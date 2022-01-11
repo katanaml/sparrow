@@ -51,4 +51,4 @@ docker run -it -d --name sparrow -p 7000:7000  katanaml/sparrow:latest
 
 ## License
 
-Licensed under the Apache License, Version 2.0. Copyright 2020-2021 Katana ML, Andrej Baranovskij. [Copy of the license](https://github.com/katanaml/table-query-model/blob/main/LICENSE).
+Licensed under the Apache License, Version 2.0. Copyright 2020-2021 Katana ML, Andrej Baranovskij. [Copy of the license](https://github.com/katanaml/sparrow/blob/main/LICENSE).
