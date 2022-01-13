@@ -6,30 +6,18 @@ Sparrow helps to extract and process data from scanned documents and pictures. I
 
 ## Instructions
 
-1. Install libraries
-
-```
-pip install -r requirements.txt
-```
-
-2. Run
-
-```
-python main.py
-```
-
-## Build and run container
-
-1. Build container
+1. Build Docker image
 
 ```
 docker build --tag katanaml/sparrow .
 ```
 
-2. Run container
+2. Setup remote interpreter in PyCharm
+
+3. Run
 
 ```
-docker run -it -d --name sparrow -p 7000:7000  katanaml/sparrow:latest
+python main.py
 ```
 
 ## Structure
