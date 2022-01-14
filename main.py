@@ -3,7 +3,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 def main():
-    image = Image.open('docs/invoice.jpg')
+    image = Image.open('docs/invoice.jpg').convert('RGB')
     image = process_document(image)
     image.save('docs/invoice_processed.jpg')
 
