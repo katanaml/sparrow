@@ -1,5 +1,5 @@
 from app.layoutlmv2 import process_document
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
 
 
 def main():
