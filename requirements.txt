@@ -4,3 +4,4 @@ pyyaml==5.1
 Pillow
 numpy
 datasets
+seqeval
