@@ -121,3 +121,4 @@ dmypy.json
 .idea/vcs.xml
 
 data/
+models/
