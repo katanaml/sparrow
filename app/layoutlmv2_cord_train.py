@@ -200,7 +200,7 @@ for epoch in range(num_train_epochs):
         optimizer.step()
         global_step += 1
 
-model.save_pretrained("data/cord/model")
+model.save_pretrained("models/cord")
 
 def process_document(image):
     print('PROCESS DOCUMENT')
