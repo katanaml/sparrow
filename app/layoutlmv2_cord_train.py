@@ -1,4 +1,18 @@
 import pandas as pd
+from collections import Counter
+import pickle
+
+from os import listdir
+from torch.utils.data import Dataset
+from PIL import Image
+
+from transformers import LayoutLMv2Processor
+
+from torch.utils.data import DataLoader
+
+from transformers import LayoutLMv2ForTokenClassification, AdamW
+import torch
+from tqdm import tqdm
 
 #
 
@@ -7,8 +21,6 @@ val = pd.read_pickle('data/cord/out/dev.pkl')
 test = pd.read_pickle('data/cord/out/test.pkl')
 
 #
-
-from collections import Counter
 
 all_labels = [item for sublist in train[1] for item in sublist] + [item for sublist in val[1] for item in sublist] + [
     item for sublist in test[1] for item in sublist]
@@ -52,13 +64,13 @@ labels = list(set(all_labels))
 label2id = {label: idx for idx, label in enumerate(labels)}
 id2label = {idx: label for idx, label in enumerate(labels)}
 
+with open('data/cord/label2id.pkl', 'wb') as t:
+    pickle.dump(label2id, t)
+
+with open('data/cord/id2label.pkl', 'wb') as t:
+    pickle.dump(id2label, t)
+
 #
-
-from os import listdir
-from torch.utils.data import Dataset
-import torch
-from PIL import Image
-
 
 class CORDDataset(Dataset):
     """CORD dataset."""
@@ -112,8 +124,6 @@ class CORDDataset(Dataset):
 
 #
 
-from transformers import LayoutLMv2Processor
-
 processor = LayoutLMv2Processor.from_pretrained("microsoft/layoutlmv2-base-uncased", revision="no_ocr")
 
 train_dataset = CORDDataset(annotations=train,
@@ -145,17 +155,11 @@ print()
 
 #
 
-from torch.utils.data import DataLoader
-
 train_dataloader = DataLoader(train_dataset, batch_size=2, shuffle=True)
 val_dataloader = DataLoader(val_dataset, batch_size=2, shuffle=True)
 test_dataloader = DataLoader(test_dataset, batch_size=2)
 
 #
-
-from transformers import LayoutLMv2ForTokenClassification, AdamW
-import torch
-from tqdm import tqdm
 
 model = LayoutLMv2ForTokenClassification.from_pretrained('microsoft/layoutlmv2-base-uncased',
                                                          num_labels=len(labels))

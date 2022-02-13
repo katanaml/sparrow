@@ -1,4 +1,27 @@
 import pandas as pd
+import pickle
+
+from os import listdir
+from torch.utils.data import Dataset
+from PIL import Image
+
+from transformers import LayoutLMv2Processor
+
+from torch.utils.data import DataLoader
+
+from transformers import LayoutLMv2ForTokenClassification
+import torch
+from tqdm import tqdm
+
+import numpy as np
+
+import warnings
+warnings.filterwarnings("ignore")
+from seqeval.metrics import (
+    classification_report,
+    f1_score,
+    precision_score,
+    recall_score)
 
 #
 
@@ -8,49 +31,30 @@ test = pd.read_pickle('data/cord/out/test.pkl')
 
 #
 
-replacing_labels = {'menu.etc': 'O', 'menu.itemsubtotal': 'O', 'menu.sub_etc': 'O', 'menu.sub_unitprice': 'O',
-                    'menu.vatyn': 'O',
-                    'void_menu.nm': 'O', 'void_menu.price': 'O', 'sub_total.othersvc_price': 'O'}
-
-
-#
+replacing_labels = {'menu.etc': 'O', 'mneu.itemsubtotal': 'O', 'menu.sub_etc': 'O', 'menu.sub_unitprice': 'O', 'menu.vatyn': 'O',
+                  'void_menu.nm': 'O', 'void_menu.price': 'O', 'sub_total.othersvc_price': 'O'}
 
 def replace_elem(elem):
-    try:
-        return replacing_labels[elem]
-    except KeyError:
-        return elem
-
-
+  try:
+    return replacing_labels[elem]
+  except KeyError:
+    return elem
 def replace_list(ls):
-    return [replace_elem(elem) for elem in ls]
-
-
+  return [replace_elem(elem) for elem in ls]
 train[1] = [replace_list(ls) for ls in train[1]]
 val[1] = [replace_list(ls) for ls in val[1]]
 test[1] = [replace_list(ls) for ls in test[1]]
 
 #
 
-all_labels = [item for sublist in train[1] for item in sublist] + [item for sublist in val[1] for item in sublist] + [
-    item for sublist in test[1] for item in sublist]
-
-#
-
+all_labels = [item for sublist in train[1] for item in sublist] + [item for sublist in val[1] for item in sublist] + [item for sublist in test[1] for item in sublist]
 labels = list(set(all_labels))
+# label2id = {label: idx for idx, label in enumerate(labels)}
+
+with open('data/cord/label2id.pkl', 'rb') as t:
+    label2id = pickle.load(t)
 
 #
-
-label2id = {label: idx for idx, label in enumerate(labels)}
-id2label = {idx: label for idx, label in enumerate(labels)}
-
-#
-
-from os import listdir
-from torch.utils.data import Dataset
-import torch
-from PIL import Image
-
 
 class CORDDataset(Dataset):
     """CORD dataset."""
@@ -101,77 +105,27 @@ class CORDDataset(Dataset):
 
         return encoded_inputs
 
-
 #
-
-from transformers import LayoutLMv2Processor
 
 processor = LayoutLMv2Processor.from_pretrained("microsoft/layoutlmv2-base-uncased", revision="no_ocr")
 
-train_dataset = CORDDataset(annotations=train,
-                            image_dir='data/cord/CORD/train/image/',
-                            processor=processor)
-val_dataset = CORDDataset(annotations=val,
-                          image_dir='data/cord/CORD/dev/image/',
-                          processor=processor)
 test_dataset = CORDDataset(annotations=test,
-                           image_dir='data/cord/CORD/test/image/',
-                           processor=processor)
+                            image_dir='data/cord/CORD/test/image/',
+                            processor=processor)
 
 #
 
-encoding = test_dataset[0]
-processor.tokenizer.decode(encoding['input_ids'])
+test_dataloader = DataLoader(test_dataset, batch_size=2)
 
 #
 
-ground_truth_labels = [id2label[label] for label in encoding['labels'].squeeze().tolist() if label != -100]
-
-#
-
-from transformers import LayoutLMv2ForTokenClassification, AdamW
-import torch
-from tqdm import tqdm
-
-model = LayoutLMv2ForTokenClassification.from_pretrained('data/cord/model',
+model = LayoutLMv2ForTokenClassification.from_pretrained('models/cord',
                                                          num_labels=len(labels))
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model.to(device)
 
 #
-
-for k,v in encoding.items():
-  encoding[k] = v.unsqueeze(0).to(device)
-
-model.eval()
-# forward pass
-outputs = model(input_ids=encoding['input_ids'], attention_mask=encoding['attention_mask'],
-                token_type_ids=encoding['token_type_ids'], bbox=encoding['bbox'],
-                image=encoding['image'])
-
-#
-
-prediction_indices = outputs.logits.argmax(-1).squeeze().tolist()
-print(prediction_indices)
-
-#
-
-prediction_indices = outputs.logits.argmax(-1).squeeze().tolist()
-predictions = [id2label[label] for gt, label in zip(encoding['labels'].squeeze().tolist(), prediction_indices) if gt != -100]
-print(predictions)
-
-#
-
-from torch.utils.data import DataLoader
-
-train_dataloader = DataLoader(train_dataset, batch_size=2, shuffle=True)
-val_dataloader = DataLoader(val_dataset, batch_size=2, shuffle=True)
-test_dataloader = DataLoader(test_dataset, batch_size=2)
-
-#
-
-import numpy as np
 
 preds_val = None
 out_label_ids = None
@@ -201,14 +155,6 @@ for batch in tqdm(test_dataloader, desc="Evaluating"):
             )
 
 #
-
-import warnings
-warnings.filterwarnings("ignore")
-from seqeval.metrics import (
-    classification_report,
-    f1_score,
-    precision_score,
-    recall_score)
 
 def results_test(preds, out_label_ids, labels):
   preds = np.argmax(preds, axis=2)
