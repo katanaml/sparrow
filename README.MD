@@ -6,35 +6,16 @@ Sparrow helps to extract and process data from scanned documents and pictures. I
 
 ## Instructions
 
-1. Datasets
-
-- [SROIE](https://www.kaggle.com/urbikn/sroie-datasetv2)
-
-3. Build Docker image
+1. Build Docker image
 
 ```
 docker build --tag katanaml/sparrow .
 ```
 
-3. Setup remote interpreter in PyCharm
-
-4. Run
+2. Run
 
 ```
 python main.py
-```
-
-## Structure
-
-```
-.
-├── app
-│   └── layoutlmv2.py
-├── main.py
-├── Dockerfile
-├── LICENSE
-├── README.md
-└── requirements.txt
 ```
 
 ## Author
