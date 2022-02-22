@@ -118,7 +118,7 @@ class Cord(datasets.GeneratorBasedBuilder):
 
         for file in sorted(os.listdir(ann_dir)):
             guid += 1
-            tokens = []
+            words = []
             bboxes = []
             ner_tags = []
 
@@ -149,7 +149,7 @@ class Cord(datasets.GeneratorBasedBuilder):
                     if len(txt) < 1:
                         continue
 
-                    tokens.append(txt)
+                    words.append(txt)
                     bboxes.append(box)
 
                     if item['category'] in replacing_labels:
@@ -157,5 +157,5 @@ class Cord(datasets.GeneratorBasedBuilder):
                     else:
                         ner_tags.append(item['category'])
 
-            yield guid, {"id": str(guid), "tokens": tokens, "bboxes": bboxes, "ner_tags": ner_tags,
+            yield guid, {"id": str(guid), "words": words, "bboxes": bboxes, "ner_tags": ner_tags,
                          "image_path": image_path}
