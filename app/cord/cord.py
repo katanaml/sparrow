@@ -153,9 +153,9 @@ class Cord(datasets.GeneratorBasedBuilder):
                     bboxes.append(box)
 
                     if item['category'] in replacing_labels:
-                        ner_tags.append('O')
+                        ner_tags.append('I-O')
                     else:
-                        ner_tags.append(item['category'])
+                        ner_tags.append('I-' + item['category'])
 
             yield guid, {"id": str(guid), "words": words, "bboxes": bboxes, "ner_tags": ner_tags,
                          "image_path": image_path}
