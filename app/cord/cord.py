@@ -56,7 +56,7 @@ class Cord(datasets.GeneratorBasedBuilder):
                     "bboxes": datasets.Sequence(datasets.Sequence(datasets.Value("int64"))),
                     "ner_tags": datasets.Sequence(
                         datasets.features.ClassLabel(
-                            names=['I-O',
+                            names=['O',
                                    'I-menu.cnt',
                                    'I-menu.discountprice',
                                    'I-menu.nm',
@@ -153,7 +153,7 @@ class Cord(datasets.GeneratorBasedBuilder):
                     bboxes.append(box)
 
                     if item['category'] in replacing_labels:
-                        ner_tags.append('I-O')
+                        ner_tags.append('O')
                     else:
                         ner_tags.append('I-' + item['category'])
 
