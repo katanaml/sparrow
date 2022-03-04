@@ -130,17 +130,22 @@ class Cord(datasets.GeneratorBasedBuilder):
             image_path = image_path.replace("json", "png")
 
             width, height = data["meta"]["image_size"]["width"], data["meta"]["image_size"]["height"]
-
+            image_id = data["meta"]["image_id"]
             for item in data["valid_line"]:
                 for word in item['words']:
                     # get word
                     txt = word['text']
 
                     # get bounding box
-                    x1 = word['quad']['x1']
-                    y1 = word['quad']['y1']
-                    x3 = word['quad']['x3']
-                    y3 = word['quad']['y3']
+                    x1 = abs(word['quad']['x1'])
+                    y1 = abs(word['quad']['y1'])
+                    x3 = abs(word['quad']['x3'])
+                    y3 = abs(word['quad']['y3'])
+
+                    x1 = width if x1 > width else x1
+                    y1 = height if y1 > height else y1
+                    x3 = width if x3 > width else x3
+                    y3 = height if y3 > height else y3
 
                     box = [x1, y1, x3, y3]
                     box = normalize_bbox(box, width=width, height=height)
