@@ -142,10 +142,10 @@ class Cord(datasets.GeneratorBasedBuilder):
                     x3 = abs(word['quad']['x3'])
                     y3 = abs(word['quad']['y3'])
 
-                    x1 = width if x1 > width else x1
-                    y1 = height if y1 > height else y1
-                    x3 = width if x3 > width else x3
-                    y3 = height if y3 > height else y3
+                    x1 = width - 10 if x1 > width else x1
+                    y1 = height - 10 if y1 > height else y1
+                    x3 = width - 5 if x3 > width else x3
+                    y3 = height - 5 if y3 > height else y3
 
                     box = [x1, y1, x3, y3]
                     box = normalize_bbox(box, width=width, height=height)
