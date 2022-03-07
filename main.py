@@ -1,6 +1,7 @@
 # from app.layoutlmv2 import process_document
 # from app.layoutlmv2_cord_train import process_document
-from app.layoutlmv2_cord_evaluate import process_document
+# from app.layoutlmv2_cord_evaluate import process_document
+from app.layoutlmv2_cord_train_hf import process_document
 from PIL import Image
 
 
