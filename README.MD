@@ -18,7 +18,7 @@ docker build --tag katanaml/sparrow .
 python main.py
 ```
 
-3. Model fine-tuning [COLAB](https://colab.research.google.com/drive/1AtbMQFw_ahESLYVsHdoYg-NZrL9i2evB?usp=sharing)
+3. Model fine-tuning [Colab](https://colab.research.google.com/drive/1AtbMQFw_ahESLYVsHdoYg-NZrL9i2evB?usp=sharing)
 
 ## Author
 
