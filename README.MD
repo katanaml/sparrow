@@ -28,7 +28,7 @@ python main.py
 
 4. LayoutLMv2 true [inference](https://github.com/katanaml/sparrow/blob/main/app/True_Inference_with_LayoutLMv2ForTokenClassification_CORD.ipynb), trained with CORD dataset [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1g1b5gSaOr4awkILH6yOr1p1z2HrBPPNf?usp=sharing)
 
-5. LayoutLMv2 Gradio demo [app](https://github.com/katanaml/sparrow/blob/main/app/Gradio_LayoutLMv2ForTokenClassification_CORD.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1g1b5gSaOr4awkILH6yOr1p1z2HrBPPNf?usp=sharing)
+5. LayoutLMv2 Gradio demo [app](https://github.com/katanaml/sparrow/blob/main/app/Gradio_LayoutLMv2ForTokenClassification_CORD.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1nhC3NGCQz46-SXar-N9m5Wr-iNwO7s6k?usp=sharing)
 
 ## Author
 
