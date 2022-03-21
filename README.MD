@@ -24,7 +24,7 @@ python main.py
 
 2. LayoutLMv2 model fine [tuning](https://github.com/katanaml/sparrow/blob/main/app/Fine_tuning_LayoutLMv2ForTokenClassification_on_CORD_using_HuggingFace_Trainer_ipynb.ipynb) with CORD dataset using Hugging Face Trainer [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1AtbMQFw_ahESLYVsHdoYg-NZrL9i2evB?usp=sharing)
 
-3. LayoutLMv2 model fine tuning with CORD dataset using PyTorch and Transformers [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1DvN9rJPpTC5-9V76DGVRmb3cYu3lvaHO?usp=sharing)
+3. LayoutLMv2 model fine [tuning](https://github.com/katanaml/sparrow/blob/main/app/Fine_tuning_LayoutLMv2ForTokenClassification_on_CORD.ipynb) with CORD dataset using PyTorch and Transformers [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1DvN9rJPpTC5-9V76DGVRmb3cYu3lvaHO?usp=sharing)
 
 4. LayoutLMv2 [inference](https://github.com/katanaml/sparrow/blob/main/app/Inference_with_LayoutLMv2ForTokenClassification_CORD.ipynb), trained with CORD dataset [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1zx1awZB9BbBCKPddvMK7tR1i4iN_wGrO?usp=sharing)
 
