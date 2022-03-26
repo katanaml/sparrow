@@ -20,7 +20,7 @@ python main.py
 
 ## Resources
 
-1. CORD dataset Hugging Face builder [class](https://github.com/katanaml/sparrow/blob/main/app/cord/cord.py)
+1. CORD dataset Hugging Face builder [class](https://github.com/katanaml/sparrow/blob/main/research/app/cord/cord.py)
 
 2. LayoutLMv2 model fine [tuning](https://github.com/katanaml/sparrow/blob/main/app/Fine_tuning_LayoutLMv2ForTokenClassification_on_CORD_using_HuggingFace_Trainer_ipynb.ipynb) with CORD dataset using Hugging Face Trainer [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1AtbMQFw_ahESLYVsHdoYg-NZrL9i2evB?usp=sharing)
 
