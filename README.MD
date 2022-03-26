@@ -4,7 +4,7 @@
 
 Sparrow helps to extract and process data from scanned documents and pictures. It works with forms, invoices, receipts and other structured data.
 
-## Instructions
+## Instructions (for research folder)
 
 1. Build Docker image
 
