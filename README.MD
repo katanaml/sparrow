@@ -24,7 +24,7 @@ python main.py
 
 2. LayoutLMv2 model fine [tuning](https://github.com/katanaml/sparrow/blob/main/research/app/Fine_tuning_LayoutLMv2ForTokenClassification_on_CORD_using_HuggingFace_Trainer_ipynb.ipynb) with CORD dataset using Hugging Face Trainer [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1AtbMQFw_ahESLYVsHdoYg-NZrL9i2evB?usp=sharing)
 
-3. LayoutLMv2 model fine [tuning](https://github.com/katanaml/sparrow/blob/main/research/app/Fine_tuning_LayoutLXM_on_FUNSD.ipynb) with CORD dataset using PyTorch and Transformers [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1DvN9rJPpTC5-9V76DGVRmb3cYu3lvaHO?usp=sharing)
+3. LayoutLMv2 model fine [tuning](https://github.com/katanaml/sparrow/blob/main/research/app/Fine_tuning_LayoutLXM_on_FUNSD.ipynb) with CORD dataset using PyTorch and Transformers [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1AtbMQFw_ahESLYVsHdoYg-NZrL9i2evB?usp=sharing)  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1DvN9rJPpTC5-9V76DGVRmb3cYu3lvaHO?usp=sharing)
 
 4. LayoutXLM model fine [tuning](https://colab.research.google.com/drive/16bKTkih-SkuE8Ckbp3rOpJ8p8paAVzrw?usp=sharing) with CORD dataset using PyTorch and Transformers [![Open In Colab](https://colab.research.google.com/drive/16bKTkih-SkuE8Ckbp3rOpJ8p8paAVzrw?usp=sharing)
 
