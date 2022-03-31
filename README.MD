@@ -32,6 +32,8 @@ python main.py
 
 6. LayoutLMv2 Gradio demo [app](https://github.com/katanaml/sparrow/blob/main/research/app/Gradio_LayoutLMv2ForTokenClassification_CORD.ipynb) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1nhC3NGCQz46-SXar-N9m5Wr-iNwO7s6k?usp=sharing)
 
+7. [Transformers-Tutorials](https://github.com/NielsRogge/Transformers-Tutorials)
+
 ## Author
 
 [Katana ML](https://katanaml.io), [Andrej Baranovskij](https://github.com/abaranovskis-redsamurai)
