@@ -26,7 +26,7 @@ python main.py
 
 3. LayoutLMv2 model fine [tuning](https://github.com/katanaml/sparrow/blob/main/research/app/Fine_tuning_LayoutLXM_on_FUNSD.ipynb) with CORD dataset using PyTorch and Transformers [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1AtbMQFw_ahESLYVsHdoYg-NZrL9i2evB?usp=sharing)  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1DvN9rJPpTC5-9V76DGVRmb3cYu3lvaHO?usp=sharing)
 
-4. LayoutXLM model fine [tuning](https://colab.research.google.com/drive/16bKTkih-SkuE8Ckbp3rOpJ8p8paAVzrw?usp=sharing) with CORD dataset using PyTorch and Transformers [![Open In Colab](https://colab.research.google.com/drive/16bKTkih-SkuE8Ckbp3rOpJ8p8paAVzrw?usp=sharing)
+4. LayoutXLM model fine [tuning](https://colab.research.google.com/drive/16bKTkih-SkuE8Ckbp3rOpJ8p8paAVzrw?usp=sharing) with CORD dataset using PyTorch and Transformers [![Open In Colab](https://colab.research.google.com/drive/16bKTkih-SkuE8Ckbp3rOpJ8p8paAVzrw?usp=sharing)](https://colab.research.google.com/drive/16bKTkih-SkuE8Ckbp3rOpJ8p8paAVzrw?usp=sharing)
 
 5. LayoutLMv2 [inference](https://github.com/katanaml/sparrow/blob/main/research/app/Inference_with_LayoutLMv2ForTokenClassification_CORD.ipynb), trained with CORD dataset [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1zx1awZB9BbBCKPddvMK7tR1i4iN_wGrO?usp=sharing)
 
