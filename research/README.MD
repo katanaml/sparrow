@@ -1,4 +1,4 @@
-# This folder provides experimental code
+# Sparrow experimental code
 
 ## Instructions
 
