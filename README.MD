@@ -6,8 +6,8 @@ Sparrow helps to extract and process data from scanned documents and pictures. I
 
 ### Modules
 
-* **[ocr](https://github.com/katanaml/sparrow/tree/main/sparrow-ocr)** - Sparrow OCR module
-* **[research](https://github.com/katanaml/sparrow/tree/main/sparrow-research)** - Sparrow experimental code
+* **[sparrow-ocr](https://github.com/katanaml/sparrow/tree/main/sparrow-ocr)** - Sparrow OCR module
+* **[sparrow-research](https://github.com/katanaml/sparrow/tree/main/sparrow-research)** - Sparrow experimental code
 
 ## Author
 
