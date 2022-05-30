@@ -1,6 +1,6 @@
-# Structured data extraction from scanned documents
+# This folder provides experimental code
 
-## Instructions (for research folder)
+## Instructions
 
 1. Build Docker image
 
