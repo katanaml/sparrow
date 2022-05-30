@@ -1,8 +1,8 @@
-# OCR Module
+# Sparrow OCR
 
 ## Description
 
-OCR module is implemented with [Mindee docTR](https://github.com/mindee/doctr) OCR
+Sparrow OCR module is implemented with [Mindee docTR](https://github.com/mindee/doctr) OCR
 
 ## Instructions
 
