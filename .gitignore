@@ -123,3 +123,9 @@ dmypy.json
 data/
 models/
 
+sparrow-ui/.idea/inspectionProfiles/profiles_settings.xml
+sparrow-ui/.idea/inspectionProfiles/Project_Default.xml
+sparrow-ui/.idea/misc.xml
+sparrow-ui/.idea/modules.xml
+sparrow-ui/.idea/sparrow-ui.iml
+sparrow-ui/.idea/vcs.xml
