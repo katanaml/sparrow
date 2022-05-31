@@ -26,6 +26,18 @@ DJANGO_ENV=development ./manage.py migrate
 DJANGO_ENV=development ./manage.py runserver
 ```
 
+2. Create super user (sparrow/welcome1)
+
+```
+DJANGO_ENV=development ./manage.py createsuperuser
+```
+
+Verify user:
+
+```
+http://127.0.0.1:8000/admin/
+```
+
 ## Author
 
 [Katana ML](https://katanaml.io), [Andrej Baranovskij](https://github.com/abaranovskis-redsamurai)
