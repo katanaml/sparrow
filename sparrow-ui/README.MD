@@ -6,7 +6,10 @@ Sparrow UI module implements UI logic for document data annotation and document 
 
 ## Instructions
 
-Initial setup, these steps were used to create Sparrow UI. Django site - katanaml, Django app - sparrow.
+Initial setup, these steps were used to create Sparrow UI. 
+
+* Django site - **katanaml**
+* Django app - **sparrow**
 
 ```
 poetry init
@@ -14,6 +17,13 @@ poetry shell
 poetry add django
 django-admin startproject katanaml .
 python manage.py startapp sparrow
+DJANGO_ENV=development ./manage.py migrate
+```
+
+1. Run Sparrow UI with Debug=True
+
+```
+DJANGO_ENV=development ./manage.py runserver
 ```
 
 ## Author
