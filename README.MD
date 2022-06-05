@@ -1,4 +1,4 @@
-# Structured data extraction from scanned documents
+# Data extraction from scanned documents
 
 ## Description
 
