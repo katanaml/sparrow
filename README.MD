@@ -1,4 +1,4 @@
-# Data extraction from scanned documents/pictures
+# Sparrow - Data extraction from scanned documents
 
 ## Description
 
