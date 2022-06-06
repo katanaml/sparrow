@@ -1,4 +1,4 @@
-# Data extraction from scanned documents
+# Data extraction from scanned documents/pictures
 
 ## Description
 
