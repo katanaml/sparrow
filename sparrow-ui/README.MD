@@ -20,16 +20,16 @@ python manage.py startapp sparrow
 DJANGO_ENV=development ./manage.py migrate
 ```
 
-1. Run Sparrow UI with Debug=True
-
-```
-DJANGO_ENV=development ./manage.py runserver
-```
-
-2. Create super user (sparrow/welcome1)
+1. Create super user (sparrow/welcome1)
 
 ```
 DJANGO_ENV=development ./manage.py createsuperuser
+```
+
+2. Run Sparrow UI with Debug=True
+
+```
+DJANGO_ENV=development ./manage.py runserver
 ```
 
 Verify user:
