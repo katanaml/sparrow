@@ -129,3 +129,7 @@ sparrow-ui/.idea/misc.xml
 sparrow-ui/.idea/modules.xml
 sparrow-ui/.idea/sparrow-ui.iml
 sparrow-ui/.idea/vcs.xml
+
+sparrow-ui/node_modules
+sparrow-ui/sparrow/static/CACHE
+sparrow-ui/sparrow/static/src/output.css
