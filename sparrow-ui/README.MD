@@ -6,7 +6,7 @@ Sparrow UI module implements UI logic for document data annotation and document 
 
 ## Instructions
 
-**Initial setup, these steps were used to create Sparrow UI.** 
+**Initial setup, these steps were used to create Sparrow UI** 
 
 * Django site - **katanaml**
 * Django app - **sparrow**
@@ -38,7 +38,7 @@ Verify user:
 http://127.0.0.1:8000/admin/
 ```
 
-**Flowbite and Tailwind setup.**
+**Flowbite and Tailwind setup**
 
 1. Add Django compressor to minimize Tailwind CSS file
 
