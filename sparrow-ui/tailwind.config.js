@@ -2,6 +2,7 @@
 module.exports = {
     content: [
         './sparrow/templates/**/*.html',
+        './sparrow/static/scripts/*.js',
         './node_modules/flowbite/**/*.js'
     ],
     theme: {

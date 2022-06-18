@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apexcharts": "^3.35.3",
     "flowbite": "^1.4.7",
     "tailwindcss": "^3.1.3"
   }
