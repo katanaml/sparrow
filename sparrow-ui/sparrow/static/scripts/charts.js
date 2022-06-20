@@ -57,12 +57,12 @@ const getMainChartOptions = () => {
 		},
 		series: [
 			{
-				name: 'Revenue',
+				name: 'Budget',
 				data: [6356, 6218, 6156, 6526, 6356, 6256, 6056],
 				color: '#1A56DB'
 			},
 			{
-				name: 'Revenue (previous period)',
+				name: 'Documents',
 				data: [6556, 6725, 6424, 6356, 6586, 6756, 6616],
 				color: '#FDBA8C'
 			}
