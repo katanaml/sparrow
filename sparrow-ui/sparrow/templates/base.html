@@ -19,7 +19,24 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
+    {% if request.path == '/forms' %}
+    <title>Forms - Sparrow</title>
+    {% elif request.path == '/tables' %}
+    <title>Tables - Sparrow</title>
+    {% elif request.path == '/identity' %}
+    <title>Identity - Sparrow</title>
+    {% elif request.path == '/ocr' %}
+    <title>OCR - Sparrow</title>
+    {% elif request.path == '/mapping' %}
+    <title>Mapping - Sparrow</title>
+    {% elif request.path == '/review' %}
+    <title>Review - Sparrow</title>
+    {% elif request.path == '/export' %}
+    <title>Export - Sparrow</title>
+    {% else %}
     <title>Sparrow</title>
+    {% endif %}
+
     <meta name="description" content="Document processing with ML">
     <meta name="author" content="Katana ML">
 

@@ -53,18 +53,18 @@
                                       clip-rule="evenodd"></path>
                             </svg>
                         </button>
-                        <ul id="dropdown-vision" class="space-y-2 py-2 {% if 1 == 2 %} hidden {% endif %}">
+                        <ul id="dropdown-vision" class="space-y-2 py-2 {% if request.path != '/forms' and request.path != '/tables' and request.path != '/identity' %} hidden {% endif %}">
                             <li>
                                 <a href="{% url 'forms' %}"
-                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700">Forms</a>
+                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/forms' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Forms</a>
                             </li>
                             <li>
-                                <a href=""
-                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700">Tables</a>
+                                <a href="{% url 'tables' %}"
+                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/tables' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Tables</a>
                             </li>
                             <li>
-                                <a href=""
-                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700">Identity</a>
+                                <a href="{% url 'identity' %}"
+                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/identity' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Identity</a>
                             </li>
                         </ul>
                     </li>
@@ -87,22 +87,22 @@
                                       clip-rule="evenodd"></path>
                             </svg>
                         </button>
-                        <ul id="dropdown-data" class="space-y-2 py-2 hidden">
+                        <ul id="dropdown-data" class="space-y-2 py-2 {% if request.path != '/ocr' and request.path != '/mapping' and request.path != '/review' and request.path != '/export' %} hidden {% endif %}">
                             <li>
-                                <a href=""
-                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700">OCR</a>
+                                <a href="{% url 'ocr' %}"
+                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/ocr' %} bg-gray-100 dark:bg-gray-700 {% endif %}">OCR</a>
                             </li>
                             <li>
-                                <a href=""
-                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700">Mapping</a>
+                                <a href="{% url 'mapping' %}"
+                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/mapping' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Mapping</a>
                             </li>
                             <li>
-                                <a href=""
-                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700">Review</a>
+                                <a href="{% url 'review' %}"
+                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/review' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Review</a>
                             </li>
                             <li>
-                                <a href=""
-                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700">Export</a>
+                                <a href="{% url 'export' %}"
+                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/export' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Export</a>
                             </li>
                         </ul>
                     </li>
@@ -133,7 +133,7 @@
             </div>
         </div>
         <div class="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex" sidebar-bottom-menu>
-            <a href="#" data-tooltip-target="tools-settings"
+            <a href="{% url 'dashboard' %}" data-tooltip-target="tools-settings"
                class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"></path>
@@ -144,7 +144,7 @@
                 Tools page
                 <div class="tooltip-arrow" data-popper-arrow></div>
             </div>
-            <a href="" data-tooltip-target="tooltip-settings"
+            <a href="{% url 'dashboard' %}" data-tooltip-target="tooltip-settings"
                class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
