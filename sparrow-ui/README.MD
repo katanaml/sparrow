@@ -71,6 +71,20 @@ npm i flowbite
 npx tailwindcss -i ./sparrow/static/src/input.css -o ./sparrow/static/src/output.css --watch
 ```
 
+**Webpack setup**
+
+1. Install
+
+```
+npm install webpack webpack-cli --save-dev
+```
+
+2. Run
+
+```
+npm run dev
+```
+
 ## Author
 
 [Katana ML](https://katanaml.io), [Andrej Baranovskij](https://github.com/abaranovskis-redsamurai)
