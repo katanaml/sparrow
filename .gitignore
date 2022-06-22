@@ -133,3 +133,4 @@ sparrow-ui/.idea/vcs.xml
 sparrow-ui/node_modules
 sparrow-ui/sparrow/static/CACHE
 sparrow-ui/sparrow/static/src/output.css
+sparrow-ui/sparrow/static/scripts/app.bundle.js
