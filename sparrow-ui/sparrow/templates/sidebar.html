@@ -35,18 +35,18 @@
                                       clip-rule="evenodd"></path>
                             </svg>
                         </button>
-                        <ul id="dropdown-vision" class="space-y-2 py-2 {% if request.path != '/forms' and request.path != '/tables' and request.path != '/identity' %} hidden {% endif %}">
+                        <ul id="dropdown-vision" class="space-y-2 py-2 {% if request.path != '/document' and request.path != '/expense' and request.path != '/identity' %} hidden {% endif %}">
                             <li>
-                                <a href="{% url 'forms' %}"
-                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/forms' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Forms</a>
+                                <a href="{% url 'document' %}"
+                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/document' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Document</a>
                             </li>
                             <li>
-                                <a href="{% url 'tables' %}"
-                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/tables' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Tables</a>
+                                <a href="{% url 'expense' %}"
+                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/expense' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Expense</a>
                             </li>
                             <li>
                                 <a href="{% url 'identity' %}"
-                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/identity' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Identity</a>
+                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/identity' %} bg-gray-100 dark:bg-gray-700 {% endif %}">ID</a>
                             </li>
                         </ul>
                     </li>
@@ -69,10 +69,10 @@
                                       clip-rule="evenodd"></path>
                             </svg>
                         </button>
-                        <ul id="dropdown-data" class="space-y-2 py-2 {% if request.path != '/ocr' and request.path != '/mapping' and request.path != '/review' and request.path != '/export' %} hidden {% endif %}">
+                        <ul id="dropdown-data" class="space-y-2 py-2 {% if request.path != '/upload' and request.path != '/mapping' and request.path != '/review' and request.path != '/export' %} hidden {% endif %}">
                             <li>
-                                <a href="{% url 'ocr' %}"
-                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/ocr' %} bg-gray-100 dark:bg-gray-700 {% endif %}">OCR</a>
+                                <a href="{% url 'upload' %}"
+                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/upload' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Upload</a>
                             </li>
                             <li>
                                 <a href="{% url 'mapping' %}"

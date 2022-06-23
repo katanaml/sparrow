@@ -1,12 +1,12 @@
 from django.urls import path
-from .views import dashboard, forms, tables, identity, ocr, mapping, review, export
+from .views import dashboard, document, expense, identity, upload, mapping, review, export
 
 urlpatterns = [
     path('', dashboard, name='dashboard'),
-    path('forms', forms, name='forms'),
-    path('tables', tables, name='tables'),
+    path('document', document, name='document'),
+    path('expense', expense, name='expense'),
     path('identity', identity, name='identity'),
-    path('ocr', ocr, name='ocr'),
+    path('upload', upload, name='upload'),
     path('mapping', mapping, name='mapping'),
     path('review', review, name='review'),
     path('export', export, name='export')

@@ -5,20 +5,20 @@ def dashboard(request):
     return render(request, 'sparrow/dashboard.html')
 
 
-def forms(request):
-    return render(request, 'sparrow/forms.html')
+def document(request):
+    return render(request, 'sparrow/document.html')
 
 
-def tables(request):
-    return render(request, 'sparrow/tables.html')
+def expense(request):
+    return render(request, 'sparrow/expense.html')
 
 
 def identity(request):
     return render(request, 'sparrow/identity.html')
 
 
-def ocr(request):
-    return render(request, 'sparrow/ocr.html')
+def upload(request):
+    return render(request, 'sparrow/upload.html')
 
 
 def mapping(request):
