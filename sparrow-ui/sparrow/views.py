@@ -25,9 +25,29 @@ def mapping(request):
     return render(request, 'sparrow/mapping.html')
 
 
-def review(request):
-    return render(request, 'sparrow/review.html')
+def setup(request):
+    return render(request, 'sparrow/setup.html')
 
 
 def export(request):
     return render(request, 'sparrow/export.html')
+
+
+def training(request):
+    return render(request, 'sparrow/training.html')
+
+
+def evaluation(request):
+    return render(request, 'sparrow/evaluation.html')
+
+
+def summary(request):
+    return render(request, 'sparrow/summary.html')
+
+
+def passwordreset(request):
+    return render(request, 'sparrow/passwordreset.html')
+
+
+def profilelock(request):
+    return render(request, 'sparrow/profilelock.html')

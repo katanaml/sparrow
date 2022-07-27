@@ -35,7 +35,8 @@
                                       clip-rule="evenodd"></path>
                             </svg>
                         </button>
-                        <ul id="dropdown-vision" class="space-y-2 py-2 {% if request.path != '/document' and request.path != '/expense' and request.path != '/identity' %} hidden {% endif %}">
+                        <ul id="dropdown-vision"
+                            class="space-y-2 py-2 {% if request.path != '/document' and request.path != '/expense' and request.path != '/identity' %} hidden {% endif %}">
                             <li>
                                 <a href="{% url 'document' %}"
                                    class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/document' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Document</a>
@@ -69,7 +70,8 @@
                                       clip-rule="evenodd"></path>
                             </svg>
                         </button>
-                        <ul id="dropdown-data" class="space-y-2 py-2 {% if request.path != '/upload' and request.path != '/mapping' and request.path != '/review' and request.path != '/export' %} hidden {% endif %}">
+                        <ul id="dropdown-data"
+                            class="space-y-2 py-2 {% if request.path != '/upload' and request.path != '/mapping' and request.path != '/setup' and request.path != '/export' %} hidden {% endif %}">
                             <li>
                                 <a href="{% url 'upload' %}"
                                    class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/upload' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Upload</a>
@@ -79,8 +81,8 @@
                                    class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/mapping' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Mapping</a>
                             </li>
                             <li>
-                                <a href="{% url 'review' %}"
-                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/review' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Review</a>
+                                <a href="{% url 'setup' %}"
+                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/review' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Setup</a>
                             </li>
                             <li>
                                 <a href="{% url 'export' %}"
@@ -88,9 +90,73 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <button type="button"
+                                class="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                                aria-controls="dropdown-data" data-collapse-toggle="dropdown-training">
+                            <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                 fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
+                            </svg>
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap"
+                                  sidebar-toggle-item>Model Training</span>
+                            <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                        <ul id="dropdown-training"
+                            class="space-y-2 py-2 {% if request.path != '/training' and request.path != '/evaluation' and request.path != '/summary' %} hidden {% endif %}">
+                            <li>
+                                <a href="{% url 'training' %}"
+                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/training' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Training</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'evaluation' %}"
+                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/evaluation' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Evaluation</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'summary' %}"
+                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/summary' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Summary</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <button type="button"
+                                class="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+                                aria-controls="dropdown-auth" data-collapse-toggle="dropdown-auth">
+                            <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
+                                 fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="flex-1 ml-3 text-left whitespace-nowrap"
+                                  sidebar-toggle-item>Authentication</span>
+                            <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                        <ul id="dropdown-auth"
+                            class="space-y-2 py-2 {% if request.path != '/passwordreset' and request.path != '/profilelock' %} hidden {% endif %}">
+                            <li>
+                                <a href="{% url 'passwordreset' %}"
+                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/passwordreset' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Reset Password</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'profilelock' %}"
+                                   class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 {% if request.path == '/profilelock' %} bg-gray-100 dark:bg-gray-700 {% endif %}">Profile Lock</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
                 <div class="pt-2 space-y-2">
-                    <a href="https://flowbite.com/docs/getting-started/introduction/" target="_blank"
+                    <a href="https://katanaml.io" target="_blank"
                        class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
                         <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
                              fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -101,7 +167,7 @@
                         </svg>
                         <span class="ml-3" sidebar-toggle-item>Docs</span>
                     </a>
-                    <a href="https://github.com/themesberg/flowbite/issues" target="_blank"
+                    <a href="https://katanaml.io" target="_blank"
                        class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
                         <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
                              fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

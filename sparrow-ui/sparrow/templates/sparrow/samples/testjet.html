@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Oracle JET Sample</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+
+    <style id="compiled-css">
+        /**
+            The default theme for JET is based on Oracle's Redwood Design System.
+            Theming is provided via CSS Variables. A Theme Builder application to help build custom themes is
+            available from the Learning/Dive-in page of the JET website.
+        **/
+
+        @import url('//static.oracle.com/cdn/jet/13.0.0/default/css/redwood/oj-redwood-min.css');
+
+        body {
+            padding: 20px;
+        }
+
+        /* EOS */
+    </style>
+
+</head>
+<body>
+<h3>Oracle JET v13.0.0 base example</h3>
+<h5>Users List</h5>
+<br/>
+<oj-table id='table' style="height:300px" class="banded-table" aria-label='Departments Table' data='[[dataProvider]]'
+          columns-default.sortable='disabled' selection-mode='{"row":"single","column":"none"}' columns='[
+                {"headerText": "Employee Number", "field": "empno"},
+                {"headerText": "Username", "field": "ename"},
+                {"headerText": "Title", "field": "job", "template": "titleTemplate"},
+                {"headerText": "Hire Date", "field": "hiredate", "template": "hireDateTemplate"},
+                {"headerText": "Salary", "field": "sal", "template": "salaryTemplate"}]'>
+
+    <template slot="titleTemplate" data-oj-as="title">
+        <oj-bind-text value="[[title.data]]"></oj-bind-text>
+    </template>
+    <template slot="hireDateTemplate" data-oj-as="hireDate">
+        <oj-bind-text value="[[formatDate(hireDate.data)]]"></oj-bind-text>
+    </template>
+    <template slot="salaryTemplate" data-oj-as="salary">
+        <oj-bind-text value="[[formatSal(salary.data)]]"></oj-bind-text>
+    </template>
+
+</oj-table>
+
+<p style="margin-top:10px;">
+    Learn more about JET at <a href="https://oracle.com/jet" target="_blank">https://oracle.com/jet</a>
+</p>
+
+
+<script type="text/javascript">//<![CDATA[
+
+
+/**
+ RequireJS is used for lazy loading of resources as well as dependency resolution.
+ **/
+
+require(['knockout',
+    'ojs/ojarraydataprovider',
+    'ojs/ojvalidation-base',
+    'ojs/ojdeferreddataprovider',
+    'ojs/ojknockout',
+    'ojs/ojtable',
+    'ojs/ojvalidation-datetime',
+    'ojs/ojvalidation-number'
+], function (ko, ArrayDataProvider, ValidationBase, DeferredDataProvider) {
+    'use strict';
+
+    let ViewModel = function () {
+
+        // for salary fields
+        const salOptions = {
+            style: 'currency',
+            currency: 'USD'
+        };
+        const salaryConverter = ValidationBase.Validation.converterFactory("number").createConverter(salOptions);
+
+        // for date fields
+        const dateOptions = {
+            formatStyle: 'date',
+            dateFormat: 'medium'
+        };
+        const dateConverter = ValidationBase.Validation.converterFactory("datetime").createConverter(dateOptions);
+
+        // the use of arrow functions works just fine
+        this.formatSal = data => salaryConverter.format(data);
+        this.formatDate = data => dateConverter.format(data);
+
+        this.dataProvider = new DeferredDataProvider(new Promise((resolve) => {
+            fetch("https://apex.oracle.com/pls/apex/oraclejet/emp/")
+                .then(response => response.json())
+                .then(data => {
+                    const tempArray = data.items.map(item => {
+                        return {
+                            empno: item.empno,
+                            ename: item.ename,
+                            job: item.job,
+                            hiredate: item.hiredate,
+                            sal: item.sal
+                        };
+                    })
+                    resolve(new ArrayDataProvider(tempArray, {
+                        keyAttributes: 'empno'
+                    }))
+                })
+        }));
+    };
+    ko.applyBindings(new ViewModel(), document.getElementById('table'));
+});
+
+
+// CDN configuration for lading base JET libraries and resources
+function _getCDNPath(paths) {
+    var cdnPath = "https://static.oracle.com/cdn/jet/";
+    var ojPath = "13.0.0/default/js/";
+    var thirdpartyPath = "13.0.0/3rdparty/";
+    var keys = Object.keys(paths);
+    var newPaths = {};
+
+    function _isoj(key) {
+        return (key.indexOf('oj') === 0 && key !== 'ojdnd');
+    }
+
+    keys.forEach(function (key) {
+        newPaths[key] = cdnPath + (_isoj(key) ? ojPath : thirdpartyPath) + paths[key];
+    });
+    return newPaths;
+}
+
+requirejs.config({
+    paths: _getCDNPath({
+        'knockout': 'knockout/knockout-3.5.1',
+        'preact': 'preact/dist/preact.umd',
+        'preact/hooks': 'preact/hooks/dist/hooks.umd',
+        'preact/compat': 'preact/compat/dist/compat.umd',
+        'preact/jsx-runtime': 'preact/jsx-runtime/dist/jsxRuntime.umd',
+        '@oracle/oraclejet-preact': 'oraclejet-preact/amd',
+        'jquery': 'jquery/jquery-3.6.0.min',
+        'jqueryui-amd': 'jquery/jqueryui-amd-1.13.0.min',
+        'ojs': 'min',
+        'ojL10n': 'ojL10n',
+        'ojtranslations': 'resources',
+        'signals': 'js-signals/signals.min',
+        'text': 'require/text',
+        'hammerjs': 'hammer/hammer-2.0.8.min',
+        'ojdnd': 'dnd-polyfill/dnd-polyfill-1.0.2.min',
+        'touchr': 'touchr/touchr'
+    })
+});
+
+
+//]]></script>
+
+</body>
+</html>

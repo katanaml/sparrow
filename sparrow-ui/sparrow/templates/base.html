@@ -29,10 +29,20 @@
     <title>Document Upload - Sparrow</title>
     {% elif request.path == '/mapping' %}
     <title>Data Mapping - Sparrow</title>
-    {% elif request.path == '/review' %}
-    <title>Review - Sparrow</title>
+    {% elif request.path == '/setup' %}
+    <title>Data Setup - Sparrow</title>
     {% elif request.path == '/export' %}
-    <title>Export - Sparrow</title>
+    <title>Data Export - Sparrow</title>
+    {% elif request.path == '/training' %}
+    <title>Model Training - Sparrow</title>
+    {% elif request.path == '/evaluation' %}
+    <title>Model Evaluation - Sparrow</title>
+    {% elif request.path == '/summary' %}
+    <title>Model Summary - Sparrow</title>
+    {% elif request.path == '/passwordreset' %}
+    <title>Password Reset - Sparrow</title>
+    {% elif request.path == '/profilelock' %}
+    <title>Profile Lock - Sparrow</title>
     {% else %}
     <title>Sparrow</title>
     {% endif %}
