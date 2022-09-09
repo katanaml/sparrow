@@ -1,4 +1,4 @@
-# Sparrow - Data extraction from scanned documents
+# Sparrow - Data extraction from documents with ML
 
 ## Description
 
