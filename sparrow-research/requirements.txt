@@ -1,7 +1,0 @@
-transformers==4.15.0
-pytesseract==0.3.8
-pyyaml==5.1
-Pillow
-numpy
-datasets
-seqeval
