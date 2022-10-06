@@ -1,0 +1,14 @@
+
+.DS_Store
+sparrow-ui/.idea/inspectionProfiles/profiles_settings.xml
+sparrow-ui/.idea/inspectionProfiles/Project_Default.xml
+sparrow-ui/.idea/misc.xml
+sparrow-ui/.idea/modules.xml
+sparrow-ui/.idea/sparrow-ui.iml
+sparrow-ui/tools/__pycache__/utilities.cpython-310.pyc
+sparrow-ui/views/__pycache__/dashboard.cpython-310.pyc
+sparrow-ui/views/__pycache__/data_annotation.cpython-310.pyc
+sparrow-ui/views/__pycache__/data_extraction.cpython-310.pyc
+sparrow-ui/views/__pycache__/model_training.cpython-310.pyc
+sparrow-ui/views/__pycache__/model_tuning.cpython-310.pyc
+sparrow-ui/views/__pycache__/settings.cpython-310.pyc
