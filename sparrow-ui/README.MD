@@ -2,7 +2,7 @@
 
 ## Description
 
-Sparrow UI module implements UI logic for document data annotation and document data extraction.
+Sparrow UI module implements UI logic with Streamlit for document data annotation and document data extraction.
 
 ## Instructions
 
