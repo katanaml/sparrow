@@ -18,7 +18,7 @@ pip install -r requirements.txt
 2. Run
 
 ```
-python -m streamlit run dashboard.py
+streamlit run main.py
 ```
 
 ## Author
