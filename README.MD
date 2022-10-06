@@ -8,8 +8,6 @@ Research repo - [sparrow-research](https://github.com/katanaml/sparrow-research)
 
 ### Modules
 
-* **[sparrow-ocr](https://github.com/katanaml/sparrow/tree/main/sparrow-ocr)** - Sparrow OCR module
-* **[sparrow-research](https://github.com/katanaml/sparrow/tree/main/sparrow-research)** - Sparrow experimental code
 * **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui)** - Sparrow UI module
 
 ## Author
