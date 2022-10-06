@@ -1,10 +1,10 @@
-# Sparrow Research - Data extraction from documents with ML
+# Sparrow - Data extraction from documents with ML
 
 ## Description
 
-This is research source code repo, check the PROD [Sparrow](https://github.com/katanaml/sparrow)
-
 Sparrow helps to extract and process data from scanned documents and pictures. It works with forms, invoices, receipts and other structured data.
+
+Research repo - [sparrow-research](https://github.com/katanaml/sparrow-research)
 
 ### Modules
 
