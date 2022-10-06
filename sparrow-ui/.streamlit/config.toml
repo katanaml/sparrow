@@ -64,7 +64,7 @@ disableWatchdogWarning = true
 
 # Handle script rerun requests immediately, rather than waiting for script execution to reach a yield point. Enabling this will make Streamlit much more responsive to user interaction, but it can lead to race conditions in apps that mutate session_state data outside of explicit session_state assignment statements.
 # Default: false
-# fastReruns = false
+fastReruns = true
 
 
 [server]

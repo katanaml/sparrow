@@ -1,16 +1,39 @@
 /* Move block container higher */
 div.block-container.css-18e3th9.egzxvld2 {
-  margin-top: -5.8em;
+    margin-top: -5.8em;
 }
 
 /* Move menu container higher */
 div.css-hxt7ib.e1fqkh3o4 {
-  padding-top: 3rem;
+    padding-top: 3rem;
 }
 
 /* Hide anchor link */
-.css-1dgmtll.e16nr0p31 {display: none}
+.css-1dgmtll.e16nr0p31 {
+    display: none
+}
+
+div[data-testid="metric-container"] {
+    background-color: #f7f8fa;
+    border: 1px solid #0c0d0d;
+    padding: 5% 5% 5% 10%;
+    border-radius: 5px;
+    color: rgb(30, 103, 119);
+    overflow-wrap: break-word;
+}
+
+/* breakline for metric text         */
+div[data-testid="metric-container"] > label[data-testid="stMetricLabel"] > div {
+    overflow-wrap: break-word;
+    white-space: break-spaces;
+    color: black;
+}
 
 /* Hide Streamlit bars */
-#MainMenu {visibility: hidden;}
-footer {visibility:hidden;}
+#MainMenu {
+    visibility: hidden;
+}
+
+footer {
+    visibility: hidden;
+}
