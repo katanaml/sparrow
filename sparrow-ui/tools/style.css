@@ -1,0 +1,16 @@
+/* Move block container higher */
+div.block-container.css-18e3th9.egzxvld2 {
+  margin-top: -5.8em;
+}
+
+/* Move menu container higher */
+div.css-hxt7ib.e1fqkh3o4 {
+  padding-top: 3rem;
+}
+
+/* Hide anchor link */
+.css-1dgmtll.e16nr0p31 {display: none}
+
+/* Hide Streamlit bars */
+#MainMenu {visibility: hidden;}
+footer {visibility:hidden;}
