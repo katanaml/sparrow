@@ -4,14 +4,14 @@
 
 Sparrow UI module implements UI logic with Streamlit for document data annotation, model training/tuning and document data extraction.
 
-![Sparrow Dashboard](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/images/dashboard.png)
+![Sparrow Dashboard](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/dashboard.png)
 
 ## Instructions
 
 1. Install
 
 Streamlit docs:
-https://docs.streamlit.io/library/get-started/installation#install-streamlit-on-macoslinux
+https://docs.streamlit.io/library/get-started/installation
 
 ```
 pip install -r requirements.txt
