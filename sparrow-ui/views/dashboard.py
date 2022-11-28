@@ -7,6 +7,30 @@ class Dashboard:
     class Model:
         pageTitle = "Dashboard"
 
+        documentsTitle = "Documents"
+        documentsCount = "10.5K"
+        documentsDelta = "125"
+
+        annotationsTitle = "Annotations"
+        annotationsCount = "510"
+        annotationsDelta = "-2"
+
+        accuracyTitle = "Accuracy"
+        accuracyCount = "87.9%"
+        accuracyDelta = "0.1%"
+
+        trainingTitle = "Training Time"
+        trainingCount = "1.5 hours"
+        trainingDelta = "10 mins"
+
+        processingTitle = "Processing Time"
+        processingCount = "3 seconds"
+        processingDelta = "-0.1 seconds"
+
+        titleDataExtraction = "## Data Extraction"
+        titleModelTraining = "## Model Training"
+        titleDataAnnotation = "## Data Annotation"
+
     def view(self, model):
         st.title(model.pageTitle)
 
@@ -14,25 +38,25 @@ class Dashboard:
             col1, col2, col3, col4, col5 = st.columns(5)
 
             with col1:
-                st.metric(label="Documents", value="10.5K", delta="125")
+                st.metric(label=model.documentsTitle, value=model.documentsCount, delta=model.documentsDelta)
 
             with col2:
-                st.metric(label="Annotations", value="510", delta="-2")
+                st.metric(label=model.annotationsTitle, value=model.annotationsCount, delta=model.annotationsDelta)
 
             with col3:
-                st.metric(label="Accuracy", value="87.9%", delta="0.1%")
+                st.metric(label=model.accuracyTitle, value=model.accuracyCount, delta=model.accuracyDelta)
 
             with col4:
-                st.metric(label="Training Time", value="1.5 hours", delta="10 mins", delta_color="inverse")
+                st.metric(label=model.trainingTitle, value=model.trainingCount, delta=model.trainingDelta, delta_color="inverse")
 
             with col5:
-                st.metric(label="Processing Time", value="3 seconds", delta="-0.1 seconds", delta_color="inverse")
+                st.metric(label=model.processingTitle, value=model.processingCount, delta=model.processingDelta, delta_color="inverse")
 
             st.markdown("---")
 
 
         with st.container():
-            st.write("## Data Extraction")
+            st.write(model.titleDataExtraction)
             chart_data = pd.DataFrame(
                 np.random.randn(20, 3),
                 columns=['a', 'b', 'c'])
@@ -46,14 +70,14 @@ class Dashboard:
 
             with col1:
                 with st.container():
-                    st.write("## Model Training")
+                    st.write(model.titleModelTraining)
 
                     # You can call any Streamlit command, including custom components:
                     st.bar_chart(np.random.randn(50, 3))
 
             with col2:
                 with st.container():
-                    st.write("## Data Annotation")
+                    st.write(model.titleDataAnnotation)
 
                     chart_data = pd.DataFrame(
                         np.random.randn(20, 3),

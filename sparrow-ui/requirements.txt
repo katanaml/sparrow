@@ -1,2 +1,3 @@
-streamlit==1.13.0
-streamlit-option-menu==0.3.2
+streamlit==1.15.1
+streamlit_option_menu
+streamlit-sparrow-labeling
