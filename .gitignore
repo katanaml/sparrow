@@ -13,3 +13,4 @@ sparrow-ui/views/__pycache__/model_training.cpython-310.pyc
 sparrow-ui/views/__pycache__/model_tuning.cpython-310.pyc
 sparrow-ui/views/__pycache__/settings.cpython-310.pyc
 sparrow-ui/.idea/vcs.xml
+*.pyc
