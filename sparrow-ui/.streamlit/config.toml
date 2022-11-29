@@ -168,7 +168,7 @@ gatherUsageStats = false
 # base =
 
 # Primary accent color for interactive elements.
-primaryColor = "#F633"
+# primaryColor = "#F633"
 
 # Background color for the main content area.
 backgroundColor = "#FFFFFF"
