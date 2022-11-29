@@ -28,8 +28,17 @@ class DataAnnotation:
     def view(self, model):
         st.title(model.pageTitle)
 
-        ui_width = st_js.st_javascript("window.innerWidth")
-        print(ui_width)
+        # print(ui_width)
+        # ui_width = st_js.st_javascript("window.innerWidth")
+        ui_width = 2031
+
+        col1, col2 = st.columns([9, 0.48])
+
+        with col1:
+            assign_labels = st.checkbox(model.assign_labels_text, True)
+            mode = "transform" if assign_labels else "rect"
+        with col2:
+            st.download_button(label='Download', data=model.rects_file)
 
         docImg = Image.open(model.img_file)
 
@@ -39,9 +48,6 @@ class DataAnnotation:
                 st.session_state['saved_state'] = saved_state
         else:
             saved_state = st.session_state['saved_state']
-
-        assign_labels = st.checkbox(model.assign_labels_text, True)
-        mode = "transform" if assign_labels else "rect"
 
         data_processor = DataProcessor()
 
