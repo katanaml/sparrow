@@ -9,6 +9,8 @@ from views.model_tuning import ModelTuning
 from views.data_extraction import DataExtraction
 from views.settings import Settings
 
+import streamlit_javascript as st_js
+
 st.set_page_config(
     page_title="Sparrow",
     page_icon="favicon.ico",
@@ -52,30 +54,42 @@ def view(model):
                                    "nav-link-selected": {"background-color": "#037ffc"},
                                })
 
+    if menuItem == model.option1:
+        Dashboard().view(Dashboard.Model())
+        ui_width = st_js.st_javascript("window.innerWidth")
+        ui_width = round(ui_width + (18 * ui_width / 100))
+
+        st.session_state['ui_width'] = ui_width
+        logout_widget()
+
+    if menuItem == model.option2:
+        DataAnnotation().view(DataAnnotation.Model(), st.session_state['ui_width'])
+        logout_widget()
+
+    if menuItem == model.option3:
+        ModelTraining().view(ModelTraining.Model())
+        logout_widget()
+
+    if menuItem == model.option4:
+        ModelTuning().view(ModelTuning.Model())
+        logout_widget()
+
+    if menuItem == model.option5:
+        DataExtraction().view(DataExtraction.Model())
+        logout_widget()
+
+    if menuItem == model.option6:
+        Settings().view(Settings.Model())
+        logout_widget()
+
+
+def logout_widget():
     with st.sidebar:
         st.markdown("---")
         st.text("User: John Doe")
         st.text("Version: 0.0.1")
         st.button("Logout")
         st.markdown("---")
-
-    if menuItem == model.option1:
-        Dashboard().view(Dashboard.Model())
-
-    if menuItem == model.option2:
-        DataAnnotation().view(DataAnnotation.Model())
-
-    if menuItem == model.option3:
-        ModelTraining().view(ModelTraining.Model())
-
-    if menuItem == model.option4:
-        ModelTuning().view(ModelTuning.Model())
-
-    if menuItem == model.option5:
-        DataExtraction().view(DataExtraction.Model())
-
-    if menuItem == model.option6:
-        Settings().view(Settings.Model())
 
 
 view(Model())

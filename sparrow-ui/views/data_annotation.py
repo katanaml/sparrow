@@ -10,7 +10,7 @@ import math
 
 class DataAnnotation:
     class Model:
-        pageTitle = "Data Annotation"
+        pageTitle = "Data Annotation - receipt_00001"
 
         img_file = "docs/image/receipt_00001.png"
         rects_file = "docs/json/receipt_00001.json"
@@ -25,20 +25,31 @@ class DataAnnotation:
         save_text = "Save"
         saved_text = "Saved!"
 
-    def view(self, model):
+        subheader_1 = "Select"
+        subheader_2 = "Upload"
+        annotation_text = "Annotation"
+
+    def view(self, model, ui_width):
         st.title(model.pageTitle)
 
-        # print(ui_width)
-        # ui_width = st_js.st_javascript("window.innerWidth")
-        ui_width = 2031
+        col1_toolbar, col2_toolbar = st.columns([4, 6])
 
-        col1, col2 = st.columns([9, 0.48])
-
-        with col1:
+        with col1_toolbar:
             assign_labels = st.checkbox(model.assign_labels_text, True)
             mode = "transform" if assign_labels else "rect"
-        with col2:
+        with col2_toolbar:
             st.download_button(label='Download', data=model.rects_file)
+
+        with st.sidebar:
+            st.markdown("---")
+            st.subheader(model.subheader_1)
+            st.selectbox(
+                model.annotation_text,
+                ('receipt_00001', 'receipt_00002', 'receipt_00003'))
+
+            st.subheader(model.subheader_2)
+            st.file_uploader("Choose a file", accept_multiple_files=True)
+
 
         docImg = Image.open(model.img_file)
 
