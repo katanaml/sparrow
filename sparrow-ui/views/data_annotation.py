@@ -1,7 +1,6 @@
 import streamlit as st
 from PIL import Image
 import streamlit_nested_layout
-import streamlit_javascript as st_js
 from streamlit_sparrow_labeling import st_sparrow_labeling
 from streamlit_sparrow_labeling import DataProcessor
 import json
@@ -10,10 +9,10 @@ import math
 
 class DataAnnotation:
     class Model:
-        pageTitle = "Data Annotation - receipt_00001"
+        pageTitle = "Data Annotation"
 
-        img_file = "docs/image/receipt_00001.png"
-        rects_file = "docs/json/receipt_00001.json"
+        img_file = None
+        rects_file = None
 
         assign_labels_text = "Assign Labels"
         text_caption_1 = "Check 'Assign Labels' to enable editing of labels and values, move and resize the boxes to annotate the document."
@@ -28,37 +27,34 @@ class DataAnnotation:
         subheader_1 = "Select"
         subheader_2 = "Upload"
         annotation_text = "Annotation"
+        no_annotation_file = "No annotation file selected"
+        no_annotation_mapping = "Please annotate the document. Uncheck 'Assign Labels' and draw new annotations"
 
     def view(self, model, ui_width):
         st.title(model.pageTitle)
 
-        col1_toolbar, col2_toolbar = st.columns([4, 6])
-
-        with col1_toolbar:
-            assign_labels = st.checkbox(model.assign_labels_text, True)
-            mode = "transform" if assign_labels else "rect"
-        with col2_toolbar:
-            st.download_button(label='Download', data=model.rects_file)
-
         with st.sidebar:
             st.markdown("---")
             st.subheader(model.subheader_1)
-            st.selectbox(
+            annotation_selection = st.selectbox(
                 model.annotation_text,
                 ('receipt_00001', 'receipt_00002', 'receipt_00003'))
+            model.img_file = f"docs/image/{annotation_selection}.png"
+            model.rects_file = f"docs/json/{annotation_selection}.json"
 
             st.subheader(model.subheader_2)
             st.file_uploader("Choose a file", accept_multiple_files=True)
 
+        if model.img_file is None:
+            st.caption(model.no_annotation_file)
+            return
+
+        saved_state = self.fetch_annotations(model.rects_file)
+
+        assign_labels = st.checkbox(model.assign_labels_text, True)
+        mode = "transform" if assign_labels else "rect"
 
         docImg = Image.open(model.img_file)
-
-        if 'saved_state' not in st.session_state:
-            with open(model.rects_file, "r") as f:
-                saved_state = json.load(f)
-                st.session_state['saved_state'] = saved_state
-        else:
-            saved_state = st.session_state['saved_state']
 
         data_processor = DataProcessor()
 
@@ -90,7 +86,7 @@ class DataAnnotation:
                         doc_height=doc_height,
                         doc_width=doc_width,
                         image_rescale=True,
-                        key="doc_annotation"
+                        key="doc_annotation" + model.img_file
                     )
 
                     st.caption(model.text_caption_1)
@@ -99,6 +95,12 @@ class DataAnnotation:
             with col2:
                 with st.container():
                     if result_rects is not None:
+                        if len(result_rects.rects_data['words']) == 0:
+                            st.caption(model.no_annotation_mapping)
+                            return
+                        else:
+                            st.download_button(label='Download', data=model.img_file)
+
                         with st.form(key="fields_form"):
                             if result_rects.current_rect_index is not None and result_rects.current_rect_index != -1:
                                 st.write(model.selected_field,
@@ -106,13 +108,17 @@ class DataAnnotation:
                                 st.markdown("---")
 
                             if ui_width > 1500:
-                                self.render_form_wide(result_rects.rects_data['words'], model.labels, result_rects, data_processor)
+                                self.render_form_wide(result_rects.rects_data['words'], model.labels, result_rects,
+                                                      data_processor)
                             elif ui_width > 1000:
-                                self.render_form_avg(result_rects.rects_data['words'], model.labels, result_rects, data_processor)
+                                self.render_form_avg(result_rects.rects_data['words'], model.labels, result_rects,
+                                                     data_processor)
                             elif ui_width > 500:
-                                self.render_form_narrow(result_rects.rects_data['words'], model.labels, result_rects, data_processor)
+                                self.render_form_narrow(result_rects.rects_data['words'], model.labels, result_rects,
+                                                        data_processor)
                             else:
-                                self.render_form_mobile(result_rects.rects_data['words'], model.labels, result_rects, data_processor)
+                                self.render_form_mobile(result_rects.rects_data['words'], model.labels, result_rects,
+                                                        data_processor)
 
                             submit = st.form_submit_button(model.save_text, type="primary")
                             if submit:
@@ -191,3 +197,13 @@ class DataAnnotation:
             return math.floor(38 * ui_width / 100)
         else:
             return ui_width
+
+    def fetch_annotations(self, rects_file):
+        if rects_file not in st.session_state:
+            with open(rects_file, "r") as f:
+                saved_state = json.load(f)
+                st.session_state[rects_file] = saved_state
+        else:
+            saved_state = st.session_state[rects_file]
+
+        return saved_state

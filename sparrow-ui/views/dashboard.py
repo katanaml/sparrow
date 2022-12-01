@@ -20,12 +20,12 @@ class Dashboard:
         accuracyDelta = "0.1%"
 
         trainingTitle = "Training Time"
-        trainingCount = "1.5 hours"
+        trainingCount = "1.5 hrs"
         trainingDelta = "10 mins"
 
         processingTitle = "Processing Time"
-        processingCount = "3 seconds"
-        processingDelta = "-0.1 seconds"
+        processingCount = "3 secs"
+        processingDelta = "-0.1 secs"
 
         titleDataExtraction = "## Data Extraction"
         titleModelTraining = "## Model Training"
