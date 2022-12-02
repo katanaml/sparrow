@@ -5,6 +5,7 @@ from streamlit_sparrow_labeling import st_sparrow_labeling
 from streamlit_sparrow_labeling import DataProcessor
 import json
 import math
+import os
 
 
 class DataAnnotation:
@@ -38,12 +39,20 @@ class DataAnnotation:
             st.subheader(model.subheader_1)
             annotation_selection = st.selectbox(
                 model.annotation_text,
-                ('receipt_00001', 'receipt_00002', 'receipt_00003'))
+                ('receipt_00001', 'receipt_00002', 'receipt_00003'), help="Select an annotation file to load")
             model.img_file = f"docs/image/{annotation_selection}.png"
             model.rects_file = f"docs/json/{annotation_selection}.json"
 
             st.subheader(model.subheader_2)
-            st.file_uploader("Choose a file", accept_multiple_files=True)
+
+            with st.form("upload-form", clear_on_submit=True):
+                uploaded_file = st.file_uploader("Choose a file", accept_multiple_files=False,
+                                                 type=['png', 'jpg', 'jpeg'],
+                                                 help="Upload a file to annotate")
+                submitted = st.form_submit_button("Upload")
+
+                if submitted and uploaded_file is not None:
+                    self.upload_file(uploaded_file)
 
         if model.img_file is None:
             st.caption(model.no_annotation_file)
@@ -51,7 +60,7 @@ class DataAnnotation:
 
         saved_state = self.fetch_annotations(model.rects_file)
 
-        assign_labels = st.checkbox(model.assign_labels_text, True)
+        assign_labels = st.checkbox(model.assign_labels_text, True, help="Check to enable editing of labels and values")
         mode = "transform" if assign_labels else "rect"
 
         docImg = Image.open(model.img_file)
@@ -99,7 +108,8 @@ class DataAnnotation:
                             st.caption(model.no_annotation_mapping)
                             return
                         else:
-                            st.download_button(label='Download', data=model.img_file)
+                            st.download_button(label='Download', data=model.img_file,
+                                               help='Download the annotated structure in JSON format')
 
                         with st.form(key="fields_form"):
                             if result_rects.current_rect_index is not None and result_rects.current_rect_index != -1:
@@ -120,7 +130,7 @@ class DataAnnotation:
                                 self.render_form_mobile(result_rects.rects_data['words'], model.labels, result_rects,
                                                         data_processor)
 
-                            submit = st.form_submit_button(model.save_text, type="primary")
+                            submit = st.form_submit_button(model.save_text, type="primary", help="Save the annotations")
                             if submit:
                                 with open(model.rects_file, "w") as f:
                                     json.dump(result_rects.rects_data, f, indent=2)
@@ -207,3 +217,9 @@ class DataAnnotation:
             saved_state = st.session_state[rects_file]
 
         return saved_state
+
+    def upload_file(self, uploaded_file):
+        if uploaded_file is not None:
+            with open(os.path.join("docs/image/", uploaded_file.name), "wb") as f:
+                f.write(uploaded_file.getbuffer())
+                print('Uploaded file:', uploaded_file.name)
