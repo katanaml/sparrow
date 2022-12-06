@@ -37,6 +37,7 @@ class DataAnnotation:
         annotation_selection_help = "Select an annotation file to load"
         upload_help = "Upload a file to annotate"
         upload_button_text = "Upload"
+        upload_button_text_desc = "Choose a file"
 
         assign_labels_text = "Assign Labels"
         assign_labels_help = "Check to enable editing of labels and values"
@@ -55,7 +56,7 @@ class DataAnnotation:
             st.subheader(model.subheader_2)
 
             with st.form("upload-form", clear_on_submit=True):
-                uploaded_file = st.file_uploader("Choose a file", accept_multiple_files=False,
+                uploaded_file = st.file_uploader(model.upload_button_text_desc, accept_multiple_files=False,
                                                  type=['png', 'jpg', 'jpeg'],
                                                  help=model.upload_help)
                 submitted = st.form_submit_button(model.upload_button_text)
@@ -229,5 +230,9 @@ class DataAnnotation:
 
     def upload_file(self, uploaded_file):
         if uploaded_file is not None:
+            if os.path.exists(os.path.join("docs/image/", uploaded_file.name)):
+                st.write("File already exists")
+                return
+
             with open(os.path.join("docs/image/", uploaded_file.name), "wb") as f:
                 f.write(uploaded_file.getbuffer())
