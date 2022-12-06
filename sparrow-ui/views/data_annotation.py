@@ -31,15 +31,24 @@ class DataAnnotation:
         no_annotation_file = "No annotation file selected"
         no_annotation_mapping = "Please annotate the document. Uncheck 'Assign Labels' and draw new annotations"
 
-    def view(self, model, ui_width):
-        st.title(model.pageTitle)
+        download_text = "Download"
+        download_hint = "Download the annotated structure in JSON format"
 
+        annotation_selection_help = "Select an annotation file to load"
+        upload_help = "Upload a file to annotate"
+        upload_button_text = "Upload"
+
+        assign_labels_text = "Assign Labels"
+        assign_labels_help = "Check to enable editing of labels and values"
+        save_help = "Save the annotations"
+
+    def view(self, model, ui_width):
         with st.sidebar:
             st.markdown("---")
             st.subheader(model.subheader_1)
             annotation_selection = st.selectbox(
                 model.annotation_text,
-                ('receipt_00001', 'receipt_00002', 'receipt_00003'), help="Select an annotation file to load")
+                ('receipt_00001', 'receipt_00002', 'receipt_00003'), help=model.annotation_selection_help)
             model.img_file = f"docs/image/{annotation_selection}.png"
             model.rects_file = f"docs/json/{annotation_selection}.json"
 
@@ -48,11 +57,13 @@ class DataAnnotation:
             with st.form("upload-form", clear_on_submit=True):
                 uploaded_file = st.file_uploader("Choose a file", accept_multiple_files=False,
                                                  type=['png', 'jpg', 'jpeg'],
-                                                 help="Upload a file to annotate")
-                submitted = st.form_submit_button("Upload")
+                                                 help=model.upload_help)
+                submitted = st.form_submit_button(model.upload_button_text)
 
                 if submitted and uploaded_file is not None:
                     self.upload_file(uploaded_file)
+
+        st.title(model.pageTitle + " - " + annotation_selection)
 
         if model.img_file is None:
             st.caption(model.no_annotation_file)
@@ -60,7 +71,7 @@ class DataAnnotation:
 
         saved_state = self.fetch_annotations(model.rects_file)
 
-        assign_labels = st.checkbox(model.assign_labels_text, True, help="Check to enable editing of labels and values")
+        assign_labels = st.checkbox(model.assign_labels_text, True, help=model.assign_labels_help)
         mode = "transform" if assign_labels else "rect"
 
         docImg = Image.open(model.img_file)
@@ -108,8 +119,8 @@ class DataAnnotation:
                             st.caption(model.no_annotation_mapping)
                             return
                         else:
-                            st.download_button(label='Download', data=model.img_file,
-                                               help='Download the annotated structure in JSON format')
+                            st.download_button(label=model.download_text, data=model.img_file,
+                                               help=model.download_hint)
 
                         with st.form(key="fields_form"):
                             if result_rects.current_rect_index is not None and result_rects.current_rect_index != -1:
@@ -130,13 +141,11 @@ class DataAnnotation:
                                 self.render_form_mobile(result_rects.rects_data['words'], model.labels, result_rects,
                                                         data_processor)
 
-                            submit = st.form_submit_button(model.save_text, type="primary", help="Save the annotations")
+                            submit = st.form_submit_button(model.save_text, type="primary", help=model.save_help)
                             if submit:
                                 with open(model.rects_file, "w") as f:
                                     json.dump(result_rects.rects_data, f, indent=2)
-                                with open(model.rects_file, "r") as f:
-                                    saved_state = json.load(f)
-                                    st.session_state['saved_state'] = saved_state
+                                st.session_state[model.rects_file] = result_rects.rects_data
                                 st.write(model.saved_text)
 
     def render_form_wide(self, words, labels, result_rects, data_processor):
@@ -222,4 +231,3 @@ class DataAnnotation:
         if uploaded_file is not None:
             with open(os.path.join("docs/image/", uploaded_file.name), "wb") as f:
                 f.write(uploaded_file.getbuffer())
-                print('Uploaded file:', uploaded_file.name)
