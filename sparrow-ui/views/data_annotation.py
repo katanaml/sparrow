@@ -53,7 +53,10 @@ class DataAnnotation:
             file_names = self.get_existing_file_names('docs/image/')
             annotation_selection = placeholder_upload.selectbox(model.annotation_text, file_names,
                                                                 help=model.annotation_selection_help)
-            model.img_file = f"docs/image/{annotation_selection}.png"
+
+            file_extension = self.get_file_extension(annotation_selection, 'docs/image/')
+
+            model.img_file = f"docs/image/{annotation_selection}" + file_extension
             model.rects_file = f"docs/json/{annotation_selection}.json"
 
             st.subheader(model.subheader_2)
@@ -66,10 +69,11 @@ class DataAnnotation:
 
                 if submitted and uploaded_file is not None:
                     self.upload_file(uploaded_file)
+
                     file_names = self.get_existing_file_names('docs/image/')
                     annotation_selection = placeholder_upload.selectbox(model.annotation_text, file_names,
                                                                           help=model.annotation_selection_help)
-                    model.img_file = f"docs/image/{annotation_selection}.png"
+                    model.img_file = f"docs/image/{annotation_selection}" + file_extension
                     model.rects_file = f"docs/json/{annotation_selection}.json"
 
         st.title(model.pageTitle + " - " + annotation_selection)
@@ -245,6 +249,35 @@ class DataAnnotation:
             with open(os.path.join("docs/image/", uploaded_file.name), "wb") as f:
                 f.write(uploaded_file.getbuffer())
 
+            img_file = Image.open(os.path.join("docs/image/", uploaded_file.name))
+
+            annotations_json = {
+                "meta": {
+                    "version": "v0.1",
+                    "split": "train",
+                    "image_id": len(self.get_existing_file_names("docs/image/")),
+                    "image_size": {
+                        "width": img_file.width,
+                        "height": img_file.height
+                    }
+                },
+                "words": []
+            }
+
+            file_name = uploaded_file.name.split(".")[0]
+            with open(os.path.join("docs/json/", file_name + ".json"), "w") as f:
+                json.dump(annotations_json, f, indent=2)
+
+            st.write("File uploaded successfully")
+
     def get_existing_file_names(self, dir_name):
         # get ordered list of files without file extension, excluding hidden files
         return sorted([os.path.splitext(f)[0] for f in os.listdir(dir_name) if not f.startswith('.')])
+
+    def get_file_extension(self, file_name, dir_name):
+        # get list of files, excluding hidden files
+        files = [f for f in os.listdir(dir_name) if not f.startswith('.')]
+        for f in files:
+            if file_name is not  None and os.path.splitext(f)[0] == file_name:
+                return os.path.splitext(f)[1]
+
