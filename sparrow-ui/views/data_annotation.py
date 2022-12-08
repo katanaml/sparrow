@@ -47,9 +47,12 @@ class DataAnnotation:
         with st.sidebar:
             st.markdown("---")
             st.subheader(model.subheader_1)
-            annotation_selection = st.selectbox(
-                model.annotation_text,
-                ('receipt_00001', 'receipt_00002', 'receipt_00003'), help=model.annotation_selection_help)
+
+            placeholder_upload = st.empty()
+
+            file_names = self.get_existing_file_names('docs/image/')
+            annotation_selection = placeholder_upload.selectbox(model.annotation_text, file_names,
+                                                                help=model.annotation_selection_help)
             model.img_file = f"docs/image/{annotation_selection}.png"
             model.rects_file = f"docs/json/{annotation_selection}.json"
 
@@ -63,6 +66,11 @@ class DataAnnotation:
 
                 if submitted and uploaded_file is not None:
                     self.upload_file(uploaded_file)
+                    file_names = self.get_existing_file_names('docs/image/')
+                    annotation_selection = placeholder_upload.selectbox(model.annotation_text, file_names,
+                                                                          help=model.annotation_selection_help)
+                    model.img_file = f"docs/image/{annotation_selection}.png"
+                    model.rects_file = f"docs/json/{annotation_selection}.json"
 
         st.title(model.pageTitle + " - " + annotation_selection)
 
@@ -236,3 +244,7 @@ class DataAnnotation:
 
             with open(os.path.join("docs/image/", uploaded_file.name), "wb") as f:
                 f.write(uploaded_file.getbuffer())
+
+    def get_existing_file_names(self, dir_name):
+        # get ordered list of files without file extension, excluding hidden files
+        return sorted([os.path.splitext(f)[0] for f in os.listdir(dir_name) if not f.startswith('.')])
