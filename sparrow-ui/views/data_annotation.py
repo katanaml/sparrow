@@ -51,11 +51,20 @@ class DataAnnotation:
             placeholder_upload = st.empty()
 
             file_names = self.get_existing_file_names('docs/image/')
+
+            if 'annotation_index' not in st.session_state:
+                st.session_state['annotation_index'] = 0
+                annotation_index = 0
+            else:
+                annotation_index = st.session_state['annotation_index']
+
             annotation_selection = placeholder_upload.selectbox(model.annotation_text, file_names,
+                                                                index=annotation_index,
                                                                 help=model.annotation_selection_help)
+            annotation_index = self.get_annotation_index(annotation_selection, file_names)
+            st.session_state['annotation_index'] = annotation_index
 
             file_extension = self.get_file_extension(annotation_selection, 'docs/image/')
-
             model.img_file = f"docs/image/{annotation_selection}" + file_extension
             model.rects_file = f"docs/json/{annotation_selection}.json"
 
@@ -71,10 +80,10 @@ class DataAnnotation:
                     self.upload_file(uploaded_file)
 
                     file_names = self.get_existing_file_names('docs/image/')
+
                     annotation_selection = placeholder_upload.selectbox(model.annotation_text, file_names,
-                                                                          help=model.annotation_selection_help)
-                    model.img_file = f"docs/image/{annotation_selection}" + file_extension
-                    model.rects_file = f"docs/json/{annotation_selection}.json"
+                                                                        index=annotation_index,
+                                                                        help=model.annotation_selection_help)
 
         st.title(model.pageTitle + " - " + annotation_selection)
 
@@ -132,8 +141,12 @@ class DataAnnotation:
                             st.caption(model.no_annotation_mapping)
                             return
                         else:
-                            st.download_button(label=model.download_text, data=model.img_file,
-                                               help=model.download_hint)
+                            with open(model.rects_file, 'rb') as file:
+                                st.download_button(label=model.download_text,
+                                                   data=file,
+                                                   file_name=annotation_selection + ".json",
+                                                   mime='application/json',
+                                                   help=model.download_hint)
 
                         with st.form(key="fields_form"):
                             if result_rects.current_rect_index is not None and result_rects.current_rect_index != -1:
@@ -280,4 +293,7 @@ class DataAnnotation:
         for f in files:
             if file_name is not  None and os.path.splitext(f)[0] == file_name:
                 return os.path.splitext(f)[1]
+
+    def get_annotation_index(self, file, files_list):
+        return files_list.index(file)
 

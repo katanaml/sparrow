@@ -2,7 +2,7 @@
   "meta": {
     "version": "v0.1",
     "split": "train",
-    "image_id": 2,
+    "image_id": 3,
     "image_size": {
       "width": 1108,
       "height": 1478
