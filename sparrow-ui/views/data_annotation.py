@@ -77,13 +77,16 @@ class DataAnnotation:
                 submitted = st.form_submit_button(model.upload_button_text)
 
                 if submitted and uploaded_file is not None:
-                    self.upload_file(uploaded_file)
+                    ret = self.upload_file(uploaded_file)
 
-                    file_names = self.get_existing_file_names('docs/image/')
+                    if ret is not False:
+                        file_names = self.get_existing_file_names('docs/image/')
 
-                    annotation_selection = placeholder_upload.selectbox(model.annotation_text, file_names,
-                                                                        index=annotation_index,
-                                                                        help=model.annotation_selection_help)
+                        annotation_index = self.get_annotation_index(annotation_selection, file_names)
+                        annotation_selection = placeholder_upload.selectbox(model.annotation_text, file_names,
+                                                                            index=annotation_index,
+                                                                            help=model.annotation_selection_help)
+                        st.session_state['annotation_index'] = annotation_index
 
         st.title(model.pageTitle + " - " + annotation_selection)
 
@@ -257,7 +260,7 @@ class DataAnnotation:
         if uploaded_file is not None:
             if os.path.exists(os.path.join("docs/image/", uploaded_file.name)):
                 st.write("File already exists")
-                return
+                return False
 
             with open(os.path.join("docs/image/", uploaded_file.name), "wb") as f:
                 f.write(uploaded_file.getbuffer())
