@@ -1,0 +1,83 @@
+{
+  "meta": {
+    "version": "v0.1",
+    "split": "train",
+    "image_id": 5,
+    "image_size": {
+      "width": 830,
+      "height": 1080
+    }
+  },
+  "words": [
+    {
+      "rect": {
+        "x1": 681,
+        "y1": 274,
+        "x2": 761,
+        "y2": 298
+      },
+      "value": "$1,699.48",
+      "label": "amount_due"
+    },
+    {
+      "rect": {
+        "x1": 703,
+        "y1": 517,
+        "x2": 765,
+        "y2": 539
+      },
+      "value": "$550.00",
+      "label": "item_price"
+    },
+    {
+      "rect": {
+        "x1": 544,
+        "y1": 274,
+        "x2": 631,
+        "y2": 297
+      },
+      "value": "INV-10012",
+      "label": "invoice_number"
+    },
+    {
+      "rect": {
+        "x1": 691,
+        "y1": 880,
+        "x2": 762,
+        "y2": 907
+      },
+      "value": "$169.95",
+      "label": "deposit_due"
+    },
+    {
+      "rect": {
+        "x1": 694,
+        "y1": 582,
+        "x2": 763,
+        "y2": 607
+      },
+      "value": "$1,125.00",
+      "label": "item_price"
+    },
+    {
+      "rect": {
+        "x1": 701,
+        "y1": 650,
+        "x2": 767,
+        "y2": 673
+      },
+      "value": "$123.39",
+      "label": "item_price"
+    },
+    {
+      "rect": {
+        "x1": 681,
+        "y1": 718,
+        "x2": 761,
+        "y2": 748
+      },
+      "value": "$1,798.39",
+      "label": "subtotal"
+    }
+  ]
+}

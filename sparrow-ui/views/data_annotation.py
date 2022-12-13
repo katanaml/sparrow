@@ -19,7 +19,8 @@ class DataAnnotation:
         text_caption_1 = "Check 'Assign Labels' to enable editing of labels and values, move and resize the boxes to annotate the document."
         text_caption_2 = "Add annotations by clicking and dragging on the document, when 'Assign Labels' is unchecked."
 
-        labels = ["", "item", "item_price", "subtotal", "tax", "total"]
+        labels = ["", "item", "item_price", "subtotal", "tax", "total", "date_issued", "due_date", "invoice_number",
+                  "amount_due", "deposit_due"]
 
         selected_field = "Selected Field: "
         save_text = "Save"
@@ -43,7 +44,7 @@ class DataAnnotation:
         assign_labels_help = "Check to enable editing of labels and values"
         save_help = "Save the annotations"
 
-    def view(self, model, ui_width):
+    def view(self, model, ui_width, device_type, device_width):
         with st.sidebar:
             st.markdown("---")
             st.subheader(model.subheader_1)
@@ -104,78 +105,88 @@ class DataAnnotation:
         data_processor = DataProcessor()
 
         with st.container():
-            col1, col2 = st.columns([4, 6])
+            doc_height = saved_state['meta']['image_size']['height']
+            doc_width = saved_state['meta']['image_size']['width']
+            canvas_width, number_of_columns = self.canvas_available_width(ui_width, doc_width, device_type,
+                                                                          device_width)
 
-            with col1:
-                with st.container():
-                    height = 1296
-                    width = 864
+            if number_of_columns > 1:
+                col1, col2 = st.columns([number_of_columns, 10 - number_of_columns])
+                with col1:
+                    result_rects = self.render_doc(model, docImg, saved_state, mode, canvas_width, doc_height, doc_width)
+                with col2:
+                    self.render_form(model, result_rects, data_processor, number_of_columns, annotation_selection)
+            else:
+                result_rects = self.render_doc(model, docImg, saved_state, mode, canvas_width, doc_height, doc_width)
+                self.render_form(model, result_rects, data_processor, number_of_columns, annotation_selection)
 
-                    doc_height = saved_state['meta']['image_size']['height']
-                    doc_width = saved_state['meta']['image_size']['width']
+    def render_doc(self, model, docImg, saved_state, mode, canvas_width, doc_height, doc_width):
+        with st.container():
+            height = 1296
+            width = 864
 
-                    canvas_width = self.canvas_available_width(ui_width)
+            result_rects = st_sparrow_labeling(
+                fill_color="rgba(0, 151, 255, 0.3)",
+                stroke_width=2,
+                stroke_color="rgba(0, 50, 255, 0.7)",
+                background_image=docImg,
+                initial_rects=saved_state,
+                height=height,
+                width=width,
+                drawing_mode=mode,
+                display_toolbar=True,
+                update_streamlit=True,
+                canvas_width=canvas_width,
+                doc_height=doc_height,
+                doc_width=doc_width,
+                image_rescale=True,
+                key="doc_annotation" + model.img_file
+            )
 
-                    result_rects = st_sparrow_labeling(
-                        fill_color="rgba(0, 151, 255, 0.3)",
-                        stroke_width=2,
-                        stroke_color="rgba(0, 50, 255, 0.7)",
-                        background_image=docImg,
-                        initial_rects=saved_state,
-                        height=height,
-                        width=width,
-                        drawing_mode=mode,
-                        display_toolbar=True,
-                        update_streamlit=True,
-                        canvas_width=canvas_width,
-                        doc_height=doc_height,
-                        doc_width=doc_width,
-                        image_rescale=True,
-                        key="doc_annotation" + model.img_file
-                    )
+            st.caption(model.text_caption_1)
+            st.caption(model.text_caption_2)
 
-                    st.caption(model.text_caption_1)
-                    st.caption(model.text_caption_2)
+            return result_rects
 
-            with col2:
-                with st.container():
-                    if result_rects is not None:
-                        if len(result_rects.rects_data['words']) == 0:
-                            st.caption(model.no_annotation_mapping)
-                            return
-                        else:
-                            with open(model.rects_file, 'rb') as file:
-                                st.download_button(label=model.download_text,
-                                                   data=file,
-                                                   file_name=annotation_selection + ".json",
-                                                   mime='application/json',
-                                                   help=model.download_hint)
+    def render_form(self, model, result_rects, data_processor, number_of_columns, annotation_selection):
+        with st.container():
+            if result_rects is not None:
+                if len(result_rects.rects_data['words']) == 0:
+                    st.caption(model.no_annotation_mapping)
+                    return
+                else:
+                    with open(model.rects_file, 'rb') as file:
+                        st.download_button(label=model.download_text,
+                                           data=file,
+                                           file_name=annotation_selection + ".json",
+                                           mime='application/json',
+                                           help=model.download_hint)
 
-                        with st.form(key="fields_form"):
-                            if result_rects.current_rect_index is not None and result_rects.current_rect_index != -1:
-                                st.write(model.selected_field,
-                                         result_rects.rects_data['words'][result_rects.current_rect_index]['value'])
-                                st.markdown("---")
+                with st.form(key="fields_form"):
+                    if result_rects.current_rect_index is not None and result_rects.current_rect_index != -1:
+                        st.write(model.selected_field,
+                                 result_rects.rects_data['words'][result_rects.current_rect_index]['value'])
+                        st.markdown("---")
 
-                            if ui_width > 1500:
-                                self.render_form_wide(result_rects.rects_data['words'], model.labels, result_rects,
-                                                      data_processor)
-                            elif ui_width > 1000:
-                                self.render_form_avg(result_rects.rects_data['words'], model.labels, result_rects,
-                                                     data_processor)
-                            elif ui_width > 500:
-                                self.render_form_narrow(result_rects.rects_data['words'], model.labels, result_rects,
-                                                        data_processor)
-                            else:
-                                self.render_form_mobile(result_rects.rects_data['words'], model.labels, result_rects,
-                                                        data_processor)
+                    if number_of_columns == 4:
+                        self.render_form_wide(result_rects.rects_data['words'], model.labels, result_rects,
+                                              data_processor)
+                    elif number_of_columns == 5:
+                        self.render_form_avg(result_rects.rects_data['words'], model.labels, result_rects,
+                                             data_processor)
+                    elif number_of_columns == 6:
+                        self.render_form_narrow(result_rects.rects_data['words'], model.labels, result_rects,
+                                                data_processor)
+                    else:
+                        self.render_form_mobile(result_rects.rects_data['words'], model.labels, result_rects,
+                                                data_processor)
 
-                            submit = st.form_submit_button(model.save_text, type="primary", help=model.save_help)
-                            if submit:
-                                with open(model.rects_file, "w") as f:
-                                    json.dump(result_rects.rects_data, f, indent=2)
-                                st.session_state[model.rects_file] = result_rects.rects_data
-                                st.write(model.saved_text)
+                    submit = st.form_submit_button(model.save_text, type="primary", help=model.save_help)
+                    if submit:
+                        with open(model.rects_file, "w") as f:
+                            json.dump(result_rects.rects_data, f, indent=2)
+                        st.session_state[model.rects_file] = result_rects.rects_data
+                        st.write(model.saved_text)
 
     def render_form_wide(self, words, labels, result_rects, data_processor):
         col1_form, col2_form, col3_form, col4_form = st.columns([1, 1, 1, 1])
@@ -239,12 +250,27 @@ class DataAnnotation:
 
         data_processor.update_rect_data(result_rects.rects_data, i, value, label)
 
-    def canvas_available_width(self, ui_width):
-        # Get ~40% of the available width, if the UI is wider than 500px
-        if ui_width > 500:
-            return math.floor(38 * ui_width / 100)
+    def canvas_available_width(self, ui_width, doc_width, device_type, device_width):
+        doc_width_pct = (doc_width * 100) / ui_width
+        if doc_width_pct < 45:
+            canvas_width_pct = 37
+        elif doc_width_pct < 55:
+            canvas_width_pct = 49
         else:
-            return ui_width
+            canvas_width_pct = 65
+
+        if ui_width > 700 and canvas_width_pct == 37 and device_type == "desktop":
+            return math.floor(canvas_width_pct * ui_width / 100), 4
+        elif ui_width > 700 and canvas_width_pct == 49 and device_type == "desktop":
+            return math.floor(canvas_width_pct * ui_width / 100), 5
+        elif ui_width > 700 and canvas_width_pct == 65 and device_type == "desktop":
+            return math.floor(canvas_width_pct * ui_width / 100), 6
+        else:
+            if device_type == "desktop":
+                ui_width = device_width - math.floor((device_width * 22) / 100)
+            elif device_type == "mobile":
+                ui_width = device_width - math.floor((device_width * 13) / 100)
+            return ui_width, 1
 
     def fetch_annotations(self, rects_file):
         if rects_file not in st.session_state:
