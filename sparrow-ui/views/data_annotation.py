@@ -288,6 +288,10 @@ class DataAnnotation:
                 st.write("File already exists")
                 return False
 
+            if len(uploaded_file.name) > 100:
+                st.write("File name too long")
+                return False
+
             with open(os.path.join("docs/image/", uploaded_file.name), "wb") as f:
                 f.write(uploaded_file.getbuffer())
 
