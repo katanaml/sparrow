@@ -8,6 +8,7 @@ from views.model_training import ModelTraining
 from views.model_tuning import ModelTuning
 from views.data_extraction import DataExtraction
 from views.settings import Settings
+from views.social import Social
 
 import streamlit_javascript as st_js
 
@@ -28,6 +29,7 @@ class Model:
     option4 = "Model Tuning"
     option5 = "Data Extraction"
     option6 = "Settings"
+    option7 = "Social"
 
     menuIcon = "menu-up"
     icon1 = "speedometer"
@@ -36,14 +38,16 @@ class Model:
     icon4 = "graph-up-arrow"
     icon5 = "clipboard-data"
     icon6 = "gear"
+    icon7 = "chat"
 
 
 def view(model):
     with st.sidebar:
         menuItem = option_menu(model.menuTitle,
                                [model.option1, model.option2, model.option3, model.option4, model.option5,
-                                model.option6],
-                               icons=[model.icon1, model.icon2, model.icon3, model.icon4, model.icon5, model.icon6],
+                                model.option6, model.option7],
+                               icons=[model.icon1, model.icon2, model.icon3, model.icon4, model.icon5, model.icon6,
+                                      model.icon7],
                                menu_icon=model.menuIcon,
                                default_index=0,
                                styles={
@@ -89,6 +93,10 @@ def view(model):
         Settings().view(Settings.Model())
         logout_widget()
 
+    if menuItem == model.option7:
+        Social().view(Social.Model())
+        logout_widget()
+
 
 def logout_widget():
     with st.sidebar:
@@ -97,6 +105,7 @@ def logout_widget():
         st.text("Version: 0.0.1")
         st.button("Logout")
         st.markdown("---")
+        st.write("Counter: ", 1546)
 
 
 view(Model())
