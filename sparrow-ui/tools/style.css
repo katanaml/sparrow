@@ -37,3 +37,23 @@ div[data-testid="metric-container"] > label[data-testid="stMetricLabel"] > div {
 footer {
     visibility: hidden;
 }
+
+/*Comment for development*/
+
+header {
+    visibility: hidden;
+}
+
+/*About page styling*/
+
+.css-12oz5g7.egzxvld2 {
+    padding-top: 0px;
+}
+
+.css-1v0mbdj.etr89bj1 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 180px;
+    max-width: 40%;
+}

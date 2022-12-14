@@ -8,7 +8,7 @@ from views.model_training import ModelTraining
 from views.model_tuning import ModelTuning
 from views.data_extraction import DataExtraction
 from views.settings import Settings
-from views.social import Social
+from views.about import About
 
 import streamlit_javascript as st_js
 
@@ -29,7 +29,7 @@ class Model:
     option4 = "Model Tuning"
     option5 = "Data Extraction"
     option6 = "Settings"
-    option7 = "Social"
+    option7 = "About"
 
     menuIcon = "menu-up"
     icon1 = "speedometer"
@@ -94,18 +94,19 @@ def view(model):
         logout_widget()
 
     if menuItem == model.option7:
-        Social().view(Social.Model())
+        About().view(About.Model())
         logout_widget()
 
 
 def logout_widget():
     with st.sidebar:
         st.markdown("---")
-        st.text("User: John Doe")
-        st.text("Version: 0.0.1")
+        st.write("User:", "John Doe")
+        st.write("Version:", "0.0.1")
         st.button("Logout")
         st.markdown("---")
-        st.write("Counter: ", 1546)
+        st.markdown("<img src='https://visitor-badge.glitch.me/badge?page_id=katanaml_sparrow_dev' alt='visitor badge'>",
+                    unsafe_allow_html=True)
 
 
 view(Model())
