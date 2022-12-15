@@ -1,5 +1,5 @@
 streamlit==1.15.1
 streamlit_option_menu
-streamlit-sparrow-labeling
+streamlit-sparrow-labeling==0.1.1
 streamlit_nested_layout
 streamlit-javascript
