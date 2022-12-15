@@ -105,7 +105,7 @@ def logout_widget():
         st.write("Version:", "0.0.1")
         st.button("Logout")
         st.markdown("---")
-        st.markdown("<img src='https://visitor-badge.glitch.me/badge?page_id=katanaml_sparrow_dev' alt='visitor badge'>",
+        st.markdown("<img src='https://visitor-badge.glitch.me/badge?page_id=katanaml_sparrow' alt='visitor badge'>",
                     unsafe_allow_html=True)
 
 
