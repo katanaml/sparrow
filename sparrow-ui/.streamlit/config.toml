@@ -98,7 +98,7 @@ fileWatcherType = "auto"
 
 # The port where the server will listen for browser connections.
 # Default: 8501
-# port = 8501
+ port = 7860
 
 # The base path for the URL where Streamlit should be served from.
 # Default: ""
