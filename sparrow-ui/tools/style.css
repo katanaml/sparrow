@@ -38,11 +38,9 @@ footer {
     visibility: hidden;
 }
 
-/*Comment for development*/
-
-header {
-    visibility: hidden;
-}
+/*header {*/
+/*    visibility: hidden;*/
+/*}*/
 
 /*About page styling*/
 
