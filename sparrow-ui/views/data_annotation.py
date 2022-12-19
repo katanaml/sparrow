@@ -186,7 +186,8 @@ class DataAnnotation:
                         with open(model.rects_file, "w") as f:
                             json.dump(result_rects.rects_data, f, indent=2)
                         st.session_state[model.rects_file] = result_rects.rects_data
-                        st.write(model.saved_text)
+                        # st.write(model.saved_text)
+                        st.experimental_rerun()
 
     def render_form_wide(self, words, labels, result_rects, data_processor):
         col1_form, col2_form, col3_form, col4_form = st.columns([1, 1, 1, 1])

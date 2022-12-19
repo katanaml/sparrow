@@ -101,10 +101,10 @@ def view(model):
 def logout_widget():
     with st.sidebar:
         st.markdown("---")
-        st.write("User:", "John Doe")
+        # st.write("User:", "John Doe")
         st.write("Version:", "0.0.1")
-        st.button("Logout")
-        st.markdown("---")
+        # st.button("Logout")
+        # st.markdown("---")
         st.markdown("<img src='https://visitor-badge.glitch.me/badge?page_id=katanaml_sparrow' alt='visitor badge'>",
                     unsafe_allow_html=True)
 
