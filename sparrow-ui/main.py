@@ -44,10 +44,8 @@ class Model:
 def view(model):
     with st.sidebar:
         menuItem = option_menu(model.menuTitle,
-                               [model.option1, model.option2, model.option3, model.option4, model.option5,
-                                model.option6, model.option7],
-                               icons=[model.icon1, model.icon2, model.icon3, model.icon4, model.icon5, model.icon6,
-                                      model.icon7],
+                               [model.option1, model.option2, model.option7],
+                               icons=[model.icon1, model.icon2, model.icon7],
                                menu_icon=model.menuIcon,
                                default_index=0,
                                styles={
@@ -60,16 +58,16 @@ def view(model):
 
     if menuItem == model.option1:
         Dashboard().view(Dashboard.Model())
-        ui_width = st_js.st_javascript("window.innerWidth")
-        # Add 20% of current screen width to compensate for the sidebar
-        ui_width = round(ui_width + (20 * ui_width / 100))
-
-        device_type = st_js.st_javascript("window.screen.width > 768 ? 'desktop' : 'mobile'")
-        device_width = st_js.st_javascript("window.screen.width")
-
-        st.session_state['ui_width'] = ui_width
-        st.session_state['device_type'] = device_type
-        st.session_state['device_width'] = device_width
+        # ui_width = st_js.st_javascript("window.innerWidth")
+        # # Add 20% of current screen width to compensate for the sidebar
+        # ui_width = round(ui_width + (20 * ui_width / 100))
+        #
+        # device_type = st_js.st_javascript("window.screen.width > 768 ? 'desktop' : 'mobile'")
+        # device_width = st_js.st_javascript("window.screen.width")
+        #
+        # st.session_state['ui_width'] = ui_width
+        # st.session_state['device_type'] = device_type
+        # st.session_state['device_width'] = device_width
         logout_widget()
 
     if menuItem == model.option2:
@@ -96,6 +94,22 @@ def view(model):
     if menuItem == model.option7:
         About().view(About.Model())
         logout_widget()
+
+    # Get UI width
+
+    ui_width = st_js.st_javascript("window.innerWidth")
+    # Add 20% of current screen width to compensate for the sidebar
+    ui_width = round(ui_width + (20 * ui_width / 100))
+
+    device_width = st_js.st_javascript("window.screen.width")
+    if device_width > 768:
+        device_type = 'desktop'
+    else:
+        device_type = 'mobile'
+
+    st.session_state['ui_width'] = ui_width
+    st.session_state['device_type'] = device_type
+    st.session_state['device_width'] = device_width
 
 
 def logout_widget():
