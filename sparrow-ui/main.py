@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 from tools.utilities import load_css
+import json
 
 from views.dashboard import Dashboard
 from views.data_annotation import DataAnnotation
@@ -113,8 +114,23 @@ def logout_widget():
         st.write("Version:", "0.0.1")
         # st.button("Logout")
         # st.markdown("---")
-        st.markdown("<img src='https://visitor-badge.glitch.me/badge?page_id=katanaml_sparrow' alt='visitor badge'>",
-                    unsafe_allow_html=True)
+
+        if 'visitors' not in st.session_state:
+            with open("docs/visitors.json", "r") as f:
+                visitors_json = json.load(f)
+                visitors = visitors_json["meta"]["visitors"]
+
+            visitors += 1
+            visitors_json["meta"]["visitors"] = visitors
+
+            with open("docs/visitors.json", "w") as f:
+                json.dump(visitors_json, f)
+
+            st.session_state['visitors'] = visitors
+        else:
+            visitors = st.session_state['visitors']
+
+        st.write("Counter:", visitors)
 
 
 view(Model())
