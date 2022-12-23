@@ -4,11 +4,11 @@
 
 [Sparrow UI](https://katanaml-org-sparrow-ui.hf.space) module implements UI logic with Streamlit for document data annotation, model training/tuning and document data extraction.
 
-Dashboard:
+# Dashboard UI:
 
 ![Sparrow Dashboard](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/dashboard.png)
 
-Annotation:
+# Annotation/Labeling UI:
 
 ![Sparrow Annotation](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/annotation.png)
 
