@@ -69,7 +69,7 @@ git lfs track "docs/image/w_invoice1.png"
 git push
 ```
 
-5. App will be accessible by URL, you can get it from Hugging Face Space info. For example:
+5. Sparrow UI will be accessible by URL, you can get it from Hugging Face Space info. For example:
 
 ```
 https://katanaml-org-sparrow-ui.hf.space
