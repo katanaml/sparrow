@@ -63,10 +63,10 @@ git lfs track "docs/image/receipt_00003.png"
 git lfs track "docs/image/w_invoice1.png"
 ```
 
-4. Push code to Hugging Face Space. Docker container will be deployed automatically
+4. Commit and push code to Hugging Face Space, follow Space instructions. Docker container will be deployed automatically. Space example:
 
 ```
-git push
+https://huggingface.co/spaces/katanaml-org/sparrow-ui
 ```
 
 5. Sparrow UI will be accessible by URL, you can get it from Hugging Face Space info. For example:
