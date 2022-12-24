@@ -44,6 +44,8 @@ class DataAnnotation:
         assign_labels_help = "Check to enable editing of labels and values"
         save_help = "Save the annotations"
 
+        error_text = "Value is too long. Please shorten it."
+
     def view(self, model, ui_width, device_type, device_width):
         with st.sidebar:
             st.markdown("---")
@@ -183,6 +185,12 @@ class DataAnnotation:
 
                     submit = st.form_submit_button(model.save_text, type="primary", help=model.save_help)
                     if submit:
+
+                        for word in result_rects.rects_data['words']:
+                            if len(word['value']) > 100:
+                                st.error(model.error_text)
+                                return
+
                         with open(model.rects_file, "w") as f:
                             json.dump(result_rects.rects_data, f, indent=2)
                         st.session_state[model.rects_file] = result_rects.rects_data
