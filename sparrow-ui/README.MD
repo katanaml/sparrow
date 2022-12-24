@@ -47,7 +47,7 @@ docker run -it --name sparrow-ui -p 7860:7860 katanaml/sparrow-ui:latest
 
 1. Create new Space - https://huggingface.co/spaces
 
-2. Clone Space repo and init Git LFS. Copy Sparrow UI files. We are using config.toml from config folder, when deploying Docker container in Hugging Face Spaces, it can't read from standard .streamlit folder
+2. Clone Space repo and init Git LFS. Copy Sparrow UI files. We are using config.toml from config folder, when deploying Docker container on Hugging Face Spaces, it can't read from standard .streamlit folder
 
 ```
 git lfs install
