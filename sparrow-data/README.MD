@@ -2,7 +2,12 @@
 
 ## Description
 
-This module implements data structure for Sparrow ML model fine-tuning.
+This module implements data structure for Sparrow ML model fine-tuning. We are using list of invoices to build Hugging Face dataset. This dataset is used for Donut model fine-tuning.
+
+## Datasets info
+
+- [Samples of electronic invoices](https://data.mendeley.com/datasets/tnj49gpmtz)
+- [Receipts](https://www.kaggle.com/jenswalter/receipts)
 
 ## Author
 
