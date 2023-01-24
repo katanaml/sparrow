@@ -1,0 +1,831 @@
+./2017/de/public transport/118NP8.pdf
+./2017/de/public transport/3ZCCCW.pdf
+./2017/de/public transport/4GBEC9.pdf
+./2017/de/public transport/96W2GF.pdf
+./2017/de/public transport/ATYWHD.pdf
+./2017/de/public transport/DECD2N.pdf
+./2017/de/public transport/DMMGDW.pdf
+./2017/de/public transport/EN97RX.pdf
+./2017/de/public transport/FX2MGP.pdf
+./2017/de/public transport/GBEOH3.pdf
+./2017/de/public transport/GOR32M.pdf
+./2017/de/public transport/KKZ2A1.pdf
+./2017/de/public transport/LPB7C1.pdf
+./2017/de/public transport/NGTGLY.pdf
+./2017/de/public transport/OC38T4.pdf
+./2017/de/public transport/P1EWTK.pdf
+./2017/de/public transport/Q7GB4T.pdf
+./2017/de/public transport/QN1ZW1.pdf
+./2017/de/public transport/TREE83.pdf
+./2017/de/public transport/vhl8hb.pdf
+./2018/ca/hotel/20181024_008.pdf
+./2018/ca/public transport/translink_20180908_009.pdf
+./2018/ca/public transport/translink_20180908_012.pdf
+./2018/ca/public transport/translink_20180908_016.pdf
+./2018/ca/restaurant/benflorentines-593603.PDF
+./2018/ca/restaurant/cafecrepe_20180908_008.pdf
+./2018/ca/restaurant/eggspectation-237309.PDF
+./2018/ca/restaurant/flamingwok_20180908_003.pdf
+./2018/ca/restaurant/mcdonalds_20180908_015.pdf
+./2018/ca/restaurant/oldspaghettifactory_20180908_006.pdf
+./2018/ca/restaurant/redrobin_20180908_013.pdf
+./2018/ca/retail/danielmongrain-20180918.PDF
+./2018/ca/retail/hm_20180908_017.pdf
+./2018/ca/retail/jeancoutu-20180928.PDF
+./2018/ca/retail/metro-004000228276.PDF
+./2018/ca/retail/metro-00665414.PDF
+./2018/ca/retail/safeway_20180908_011.pdf
+./2018/ca/retail/wholefoods_20180908_010.pdf
+./2018/ca/retail/wholefoods_20180908_014.pdf
+./2018/ca/tourist attraction/seatosky_20180908_005.pdf
+./2018/ca/tourist attraction/seatosky_20180908_009.pdf
+./2018/cn/cafe/20181024.pdf
+./2018/cn/cafe/20181024_002.pdf
+./2018/cn/cafe/20181024_007.pdf
+./2018/cn/cafe/20181024_011.pdf
+./2018/cn/cafe/20181024_014.pdf
+./2018/cn/cafe/20181024_016.pdf
+./2018/cn/cafe/20181024_018.pdf
+./2018/cn/cafe/20181024_018_1.pdf
+./2018/cn/cafe/20181024_018_2.pdf
+./2018/cn/hotel/kuntai-201605.pdf
+./2018/cn/public transport/20181024_001.pdf
+./2018/cn/public transport/20181024_003.pdf
+./2018/cn/public transport/20181024_004.pdf
+./2018/cn/public transport/20181024_012.pdf
+./2018/cn/restaurant/20181024_005.pdf
+./2018/cn/restaurant/20181024_015.pdf
+./2018/cn/restaurant/20181024_017.pdf
+./2018/cn/restaurant/20181024_019.pdf
+./2018/cn/retail/20181024_009.pdf
+./2018/cn/retail/20181024_010.pdf
+./2018/cn/retail/20181024_013.pdf
+./2018/cn/retail/20181024_015.pdf
+./2018/cn/retail/20181024_017.pdf
+./2018/cn/tourist attraction/20181024_015.pdf
+./2018/de/cafe/20181024_018.pdf
+./2018/de/cafe/EPSON090.PDF
+./2018/de/cafe/starbucks-15373.pdf
+./2018/de/cafe/starbucks-20181103_001.pdf
+./2018/de/cafe/starbucks-20181117.pdf
+./2018/de/cafe/starbucks-20181222_007.pdf
+./2018/de/cafe/starbucks-254352354.pdf
+./2018/de/hotel/20180915_THE MADISON HAMBURG.pdf
+./2018/de/hotel/20181024_Ibis Styles Konstanz.pdf
+./2018/de/hotel/20181024_THE MADISON HAMBURG.pdf
+./2018/de/hotel/20181103_THE MADISON HAMBURG.pdf
+./2018/de/hotel/20181117_THE MADISON HAMBURG.pdf
+./2018/de/hotel/20181117_THE MADISON HAMBURG_001.pdf
+./2018/de/hotel/madison_481788.pdf
+./2018/de/hotel/madison_483390.pdf
+./2018/de/hotel/madison_484265.pdf
+./2018/de/hotel/madison_484950.pdf
+./2018/de/public transport/113494.pdf
+./2018/de/public transport/13127C.pdf
+./2018/de/public transport/2BVRL7.pdf
+./2018/de/public transport/2CN4BN.pdf
+./2018/de/public transport/31VQWO.pdf
+./2018/de/public transport/3HY8LK.pdf
+./2018/de/public transport/8M1XML.pdf
+./2018/de/public transport/93K1WR.pdf
+./2018/de/public transport/9PYMPC.pdf
+./2018/de/public transport/AEXVDX.pdf
+./2018/de/public transport/BG32CB.pdf
+./2018/de/public transport/CCGTTH.pdf
+./2018/de/public transport/CWUCP1.pdf
+./2018/de/public transport/DKK1U1.pdf
+./2018/de/public transport/EAOKVW.pdf
+./2018/de/public transport/ETW1ZY.pdf
+./2018/de/public transport/GUY1PY.pdf
+./2018/de/public transport/H1U2U2.pdf
+./2018/de/public transport/HQYCNA.pdf
+./2018/de/public transport/KNSM2D.pdf
+./2018/de/public transport/KYVTXA.pdf
+./2018/de/public transport/N8VFR7.pdf
+./2018/de/public transport/NOMTX1.pdf
+./2018/de/public transport/OG4EB6.pdf
+./2018/de/public transport/P6RODO.pdf
+./2018/de/public transport/P9B8K1.pdf
+./2018/de/public transport/PTPH2L.pdf
+./2018/de/public transport/PYOPWY.pdf
+./2018/de/public transport/QLVRMR.pdf
+./2018/de/public transport/R9MNS4.pdf
+./2018/de/public transport/RHV2QH.pdf
+./2018/de/public transport/SGNAYY.pdf
+./2018/de/public transport/SMD3BF.pdf
+./2018/de/public transport/SYGLKK.pdf
+./2018/de/public transport/TENQZP.pdf
+./2018/de/public transport/TQX1M9.pdf
+./2018/de/public transport/TTT9RG.pdf
+./2018/de/public transport/U622FD.pdf
+./2018/de/public transport/V6QLE8.pdf
+./2018/de/public transport/VBA9YC.pdf
+./2018/de/public transport/VK4H1N.pdf
+./2018/de/public transport/VPZ9R9.pdf
+./2018/de/public transport/Y937EM.pdf
+./2018/de/public transport/YXSHKW.pdf
+./2018/de/public transport/bahn-1HZ9O3.pdf
+./2018/de/public transport/bahn-6GS7GQ.pdf
+./2018/de/public transport/bahn-74FCV9.pdf
+./2018/de/public transport/bahn-7MCRKV.pdf
+./2018/de/public transport/bahn-7O8H8B.pdf
+./2018/de/public transport/bahn-7WCHS9.pdf
+./2018/de/public transport/bahn-893VBQ.pdf
+./2018/de/public transport/bahn-914GPY.pdf
+./2018/de/public transport/bahn-B3QNOU.pdf
+./2018/de/public transport/bahn-BG32BP.pdf
+./2018/de/public transport/bahn-EPDAHS.pdf
+./2018/de/public transport/bahn-G4SUFW.pdf
+./2018/de/public transport/bahn-GOAN3H.pdf
+./2018/de/public transport/bahn-GQP6K8.pdf
+./2018/de/public transport/bahn-LGNSW7.pdf
+./2018/de/public transport/bahn-LOCL4G.pdf
+./2018/de/public transport/bahn-LVE97O.pdf
+./2018/de/public transport/bahn-MTZCYT.pdf
+./2018/de/public transport/bahn-MY7C7O.pdf
+./2018/de/public transport/bahn-O4O8XZ.pdf
+./2018/de/public transport/bahn-OF4PMO.pdf
+./2018/de/public transport/bahn-ONHSNG.pdf
+./2018/de/public transport/bahn-RAO64L.pdf
+./2018/de/public transport/bahn-RNHPVA.pdf
+./2018/de/public transport/bahn-RUWFTQ.pdf
+./2018/de/public transport/bahn-T8L9M3.pdf
+./2018/de/public transport/bahn-UFXWCO.pdf
+./2018/de/public transport/bahn-UKW9RT.pdf
+./2018/de/public transport/bahn-W2YOYF.pdf
+./2018/de/public transport/bahn-WH7FE6.pdf
+./2018/de/public transport/bahn-WW1R8K.pdf
+./2018/de/public transport/bahn-X76UT6.pdf
+./2018/de/public transport/bahn-X8CZ3N.pdf
+./2018/de/public transport/bahn-XK4Y3H.pdf
+./2018/de/public transport/bahn-XO4XL1.pdf
+./2018/de/public transport/bahn-XOM7NH.pdf
+./2018/de/public transport/bahn-Y2UERZ.pdf
+./2018/de/public transport/bahn-Z2N4WC.pdf
+./2018/de/public transport/hvv-2543543543.pdf
+./2018/de/public transport/hvv-35645436356.pdf
+./2018/de/public transport/vrs-3576214365.pdf
+./2018/de/restaurant/20180909.pdf
+./2018/de/restaurant/20180915_001.pdf
+./2018/de/restaurant/bonngout-454325362536.pdf
+./2018/de/restaurant/burgerking_20181208_011.pdf
+./2018/de/restaurant/burgerlich-436534234.pdf
+./2018/de/restaurant/cafeluise_20181026.pdf
+./2018/de/restaurant/deandavid_147717.pdf
+./2018/de/restaurant/eltarascon_20181208_002.pdf
+./2018/de/restaurant/indiancrown_20180812.pdf
+./2018/de/restaurant/jimblock-135420543.pdf
+./2018/de/restaurant/jimblock-20181103.pdf
+./2018/de/restaurant/jimblock-20181117.pdf
+./2018/de/restaurant/jimblock-2435345.pdf
+./2018/de/restaurant/jimblock-5453q54.pdf
+./2018/de/restaurant/jimblock_20181208_009.pdf
+./2018/de/restaurant/jimblock_20181222_004.pdf
+./2018/de/restaurant/jimblock_20181222_006.pdf
+./2018/de/restaurant/losteria-435326542345.pdf
+./2018/de/restaurant/losteria_20181222_005.pdf
+./2018/de/restaurant/mcdonalds-20181117.pdf
+./2018/de/restaurant/mcdonalds-213432543543.pdf
+./2018/de/restaurant/mcdonalds-2432542345.pdf
+./2018/de/restaurant/mcdonalds-5435652354.pdf
+./2018/de/restaurant/mcdonalds_20181222_005.pdf
+./2018/de/restaurant/morrison-20181103_002.pdf
+./2018/de/restaurant/peterpane_20181027.pdf
+./2018/de/restaurant/phoviet_38469.pdf
+./2018/de/restaurant/roses-453453.pdf
+./2018/de/restaurant/swissbreak-12143242354.pdf
+./2018/de/restaurant/swissbreak-20181117.pdf
+./2018/de/retail/20180811.pdf
+./2018/de/retail/20180811_001.pdf
+./2018/de/retail/EPSON089.PDF
+./2018/de/retail/Edeka-764.pdf
+./2018/de/retail/dm-20181103_003.pdf
+./2018/de/retail/dm-5376524547654.pdf
+./2018/de/retail/hm-324235435.pdf
+./2018/de/retail/hm-8657767665.pdf
+./2018/de/retail/hub-1243253424.pdf
+./2018/de/retail/mediamarkt-20181026_001.pdf
+./2018/de/retail/mediamarkt_230433.pdf
+./2018/de/retail/pc_1006019999920234169.pdf
+./2018/de/retail/rewe-35645636345.pdf
+./2018/de/retail/wardow-20181112.pdf
+./2018/fr/public transport/sncf-453653635.pdf
+./2018/fr/restaurant/monoprix-325435432.pdf
+./2018/us/hotel/venetian_434280912998.pdf
+./2018/us/public transport/bart-43253423.pdf
+./2018/us/public transport/bart-535245634.pdf
+./2018/us/public transport/bart_20180908_004.pdf
+./2018/us/public transport/bart_20180908_007.pdf
+./2018/us/public transport/caltrain-425345423423.pdf
+./2018/us/restaurant/applebees_8267120140431.pdf
+./2018/us/restaurant/beerhaus_20181208_006.pdf
+./2018/us/restaurant/beerhaus_20181208_007.pdf
+./2018/us/restaurant/shakeshack_20181208_004.pdf
+./2018/us/restaurant/sliders-454353423425.pdf
+./2018/us/restaurant/sw_20181208_005.pdf
+./2018/us/restaurant/sw_20181208_3630.pdf
+./2018/us/retail/hm-4352342354.pdf
+./2018/us/retail/safeway-3208524524.pdf
+./2018/us/retail/walgreens-42543523432.pdf
+./2018/us/taxi/taxi_010E33SD547.pdf
+./2018/us/tourist attraction/grandcanyonwest_20181208.pdf
+./2019/de/cafe/coffeefellow-20191020.pdf
+./2019/de/cafe/kamps_20191116_002.pdf
+./2019/de/cafe/kamps_20191124_001.pdf
+./2019/de/cafe/starbucks-20190102.pdf
+./2019/de/cafe/starbucks-20190217_002.pdf
+./2019/de/cafe/starbucks-20190323_004.pdf
+./2019/de/cafe/starbucks-20190323_009.pdf
+./2019/de/cafe/starbucks-20190519.pdf
+./2019/de/cafe/starbucks-20190521.pdf
+./2019/de/cafe/starbucks-20190525.pdf
+./2019/de/cafe/starbucks-20190720_013.pdf
+./2019/de/cafe/vorort_20191124_002.pdf
+./2019/de/flights/eurowings-NFCZMQ.pdf
+./2019/de/flights/norwegian_KPE6BN.pdf
+./2019/de/flights/norwegian_KQMDM9.pdf
+./2019/de/flights/ryanair-FR2733.pdf
+./2019/de/hotel/20190119_002.pdf
+./2019/de/hotel/20190202_THE MADISON HAMBURG.pdf
+./2019/de/hotel/20190202_THE MADISON HAMBURG_001.pdf
+./2019/de/hotel/citadines-20190331_Invoice.pdf
+./2019/de/hotel/citadines_08372561.pdf
+./2019/de/hotel/hampton-25789.pdf
+./2019/de/hotel/hampton_20190411.pdf
+./2019/de/hotel/hampton_24361.pdf
+./2019/de/hotel/hampton_28646.pdf
+./2019/de/hotel/madison-489347.pdf
+./2019/de/hotel/madison-490057.pdf
+./2019/de/hotel/madison-490969.pdf
+./2019/de/hotel/madison-492602.pdf
+./2019/de/hotel/madison-493304.pdf
+./2019/de/hotel/madison-496987.pdf
+./2019/de/hotel/madison-502875.pdf
+./2019/de/hotel/madison-5036666.pdf
+./2019/de/hotel/madison_497810.pdf
+./2019/de/hotel/madison_folio_g_cp_efolio5895702.pdf
+./2019/de/hotel/madison_folio_g_cp_efolio5895707.pdf
+./2019/de/hotel/madison_folio_g_cp_efolio5945547.pdf
+./2019/de/hotel/madison_folio_g_cp_efolio5972171.pdf
+./2019/de/hotel/madison_folio_g_cp_efolio5976009.pdf
+./2019/de/hotel/madison_folio_g_cp_efolio5991896.pdf
+./2019/de/hotel/mercure-37816396.pdf
+./2019/de/hotel/motelone-524544306.pdf
+./2019/de/hotel/motelone_20191111.pdf
+./2019/de/hotel/motelone_20191118.pdf
+./2019/de/hotel/moxy-20191221_007.pdf
+./2019/de/hotel/moxy_20191221_006.pdf
+./2019/de/hotel/premierinn_GABCI19014325.pdf
+./2019/de/miscellaneous/aral_20190901.pdf
+./2019/de/public transport/bahn-190521752786.pdf
+./2019/de/public transport/bahn-1QXDOG.pdf
+./2019/de/public transport/bahn-2V8616.pdf
+./2019/de/public transport/bahn-3GRXP2.pdf
+./2019/de/public transport/bahn-4L9BE9.pdf
+./2019/de/public transport/bahn-4L9ORV.pdf
+./2019/de/public transport/bahn-4RYGZD.pdf
+./2019/de/public transport/bahn-6M824B.pdf
+./2019/de/public transport/bahn-7YS6PW.pdf
+./2019/de/public transport/bahn-82CTAK.pdf
+./2019/de/public transport/bahn-9Z4ZKL.pdf
+./2019/de/public transport/bahn-A2XKZM.pdf
+./2019/de/public transport/bahn-AXE1QT.pdf
+./2019/de/public transport/bahn-BDO28U.pdf
+./2019/de/public transport/bahn-BRA4ZS.pdf
+./2019/de/public transport/bahn-BXSM6Z.pdf
+./2019/de/public transport/bahn-CU6YC7.pdf
+./2019/de/public transport/bahn-D3ERDQ.pdf
+./2019/de/public transport/bahn-DSK7YS.pdf
+./2019/de/public transport/bahn-F681BE.pdf
+./2019/de/public transport/bahn-FSMFET.pdf
+./2019/de/public transport/bahn-FZ8Z8S.pdf
+./2019/de/public transport/bahn-GOT7KQ.pdf
+./2019/de/public transport/bahn-HVR126.pdf
+./2019/de/public transport/bahn-HW38FP.pdf
+./2019/de/public transport/bahn-HZ64OO.pdf
+./2019/de/public transport/bahn-K1XZ9A.pdf
+./2019/de/public transport/bahn-KF3H7Y.pdf
+./2019/de/public transport/bahn-M1D2SA.pdf
+./2019/de/public transport/bahn-ND63TR.pdf
+./2019/de/public transport/bahn-NDUKNT.pdf
+./2019/de/public transport/bahn-NP28SZ.pdf
+./2019/de/public transport/bahn-OAFVKK.pdf
+./2019/de/public transport/bahn-OCZBWQ.pdf
+./2019/de/public transport/bahn-OFV9MR.pdf
+./2019/de/public transport/bahn-PA9QOU.pdf
+./2019/de/public transport/bahn-PCOSXT.pdf
+./2019/de/public transport/bahn-PEE32A.pdf
+./2019/de/public transport/bahn-PNWLSA.pdf
+./2019/de/public transport/bahn-QUSYCY.pdf
+./2019/de/public transport/bahn-RRGLTX.pdf
+./2019/de/public transport/bahn-TRY182.pdf
+./2019/de/public transport/bahn-TT13TQ.pdf
+./2019/de/public transport/bahn-UKU46K.pdf
+./2019/de/public transport/bahn-VERCW9.pdf
+./2019/de/public transport/bahn-WB3D4K.pdf
+./2019/de/public transport/bahn-WPYCXF.pdf
+./2019/de/public transport/bahn-WQYUTC.pdf
+./2019/de/public transport/bahn-X41PAT.pdf
+./2019/de/public transport/bahn-Y11TNC.pdf
+./2019/de/public transport/bahn-YB9X4L.pdf
+./2019/de/public transport/bahn-YFG7VG.pdf
+./2019/de/public transport/bahn-YQPTKX.pdf
+./2019/de/public transport/bahn-Z41MZO.pdf
+./2019/de/public transport/bahn-ZD7YDQ.pdf
+./2019/de/public transport/bahn-ZHKBHV.pdf
+./2019/de/public transport/bahn-ZT2B67.pdf
+./2019/de/restaurant/andria-20190529.pdf
+./2019/de/restaurant/andria_20191116_001.pdf
+./2019/de/restaurant/chinarestaurant_20191116_003.pdf
+./2019/de/restaurant/chinaswelt_20190929_001.pdf
+./2019/de/restaurant/davidanddean-20190323_007.pdf
+./2019/de/restaurant/deanandavid_20191026.pdf
+./2019/de/restaurant/deananddavid-20190217_001.pdf
+./2019/de/restaurant/deananddavid-20190223_001.pdf
+./2019/de/restaurant/deananddavid-20191026_002.pdf
+./2019/de/restaurant/deananddavid_185229.pdf
+./2019/de/restaurant/deananddavid_20190803_001.pdf
+./2019/de/restaurant/deananddavid_20190810_001.pdf
+./2019/de/restaurant/deananddavid_20190914_001.pdf
+./2019/de/restaurant/deananddavid_20191019_015.pdf
+./2019/de/restaurant/dhillons_20190418.pdf
+./2019/de/restaurant/eltarascon-20191221.pdf
+./2019/de/restaurant/jimblock-20190217.pdf
+./2019/de/restaurant/jimblock-20190217_004.pdf
+./2019/de/restaurant/jimblock-20190223_002.pdf
+./2019/de/restaurant/jimblock-20190323_008.pdf
+./2019/de/restaurant/jimblock-20190323_010.pdf
+./2019/de/restaurant/jimblock-20190326.pdf
+./2019/de/restaurant/jimblock-20190402.pdf
+./2019/de/restaurant/jimblock-20190416.pdf
+./2019/de/restaurant/jimblock-20190523.pdf
+./2019/de/restaurant/jimblock-20190612.pdf
+./2019/de/restaurant/jimblock-20190622.pdf
+./2019/de/restaurant/jimblock_20190120.pdf
+./2019/de/restaurant/jimblock_20190202_002.pdf
+./2019/de/restaurant/jimblock_20190803.pdf
+./2019/de/restaurant/jimblock_20190817_001.pdf
+./2019/de/restaurant/jimblock_20190904.pdf
+./2019/de/restaurant/jimblock_20190914.pdf
+./2019/de/restaurant/jimblock_20191019.pdf
+./2019/de/restaurant/jimblock_20191019_019.pdf
+./2019/de/restaurant/jimblock_20191026_003.pdf
+./2019/de/restaurant/jimblock_20191123.pdf
+./2019/de/restaurant/jimblock_20191128.pdf
+./2019/de/restaurant/kochspielhaus-20190323_005.pdf
+./2019/de/restaurant/kolaile_20190608.pdf
+./2019/de/restaurant/losteria_20190727.pdf
+./2019/de/restaurant/losteria_20190825.pdf
+./2019/de/restaurant/losteria_20191116_004.pdf
+./2019/de/restaurant/luise_20190929.pdf
+./2019/de/restaurant/mcdonalds-20190217_003.pdf
+./2019/de/restaurant/mcdonalds-20190217_004.pdf
+./2019/de/restaurant/mcdonalds-20190323_006.pdf
+./2019/de/restaurant/mcdonalds-20190420_002.pdf
+./2019/de/restaurant/mcdonalds-20190526.pdf
+./2019/de/restaurant/mcdonalds-20190614.pdf
+./2019/de/restaurant/mcdonalds-20190720_014.pdf
+./2019/de/restaurant/mcdonalds-20191221.pdf
+./2019/de/restaurant/mcdonalds_20190202_001.pdf
+./2019/de/restaurant/mcdonalds_20190422.pdf
+./2019/de/restaurant/mcdonalds_20190428.pdf
+./2019/de/restaurant/mcdonalds_20190810.pdf
+./2019/de/restaurant/mcdonalds_20190810_002.pdf
+./2019/de/restaurant/mcdonalds_20190817.pdf
+./2019/de/restaurant/mcdonalds_20190901.pdf
+./2019/de/restaurant/mcdonalds_20191019_018.pdf
+./2019/de/restaurant/mcdonalds_20191124_003.pdf
+./2019/de/restaurant/mrmoto_20190119_001.pdf
+./2019/de/restaurant/mrmoto_20191116.pdf
+./2019/de/restaurant/noelsballroom_20190817_001.pdf
+./2019/de/restaurant/osteria-20190323.pdf
+./2019/de/restaurant/osteria-20190420_008.pdf
+./2019/de/restaurant/osteria-20190609.pdf
+./2019/de/restaurant/peterpane-20190223.pdf
+./2019/de/restaurant/peterpane-20190622_001.pdf
+./2019/de/restaurant/peterpane_20191124.pdf
+./2019/de/restaurant/phoviet_20191019_001.pdf
+./2019/de/restaurant/rohmuehle-20190217_002.pdf
+./2019/de/restaurant/roses_20191019_002.pdf
+./2019/de/restaurant/roses_79.pdf
+./2019/de/restaurant/schnizz-20191026_001.pdf
+./2019/de/restaurant/thebird-20190228.pdf
+./2019/de/restaurant/zhazhaburger-20190225.pdf
+./2019/de/retail/ansons_20190119.pdf
+./2019/de/retail/breuninger-20190330_001.pdf
+./2019/de/retail/breuninger_20190119_003.pdf
+./2019/de/retail/ca-20191020.pdf
+./2019/de/retail/deichmann_20190803_003.pdf
+./2019/de/retail/dm-20190330_002.pdf
+./2019/de/retail/dm_20190803_006.pdf
+./2019/de/retail/frischeparadis_20190803_005.pdf
+./2019/de/retail/galeria-04335647394318.pdf
+./2019/de/retail/galeria_20190803_004.pdf
+./2019/de/retail/mediamarkt_40731877.pdf
+./2019/de/retail/rewe_20190902.pdf
+./2019/de/retail/saturn_20190817_002.pdf
+./2019/ee/cafe/baubamaja_12305124.pdf
+./2019/ee/cafe/caffeine_1935658.pdf
+./2019/ee/hotel/swissotel_377904.pdf
+./2019/ee/restaurant/hesburger_645907.pdf
+./2019/es/cafe/faborit_20190922_008.pdf
+./2019/es/cafe/starbucks_20190922.pdf
+./2019/es/cafe/starbucks_20190922_003.pdf
+./2019/es/cafe/starbucks_20190922_005.pdf
+./2019/es/hotel/onlyyou_20190922_009.pdf
+./2019/es/public transport/subway_20190916.pdf
+./2019/es/restaurant/burgerking_20190922_001.pdf
+./2019/es/restaurant/golfo_20190922_002.pdf
+./2019/es/tourist attraction/museodelferrocarril_20190922_007.pdf
+./2019/es/tourist attraction/museoreinasofia_20190922_004.pdf
+./2019/es/tourist attraction/patrimonio_20190922_006.pdf
+./2019/es/tourist attraction/prado_20190922_003.pdf
+./2019/hk/cafe/20190720_001.pdf
+./2019/hk/cafe/20190720_002.pdf
+./2019/hk/cafe/20190720_005.pdf
+./2019/hk/cafe/20190720_009.pdf
+./2019/hk/cafe/20190720_011.pdf
+./2019/hk/cafe/20190720_015.pdf
+./2019/hk/cafe/20190720_017.pdf
+./2019/hk/cafe/20190720_018.pdf
+./2019/hk/hotel/ozo-5056563.pdf
+./2019/hk/restaurant/20190720.pdf
+./2019/hk/restaurant/20190720_003.pdf
+./2019/hk/restaurant/20190720_004.pdf
+./2019/hk/restaurant/20190720_006.pdf
+./2019/hk/restaurant/20190720_007.pdf
+./2019/hk/restaurant/20190720_008.pdf
+./2019/hk/restaurant/20190720_012.pdf
+./2019/hk/retail/20190720_010.pdf
+./2019/lt/public transport/vilniausmiestro-20190323.pdf
+./2019/lt/restaurant/delano-20190323.pdf
+./2019/lt/restaurant/macdonalds-20190323.pdf
+./2019/lt/restaurant/vilniausbaras-20190323.pdf
+./2019/nl/cafe/starbucks_20191019_005.pdf
+./2019/nl/cafe/starbucks_20191019_023.pdf
+./2019/nl/hotel/leonardo_03040575.pdf
+./2019/nl/public transport/gvbcharge_20191019_007.pdf
+./2019/nl/public transport/train_20191019_008.pdf
+./2019/nl/public transport/train_20191019_018.pdf
+./2019/nl/public transport/train_20191019_024.pdf
+./2019/nl/restaurant/breakfastclub_20191019_013.pdf
+./2019/nl/restaurant/burgerking_20191019_016.pdf
+./2019/nl/restaurant/butcher_20191019_011.pdf
+./2019/nl/restaurant/kfc_20191019_006.pdf
+./2019/nl/restaurant/kfc_20191019_012.pdf
+./2019/nl/restaurant/mcdonalds_20191019_009.pdf
+./2019/nl/restaurant/mcdonalds_20191019_010.pdf
+./2019/nl/restaurant/pancakes_20191019_003.pdf
+./2019/nl/tourist attraction/bodyworlds_20191019_004.pdf
+./2019/nl/tourist attraction/bodyworlds_20191019_014.pdf
+./2019/nl/tourist attraction/maritim_20191019_022.pdf
+./2019/nl/tourist attraction/ruks_20191019_023.pdf
+./2019/se/hotel/scandic_808219768.pdf
+./2019/se/public transport/arlandaexpress_0000826085.pdf
+./2019/se/public transport/arlandaexpress_0000875553.pdf
+./2019/se/restaurant/burgerking_8448.pdf
+./2019/se/restaurant/eatmarket_42174.pdf
+./2019/se/restaurant/kebabhouse_100416229.pdf
+./2019/se/restaurant/maxburger_492653.pdf
+./2019/se/restaurant/maxburger_6206.pdf
+./2019/se/restaurant/maxburger_6889.pdf
+./2019/se/restaurant/maxburger_6985.pdf
+./2019/se/retail/apoteketcwscheele_37653.pdf
+./2019/se/retail/apotheketcwscheele_39368.pdf
+./2019/se/retail/coop_0216332.pdf
+./2019/se/retail/elitvatten_20190504.pdf
+./2019/se/tourist attraction/tekniska_1030366.pdf
+./2019/uk/cafe/caffenero_20190831.pdf
+./2019/uk/cafe/pret_20190827.pdf
+./2019/uk/hotel/Leonardo_362412213.pdf
+./2019/uk/miscellaneous/horizonparking_20190820.pdf
+./2019/uk/miscellaneous/rosestreet_20190829.pdf
+./2019/uk/miscellaneous/shell_20190839.pdf
+./2019/uk/miscellaneous/slateford_20190830.pdf
+./2019/uk/public transport/editram_20190916.pdf
+./2019/uk/public transport/tram_20191116_006.pdf
+./2019/uk/restaurant/brewdogs_20190827.pdf
+./2019/uk/restaurant/chopstix_20190828.pdf
+./2019/uk/restaurant/fiveguys_20190829.pdf
+./2019/uk/restaurant/gourmetmash_20190830.pdf
+./2019/uk/restaurant/haymarketedi_20190826.pdf
+./2019/uk/restaurant/lebowski_20190828.pdf
+./2019/uk/retail/coop_20190829.pdf
+./2019/uk/tourist attraction/castle_20190827.pdf
+./2019/uk/tourist attraction/obandistillery_20190830.pdf
+./2019/uk/tourist attraction/urquhartcastle_20190829.pdf
+./2019/us/cafe/starbucks_731564.pdf
+./2019/us/hotel/countryinn_30878.pdf
+./2019/us/hotel/hilton_3098434064.pdf
+./2019/us/hotel/mystic-106247969.pdf
+./2019/us/hotel/venetian-437991869934.pdf
+./2019/us/public transport/bart-16040508.pdf
+./2019/us/public transport/bart-18102616.pdf
+./2019/us/public transport/bart_64514-18051616-2.pdf
+./2019/us/public transport/bart_64514-18051616.pdf
+./2019/us/public transport/caltrain_20190510.pdf
+./2019/us/restaurant/cheesecake-20191221_003.pdf
+./2019/us/restaurant/cowgirlcreamery-20190420_010.pdf
+./2019/us/restaurant/dennys-20190420_009.pdf
+./2019/us/restaurant/dennys-20190420_013.pdf
+./2019/us/restaurant/dennys-20191204.pdf
+./2019/us/restaurant/dennys_318879.pdf
+./2019/us/restaurant/fatburger-20191203.pdf
+./2019/us/restaurant/fiveguys_aaaxwhncacb5.pdf
+./2019/us/restaurant/fiveguys_aaaxwhnjaebm.pdf
+./2019/us/restaurant/inout-20191221_005.pdf
+./2019/us/restaurant/moz_208095.pdf
+./2019/us/restaurant/outback-20191204.pdf
+./2019/us/restaurant/panda-20191221_004.pdf
+./2019/us/restaurant/roxanne-596018.pdf
+./2019/us/restaurant/roxannes_599355.pdf
+./2019/us/restaurant/sudamkorean_20190507.pdf
+./2019/us/restaurant/superduper_20355.pdf
+./2019/us/restaurant/superduper_20451.pdf
+./2019/us/restaurant/superduperburger-20190420_008.pdf
+./2019/us/retail/cocacola-20191221_001.pdf
+./2019/us/retail/cvs-20190420_012.pdf
+./2019/us/retail/oldnavy-059343150871201904133755.pdf
+./2019/us/retail/oldnavy-20191221_002.pdf
+./2019/us/retail/oldnavy_059340204213201905110270.pdf
+./2019/us/retail/safeway_40001555198.pdf
+./2019/us/retail/safeway_85001973167.pdf
+./2019/us/retail/uniqlo-20190420_007.pdf
+./2019/us/retail/walgreens-20190420_006.pdf
+./2019/us/retail/walgreens-20191207.pdf
+./2019/us/retail/walgreens-20191221_009.pdf
+./2019/us/retail/walgreens_20190510.pdf
+./2019/us/retail/walgreens_20190512.pdf
+./2019/us/retail/wholefoods-20190420_004.pdf
+./2019/us/retail/wholefoods_500100364.pdf
+./2019/us/tourist attraction/topgold-20191203.pdf
+./2020/de/cafe/feiste-20200803.pdf
+./2020/de/cafe/feiste-20200815.pdf
+./2020/de/cafe/kamps-20200314_001.pdf
+./2020/de/cafe/kamps-20200315_002.pdf
+./2020/de/cafe/luise-20200102.pdf
+./2020/de/cafe/pendel-20200125.pdf
+./2020/de/cafe/pendel-20200216_001.pdf
+./2020/de/cafe/pendel-20200307_008.pdf
+./2020/de/cafe/pendel-20200315_003.pdf
+./2020/de/cafe/squaire_20200307_006.pdf
+./2020/de/hotel/hampton_20200923.pdf
+./2020/de/hotel/premierinn-20200117.pdf
+./2020/de/hotel/premierinn-20200308.pdf
+./2020/de/hotel/premierinn-GABCI20000791.pdf
+./2020/de/miscellaneous/aral-20200822_001.pdf
+./2020/de/miscellaneous/cinestar-20200102.pdf
+./2020/de/miscellaneous/ikea-20200314_004.pdf
+./2020/de/miscellaneous/mediamarkt-20200314_003.pdf
+./2020/de/miscellaneous/saturn-20200216_003.pdf
+./2020/de/miscellaneous/star-20200822.pdf
+./2020/de/miscellaneous/unterwegs-20200314_002.pdf
+./2020/de/public transport/bahn-17B6DU.pdf
+./2020/de/public transport/bahn-34QQAW.pdf
+./2020/de/public transport/bahn-6QBUR1.pdf
+./2020/de/public transport/bahn-7PAYXR.pdf
+./2020/de/public transport/bahn-E7QH8B.pdf
+./2020/de/public transport/bahn-LP9Z99.pdf
+./2020/de/public transport/bahn-TH9ZKM.pdf
+./2020/de/public transport/bahn-VDCSQA.pdf
+./2020/de/restaurant/agustiner-20200314.pdf
+./2020/de/restaurant/augustiner_20201001.pdf
+./2020/de/restaurant/burgerheart-20200730.pdf
+./2020/de/restaurant/chinawhite_20201011.pdf
+./2020/de/restaurant/chinawhite_20201022.pdf
+./2020/de/restaurant/chito_20201021.pdf
+./2020/de/restaurant/cosmojap_20201008.pdf
+./2020/de/restaurant/deananddavid-20200928.pdf
+./2020/de/restaurant/dimsum-20200216.pdf
+./2020/de/restaurant/indiancrown_20200725.pdf
+./2020/de/restaurant/jimblock-20200130.pdf
+./2020/de/restaurant/jimblock-20200216_004.pdf
+./2020/de/restaurant/jimblock-20200307_003.pdf
+./2020/de/restaurant/jimblock-20200307_009.pdf
+./2020/de/restaurant/jimblock-20200315.pdf
+./2020/de/restaurant/jimblock_20200116.pdf
+./2020/de/restaurant/luise_20201006.pdf
+./2020/de/restaurant/luise_20201006_002.pdf
+./2020/de/restaurant/mcdonalds-20200119.pdf
+./2020/de/restaurant/mcdonalds-20200126.pdf
+./2020/de/restaurant/mcdonalds-20200216_005.pdf
+./2020/de/restaurant/mcdonalds-20200216_006.pdf
+./2020/de/restaurant/mcdonalds-20200307.pdf
+./2020/de/restaurant/mcdonalds-20200501.pdf
+./2020/de/restaurant/mcdonalds_20201016.pdf
+./2020/de/restaurant/mcdonalds_20201021_001.pdf
+./2020/de/restaurant/noels_20200905.pdf
+./2020/de/restaurant/noels_20201101.pdf
+./2020/de/restaurant/osteria-20200125.pdf
+./2020/de/restaurant/osteria-20200216_002.pdf
+./2020/de/restaurant/osteria-20200315_001.pdf
+./2020/de/restaurant/phoviet_20200924.pdf
+./2020/de/retail/aldi_20200625.pdf
+./2020/de/retail/aldi_20200717.pdf
+./2020/de/retail/aldi_20200725.pdf
+./2020/de/retail/aldi_20200926_001.pdf
+./2020/de/retail/cyberport_20201029_Rechnung.pdf
+./2020/de/retail/cyberport_20201125_Rechnung.pdf
+./2020/de/retail/deichmann_20200716_001.pdf
+./2020/de/retail/dm_20201014.pdf
+./2020/de/retail/hit-20200731.pdf
+./2020/de/retail/hit-20200803_001.pdf
+./2020/de/retail/hit_20200630.pdf
+./2020/de/retail/hit_20200630_001.pdf
+./2020/de/retail/hit_20200703.pdf
+./2020/de/retail/hit_20200711.pdf
+./2020/de/retail/hit_20200711_002.pdf
+./2020/de/retail/hit_20200716.pdf
+./2020/de/retail/hit_20200717_001.pdf
+./2020/de/retail/hit_20200724.pdf
+./2020/de/retail/hit_20200724_001.pdf
+./2020/de/retail/hit_20200905_001.pdf
+./2020/de/retail/hit_20201104.pdf
+./2020/de/retail/kamps_20201016_001.pdf
+./2020/de/retail/netto_20200706_002.pdf
+./2020/de/retail/penny_20200625_001.pdf
+./2020/de/retail/penny_20200706_001.pdf
+./2020/de/retail/penny_20200711_001.pdf
+./2020/de/retail/penny_20200721.pdf
+./2020/de/retail/penny_20201001_001.pdf
+./2020/de/retail/rewe_20200725_001.pdf
+./2020/de/retail/rewe_20200926.pdf
+./2020/de/retail/rewe_20201006_001.pdf
+./2020/de/retail/rewe_20201114.pdf
+./2020/de/retail/rewe_20201218.pdf
+./2020/de/retail/rossmann_20200924_001.pdf
+./2020/de/retail/stadler_20200920.pdf
+./2020/de/retail/stadler_20200920_001.pdf
+./2020/de/retail/toom_20200706.pdf
+./2020/de/retail/unterwegs-20200314_002.pdf
+./2020/de/retail/unterwegs_20201111.pdf
+./2020/pl/cafe/costa-20200307_001.pdf
+./2020/pl/cafe/starbucks-20200307_005.pdf
+./2020/pl/restaurant/mandu-20200307_002.pdf
+./2020/pl/restaurant/mandu-20200307_007.pdf
+./2020/pl/restaurant/thaiwok-20200307_004.pdf
+./2021/at/20210906_001.pdf
+./2021/at/20210906_008.pdf
+./2021/de/aral-20210906_002.pdf
+./2021/de/armor-20211106.pdf
+./2021/de/burgerking-20210321.pdf
+./2021/de/chinawhite-20211116.pdf
+./2021/de/coffeefellows-20210702_004.pdf
+./2021/de/cyberport-20210103.pdf
+./2021/de/cyberport-20210403_Rechnung.pdf
+./2021/de/cyberport-20210813_Rechnung.pdf
+./2021/de/decathlon-20210717.pdf
+./2021/de/decathlon-20210819.pdf
+./2021/de/deichmann-20210717_003.pdf
+./2021/de/dm-20210619.pdf
+./2021/de/dm-20210723.pdf
+./2021/de/dm-20210822_001.pdf
+./2021/de/dm-20211022.pdf
+./2021/de/dm-20211116_002.pdf
+./2021/de/dm-20220114_001.pdf
+./2021/de/galeria-20210822.pdf
+./2021/de/galeria-20210822_002.pdf
+./2021/de/globetrotter-20210717_002.pdf
+./2021/de/grotta-20210717_004.pdf
+./2021/de/hit-20210806.pdf
+./2021/de/hit-20210908.pdf
+./2021/de/hit-20210912_003.pdf
+./2021/de/hm-20210702_003.pdf
+./2021/de/hugendubel-20210702_001.pdf
+./2021/de/hugendubel-20210814_001.pdf
+./2021/de/indiancrown-20210824.pdf
+./2021/de/luise-20210614.pdf
+./2021/de/luise-20210912.pdf
+./2021/de/mcdonalds-20210906_016.pdf
+./2021/de/mio-20211211_021.pdf
+./2021/de/miscellaneous/20210220.pdf
+./2021/de/olymp-20210702_006.pdf
+./2021/de/olymp-20210819_002.pdf
+./2021/de/osteria-20210915.pdf
+./2021/de/papajohns-20210702_002.pdf
+./2021/de/peekcloppenburg-20210702.pdf
+./2021/de/peekcloppenburg-20210824_001.pdf
+./2021/de/phoviet-20210819_001.pdf
+./2021/de/phoviet-20211116_001.pdf
+./2021/de/prettyplease-20210625.pdf
+./2021/de/retail/20210114.pdf
+./2021/de/retail/20210204.pdf
+./2021/de/rewe-20210514.pdf
+./2021/de/rewe-20210515.pdf
+./2021/de/rewe-20210529.pdf
+./2021/de/rewe-20210607.pdf
+./2021/de/rewe-20210721.pdf
+./2021/de/rewe-20210723_001.pdf
+./2021/de/rewe-20210814.pdf
+./2021/de/rewe-20210912_001.pdf
+./2021/de/rewe-20210912_002.pdf
+./2021/de/riquet-20210717_001.pdf
+./2021/de/rossmann-20210723_002.pdf
+./2021/de/sanchopancha-20210730.pdf
+./2021/de/sportcheck-20211022_001.pdf
+./2021/de/stadler-20210702_005.pdf
+./2021/de/stadler-20220213_001.pdf
+./2021/de/star-20210322.pdf
+./2021/de/star-20210908_001.pdf
+./2021/de/toom-20210912_004.pdf
+./2021/hr/20210825_Hotel.pdf
+./2021/hr/20210828_RaCun br.pdf
+./2021/hr/20210828_VALAMAR.pdf
+./2021/hr/20210831_Hotel BOR.VNIK.pdf
+./2021/hr/20210906.pdf
+./2021/hr/20210906_004.pdf
+./2021/hr/20210906_005.pdf
+./2021/hr/20210906_006.pdf
+./2021/hr/20210906_007.pdf
+./2021/hr/20210906_009.pdf
+./2021/hr/20210906_010.pdf
+./2021/hr/20210906_012.pdf
+./2021/hr/20210906_013.pdf
+./2021/hr/20210906_014.pdf
+./2021/hr/20210906_015.pdf
+./2021/hr/20210906_017.pdf
+./2021/hr/20210906_019.pdf
+./2021/hr/amarin-20210309.pdf
+./2021/hr/ina-20210906_003.pdf
+./2021/hr/ina-20210906_018.pdf
+./2021/us/bestbuy-20211211_006.pdf
+./2021/us/bestbuy-20211211_013.pdf
+./2021/us/bigboy-20211211_020.pdf
+./2021/us/coffeebean-20211211_016.pdf
+./2021/us/cornerbakery-20211211_017.pdf
+./2021/us/cvs-20211211_003.pdf
+./2021/us/cvs-20211211_004.pdf
+./2021/us/cvs-20211211_009.pdf
+./2021/us/fiveguys-20211211_018.pdf
+./2021/us/inout-20211211_001.pdf
+./2021/us/mgm_895557014.pdf
+./2021/us/oldnavy-20211211_007.pdf
+./2021/us/oldnavy-20211211_008.pdf
+./2021/us/oldnavy-20211211_015.pdf
+./2021/us/panda-20211211_012.pdf
+./2021/us/panera-20211211_017.pdf
+./2021/us/ross-20211211_010.pdf
+./2021/us/shakeshack-20211211.pdf
+./2021/us/snacks-20211211_002.pdf
+./2021/us/snacks-20211211_019.pdf
+./2021/us/wholefoods-20211211_005.pdf
+./2021/us/wholefoods-20211211_011.pdf
+./2022/de/aldi-20220505.pdf
+./2022/de/amor-20220130.pdf
+./2022/de/breuninger-20220507_003.pdf
+./2022/de/chinawhite-20220203.pdf
+./2022/de/chito-20220507.pdf
+./2022/de/decathlon-20220507_001.pdf
+./2022/de/deichmann-20220611.pdf
+./2022/de/deichmann-20220904.pdf
+./2022/de/dm-20220114.pdf
+./2022/de/dm-20220414_003.pdf
+./2022/de/dm-20220507(1).pdf
+./2022/de/dm-20220625.pdf
+./2022/de/dm-20220820.pdf
+./2022/de/fiveguys-20220607.pdf
+./2022/de/galeria-20220414_001.pdf
+./2022/de/galeria-20220618.pdf
+./2022/de/ganos-20220604.pdf
+./2022/de/hit-20220607_002.pdf
+./2022/de/hit-20220813_001.pdf
+./2022/de/hm-20220414_003.pdf
+./2022/de/indiancrown-20220416_001.pdf
+./2022/de/jimblock-20220607_001.pdf
+./2022/de/josephpub-20220507_004.pdf
+./2022/de/kimi-20220801_001.pdf
+./2022/de/lagrotta-20220414.pdf
+./2022/de/luise-20220123.pdf
+./2022/de/mcdonalds-20220617_001.pdf
+./2022/de/mediamarkt-20220801_002.pdf
+./2022/de/mediamarkt-20220821.pdf
+./2022/de/natl-20220801_002.pdf
+./2022/de/olymp-20220109.pdf
+./2022/de/olymp-20220505_001.pdf
+./2022/de/pc-20220414_002.pdf
+./2022/de/penny-20220603.pdf
+./2022/de/pizzaturm-20220416.pdf
+./2022/de/puskin-20220807.pdf
+./2022/de/rewe-20220609.pdf
+./2022/de/rewe-20220611_001.pdf
+./2022/de/rewe-20220617.pdf
+./2022/de/stadler-20220213.pdf
+./2022/de/toom-20220801_004.pdf
+./2022/es/bastard-20220610_003.pdf
+./2022/es/ca-20220610_001.pdf
+./2022/es/ca-20220610_004.pdf
+./2022/es/ciudad-20220610_004.pdf
+./2022/es/goiko-20220610_002.pdf
+./2022/es/grupo-20220610_010.pdf
+./2022/es/manolo-20220610.pdf
+./2022/es/metro-20220610_005.pdf
+./2022/es/metro-20220610_006.pdf
+./2022/es/metro-20220610_010.pdf
+./2022/es/pans-20220607_003.pdf
+./2022/es/pans-20220610_009.pdf
+./2022/es/pumma-20220610_008.pdf
+./2022/es/tgb-20220610_007.pdf
+./2022/ir/20220801_003.pdf
+./2022/ir/fiveguys-20220722_001.pdf
+./2022/ir/fiveguys-20220813.pdf
+./2022/ir/skan-20220801.pdf
