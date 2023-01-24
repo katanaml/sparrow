@@ -14,3 +14,9 @@ sparrow-ui/views/__pycache__/model_tuning.cpython-310.pyc
 sparrow-ui/views/__pycache__/settings.cpython-310.pyc
 sparrow-ui/.idea/vcs.xml
 *.pyc
+sparrow-data/.idea/inspectionProfiles/profiles_settings.xml
+sparrow-data/.idea/inspectionProfiles/Project_Default.xml
+sparrow-data/.idea/misc.xml
+sparrow-data/.idea/modules.xml
+sparrow-data/.idea/sparrow-data.iml
+sparrow-data/.idea/vcs.xml
