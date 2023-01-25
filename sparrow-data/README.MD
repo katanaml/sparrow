@@ -4,7 +4,21 @@
 
 This module implements data structure for Sparrow ML model fine-tuning. We are using list of invoices to build Hugging Face dataset. This dataset is used for Donut model fine-tuning.
 
-## Datasets info
+## Install
+
+1. Install
+
+```
+pip install -r requirements.txt
+```
+
+2. Install Poppler, required for pdf2image to work (macos example)
+
+```
+brew install poppler
+```
+
+## Dataset info
 
 - [Samples of electronic invoices](https://data.mendeley.com/datasets/tnj49gpmtz)
 - [Receipts](https://www.kaggle.com/jenswalter/receipts)
