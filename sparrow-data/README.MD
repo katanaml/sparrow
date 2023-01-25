@@ -18,6 +18,13 @@ pip install -r requirements.txt
 brew install poppler
 ```
 
+3. Mindee docTR OCR installation with dependencies
+
+```
+pip install torch torchvision torchaudio
+pip install python-doctr
+```
+
 ## Dataset info
 
 - [Samples of electronic invoices](https://data.mendeley.com/datasets/tnj49gpmtz)

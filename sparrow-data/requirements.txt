@@ -1,1 +1,5 @@
-pdf2image
+pdf2image==1.16.2
+torch==1.13.1
+python-doctr==0.6.0
+torchvision
+torchaudio
