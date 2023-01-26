@@ -9,7 +9,7 @@ class OCRExtractor:
     def __init__(self, det_arch, reco_arch, pretrained):
         self.model = ocr_predictor(det_arch, reco_arch, pretrained=pretrained)
 
-    def extract(self, file_path):
+    def extract(self, file_path, show_prediction=False):
         data_path = file_path + '/images/'
         ocr_path = file_path + '/ocr/'
 
@@ -22,5 +22,6 @@ class OCRExtractor:
             with open(ocr_path + data_file.replace('.jpg', '') + '.json', 'w') as f:
                 json.dump(result, f, indent=4)
 
-            # predictions.show(doc)
-            # break
+            if show_prediction:
+                predictions.show(doc)
+                break

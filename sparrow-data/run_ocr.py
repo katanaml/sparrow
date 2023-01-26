@@ -9,7 +9,7 @@ def main():
 
     # OCR
     ocr_extractor = OCRExtractor('db_resnet50', 'crnn_vgg16_bn', pretrained=True)
-    ocr_extractor.extract('docs/invoices')
+    ocr_extractor.extract('docs/invoices', show_prediction=False)
 
 if __name__ == '__main__':
     main()
