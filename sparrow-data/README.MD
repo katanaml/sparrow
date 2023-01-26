@@ -29,6 +29,7 @@ pip install python-doctr
 
 - [Samples of electronic invoices](https://data.mendeley.com/datasets/tnj49gpmtz)
 - [Receipts](https://www.kaggle.com/jenswalter/receipts)
+- [SROIE](https://github.com/zzzDavid/ICDAR-2019-SROIE)
 
 ## Author
 

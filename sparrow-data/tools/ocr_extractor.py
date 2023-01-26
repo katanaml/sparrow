@@ -1,6 +1,8 @@
 from doctr.io import DocumentFile
 from doctr.models import ocr_predictor
 import json
+import os
+from tqdm import tqdm
 
 
 class OCRExtractor:
@@ -8,10 +10,17 @@ class OCRExtractor:
         self.model = ocr_predictor(det_arch, reco_arch, pretrained=pretrained)
 
     def extract(self, file_path):
-        doc = DocumentFile.from_images(file_path)
-        predictions = self.model(doc)
+        data_path = file_path + '/images/'
+        ocr_path = file_path + '/ocr/'
 
-        result = predictions.export()
-        print(json.dumps(result, indent=4))
+        for data_file in tqdm(sorted((f for f in os.listdir(data_path) if not f.startswith(".")), key=str.lower)):
+            doc = DocumentFile.from_images(data_path + data_file)
+            predictions = self.model(doc)
 
-        predictions.show(doc)
+            result = predictions.export()
+            # write the result to a json file
+            with open(ocr_path + data_file.replace('.jpg', '') + '.json', 'w') as f:
+                json.dump(result, f, indent=4)
+
+            # predictions.show(doc)
+            # break
