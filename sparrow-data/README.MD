@@ -25,6 +25,20 @@ pip install torch torchvision torchaudio
 pip install python-doctr
 ```
 
+## Usage
+
+1. Run OCR on invoices with PDF conversion to JPG
+
+```
+python run_ocr.py
+```
+
+2. Run data conversion to Sparrow format
+
+```
+python run_converter.py
+```
+
 ## Dataset info
 
 - [Samples of electronic invoices](https://data.mendeley.com/datasets/tnj49gpmtz)
