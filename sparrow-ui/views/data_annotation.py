@@ -53,7 +53,7 @@ class DataAnnotation:
 
             placeholder_upload = st.empty()
 
-            file_names = self.get_existing_file_names('docs/image/')
+            file_names = self.get_existing_file_names('docs/images/')
 
             if 'annotation_index' not in st.session_state:
                 st.session_state['annotation_index'] = 0
@@ -67,8 +67,8 @@ class DataAnnotation:
             annotation_index = self.get_annotation_index(annotation_selection, file_names)
             st.session_state['annotation_index'] = annotation_index
 
-            file_extension = self.get_file_extension(annotation_selection, 'docs/image/')
-            model.img_file = f"docs/image/{annotation_selection}" + file_extension
+            file_extension = self.get_file_extension(annotation_selection, 'docs/images/')
+            model.img_file = f"docs/images/{annotation_selection}" + file_extension
             model.rects_file = f"docs/json/{annotation_selection}.json"
 
             st.subheader(model.subheader_2)
@@ -83,7 +83,7 @@ class DataAnnotation:
                     ret = self.upload_file(uploaded_file)
 
                     if ret is not False:
-                        file_names = self.get_existing_file_names('docs/image/')
+                        file_names = self.get_existing_file_names('docs/images/')
 
                         annotation_index = self.get_annotation_index(annotation_selection, file_names)
                         annotation_selection = placeholder_upload.selectbox(model.annotation_text, file_names,
@@ -293,7 +293,7 @@ class DataAnnotation:
 
     def upload_file(self, uploaded_file):
         if uploaded_file is not None:
-            if os.path.exists(os.path.join("docs/image/", uploaded_file.name)):
+            if os.path.exists(os.path.join("docs/images/", uploaded_file.name)):
                 st.write("File already exists")
                 return False
 
@@ -301,16 +301,16 @@ class DataAnnotation:
                 st.write("File name too long")
                 return False
 
-            with open(os.path.join("docs/image/", uploaded_file.name), "wb") as f:
+            with open(os.path.join("docs/images/", uploaded_file.name), "wb") as f:
                 f.write(uploaded_file.getbuffer())
 
-            img_file = Image.open(os.path.join("docs/image/", uploaded_file.name))
+            img_file = Image.open(os.path.join("docs/images/", uploaded_file.name))
 
             annotations_json = {
                 "meta": {
                     "version": "v0.1",
                     "split": "train",
-                    "image_id": len(self.get_existing_file_names("docs/image/")),
+                    "image_id": len(self.get_existing_file_names("docs/images/")),
                     "image_size": {
                         "width": img_file.width,
                         "height": img_file.height

@@ -1,5 +1,6 @@
 import os
 import json
+import math
 
 
 class DataConverter:
@@ -29,14 +30,24 @@ class DataConverter:
                 for block in page['blocks']:
                     for line in block['lines']:
                         for word in line['words']:
+
+                            len_x = dimensions[1]
+                            len_y = dimensions[0]
+                            (x1, y1) = word['geometry'][0]
+                            (x2, y2) = word['geometry'][1]
+                            x1 = math.floor(x1 * len_x)
+                            y1 = math.floor(y1 * len_y)
+                            x2 = math.ceil(x2 * len_x)
+                            y2 = math.ceil(y2 * len_y)
+
                             word_data = {
                                 "value": word['value'],
                                 "label": "",
                                 "rect": {
-                                    "x1": word['geometry'][0][0],
-                                    "y1": word['geometry'][0][1],
-                                    "x2": word['geometry'][1][0],
-                                    "y2": word['geometry'][1][1]
+                                    "x1": x1,
+                                    "y1": y1,
+                                    "x2": x2,
+                                    "y2": y2
                                 }
                             }
                             annotations_json['words'].append(word_data)
