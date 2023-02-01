@@ -6,6 +6,7 @@ from streamlit_sparrow_labeling import DataProcessor
 import json
 import math
 import os
+from natsort import natsorted
 
 
 class DataAnnotation:
@@ -166,7 +167,7 @@ class DataAnnotation:
 
                 with st.form(key="fields_form"):
                     if result_rects.current_rect_index is not None and result_rects.current_rect_index != -1:
-                        st.write(model.selected_field,
+                        st.write("**`" + model.selected_field + "`**",
                                  result_rects.rects_data['words'][result_rects.current_rect_index]['value'])
                         st.markdown("---")
 
@@ -231,16 +232,8 @@ class DataAnnotation:
                     self.render_form_element(rect, labels, i, result_rects, data_processor)
 
     def render_form_narrow(self, words, labels, result_rects, data_processor):
-        col1_form, col2_form = st.columns([1, 1])
-        num_rows = math.ceil(len(words) / 2)
-
         for i, rect in enumerate(words):
-            if i < num_rows:
-                with col1_form:
-                    self.render_form_element(rect, labels, i, result_rects, data_processor)
-            else:
-                with col2_form:
-                    self.render_form_element(rect, labels, i, result_rects, data_processor)
+            self.render_form_element(rect, labels, i, result_rects, data_processor)
 
     def render_form_mobile(self, words, labels, result_rects, data_processor):
         for i, rect in enumerate(words):
@@ -251,9 +244,9 @@ class DataAnnotation:
         if rect['label']:
             default_index = labels.index(rect['label'])
 
-        value = st.text_input("Value", rect['value'], key=f"field_value_{i}",
+        value = st.text_input("**`Value`**" if i == result_rects.current_rect_index else "Value", rect['value'], key=f"field_value_{i}",
                               disabled=False if i == result_rects.current_rect_index else True)
-        label = st.selectbox("Label", labels, key=f"label_{i}", index=default_index,
+        label = st.selectbox("**`Label`**" if i == result_rects.current_rect_index else "Label", labels, key=f"label_{i}", index=default_index,
                              disabled=False if i == result_rects.current_rect_index else True)
         st.markdown("---")
 
@@ -266,13 +259,13 @@ class DataAnnotation:
         elif doc_width_pct < 55:
             canvas_width_pct = 49
         else:
-            canvas_width_pct = 65
+            canvas_width_pct = 60
 
         if ui_width > 700 and canvas_width_pct == 37 and device_type == "desktop":
             return math.floor(canvas_width_pct * ui_width / 100), 4
         elif ui_width > 700 and canvas_width_pct == 49 and device_type == "desktop":
             return math.floor(canvas_width_pct * ui_width / 100), 5
-        elif ui_width > 700 and canvas_width_pct == 65 and device_type == "desktop":
+        elif ui_width > 700 and canvas_width_pct == 60 and device_type == "desktop":
             return math.floor(canvas_width_pct * ui_width / 100), 6
         else:
             if device_type == "desktop":
@@ -327,7 +320,7 @@ class DataAnnotation:
 
     def get_existing_file_names(self, dir_name):
         # get ordered list of files without file extension, excluding hidden files
-        return sorted([os.path.splitext(f)[0] for f in os.listdir(dir_name) if not f.startswith('.')])
+        return natsorted([os.path.splitext(f)[0] for f in os.listdir(dir_name) if not f.startswith('.')])
 
     def get_file_extension(self, file_name, dir_name):
         # get list of files, excluding hidden files
