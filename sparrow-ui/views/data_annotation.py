@@ -7,6 +7,8 @@ import json
 import math
 import os
 from natsort import natsorted
+from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode
+import pandas as pd
 
 
 class DataAnnotation:
@@ -118,7 +120,11 @@ class DataAnnotation:
                 with col1:
                     result_rects = self.render_doc(model, docImg, saved_state, mode, canvas_width, doc_height, doc_width)
                 with col2:
-                    self.render_form(model, result_rects, data_processor, number_of_columns, annotation_selection)
+                    tab1, tab2 = st.tabs(["Mapping", "Grouping"])
+                    with tab1:
+                        self.render_form(model, result_rects, data_processor, number_of_columns, annotation_selection)
+                    with tab2:
+                        self.group_annotations(result_rects)
             else:
                 result_rects = self.render_doc(model, docImg, saved_state, mode, canvas_width, doc_height, doc_width)
                 self.render_form(model, result_rects, data_processor, number_of_columns, annotation_selection)
@@ -331,4 +337,29 @@ class DataAnnotation:
 
     def get_annotation_index(self, file, files_list):
         return files_list.index(file)
+
+
+    def group_annotations(self, result_rects):
+        if result_rects is not None:
+            words = result_rects.rects_data['words']
+            data = []
+            for i, rect in enumerate(words):
+                data.append({'id': i, 'value': rect['value']})
+            df = pd.DataFrame(data)
+
+            gb = GridOptionsBuilder.from_dataframe(df)
+            gb.configure_selection(selection_mode="multiple", use_checkbox=True)
+            gb.configure_pagination(enabled=True, paginationAutoPageSize=False, paginationPageSize=40)
+            gb.configure_column("id", header_name="ID")
+            gb.configure_column("value", header_name="Value")
+            grid_options = gb.build()
+
+            response = AgGrid(df, gridOptions=grid_options, use_checkbox=True,
+                              columns_auto_size_mode=ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW)
+
+            print(response['selected_rows'])
+            v = response['selected_rows']
+            if v:
+                st.write('Selected rows')
+                st.dataframe(v)
 

@@ -4,3 +4,4 @@ streamlit-sparrow-labeling==0.1.1
 streamlit_nested_layout
 streamlit-javascript
 natsort
+streamlit-aggrid
