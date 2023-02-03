@@ -32,7 +32,7 @@ class Dashboard:
         titleDataAnnotation = "## Data Annotation"
 
     def view(self, model):
-        st.title(model.pageTitle)
+        # st.title(model.pageTitle)
 
         with st.container():
             col1, col2, col3, col4, col5 = st.columns(5)

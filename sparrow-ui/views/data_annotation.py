@@ -94,7 +94,7 @@ class DataAnnotation:
                                                                             help=model.annotation_selection_help)
                         st.session_state['annotation_index'] = annotation_index
 
-        st.title(model.pageTitle + " - " + annotation_selection)
+        # st.title(model.pageTitle + " - " + annotation_selection)
 
         if model.img_file is None:
             st.caption(model.no_annotation_file)
