@@ -409,8 +409,8 @@ class DataAnnotation:
 
                     result_rects.rects_data['words'] = words
 
-                    # with open(model.rects_file, "w") as f:
-                    #     json.dump(result_rects.rects_data, f, indent=2)
+                    with open(model.rects_file, "w") as f:
+                        json.dump(result_rects.rects_data, f, indent=2)
                     st.session_state[model.rects_file] = result_rects.rects_data
                     st.experimental_rerun()
 
