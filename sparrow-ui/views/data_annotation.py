@@ -72,12 +72,14 @@ class DataAnnotation:
             annotation_selection = placeholder_upload.selectbox(model.annotation_text, file_names,
                                                                 index=annotation_index,
                                                                 help=model.annotation_selection_help)
+
             annotation_index = self.get_annotation_index(annotation_selection, file_names)
-            st.session_state['annotation_index'] = annotation_index
 
             file_extension = self.get_file_extension(annotation_selection, 'docs/images/')
             model.img_file = f"docs/images/{annotation_selection}" + file_extension
             model.rects_file = f"docs/json/{annotation_selection}.json"
+
+            completed_check = st.empty()
 
             st.subheader(model.subheader_2)
 
@@ -106,6 +108,27 @@ class DataAnnotation:
             return
 
         saved_state = self.fetch_annotations(model.rects_file)
+
+        # annotation file has been changed
+        if annotation_index != st.session_state['annotation_index']:
+            annotation_v = saved_state['meta']['version']
+            if annotation_v == "v0.1":
+                st.session_state["annotation_done"] = False
+            else:
+                st.session_state["annotation_done"] = True
+        # store the annotation file index
+        st.session_state['annotation_index'] = annotation_index
+
+        with completed_check:
+            annotation_done = st.checkbox("Completed", help="File annotation is completed", key="annotation_done")
+            if annotation_done:
+                saved_state['meta']['version'] = "v1.0"
+            else:
+                saved_state['meta']['version'] = "v0.1"
+
+            with open(model.rects_file, "w") as f:
+                json.dump(saved_state, f, indent=2)
+            st.session_state[model.rects_file] = saved_state
 
         assign_labels = st.checkbox(model.assign_labels_text, True, help=model.assign_labels_help)
         mode = "transform" if assign_labels else "rect"
