@@ -47,8 +47,6 @@ class DataAnnotation:
 
         assign_labels_text = "Assign Labels"
         assign_labels_help = "Check to enable editing of labels and values"
-        save_help = "Save the annotations"
-        save_grouping_help = "Save the grouping"
 
         grouping_id = "ID"
         grouping_value = "Value"
@@ -153,10 +151,10 @@ class DataAnnotation:
                 with col1:
                     result_rects = self.render_doc(model, docImg, saved_state, mode, canvas_width, doc_height, doc_width)
                 with col2:
-                    tab1, tab2 = st.tabs(["Mapping", "Grouping"])
-                    with tab1:
+                    tab = st.radio("Select", ["Mapping", "Grouping"], horizontal=True, label_visibility="collapsed")
+                    if tab == "Mapping":
                         self.render_form(model, result_rects, data_processor, number_of_columns, annotation_selection)
-                    with tab2:
+                    else:
                         self.group_annotations(model, result_rects)
             else:
                 result_rects = self.render_doc(model, docImg, saved_state, mode, canvas_width, doc_height, doc_width)
@@ -193,22 +191,8 @@ class DataAnnotation:
     def render_form(self, model, result_rects, data_processor, number_of_columns, annotation_selection):
         with st.container():
             if result_rects is not None:
-                if len(result_rects.rects_data['words']) == 0:
-                    st.caption(model.no_annotation_mapping)
-                    return
-                else:
-                    with open(model.rects_file, 'rb') as file:
-                        st.download_button(label=model.download_text,
-                                           data=file,
-                                           file_name=annotation_selection + ".json",
-                                           mime='application/json',
-                                           help=model.download_hint)
-
                 with st.form(key="fields_form"):
-                    if result_rects.current_rect_index is not None and result_rects.current_rect_index != -1:
-                        st.write("**`" + model.selected_field + "`**",
-                                 result_rects.rects_data['words'][result_rects.current_rect_index]['value'])
-                        st.markdown("---")
+                    toolbar = st.empty()
 
                     if number_of_columns == 4:
                         self.render_form_wide(result_rects.rects_data['words'], model.labels, result_rects,
@@ -223,18 +207,30 @@ class DataAnnotation:
                         self.render_form_mobile(result_rects.rects_data['words'], model.labels, result_rects,
                                                 data_processor)
 
-                    submit = st.form_submit_button(model.save_text, type="primary", help=model.save_help)
-                    if submit:
-                        for word in result_rects.rects_data['words']:
-                            if len(word['value']) > 100:
-                                st.error(model.error_text)
-                                return
+                    with toolbar:
+                        submit = st.form_submit_button(model.save_text, type="primary")
+                        if submit:
+                            for word in result_rects.rects_data['words']:
+                                if len(word['value']) > 100:
+                                    st.error(model.error_text)
+                                    return
 
-                        with open(model.rects_file, "w") as f:
-                            json.dump(result_rects.rects_data, f, indent=2)
-                        st.session_state[model.rects_file] = result_rects.rects_data
-                        # st.write(model.saved_text)
-                        st.experimental_rerun()
+                            with open(model.rects_file, "w") as f:
+                                json.dump(result_rects.rects_data, f, indent=2)
+                            st.session_state[model.rects_file] = result_rects.rects_data
+                            # st.write(model.saved_text)
+                            st.experimental_rerun()
+
+                if len(result_rects.rects_data['words']) == 0:
+                    st.caption(model.no_annotation_mapping)
+                    return
+                else:
+                    with open(model.rects_file, 'rb') as file:
+                        st.download_button(label=model.download_text,
+                                           data=file,
+                                           file_name=annotation_selection + ".json",
+                                           mime='application/json',
+                                           help=model.download_hint)
 
     def render_form_wide(self, words, labels, result_rects, data_processor):
         col1_form, col2_form, col3_form, col4_form = st.columns([1, 1, 1, 1])
@@ -270,8 +266,40 @@ class DataAnnotation:
                     self.render_form_element(rect, labels, i, result_rects, data_processor)
 
     def render_form_narrow(self, words, labels, result_rects, data_processor):
+        data = []
         for i, rect in enumerate(words):
-            self.render_form_element(rect, labels, i, result_rects, data_processor)
+            data.append({'id': i, 'value': rect['value'], 'label': rect['label']})
+        df = pd.DataFrame(data)
+
+        formatter = {
+            'id': ('ID', {**PINLEFT, 'hide': True}),
+            'value': ('Value', PINLEFT),
+            'label': ('Label', {**PINLEFT, 'width': 80})
+        }
+
+        go = {
+            'rowClassRules': {
+                'row-selected': 'data.id === ' + str(result_rects.current_rect_index)
+            }
+        }
+
+        GREEN_LIGHT = "#abf7b1"
+        css = {
+            '.row-selected': {
+                'background-color': f'{GREEN_LIGHT} !important'
+            }
+        }
+
+        response = agstyler.draw_grid(
+            df,
+            formatter=formatter,
+            fit_columns=True,
+            grid_options=go,
+            css=css
+        )
+
+        # for i, rect in enumerate(words):
+        #     self.render_form_element(rect, labels, i, result_rects, data_processor)
 
     def render_form_mobile(self, words, labels, result_rects, data_processor):
         for i, rect in enumerate(words):
@@ -381,7 +409,7 @@ class DataAnnotation:
                 df = pd.DataFrame(data)
 
                 formatter = {
-                    'id': ('ID', PINLEFT),
+                    'id': ('ID', {**PINLEFT, 'width': 30}),
                     'value': ('Value', PINLEFT)
                 }
 
@@ -393,13 +421,13 @@ class DataAnnotation:
                     fit_columns=True,
                     selection='multiple',
                     use_checkbox='True',
-                    pagination_size=30
+                    pagination_size=40
                 )
 
                 rows = response['selected_rows']
 
                 with toolbar:
-                    submit = st.form_submit_button(model.save_text, type="primary", help=model.save_grouping_help)
+                    submit = st.form_submit_button(model.save_text, type="primary")
                     if submit and len(rows) > 0:
                         # check if there are gaps in the selected rows
                         if len(rows) > 1:
