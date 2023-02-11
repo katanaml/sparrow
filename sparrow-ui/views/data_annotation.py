@@ -8,6 +8,8 @@ import math
 import os
 from natsort import natsorted
 from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode
+from tools import agstyler
+from tools.agstyler import PINLEFT
 import pandas as pd
 
 
@@ -50,6 +52,9 @@ class DataAnnotation:
 
         grouping_id = "ID"
         grouping_value = "Value"
+
+        completed_text = "Completed"
+        completed_help = "Check to mark the annotation as completed"
 
         error_text = "Value is too long. Please shorten it."
         selection_must_be_continuous = "Please select continuous rows"
@@ -120,7 +125,7 @@ class DataAnnotation:
         st.session_state['annotation_index'] = annotation_index
 
         with completed_check:
-            annotation_done = st.checkbox("Completed", help="File annotation is completed", key="annotation_done")
+            annotation_done = st.checkbox(model.completed_text, help=model.completed_help, key="annotation_done")
             if annotation_done:
                 saved_state['meta']['version'] = "v1.0"
             else:
@@ -375,65 +380,72 @@ class DataAnnotation:
                     data.append({'id': i, 'value': rect['value']})
                 df = pd.DataFrame(data)
 
-                gb = GridOptionsBuilder.from_dataframe(df)
-                gb.configure_selection(selection_mode="multiple", use_checkbox=True)
-                gb.configure_pagination(enabled=True, paginationAutoPageSize=False, paginationPageSize=35)
-                gb.configure_column("id", header_name=model.grouping_id)
-                gb.configure_column("value", header_name=model.grouping_value)
-                grid_options = gb.build()
+                formatter = {
+                    'id': ('ID', PINLEFT),
+                    'value': ('Value', PINLEFT)
+                }
 
-                response = AgGrid(df, gridOptions=grid_options, use_checkbox=True,
-                                  columns_auto_size_mode=ColumnsAutoSizeMode.FIT_ALL_COLUMNS_TO_VIEW)
+                toolbar = st.empty()
+
+                response = agstyler.draw_grid(
+                    df,
+                    formatter=formatter,
+                    fit_columns=True,
+                    selection='multiple',
+                    use_checkbox='True',
+                    pagination_size=30
+                )
 
                 rows = response['selected_rows']
 
-                submit = st.form_submit_button(model.save_text, type="primary", help=model.save_grouping_help)
-                if submit and len(rows) > 0:
-                    # check if there are gaps in the selected rows
-                    if len(rows) > 1:
-                        for i in range(len(rows) - 1):
-                            if rows[i]['id'] + 1 != rows[i + 1]['id']:
-                                st.error(model.selection_must_be_continuous)
-                                return
+                with toolbar:
+                    submit = st.form_submit_button(model.save_text, type="primary", help=model.save_grouping_help)
+                    if submit and len(rows) > 0:
+                        # check if there are gaps in the selected rows
+                        if len(rows) > 1:
+                            for i in range(len(rows) - 1):
+                                if rows[i]['id'] + 1 != rows[i + 1]['id']:
+                                    st.error(model.selection_must_be_continuous)
+                                    return
 
-                    words = result_rects.rects_data['words']
-                    new_words_list = []
-                    coords = []
-                    for row in rows:
-                        word_value = words[row['id']]['value']
-                        rect = words[row['id']]['rect']
-                        coords.append(rect)
-                        new_words_list.append(word_value)
-                    # convert array to string
-                    new_word = " ".join(new_words_list)
+                        words = result_rects.rects_data['words']
+                        new_words_list = []
+                        coords = []
+                        for row in rows:
+                            word_value = words[row['id']]['value']
+                            rect = words[row['id']]['rect']
+                            coords.append(rect)
+                            new_words_list.append(word_value)
+                        # convert array to string
+                        new_word = " ".join(new_words_list)
 
-                    # Get min x1 value from coords array
-                    x1_min = min([coord['x1'] for coord in coords])
-                    y1_min = min([coord['y1'] for coord in coords])
-                    x2_max = max([coord['x2'] for coord in coords])
-                    y2_max = max([coord['y2'] for coord in coords])
+                        # Get min x1 value from coords array
+                        x1_min = min([coord['x1'] for coord in coords])
+                        y1_min = min([coord['y1'] for coord in coords])
+                        x2_max = max([coord['x2'] for coord in coords])
+                        y2_max = max([coord['y2'] for coord in coords])
 
 
-                    words[rows[0]['id']]['value'] = new_word
-                    words[rows[0]['id']]['rect'] = {
-                        "x1": x1_min,
-                        "y1": y1_min,
-                        "x2": x2_max,
-                        "y2": y2_max
-                    }
+                        words[rows[0]['id']]['value'] = new_word
+                        words[rows[0]['id']]['rect'] = {
+                            "x1": x1_min,
+                            "y1": y1_min,
+                            "x2": x2_max,
+                            "y2": y2_max
+                        }
 
-                    # loop array in reverse order and remove selected entries
-                    i = 0
-                    for row in rows[::-1]:
-                        if i == len(rows) - 1:
-                            break
-                        del words[row['id']]
-                        i += 1
+                        # loop array in reverse order and remove selected entries
+                        i = 0
+                        for row in rows[::-1]:
+                            if i == len(rows) - 1:
+                                break
+                            del words[row['id']]
+                            i += 1
 
-                    result_rects.rects_data['words'] = words
+                        result_rects.rects_data['words'] = words
 
-                    with open(model.rects_file, "w") as f:
-                        json.dump(result_rects.rects_data, f, indent=2)
-                    st.session_state[model.rects_file] = result_rects.rects_data
-                    st.experimental_rerun()
+                        with open(model.rects_file, "w") as f:
+                            json.dump(result_rects.rects_data, f, indent=2)
+                        st.session_state[model.rects_file] = result_rects.rects_data
+                        st.experimental_rerun()
 

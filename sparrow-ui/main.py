@@ -8,6 +8,7 @@ from views.data_annotation import DataAnnotation
 from views.model_training import ModelTraining
 from views.model_tuning import ModelTuning
 from views.data_extraction import DataExtraction
+from views.setup import Setup
 from views.settings import Settings
 from views.about import About
 
@@ -29,8 +30,9 @@ class Model:
     option3 = "Model Training"
     option4 = "Model Tuning"
     option5 = "Data Extraction"
-    option6 = "Settings"
-    option7 = "About"
+    option6 = "Data Setup"
+    option7 = "Settings"
+    option8 = "About"
 
     menuIcon = "menu-up"
     icon1 = "speedometer"
@@ -38,15 +40,16 @@ class Model:
     icon3 = "motherboard"
     icon4 = "graph-up-arrow"
     icon5 = "clipboard-data"
-    icon6 = "gear"
-    icon7 = "chat"
+    icon6 = "clipboard-data"
+    icon7 = "gear"
+    icon8 = "chat"
 
 
 def view(model):
     with st.sidebar:
         menuItem = option_menu(model.menuTitle,
-                               [model.option1, model.option2, model.option7],
-                               icons=[model.icon1, model.icon2, model.icon7],
+                               [model.option1, model.option2, model.option6, model.option8],
+                               icons=[model.icon1, model.icon2, model.icon6, model.icon8],
                                menu_icon=model.menuIcon,
                                default_index=0,
                                styles={
@@ -99,10 +102,14 @@ def view(model):
         logout_widget()
 
     if menuItem == model.option6:
-        Settings().view(Settings.Model())
+        Setup().view(Setup.Model())
         logout_widget()
 
     if menuItem == model.option7:
+        Settings().view(Settings.Model())
+        logout_widget()
+
+    if menuItem == model.option8:
         About().view(About.Model())
         logout_widget()
 
