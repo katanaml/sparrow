@@ -7,7 +7,6 @@ import json
 import math
 import os
 from natsort import natsorted
-from st_aggrid import AgGrid, GridOptionsBuilder, ColumnsAutoSizeMode
 from tools import agstyler
 from tools.agstyler import PINLEFT
 import pandas as pd
@@ -24,8 +23,9 @@ class DataAnnotation:
         text_caption_1 = "Check 'Assign Labels' to enable editing of labels and values, move and resize the boxes to annotate the document."
         text_caption_2 = "Add annotations by clicking and dragging on the document, when 'Assign Labels' is unchecked."
 
-        labels = ["", "item", "item_price", "subtotal", "tax", "total", "date_issued", "due_date", "invoice_number",
-                  "amount_due", "deposit_due"]
+        labels = ["", "invoice_no", "invoice_date", "seller", "client", "seller_tax_id", "client_tax_id", "iban", "item_desc",
+                  "item_qty", "item_net_price", "item_net_worth", "item_vat", "item_gross_worth", "total_net_worth", "total_vat",
+                  "total_gross_worth"]
 
         selected_field = "Selected Field: "
         save_text = "Save"
@@ -211,7 +211,7 @@ class DataAnnotation:
                         submit = st.form_submit_button(model.save_text, type="primary")
                         if submit:
                             for word in result_rects.rects_data['words']:
-                                if len(word['value']) > 100:
+                                if len(word['value']) > 1000:
                                     st.error(model.error_text)
                                     return
 
@@ -273,8 +273,14 @@ class DataAnnotation:
 
         formatter = {
             'id': ('ID', {**PINLEFT, 'hide': True}),
-            'value': ('Value', PINLEFT),
-            'label': ('Label', {**PINLEFT, 'width': 80})
+            'value': ('Value', {**PINLEFT, 'editable': True}),
+            'label': ('Label', {**PINLEFT,
+                                'width': 80,
+                                'editable': True,
+                                'cellEditor': 'agSelectCellEditor',
+                                'cellEditorParams': {
+                                    'values': labels
+                                }})
         }
 
         go = {
@@ -283,10 +289,10 @@ class DataAnnotation:
             }
         }
 
-        GREEN_LIGHT = "#abf7b1"
+        green_light = "#abf7b1"
         css = {
             '.row-selected': {
-                'background-color': f'{GREEN_LIGHT} !important'
+                'background-color': f'{green_light} !important'
             }
         }
 
@@ -298,8 +304,12 @@ class DataAnnotation:
             css=css
         )
 
-        # for i, rect in enumerate(words):
-        #     self.render_form_element(rect, labels, i, result_rects, data_processor)
+        data = response['data'].values.tolist()
+
+        for i, rect in enumerate(words):
+            value = data[i][1]
+            label = data[i][2]
+            data_processor.update_rect_data(result_rects.rects_data, i, value, label)
 
     def render_form_mobile(self, words, labels, result_rects, data_processor):
         for i, rect in enumerate(words):
