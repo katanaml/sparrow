@@ -153,12 +153,16 @@ class DataAnnotation:
                 with col2:
                     tab = st.radio("Select", ["Mapping", "Grouping"], horizontal=True, label_visibility="collapsed")
                     if tab == "Mapping":
-                        self.render_form(model, result_rects, data_processor, number_of_columns, annotation_selection)
+                        self.render_form(model, result_rects, data_processor, annotation_selection)
                     else:
                         self.group_annotations(model, result_rects)
             else:
                 result_rects = self.render_doc(model, docImg, saved_state, mode, canvas_width, doc_height, doc_width)
-                self.render_form(model, result_rects, data_processor, number_of_columns, annotation_selection)
+                tab = st.radio("Select", ["Mapping", "Grouping"], horizontal=True, label_visibility="collapsed")
+                if tab == "Mapping":
+                    self.render_form(model, result_rects, data_processor, annotation_selection)
+                else:
+                    self.group_annotations(model, result_rects)
 
     def render_doc(self, model, docImg, saved_state, mode, canvas_width, doc_height, doc_width):
         with st.container():
@@ -188,24 +192,14 @@ class DataAnnotation:
 
             return result_rects
 
-    def render_form(self, model, result_rects, data_processor, number_of_columns, annotation_selection):
+    def render_form(self, model, result_rects, data_processor, annotation_selection):
         with st.container():
             if result_rects is not None:
                 with st.form(key="fields_form"):
                     toolbar = st.empty()
 
-                    if number_of_columns == 4:
-                        self.render_form_wide(result_rects.rects_data['words'], model.labels, result_rects,
-                                              data_processor)
-                    elif number_of_columns == 5:
-                        self.render_form_avg(result_rects.rects_data['words'], model.labels, result_rects,
-                                             data_processor)
-                    elif number_of_columns == 6:
-                        self.render_form_narrow(result_rects.rects_data['words'], model.labels, result_rects,
-                                                data_processor)
-                    else:
-                        self.render_form_mobile(result_rects.rects_data['words'], model.labels, result_rects,
-                                                data_processor)
+                    self.render_form_view(result_rects.rects_data['words'], model.labels, result_rects,
+                                          data_processor)
 
                     with toolbar:
                         submit = st.form_submit_button(model.save_text, type="primary")
@@ -232,40 +226,7 @@ class DataAnnotation:
                                            mime='application/json',
                                            help=model.download_hint)
 
-    def render_form_wide(self, words, labels, result_rects, data_processor):
-        col1_form, col2_form, col3_form, col4_form = st.columns([1, 1, 1, 1])
-        num_rows = math.ceil(len(words) / 4)
-
-        for i, rect in enumerate(words):
-            if i < num_rows:
-                with col1_form:
-                    self.render_form_element(rect, labels, i, result_rects, data_processor)
-            elif i < num_rows * 2:
-                with col2_form:
-                    self.render_form_element(rect, labels, i, result_rects, data_processor)
-            elif i < num_rows * 3:
-                with col3_form:
-                    self.render_form_element(rect, labels, i, result_rects, data_processor)
-            else:
-                with col4_form:
-                    self.render_form_element(rect, labels, i, result_rects, data_processor)
-
-    def render_form_avg(self, words, labels, result_rects, data_processor):
-        col1_form, col2_form, col3_form = st.columns([1, 1, 1])
-        num_rows = math.ceil(len(words) / 3)
-
-        for i, rect in enumerate(words):
-            if i < num_rows:
-                with col1_form:
-                    self.render_form_element(rect, labels, i, result_rects, data_processor)
-            elif i < num_rows * 2:
-                with col2_form:
-                    self.render_form_element(rect, labels, i, result_rects, data_processor)
-            else:
-                with col3_form:
-                    self.render_form_element(rect, labels, i, result_rects, data_processor)
-
-    def render_form_narrow(self, words, labels, result_rects, data_processor):
+    def render_form_view(self, words, labels, result_rects, data_processor):
         data = []
         for i, rect in enumerate(words):
             data.append({'id': i, 'value': rect['value'], 'label': rect['label']})
@@ -310,23 +271,6 @@ class DataAnnotation:
             value = data[i][1]
             label = data[i][2]
             data_processor.update_rect_data(result_rects.rects_data, i, value, label)
-
-    def render_form_mobile(self, words, labels, result_rects, data_processor):
-        for i, rect in enumerate(words):
-            self.render_form_element(rect, labels, i, result_rects, data_processor)
-
-    def render_form_element(self, rect, labels, i, result_rects, data_processor):
-        default_index = 0
-        if rect['label']:
-            default_index = labels.index(rect['label'])
-
-        value = st.text_input("**`Value`**" if i == result_rects.current_rect_index else "Value", rect['value'], key=f"field_value_{i}",
-                              disabled=False if i == result_rects.current_rect_index else True)
-        label = st.selectbox("**`Label`**" if i == result_rects.current_rect_index else "Label", labels, key=f"label_{i}", index=default_index,
-                             disabled=False if i == result_rects.current_rect_index else True)
-        st.markdown("---")
-
-        data_processor.update_rect_data(result_rects.rects_data, i, value, label)
 
     def canvas_available_width(self, ui_width, doc_width, device_type, device_width):
         doc_width_pct = (doc_width * 100) / ui_width
@@ -419,7 +363,7 @@ class DataAnnotation:
                 df = pd.DataFrame(data)
 
                 formatter = {
-                    'id': ('ID', {**PINLEFT, 'width': 30}),
+                    'id': ('ID', {**PINLEFT, 'width': 50}),
                     'value': ('Value', PINLEFT)
                 }
 
@@ -486,4 +430,3 @@ class DataAnnotation:
                             json.dump(result_rects.rects_data, f, indent=2)
                         st.session_state[model.rects_file] = result_rects.rects_data
                         st.experimental_rerun()
-
