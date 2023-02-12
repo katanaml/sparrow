@@ -7,11 +7,11 @@ class Dashboard:
     class Model:
         pageTitle = "Dashboard"
 
-        documentsTitle = "Documents"
+        documentsTitle = "Pages"
         documentsCount = "10.5K"
         documentsDelta = "125"
 
-        annotationsTitle = "Annotations"
+        annotationsTitle = "Documents"
         annotationsCount = "510"
         annotationsDelta = "-2"
 
