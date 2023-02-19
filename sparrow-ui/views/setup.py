@@ -3,6 +3,7 @@ import json
 import pandas as pd
 from tools import agstyler
 from tools.agstyler import PINLEFT
+from toolbar import component_toolbar_buttons
 
 
 class Setup:
@@ -33,15 +34,28 @@ class Setup:
             'description': ('Description', {**PINLEFT, 'editable': True})
         }
 
-        st.button("Create")
-        st.button("Delete")
-        st.button("Save", type="primary")
+        def run_component(props):
+            value = component_toolbar_buttons(key='toolbar_buttons', **props)
+            return value
+
+        def handle_event(value):
+            st.write('Received from component: ', value)
+
+        props = {
+            'buttons': {
+                'create': False,
+                'delete': False,
+                'save': False,
+            }
+        }
+
+        handle_event(run_component(props))
 
         response = agstyler.draw_grid(
             df,
             formatter=formatter,
             fit_columns=True,
-            pagination_size=30,
+            pagination_size=10,
             selection="single",
             use_checkbox=False
         )
