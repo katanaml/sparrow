@@ -1,84 +1,84 @@
 {
   "labels": [
     {
-        "id": 1,
-        "name": "invoice_no",
-        "description": "Invoice Number"
+      "id": 1,
+      "name": "invoice_no",
+      "description": "Invoice Number"
     },
     {
-        "id": 2,
-        "name": "invoice_date",
-        "description": "Invoice Date"
+      "id": 2,
+      "name": "invoice_date",
+      "description": "Invoice Date"
     },
     {
-        "id": 3,
-        "name": "seller",
-        "description": "Seller"
+      "id": 3,
+      "name": "seller",
+      "description": "Seller"
     },
     {
-        "id": 4,
-        "name": "client",
-        "description": "Client"
+      "id": 4,
+      "name": "client",
+      "description": "Client"
     },
     {
-        "id": 5,
-        "name": "seller_tax_id",
-        "description": "Seller Tax ID"
+      "id": 5,
+      "name": "seller_tax_id",
+      "description": "Seller Tax ID"
     },
     {
-        "id": 6,
-        "name": "client_tax_id",
-        "description": "Client Tax ID"
+      "id": 6,
+      "name": "client_tax_id",
+      "description": "Client Tax ID"
     },
     {
-        "id": 7,
-        "name": "iban",
-        "description": "IBAN"
+      "id": 7,
+      "name": "iban",
+      "description": "IBAN"
     },
     {
-        "id": 8,
-        "name": "item_desc",
-        "description": "Item Description"
+      "id": 8,
+      "name": "item_desc",
+      "description": "Item Description"
     },
     {
-        "id": 9,
-        "name": "item_qty",
-        "description": "Item Quantity"
+      "id": 9,
+      "name": "item_qty",
+      "description": "Item Quantity"
     },
     {
-        "id": 10,
-        "name": "item_net_price",
-        "description": "Item Net Price"
+      "id": 10,
+      "name": "item_net_price",
+      "description": "Item Net Price"
     },
     {
-        "id": 11,
-        "name": "item_net_worth",
-        "description": "Item Net Worth"
+      "id": 11,
+      "name": "item_net_worth",
+      "description": "Item Net Worth"
     },
     {
-        "id": 12,
-        "name": "item_vat",
-        "description": "Item VAT"
+      "id": 12,
+      "name": "item_vat",
+      "description": "Item VAT"
     },
     {
-        "id": 13,
-        "name": "item_gross_worth",
-        "description": "Item Gross Worth"
+      "id": 13,
+      "name": "item_gross_worth",
+      "description": "Item Gross Worth"
     },
     {
-        "id": 14,
-        "name": "total_net_worth",
-        "description": "Total Net Worth"
+      "id": 14,
+      "name": "total_net_worth",
+      "description": "Total Net Worth"
     },
     {
-        "id": 15,
-        "name": "total_vat",
-        "description": "Total VAT"
+      "id": 15,
+      "name": "total_vat",
+      "description": "Total VAT"
     },
     {
-        "id": 16,
-        "name": "total_gross_worth",
-        "description": "Total Gross Worth"
+      "id": 16,
+      "name": "total_gross_worth",
+      "description": "Total Gross Worth"
     }
   ]
 }

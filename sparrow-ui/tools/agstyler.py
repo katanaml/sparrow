@@ -58,7 +58,8 @@ def draw_grid(
         fit_columns_on_grid_load=fit_columns,
         theme=theme,
         key=key,
-        custom_css=css
+        custom_css=css,
+        enable_enterprise_modules=False
     )
 
 

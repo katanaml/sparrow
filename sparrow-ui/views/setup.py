@@ -13,11 +13,14 @@ class Setup:
         labels_file = "docs/labels.json"
 
     def view(self, model):
-        st.title(model.pageTitle)
+        # st.title(model.pageTitle)
 
         self.setup_labels(model)
 
     def setup_labels(self, model):
+        if 'action' not in st.session_state:
+            st.session_state['action'] = None
+
         with open(model.labels_file, "r") as f:
             labels_json = json.load(f)
 
@@ -26,7 +29,7 @@ class Setup:
         data = []
         for label in labels:
             data.append({'id': label['id'], 'name': label['name'], 'description': label['description']})
-        df = pd.DataFrame(data)
+        self.df = pd.DataFrame(data)
 
         formatter = {
             'id': ('ID', {'hide': True}),
@@ -39,7 +42,24 @@ class Setup:
             return value
 
         def handle_event(value):
-            st.write('Received from component: ', value)
+            if value is not None and value['action'] == 'create':
+                if st.session_state['action'] != 'delete':
+                    max_id = self.df['id'].max()
+                    self.df.loc[-1] = [max_id + 1, '', '']  # adding a row
+                    self.df.index = self.df.index + 1  # shifting index
+                    self.df.sort_index(inplace=True)
+                    st.session_state['action'] = 'create'
+            elif value is not None and value['action'] == 'delete':
+                if st.session_state['action'] != 'delete' and st.session_state['action'] != 'create':
+                    rows = st.session_state['selected_rows']
+                    if len(rows) > 0:
+                        idx = rows[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                        self.df.drop(self.df.index[idx], inplace=True)
+                        self.df.reset_index(drop=True, inplace=True)
+
+                    st.session_state['action'] = 'delete'
+            elif value is not None and value['action'] == 'save':
+                st.session_state['action'] = 'save'
 
         props = {
             'buttons': {
@@ -51,11 +71,40 @@ class Setup:
 
         handle_event(run_component(props))
 
+        if st.session_state['action'] == 'save' and st.session_state['response'] is not None:
+            self.df = st.session_state['response']
+            st.session_state['response'] = None
+
+        if st.session_state['action'] == 'create' and 'response' in st.session_state:
+            if st.session_state['response'] is not None:
+                self.df = st.session_state['response']
+
+        if st.session_state['action'] == 'delete' and 'response' in st.session_state:
+            if st.session_state['response'] is not None:
+                self.df = st.session_state['response']
+
         response = agstyler.draw_grid(
-            df,
+            self.df,
             formatter=formatter,
             fit_columns=True,
             pagination_size=10,
             selection="single",
             use_checkbox=False
         )
+
+        rows = response['selected_rows']
+        st.session_state['selected_rows'] = rows
+
+        if st.session_state['action'] == 'create':
+            st.session_state['response'] = response['data']
+        elif st.session_state['action'] == 'delete':
+            st.session_state['response'] = response['data']
+        elif st.session_state['action'] == 'save':
+            data = response['data'].values.tolist()
+            rows = []
+            for row in data:
+                rows.append({'id': row[0], 'name': row[1], 'description': row[2]})
+
+            labels_json['labels'] = rows
+            with open(model.labels_file, "w") as f:
+                json.dump(labels_json, f, indent=2)
