@@ -132,6 +132,14 @@ class DataAnnotation:
         # store the annotation file index
         st.session_state['annotation_index'] = annotation_index
 
+        # first load
+        if "annotation_done" not in st.session_state:
+            annotation_v = saved_state['meta']['version']
+            if annotation_v == "v0.1":
+                st.session_state["annotation_done"] = False
+            else:
+                st.session_state["annotation_done"] = True
+
         with completed_check:
             annotation_done = st.checkbox(model.completed_text, help=model.completed_help, key="annotation_done")
             if annotation_done:
