@@ -82,8 +82,9 @@ class Setup:
 
         handle_event(run_component(props))
 
-        if st.session_state['action'] == 'save' and st.session_state['response'] is not None:
-            self.df = st.session_state['response']
+        if st.session_state['action'] == 'save' and 'response' in st.session_state:
+            if st.session_state['response'] is not None:
+                self.df = st.session_state['response']
             st.session_state['response'] = None
 
         if st.session_state['action'] == 'create' and 'response' in st.session_state:

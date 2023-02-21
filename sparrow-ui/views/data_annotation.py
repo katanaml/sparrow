@@ -18,6 +18,7 @@ class DataAnnotation:
 
         img_file = None
         rects_file = None
+        labels_file = "docs/labels.json"
 
         assign_labels_text = "Assign Labels"
         text_caption_1 = "Check 'Assign Labels' to enable editing of labels and values, move and resize the boxes to annotate the document."
@@ -58,6 +59,15 @@ class DataAnnotation:
         selection_must_be_continuous = "Please select continuous rows"
 
     def view(self, model, ui_width, device_type, device_width):
+        with open(model.labels_file, "r") as f:
+            labels_json = json.load(f)
+
+        labels_list = labels_json["labels"]
+        labels = ['']
+        for label in labels_list:
+            labels.append(label['name'])
+        model.labels = labels
+
         with st.sidebar:
             st.markdown("---")
             st.subheader(model.subheader_1)
