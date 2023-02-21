@@ -1,6 +1,9 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
+import os
+import json
+import altair as alt
 
 
 class Dashboard:
@@ -30,6 +33,9 @@ class Dashboard:
         titleDataExtraction = "## Data Extraction"
         titleModelTraining = "## Model Training"
         titleDataAnnotation = "## Data Annotation"
+
+        status_file = "docs/status.json"
+        annotation_files_dir = "docs/json"
 
     def view(self, model):
         # st.title(model.pageTitle)
@@ -79,8 +85,43 @@ class Dashboard:
                 with st.container():
                     st.write(model.titleDataAnnotation)
 
-                    chart_data = pd.DataFrame(
-                        np.random.randn(20, 3),
-                        columns=['a', 'b', 'c'])
+                    total, completed, in_progress = self.render_annotation_stats(model)
 
-                    st.area_chart(chart_data)
+                    source = pd.DataFrame({"Status": ["Completed", "In Progress"], "value": [completed, in_progress]})
+
+                    c = alt.Chart(source).mark_arc().encode(
+                        theta=alt.Theta(field="value", type="quantitative"),
+                        color=alt.Color(field="Status", type="nominal"),
+                    )
+
+                    st.altair_chart(c, use_container_width=True)
+
+    def render_annotation_stats(self, model):
+        completed = 0
+        in_progress = 0
+
+        files = [f for f in os.listdir(model.annotation_files_dir) if not f.startswith('.')]
+        for f in files:
+            with open(os.path.join(model.annotation_files_dir, f), "r") as f:
+                data = json.load(f)
+                v = data['meta']['version']
+                if v == 'v0.1':
+                    in_progress += 1
+                else:
+                    completed += 1
+        total = completed + in_progress
+
+        status_json = {
+            "annotations": [
+                {
+                    "completed": completed,
+                    "in_progress": in_progress,
+                    "total": total
+                }
+            ]
+        }
+
+        with open(model.status_file, "w") as f:
+            json.dump(status_json, f, indent=2)
+
+        return total, completed, in_progress
