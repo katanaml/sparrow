@@ -13,7 +13,7 @@ class Setup:
         labels_file = "docs/labels.json"
 
     def view(self, model):
-        # st.title(model.pageTitle)
+        st.title(model.pageTitle)
 
         self.setup_labels(model)
 
