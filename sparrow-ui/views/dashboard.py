@@ -72,7 +72,7 @@ class Dashboard:
         st.markdown("---")
 
         with st.container():
-            col1, col2, col3 = st.columns(3)
+            col1, col2 = st.columns(2)
 
             with col1:
                 with st.container():
@@ -89,7 +89,7 @@ class Dashboard:
 
                     source = pd.DataFrame({"Status": ["Completed", "In Progress"], "value": [completed, in_progress]})
 
-                    c = alt.Chart(source).mark_arc().encode(
+                    c = alt.Chart(source).mark_arc(innerRadius=50).encode(
                         theta=alt.Theta(field="value", type="quantitative"),
                         color=alt.Color(field="Status", type="nominal"),
                     )
