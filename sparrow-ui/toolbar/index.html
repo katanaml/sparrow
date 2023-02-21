@@ -104,8 +104,10 @@ Your custom static HTML goes in the body:
   // Your custom functionality for the component goes here:
 
   function call(button) {
+    timestamp = Date.now()
     action = {
       "action": button.id,
+      "timestamp": timestamp
     }
     notifyHost({
       value: action,

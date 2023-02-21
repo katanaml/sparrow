@@ -18,6 +18,7 @@ class Setup:
         self.setup_labels(model)
 
     def setup_labels(self, model):
+        self.action_event = False
         if 'action' not in st.session_state:
             st.session_state['action'] = None
 
@@ -42,23 +43,33 @@ class Setup:
             return value
 
         def handle_event(value):
-            if value is not None and value['action'] == 'create':
+            if value is not None:
+                if 'action_timestamp' not in st.session_state:
+                    self.action_event = True
+                    st.session_state['action_timestamp'] = value['timestamp']
+                else:
+                    if st.session_state['action_timestamp'] != value['timestamp']:
+                        self.action_event = True
+                        st.session_state['action_timestamp'] = value['timestamp']
+                    else:
+                        self.action_event = False
+
+            if value is not None and value['action'] == 'create' and self.action_event:
                 if st.session_state['action'] != 'delete':
                     max_id = self.df['id'].max()
                     self.df.loc[-1] = [max_id + 1, '', '']  # adding a row
                     self.df.index = self.df.index + 1  # shifting index
                     self.df.sort_index(inplace=True)
                     st.session_state['action'] = 'create'
-            elif value is not None and value['action'] == 'delete':
+            elif value is not None and value['action'] == 'delete' and self.action_event:
                 if st.session_state['action'] != 'delete' and st.session_state['action'] != 'create':
                     rows = st.session_state['selected_rows']
                     if len(rows) > 0:
                         idx = rows[0]['_selectedRowNodeInfo']['nodeRowIndex']
                         self.df.drop(self.df.index[idx], inplace=True)
                         self.df.reset_index(drop=True, inplace=True)
-
                     st.session_state['action'] = 'delete'
-            elif value is not None and value['action'] == 'save':
+            elif value is not None and value['action'] == 'save' and self.action_event:
                 st.session_state['action'] = 'save'
 
         props = {
@@ -95,11 +106,11 @@ class Setup:
         rows = response['selected_rows']
         st.session_state['selected_rows'] = rows
 
-        if st.session_state['action'] == 'create':
+        if st.session_state['action'] == 'create' and self.action_event:
             st.session_state['response'] = response['data']
-        elif st.session_state['action'] == 'delete':
+        elif st.session_state['action'] == 'delete' and self.action_event:
             st.session_state['response'] = response['data']
-        elif st.session_state['action'] == 'save':
+        elif st.session_state['action'] == 'save' and self.action_event:
             data = response['data'].values.tolist()
             rows = []
             for row in data:
