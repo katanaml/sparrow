@@ -33,6 +33,7 @@ class Dashboard:
         titleDataExtraction = "## Data Extraction"
         titleModelTraining = "## Model Training"
         titleDataAnnotation = "## Data Annotation"
+        titleDocumentTypes = "## Document Types"
 
         status_file = "docs/status.json"
         annotation_files_dir = "docs/json"
@@ -72,20 +73,13 @@ class Dashboard:
         st.markdown("---")
 
         with st.container():
-            col1, col2 = st.columns(2)
+            col1, col2, col3 = st.columns(3)
 
             with col1:
                 with st.container():
-                    st.write(model.titleModelTraining)
-
-                    # You can call any Streamlit command, including custom components:
-                    st.bar_chart(np.random.randn(50, 3))
-
-            with col2:
-                with st.container():
                     st.write(model.titleDataAnnotation)
 
-                    total, completed, in_progress = self.render_annotation_stats(model)
+                    total, completed, in_progress = self.calculate_annotation_stats(model)
 
                     source = pd.DataFrame({"Status": ["Completed", "In Progress"], "value": [completed, in_progress]})
 
@@ -93,10 +87,32 @@ class Dashboard:
                         theta=alt.Theta(field="value", type="quantitative"),
                         color=alt.Color(field="Status", type="nominal"),
                     )
+                    st.altair_chart(c, use_container_width=True)
+            with col2:
+                with st.container():
+                    st.write(model.titleModelTraining)
 
+                    source = pd.DataFrame({"Status": ["Running", "Failed", "Successful"], "value": [2, 10, 14]})
+
+                    c = alt.Chart(source).mark_arc(innerRadius=50).encode(
+                        theta=alt.Theta(field="value", type="quantitative"),
+                        color=alt.Color(field="Status", type="nominal"),
+                    )
+                    st.altair_chart(c, use_container_width=True)
+            with col3:
+                with st.container():
+                    st.write(model.titleDocumentTypes)
+
+                    source = pd.DataFrame({"Types": ["Receipt", "Invoice", "General Form", "Claim"], "value": [22, 130, 5, 44]})
+
+                    c = alt.Chart(source).mark_arc(innerRadius=50).encode(
+                        theta=alt.Theta(field="value", type="quantitative"),
+                        color=alt.Color(field="Types", type="nominal"),
+                    )
                     st.altair_chart(c, use_container_width=True)
 
-    def render_annotation_stats(self, model):
+
+    def calculate_annotation_stats(self, model):
         completed = 0
         in_progress = 0
 
