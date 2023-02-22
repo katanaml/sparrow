@@ -1,8 +1,8 @@
 {
   "annotations": [
     {
-      "completed": 0,
-      "in_progress": 1000,
+      "completed": 1,
+      "in_progress": 999,
       "total": 1000
     }
   ]
