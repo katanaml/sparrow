@@ -49,6 +49,10 @@ class DataAnnotation:
         assign_labels_text = "Assign Labels"
         assign_labels_help = "Check to enable editing of labels and values"
 
+        export_labels_text = "Export Labels"
+        export_labels_help = "Create key-value pairs for the labels in JSON format"
+        done_text = "Done"
+
         grouping_id = "ID"
         grouping_value = "Value"
 
@@ -93,6 +97,11 @@ class DataAnnotation:
             model.rects_file = f"docs/json/{annotation_selection}.json"
 
             completed_check = st.empty()
+
+            btn = st.button(model.export_labels_text)
+            if btn:
+                self.export_labels(model)
+                st.write(model.done_text)
 
             st.subheader(model.subheader_2)
 
@@ -448,3 +457,27 @@ class DataAnnotation:
                             json.dump(result_rects.rects_data, f, indent=2)
                         st.session_state[model.rects_file] = result_rects.rects_data
                         st.experimental_rerun()
+
+
+    def export_labels(self, model):
+        path_from = os.path.join("docs/json/")
+        path_to = os.path.join("docs/json/key/")
+
+        files = [f for f in os.listdir(path_from) if not f.startswith('.')]
+        for file in files:
+            path = os.path.join(path_from, file)
+            if os.path.isfile(path):
+                with open(path, "r") as f:
+                    data = json.load(f)
+                    words = data['words']
+
+                    keys = {}
+
+                    for word in words:
+                        if word['label'] != '':
+                            keys[word['label']] = word['value']
+
+                    if keys != {}:
+                        path = os.path.join(path_to, file)
+                        with open(path, "w") as f:
+                            json.dump(keys, f, indent=2)
