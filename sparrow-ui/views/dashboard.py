@@ -4,6 +4,7 @@ import pandas as pd
 import os
 import json
 import altair as alt
+from pathlib import Path
 
 
 class Dashboard:
@@ -115,10 +116,10 @@ class Dashboard:
     def calculate_annotation_stats(self, model):
         completed = 0
         in_progress = 0
+        data_dir_path = Path(model.annotation_files_dir)
 
-        files = [f for f in os.listdir(model.annotation_files_dir) if not f.startswith('.')]
-        for f in files:
-            with open(os.path.join(model.annotation_files_dir, f), "r") as f:
+        for file_name in data_dir_path.glob("*.json"):
+            with open(file_name, "r") as f:
                 data = json.load(f)
                 v = data['meta']['version']
                 if v == 'v0.1':
