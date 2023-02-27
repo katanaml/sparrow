@@ -12,4 +12,5 @@ class PDFConverter:
             pages = convert_from_path(pdf_path + '/' + pdf_file, 300)
             # save the jpg file
             for page in pages:
+                # this assumes that we work with single page docs, add a loop if you need to work with multi-page docs
                 page.save(jpg_path + '/' + pdf_file.replace('.pdf', '') + '.jpg', 'JPEG')
