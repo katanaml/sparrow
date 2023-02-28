@@ -29,6 +29,9 @@ class DataAnnotation:
                   "item_qty", "item_net_price", "item_net_worth", "item_vat", "item_gross_worth", "total_net_worth", "total_vat",
                   "total_gross_worth"]
 
+        groups = ["", "items_row1", "items_row2", "items_row3", "items_row4", "items_row5", "items_row6", "items_row7",
+                  "items_row8", "items_row9", "items_row10", "summary"]
+
         selected_field = "Selected Field: "
         save_text = "Save"
         saved_text = "Saved!"
@@ -186,7 +189,7 @@ class DataAnnotation:
                     elif tab == "Grouping":
                         self.group_annotations(model, result_rects)
                     elif tab == "Ordering":
-                        self.order_annotations(model, model.labels, result_rects)
+                        self.order_annotations(model, model.labels, model.groups, result_rects)
             else:
                 result_rects = self.render_doc(model, docImg, saved_state, mode, canvas_width, doc_height, doc_width)
                 tab = st.radio("Select", ["Mapping", "Grouping"], horizontal=True, label_visibility="collapsed")
@@ -260,7 +263,8 @@ class DataAnnotation:
     def render_form_view(self, words, labels, result_rects, data_processor):
         data = []
         for i, rect in enumerate(words):
-            data.append({'id': i, 'value': rect['value'], 'label': rect['label']})
+            group, label = rect['label'].split(":", 1) if ":" in rect['label'] else (None, rect['label'])
+            data.append({'id': i, 'value': rect['value'], 'label': label})
         df = pd.DataFrame(data)
 
         formatter = {
@@ -463,14 +467,16 @@ class DataAnnotation:
                         st.experimental_rerun()
 
 
-    def order_annotations(self, model, labels, result_rects):
+    def order_annotations(self, model, labels, groups, result_rects):
         if result_rects is not None:
             self.action_event = None
             data = []
             words = result_rects.rects_data['words']
             for i, rect in enumerate(words):
                 if rect['label'] != "":
-                    data.append({'id': i, 'value': rect['value'], 'label': rect['label']})
+                    # split string into two variables, assign None to first variable if no split is found
+                    group, label = rect['label'].split(":", 1) if ":" in rect['label'] else (None, rect['label'])
+                    data.append({'id': i, 'value': rect['value'], 'label': label, 'group': group})
             df = pd.DataFrame(data)
 
             formatter = {
@@ -482,6 +488,13 @@ class DataAnnotation:
                                     'cellEditor': 'agSelectCellEditor',
                                     'cellEditorParams': {
                                         'values': labels
+                                    }}),
+                'group': ('Group', {**PINLEFT,
+                                    'width': 50,
+                                    'editable': True,
+                                    'cellEditor': 'agSelectCellEditor',
+                                    'cellEditorParams': {
+                                        'values': groups
                                     }})
             }
 
@@ -547,14 +560,45 @@ class DataAnnotation:
             if str(self.action_event) == 'up':
                 if len(rows) > 0:
                     idx = rows[0]['_selectedRowNodeInfo']['nodeRowIndex']
-                    print(idx)
-                # if result_rects.current_rect_index > 0:
-                #     words = result_rects.rects_data['words']
-                #     words[result_rects.current_rect_index], words[result_rects.current_rect_index - 1] = \
-                #         words[result_rects.current_rect_index - 1], words[result_rects.current_rect_index]
-                #     result_rects.current_rect_index -= 1
-                #     st.session_state[model.rects_file] = result_rects.rects_data
-                #     st.experimental_rerun()
+                    if idx > 0:
+                        row_id = rows[0]['id']
+                        # swap row upwards in the array
+                        words[row_id], words[row_id - 1] = words[row_id - 1], words[row_id]
+
+                        result_rects.rects_data['words'] = words
+
+                        with open(model.rects_file, "w") as f:
+                            json.dump(result_rects.rects_data, f, indent=2)
+                        st.session_state[model.rects_file] = result_rects.rects_data
+                        st.experimental_rerun()
+            elif str(self.action_event) == 'down':
+                if len(rows) > 0:
+                    idx = rows[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                    if idx < len(words) - 1:
+                        row_id = rows[0]['id']
+                        # swap row downwards in the array
+                        words[row_id], words[row_id + 1] = words[row_id + 1], words[row_id]
+
+                        result_rects.rects_data['words'] = words
+
+                        with open(model.rects_file, "w") as f:
+                            json.dump(result_rects.rects_data, f, indent=2)
+                        st.session_state[model.rects_file] = result_rects.rects_data
+                        st.experimental_rerun()
+            elif str(self.action_event) == 'save':
+                data = response['data'].values.tolist()
+                for elem in data:
+                    if elem[3] != "None":
+                        idx = elem[0]
+                        group = elem[3]
+                        words[idx]['label'] = f"{group}:{elem[2]}"
+
+                result_rects.rects_data['words'] = words
+
+                with open(model.rects_file, "w") as f:
+                    json.dump(result_rects.rects_data, f, indent=2)
+                st.session_state[model.rects_file] = result_rects.rects_data
+                st.experimental_rerun()
 
 
     def export_labels(self, model):
