@@ -12,6 +12,10 @@
 
 ![Sparrow Annotation](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/annotation.png)
 
+#### Labels/Groups CRUD UI:
+
+![Sparrow CRUD](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/crud.png)
+
 ## Instructions
 
 1. Install
