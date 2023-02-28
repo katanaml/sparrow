@@ -251,16 +251,6 @@
     },
     {
       "rect": {
-        "x1": 1007,
-        "y1": 1394,
-        "x2": 1094,
-        "y2": 1446
-      },
-      "value": "1,00",
-      "label": "item_qty"
-    },
-    {
-      "rect": {
         "x1": 1155,
         "y1": 1398,
         "x2": 1242,
@@ -351,16 +341,6 @@
     },
     {
       "rect": {
-        "x1": 2169,
-        "y1": 1394,
-        "x2": 2256,
-        "y2": 1446
-      },
-      "value": "8,25",
-      "label": "item_gross_worth"
-    },
-    {
-      "rect": {
         "x1": 249,
         "y1": 1398,
         "x2": 294,
@@ -377,7 +357,17 @@
         "y2": 1528
       },
       "value": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
-      "label": "item_desc"
+      "label": "items_row1:item_desc"
+    },
+    {
+      "rect": {
+        "x1": 1007,
+        "y1": 1394,
+        "x2": 1094,
+        "y2": 1446
+      },
+      "value": "1,00",
+      "label": "items_row1:item_qty"
     },
     {
       "rect": {
@@ -387,7 +377,7 @@
         "y2": 1446
       },
       "value": "7,50",
-      "label": "item_net_price"
+      "label": "items_row1:item_net_price"
     },
     {
       "rect": {
@@ -397,7 +387,7 @@
         "y2": 1446
       },
       "value": "7,50",
-      "label": "item_net_worth"
+      "label": "items_row1:item_net_worth"
     },
     {
       "rect": {
@@ -407,7 +397,17 @@
         "y2": 1439
       },
       "value": "10%",
-      "label": "item_vat"
+      "label": "items_row1:item_vat"
+    },
+    {
+      "rect": {
+        "x1": 2169,
+        "y1": 1394,
+        "x2": 2256,
+        "y2": 1446
+      },
+      "value": "8,25",
+      "label": "items_row1:item_gross_worth"
     },
     {
       "rect": {
@@ -487,7 +487,7 @@
         "y2": 1980
       },
       "value": "$7,50",
-      "label": "total_net_worth"
+      "label": "summary:total_net_worth"
     },
     {
       "rect": {
@@ -517,7 +517,7 @@
         "y2": 1974
       },
       "value": "$0,75",
-      "label": "total_vat"
+      "label": "summary:total_vat"
     },
     {
       "rect": {
@@ -557,7 +557,7 @@
         "y2": 1974
       },
       "value": "$8,25",
-      "label": "total_gross_worth"
+      "label": "summary:total_gross_worth"
     },
     {
       "rect": {
