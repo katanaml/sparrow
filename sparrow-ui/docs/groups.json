@@ -1,0 +1,59 @@
+{
+  "groups": [
+    {
+      "id": 1,
+      "name": "items_row1",
+      "description": "Items in row 1"
+    },
+    {
+      "id": 2,
+      "name": "items_row2",
+      "description": "Items in row 2"
+    },
+    {
+      "id": 3,
+      "name": "items_row3",
+      "description": "Items in row 3"
+    },
+    {
+      "id": 4,
+      "name": "items_row4",
+      "description": "Items in row 4"
+    },
+    {
+      "id": 5,
+      "name": "items_row5",
+      "description": "Items in row 5"
+    },
+    {
+      "id": 6,
+      "name": "items_row6",
+      "description": "Items in row 6"
+    },
+    {
+      "id": 7,
+      "name": "items_row7",
+      "description": "Items in row 7"
+    },
+    {
+      "id": 8,
+      "name": "items_row8",
+      "description": "Items in row 8"
+    },
+    {
+      "id": 9,
+      "name": "items_row9",
+      "description": "Items in row 9"
+    },
+    {
+      "id": 10,
+      "name": "items_row10",
+      "description": "Items in row 10"
+    },
+    {
+      "id": 11,
+      "name": "summary",
+      "description": "Summary"
+    }
+  ]
+}

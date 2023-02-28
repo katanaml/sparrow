@@ -20,6 +20,7 @@ class DataAnnotation:
         img_file = None
         rects_file = None
         labels_file = "docs/labels.json"
+        groups_file = "docs/groups.json"
 
         assign_labels_text = "Assign Labels"
         text_caption_1 = "Check 'Assign Labels' to enable editing of labels and values, move and resize the boxes to annotate the document."
@@ -75,6 +76,15 @@ class DataAnnotation:
         for label in labels_list:
             labels.append(label['name'])
         model.labels = labels
+
+        with open(model.groups_file, "r") as f:
+            groups_json = json.load(f)
+
+        groups_list = groups_json["groups"]
+        groups = ['']
+        for group in groups_list:
+            groups.append(group['name'])
+        model.groups = groups
 
         with st.sidebar:
             st.markdown("---")
