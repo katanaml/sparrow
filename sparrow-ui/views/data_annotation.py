@@ -10,6 +10,7 @@ from natsort import natsorted
 from tools import agstyler
 from tools.agstyler import PINLEFT
 import pandas as pd
+from toolbar_main import component_toolbar_main
 
 
 class DataAnnotation:
@@ -178,11 +179,14 @@ class DataAnnotation:
                 with col1:
                     result_rects = self.render_doc(model, docImg, saved_state, mode, canvas_width, doc_height, doc_width)
                 with col2:
-                    tab = st.radio("Select", ["Mapping", "Grouping"], horizontal=True, label_visibility="collapsed")
+                    tab = st.radio("Select", ["Mapping", "Grouping", "Ordering"], horizontal=True,
+                                   label_visibility="collapsed")
                     if tab == "Mapping":
                         self.render_form(model, result_rects, data_processor, annotation_selection)
-                    else:
+                    elif tab == "Grouping":
                         self.group_annotations(model, result_rects)
+                    elif tab == "Ordering":
+                        self.order_annotations(model, model.labels, result_rects)
             else:
                 result_rects = self.render_doc(model, docImg, saved_state, mode, canvas_width, doc_height, doc_width)
                 tab = st.radio("Select", ["Mapping", "Grouping"], horizontal=True, label_visibility="collapsed")
@@ -457,6 +461,100 @@ class DataAnnotation:
                             json.dump(result_rects.rects_data, f, indent=2)
                         st.session_state[model.rects_file] = result_rects.rects_data
                         st.experimental_rerun()
+
+
+    def order_annotations(self, model, labels, result_rects):
+        if result_rects is not None:
+            self.action_event = None
+            data = []
+            words = result_rects.rects_data['words']
+            for i, rect in enumerate(words):
+                if rect['label'] != "":
+                    data.append({'id': i, 'value': rect['value'], 'label': rect['label']})
+            df = pd.DataFrame(data)
+
+            formatter = {
+                'id': ('ID', {**PINLEFT, 'width': 50}),
+                'value': ('Value', {**PINLEFT}),
+                'label': ('Label', {**PINLEFT,
+                                    'width': 80,
+                                    'editable': False,
+                                    'cellEditor': 'agSelectCellEditor',
+                                    'cellEditorParams': {
+                                        'values': labels
+                                    }})
+            }
+
+            go = {
+                'rowClassRules': {
+                    'row-selected': 'data.id === ' + str(result_rects.current_rect_index)
+                }
+            }
+
+            green_light = "#abf7b1"
+            css = {
+                '.row-selected': {
+                    'background-color': f'{green_light} !important'
+                }
+            }
+
+            def run_component(props):
+                value = component_toolbar_main(key='toolbar_main', **props)
+                return value
+
+            def handle_event(value):
+                if value is not None:
+                    if 'action_timestamp' not in st.session_state:
+                        self.action_event = value['action']
+                        st.session_state['action_timestamp'] = value['timestamp']
+                    else:
+                        if st.session_state['action_timestamp'] != value['timestamp']:
+                            self.action_event = value['action']
+                            st.session_state['action_timestamp'] = value['timestamp']
+                        else:
+                            self.action_event = None
+
+            props = {
+                'buttons': {
+                    'up': {
+                        'disabled': False,
+                        'rendered': ''
+                    },
+                    'down': {
+                        'disabled': False,
+                        'rendered': ''
+                    },
+                    'save': {
+                        'disabled': False,
+                        'rendered': ''
+                        # 'rendered': 'none',
+                    }
+                }
+            }
+
+            handle_event(run_component(props))
+
+            response = agstyler.draw_grid(
+                df,
+                formatter=formatter,
+                fit_columns=True,
+                grid_options=go,
+                css=css
+            )
+
+            rows = response['selected_rows']
+
+            if str(self.action_event) == 'up':
+                if len(rows) > 0:
+                    idx = rows[0]['_selectedRowNodeInfo']['nodeRowIndex']
+                    print(idx)
+                # if result_rects.current_rect_index > 0:
+                #     words = result_rects.rects_data['words']
+                #     words[result_rects.current_rect_index], words[result_rects.current_rect_index - 1] = \
+                #         words[result_rects.current_rect_index - 1], words[result_rects.current_rect_index]
+                #     result_rects.current_rect_index -= 1
+                #     st.session_state[model.rects_file] = result_rects.rects_data
+                #     st.experimental_rerun()
 
 
     def export_labels(self, model):
