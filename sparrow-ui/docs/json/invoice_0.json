@@ -37,7 +37,7 @@
         "y2": 162
       },
       "value": "40378170",
-      "label": "invoice_no"
+      "label": "header:invoice_no"
     },
     {
       "rect": {
@@ -77,7 +77,7 @@
         "y2": 264
       },
       "value": "10/15/2012",
-      "label": "invoice_date"
+      "label": "header:invoice_date"
     },
     {
       "rect": {
@@ -97,7 +97,7 @@
         "y2": 922
       },
       "value": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-      "label": "seller"
+      "label": "header:seller"
     },
     {
       "rect": {
@@ -121,13 +121,23 @@
     },
     {
       "rect": {
+        "x1": 1247,
+        "y1": 756,
+        "x2": 1890,
+        "y2": 918
+      },
+      "value": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
+      "label": "header:client"
+    },
+    {
+      "rect": {
         "x1": 366,
         "y1": 972,
         "x2": 639,
         "y2": 1020
       },
       "value": "958-74-3511",
-      "label": "seller_tax_id"
+      "label": "header:seller_tax_id"
     },
     {
       "rect": {
@@ -171,16 +181,6 @@
     },
     {
       "rect": {
-        "x1": 1247,
-        "y1": 756,
-        "x2": 1890,
-        "y2": 918
-      },
-      "value": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-      "label": "client"
-    },
-    {
-      "rect": {
         "x1": 1242,
         "y1": 968,
         "x2": 1336,
@@ -207,7 +207,7 @@
         "y2": 1020
       },
       "value": "998-87-7723",
-      "label": "client_tax_id"
+      "label": "header:client_tax_id"
     },
     {
       "rect": {
@@ -227,7 +227,7 @@
         "y2": 1075
       },
       "value": "GB77WRBQ31965128414006",
-      "label": "iban"
+      "label": "header:iban"
     },
     {
       "rect": {

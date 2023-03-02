@@ -1,6 +1,11 @@
 {
   "groups": [
     {
+      "id": 12,
+      "name": "header",
+      "description": "Header"
+    },
+    {
       "id": 1,
       "name": "items_row1",
       "description": "Items in row 1"
