@@ -340,6 +340,10 @@ class DataAnnotation:
             return ui_width, 1
 
     def fetch_annotations(self, rects_file):
+        for key in st.session_state:
+            if key.startswith("docs/json/") and key != rects_file:
+                del st.session_state[key]
+
         if rects_file not in st.session_state:
             with open(rects_file, "r") as f:
                 saved_state = json.load(f)
