@@ -485,12 +485,14 @@ class DataAnnotation:
         if result_rects is not None:
             self.action_event = None
             data = []
+            idx_list = [""]
             words = result_rects.rects_data['words']
             for i, rect in enumerate(words):
                 if rect['label'] != "":
                     # split string into two variables, assign None to first variable if no split is found
                     group, label = rect['label'].split(":", 1) if ":" in rect['label'] else (None, rect['label'])
                     data.append({'id': i, 'value': rect['value'], 'label': label, 'group': group})
+                    idx_list.append(i)
             df = pd.DataFrame(data)
 
             formatter = {
@@ -524,6 +526,8 @@ class DataAnnotation:
                     'background-color': f'{green_light} !important'
                 }
             }
+
+            idx_option = st.selectbox('Select row to move into', idx_list)
 
             def run_component(props):
                 value = component_toolbar_main(key='toolbar_main', **props)
@@ -576,8 +580,17 @@ class DataAnnotation:
                     idx = rows[0]['_selectedRowNodeInfo']['nodeRowIndex']
                     if idx > 0:
                         row_id = rows[0]['id']
+                        if row_id == idx_option:
+                            return
                         # swap row upwards in the array
-                        words[row_id], words[row_id - 1] = words[row_id - 1], words[row_id]
+                        if idx_option == "":
+                            words[row_id], words[row_id - 1] = words[row_id - 1], words[row_id]
+                        else:
+                            for i in range(1000):
+                                words[row_id], words[row_id - 1] = words[row_id - 1], words[row_id]
+                                row_id -= 1
+                                if row_id == idx_option:
+                                    break
 
                         result_rects.rects_data['words'] = words
 
@@ -588,10 +601,19 @@ class DataAnnotation:
             elif str(self.action_event) == 'down':
                 if len(rows) > 0:
                     idx = rows[0]['_selectedRowNodeInfo']['nodeRowIndex']
-                    if idx < len(words) - 1:
+                    if idx < len(df) - 1:
                         row_id = rows[0]['id']
+                        if row_id == idx_option:
+                            return
                         # swap row downwards in the array
-                        words[row_id], words[row_id + 1] = words[row_id + 1], words[row_id]
+                        if idx_option == "":
+                            words[row_id], words[row_id + 1] = words[row_id + 1], words[row_id]
+                        else:
+                            for i in range(1000):
+                                words[row_id], words[row_id + 1] = words[row_id + 1], words[row_id]
+                                row_id += 1
+                                if row_id == idx_option:
+                                    break
 
                         result_rects.rects_data['words'] = words
 
