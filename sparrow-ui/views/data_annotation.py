@@ -506,7 +506,7 @@ class DataAnnotation:
                                         'values': labels
                                     }}),
                 'group': ('Group', {**PINLEFT,
-                                    'width': 50,
+                                    'width': 80,
                                     'editable': True,
                                     'cellEditor': 'agSelectCellEditor',
                                     'cellEditorParams': {
