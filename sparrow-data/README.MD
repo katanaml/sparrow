@@ -39,6 +39,12 @@ python run_ocr.py
 python run_converter.py
 ```
 
+3. Run data preparation task for Donut model fine-tuning
+
+```
+python run_donut.py
+```
+
 ## Dataset info
 
 - [Samples of electronic invoices](https://data.mendeley.com/datasets/tnj49gpmtz)
