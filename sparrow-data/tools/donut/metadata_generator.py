@@ -2,10 +2,10 @@ from pathlib import Path
 import json
 
 
-class MetadataGenerator:
+class DonutMetadataGenerator:
     def generate(self, data_dir):
         data_dir_path = Path(data_dir).joinpath("key")
-        img_dir_path = Path(data_dir).joinpath("img")
+        img_dir_path = Path(data_dir).joinpath("img/train")
 
         metadata_list = []
 
@@ -15,11 +15,11 @@ class MetadataGenerator:
                 text = json.dumps(data)
                 if img_dir_path.joinpath(f"{file_name.stem}.jpg").is_file():
                     metadata_list.append({
-                        "text": text,
+                        "ground_truth": text,
                         "file_name": f"{file_name.stem}.jpg"
                     })
 
-        with open(Path(data_dir).joinpath("metadata.jsonl"), "w") as outfile:
+        with open(Path(img_dir_path).joinpath("metadata.jsonl"), "w") as outfile:
             for entry in metadata_list:
                 json.dump(entry, outfile)
                 outfile.write("\n")

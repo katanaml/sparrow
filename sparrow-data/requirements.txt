@@ -3,3 +3,4 @@ torch==1.13.1
 python-doctr==0.6.0
 torchvision
 torchaudio
+datasets==2.10.1
