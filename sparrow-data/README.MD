@@ -39,21 +39,21 @@ python run_ocr.py
 python run_converter.py
 ```
 
-## Run Sparrow UI to annotate the documents and create key/value pairs.
+Run Sparrow UI to annotate the documents and create key/value pairs.
 
-1Run data preparation task for Donut model fine-tuning. This task will create metadata. It will create Hugging Face dataset with train, validation and test splits for Donut model fine-tuning
+3. Run data preparation task for Donut model fine-tuning. This task will create metadata. It will create Hugging Face dataset with train, validation and test splits for Donut model fine-tuning
 
 ```
 python run_donut.py
 ```
 
-2. Push dataset to Huggung Face Hub. You need to have Hugging Face account and Hugging Face Hub token. Read more: https://huggingface.co/docs/datasets/main/en/image_dataset
+4. Push dataset to Huggung Face Hub. You need to have Hugging Face account and Hugging Face Hub token. Read more: https://huggingface.co/docs/datasets/main/en/image_dataset
 
 ```
 python run_donut_upload.py
 ```
 
-3. Test dataset by using load_dataset and fetching data from Hugging Face Hub
+5. Test dataset by using load_dataset and fetching data from Hugging Face Hub
 
 ```
 python run_donut_test.py
