@@ -3,16 +3,17 @@ import json
 
 
 class DonutMetadataGenerator:
-    def generate(self, data_dir):
+    def generate(self, data_dir, split):
         data_dir_path = Path(data_dir).joinpath("key")
-        img_dir_path = Path(data_dir).joinpath("img/train")
+        img_dir_path = Path(data_dir).joinpath("img/" + split)
 
         metadata_list = []
 
         for file_name in data_dir_path.glob("*.json"):
             with open(file_name, "r") as json_file:
                 data = json.load(json_file)
-                text = json.dumps(data)
+                line = {"gt_parse": data}
+                text = json.dumps(line)
                 if img_dir_path.joinpath(f"{file_name.stem}.jpg").is_file():
                     metadata_list.append({
                         "ground_truth": text,

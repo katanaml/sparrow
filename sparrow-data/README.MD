@@ -39,10 +39,22 @@ python run_ocr.py
 python run_converter.py
 ```
 
-3. Run data preparation task for Donut model fine-tuning
+3. Run data preparation task for Donut model fine-tuning. This task will create metadata and train, validation and test datasets for Donut model fine-tuning.
 
 ```
 python run_donut.py
+```
+
+4. Push dataset to Huggung Face Hub. You need to have Hugging Face account and Hugging Face Hub token. Read more: https://huggingface.co/docs/datasets/main/en/image_dataset
+
+```
+python run_donut_upload.py
+```
+
+5. Test dataset by using load_dataset and fetching data from Hugging Face Hub
+
+```
+python run_donut_test.py
 ```
 
 ## Dataset info
