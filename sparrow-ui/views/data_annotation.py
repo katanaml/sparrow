@@ -650,10 +650,29 @@ class DataAnnotation:
                     words = data['words']
 
                     keys = {}
+                    row_keys = {}
 
                     for word in words:
                         if word['label'] != '':
-                            keys[word['label']] = word['value']
+                            if ':' in word['label']:
+                                group, label = word['label'].split(':', 1)
+                                if 'row' not in group:
+                                    if group not in keys:
+                                        keys[group] = {}
+                                    keys[group][label] = word['value']
+                                else:
+                                    if "items" not in keys:
+                                        keys["items"] = []
+
+                                    if group not in row_keys:
+                                        row_keys[group] = {}
+                                    row_keys[group][label] = word['value']
+                            else:
+                                keys[word['label']] = word['value']
+
+                    if row_keys != {}:
+                        for key in row_keys:
+                            keys["items"].append(row_keys[key])
 
                     if keys != {}:
                         path = os.path.join(path_to, file)
