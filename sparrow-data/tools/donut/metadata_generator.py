@@ -3,13 +3,12 @@ import json
 
 
 class DonutMetadataGenerator:
-    def generate(self, data_dir, split):
-        data_dir_path = Path(data_dir).joinpath("key")
+    def generate(self, data_dir, files_list, split):
         img_dir_path = Path(data_dir).joinpath("img/" + split)
 
         metadata_list = []
 
-        for file_name in data_dir_path.glob("*.json"):
+        for file_name in files_list:
             with open(file_name, "r") as json_file:
                 data = json.load(json_file)
                 line = {"gt_parse": data}
