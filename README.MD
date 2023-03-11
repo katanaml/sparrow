@@ -9,6 +9,7 @@ Research repo - [sparrow-research](https://github.com/katanaml/sparrow-research)
 ### Modules
 
 * **[sparrow-data](https://github.com/katanaml/sparrow/tree/main/sparrow-data)** - Sparrow Data module
+* **[sparrow-ml](https://github.com/katanaml/sparrow/tree/main/sparrow-ml)** - Sparrow ML module
 * **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui)** - Sparrow UI module
 
 ## Author
