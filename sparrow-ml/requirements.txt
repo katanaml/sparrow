@@ -4,3 +4,4 @@ sentencepiece
 pytorch-lightning
 wandb
 Pillow
+donut-python
