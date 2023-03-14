@@ -1,6 +1,7 @@
 git+https://github.com/huggingface/transformers.git
 datasets
 sentencepiece
+tensorboard
 pytorch-lightning
 wandb
 Pillow
