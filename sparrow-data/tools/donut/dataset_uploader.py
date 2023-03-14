@@ -9,5 +9,5 @@ class DonutDatasetUploader:
         dataset = load_dataset("imagefolder", data_dir=img_dir_path)
 
         # Save dataset: https://huggingface.co/docs/datasets/main/en/image_dataset
-        dataset.push_to_hub("katanaml-org/invoices-donut", private=True)
+        dataset.push_to_hub("katanaml-org/invoices-donut-data-v1", private=True)
 
