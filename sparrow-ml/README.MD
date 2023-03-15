@@ -16,7 +16,7 @@ pip install -r requirements.txt
 
 1. Run sparrow_finetuning_donut_v1.ipynb notebook to finetune Donut model on your data with **PyTorch Lighting**. This notebook shouldn't be used in MLOps pipeline, it is for research purposes. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1-v1VE2Oow_klQjO-ETGyxuIP4ebIjRGC?usp=sharing)
 
-2. Run sparrow_finetuning_donut_v2.ipynb notebook to finetune Donut model on your data with **Hugging Face Trainer**. This notebook shouldn't be used in MLOps pipeline, it is for research purposes.
+2. Run sparrow_finetuning_donut_v2.ipynb notebook to finetune Donut model on your data with **Hugging Face Trainer**. This notebook shouldn't be used in MLOps pipeline, it is for research purposes. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1SxuTbM_bbnA_XKQ6rpx75mamTV6XYixF?usp=sharing)
 
 ## Author
 
