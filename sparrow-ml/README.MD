@@ -22,6 +22,8 @@ pip install -r requirements.txt
 
 4. Run **sparrow_inference_standalone_donut_v1.ipynb** notebook to test model (fine-tuned with **PyTorch Lighting**) inference with external image. This notebook shouldn't be used in MLOps pipeline, it is for research purposes. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1OoX1llhhNWeI9j8ajJRm7dbPFA3ZlFg5?usp=sharing)
 
+5. Run **sparrow_inference_standalone_donut_v2.ipynb** notebook to test model (fine-tuned with **Hugging Face Trainer**) inference with external image. This notebook shouldn't be used in MLOps pipeline, it is for research purposes. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1FSTh0mp99o71v2Kl_wjbbd0gHIlDQANm?usp=sharing)
+
 ## Author
 
 [Katana ML](https://katanaml.io), [Andrej Baranovskij](https://github.com/abaranovskis-redsamurai)
