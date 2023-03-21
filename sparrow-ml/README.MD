@@ -24,6 +24,16 @@ pip install -r requirements.txt
 
 5. Run **sparrow_inference_standalone_donut_v2.ipynb** notebook to test model (fine-tuned with **Hugging Face Trainer**) inference with external image. This notebook shouldn't be used in MLOps pipeline, it is for research purposes. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1FSTh0mp99o71v2Kl_wjbbd0gHIlDQANm?usp=sharing)
 
+## Resources
+
+1. [Invoices Dataset for Donut v1](https://huggingface.co/datasets/katanaml-org/invoices-donut-data-v1)
+
+2. [Invoices Dataset for Donut v2](https://huggingface.co/datasets/katanaml-org/invoices-donut-data-v2)
+
+3. [Invoices Model for Donut v1](https://huggingface.co/katanaml-org/invoices-donut-model-v1)
+
+4. [Invoices Model for Donut v2](https://huggingface.co/katanaml-org/invoices-donut-model-v2)
+
 ## References
 
 1. [Transformers Tutorials](https://github.com/NielsRogge/Transformers-Tutorials/tree/master/Donut) for Donut
