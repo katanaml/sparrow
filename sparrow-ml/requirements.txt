@@ -8,3 +8,4 @@ Pillow
 donut-python
 fastapi==0.95.0
 uvicorn[standard]
+python-multipart

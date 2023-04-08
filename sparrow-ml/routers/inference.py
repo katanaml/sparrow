@@ -1,4 +1,5 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, File, UploadFile, Form
+from typing import Optional
 from PIL import Image
 import urllib.request
 from io import BytesIO
@@ -54,13 +55,21 @@ def process_document(image):
     return processor.token2json(sequence)
 
 
-@router.get("/inference", tags=["inference"])
-async def run_inference():
-    image_url = 'https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-data/docs/input/invoices/processed/images/invoice_10.jpg'
+@router.post("/inference", tags=["inference"])
+async def run_inference(file: Optional[UploadFile] = File(None), image_url: Optional[str] = Form(None)):
+    if file:
+        # Ensure the uploaded file is a JPG image
+        if file.content_type not in ["image/jpeg", "image/jpg"]:
+            return {"error": "Invalid file type. Only JPG images are allowed."}
 
-    with urllib.request.urlopen(image_url) as url:
-        image = Image.open(BytesIO(url.read()))
-
-    result = process_document(image)
+        image = Image.open(BytesIO(await file.read()))
+        result = process_document(image)
+    elif image_url:
+        # test image url: https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-data/docs/input/invoices/processed/images/invoice_10.jpg
+        with urllib.request.urlopen(image_url) as url:
+            image = Image.open(BytesIO(url.read()))
+        result = process_document(image)
+    else:
+        result = {"info": "No input provided"}
 
     return result
