@@ -7,15 +7,16 @@ import re
 import time
 import torch
 from transformers import DonutProcessor, VisionEncoderDecoderModel
+from config import settings
 
 
 router = APIRouter()
 
 from huggingface_hub import login
-login("")
+login(settings.huggingface_key)
 
-processor = DonutProcessor.from_pretrained("katanaml-org/invoices-donut-model-v1")
-model = VisionEncoderDecoderModel.from_pretrained("katanaml-org/invoices-donut-model-v1")
+processor = DonutProcessor.from_pretrained(settings.donut_processor)
+model = VisionEncoderDecoderModel.from_pretrained(settings.donut_model)
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model.to(device)
@@ -55,7 +56,7 @@ def process_document(image):
     return processor.token2json(sequence)
 
 
-@router.post("/inference", tags=["inference"])
+@router.post("/inference")
 async def run_inference(file: Optional[UploadFile] = File(None), image_url: Optional[str] = Form(None)):
     if file:
         # Ensure the uploaded file is a JPG image
@@ -73,3 +74,8 @@ async def run_inference(file: Optional[UploadFile] = File(None), image_url: Opti
         result = {"info": "No input provided"}
 
     return result
+
+
+@router.get("/statistics")
+async def get_statistics():
+    return {"message": "Inference statistics"}
