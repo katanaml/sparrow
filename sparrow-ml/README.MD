@@ -49,6 +49,7 @@ curl -X 'POST' \
   -H 'Content-Type: multipart/form-data' \
   -F 'file=' \
   -F 'image_url=https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-data/docs/input/invoices/processed/images/invoice_10.jpg'
+  -F 'model_in_use=donut'
 ```
 
 Replace URLs with your own
