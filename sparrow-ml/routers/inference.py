@@ -32,7 +32,11 @@ def count_values(obj):
 
 @router.post("/inference")
 async def run_inference(file: Optional[UploadFile] = File(None), image_url: Optional[str] = Form(None),
-                        model_in_use: str = Form('donut')):
+                        model_in_use: str = Form('donut'), sparrow_key: str = Form(None)):
+
+    if sparrow_key != settings.sparrow_key:
+        return {"error": "Invalid Sparrow key."}
+
     result = []
     if file:
         # Ensure the uploaded file is a JPG image
