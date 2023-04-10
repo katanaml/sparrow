@@ -14,7 +14,7 @@ async def run_training():
 
 @router.get("/statistics")
 async def get_statistics():
-    file_path = settings.donut_training_stats_file
+    file_path = settings.training_stats_file
 
     # Check if the file exists, and read its content
     if os.path.exists(file_path):
