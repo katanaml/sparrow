@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     donut_processor: str = "katanaml-org/invoices-donut-model-v1"
     donut_model: str = "katanaml-org/invoices-donut-model-v1"
     donut_inference_stats_file: str = "data/donut_inference_stats.json"
+    donut_training_stats_file: str = "data/donut_training_stats.json"
 
 
 settings = Settings()
