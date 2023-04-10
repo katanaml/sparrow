@@ -26,16 +26,31 @@ pip install -r requirements.txt
 
 ## FastAPI Service
 
+Set Hugging Face key in config.py
+
 1. Run
 
 ```
 uvicorn endpoints:app --reload
 ```
 
-2. API endpoint
+2. FastAPI Swagger
 
 ```
 http://127.0.0.1:8000/api/v1/sparrow-ml/docs
+```
+
+## Endpoints
+
+1. Donut inference
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api-inference/v1/sparrow-ml/inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'file=' \
+  -F 'image_url=https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-data/docs/input/invoices/processed/images/invoice_10.jpg'
 ```
 
 ## Resources
