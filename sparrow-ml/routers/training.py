@@ -7,7 +7,7 @@ import json
 router = APIRouter()
 
 
-@router.get("/training",)
+@router.get("/training")
 async def run_training():
     return {"message": "Sparrow ML training started"}
 

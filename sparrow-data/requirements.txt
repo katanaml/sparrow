@@ -4,3 +4,5 @@ python-doctr==0.6.0
 torchvision
 torchaudio
 datasets==2.10.1
+fastapi==0.95.0
+uvicorn[standard]
