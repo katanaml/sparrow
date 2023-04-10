@@ -42,7 +42,7 @@ http://127.0.0.1:8000/api/v1/sparrow-ml/docs
 
 ## Endpoints
 
-1. Donut inference
+1. Inference
 
 ```
 curl -X 'POST' \
@@ -52,6 +52,38 @@ curl -X 'POST' \
   -F 'file=' \
   -F 'image_url=https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-data/docs/input/invoices/processed/images/invoice_10.jpg'
 ```
+
+Replace URLs with your own
+
+2. Inference statistics
+
+```
+curl -X 'GET' \
+  'http://127.0.0.1:8000/api-inference/v1/sparrow-ml/statistics' \
+  -H 'accept: application/json'
+```
+
+Replace URL with your own
+
+3. Training
+
+```
+curl -X 'GET' \
+  'http://127.0.0.1:8000/api-training/v1/sparrow-ml/training' \
+  -H 'accept: application/json'
+```
+
+Replace URL with your own
+
+4. Training statistics
+
+```
+curl -X 'GET' \
+  'http://127.0.0.1:8000/api-training/v1/sparrow-ml/statistics' \
+  -H 'accept: application/json'
+```
+
+Replace URL with your own
 
 ## Resources
 
