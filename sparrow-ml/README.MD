@@ -6,8 +6,6 @@ This module implements Sparrow ML model fine-tuning and inference. We are using 
 
 ## Install
 
-1. Install
-
 ```
 pip install -r requirements.txt
 ```
