@@ -24,7 +24,7 @@ pip install -r requirements.txt
 
 ## FastAPI Service
 
-Set Hugging Face key in config.py
+Set **huggingface_key** in config.py. Note down **sparrow_key** from config.py, it will be required to execute inference and training requests
 
 1. Run
 
@@ -50,6 +50,7 @@ curl -X 'POST' \
   -F 'file=' \
   -F 'image_url=https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-data/docs/input/invoices/processed/images/invoice_10.jpg'
   -F 'model_in_use=donut'
+  -F 'sparrow_key=2ec6602fa3fe013f3fa8859d008bd66e'
 ```
 
 Replace URLs with your own
