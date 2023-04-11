@@ -574,6 +574,18 @@ class DataAnnotation:
             )
 
             rows = response['selected_rows']
+            if len(rows) == 0 and result_rects.current_rect_index > -1:
+                for i, row in enumerate(data):
+                    if row['id'] == result_rects.current_rect_index:
+                        rows = [
+                            {
+                                '_selectedRowNodeInfo': {
+                                    'nodeRowIndex': i
+                                },
+                                'id': row['id']
+                            }
+                        ]
+                        break
 
             if str(self.action_event) == 'up':
                 if len(rows) > 0:
