@@ -59,6 +59,25 @@ python run_donut_upload.py
 python run_donut_test.py
 ```
 
+## FastAPI Service
+
+Set **huggingface_key** in config.py
+
+1. Run
+
+```
+uvicorn endpoints:app --reload
+```
+
+2. FastAPI Swagger
+
+```
+http://127.0.0.1:8000/api/v1/sparrow-data/docs
+```
+
+## Endpoints
+
+
 ## Dataset info
 
 - [Samples of electronic invoices](https://data.mendeley.com/datasets/tnj49gpmtz)
