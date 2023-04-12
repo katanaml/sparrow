@@ -85,6 +85,8 @@ curl -X 'GET' \
   -H 'accept: application/json'
 ```
 
+Replace URL with your own
+
 2. Ground truth
 
 ```
@@ -92,6 +94,8 @@ curl -X 'GET' \
   'http://127.0.0.1:8000/api-dataset/v1/sparrow-data/ground_truth' \
   -H 'accept: application/json'
 ```
+
+Replace URL with your own
 
 ## Dataset info
 
