@@ -77,6 +77,21 @@ http://127.0.0.1:8000/api/v1/sparrow-data/docs
 
 ## Endpoints
 
+1. Info
+
+```
+curl -X 'GET' \
+  'http://127.0.0.1:8000/api-dataset/v1/sparrow-data/dataset_info' \
+  -H 'accept: application/json'
+```
+
+2. Ground truth
+
+```
+curl -X 'GET' \
+  'http://127.0.0.1:8000/api-dataset/v1/sparrow-data/ground_truth' \
+  -H 'accept: application/json'
+```
 
 ## Dataset info
 
