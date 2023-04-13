@@ -42,6 +42,20 @@ uvicorn endpoints:app --reload
 http://127.0.0.1:8000/api/v1/sparrow-ml/docs
 ```
 
+**Run in Docker container**
+
+1. Build Docker image
+
+```
+docker build --tag katanaml/sparrow-ml .
+```
+
+2. Run Docker container
+
+```
+docker run -it --name sparrow-ml -p 7860:7860 katanaml/sparrow-ml:latest
+```
+
 ## Endpoints
 
 1. Inference
