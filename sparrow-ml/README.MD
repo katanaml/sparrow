@@ -29,6 +29,10 @@ Set **huggingface_key** in config.py. Note down **sparrow_key** from config.py, 
 1. Run
 
 ```
+cd api
+```
+
+```
 uvicorn endpoints:app --reload
 ```
 
