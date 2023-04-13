@@ -79,6 +79,20 @@ uvicorn endpoints:app --reload
 http://127.0.0.1:8000/api/v1/sparrow-data/docs
 ```
 
+Run in Docker container
+
+1. Build Docker image
+
+```
+docker build --tag katanaml/sparrow-data .
+```
+
+2. Run Docker container
+
+```
+docker run -it --name sparrow-data -p 7860:7860 katanaml/sparrow-data:latest
+```
+
 ## Endpoints
 
 1. Info
