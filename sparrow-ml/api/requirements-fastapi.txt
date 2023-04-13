@@ -1,0 +1,10 @@
+git+https://github.com/huggingface/transformers.git
+datasets
+sentencepiece
+tensorboard
+pytorch-lightning
+Pillow
+donut-python
+fastapi==0.95.0
+uvicorn[standard]
+python-multipart
