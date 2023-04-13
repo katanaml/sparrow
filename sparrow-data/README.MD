@@ -115,6 +115,31 @@ curl -X 'GET' \
 
 Replace URL with your own
 
+## Deploy to Hugging Face Spaces
+
+1. Create new space - https://huggingface.co/spaces. Follow instructions from readme doc
+
+2. Create huggingface_key secret in space settings
+
+3. In config.py, replace huggingface_key variable with this line of code
+
+```
+huggingface_key: str = os.environ.get("huggingface_key")
+```
+
+4. Commit and push code to the space, follow readme instructions. Docker container will be deployed automatically. Example:
+
+```
+https://huggingface.co/spaces/katanaml-org/sparrow-data
+```
+
+5. Sparrow Data API will be accessible by URL, you can get it from space info. Example:
+
+```
+https://katanaml-org-sparrow-data.hf.space/api/v1/sparrow-data/docs
+```
+
+
 ## Dataset info
 
 - [Samples of electronic invoices](https://data.mendeley.com/datasets/tnj49gpmtz)
