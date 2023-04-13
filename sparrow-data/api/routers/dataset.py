@@ -1,5 +1,4 @@
 from fastapi import APIRouter
-from config import settings
 from datasets import load_dataset
 from ast import literal_eval
 from pydantic import BaseModel
@@ -7,6 +6,7 @@ from typing import Dict
 from io import BytesIO
 from PIL import Image
 import base64
+from config import settings
 
 
 router = APIRouter()
