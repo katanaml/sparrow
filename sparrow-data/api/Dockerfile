@@ -15,6 +15,6 @@ ENV HOME=/home/user \
 
 WORKDIR $HOME/app
 
-COPY --chown=user config.py endpoints.py routers $HOME/app/
+COPY --chown=user . $HOME/app/
 
 CMD ["uvicorn", "endpoints:app", "--host", "0.0.0.0", "--port", "7860"]
