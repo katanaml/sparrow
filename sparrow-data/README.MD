@@ -66,6 +66,10 @@ Set **huggingface_key** in config.py
 1. Run
 
 ```
+cd api
+```
+
+```
 uvicorn endpoints:app --reload
 ```
 
