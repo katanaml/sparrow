@@ -103,6 +103,34 @@ curl -X 'GET' \
 
 Replace URL with your own
 
+## Deploy to Hugging Face Spaces
+
+1. Create new space - https://huggingface.co/spaces. Follow instructions from readme doc
+
+2. Create huggingface_key and sparrow_key secret in space settings
+
+3. In config.py, replace huggingface_key and sparrow_key variable with this line of code
+
+```
+huggingface_key: str = os.environ.get("huggingface_key")
+```
+
+```
+sparrow_key: str = os.environ.get("sparrow_key")
+```
+
+4. Commit and push code to the space, follow readme instructions. Docker container will be deployed automatically. Example:
+
+```
+https://huggingface.co/spaces/katanaml-org/sparrow-ml
+```
+
+5. Sparrow ML API will be accessible by URL, you can get it from space info. Example:
+
+```
+https://katanaml-org-sparrow-ml.hf.space/api/v1/sparrow-ml/docs
+```
+
 ## Resources
 
 1. [Invoices Dataset for Donut v1](https://huggingface.co/datasets/katanaml-org/invoices-donut-data-v1)
