@@ -3,7 +3,10 @@ import time
 import torch
 from transformers import DonutProcessor, VisionEncoderDecoderModel
 from config import settings
+from huggingface_hub import login
 
+
+login(settings.huggingface_key)
 
 processor = DonutProcessor.from_pretrained(settings.processor)
 model = VisionEncoderDecoderModel.from_pretrained(settings.model)

@@ -7,11 +7,11 @@ from io import BytesIO
 from PIL import Image
 import base64
 from config import settings
+from huggingface_hub import login
 
 
 router = APIRouter()
 
-from huggingface_hub import login
 login(settings.huggingface_key)
 
 class ImageResponse(BaseModel):

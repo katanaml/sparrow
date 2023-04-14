@@ -12,9 +12,6 @@ from routers.donut_inference import process_document_donut
 
 router = APIRouter()
 
-from huggingface_hub import login
-login(settings.huggingface_key)
-
 def count_values(obj):
     if isinstance(obj, dict):
         count = 0
