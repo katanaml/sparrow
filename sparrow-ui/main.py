@@ -7,7 +7,7 @@ from views.dashboard import Dashboard
 from views.data_annotation import DataAnnotation
 from views.model_training import ModelTraining
 from views.model_tuning import ModelTuning
-from views.data_extraction import DataExtraction
+from views.data_inference import DataInference
 from views.setup import Setup
 from views.settings import Settings
 from views.about import About
@@ -29,7 +29,7 @@ class Model:
     option2 = "Data Annotation"
     option3 = "Model Training"
     option4 = "Model Tuning"
-    option5 = "Data Extraction"
+    option5 = "Inference"
     option6 = "Data Setup"
     option7 = "Settings"
     option8 = "About"
@@ -39,7 +39,7 @@ class Model:
     icon2 = "activity"
     icon3 = "motherboard"
     icon4 = "graph-up-arrow"
-    icon5 = "clipboard-data"
+    icon5 = "journal-arrow-down"
     icon6 = "clipboard-data"
     icon7 = "gear"
     icon8 = "chat"
@@ -48,8 +48,8 @@ class Model:
 def view(model):
     with st.sidebar:
         menuItem = option_menu(model.menuTitle,
-                               [model.option1, model.option2, model.option6, model.option8],
-                               icons=[model.icon1, model.icon2, model.icon6, model.icon8],
+                               [model.option1, model.option2, model.option5, model.option6, model.option8],
+                               icons=[model.icon1, model.icon2, model.icon5, model.icon6, model.icon8],
                                menu_icon=model.menuIcon,
                                default_index=0,
                                styles={
@@ -98,7 +98,7 @@ def view(model):
         logout_widget()
 
     if menuItem == model.option5:
-        DataExtraction().view(DataExtraction.Model())
+        DataInference().view(DataInference.Model())
         logout_widget()
 
     if menuItem == model.option6:
@@ -118,7 +118,7 @@ def logout_widget():
     with st.sidebar:
         st.markdown("---")
         # st.write("User:", "John Doe")
-        st.write("Version:", "1.0.0")
+        st.write("Version:", "1.1.0")
         # st.button("Logout")
         # st.markdown("---")
 
