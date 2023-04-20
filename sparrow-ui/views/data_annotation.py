@@ -385,7 +385,7 @@ class DataAnnotation:
             with open(os.path.join("docs/json/", file_name + ".json"), "w") as f:
                 json.dump(annotations_json, f, indent=2)
 
-            st.write("File uploaded successfully")
+            st.success("File uploaded successfully")
 
     def get_existing_file_names(self, dir_name):
         # get ordered list of files without file extension, excluding hidden files
