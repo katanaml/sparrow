@@ -98,7 +98,29 @@ def view(model):
         logout_widget()
 
     if menuItem == model.option5:
-        DataInference().view(DataInference.Model())
+        if 'ui_width' not in st.session_state or 'device_type' not in st.session_state or 'device_width' not in st.session_state:
+            # Get UI width
+            ui_width = st_js.st_javascript("window.innerWidth", key="ui_width_comp")
+            device_width = st_js.st_javascript("window.screen.width", key="device_width_comp")
+
+            if ui_width > 0 and device_width > 0:
+                # Add 20% of current screen width to compensate for the sidebar
+                ui_width = round(ui_width + (20 * ui_width / 100))
+
+                if device_width > 768:
+                    device_type = 'desktop'
+                else:
+                    device_type = 'mobile'
+
+                st.session_state['ui_width'] = ui_width
+                st.session_state['device_type'] = device_type
+                st.session_state['device_width'] = device_width
+
+                st.experimental_rerun()
+        else:
+            DataInference().view(DataInference.Model(), st.session_state['ui_width'], st.session_state['device_type'],
+                                 st.session_state['device_width'])
+
         logout_widget()
 
     if menuItem == model.option6:
