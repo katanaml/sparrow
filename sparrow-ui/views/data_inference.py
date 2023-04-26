@@ -6,6 +6,7 @@ import math
 from streamlit_sparrow_labeling import st_sparrow_labeling
 import requests
 from config import settings
+import json
 
 
 class DataInference:
@@ -78,6 +79,7 @@ class DataInference:
                     self.render_results(model)
             else:
                 self.render_doc(model, doc_img, canvas_width, doc_height, doc_width)
+                self.render_results(model)
         else:
             st.title(model.initial_msg)
 
@@ -126,46 +128,49 @@ class DataInference:
             return ui_width, 1
 
     def render_doc(self, model, doc_img, canvas_width, doc_height, doc_width):
-        with st.container():
-            height = 1296
-            width = 864
+        height = 1296
+        width = 864
 
-            annotations_json = {
-                "meta": {
-                    "version": "v0.1",
-                    "split": "train",
-                    "image_id": 0,
-                    "image_size": {
-                        "width": doc_width,
-                        "height": doc_height
-                    }
-                },
-                "words": []
-            }
+        annotations_json = {
+            "meta": {
+                "version": "v0.1",
+                "split": "train",
+                "image_id": 0,
+                "image_size": {
+                    "width": doc_width,
+                    "height": doc_height
+                }
+            },
+            "words": []
+        }
 
-            st_sparrow_labeling(
-                fill_color="rgba(0, 151, 255, 0.3)",
-                stroke_width=2,
-                stroke_color="rgba(0, 50, 255, 0.7)",
-                background_image=doc_img,
-                initial_rects=annotations_json,
-                height=height,
-                width=width,
-                drawing_mode="transform",
-                display_toolbar=False,
-                update_streamlit=False,
-                canvas_width=canvas_width,
-                doc_height=doc_height,
-                doc_width=doc_width,
-                image_rescale=True,
-                key="doc_annotation" + model.get_image_file()
-            )
+        st_sparrow_labeling(
+            fill_color="rgba(0, 151, 255, 0.3)",
+            stroke_width=2,
+            stroke_color="rgba(0, 50, 255, 0.7)",
+            background_image=doc_img,
+            initial_rects=annotations_json,
+            height=height,
+            width=width,
+            drawing_mode="transform",
+            display_toolbar=False,
+            update_streamlit=False,
+            canvas_width=canvas_width,
+            doc_height=doc_height,
+            doc_width=doc_width,
+            image_rescale=True,
+            key="doc_annotation" + model.get_image_file()
+        )
 
     def render_results(self, model):
         with st.form(key="results_form"):
             button_placeholder = st.empty()
 
             submit = button_placeholder.form_submit_button(model.extract_data, type="primary")
+            if 'inference_error' in st.session_state:
+                st.error(st.session_state.inference_error)
+                del st.session_state.inference_error
+
             if submit:
                 button_placeholder.empty()
 
@@ -193,11 +198,19 @@ class DataInference:
                     print('Request failed with status code:', response.status_code)
                     print('Response:', response.text)
 
+                    st.session_state["inference_error"] = "Error extracting data from document"
+                    st.experimental_rerun()
+
                 model.set_data_result(response.text)
 
                 # Display JSON data in Streamlit
                 st.markdown("---")
                 st.json(response.text)
+
+                # replace file extension to json
+                file_path = file_path.replace(".jpg", ".json")
+                with open(file_path, "w") as f:
+                    json.dump(response.text, f, indent=2)
 
                 st.experimental_rerun()
             else:
