@@ -12,6 +12,14 @@
 
 ![Sparrow Annotation](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/annotation.png)
 
+#### Inference UI:
+
+![Sparrow Inference](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/inference.png)
+
+#### Review UI:
+
+![Sparrow Review](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/review.png)
+
 #### Labels/Groups CRUD UI:
 
 ![Sparrow CRUD](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/crud.png)
