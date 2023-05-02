@@ -103,6 +103,28 @@ curl -X 'GET' \
 
 Replace URL with your own
 
+## CLI
+
+Navigate to 'cli' folder and run 'chmod +x sparrow'. Add to system path to make it executable globally on the system.
+
+1. Inference
+
+```
+./sparrow --api_url https://katanaml-org-sparrow-ml.hf.space/api-inference/v1/sparrow-ml/inference 
+          --type inference 
+          --file_path ../data/img/invoice_0.jpg 
+          --model_in_use donut 
+          --sparrow_key <key>
+```
+
+2. Training
+
+```
+./sparrow --api_url https://katanaml-org-sparrow-ml.hf.space/api-training/v1/sparrow-ml/training 
+          --type training 
+          --sparrow_key <key>
+```
+
 ## Deploy to Hugging Face Spaces
 
 1. Create new space - https://huggingface.co/spaces. Follow instructions from readme doc
