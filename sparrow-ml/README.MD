@@ -33,7 +33,7 @@ cd api
 ```
 
 ```
-uvicorn endpoints:app --reload
+uvicorn endpoints:app --workers 4
 ```
 
 2. FastAPI Swagger
