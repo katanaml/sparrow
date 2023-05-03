@@ -5,9 +5,11 @@ from transformers import DonutProcessor, VisionEncoderDecoderModel
 from config import settings
 from huggingface_hub import login
 from functools import lru_cache
+import os
 
 
 login(settings.huggingface_key)
+
 
 @lru_cache(maxsize=1)
 def load_model():
@@ -19,7 +21,11 @@ def load_model():
 
     return processor, model, device
 
+
 def process_document_donut(image):
+    worker_pid = os.getpid()
+    print(f"Handling inference request with worker PID: {worker_pid}")
+
     start_time = time.time()
 
     processor, model, device = load_model()
