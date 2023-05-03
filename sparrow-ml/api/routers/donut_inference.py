@@ -4,18 +4,25 @@ import torch
 from transformers import DonutProcessor, VisionEncoderDecoderModel
 from config import settings
 from huggingface_hub import login
+from functools import lru_cache
 
 
 login(settings.huggingface_key)
 
-processor = DonutProcessor.from_pretrained(settings.processor)
-model = VisionEncoderDecoderModel.from_pretrained(settings.model)
+@lru_cache(maxsize=1)
+def load_model():
+    processor = DonutProcessor.from_pretrained(settings.processor)
+    model = VisionEncoderDecoderModel.from_pretrained(settings.model)
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
-model.to(device)
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    model.to(device)
+
+    return processor, model, device
 
 def process_document_donut(image):
     start_time = time.time()
+
+    processor, model, device = load_model()
 
     # prepare encoder inputs
     pixel_values = processor(image, return_tensors="pt").pixel_values
