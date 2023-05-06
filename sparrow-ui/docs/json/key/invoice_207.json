@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "99763738",
+    "invoice_date": "06/14/2017",
+    "seller": "Wheeler-Dawson 66055 Tammy Loaf Apt. 344 South Adamberg, AR 08257",
+    "client": "Franklin, Alexander and Ford 98812 Lynch Underpass Suite 322 Lake Erica, LA 35312",
+    "seller_tax_id": "928-86-2361",
+    "client_tax_id": "962-81-9802",
+    "iban": "GB85ROPU13395160617712"
+  },
+  "items": [
+    {
+      "item_desc": "Joma Youth Boys Gol 205 Piso Multitaco Soccer Cleats 2.5 White Blue Yellow NEW",
+      "item_qty": "5,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "99,95",
+      "item_vat": "10%",
+      "item_gross_worth": "109,94"
+    },
+    {
+      "item_desc": "Reebok Kids Boys Blue Sneakers Shoes US 11 No Laces",
+      "item_qty": "2,00",
+      "item_net_price": "5,00",
+      "item_net_worth": "10,00",
+      "item_vat": "10%",
+      "item_gross_worth": "11,00"
+    },
+    {
+      "item_desc": "Adult Girl Version Hermione Granger Cosplay Costume Gryffindor Kid size In Stock",
+      "item_qty": "4,00",
+      "item_net_price": "64,16",
+      "item_net_worth": "256,64",
+      "item_vat": "10%",
+      "item_gross_worth": "282,30"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 366,59",
+    "total_vat": "$36,66",
+    "total_gross_worth": "$403,25"
+  }
+}

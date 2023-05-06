@@ -1,0 +1,58 @@
+{
+  "header": {
+    "invoice_no": "81972673",
+    "invoice_date": "08/13/2014",
+    "seller": "Dickerson-Burgess 6625 Scott Club Suite 247 East Dannyville, VT 74376",
+    "client": "Baxter-Gonzalez 1903 Katrina Brooks West Allisonchester, IN 44744",
+    "seller_tax_id": "988-88-0263",
+    "client_tax_id": "987-81-1204",
+    "iban": "GB96ZOZX67321501892716"
+  },
+  "items": [
+    {
+      "item_desc": "miley cyrus Bubble Dress",
+      "item_qty": "3,00",
+      "item_net_price": "16,00",
+      "item_net_worth": "48,00",
+      "item_vat": "10%",
+      "item_gross_worth": "52,80"
+    },
+    {
+      "item_desc": "Vintage 90s Sostanza Plus Size Dress 22W Floral Cottagecore",
+      "item_qty": "5,00",
+      "item_net_price": "49,96",
+      "item_net_worth": "249,80",
+      "item_vat": "10%",
+      "item_gross_worth": "274,78"
+    },
+    {
+      "item_desc": "PAS DE CALAIS DRESS WOMENS SIZE 36",
+      "item_qty": "1,00",
+      "item_net_price": "9,95",
+      "item_net_worth": "9,95",
+      "item_vat": "10%",
+      "item_gross_worth": "10,94"
+    },
+    {
+      "item_desc": "Matilda Jane Womans Lets Go Together Black Knit Dress Size M Medium NWT",
+      "item_qty": "2,00",
+      "item_net_price": "19,60",
+      "item_net_worth": "39,20",
+      "item_vat": "10%",
+      "item_gross_worth": "43,12"
+    },
+    {
+      "item_desc": "Lands End Womens 3/4 Sleeve Dress Plus 3X Navy Blue Floral Cotton Knit 482038",
+      "item_qty": "2,00",
+      "item_net_price": "21,23",
+      "item_net_worth": "42,46",
+      "item_vat": "10%",
+      "item_gross_worth": "46,71"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 389,41",
+    "total_vat": "$38,94",
+    "total_gross_worth": "$ 428,35"
+  }
+}

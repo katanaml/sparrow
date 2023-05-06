@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "33691533",
+    "invoice_date": "07/25/2014",
+    "seller": "Fowler-Griffin 3122 Gene Mountain Marcport, AK 52348",
+    "client": "Scott-Garcia 808 Stacy Squares East Oscarchester, KS 93753",
+    "seller_tax_id": "996-86-5609",
+    "client_tax_id": "963-95-6326",
+    "iban": "GB79HWNL47420369669125"
+  },
+  "items": [
+    {
+      "item_desc": "Dell Optiplex 9010 PC Computer",
+      "item_qty": "5,00",
+      "item_net_price": "99,90",
+      "item_net_worth": "499,50",
+      "item_vat": "10%",
+      "item_gross_worth": "549,45"
+    },
+    {
+      "item_desc": "HP 8300 Slim Desktop Small Computer PC i5 3.2GHz 4GB 500GB Windows 10 Pro WiFi",
+      "item_qty": "4,00",
+      "item_net_price": "99,99",
+      "item_net_worth": "399,96",
+      "item_vat": "10%",
+      "item_gross_worth": "439,96"
+    },
+    {
+      "item_desc": "Custom Built Windows 98 Retro Gaming Industrial PC Computer P2 B Montego II 5GB",
+      "item_qty": "1,00",
+      "item_net_price": "409,99",
+      "item_net_worth": "409,99",
+      "item_vat": "10%",
+      "item_gross_worth": "450,99"
+    },
+    {
+      "item_desc": "Custom Build Dell Desktop Computer i5 I 16GB I 1TB SSD I HDMI Windows 10 PC WiFi",
+      "item_qty": "4,00",
+      "item_net_price": "99,00",
+      "item_net_worth": "396,00",
+      "item_vat": "10%",
+      "item_gross_worth": "435,60"
+    },
+    {
+      "item_desc": "$5.00 Desktop Computers!",
+      "item_qty": "5,00",
+      "item_net_price": "5,00",
+      "item_net_worth": "25,00",
+      "item_vat": "10%",
+      "item_gross_worth": "27,50"
+    },
+    {
+      "item_desc": "CAD Solidworks Video Photo Editing Workstation 64GB 8C Xeon Quadro Computer NVME",
+      "item_qty": "3,00",
+      "item_net_price": "520,00",
+      "item_net_worth": "1560,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1716,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$3290,45",
+    "total_vat": "$ 329,05",
+    "total_gross_worth": "$3619,50"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "header": {
+    "invoice_no": "95076029",
+    "invoice_date": "11/20/2011",
+    "seller": "Wallace, Webb and Lucas Unit 0077 Box 3864 DPO AP 70449",
+    "client": "Smith-Cabrera 24941 Perry Shores Kevintown, WY 71069",
+    "seller_tax_id": "937-78-4543",
+    "client_tax_id": "918-91-8490",
+    "iban": "GB66JBMG14825780092382"
+  },
+  "items": [
+    {
+      "item_desc": "Birthday Girl 15 OZ Hand Painted Wine Glass With Box & Recipe by Lolita New",
+      "item_qty": "4,00",
+      "item_net_price": "12,99",
+      "item_net_worth": "51,96",
+      "item_vat": "10%",
+      "item_gross_worth": "57,16"
+    },
+    {
+      "item_desc": "a pair of wine glasses drawer 1 e",
+      "item_qty": "2,00",
+      "item_net_price": "7,30",
+      "item_net_worth": "14,60",
+      "item_vat": "10%",
+      "item_gross_worth": "16,06"
+    },
+    {
+      "item_desc": "Sitting Deer Wine Bottle Holder Decoration New",
+      "item_qty": "1,00",
+      "item_net_price": "30,88",
+      "item_net_worth": "30,88",
+      "item_vat": "10%",
+      "item_gross_worth": "33,97"
+    },
+    {
+      "item_desc": "Black Pug wine holder",
+      "item_qty": "4,00",
+      "item_net_price": "12,95",
+      "item_net_worth": "51,80",
+      "item_vat": "10%",
+      "item_gross_worth": "56,98"
+    },
+    {
+      "item_desc": "Diamond Cut Crystal Whisky Glass Coketail Glasses Wine Glass 310ml Set of 6",
+      "item_qty": "3,00",
+      "item_net_price": "26,00",
+      "item_net_worth": "78,00",
+      "item_vat": "10%",
+      "item_gross_worth": "85,80"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 227,24",
+    "total_vat": "$22,72",
+    "total_gross_worth": "$249,96"
+  }
+}

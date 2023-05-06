@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "92321765",
+    "invoice_date": "11/19/2016",
+    "seller": "Clark-Osborn 354 Craig Greens Suite 702 Lake Christina, ME 13643",
+    "client": "Perry and Sons 5948 Diana Islands Nicolemouth, IN 49736",
+    "seller_tax_id": "933-75-0626",
+    "client_tax_id": "959-78-3668",
+    "iban": "GB30QQTB68233098914400"
+  },
+  "items": [
+    {
+      "item_desc": "3D Stones Florals Corridor Carpet Doorway Mat Soft Antislip Living Room Area Rug",
+      "item_qty": "5,00",
+      "item_net_price": "15,19",
+      "item_net_worth": "75,95",
+      "item_vat": "10%",
+      "item_gross_worth": "83,55"
+    },
+    {
+      "item_desc": "YILONG 1.2x1.7' 300L Handmade Tree of Life Silk Carpet Home Tapestry LH693A",
+      "item_qty": "3,00",
+      "item_net_price": "188,00",
+      "item_net_worth": "564,00",
+      "item_vat": "10%",
+      "item_gross_worth": "620,40"
+    },
+    {
+      "item_desc": "Hippie Sea Wave 3D Carpet Floor Mats Soft Rug for Living Room Non-slip Carpets",
+      "item_qty": "2,00",
+      "item_net_price": "11,69",
+      "item_net_worth": "23,38",
+      "item_vat": "10%",
+      "item_gross_worth": "25,72"
+    },
+    {
+      "item_desc": "Pittsburgh Steelers Anti-Skid Area Rug Floor Mat Soft Carpet Living Room Bedroom",
+      "item_qty": "3,00",
+      "item_net_price": "18,04",
+      "item_net_worth": "54,12",
+      "item_vat": "10%",
+      "item_gross_worth": "59,53"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 717,45",
+    "total_vat": "$71,75",
+    "total_gross_worth": "$ 789,20"
+  }
+}

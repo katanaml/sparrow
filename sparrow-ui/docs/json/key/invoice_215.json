@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "76903393",
+    "invoice_date": "07/24/2012",
+    "seller": "Young, Owens and Hall PSC 2231, Box 3989 APO AP 45024",
+    "client": "King-Wells 014 Julia Locks Johnbury, KY 64775",
+    "seller_tax_id": "964-86-1473",
+    "client_tax_id": "993-82-3637",
+    "iban": "GB75SYCE31934427988296"
+  },
+  "items": [
+    {
+      "item_desc": "Sony PlayStation 5 Digital Edition 825GB Video Game Console White",
+      "item_qty": "1,00",
+      "item_net_price": "550,00",
+      "item_net_worth": "550,00",
+      "item_vat": "10%",
+      "item_gross_worth": "605,00"
+    },
+    {
+      "item_desc": "Nintendo Switch Lite Yellow CONSOLE ONLY No Accessories or Charger [B1-1]",
+      "item_qty": "5,00",
+      "item_net_price": "135,00",
+      "item_net_worth": "675,00",
+      "item_vat": "10%",
+      "item_gross_worth": "742,50"
+    },
+    {
+      "item_desc": "SONY Playstation2 Console SCPH-39000 \" Aqua Color\"I TESTED 11180",
+      "item_qty": "1,00",
+      "item_net_price": "60,00",
+      "item_net_worth": "60,00",
+      "item_vat": "10%",
+      "item_gross_worth": "66,00"
+    },
+    {
+      "item_desc": "Nintendo 64 N64 Console Black Japan Tested Working NUSHA",
+      "item_qty": "3,00",
+      "item_net_price": "49,99",
+      "item_net_worth": "149,97",
+      "item_vat": "10%",
+      "item_gross_worth": "164,97"
+    },
+    {
+      "item_desc": "Sony PlayStation 5 Console - White Disc Version CONFIRMED PRE ORDER PS5",
+      "item_qty": "5,00",
+      "item_net_price": "499,99",
+      "item_net_worth": "2 499,95",
+      "item_vat": "10%",
+      "item_gross_worth": "2 749,95"
+    },
+    {
+      "item_desc": "Sega V Saturn Victor Console RG-JX1 Gray Tested Working",
+      "item_qty": "1,00",
+      "item_net_price": "119,99",
+      "item_net_worth": "119,99",
+      "item_vat": "10%",
+      "item_gross_worth": "131,99"
+    },
+    {
+      "item_desc": "Nintendo Gameboy Original Console Gray with Box Manual DMB-01 Japan Tested 67",
+      "item_qty": "5,00",
+      "item_net_price": "140,00",
+      "item_net_worth": "700,00",
+      "item_vat": "10%",
+      "item_gross_worth": "770,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$4754,91",
+    "total_vat": "$ 475,49",
+    "total_gross_worth": "$5230,40"
+  }
+}

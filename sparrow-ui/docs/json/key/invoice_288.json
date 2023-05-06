@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "65166425",
+    "invoice_date": "11/14/2020",
+    "seller": "Wagner PLC 74685 Patricia Ferry Suite 974 Maureenside, DE 84080",
+    "client": "GutierrezWillams USCGC Cannon FPO AP 22243",
+    "seller_tax_id": "963-76-4291",
+    "client_tax_id": "902-81-1977",
+    "iban": "GB74LWZA78599473788589"
+  },
+  "items": [
+    {
+      "item_desc": "Joma Youth Boys Gol 205 Piso Multitaco Soccer Cleats 3.5 White Blue Yellow NEW",
+      "item_qty": "2,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "39,98",
+      "item_vat": "10%",
+      "item_gross_worth": "43,98"
+    },
+    {
+      "item_desc": "nickelodeon TMNT Teenage Mutant Ninja Turtles D L M R 6in Action Figure Kids Toy",
+      "item_qty": "2,00",
+      "item_net_price": "42,98",
+      "item_net_worth": "85,96",
+      "item_vat": "10%",
+      "item_gross_worth": "94,56"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$125,94",
+    "total_vat": "$12,59",
+    "total_gross_worth": "$ 138,53"
+  }
+}

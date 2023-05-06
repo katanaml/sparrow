@@ -1,0 +1,58 @@
+{
+  "header": {
+    "invoice_no": "57468195",
+    "invoice_date": "12/25/2013",
+    "seller": "Hutchinson, Williams and Wilson 27897 Merritt Circle East Richard, MI 82755",
+    "client": "Adams-Campbell 3649 Barnett Fork New Andreaside, WI 21028",
+    "seller_tax_id": "917-73-7110",
+    "client_tax_id": "987-80-1887",
+    "iban": "GB08AGYT95144784457006"
+  },
+  "items": [
+    {
+      "item_desc": "Minecraft Creative Stuffed Plush Kids Childrens Gift Cute Toy Birthday Christmas",
+      "item_qty": "1,00",
+      "item_net_price": "7,25",
+      "item_net_worth": "7,25",
+      "item_vat": "10%",
+      "item_gross_worth": "7,98"
+    },
+    {
+      "item_desc": "Easy No Tie Rubber Shoe Laces Colored Trainers Snickers Kids + Adults Shoelaces",
+      "item_qty": "4,00",
+      "item_net_price": "1,55",
+      "item_net_worth": "6,20",
+      "item_vat": "10%",
+      "item_gross_worth": "6,82"
+    },
+    {
+      "item_desc": "SEVENTEEN Semicolon Special Album [Photocard / Digi Pack Cover / Mini Card]",
+      "item_qty": "2,00",
+      "item_net_price": "4,99",
+      "item_net_worth": "9,98",
+      "item_vat": "10%",
+      "item_gross_worth": "10,98"
+    },
+    {
+      "item_desc": "Sperry Top-Sider Boys Toddlers Lace Tie Boat Shoes Brown 13M New",
+      "item_qty": "1,00",
+      "item_net_price": "37,69",
+      "item_net_worth": "37,69",
+      "item_vat": "10%",
+      "item_gross_worth": "41,46"
+    },
+    {
+      "item_desc": "Lands' End Kids Boys Snow Winter Boots Size 5 Blue Warm Zip Up Easy On Easy Off",
+      "item_qty": "3,00",
+      "item_net_price": "9,50",
+      "item_net_worth": "28,50",
+      "item_vat": "10%",
+      "item_gross_worth": "31,35"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$89,62",
+    "total_vat": "$8,96",
+    "total_gross_worth": "$98,58"
+  }
+}

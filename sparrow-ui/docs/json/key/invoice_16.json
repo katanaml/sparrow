@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "93356118",
+    "invoice_date": "06/14/2013",
+    "seller": "Simon-Colon 05647 Oconnell Coves Dennistown, MD 47477",
+    "client": "Robinson, Cannon and Ray 630 Alex Islands Suite 809 Brandonport, NC 62378",
+    "seller_tax_id": "974-95-4763",
+    "client_tax_id": "976-82-9140",
+    "iban": "GB81XWKP43253048936289"
+  },
+  "items": [
+    {
+      "item_desc": "Semi Precious Stone Inlay Art Island Table Top Marble Dinning Table 36 Inches",
+      "item_qty": "5,00",
+      "item_net_price": "1751,25",
+      "item_net_worth": "8 756,25",
+      "item_vat": "10%",
+      "item_gross_worth": "9631,87"
+    },
+    {
+      "item_desc": "6 Pack Metal Plated Table Locks Dining Training Table Buckles Connectors Hardwar",
+      "item_qty": "1,00",
+      "item_net_price": "12,73",
+      "item_net_worth": "12,73",
+      "item_vat": "10%",
+      "item_gross_worth": "14,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$8768,98",
+    "total_vat": "$876,90",
+    "total_gross_worth": "$9645,88"
+  }
+}

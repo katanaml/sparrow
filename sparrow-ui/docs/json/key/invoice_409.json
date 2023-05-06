@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "14878236",
+    "invoice_date": "04/26/2015",
+    "seller": "Hernandez, Coleman and Alvarado 6080 Justin Fort Suite 152 Brownburgh, NC 87582",
+    "client": "Turner-Green 7245 Stephens Orchard Lake Mitchellview, MI 50388",
+    "seller_tax_id": "988-79-4495",
+    "client_tax_id": "950-70-5065",
+    "iban": "GB17VARZ09653710676977"
+  },
+  "items": [
+    {
+      "item_desc": "Cabi 5610 Striped White Blue Launch Maxi Dress Womens Sz",
+      "item_qty": "3,00",
+      "item_net_price": "48,99",
+      "item_net_worth": "146,97",
+      "item_vat": "10%",
+      "item_gross_worth": "161,67"
+    },
+    {
+      "item_desc": "Boden black blue floral short sleeve dress size 6",
+      "item_qty": "2,00",
+      "item_net_price": "36,99",
+      "item_net_worth": "73,98",
+      "item_vat": "10%",
+      "item_gross_worth": "81,38"
+    },
+    {
+      "item_desc": "Ann Taylor LOFT 3/4 Knit Sleeve Dress Size 0",
+      "item_qty": "4,00",
+      "item_net_price": "8,00",
+      "item_net_worth": "32,00",
+      "item_vat": "10%",
+      "item_gross_worth": "35,20"
+    },
+    {
+      "item_desc": "Divided Black Asymmetrical Dress size 8 NWT",
+      "item_qty": "2,00",
+      "item_net_price": "7,99",
+      "item_net_worth": "15,98",
+      "item_vat": "10%",
+      "item_gross_worth": "17,58"
+    },
+    {
+      "item_desc": "Women Elegant Fashion O-Neck Knee Length Short Sleeve Retro Floral Print Dress",
+      "item_qty": "4,00",
+      "item_net_price": "12,00",
+      "item_net_worth": "48,00",
+      "item_vat": "10%",
+      "item_gross_worth": "52,80"
+    },
+    {
+      "item_desc": "Vintage 90s Sostanza Plus Size Dress 22W Floral Cottagecore",
+      "item_qty": "3,00",
+      "item_net_price": "49,96",
+      "item_net_worth": "149,88",
+      "item_vat": "10%",
+      "item_gross_worth": "164,87"
+    },
+    {
+      "item_desc": "Matilda Jane Women's Light Rising High Low Green Floral Dress Size L Pockets",
+      "item_qty": "1,00",
+      "item_net_price": "50,00",
+      "item_net_worth": "50,00",
+      "item_vat": "10%",
+      "item_gross_worth": "55,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 516,81",
+    "total_vat": "$51,68",
+    "total_gross_worth": "$ 568,49"
+  }
+}

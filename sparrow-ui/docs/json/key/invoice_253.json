@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "60241381",
+    "invoice_date": "10/02/2018",
+    "seller": "Stevens-Black 35899 Sean Plaza Jasonton, NE 23838",
+    "client": "Higgins, Bautista and Harrison PSC 7664, Box 0557 APO AE 53176",
+    "seller_tax_id": "939-88-5337",
+    "client_tax_id": "953-83-6989",
+    "iban": "GB31FUBU09086285398305"
+  },
+  "items": [
+    {
+      "item_desc": "Women's black cocktail dress,",
+      "item_qty": "5,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "99,95",
+      "item_vat": "10%",
+      "item_gross_worth": "109,94"
+    },
+    {
+      "item_desc": "Women Sexy Lingerie Lace Dress Underwear Babydoll Sleepwear G-string Bikini Lot",
+      "item_qty": "5,00",
+      "item_net_price": "0,99",
+      "item_net_worth": "4,95",
+      "item_vat": "10%",
+      "item_gross_worth": "5,45"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 104,90",
+    "total_vat": "$ 10,49",
+    "total_gross_worth": "$ 115,39"
+  }
+}

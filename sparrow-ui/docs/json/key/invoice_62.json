@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "87655538",
+    "invoice_date": "12/16/2018",
+    "seller": "Gibson, Wells and Taylor 20644 Tanner Avenue Suite 715 Lake Gloriaside, NJ 49027",
+    "client": "Roth, Key and Hubbard 97486 Edward Shoal Stevenport, DE 72648",
+    "seller_tax_id": "904-95-3601",
+    "client_tax_id": "970-96-1494",
+    "iban": "GB59MCIJ70715558745631"
+  },
+  "items": [
+    {
+      "item_desc": "B311 Nintendo 3DS console Cosmo Black Japan x",
+      "item_qty": "3,00",
+      "item_net_price": "11,99",
+      "item_net_worth": "35,97",
+      "item_vat": "10%",
+      "item_gross_worth": "39,57"
+    },
+    {
+      "item_desc": "Nintendo Game Boy Micro Console Black (OXYSFBB)",
+      "item_qty": "3,00",
+      "item_net_price": "130,00",
+      "item_net_worth": "390,00",
+      "item_vat": "10%",
+      "item_gross_worth": "429,00"
+    },
+    {
+      "item_desc": "PS4 PlayStation 4 500 GB Console CUH-1115A Bundle, 1 Controller, 8 Games",
+      "item_qty": "1,00",
+      "item_net_price": "349,99",
+      "item_net_worth": "349,99",
+      "item_vat": "10%",
+      "item_gross_worth": "384,99"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 775,96",
+    "total_vat": "$77,60",
+    "total_gross_worth": "$ 853,56"
+  }
+}

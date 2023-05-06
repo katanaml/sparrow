@@ -1,0 +1,39 @@
+{
+  "header": {
+    "invoice_no": "69167020",
+    "invoice_date": "10/03/2020",
+    "seller": "Green, Phillips and Washington 08050 Burns Unions Apt. 703 West Mark, ID 06799",
+    "client": "Gibson PLC 3324 Sheri Unions Suite 038 Autumnfurt, DE 97496",
+    "seller_tax_id": "901-76-9701",
+    "client_tax_id": "936-95-7995",
+    "iban": "GB76RLVG97497497779065189"
+  },
+  "items": [
+    {
+      "item_desc": "Nordic Braided Tassels Sofa Rugs Area Rug Soft Mat Palm Leaves Room Carpet",
+      "item_qty": "4,00",
+      "item_net_price": "186,54",
+      "item_net_worth": "820,78",
+      "item_vat": "10%"
+    },
+    {
+      "item_desc": "Chindi Area Rugs Carpet New Design Bohemian Hippi Garden Yoga Mat Indian Kilim",
+      "item_qty": "4,00",
+      "item_net_price": "29,99",
+      "item_net_worth": "131,96",
+      "item_vat": "10%"
+    },
+    {
+      "item_desc": "Happy Christmas Home Decoration Rug Mat Carpet Bedroom Rugs Bedside Area Rug New",
+      "item_qty": "3,00",
+      "item_net_price": "60,32",
+      "item_net_worth": "199,06",
+      "item_vat": "10%"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$1047,08",
+    "total_vat": "$ 104,71",
+    "total_gross_worth": "$1151,79"
+  }
+}

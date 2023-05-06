@@ -1,0 +1,58 @@
+{
+  "header": {
+    "invoice_no": "52093915",
+    "invoice_date": "08/29/2017",
+    "seller": "Cooper Group 079 Cisneros Squares Alvarezland, RI 49684",
+    "client": "West LLC 7197 Tammy Forks Suite 476 Leonardburgh, OK 34364",
+    "seller_tax_id": "955-78-7390",
+    "client_tax_id": "997-81-2291",
+    "iban": "GB67AVNU74662311601021"
+  },
+  "items": [
+    {
+      "item_desc": "Nintendo WII Black Console Bundle 2 Remotes+ sensor+ 1 Numchuk Tested & Works",
+      "item_qty": "3,00",
+      "item_net_price": "52,95",
+      "item_net_worth": "158,85",
+      "item_vat": "10%",
+      "item_gross_worth": "174,74"
+    },
+    {
+      "item_desc": "B400 Nintendo 3DS console Gloss Pink Japan X",
+      "item_qty": "4,00",
+      "item_net_price": "14,99",
+      "item_net_worth": "59,96",
+      "item_vat": "10%",
+      "item_gross_worth": "65,96"
+    },
+    {
+      "item_desc": "Nintendo Switch 32GB Neon Red/Neon Blue Console",
+      "item_qty": "4,00",
+      "item_net_price": "300,00",
+      "item_net_worth": "1200,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1320,00"
+    },
+    {
+      "item_desc": "Nintendo N64 Atomic Purple Console in box Mario Kart in box +Extras",
+      "item_qty": "2,00",
+      "item_net_price": "51,00",
+      "item_net_worth": "102,00",
+      "item_vat": "10%",
+      "item_gross_worth": "112,20"
+    },
+    {
+      "item_desc": "SONY Playstation2 Console SCPH-39000 \" Aqua Color \"I TESTED 11181",
+      "item_qty": "1,00",
+      "item_net_price": "45,00",
+      "item_net_worth": "45,00",
+      "item_vat": "10%",
+      "item_gross_worth": "49,50"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$1565,81",
+    "total_vat": "$ 156,58",
+    "total_gross_worth": "$1722,39"
+  }
+}

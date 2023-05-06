@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "45181097",
+    "invoice_date": "02/24/2018",
+    "seller": "Long, Alvarez and Mendoza 1303 Stuart Centers Bautistafurt, FL 80497",
+    "client": "Hobbs Group 91981 Darlene Fork Lake Kennethmouth, NV 76378",
+    "seller_tax_id": "926-72-1593",
+    "client_tax_id": "977-99-7808",
+    "iban": "GB84CEYB30028969299840"
+  },
+  "items": [
+    {
+      "item_desc": "Nike Air Max 90 All Black Leather Running Shoes 833412-001 Size 7Y (Women's 8.5)",
+      "item_qty": "4,00",
+      "item_net_price": "74,99",
+      "item_net_worth": "299,96",
+      "item_vat": "10%",
+      "item_gross_worth": "329,96"
+    },
+    {
+      "item_desc": "Nike Air Force 1 Low 314192-117 Triple White Youth Boys Size 5Y",
+      "item_qty": "2,00",
+      "item_net_price": "54,95",
+      "item_net_worth": "109,90",
+      "item_vat": "10%",
+      "item_gross_worth": "120,89"
+    },
+    {
+      "item_desc": "Nike Boys Shorts Size 5",
+      "item_qty": "5,00",
+      "item_net_price": "8,99",
+      "item_net_worth": "44,95",
+      "item_vat": "10%",
+      "item_gross_worth": "49,45"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 454,81",
+    "total_vat": "$45,48",
+    "total_gross_worth": "Total"
+  }
+}

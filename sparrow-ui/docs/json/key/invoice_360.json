@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "36526167",
+    "invoice_date": "01/05/2013",
+    "seller": "Roy and Sons 9089 Gallegos Road New Josetown, KS 56485",
+    "client": "Mahoney, Bird and Gonzalez 46369 Patton Stravenue Apt. 576 Lake Jonathanstad, AR 10360",
+    "seller_tax_id": "929-86-4632",
+    "client_tax_id": "958-84-4387",
+    "iban": "GB66KXUU303330333153690584"
+  },
+  "items": [
+    {
+      "item_desc": "Lotto Youth Boys Fuerzapura L500 Jr Soccer Cleats Size 1.5 Black Yellow N1385",
+      "item_qty": "1,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "19,99",
+      "item_vat": "10%",
+      "item_gross_worth": "21,99"
+    },
+    {
+      "item_desc": "Kid's Unicorn Sunglasses Girls Rainbow Mythical Fashion Shades",
+      "item_qty": "5,00",
+      "item_net_price": "9,95",
+      "item_net_worth": "49,75",
+      "item_vat": "10%",
+      "item_gross_worth": "54,73"
+    },
+    {
+      "item_desc": "Nike Oncore High Jr 6.0 (Kids) Size 4Y Black, Red, White",
+      "item_qty": "1,00",
+      "item_net_price": "25,00",
+      "item_net_worth": "25,00",
+      "item_vat": "10%",
+      "item_gross_worth": "27,50"
+    },
+    {
+      "item_desc": "Joma Boys Youth Super Copa 102 Soccer Cleats 2.5 White Yellow Blue Futbol NEW",
+      "item_qty": "2,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "39,98",
+      "item_vat": "10%",
+      "item_gross_worth": "43,98"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$134,72",
+    "total_vat": "$13,47",
+    "total_gross_worth": "$ 148,19"
+  }
+}

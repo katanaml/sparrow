@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "16253735",
+    "invoice_date": "09/28/2014",
+    "seller": "Powell, Baker and Mills USNV Gillespie FPO AE 74725",
+    "client": "Grant PLC 97139 Wilson Junction Suite 853 Lake Jennaland, CA 14762",
+    "seller_tax_id": "968-92-3838",
+    "client_tax_id": "996-74-4056",
+    "iban": "GB35ZSKH89271359206120"
+  },
+  "items": [
+    {
+      "item_desc": "Sony PlayStation 3 PS3 CECH-2501A Slim 150GB Black Console TESTED",
+      "item_qty": "5,00",
+      "item_net_price": "119,99",
+      "item_net_worth": "599,95",
+      "item_vat": "10%",
+      "item_gross_worth": "659,94"
+    },
+    {
+      "item_desc": "Sony PlayStation 5 Console \"DIGITAL EDITION\" Presale",
+      "item_qty": "5,00",
+      "item_net_price": "949,99",
+      "item_net_worth": "4749,95",
+      "item_vat": "10%",
+      "item_gross_worth": "5224,95"
+    },
+    {
+      "item_desc": "Sony PlayStation 4 Slim 1TB (Upgraded to SSD) Black Game Console",
+      "item_qty": "2,00",
+      "item_net_price": "150,00",
+      "item_net_worth": "300,00",
+      "item_vat": "10%",
+      "item_gross_worth": "330,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$5649,90",
+    "total_vat": "$ 564,99",
+    "total_gross_worth": "$6214,89"
+  }
+}

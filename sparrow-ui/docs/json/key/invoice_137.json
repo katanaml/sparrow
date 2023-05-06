@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "84422507",
+    "invoice_date": "12/08/2019",
+    "seller": "Shelton Inc 6718 Esparza Bridge Lake Waltermouth, MS 38936",
+    "client": "Watson, White and Lawrence 5575 Santiago Extension Port Rebeccamouth, MI 17974",
+    "seller_tax_id": "925-76-2898",
+    "client_tax_id": "961-79-5330",
+    "iban": "GB90LFJV64626371402095"
+  },
+  "items": [
+    {
+      "item_desc": "HP Windows 10 Pro Desktop Computer Intel QUAD CORE i5 Wifi, Keyboard & Mouse",
+      "item_qty": "1,00",
+      "item_net_price": "169,95",
+      "item_net_worth": "169,95",
+      "item_vat": "10%",
+      "item_gross_worth": "186,95"
+    },
+    {
+      "item_desc": "Alarco Gaming PC Desktop Computer Intel i5v 8GV 1Tbv WIN 10v NVIDIA GTX 650 1GB",
+      "item_qty": "1,00",
+      "item_net_price": "500,00",
+      "item_net_worth": "500,00",
+      "item_vat": "10%",
+      "item_gross_worth": "550,00"
+    },
+    {
+      "item_desc": "HP Pro 3500 Microtower Desktop Computer 3.4GHz i3 4GB 500GB Windows 10 Pro",
+      "item_qty": "1,00",
+      "item_net_price": "74,99",
+      "item_net_worth": "74,99",
+      "item_vat": "10%",
+      "item_gross_worth": "82,49"
+    },
+    {
+      "item_desc": "Intel Compute Stick PC (32GB, 1.33GHz, 2GB) - BOXSTCKIA32WFC + Wireless Keyboard",
+      "item_qty": "5,00",
+      "item_net_price": "29,99",
+      "item_net_worth": "149,95",
+      "item_vat": "10%",
+      "item_gross_worth": "164,94"
+    },
+    {
+      "item_desc": "NEW RGB Quad Core Gaming PC Desktop Computer 4.2 GHz 500 8GB RAM WIN 10 WIFI",
+      "item_qty": "2,00",
+      "item_net_price": "299,99",
+      "item_net_worth": "599,98",
+      "item_vat": "10%",
+      "item_gross_worth": "659,98"
+    },
+    {
+      "item_desc": "HP XW9400 AMD Dual Core 2216 2. .6GHz /8GB/250GB/ PC Computer 1 Desktop",
+      "item_qty": "4,00",
+      "item_net_price": "225,00",
+      "item_net_worth": "900,00",
+      "item_vat": "10%",
+      "item_gross_worth": "990,00"
+    },
+    {
+      "item_desc": "Alienware Area 51 Gaming Desktop Computer",
+      "item_qty": "4,00",
+      "item_net_price": "600,00",
+      "item_net_worth": "2 400,00",
+      "item_vat": "10%",
+      "item_gross_worth": "2 640,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$4794,87",
+    "total_vat": "$ 479,49",
+    "total_gross_worth": "$5274,36"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "59070830",
+    "invoice_date": "11/25/2020",
+    "seller": "Forbes, Newton and Clayton PSC 8039, Box 9847 APO AP 33907",
+    "client": "Yang, Hicks and Thomas 9522 Robinson Ferry Audreyton, ID 50817",
+    "seller_tax_id": "921-90-6392",
+    "client_tax_id": "979-97-1773",
+    "iban": "GB32JLII86014255977399"
+  },
+  "items": [
+    {
+      "item_desc": "Elisa Cavaletti Daniela Dallavalle Shift Dress Grey And White .Size M",
+      "item_qty": "2,00",
+      "item_net_price": "60,00",
+      "item_net_worth": "120,00",
+      "item_vat": "10%",
+      "item_gross_worth": "132,00"
+    },
+    {
+      "item_desc": "Socialite White Black Striped A Line Dress With Pockets Large",
+      "item_qty": "4,00",
+      "item_net_price": "10,00",
+      "item_net_worth": "40,00",
+      "item_vat": "10%",
+      "item_gross_worth": "44,00"
+    },
+    {
+      "item_desc": "Adult Kids Pokemon Pikachu Kigurumi Pajama Cosplay Christmas Costume Sleepwear",
+      "item_qty": "2,00",
+      "item_net_price": "9,95",
+      "item_net_worth": "19,90",
+      "item_vat": "10%",
+      "item_gross_worth": "21,89"
+    },
+    {
+      "item_desc": "Vintage 90s Sostanza Plus Size Dress 22W Floral Cottagecore",
+      "item_qty": "4,00",
+      "item_net_price": "49,96",
+      "item_net_worth": "199,84",
+      "item_vat": "10%",
+      "item_gross_worth": "219,82"
+    },
+    {
+      "item_desc": "Banana Republic Maroon Abstract ruffled wrap Dress With slip XS 0",
+      "item_qty": "4,00",
+      "item_net_price": "5,00",
+      "item_net_worth": "20,00",
+      "item_vat": "10%",
+      "item_gross_worth": "22,00"
+    },
+    {
+      "item_desc": "Free People Lace Dress One Shoulder Size L",
+      "item_qty": "2,00",
+      "item_net_price": "12,00",
+      "item_net_worth": "24,00",
+      "item_vat": "10%",
+      "item_gross_worth": "26,40"
+    },
+    {
+      "item_desc": "Lilly Pulitzer 8 Sunkissed with Glow Janice Shift Dress",
+      "item_qty": "4,00",
+      "item_net_price": "56,89",
+      "item_net_worth": "227,56",
+      "item_vat": "10%",
+      "item_gross_worth": "250,32"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 651,30",
+    "total_vat": "$65,13",
+    "total_gross_worth": "$ 716,43"
+  }
+}

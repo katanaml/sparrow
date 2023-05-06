@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "99314100",
+    "invoice_date": "06/25/2014",
+    "seller": "Michael, Farrell and Lee 95360 Washington Inlet Port Sandraview, CT 01507",
+    "client": "Collins, Barrett and Schroeder 2314 Beard Via Kellybury, GA 19687",
+    "seller_tax_id": "993-76-1179",
+    "client_tax_id": "908-81-7850",
+    "iban": "GB20WFQR49970703277369"
+  },
+  "items": [
+    {
+      "item_desc": "Real Madrid Inflatable Chair (SG16136)",
+      "item_qty": "5,00",
+      "item_net_price": "43,95",
+      "item_net_worth": "219,75",
+      "item_vat": "10%",
+      "item_gross_worth": "241,73"
+    },
+    {
+      "item_desc": "60 Inches Marble Dinning Table Top Inlay Work Lawn Table with Multi Color Stones",
+      "item_qty": "1,00",
+      "item_net_price": "5756,00",
+      "item_net_worth": "5756,00",
+      "item_vat": "10%",
+      "item_gross_worth": "6331,60"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$5975,75",
+    "total_vat": "$ 597,58",
+    "total_gross_worth": "$6573,33"
+  }
+}

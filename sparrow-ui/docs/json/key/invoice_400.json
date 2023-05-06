@@ -1,0 +1,58 @@
+{
+  "header": {
+    "invoice_no": "56418581",
+    "invoice_date": "01/25/2013",
+    "seller": "Watkins Inc 292 Hurst Orchard Apt. 221 Wongstad, WV 85962",
+    "client": "Cruz, Nichols and Fischer 7609 Carr Park Suite 493 North Robert, FL 46982",
+    "seller_tax_id": "942-95-3896",
+    "client_tax_id": "911-82-4219",
+    "iban": "GB80EJHH36308848007839"
+  },
+  "items": [
+    {
+      "item_desc": "24\"x24\" Marble Black Top Coffee Table Inlaid Floral Art Christmas Gift Home Deco",
+      "item_qty": "5,00",
+      "item_net_price": "1150,00",
+      "item_net_worth": "5 750,00",
+      "item_vat": "10%",
+      "item_gross_worth": "6325,00"
+    },
+    {
+      "item_desc": "6'x3' Elegant Marble Black Top Dining Table Italian Inlay Furniture Decor E964B",
+      "item_qty": "4,00",
+      "item_net_price": "5469,38",
+      "item_net_worth": "21877,52",
+      "item_vat": "10%",
+      "item_gross_worth": "24 065,27"
+    },
+    {
+      "item_desc": "54 Inches Marble Dinning Table Top Hand Crafted Reception Table Home Furniture",
+      "item_qty": "2,00",
+      "item_net_price": "4452,00",
+      "item_net_worth": "8904,00",
+      "item_vat": "10%",
+      "item_gross_worth": "9 794,40"
+    },
+    {
+      "item_desc": "15\"x15\" White Marble Coffee Table Top With 15\" Tall Stand Semi Precious Art Deco",
+      "item_qty": "4,00",
+      "item_net_price": "575,99",
+      "item_net_worth": "2 303,96",
+      "item_vat": "10%",
+      "item_gross_worth": "2 534,36"
+    },
+    {
+      "item_desc": "25 Inches Black Marble Center Table Top with Multi Stones Coffee Table for Home",
+      "item_qty": "1,00",
+      "item_net_price": "731,25",
+      "item_net_worth": "731,25",
+      "item_vat": "10%",
+      "item_gross_worth": "804,37"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$39566,73",
+    "total_vat": "$3956,67",
+    "total_gross_worth": "$ 43523,40"
+  }
+}

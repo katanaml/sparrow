@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "13407985",
+    "invoice_date": "11/22/2013",
+    "seller": "Nicholson, Miller and Webster USS Lee FPO AE 74393",
+    "client": "Mccormick and Sons 22688 Ortiz Plaza Meganfort, WA 91964",
+    "seller_tax_id": "962-88-9077",
+    "client_tax_id": "997-95-5690",
+    "iban": "GB23TMKM50357047352524"
+  },
+  "items": [
+    {
+      "item_desc": "Adult Kids Pokemon Pikachu Kigurumi Pajama Cosplay Christmas Costume Sleepwear",
+      "item_qty": "5,00",
+      "item_net_price": "9,95",
+      "item_net_worth": "49,75",
+      "item_vat": "10%",
+      "item_gross_worth": "54,73"
+    },
+    {
+      "item_desc": "Vintage 90s Sostanza Plus Size Dress 22W Floral Cottagecore",
+      "item_qty": "3,00",
+      "item_net_price": "49,96",
+      "item_net_worth": "149,88",
+      "item_vat": "10%",
+      "item_gross_worth": "164,87"
+    },
+    {
+      "item_desc": "balmain dress 36",
+      "item_qty": "3,00",
+      "item_net_price": "1550,00",
+      "item_net_worth": "4650,00",
+      "item_vat": "10%",
+      "item_gross_worth": "5115,00"
+    },
+    {
+      "item_desc": "Lilly Pulitzer 8 Sunkissed with Glow Janice Shift Dress",
+      "item_qty": "2,00",
+      "item_net_price": "56,89",
+      "item_net_worth": "113,78",
+      "item_vat": "10%",
+      "item_gross_worth": "125,16"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$4963,41",
+    "total_vat": "$ 496,34",
+    "total_gross_worth": "$5459,75"
+  }
+}

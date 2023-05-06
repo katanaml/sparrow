@@ -1,0 +1,73 @@
+{
+  "header": {
+    "invoice_no": "15902016",
+    "invoice_date": "11/07/2017",
+    "seller": "Martin-Silva USCGC Gonzalez FPO AP 27004",
+    "client": "Spencer Ltd 70039 Leslie Locks Suite 218 Port Saraland, KY 84303",
+    "seller_tax_id": "908-72-0681",
+    "client_tax_id": "905-70-3376",
+    "iban": "GB62TDNY91893152860446"
+  },
+  "items": [
+    {
+      "item_desc": "Dell Desktop Computer/16GB 2TB HD OR 512GB SSD Quad Core i5[Windows 10 22\" LCD",
+      "item_qty": "5,00",
+      "item_net_price": "129,95",
+      "item_net_worth": "649,75",
+      "item_vat": "10%",
+      "item_gross_worth": "714,73"
+    },
+    {
+      "item_desc": "Gaming PC Computer RX 580 8GB Ryzen 5 2x8GB Ram",
+      "item_qty": "4,00",
+      "item_net_price": "400,00",
+      "item_net_worth": "1600,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1760,00"
+    },
+    {
+      "item_desc": "Dell Optiplex 790 Computer i7 @ 3.40 Ghz Quad Core 250GB 4GB Working",
+      "item_qty": "4,00",
+      "item_net_price": "159,99",
+      "item_net_worth": "639,96",
+      "item_vat": "10%",
+      "item_gross_worth": "703,96"
+    },
+    {
+      "item_desc": "Lenovo i5 I 32GB I 2TB I SSD Windows 10 Pro Desktop Computer PC WiFi Bluetooth",
+      "item_qty": "3,00",
+      "item_net_price": "139,00",
+      "item_net_worth": "417,00",
+      "item_vat": "10%",
+      "item_gross_worth": "458,70"
+    },
+    {
+      "item_desc": "GAMING PC Desktop Computer RGB BUNDLE Intel CORE i7 16GB RAM Nvidia GTX 1650 1TB",
+      "item_qty": "3,00",
+      "item_net_price": "1649,97",
+      "item_vat": "10%",
+      "item_gross_worth": "1814,97"
+    },
+    {
+      "item_desc": "Dell 7010 Desktop Computer Intel Core i5 3.10 Windows 10 pro 64 500gb HD 4gb Ram",
+      "item_qty": "4,00",
+      "item_net_price": "241,60",
+      "item_net_worth": "966,40",
+      "item_vat": "10%",
+      "item_gross_worth": "1 063,04"
+    },
+    {
+      "item_desc": "HP ProDesk 400 G5 Mini Desktop Computer i5-9500T 8GB 256GB SSD W10P",
+      "item_qty": "4,00",
+      "item_net_price": "200,50",
+      "item_net_worth": "802,00",
+      "item_vat": "10%",
+      "item_gross_worth": "882,20"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$6725,08",
+    "total_vat": "$ 672,51",
+    "total_gross_worth": "$7397,59"
+  }
+}

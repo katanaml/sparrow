@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "18650156",
+    "invoice_date": "03/23/2020",
+    "seller": "Young LLC 80219 Green Squares New Victoriaberg, MS 61758",
+    "client": "Rodriguez LLC 518 Nguyen Landing Apt. 645 Monicaborough, MT 28809",
+    "seller_tax_id": "971-82-5916",
+    "client_tax_id": "964-75-4735",
+    "iban": "GB19FFCY83556688389779"
+  },
+  "items": [
+    {
+      "item_desc": "Jordan Sneakers Size 3.5 Youth Red And Blue",
+      "item_qty": "2,00",
+      "item_net_price": "9,99",
+      "item_net_worth": "19,98",
+      "item_vat": "10%",
+      "item_gross_worth": "21,98"
+    },
+    {
+      "item_desc": "Adidas Baseball Youth Cleats Spikes Kids Shoes Black White Size 12K",
+      "item_qty": "1,00",
+      "item_net_price": "11,99",
+      "item_net_worth": "11,99",
+      "item_vat": "10%",
+      "item_gross_worth": "13,19"
+    },
+    {
+      "item_desc": "Joma Boys Youth Gol-102 Soccer Cleats Shoes Size 4 White Red Futbol NEW",
+      "item_qty": "3,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "59,97",
+      "item_vat": "10%",
+      "item_gross_worth": "65,97"
+    },
+    {
+      "item_desc": "TODDLER SHAQ HIGH TOP SHOES SIZE 4",
+      "item_qty": "1,00",
+      "item_net_price": "9,99",
+      "item_net_worth": "9,99",
+      "item_vat": "10%",
+      "item_gross_worth": "10,99"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 101,93",
+    "total_vat": "$ 10,19",
+    "total_gross_worth": "$ 112,12"
+  }
+}

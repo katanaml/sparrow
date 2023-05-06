@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "61669642",
+    "invoice_date": "11/12/2013",
+    "seller": "Carter Inc 7936 Smith Streets Mariahchester, PA 08114",
+    "client": "Torres, Sutton and Weeks 618 Perez Shoals Suite 978 Bradshawton, TN 51301",
+    "seller_tax_id": "940-76-9247",
+    "client_tax_id": "909-87-3064",
+    "iban": "GB89DNYK55635635059269556"
+  },
+  "items": [
+    {
+      "item_desc": "Jesus (Hardback or Cased Book)",
+      "item_qty": "4,00",
+      "item_net_price": "31,96",
+      "item_net_worth": "127,84",
+      "item_vat": "10%",
+      "item_gross_worth": "140,62"
+    },
+    {
+      "item_desc": "Haida: Their Art and Culture",
+      "item_qty": "2,00",
+      "item_net_price": "4,89",
+      "item_net_worth": "9,78",
+      "item_vat": "10%",
+      "item_gross_worth": "10,76"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 137,62",
+    "total_vat": "$ 13,76",
+    "total_gross_worth": "$ 151,38"
+  }
+}

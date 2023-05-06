@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "22537855",
+    "invoice_date": "07/03/2013",
+    "seller": "Barton, Garcia and Richards 3194 Brianna Path Suite 785 Cainfort, WV 50923",
+    "client": "Wilson, Wagner and Newman 7038 Burns Street Rhodesville, MN 41253",
+    "seller_tax_id": "945-96-2248",
+    "client_tax_id": "961-85-8571",
+    "iban": "GB98FOPY29496953726939"
+  },
+  "items": [
+    {
+      "item_desc": "Muted Vegetable Dye Khootan Oriental Area Rug Hand-knotted Floral 8'x11' Carpet",
+      "item_qty": "4,00",
+      "item_net_price": "2015,64",
+      "item_net_worth": "8062,56",
+      "item_vat": "10%",
+      "item_gross_worth": "8868,82"
+    },
+    {
+      "item_desc": "Imitation Wool Carpet Rugs Koala Panda Plush Living Room Blankets Non Slip Decor",
+      "item_qty": "5,00",
+      "item_net_price": "26,11",
+      "item_net_worth": "130,55",
+      "item_vat": "10%",
+      "item_gross_worth": "143,61"
+    },
+    {
+      "item_desc": "Moroccan Handmade Amazigh Carpet 9'2\" x 4'5\"",
+      "item_qty": "2,00",
+      "item_net_price": "329,00",
+      "item_net_worth": "658,00",
+      "item_vat": "10%",
+      "item_gross_worth": "723,80"
+    },
+    {
+      "item_desc": "YILONG 1.2x1.7' 300L Handmade Tree of Life Silk Carpet Home Tapestry LH693A",
+      "item_qty": "2,00",
+      "item_net_price": "188,00",
+      "item_net_worth": "376,00",
+      "item_vat": "10%",
+      "item_gross_worth": "413,60"
+    },
+    {
+      "item_desc": "Carton Tiger Print Area Rug Faux Skin Rug Hide Cute Carpet Floor Mat Home Decor",
+      "item_qty": "2,00",
+      "item_net_price": "10,99",
+      "item_net_worth": "21,98",
+      "item_vat": "10%",
+      "item_gross_worth": "24,18"
+    },
+    {
+      "item_desc": "7x10 Diamond Geometric Rugs Contemporary Black Color Large Mat Dhurrie Carpet",
+      "item_qty": "1,00",
+      "item_net_price": "350,00",
+      "item_net_worth": "350,00",
+      "item_vat": "10%",
+      "item_gross_worth": "385,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$9599,09",
+    "total_vat": "$ 959,91",
+    "total_gross_worth": "$ 10559,00"
+  }
+}

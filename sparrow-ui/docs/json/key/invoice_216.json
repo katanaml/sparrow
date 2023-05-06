@@ -1,0 +1,26 @@
+{
+  "header": {
+    "invoice_no": "41389063",
+    "invoice_date": "03/17/2021",
+    "seller": "Carpenter, Robinson and Jackson 7554 Acevedo Expressway Apt. 124 Shawnfort, KY 01851",
+    "client": "Davis, Li and Coleman 07244 Henry View Thompsonchester, WA 44629",
+    "seller_tax_id": "940-95-2437",
+    "client_tax_id": "905-83-5704",
+    "iban": "GB47PCJH31839415874046"
+  },
+  "items": [
+    {
+      "item_desc": "Haida: Their Art and Culture",
+      "item_qty": "3,00",
+      "item_net_price": "4,89",
+      "item_net_worth": "14,67",
+      "item_vat": "10%",
+      "item_gross_worth": "16,14"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 14,67",
+    "total_vat": "$ 1,47",
+    "total_gross_worth": "$ 16,14"
+  }
+}

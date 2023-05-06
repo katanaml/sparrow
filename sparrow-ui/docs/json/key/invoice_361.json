@@ -1,0 +1,32 @@
+{
+  "header": {
+    "invoice_no": "51409570",
+    "invoice_date": "12/29/2018",
+    "seller": "Mcguire PLC USCGC Lane FPO AP 21730",
+    "client": "Chase, Mullins and Donaldson Unit 2225 Box 9147 DPO AE 19259",
+    "seller_tax_id": "931-95-9783",
+    "client_tax_id": "953-96-5338",
+    "iban": "GB52CMAR36651996530915"
+  },
+  "items": [
+    {
+      "item_desc": "S.L. Fashions Size 16 Stretch Bodice Dress",
+      "item_qty": "10%",
+      "item_net_price": "15,50",
+      "item_net_worth": "62,00",
+      "item_gross_worth": "68,20"
+    },
+    {
+      "item_desc": "Vince Camuto Sweater Dress Size Medium Striped Long Sleeve",
+      "item_qty": "10%",
+      "item_net_price": "32,00",
+      "item_net_worth": "96,00",
+      "item_gross_worth": "105,60"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 158,00",
+    "total_vat": "$15,80",
+    "total_gross_worth": "$ 173,80"
+  }
+}

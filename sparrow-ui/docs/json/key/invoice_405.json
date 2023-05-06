@@ -1,0 +1,26 @@
+{
+  "header": {
+    "invoice_no": "61942465",
+    "invoice_date": "08/27/2012",
+    "seller": "Jones Ltd USNV Rush FPO AP 95885",
+    "client": "Williams, Kelley and Watts 441 David Mews Port Sharifurt, ID 47380",
+    "seller_tax_id": "936-72-2389",
+    "client_tax_id": "963-78-9800",
+    "iban": "GB60ZVVK77498620703333"
+  },
+  "items": [
+    {
+      "item_desc": "DESIGNER MICHAEL KORS DRESS SIZE S",
+      "item_qty": "2,00",
+      "item_net_price": "20,00",
+      "item_net_worth": "40,00",
+      "item_vat": "10%",
+      "item_gross_worth": "44,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 40,00",
+    "total_vat": "$ 4,00",
+    "total_gross_worth": "$44,00"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "header": {
+    "invoice_no": "65345089",
+    "invoice_date": "12/24/2020",
+    "seller": "Roberts Group 058 Laura Squares East Saramouth, WA 49444",
+    "client": "958-90-2468",
+    "seller_tax_id": "978-71-2963",
+    "iban": "GB41CYBY20444587829017"
+  },
+  "items": [
+    {
+      "item_desc": "10-Core Gaming Computer Desktop PC Tower HDMI 8GB DDR4 R7 Graphic CUSTOM BUILT",
+      "item_qty": "4,00",
+      "item_net_price": "348,88",
+      "item_net_worth": "1395,52",
+      "item_vat": "10%",
+      "item_gross_worth": "1535,07"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$1395,52",
+    "total_vat": "$ 139,55",
+    "total_gross_worth": "$1535,07"
+  }
+}

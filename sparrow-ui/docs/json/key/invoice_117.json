@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "94133236",
+    "invoice_date": "12/12/2019",
+    "seller": "Parker Inc 6686 Duran Brooks Apt. 003 Lake Jane, MA 15473",
+    "client": "Jefferson Group 87490 Le Brooks South Hollyberg, NH 35858",
+    "seller_tax_id": "980-76-7923",
+    "client_tax_id": "937-75-3172",
+    "iban": "GB726HYW09265342345456"
+  },
+  "items": [
+    {
+      "item_desc": "6'x3' Black Marble Top Dining Room Table Sets Scagaliola Very Pietradure Decor",
+      "item_qty": "5,00",
+      "item_net_price": "5 710,22",
+      "item_net_worth": "28551,10",
+      "item_vat": "10%",
+      "item_gross_worth": "31 406,21"
+    },
+    {
+      "item_desc": "16\"x16\" Marble Top Customize Table Lapis Lazuli Marquetry Inlaid Halloween Gift",
+      "item_qty": "3,00",
+      "item_net_price": "800,00",
+      "item_net_worth": "2400,00",
+      "item_vat": "10%",
+      "item_gross_worth": "2 640,00"
+    },
+    {
+      "item_desc": "12\" Marble Coffee Side Table Top Lapis Peacock Floral Inlay Bedroom Decors W019",
+      "item_qty": "5,00",
+      "item_net_price": "248,78",
+      "item_net_worth": "1243,90",
+      "item_vat": "10%",
+      "item_gross_worth": "1 368,29"
+    },
+    {
+      "item_desc": "12\" White Marble Coffee Table Top Marquetry Multi Inlay Beautiful Room Home Arts",
+      "item_qty": "5,00",
+      "item_net_price": "398,76",
+      "item_net_worth": "1993,80",
+      "item_vat": "10%",
+      "item_gross_worth": "2 193,18"
+    },
+    {
+      "item_desc": "30\"x30\" Marble Black Top Table Semi Precious Bird Art Black Friday Gift D\u00e9cor",
+      "item_qty": "2,00",
+      "item_net_price": "2399,00",
+      "item_net_worth": "4798,00",
+      "item_vat": "10%",
+      "item_gross_worth": "5 277,80"
+    },
+    {
+      "item_desc": "Antique Vintage style hand carved table *Unique*",
+      "item_qty": "5,00",
+      "item_net_price": "13 000,00",
+      "item_net_worth": "65000,00",
+      "item_vat": "10%",
+      "item_gross_worth": "71 500,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 103 986,80",
+    "total_vat": "$ 10398,68",
+    "total_gross_worth": "$ 114 385,48"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "header": {
+    "invoice_no": "59612541",
+    "invoice_date": "08/24/2016",
+    "seller": "Thomas, Gonzalez and Bennett 4352 Yvonne Cliff Port Miahaven, IL 59645",
+    "client": "Flynn-Walton 7494 Michelle Ville Suite 928 Thompsonberg, AL 63203",
+    "seller_tax_id": "939-84-2118",
+    "client_tax_id": "981-78-6102",
+    "iban": "GB41IFVA68767399081692"
+  },
+  "items": [
+    {
+      "item_desc": "Red Traditional Oriental Medallion 8x10 Area Rug Carpet 2x3 Mat 5x7 Rugs",
+      "item_qty": "5,00",
+      "item_net_price": "39,98",
+      "item_net_worth": "199,90",
+      "item_vat": "10%",
+      "item_gross_worth": "219,89"
+    },
+    {
+      "item_desc": "Sheepskin Shaggy Faux Fur Silky Plush Soft Fabric Rectangular Rug Doormat Carpet",
+      "item_qty": "2,00",
+      "item_net_price": "8,99",
+      "item_net_worth": "17,98",
+      "item_vat": "10%",
+      "item_gross_worth": "19,78"
+    },
+    {
+      "item_desc": "YILONG 5.6'x8.2' Handknotted Silk Rug Red Medallion Indoor Durable Carpet 1842",
+      "item_qty": "1,00",
+      "item_net_price": "3300,00",
+      "item_net_worth": "3300,00",
+      "item_vat": "10%",
+      "item_gross_worth": "3630,00"
+    },
+    {
+      "item_desc": "Galaxy Butterfly Area Rugs Children Bedroom Non-Slip Doormat Floor Mat Carpet",
+      "item_qty": "4,00",
+      "item_net_price": "13,69",
+      "item_net_worth": "10%",
+      "item_gross_worth": "60,24"
+    },
+    {
+      "item_desc": "YILONG 9'x12' Oversize Handmade Silk Carpet Antistatic Luxurious Area Rug T/107A",
+      "item_qty": "2,00",
+      "item_net_price": "7800,00",
+      "item_net_worth": "15 600,00",
+      "item_vat": "10%",
+      "item_gross_worth": "17 160,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 19 172,64",
+    "total_vat": "$1917,26",
+    "total_gross_worth": "$ 21 089,90"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "32009066",
+    "invoice_date": "04/18/2020",
+    "seller": "Reese, Young and Sosa Unit 3429 Box 9311 DPO AP 75271",
+    "client": "Peterson-Bryant 993 Marilyn Forest South Tiffany, ND 95931",
+    "seller_tax_id": "915-84-9467",
+    "client_tax_id": "966-82-9806",
+    "iban": "GB22DOWO59772132319337"
+  },
+  "items": [
+    {
+      "item_desc": "10-Core Gaming Computer Desktop PC Tower 3TB Quad 16GB DDR4 AMD Graphics WIFI",
+      "item_qty": "5,00",
+      "item_net_price": "618,49",
+      "item_net_worth": "3092,45",
+      "item_vat": "10%",
+      "item_gross_worth": "3 401,70"
+    },
+    {
+      "item_desc": "Lenovo C20-00...all in one desktop computer . with Wireless Mouse....",
+      "item_qty": "1,00",
+      "item_net_price": "277,64",
+      "item_net_worth": "277,64",
+      "item_vat": "10%",
+      "item_gross_worth": "305,40"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$3370,09",
+    "total_vat": "$ 337,01",
+    "total_gross_worth": "$3707,10"
+  }
+}

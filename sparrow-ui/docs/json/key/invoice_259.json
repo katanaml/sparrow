@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "16131761",
+    "invoice_date": "12/04/2015",
+    "seller": "Figueroa, Richard and Hunter 177 Ralph Oval Apt. 840 Lake Julie, MD 68049",
+    "client": "Watts-Glover 765 Danny Islands New Robinberg, KS 90636",
+    "seller_tax_id": "997-81-6205",
+    "client_tax_id": "960-96-3792",
+    "iban": "GB67GACG37604699494790"
+  },
+  "items": [
+    {
+      "item_desc": "Rickshaw Decoration Gift Wine Rack Retro Holder Bar Home Ornaments Vintage Iron",
+      "item_qty": "4,00",
+      "item_net_price": "71,49",
+      "item_net_worth": "285,96",
+      "item_vat": "10%",
+      "item_gross_worth": "314,56"
+    },
+    {
+      "item_desc": "Custom wine glass",
+      "item_qty": "4,00",
+      "item_net_price": "19,00",
+      "item_net_worth": "76,00",
+      "item_vat": "10%",
+      "item_gross_worth": "83,60"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$361,96",
+    "total_vat": "$36,20",
+    "total_gross_worth": "$ 398,16"
+  }
+}

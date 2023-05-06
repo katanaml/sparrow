@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "52661039",
+    "invoice_date": "06/27/2017",
+    "seller": "Ortiz, Alvarez and Davis 90009 Tyler Plaza Flemingchester, CO 70749",
+    "client": "Castro-Medina 26035 Snyder Junctions Suite 966 Randolphstad, CA 25528",
+    "seller_tax_id": "938-86-3878",
+    "client_tax_id": "948-90-7696",
+    "iban": "GB47BBAU01991609614599"
+  },
+  "items": [
+    {
+      "item_desc": "Nintendo Wii Console Complete Bundle w/extras tested",
+      "item_qty": "1,00",
+      "item_net_price": "104,99",
+      "item_net_worth": "104,99",
+      "item_vat": "10%",
+      "item_gross_worth": "115,49"
+    },
+    {
+      "item_desc": "Nintendo Wii Console RVL-001 Complete Hookups W/ Mario&Sonic; Tested / Working",
+      "item_qty": "4,00",
+      "item_net_price": "78,88",
+      "item_net_worth": "315,52",
+      "item_vat": "10%",
+      "item_gross_worth": "347,07"
+    },
+    {
+      "item_desc": "Original xbox console (Works Great, Tested)",
+      "item_qty": "2,00",
+      "item_net_price": "38,00",
+      "item_net_worth": "76,00",
+      "item_vat": "10%",
+      "item_gross_worth": "83,60"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 496,51",
+    "total_vat": "$49,65",
+    "total_gross_worth": "$ 546,16"
+  }
+}

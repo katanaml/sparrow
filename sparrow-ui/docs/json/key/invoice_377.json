@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "67156751",
+    "invoice_date": "07/31/2011",
+    "seller": "Little PLC 244 Judith Islands Suite 123 Lewisfurt, WY 72866",
+    "client": "Moreno, Montoya and Washington 7851 Morris Summit North Franciscoton, AK 19387",
+    "seller_tax_id": "938-72-1087",
+    "client_tax_id": "907-85-6783",
+    "iban": "GB08ATPM35617063741165"
+  },
+  "items": [
+    {
+      "item_desc": "Charlie Jade Purple Black Brown Sleeveless Dress WOMENS SIZE SMALL",
+      "item_qty": "2,00",
+      "item_net_price": "11,97",
+      "item_net_worth": "23,94",
+      "item_vat": "10%",
+      "item_gross_worth": "26,33"
+    },
+    {
+      "item_desc": "Matilda Jane Womans Lets Go Together Black Knit Dress Size M Medium NWT",
+      "item_qty": "1,00",
+      "item_net_price": "19,60",
+      "item_net_worth": "19,60",
+      "item_vat": "10%",
+      "item_gross_worth": "21,56"
+    },
+    {
+      "item_desc": "Leopard Print Large Dress With Pockets & Floral Sleeves HoneyMe Size L NWT",
+      "item_qty": "5,00",
+      "item_net_price": "39,00",
+      "item_net_worth": "195,00",
+      "item_vat": "10%",
+      "item_gross_worth": "214,50"
+    },
+    {
+      "item_desc": "Lularoe Nicole Dress Size Small Light Solid Grey/ White Ringer Tee Trim",
+      "item_qty": "2,00",
+      "item_net_price": "3,75",
+      "item_net_worth": "7,50",
+      "item_vat": "10%",
+      "item_gross_worth": "8,25"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 246,04",
+    "total_vat": "$24,60",
+    "total_gross_worth": "$ 270,64"
+  }
+}

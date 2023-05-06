@@ -1,0 +1,26 @@
+{
+  "header": {
+    "invoice_no": "22083742",
+    "invoice_date": "03/01/2014",
+    "seller": "Smith, Schaefer and Gonzalez Unit 1154 Box 8683 DPO AE 34629",
+    "client": "Smith-Petersen 05025 Mary Fall Mackside, OR 70036",
+    "seller_tax_id": "902-72-8574",
+    "client_tax_id": "934-70-6847",
+    "iban": "GB62/ACN00896958403438"
+  },
+  "items": [
+    {
+      "item_desc": "YILONG 4'x6' All over Handmade Carpet Dining Room Hand Knotted Silk Rugs 082B",
+      "item_qty": "2,00",
+      "item_net_price": "3600,00",
+      "item_net_worth": "7200,00",
+      "item_vat": "10%",
+      "item_gross_worth": "7920,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$7200,00",
+    "total_vat": "$ 720,00",
+    "total_gross_worth": "$7920,00"
+  }
+}

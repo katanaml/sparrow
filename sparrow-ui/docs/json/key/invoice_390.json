@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "33784215",
+    "invoice_date": "03/24/2018",
+    "seller": "Hart-Johnson 244 Jennifer Fort Millsstad, TN 37715",
+    "client": "Martin and Sons 511 Moore Streets Suite 141 North Matthewland, MN 20879",
+    "seller_tax_id": "913-74-7344",
+    "client_tax_id": "917-77-1318",
+    "iban": "GB80GQQM83063676172071"
+  },
+  "items": [
+    {
+      "item_desc": "Adult Kids Pokemon Pikachu Kigurumi Pajama Cosplay Christmas Costume Sleepwear",
+      "item_qty": "4,00",
+      "item_net_price": "9,95",
+      "item_net_worth": "39,80",
+      "item_vat": "10%",
+      "item_gross_worth": "43,78"
+    },
+    {
+      "item_desc": "Cherry Halter Rockabilly Black Summer Dress Size 3/4",
+      "item_qty": "2,00",
+      "item_net_price": "3,50",
+      "item_net_worth": "7,00",
+      "item_vat": "10%",
+      "item_gross_worth": "7,70"
+    },
+    {
+      "item_desc": "Lumiere Large Multicolored Orange Short Dress NWT",
+      "item_qty": "1,00",
+      "item_net_price": "4,99",
+      "item_net_worth": "4,99",
+      "item_vat": "10%",
+      "item_gross_worth": "5,49"
+    },
+    {
+      "item_desc": "NWT Boohoo Sabra Emerald Green Floral Ruffle Dress Sz 12",
+      "item_qty": "1,00",
+      "item_net_price": "4,99",
+      "item_net_worth": "4,99",
+      "item_vat": "10%",
+      "item_gross_worth": "5,49"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$56,78",
+    "total_vat": "$5,68",
+    "total_gross_worth": "$62,46"
+  }
+}

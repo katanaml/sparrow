@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "14287592",
+    "invoice_date": "03/05/2021",
+    "seller": "Burns, Figueroa and Hawkins 490 Kathy Plains North Lindseymouth, TX 73040",
+    "client": "Compton-Brown 91812 Kyle Lodge Katrinamouth, TN 48338",
+    "seller_tax_id": "920-81-8279",
+    "client_tax_id": "991-91-0394",
+    "iban": "GB73Y5DC23533533582599166"
+  },
+  "items": [
+    {
+      "item_desc": "6'x3' Marble Living Room Table Top Unique Collectible Inlay Design Decor H4990A",
+      "item_qty": "4,00",
+      "item_net_price": "5992,01",
+      "item_net_worth": "23968,04",
+      "item_vat": "10%",
+      "item_gross_worth": "26 364,84"
+    },
+    {
+      "item_desc": "5'x2' Marble White Center Table Top With 18\" Tall Stand Pauashell Inlay Art Deco",
+      "item_qty": "3,00",
+      "item_net_price": "3888,89",
+      "item_net_worth": "11666,67",
+      "item_vat": "10%",
+      "item_gross_worth": "12 833,34"
+    },
+    {
+      "item_desc": "6'x3' Marble Dining Table Hakik Pietradura Inlay Room Outdoor Mosaic Decor H3143",
+      "item_qty": "4,00",
+      "item_net_price": "8630,92",
+      "item_net_worth": "34523,68",
+      "item_vat": "10%",
+      "item_gross_worth": "37 976,05"
+    },
+    {
+      "item_desc": "48 Inches Marble Dinning Table Top Handmade Meeting Table Top with Vintage Art",
+      "item_qty": "5,00",
+      "item_net_price": "2 760,00",
+      "item_net_worth": "13 800,00",
+      "item_vat": "10%",
+      "item_gross_worth": "15 180,00"
+    },
+    {
+      "item_desc": "72 Inches Marble Dinning Table Top Pietra Dura Art Lawn Table for Home Furniture",
+      "item_qty": "1,00",
+      "item_net_price": "8 400,00",
+      "item_net_worth": "8400,00",
+      "item_vat": "10%",
+      "item_gross_worth": "9 240,00"
+    },
+    {
+      "item_desc": "25\"x25\" White Marble Top Counter Table Carnelian Marquetry Art Columbus Day Gift",
+      "item_qty": "5,00",
+      "item_net_price": "2728,00",
+      "item_net_worth": "13640,00",
+      "item_vat": "10%",
+      "item_gross_worth": "15 004,00"
+    },
+    {
+      "item_desc": "45\"x45\" Marble Black Coffee Top Table Mosai Inlaid Italian Art Halloween Gift",
+      "item_qty": "4,00",
+      "item_net_price": "7 388,00",
+      "item_net_worth": "29552,00",
+      "item_vat": "10%",
+      "item_gross_worth": "32 507,20"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 135 550,39",
+    "total_vat": "$13 555,04",
+    "total_gross_worth": "$ 149105,43"
+  }
+}

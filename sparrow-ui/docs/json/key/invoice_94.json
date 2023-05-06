@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "22434910",
+    "invoice_date": "12/30/2015",
+    "seller": "Orozco PLC 56647 Kari Squares North Kenneth, NC 63232",
+    "client": "Miller Group 2815 Perez Drives Port Danielchester, OK 76007",
+    "seller_tax_id": "932-74-5299",
+    "client_tax_id": "993-87-4206",
+    "iban": "GB975YXK21154194731792"
+  },
+  "items": [
+    {
+      "item_desc": "Pittsburgh Steelers Anti-Skid Area Rug Floor Mat Soft Carpet Living Room Bedroom",
+      "item_qty": "3,00",
+      "item_net_price": "18,04",
+      "item_net_worth": "54,12",
+      "item_vat": "10%",
+      "item_gross_worth": "59,53"
+    },
+    {
+      "item_desc": "Rug White Moroccan Beni Ourain Trellis Shag Area Rug Authentic Handmade Carpet",
+      "item_qty": "1,00",
+      "item_net_price": "245,00",
+      "item_net_worth": "245,00",
+      "item_vat": "10%",
+      "item_gross_worth": "269,50"
+    },
+    {
+      "item_desc": "Soft Sheepskin Mat Faux Fur Fake Rug Shaggy Non Slip Floor Carpet Black",
+      "item_qty": "1,00",
+      "item_net_price": "9,84",
+      "item_net_worth": "9,84",
+      "item_vat": "10%",
+      "item_gross_worth": "10,82"
+    },
+    {
+      "item_desc": "Fluffy Floor Mat Anti-Skid Shaggy Area Rugs Dining Living Room Carpet Home Decor",
+      "item_qty": "1,00",
+      "item_net_price": "3,89",
+      "item_net_worth": "3,89",
+      "item_vat": "10%",
+      "item_gross_worth": "4,28"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 312,85",
+    "total_vat": "$31,28",
+    "total_gross_worth": "$ 344,13"
+  }
+}

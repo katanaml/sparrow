@@ -1,0 +1,26 @@
+{
+  "header": {
+    "invoice_no": "12222347",
+    "invoice_date": "03/18/2017",
+    "seller": "Gregory, Patterson and Fischer 439 Hunter Land South Jameschester, MT 09091",
+    "client": "Wilson PLC 667 Wu Ports Marshallmouth, AK 03373",
+    "seller_tax_id": "958-94-6606",
+    "client_tax_id": "928-91-2431",
+    "iban": "GB10YCPS61791791374226282"
+  },
+  "items": [
+    {
+      "item_desc": "Zara Yellow Shift Dress XS",
+      "item_qty": "5,00",
+      "item_net_price": "24,75",
+      "item_net_worth": "123,75",
+      "item_vat": "10%",
+      "item_gross_worth": "136,13"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 123,75",
+    "total_vat": "$ 12,38",
+    "total_gross_worth": "$ 136,13"
+  }
+}

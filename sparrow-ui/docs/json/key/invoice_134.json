@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "26248685",
+    "invoice_date": "05/26/2018",
+    "seller": "Baker Inc 8498 Baldwin Bypass Apt. 995 Zacharymouth, NE 79246",
+    "client": "Mitchell, Hill and Strickland 301 Jennifer Crossing Suite 311 Crystalland, ND 67903",
+    "seller_tax_id": "978-83-5677",
+    "client_tax_id": "966-72-6194",
+    "iban": "GB97DXYE25395395425116910"
+  },
+  "items": [
+    {
+      "item_desc": "FashionNova \"Forecasting You\" MAXI DRESS TAUPE SZ M",
+      "item_qty": "5,00",
+      "item_net_price": "25,00",
+      "item_net_worth": "125,00",
+      "item_vat": "10%",
+      "item_gross_worth": "137,50"
+    },
+    {
+      "item_desc": "Leopard Print Large Dress With Pockets & Floral Sleeves HoneyMe Size L NWT",
+      "item_qty": "4,00",
+      "item_net_price": "39,00",
+      "item_net_worth": "156,00",
+      "item_vat": "10%",
+      "item_gross_worth": "171,60"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 281,00",
+    "total_vat": "$28,10",
+    "total_gross_worth": "$ 309,10"
+  }
+}

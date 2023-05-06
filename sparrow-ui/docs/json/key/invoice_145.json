@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "87970852",
+    "invoice_date": "05/16/2018",
+    "seller": "Harvey-Rivas 205 Smith Camp Lewiston, TX 81451",
+    "client": "Trujillo PLC USS Chen FPO AA 56870",
+    "seller_tax_id": "944-74-6922",
+    "client_tax_id": "903-83-8188",
+    "iban": "GB80JAPJ33404818900485"
+  },
+  "items": [
+    {
+      "item_desc": "Rabbit Wine Tool Kit 6 Piece Set. Open box Sealed",
+      "item_qty": "3,00",
+      "item_net_price": "24,20",
+      "item_net_worth": "72,60",
+      "item_vat": "10%",
+      "item_gross_worth": "79,86"
+    },
+    {
+      "item_desc": "Lolita Happy Retirement Wine Glass 15 Ounce GLS11-5534H",
+      "item_qty": "4,00",
+      "item_net_price": "8,00",
+      "item_net_worth": "32,00",
+      "item_vat": "10%",
+      "item_gross_worth": "35,20"
+    },
+    {
+      "item_desc": "VINTAGE ANTIQUE BRASS TABLE TOP WINE BOTTLE OPENER /WOOD HANDLE",
+      "item_qty": "3,00",
+      "item_net_price": "60,00",
+      "item_net_worth": "180,00",
+      "item_vat": "10%",
+      "item_gross_worth": "198,00"
+    },
+    {
+      "item_desc": "Anthropologie Gold Elegant Swan Decorative Metal Bottle Stopper Wine Saver",
+      "item_qty": "1,00",
+      "item_net_price": "19,98",
+      "item_net_worth": "19,98",
+      "item_vat": "10%",
+      "item_gross_worth": "21,98"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 304,58",
+    "total_vat": "$30,46",
+    "total_gross_worth": "$ 335,04"
+  }
+}

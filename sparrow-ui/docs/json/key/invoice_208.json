@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "65507091",
+    "invoice_date": "07/30/2014",
+    "seller": "Pacheco, Simmons and Coleman 241 Heidi Vista Apt. 333 Odomville, DC 06454",
+    "client": "Hensley LLC 875 Jessica Course Apt. 269 North Kari, LA 34931",
+    "seller_tax_id": "989-80-0526",
+    "client_tax_id": "994-77-3638",
+    "iban": "GB37LLXC27152919375463"
+  },
+  "items": [
+    {
+      "item_desc": "Yilong 1'x1.5' 400Lines Area Rug High Density Hand knotted Silk Carpet 221H",
+      "item_qty": "1,00",
+      "item_net_price": "540,00",
+      "item_net_worth": "540,00",
+      "item_vat": "10%",
+      "item_gross_worth": "594,00"
+    },
+    {
+      "item_desc": "YILONG 6'x9' Handmade Silk Area Rug Chinese Art Deco Classic Indoor Carpet",
+      "item_qty": "5,00",
+      "item_net_price": "12 000,00",
+      "item_net_worth": "60 000,00",
+      "item_vat": "10%",
+      "item_gross_worth": "66 000,00"
+    },
+    {
+      "item_desc": "Faux Fur Animal Print Hide Skin Rug Cowhide Area Rug Floor Mat Carpet 33.5\"X43\"",
+      "item_qty": "4,00",
+      "item_net_price": "26,03",
+      "item_net_worth": "104,12",
+      "item_vat": "10%",
+      "item_gross_worth": "114,53"
+    },
+    {
+      "item_desc": "Moroccan Amazigh Handmade Carpet 14'2\" x 7'5\"",
+      "item_qty": "2,00",
+      "item_net_price": "342,00",
+      "item_net_worth": "684,00",
+      "item_vat": "10%",
+      "item_gross_worth": "752,40"
+    },
+    {
+      "item_desc": "2Pack Soft Fluffy Faux Fur Plain Chair Cover Washable Shaggy Area Rugs Carpet",
+      "item_qty": "3,00",
+      "item_net_price": "13,59",
+      "item_net_worth": "40,77",
+      "item_vat": "10%",
+      "item_gross_worth": "44,85"
+    },
+    {
+      "item_desc": "Happy Christmas Home Decoration Rug Mat Carpet Bedroom Rugs Bedside Area Rug New",
+      "item_qty": "1,00",
+      "item_net_price": "60,32",
+      "item_net_worth": "60,32",
+      "item_vat": "10%",
+      "item_gross_worth": "66,35"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$61 429,21",
+    "total_vat": "$6142,92",
+    "total_gross_worth": "$67572,13"
+  }
+}

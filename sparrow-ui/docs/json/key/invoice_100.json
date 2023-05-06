@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "95611677",
+    "invoice_date": "07/19/2016",
+    "seller": "Franco Group 796 Arnold Cove Apt. 091 Reginaport, AZ 06940",
+    "client": "Johnson Group 0693 Robin Mountain Apt. 180 Lake Christina, MI 87634",
+    "seller_tax_id": "973-97-5084",
+    "client_tax_id": "952-81-0165",
+    "iban": "GB95MPFV88552069556163"
+  },
+  "items": [
+    {
+      "item_desc": "Round Indian Braided Jute Carpet I Hand Woven Brown Round Shape Living Room Rug",
+      "item_qty": "5,00",
+      "item_net_price": "49,99",
+      "item_net_worth": "249,95",
+      "item_vat": "10%",
+      "item_gross_worth": "274,95"
+    },
+    {
+      "item_desc": "Cartoon Rabbit Printed Round Carpet Area Rug Children Play Tent Floor Mat Rug",
+      "item_qty": "4,00",
+      "item_net_price": "177,08",
+      "item_net_worth": "708,32",
+      "item_vat": "10%",
+      "item_gross_worth": "779,15"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$958,27",
+    "total_vat": "$95,83",
+    "total_gross_worth": "$1054,10"
+  }
+}

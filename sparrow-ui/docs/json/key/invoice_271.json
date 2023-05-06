@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "75106829",
+    "invoice_date": "09/03/2011",
+    "seller": "Young, Gonzalez and Russell 95753 Sims Pike Apt. 538 Carloschester, DC 24903",
+    "client": "Adams, Garza and Lynch 21585 Allison Locks Perezchester, RI 36940",
+    "seller_tax_id": "992-86-2258",
+    "client_tax_id": "974-81-1711",
+    "iban": "GB59ULSR65276761398847"
+  },
+  "items": [
+    {
+      "item_desc": "PUMA Boys Youth Universal FG JrSoccer Cleats 2.5 White High Red NEW Futbol",
+      "item_qty": "3,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "59,97",
+      "item_vat": "10%",
+      "item_gross_worth": "65,97"
+    },
+    {
+      "item_desc": "Roper Boys' American Patriot Boot Square Toe Sz 4 Big Kids Flag Red White Blue",
+      "item_qty": "4,00",
+      "item_net_price": "49,00",
+      "item_net_worth": "196,00",
+      "item_vat": "10%",
+      "item_gross_worth": "215,60"
+    },
+    {
+      "item_desc": "Timberland brown slip on shoes size 4.5 juniors",
+      "item_qty": "3,00",
+      "item_net_price": "2,00",
+      "item_net_worth": "6,00",
+      "item_vat": "10%",
+      "item_gross_worth": "6,60"
+    },
+    {
+      "item_desc": "Skechers Kids' Snap Sprints Sneaker Size 4 Blue/Black 975461",
+      "item_qty": "2,00",
+      "item_net_price": "29,99",
+      "item_net_worth": "59,98",
+      "item_vat": "10%",
+      "item_gross_worth": "65,98"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$321,95",
+    "total_vat": "$32,20",
+    "total_gross_worth": "$ 354,15"
+  }
+}

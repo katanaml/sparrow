@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "61026262",
+    "invoice_date": "08/03/2013",
+    "seller": "Butler PLC 572 Lee Gardens Suite 859 New Anthonyside, TX 66837",
+    "client": "Wood, Williams and Lozano 79521 Turner Locks Apt. 960 Robertview, TX 80736",
+    "seller_tax_id": "942-81-9261",
+    "client_tax_id": "948-83-3330",
+    "iban": "GB34PSSJ26140269131425"
+  },
+  "items": [
+    {
+      "item_desc": "B311 Nintendo 3DS console Cosmo Black Japan x",
+      "item_qty": "5,00",
+      "item_net_price": "11,99",
+      "item_net_worth": "59,95",
+      "item_vat": "10%",
+      "item_gross_worth": "65,95"
+    },
+    {
+      "item_desc": "Sega Game Gear Micro console 4 color complete set 30th Anniversary GG w/window",
+      "item_qty": "3,00",
+      "item_net_price": "249,98",
+      "item_net_worth": "749,94",
+      "item_vat": "10%",
+      "item_gross_worth": "824,93"
+    },
+    {
+      "item_desc": "Xbox 360 console with games",
+      "item_qty": "3,00",
+      "item_net_price": "41,00",
+      "item_net_worth": "123,00",
+      "item_vat": "10%",
+      "item_gross_worth": "135,30"
+    },
+    {
+      "item_desc": "Microsoft Xbox One X 1TB 4k Ultra HD Console black controller works great 1787",
+      "item_qty": "3,00",
+      "item_net_price": "249,00",
+      "item_net_worth": "747,00",
+      "item_vat": "10%",
+      "item_gross_worth": "821,70"
+    },
+    {
+      "item_desc": "Microsoft Xbox 360 S 4GB Black Console",
+      "item_qty": "4,00",
+      "item_net_price": "119,99",
+      "item_net_worth": "479,96",
+      "item_vat": "10%",
+      "item_gross_worth": "527,96"
+    },
+    {
+      "item_desc": "Nintendo Wii Console With Cables And Accessories And New Super Mario Bros Disc!",
+      "item_qty": "5,00",
+      "item_net_price": "29,99",
+      "item_net_worth": "149,95",
+      "item_vat": "10%",
+      "item_gross_worth": "164,94"
+    },
+    {
+      "item_desc": "Microsoft Xbox 360 Console 49 Game Bundle 250GB Black",
+      "item_qty": "3,00",
+      "item_net_price": "25,00",
+      "item_net_worth": "75,00",
+      "item_vat": "10%",
+      "item_gross_worth": "82,50"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$2384,80",
+    "total_vat": "$ 238,48",
+    "total_gross_worth": "$2623,28"
+  }
+}

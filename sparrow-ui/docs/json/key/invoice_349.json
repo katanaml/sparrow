@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "47990906",
+    "invoice_date": "12/13/2015",
+    "seller": "Reynolds PLC 875 Allen Coves Suite 655 South Angelatown, IN 85030",
+    "client": "Garcia-Thompson 51335 Elizabeth Well Apt. 496 Lake Ryanfurt, ID 62599",
+    "seller_tax_id": "955-91-0097",
+    "client_tax_id": "956-78-0942",
+    "iban": "GB90UKPN98230908106437"
+  },
+  "items": [
+    {
+      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
+      "item_qty": "2,00",
+      "item_net_price": "7,50",
+      "item_net_worth": "15,00",
+      "item_vat": "10%",
+      "item_gross_worth": "16,50"
+    },
+    {
+      "item_desc": "Metal Storage Shelf Wine Glass Rack Wine Glasses for The Cabinet",
+      "item_qty": "3,00",
+      "item_net_price": "22,42",
+      "item_net_worth": "67,26",
+      "item_vat": "10%",
+      "item_gross_worth": "73,99"
+    },
+    {
+      "item_desc": "Iron Glass Holder Organizer Wall Mounted Kitchen Bar 5 Bottles Wine Rack Display",
+      "item_qty": "2,00",
+      "item_net_price": "44,33",
+      "item_net_worth": "88,66",
+      "item_vat": "10%",
+      "item_gross_worth": "97,53"
+    },
+    {
+      "item_desc": "Black Pug wine holder",
+      "item_qty": "5,00",
+      "item_net_price": "12,95",
+      "item_net_worth": "64,75",
+      "item_vat": "10%",
+      "item_gross_worth": "71,23"
+    },
+    {
+      "item_desc": "confetti wine glass",
+      "item_qty": "2,00",
+      "item_net_price": "15,00",
+      "item_net_worth": "30,00",
+      "item_vat": "10%",
+      "item_gross_worth": "33,00"
+    },
+    {
+      "item_desc": "Vintage Set of 4 Clear Iridescent Rainbow Glass Glasses Champagne Wine",
+      "item_qty": "4,00",
+      "item_net_price": "15,95",
+      "item_net_worth": "63,80",
+      "item_vat": "10%",
+      "item_gross_worth": "70,18"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$329,47",
+    "total_vat": "$32,95",
+    "total_gross_worth": "$ 362,42"
+  }
+}

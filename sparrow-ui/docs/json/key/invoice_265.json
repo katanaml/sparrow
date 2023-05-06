@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "91966464",
+    "invoice_date": "08/24/2020",
+    "seller": "Taylor and Sons 073 Christopher Fall Georgemouth, CA 01544",
+    "client": "Hays and Sons 63998 Rojas Trafficway Port Danny, NC 49968",
+    "seller_tax_id": "982-80-5952",
+    "client_tax_id": "990-91-6829",
+    "iban": "GB14ETFJ75094365759842"
+  },
+  "items": [
+    {
+      "item_desc": "Super Nintendo SNES System Console Controller & Cables - SNS-001 + 3 Games",
+      "item_qty": "2,00",
+      "item_net_price": "103,99",
+      "item_net_worth": "207,98",
+      "item_vat": "10%",
+      "item_gross_worth": "228,78"
+    },
+    {
+      "item_desc": "PlayStation 5 Console Disc Version PREORDER--IDDD",
+      "item_qty": "1,00",
+      "item_net_price": "899,99",
+      "item_net_worth": "899,99",
+      "item_vat": "10%",
+      "item_gross_worth": "989,99"
+    },
+    {
+      "item_desc": "Nintendo Wii U Console Deluxe/Handheld Bundle",
+      "item_qty": "2,00",
+      "item_net_price": "79,99",
+      "item_net_worth": "159,98",
+      "item_vat": "10%",
+      "item_gross_worth": "175,98"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$1267,95",
+    "total_vat": "$ 126,80",
+    "total_gross_worth": "$1394,75"
+  }
+}

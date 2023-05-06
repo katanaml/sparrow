@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "83347787",
+    "invoice_date": "06/05/2013",
+    "seller": "Williams, Coleman and Parrish 716 Johnson Mountain Suite 119 South Lisa, CT 42270",
+    "client": "Lyons-Manning 364 Melissa Brooks Veronicaland, IL 74914",
+    "seller_tax_id": "953-87-3893",
+    "client_tax_id": "952-91-0003",
+    "iban": "GB39BPFW56068121674289"
+  },
+  "items": [
+    {
+      "item_desc": "Women Spaghetti Strap Bodycon Mini Dress Sexy Party Club Wear Summer Short Dress",
+      "item_qty": "4,00",
+      "item_net_price": "4,47",
+      "item_net_worth": "17,88",
+      "item_vat": "10%",
+      "item_gross_worth": "19,67"
+    },
+    {
+      "item_desc": "R&M; RICHARDS WOMAN'S BLUE PRINT LONG DRESS WITH SHRUG JACKET SIZE 18W NWT",
+      "item_qty": "4,00",
+      "item_net_price": "29,99",
+      "item_net_worth": "119,96",
+      "item_vat": "10%",
+      "item_gross_worth": "131,96"
+    },
+    {
+      "item_desc": "WD NY BLACK & OFF WHITE DRESS SIZE 8 Button Front",
+      "item_qty": "4,00",
+      "item_net_price": "10,00",
+      "item_net_worth": "40,00",
+      "item_vat": "10%",
+      "item_gross_worth": "44,00"
+    },
+    {
+      "item_desc": "Escada Long Black Dress SZ 40 100% Silk Lining",
+      "item_qty": "1,00",
+      "item_net_price": "74,99",
+      "item_net_worth": "74,99",
+      "item_vat": "10%",
+      "item_gross_worth": "82,49"
+    },
+    {
+      "item_desc": "Xhilaration Womens L Burgandy Boho Embroidered Festival Mini Dress NEW",
+      "item_qty": "5,00",
+      "item_net_price": "14,95",
+      "item_net_worth": "74,75",
+      "item_vat": "10%",
+      "item_gross_worth": "82,23"
+    },
+    {
+      "item_desc": "Lilly Pulitzer XS Spike the Punch Cassie Cotton Dress with Quarter Sleeves",
+      "item_qty": "4,00",
+      "item_net_price": "44,89",
+      "item_net_worth": "179,56",
+      "item_vat": "10%",
+      "item_gross_worth": "197,52"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$507,14",
+    "total_vat": "$50,71",
+    "total_gross_worth": "$ 557,85"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "37959814",
+    "invoice_date": "07/12/2013",
+    "seller": "Moore, Wells and Wilson 98502 Walker Parkways Cassandraside, OR 96399",
+    "client": "Hopkins-Moreno 6832 Rice Mill Apt. 735 Carterfort, NV 04380",
+    "seller_tax_id": "967-92-2894",
+    "client_tax_id": "970-94-8001",
+    "iban": "GB05XBMF67798318915337"
+  },
+  "items": [
+    {
+      "item_desc": "10-Core Gaming Computer Desktop PC Tower HDMI 8GB DDR4 R7 Graphic CUSTOM BUILT",
+      "item_qty": "4,00",
+      "item_net_price": "348,88",
+      "item_net_worth": "1395,52",
+      "item_vat": "10%",
+      "item_gross_worth": "1535,07"
+    },
+    {
+      "item_desc": "Dell Desktop Computer 3020 Micro Tiny PC Intel i3 4GB 120GB SSD Windows 10 WiFi",
+      "item_qty": "5,00",
+      "item_net_price": "134,95",
+      "item_net_worth": "674,75",
+      "item_vat": "10%",
+      "item_gross_worth": "742,23"
+    },
+    {
+      "item_desc": "Custom Gaming Computer Ryzen 7 2700 32GB DDR4 Nvidia RTX 2060 RGB SSD 500GB HDD",
+      "item_qty": "2,00",
+      "item_net_price": "1092,27",
+      "item_net_worth": "2184,54",
+      "item_vat": "10%",
+      "item_gross_worth": "2402,99"
+    },
+    {
+      "item_desc": "10-Core Gaming Computer Desktop PC Tower 500 GB Quad 8GB AMD R7 GRAPHICS NEW",
+      "item_qty": "3,00",
+      "item_net_price": "501,32",
+      "item_net_worth": "1503,96",
+      "item_vat": "10%",
+      "item_gross_worth": "1654,36"
+    },
+    {
+      "item_desc": "Dell Desktop Computer PC Optiplex 790 Quad Core i5 8GB 480GB SSD Windows 10 Wifi",
+      "item_qty": "5,00",
+      "item_net_price": "144,99",
+      "item_net_worth": "724,95",
+      "item_vat": "10%",
+      "item_gross_worth": "797,45"
+    },
+    {
+      "item_desc": "Dell Desktop ComputerlIntel Core 2 Duo 8GB 1TB HD Windows 10 PC 22\" LCD Wifi",
+      "item_qty": "2,00",
+      "item_net_price": "69,95",
+      "item_net_worth": "139,90",
+      "item_vat": "10%",
+      "item_gross_worth": "153,89"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$6623,62",
+    "total_vat": "$ 662,36",
+    "total_gross_worth": "$7285,98"
+  }
+}

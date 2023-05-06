@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "38870308",
+    "invoice_date": "08/01/2019",
+    "seller": "Dunn-Campbel. 36709 Santiago Viaduct Dianaland, MN 12512",
+    "client": "Ramirez, Donaldson and Lane 567 Ortiz Valley Suite 979 Kellyfort, GA 69454",
+    "seller_tax_id": "986-74-6578",
+    "client_tax_id": "948-74-8143",
+    "iban": "GB37QZVP50159087754233"
+  },
+  "items": [
+    {
+      "item_desc": "Ol Red Wine Glasses Ball Mason Jar Fancy Rednecks Set of 2 New in Box",
+      "item_qty": "4,00",
+      "item_net_price": "35,00",
+      "item_net_worth": "140,00",
+      "item_vat": "10%",
+      "item_gross_worth": "154,00"
+    },
+    {
+      "item_desc": "2 Cakebread Cellars Napa Valley Wine Glasses",
+      "item_qty": "1,00",
+      "item_net_price": "29,95",
+      "item_net_worth": "29,95",
+      "item_vat": "10%",
+      "item_gross_worth": "32,95"
+    },
+    {
+      "item_desc": "Vintage Wine Basket Holder - 3 Bottles",
+      "item_qty": "1,00",
+      "item_net_price": "32,99",
+      "item_net_worth": "32,99",
+      "item_vat": "10%",
+      "item_gross_worth": "36,29"
+    },
+    {
+      "item_desc": "Vintage Set of 3 Cobalt Blue Glass Wine Glasses / Water Goblets Barware Stemware",
+      "item_qty": "4,00",
+      "item_net_price": "24,00",
+      "item_net_worth": "96,00",
+      "item_vat": "10%",
+      "item_gross_worth": "105,60"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 298,94",
+    "total_vat": "$29,89",
+    "total_gross_worth": "$ 328,83"
+  }
+}

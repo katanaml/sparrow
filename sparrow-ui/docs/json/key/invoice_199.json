@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "52676405",
+    "invoice_date": "09/02/2017",
+    "seller": "Phillps-Barnes 96213 Nelson Mission Apt. 146 Briannashire, NV 95032",
+    "client": "Avila-Miller 8595 Davis Crescent Shaunborough, IA 10338",
+    "seller_tax_id": "950-76-4110",
+    "client_tax_id": "930-74-7345",
+    "iban": "GB10HUNR83412055935003"
+  },
+  "items": [
+    {
+      "item_desc": "Cup Hanging Shelf Cup Rack Iron Wine Glass Shelf Restaurant Bar for Home Kitchen",
+      "item_qty": "4,00",
+      "item_net_price": "26,63",
+      "item_net_worth": "106,52",
+      "item_vat": "10%",
+      "item_gross_worth": "117,17"
+    },
+    {
+      "item_desc": "Iron Glass Holder Organizer Wall Mounted Kitchen Bar 5 Bottles Wine Rack Display",
+      "item_qty": "1,00",
+      "item_net_price": "44,33",
+      "item_net_worth": "44,33",
+      "item_vat": "10%",
+      "item_gross_worth": "48,76"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 150,85",
+    "total_vat": "$ 15,09",
+    "total_gross_worth": "$ 165,94"
+  }
+}

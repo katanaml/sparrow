@@ -1,0 +1,25 @@
+{
+  "header": {
+    "invoice_no": "76533932",
+    "invoice_date": "10/29/2016",
+    "seller": "Harrell LLC 779 Hernandez Landing Suite 379 Norrisberg, WI 16308",
+    "client": "Houston-Ortiz 1979 Kristina Well Suite 495 South Donna, ID 63578",
+    "seller_tax_id": "982-94-6877",
+    "client_tax_id": "929-91-2762",
+    "iban": "GB76XZMP04316212335012"
+  },
+  "items": [
+    {
+      "item_desc": "Lulus Women's Black Bell Sleeve Floral Swing Dress Size S",
+      "item_qty": "10%",
+      "item_net_price": "22,95",
+      "item_net_worth": "114,75",
+      "item_gross_worth": "126,23"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 114,75",
+    "total_vat": "$ 11,48",
+    "total_gross_worth": "$ 126,23"
+  }
+}

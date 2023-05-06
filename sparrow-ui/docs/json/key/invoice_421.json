@@ -1,0 +1,26 @@
+{
+  "header": {
+    "invoice_no": "62261351",
+    "invoice_date": "02/06/2012",
+    "seller": "Mcdowell PLC 97699 Debbie Track Ericfort, GA 67511",
+    "client": "Calhoun Ltd 9578 Keith Land Jessicaton, FL 56885",
+    "seller_tax_id": "916-77-3369",
+    "client_tax_id": "965-99-2150",
+    "iban": "GB80GOXU60164754967251"
+  },
+  "items": [
+    {
+      "item_desc": "Joma Youth Boys Gol 205 Piso Multitaco Soccer Cleats 5.5 White Blue Yellow NEW",
+      "item_qty": "2,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "39,98",
+      "item_vat": "10%",
+      "item_gross_worth": "43,98"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 39,98",
+    "total_vat": "$4,00",
+    "total_gross_worth": "$ 43,98"
+  }
+}

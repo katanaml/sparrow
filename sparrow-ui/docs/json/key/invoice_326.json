@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "14875723",
+    "invoice_date": "04/11/2014",
+    "seller": "Gray Inc 058 Patrick Heights Davismouth, NH 62067",
+    "client": "Perkins LLC 0977 Jennifer Spurs East Elizabeth, NE 59360",
+    "seller_tax_id": "923-86-7427",
+    "client_tax_id": "916-84-4396",
+    "iban": "GB52PDHC09496479637843"
+  },
+  "items": [
+    {
+      "item_desc": "Used Couch Dark Blue",
+      "item_qty": "2,00",
+      "item_net_price": "97,00",
+      "item_net_worth": "194,00",
+      "item_vat": "10%",
+      "item_gross_worth": "213,40"
+    },
+    {
+      "item_desc": "6'x3' Black Marble Top Dining Table Scagliola Inlay Antique Arts Kitchen Decor",
+      "item_qty": "2,00",
+      "item_net_price": "5265,97",
+      "item_net_worth": "10531,94",
+      "item_vat": "10%",
+      "item_gross_worth": "11 585,13"
+    },
+    {
+      "item_desc": "Semi Precious Stone Inlay Art Island Table Top Marble Dinning Table 36 Inches",
+      "item_qty": "3,00",
+      "item_net_price": "1751,25",
+      "item_net_worth": "5253,75",
+      "item_vat": "10%",
+      "item_gross_worth": "5 779,13"
+    },
+    {
+      "item_desc": "7'x4' Blue Random Marble Dining Hallway Table Top Lapis Lazuli Inlay Decor E947A",
+      "item_qty": "1,00",
+      "item_net_price": "8194,09",
+      "item_net_worth": "8194,09",
+      "item_vat": "10%",
+      "item_gross_worth": "9013,50"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 24 173,78",
+    "total_vat": "$2417,38",
+    "total_gross_worth": "$26591,16"
+  }
+}

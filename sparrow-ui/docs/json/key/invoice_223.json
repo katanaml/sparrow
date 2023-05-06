@@ -1,0 +1,58 @@
+{
+  "header": {
+    "invoice_no": "26343874",
+    "invoice_date": "07/17/2013",
+    "seller": "Smith Ltd 290 Jodi Gardens Charlesview, TN 10958",
+    "client": "Herring-Floyd 8113 Hansen Cliff Apt. 826 Port Alice, ID 99663",
+    "seller_tax_id": "916-97-6743",
+    "client_tax_id": "913-80-4636",
+    "iban": "GB78TZMX55978564099007"
+  },
+  "items": [
+    {
+      "item_desc": "Microsoft Xbox One X 1TB 4k Ultra HD Console black controller works great 1787",
+      "item_qty": "5,00",
+      "item_net_price": "249,00",
+      "item_net_worth": "1245,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1369,50"
+    },
+    {
+      "item_desc": "Cables 500gb,Sony PlayStation 4 PS4 CUH 1215A Jet Black Console w/ Controller",
+      "item_qty": "5,00",
+      "item_net_price": "100,00",
+      "item_net_worth": "500,00",
+      "item_vat": "10%",
+      "item_gross_worth": "550,00"
+    },
+    {
+      "item_desc": "PS2 Slim Console System SCPH-77000 PINK Playstation 2 Tested",
+      "item_qty": "4,00",
+      "item_net_price": "252,00",
+      "item_net_worth": "1008,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1 108,80"
+    },
+    {
+      "item_desc": "Nintendo Game Boy Micro Console - Black (OXYSFBB)",
+      "item_qty": "2,00",
+      "item_net_price": "130,00",
+      "item_net_worth": "260,00",
+      "item_vat": "10%",
+      "item_gross_worth": "286,00"
+    },
+    {
+      "item_desc": "Nintendo GameCube System Console Bundle Mario Sunshine + Genuine controller LOT",
+      "item_qty": "1,00",
+      "item_net_price": "159,99",
+      "item_net_worth": "159,99",
+      "item_vat": "10%",
+      "item_gross_worth": "175,99"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$3172,99",
+    "total_vat": "$ 317,30",
+    "total_gross_worth": "$3490,29"
+  }
+}

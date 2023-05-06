@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "37995856",
+    "invoice_date": "06/05/2017",
+    "seller": "Arnold, Mercer and Shelton 52469 Bonnie Station Thomasport, AL 29602",
+    "client": "Turner-Lee 82461 Phillip Pine North Garyborough, AR01009",
+    "seller_tax_id": "938-99-2312",
+    "client_tax_id": "941-97-9484",
+    "iban": "GB15WYGM00923783631136"
+  },
+  "items": [
+    {
+      "item_desc": "Nike Pre School Kids Size 12C Jordan Jumpman Team II (PS) AQ2797-300",
+      "item_qty": "1,00",
+      "item_net_price": "59,99",
+      "item_net_worth": "59,99",
+      "item_vat": "10%",
+      "item_gross_worth": "65,99"
+    },
+    {
+      "item_desc": "Joma Boys Youth Gol-102 Soccer Cleats Shoes Size 3.5 White Red Futbol NEW",
+      "item_qty": "1,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "19,99",
+      "item_vat": "10%",
+      "item_gross_worth": "21,99"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$79,98",
+    "total_vat": "$8,00",
+    "total_gross_worth": "$87,98"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "98151772",
+    "invoice_date": "09/30/2019",
+    "seller": "Sexton, Rivera and Pineda 24612 Hernandez Mission Suite 845 Rodriguezbury, NC 85490",
+    "client": "Wright-Lopez 3726 Rodriguez Trace Suite 582 Jenkinschester, KY 26331",
+    "seller_tax_id": "940-76-0066",
+    "client_tax_id": "979-85-5438",
+    "iban": "GB89HOXJ70693867596474"
+  },
+  "items": [
+    {
+      "item_desc": "a pair of wine glasses drawer 1",
+      "item_qty": "1,00",
+      "item_net_price": "7,30",
+      "item_net_worth": "7,30",
+      "item_vat": "10%",
+      "item_gross_worth": "8,03"
+    },
+    {
+      "item_desc": "Wall Mounted Upside Down Wine Bottle Rack Goblet Glass Holder Storage Organizer",
+      "item_qty": "3,00",
+      "item_net_price": "14,98",
+      "item_net_worth": "44,94",
+      "item_vat": "10%",
+      "item_gross_worth": "49,43"
+    },
+    {
+      "item_desc": "Birthday Girl Wine Glass by",
+      "item_qty": "5,00",
+      "item_net_price": "23,75",
+      "item_net_worth": "118,75",
+      "item_vat": "10%",
+      "item_gross_worth": "130,63"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 170,99",
+    "total_vat": "$ 17,10",
+    "total_gross_worth": "$ 188,09"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "55236311",
+    "invoice_date": "10/21/2017",
+    "seller": "Hill PLC 6031 Lynn Walks Apt. 242 West Carlos, TX 58783",
+    "client": "Ward-Lindsey 1556 Davenport Greens Apt. 902 North Steven, TX 74063",
+    "seller_tax_id": "925-86-4526",
+    "client_tax_id": "919-75-1778",
+    "iban": "GB43XGPY43263263353953673"
+  },
+  "items": [
+    {
+      "item_desc": "Nightmares in the Sky: Gargoyles and Grotesques",
+      "item_qty": "5,00",
+      "item_net_price": "7,50",
+      "item_net_worth": "37,50",
+      "item_vat": "10%",
+      "item_gross_worth": "41,25"
+    },
+    {
+      "item_desc": "Spectacular Ireland Coffee Table Book - very large",
+      "item_qty": "1,00",
+      "item_net_price": "10,00",
+      "item_net_worth": "10,00",
+      "item_vat": "10%",
+      "item_gross_worth": "11,00"
+    },
+    {
+      "item_desc": "Midnight Sun(Twilight) by Stephenie Meyer I Hardback UK Edition",
+      "item_qty": "3,00",
+      "item_net_price": "24,99",
+      "item_net_worth": "74,97",
+      "item_vat": "10%",
+      "item_gross_worth": "82,47"
+    },
+    {
+      "item_desc": "The Fifty Greatest Conspiracies of All Time History S Biggest Myster",
+      "item_qty": "1,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "4,49",
+      "item_vat": "10%",
+      "item_gross_worth": "4,94"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 126,96",
+    "total_vat": "$ 12,70",
+    "total_gross_worth": "$ 139,66"
+  }
+}

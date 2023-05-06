@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "13044521",
+    "invoice_date": "01/02/2013",
+    "seller": "Johnson Group 41474 Alexa Valley Maddoxside, DC 90699",
+    "client": "Garcia and Sons 6500 Diana Terrace Suite 601 New Laura, DC 84719",
+    "seller_tax_id": "942-98-3474",
+    "client_tax_id": "961-71-7742",
+    "iban": "GB76MFUI00830830050935765"
+  },
+  "items": [
+    {
+      "item_desc": "6'x3' Marble Dining Table Hakik Pietradura Inlay Room Outdoor Mosaic Decor H3143",
+      "item_qty": "3,00",
+      "item_net_price": "8630,92",
+      "item_net_worth": "25 892,76",
+      "item_vat": "10%",
+      "item_gross_worth": "28 482,04"
+    },
+    {
+      "item_desc": "6'x3' White Marble Living Room Dining Table Top Marquetry Inlay Furniture H4743A",
+      "item_qty": "4,00",
+      "item_net_price": "5590,21",
+      "item_net_worth": "22360,84",
+      "item_vat": "10%",
+      "item_gross_worth": "24 596,92"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$48253,60",
+    "total_vat": "$4825,36",
+    "total_gross_worth": "$53078,96"
+  }
+}

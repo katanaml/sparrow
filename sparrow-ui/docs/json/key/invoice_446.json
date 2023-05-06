@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "63395419",
+    "invoice_date": "06/20/2015",
+    "seller": "Harris-Scott 868 Coleman Ferry North Michaelchester, OH 33235",
+    "client": "Walter-Walters 38897 Brian Mill Suite 806 Youngborough, NJ 57033",
+    "seller_tax_id": "914-74-6590",
+    "client_tax_id": "921-97-3910",
+    "iban": "GB16HITK55079999756841"
+  },
+  "items": [
+    {
+      "item_desc": "balmain dress 36",
+      "item_qty": "4,00",
+      "item_net_price": "1550,00",
+      "item_net_worth": "6200,00",
+      "item_vat": "10%",
+      "item_gross_worth": "6820,00"
+    },
+    {
+      "item_desc": "LuLaRoe Nicole Dress Size Large 25",
+      "item_qty": "3,00",
+      "item_net_price": "1,99",
+      "item_net_worth": "5,97",
+      "item_vat": "10%",
+      "item_gross_worth": "6,57"
+    },
+    {
+      "item_desc": "Speechless Green Brown White Psychedelic Sleeveless Dress Size Large",
+      "item_qty": "3,00",
+      "item_net_price": "7,00",
+      "item_net_worth": "21,00",
+      "item_vat": "10%",
+      "item_gross_worth": "23,10"
+    },
+    {
+      "item_desc": "Matilda Jane Womans Lets Go Together Black Knit Dress Size M Medium NWT",
+      "item_qty": "4,00",
+      "item_net_price": "19,60",
+      "item_net_worth": "78,40",
+      "item_vat": "10%",
+      "item_gross_worth": "86,24"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$6305,37",
+    "total_vat": "$ 630,54",
+    "total_gross_worth": "$6935,91"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "48650328",
+    "invoice_date": "01/23/2019",
+    "seller": "Dunn PLC 26928 Henry Mountain West Joshua, AZ 20100",
+    "client": "Steele PLC 9260 Gutierrez Pass New Derek, SC 13007",
+    "seller_tax_id": "936-83-8123",
+    "client_tax_id": "967-75-1897",
+    "iban": "GB35OAOF63174638622354"
+  },
+  "items": [
+    {
+      "item_desc": "Lenovo C20-00..all in one desktop computer : .with Wireless Mouse..",
+      "item_qty": "5,00",
+      "item_net_price": "277,64",
+      "item_net_worth": "1388,20",
+      "item_vat": "10%",
+      "item_gross_worth": "1527,02"
+    },
+    {
+      "item_desc": "10-Core Gaming Computer Desktop PC Tower HDMI 8GB DDR4 R7 Graphic CUSTOM BUILT",
+      "item_qty": "1,00",
+      "item_net_price": "348,88",
+      "item_net_worth": "348,88",
+      "item_vat": "10%",
+      "item_gross_worth": "383,77"
+    },
+    {
+      "item_desc": "Gaming PC Computer RX 580 8GB Ryzen 5 2x8GB Ram",
+      "item_qty": "1,00",
+      "item_net_price": "400,00",
+      "item_net_worth": "400,00",
+      "item_vat": "10%",
+      "item_gross_worth": "440,00"
+    },
+    {
+      "item_desc": "HP Desktop Computer 400 G1 Core i3 3.4GHz 8GB 256GB SSD 19\" LCD Windows 10 PC",
+      "item_qty": "5,00",
+      "item_net_price": "139,95",
+      "item_net_worth": "699,75",
+      "item_vat": "10%",
+      "item_gross_worth": "769,73"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$2836,83",
+    "total_vat": "$ 283,68",
+    "total_gross_worth": "$3120,51"
+  }
+}

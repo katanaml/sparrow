@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "45687667",
+    "invoice_date": "12/21/2013",
+    "seller": "Lewis and Sons 920 Tina Camp Suite 618 North Dennis, NE 38283",
+    "client": "Phillips PLC 561 Michael Terrace Elizabethside, WI 75878",
+    "seller_tax_id": "907-76-8021",
+    "client_tax_id": "922-77-9058",
+    "iban": "GB49JIEM86569350189370"
+  },
+  "items": [
+    {
+      "item_desc": "1-4 Seater General Elastic Fabric Protector Sofa Covers Couch Slipcovers Stretch",
+      "item_qty": "2,00",
+      "item_net_price": "0,99",
+      "item_net_worth": "1,98",
+      "item_vat": "10%",
+      "item_gross_worth": "2,18"
+    },
+    {
+      "item_desc": "24\"x24\" Marble Real White Top Coffee Table lapis Marquetry Floral Christmas Gift",
+      "item_qty": "4,00",
+      "item_net_price": "2500,00",
+      "item_net_worth": "10 000,00",
+      "item_vat": "10%",
+      "item_gross_worth": "11 000,00"
+    },
+    {
+      "item_desc": "18\"x18\" White Hand Curved Top Coffee Table Inlay Decorative Gift For Her Wedding",
+      "item_qty": "5,00",
+      "item_net_price": "475,22",
+      "item_net_worth": "2376,10",
+      "item_vat": "10%",
+      "item_gross_worth": "2613,71"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 12 378,08",
+    "total_vat": "$1237,81",
+    "total_gross_worth": "$ 13 615,89"
+  }
+}

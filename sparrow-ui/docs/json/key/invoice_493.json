@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "10060256",
+    "invoice_date": "12/22/2013",
+    "seller": "Kim-Davenport 4510 Mcguire Stravenue Jessicahaven, NV 75027",
+    "client": "Baker-Dixon 60356 Kenneth Corners Lake Justinberg, WA 57791",
+    "seller_tax_id": "992-99-5054",
+    "client_tax_id": "980-85-0626",
+    "iban": "GB29WBLP21480508497147"
+  },
+  "items": [
+    {
+      "item_desc": "Story of a Soul: The Autobiography of St. Therese of Lisieux",
+      "item_qty": "2,00",
+      "item_net_price": "9,35",
+      "item_net_worth": "18,70",
+      "item_vat": "10%",
+      "item_gross_worth": "20,57"
+    },
+    {
+      "item_desc": "Poor Charlie's Almanack The Wit and Wisdom of Charles T Munger 3rd Ed. BRAND NEW",
+      "item_qty": "2,00",
+      "item_net_price": "64,95",
+      "item_net_worth": "129,90",
+      "item_vat": "10%",
+      "item_gross_worth": "142,89"
+    },
+    {
+      "item_desc": "The Last Kings of Shanghai by Jonathan Kaufman",
+      "item_qty": "5,00",
+      "item_net_price": "2,99",
+      "item_net_worth": "14,95",
+      "item_vat": "10%",
+      "item_gross_worth": "16,45"
+    },
+    {
+      "item_desc": "That Quail Robert",
+      "item_qty": "2,00",
+      "item_net_price": "4,89",
+      "item_net_worth": "9,78",
+      "item_vat": "10%",
+      "item_gross_worth": "10,76"
+    },
+    {
+      "item_desc": "Day Trading Joe Ross New Hard cover English edition",
+      "item_qty": "2,00",
+      "item_net_price": "125,00",
+      "item_net_worth": "250,00",
+      "item_vat": "10%",
+      "item_gross_worth": "275,00"
+    },
+    {
+      "item_desc": "Our Family Tree A History of Our Family",
+      "item_qty": "4,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "17,96",
+      "item_vat": "10%",
+      "item_gross_worth": "19,76"
+    },
+    {
+      "item_desc": "A Million Little Bricks The Unofficial Illustrated History of the LE",
+      "item_qty": "3,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "13,47",
+      "item_vat": "10%",
+      "item_gross_worth": "14,82"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$454,76",
+    "total_vat": "$45,48",
+    "total_gross_worth": "$ 500,24"
+  }
+}

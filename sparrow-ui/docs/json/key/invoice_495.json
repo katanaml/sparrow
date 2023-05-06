@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "25532811",
+    "invoice_date": "07/07/2016",
+    "seller": "Sandoval-Mckenzie 0568 Lori Landing New Gabriel, FL 38446",
+    "client": "Terry, Lindsey and Fox 4053 Justin Port Mcbridetown, OH 93256",
+    "seller_tax_id": "935-92-3150",
+    "client_tax_id": "924-95-1084",
+    "iban": "GB39CBDD79313779866142"
+  },
+  "items": [
+    {
+      "item_desc": "B408 Nintendo Gameboy Color console Ice Blue Toysrus Limited Japan GBC REAR X",
+      "item_qty": "5,00",
+      "item_net_price": "74,99",
+      "item_net_worth": "374,95",
+      "item_vat": "10%",
+      "item_gross_worth": "412,44"
+    },
+    {
+      "item_desc": "Microsoft Xbox One X 1TB 4k Ultra HD Console black controller works great 1787",
+      "item_qty": "5,00",
+      "item_net_price": "249,00",
+      "item_net_worth": "1245,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1369,50"
+    },
+    {
+      "item_desc": "Sony PlayStation 2 Console - Black (SCPH-39001) w/ 2 Controllers and 5 Games",
+      "item_qty": "4,00",
+      "item_net_price": "79,99",
+      "item_net_worth": "319,96",
+      "item_vat": "10%",
+      "item_gross_worth": "351,96"
+    },
+    {
+      "item_desc": "8GB 4.3\" Retro Handheld Game Console Portable Video Game Built-In 10000+ Games",
+      "item_qty": "3,00",
+      "item_net_price": "29,99",
+      "item_net_worth": "89,97",
+      "item_vat": "10%",
+      "item_gross_worth": "98,97"
+    },
+    {
+      "item_desc": "Sega Saturn Console Gray HST-3200 HST-3210 Japanese",
+      "item_qty": "4,00",
+      "item_net_price": "119,98",
+      "item_net_worth": "479,92",
+      "item_vat": "10%",
+      "item_gross_worth": "527,91"
+    },
+    {
+      "item_desc": "Xbox One X 1TB Console w/ Wireless Controller",
+      "item_qty": "2,00",
+      "item_net_price": "200,00",
+      "item_net_worth": "400,00",
+      "item_vat": "10%",
+      "item_gross_worth": "440,00"
+    },
+    {
+      "item_desc": "Magnavox Odyssey 2 Microprocessor Console System w Joy Sticks & 15 Games 1978",
+      "item_qty": "2,00",
+      "item_net_price": "155,00",
+      "item_net_worth": "310,00",
+      "item_vat": "10%",
+      "item_gross_worth": "341,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$3219,80",
+    "total_vat": "$ 321,98",
+    "total_gross_worth": "$3 541,78"
+  }
+}

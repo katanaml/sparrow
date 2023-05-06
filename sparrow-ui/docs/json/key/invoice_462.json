@@ -1,0 +1,18 @@
+{
+  "invoice_no": "33102457",
+  "invoice_date": "09/18/2018",
+  "seller": "Harris LLC 19049 Norma Centers Apt. 108 Fieldsmouth, AZ 08845",
+  "client": "Pierce, Bush and Jones Unit 0758 Box 0909 DPO AA 34990",
+  "seller_tax_id": "937-81-0462",
+  "client_tax_id": "974-83-3645",
+  "iban": "GB42MQKW899089908599665710",
+  "item_desc": "12\" Marble Side Coffee Table Top Multi Stone Floral Inlay Occasional Decor W260",
+  "item_qty": "3,00",
+  "item_net_price": "259,77",
+  "item_net_worth": "779,31",
+  "item_vat": "10%",
+  "item_gross_worth": "857,24",
+  "total_net_worth": "$16 619,31",
+  "total_vat": "$1661,93",
+  "total_gross_worth": "$18 281,24"
+}

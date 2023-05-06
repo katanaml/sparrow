@@ -1,0 +1,26 @@
+{
+  "header": {
+    "invoice_no": "47433391",
+    "invoice_date": "11/23/2018",
+    "seller": "Kramer, Harris and Martinez 53014 Michelle Dale South Rogerland, NC 21168",
+    "client": "Dawson LLC 1223 Carter Brook Suite 382 Jaclynshire, GA 60987",
+    "seller_tax_id": "907-94-4908",
+    "client_tax_id": "914-96-8395",
+    "iban": "GB33CIDW47315579633805"
+  },
+  "items": [
+    {
+      "item_desc": "Dell Desktop Computers 0 Core i5 16GB 2TB HD 512GB SSD 0 Windows 10PC22\"LCD",
+      "item_qty": "3,00",
+      "item_net_price": "129,95",
+      "item_net_worth": "389,85",
+      "item_vat": "10%",
+      "item_gross_worth": "428,83"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 389,85",
+    "total_vat": "$ 38,98",
+    "total_gross_worth": "$ 428,83"
+  }
+}

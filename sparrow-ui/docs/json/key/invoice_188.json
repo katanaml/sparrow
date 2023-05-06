@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "18001573",
+    "invoice_date": "12/30/2012",
+    "seller": "Mcgrath-Ruiz 96052 Arnold Mountain East Sara, SD 80652",
+    "client": "Chavez, Burke and Jones 469 Mcdonald Mountains Apt. 860 Lake Jason, MI 93514",
+    "seller_tax_id": "911-76-9645",
+    "client_tax_id": "976-73-2435",
+    "iban": "GB37ARTN37168057473190"
+  },
+  "items": [
+    {
+      "item_desc": "mDesign Metal Wine Rack Storage Organizer, 6 Bottles Chrome",
+      "item_qty": "3,00",
+      "item_net_price": "22,99",
+      "item_net_worth": "68,97",
+      "item_vat": "10%",
+      "item_gross_worth": "75,87"
+    },
+    {
+      "item_desc": "New Never Used CROFTON CHEFS COLLECTION WINE COOLING STICK IN PACKAGE",
+      "item_qty": "4,00",
+      "item_net_price": "3,00",
+      "item_net_worth": "12,00",
+      "item_vat": "10%",
+      "item_gross_worth": "13,20"
+    },
+    {
+      "item_desc": "Refinery Wine Opener",
+      "item_qty": "2,00",
+      "item_net_price": "10,00",
+      "item_net_worth": "20,00",
+      "item_vat": "10%",
+      "item_gross_worth": "22,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 100,97",
+    "total_vat": "$ 10,10",
+    "total_gross_worth": "$ 111,07"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "header": {
+    "invoice_no": "70922221",
+    "invoice_date": "05/30/2021",
+    "seller": "Vincent Ltd 9327 Perez Forge Suite 038 Port Philip, NE 14926",
+    "client": "Miller LLC 7489 Jennifer Crescent Suite 727 Paulstad, AR 01751",
+    "seller_tax_id": "925-70-8453",
+    "client_tax_id": "912-94-9751",
+    "iban": "GB261Z1/01461461902128766"
+  },
+  "items": [
+    {
+      "item_desc": "YILONG 9'x12' Oversize Handmade Silk Carpet Antistatic Luxurious Area Rug TJ107A",
+      "item_qty": "5,00",
+      "item_net_price": "7800,00",
+      "item_net_worth": "39 000,00",
+      "item_vat": "10%",
+      "item_gross_worth": "42 900,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 39 000,00",
+    "total_vat": "$3900,00",
+    "total_gross_worth": "$ 42900,00"
+  }
+}

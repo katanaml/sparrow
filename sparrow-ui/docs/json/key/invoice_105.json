@@ -1,0 +1,33 @@
+{
+  "header": {
+    "invoice_date": "03/23/2019",
+    "seller": "Moore Ltd USNV Thompson FPO AE 33047",
+    "client": "Graham-Shepherd 42634 Michelle Mission Harperport, TN 23702",
+    "seller_tax_id": "988-96-5242",
+    "client_tax_id": "943-88-6756",
+    "iban": "GB83FTEF94522626404124"
+  },
+  "items": [
+    {
+      "item_desc": "confetti wine glass",
+      "item_qty": "4,00",
+      "item_net_price": "15,00",
+      "item_net_worth": "60,00",
+      "item_vat": "10%",
+      "item_gross_worth": "66,00"
+    },
+    {
+      "item_desc": "BRAND NEW Metrokane Rabbit Wine Gold Color Tool Kit 6 Piece Set w/Aerator",
+      "item_qty": "2,00",
+      "item_net_price": "29,99",
+      "item_net_worth": "59,98",
+      "item_vat": "10%",
+      "item_gross_worth": "65,98"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 119,98",
+    "total_vat": "$ 12,00",
+    "total_gross_worth": "131,98"
+  }
+}

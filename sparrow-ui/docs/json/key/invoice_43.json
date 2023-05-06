@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "57338979",
+    "invoice_date": "05/10/2021",
+    "seller": "Estrada and Sons 70379 Brooks Heights Apt. 110 Lake Megan, WI 84417",
+    "client": "Santana-Sherman 4195 Sutton Plaza Suite 750 Christopherfort, MS 70499",
+    "seller_tax_id": "926-74-0874",
+    "client_tax_id": "939-81-4695",
+    "iban": "GB90ALYU92362362601688809"
+  },
+  "items": [
+    {
+      "item_desc": "3'x2' Black Marvels Top Dining Table Italian Handmade Floral Art Christmas Gift",
+      "item_qty": "5,00",
+      "item_net_price": "2585,00",
+      "item_net_worth": "12 925,00",
+      "iban": "10%",
+      "item_gross_worth": "14 217,50"
+    },
+    {
+      "item_desc": "12\" Marble Coffee Table Top Multi Stone Peacock & Floral Inlay Home Decors W364",
+      "item_qty": "3,00",
+      "item_net_price": "264,27",
+      "item_net_worth": "792,81",
+      "iban": "10%",
+      "item_gross_worth": "872,09"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$13 717,81",
+    "total_vat": "$1371,78",
+    "total_gross_worth": "$15089,59"
+  }
+}

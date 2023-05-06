@@ -1,0 +1,65 @@
+{
+  "header": {
+    "invoice_no": "12459784",
+    "invoice_date": "08/19/2020",
+    "seller": "Smith, Johnson and Ramsey 3581 Ruben Gateway Suite 160 New Kayla, NH 28229",
+    "client": "Russell-Cruz USNV Olson FPO AP 50747",
+    "seller_tax_id": "902-96-4332",
+    "client_tax_id": "969-85-1568",
+    "iban": "GB87QEXA379037903967899333"
+  },
+  "items": [
+    {
+      "item_desc": "The Great One: The Complete Wayne Gretzky Collection",
+      "item_qty": "4,00",
+      "item_net_price": "4,89",
+      "item_net_worth": "19,56",
+      "item_vat": "10%",
+      "item_gross_worth": "21,52"
+    },
+    {
+      "item_desc": "return to virgin river by robyn",
+      "item_qty": "4,00",
+      "item_net_price": "2,99",
+      "item_net_worth": "11,96",
+      "item_vat": "10%",
+      "item_gross_worth": "13,16"
+    },
+    {
+      "item_desc": "Michael Jackson: A Life in Music (Paperback or Softback)",
+      "item_qty": "2,00",
+      "item_net_price": "12,33",
+      "item_net_worth": "24,66",
+      "item_vat": "10%",
+      "item_gross_worth": "27,13"
+    },
+    {
+      "item_desc": "Luke S Fate Star Wars",
+      "item_qty": "3,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "13,47",
+      "item_vat": "10%",
+      "item_gross_worth": "14,82"
+    },
+    {
+      "item_desc": "Little Women by Louisa May Alcott Illustrated Brand New Collectible Hardcover",
+      "item_qty": "5,00",
+      "item_net_price": "14,77",
+      "item_net_worth": "73,85",
+      "item_vat": "10%",
+      "item_gross_worth": "81,23"
+    },
+    {
+      "item_desc": "The Blooding by Joseph Wambaugh",
+      "item_qty": "1,00",
+      "item_net_price": "4,49",
+      "item_vat": "10%",
+      "item_gross_worth": "4,94"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 147,99",
+    "total_vat": "$14,80",
+    "total_gross_worth": "$ 162,79"
+  }
+}

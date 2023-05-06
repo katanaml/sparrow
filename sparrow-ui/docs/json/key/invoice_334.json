@@ -1,0 +1,26 @@
+{
+  "header": {
+    "invoice_no": "15259432",
+    "invoice_date": "02/06/2016",
+    "seller": "Franklin, Buchanan and Reed 61217 Smith Mall Suite 690 Seanberg, DE 85994",
+    "client": "Ford, Myers and Walton 935 Sharon Junctions Suite 858 Rayville, AZ 10556",
+    "seller_tax_id": "931-73-0421",
+    "client_tax_id": "957-96-8255",
+    "iban": "GB25HDAF70741306057560"
+  },
+  "items": [
+    {
+      "item_desc": "Tiffany and Co Pair 2 Stemless Wine Champagne Glasses Original Stickers NO BOX",
+      "item_qty": "1,00",
+      "item_net_price": "74,99",
+      "item_net_worth": "74,99",
+      "item_vat": "10%",
+      "item_gross_worth": "82,49"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$74,99",
+    "total_vat": "$7,50",
+    "total_gross_worth": "$ 82,49"
+  }
+}

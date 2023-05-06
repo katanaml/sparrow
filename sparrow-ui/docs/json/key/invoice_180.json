@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "10541959",
+    "invoice_date": "02/19/2017",
+    "seller": "Alvarez-Woods 7059 Bauer Squares Apt. 050 West Tammy, TN 81798",
+    "client": "Smith-Haynes 11054 Adrian Stream Port Nicholasfort, NE 71131",
+    "seller_tax_id": "939-92-6291",
+    "client_tax_id": "974-91-1402",
+    "iban": "GB35DSTQ64817325575579"
+  },
+  "items": [
+    {
+      "item_desc": "Women Sexy Lingerie Lace Dress Underwear Babydoll Sleepwear G-string Bikini Lot",
+      "item_qty": "1,00",
+      "item_net_price": "0,99",
+      "item_net_worth": "0,99",
+      "item_vat": "10%",
+      "item_gross_worth": "1,09"
+    },
+    {
+      "item_desc": "NWT Boohoo Sabra Emerald Green Floral Ruffle Dress Sz 12",
+      "item_qty": "4,00",
+      "item_net_price": "4,99",
+      "item_net_worth": "19,96",
+      "item_vat": "10%",
+      "item_gross_worth": "21,96"
+    },
+    {
+      "item_desc": "Sexy Lingerie Lace Dress Babydoll Women's Underwear Nightwear Sleepwear G-string",
+      "item_qty": "1,00",
+      "item_net_price": "5,19",
+      "item_net_worth": "5,19",
+      "item_vat": "10%",
+      "item_gross_worth": "5,71"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 26,14",
+    "total_vat": "$2,61",
+    "total_gross_worth": "$28,75"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "54299574",
+    "invoice_date": "11/20/2013",
+    "seller": "Blankenship Inc 4205 John Groves Aguilarbury, GA 74451",
+    "client": "Ortega-Ramos 47406 Houston Ford Sotoberg, WV 16127",
+    "seller_tax_id": "903-84-5372",
+    "client_tax_id": "968-80-8718",
+    "iban": "GB60APZH41378958559864"
+  },
+  "items": [
+    {
+      "item_desc": "Yellow Stone Royal Art Marble Dinning Table Top Round Garden Table Top 60 Inches",
+      "item_qty": "4,00",
+      "item_net_price": "6756,00",
+      "item_net_worth": "27 024,00",
+      "item_vat": "10%",
+      "item_gross_worth": "29 726,40"
+    },
+    {
+      "item_desc": "2 Industrial Live edge Legs 16\" Tall Cast Aluminum Cast Iron Coffee Table Bench",
+      "item_qty": "2,00",
+      "item_net_price": "159,28",
+      "item_net_worth": "318,56",
+      "item_vat": "10%",
+      "item_gross_worth": "350,42"
+    },
+    {
+      "item_desc": "40 Inches Marble Utility Table Top Inlay with Royal Pattern Stone Dinning Table",
+      "item_qty": "2,00",
+      "item_net_price": "1713,75",
+      "item_net_worth": "3427,50",
+      "item_vat": "10%",
+      "item_gross_worth": "3 770,25"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 30 770,06",
+    "total_vat": "$3077,01",
+    "total_gross_worth": "$ 33 847,07"
+  }
+}

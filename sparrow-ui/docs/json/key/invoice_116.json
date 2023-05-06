@@ -1,0 +1,73 @@
+{
+  "header": {
+    "invoice_no": "70372519",
+    "invoice_date": "05/01/2013",
+    "seller": "Williamson, Murphy and Winters 6341 Pamela Views Smithtown, DC 63428",
+    "client": "Brown, Rodriguez and Lopez 8747 Charles Alley Sherrybury, CT 27957",
+    "seller_tax_id": "970-75-4240",
+    "client_tax_id": "933-82-8453",
+    "iban": "GB19KZPB65453134501012"
+  },
+  "items": [
+    {
+      "item_desc": "Black Nintendo Wii Console Bundle RVL-101 with 2 Controllers & Cords",
+      "item_qty": "3,00",
+      "item_net_price": "89,99",
+      "item_net_worth": "269,97",
+      "item_vat": "10%",
+      "item_gross_worth": "296,97"
+    },
+    {
+      "item_desc": "SONY Playstation2 Console SCPH-39000 \" Aqua Color \" / TESTED 11180",
+      "item_qty": "3,00",
+      "item_net_price": "60,00",
+      "item_net_worth": "180,00",
+      "item_vat": "10%",
+      "item_gross_worth": "198,00"
+    },
+    {
+      "item_desc": "Sony PlayStation 5 Console - White Digital Version",
+      "item_qty": "5,00",
+      "item_net_price": "630,00",
+      "item_net_worth": "3150,00",
+      "item_vat": "10%",
+      "item_gross_worth": "3 465,00"
+    },
+    {
+      "item_desc": "Nintendo Wii Console Mario Kart Controller Wii Fit 2 Board Remotes Game BUNDLE",
+      "item_qty": "1,00",
+      "item_net_price": "199,97",
+      "item_net_worth": "199,97",
+      "item_vat": "10%",
+      "item_gross_worth": "219,97"
+    },
+    {
+      "item_desc": "Sega V Saturn Victor Console RG-JX1 Gray Tested Working",
+      "item_qty": "2,00",
+      "item_net_price": "109,99",
+      "item_net_worth": "219,98",
+      "item_vat": "10%",
+      "item_gross_worth": "241,98"
+    },
+    {
+      "item_desc": "Super Nintendo SNES System Console SNS 001 with 2 Controllers Cleaned And Tested",
+      "item_qty": "1,00",
+      "item_net_price": "149,99",
+      "item_net_worth": "149,99",
+      "item_vat": "10%",
+      "item_gross_worth": "164,99"
+    },
+    {
+      "item_desc": "Retro Arcade Game Console All In One 128G Raspberry PI 4 Model B 4GB Plug Play",
+      "item_qty": "2,00",
+      "item_net_price": "149,99",
+      "item_net_worth": "10%",
+      "item_gross_worth": "329,98"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$4469,89",
+    "total_vat": "$ 446,99",
+    "total_gross_worth": "$4916,88"
+  }
+}

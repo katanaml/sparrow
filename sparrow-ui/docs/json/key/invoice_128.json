@@ -1,0 +1,32 @@
+{
+  "header": {
+    "invoice_no": "40703934",
+    "invoice_date": "03/10/2016",
+    "seller": "Morales LLC 0655 Miles Radial Darlenetown, IL 99206",
+    "client": "Moore-Miller 617 Davis Land Apt. 270 Hammondberg, AR 43526",
+    "seller_tax_id": "980-91-2489",
+    "client_tax_id": "995-90-7291",
+    "iban": "GB76QY1O56599829861096"
+  },
+  "items": [
+    {
+      "item_desc": "Victorian European Country Traditional Floral Floor Mat Area Rug Carpet Beige U",
+      "item_qty": "1,00",
+      "item_net_price": "178,00",
+      "item_vat": "10%",
+      "item_gross_worth": "195,80"
+    },
+    {
+      "item_desc": "Round Rug Carpet For Living Room Decor Faux Fur Rugs Kids Room Long Plush Rugs",
+      "item_qty": "4,00",
+      "item_net_worth": "39,48",
+      "item_vat": "10%",
+      "item_gross_worth": "43,43"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$217,48",
+    "total_vat": "$21,75",
+    "total_gross_worth": "$ 239,23"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "83684211",
+    "invoice_date": "06/19/2016",
+    "seller": "Lucas Inc 1477 Valerie Ridge Apt. 296 Clarkview, WY 27651",
+    "client": "Johnson Inc 78669 Edward Causeway West Nicole, ND 96674",
+    "seller_tax_id": "903-85-7168",
+    "client_tax_id": "981-84-1008",
+    "iban": "GB44HMTD41589863241215"
+  },
+  "items": [
+    {
+      "item_desc": "Hanging Wine Cup Rack Goblet Inverted Holder Stemware Display Shelf Drainer",
+      "item_qty": "1,00",
+      "item_net_price": "26,88",
+      "item_net_worth": "26,88",
+      "item_vat": "10%",
+      "item_gross_worth": "29,57"
+    },
+    {
+      "item_desc": "6) Vintage Leaf Etched Straight Sided Wine Glasses. Set of 6 Unknown Maker",
+      "item_qty": "1,00",
+      "item_net_price": "65,00",
+      "item_net_worth": "65,00",
+      "item_vat": "10%",
+      "item_gross_worth": "71,50"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$91,88",
+    "total_vat": "$9,19",
+    "total_gross_worth": "$ 101,07"
+  }
+}

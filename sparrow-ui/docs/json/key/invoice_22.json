@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "18531177",
+    "invoice_date": "04/30/2015",
+    "seller": "Adkins, Campbell and Butler PSC 8125, Box 9401 APO AA 65326",
+    "client": "Bird, Bates and Johnston 970 Rowe Street Kristieton, CO 20645",
+    "seller_tax_id": "948-87-7876",
+    "client_tax_id": "910-92-9312",
+    "iban": "GB66GZAK57253283036257"
+  },
+  "items": [
+    {
+      "item_desc": "Toddler Car Rain boots 5",
+      "item_qty": "3,00",
+      "item_net_price": "9,00",
+      "item_net_worth": "27,00",
+      "item_vat": "10%",
+      "item_gross_worth": "29,70"
+    },
+    {
+      "item_desc": "Skechers Kids' Snap Sprints Sneaker Size 4 Blue/Black 975461",
+      "item_qty": "4,00",
+      "item_net_price": "29,99",
+      "item_net_worth": "119,96",
+      "item_vat": "10%",
+      "item_gross_worth": "131,96"
+    },
+    {
+      "item_desc": "Skechers Blue Athletic Shoes Kids Size 2 EUC",
+      "item_qty": "3,00",
+      "item_net_price": "11,99",
+      "item_net_worth": "35,97",
+      "item_vat": "10%",
+      "item_gross_worth": "39,57"
+    },
+    {
+      "item_desc": "Joma Youth Boy Supercopa 201 Soccer Cleats 4.5 Negro Verde Multitaco Black Green",
+      "item_qty": "2,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "39,98",
+      "item_vat": "10%",
+      "item_gross_worth": "43,98"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$222,91",
+    "total_vat": "$22,29",
+    "total_gross_worth": "$ 245,20"
+  }
+}

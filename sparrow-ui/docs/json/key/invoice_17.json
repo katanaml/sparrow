@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "77658002",
+    "invoice_date": "01/21/2014",
+    "seller": "Mckenzie, Clay and Campos 76099 Bryan View Suite 318 Gregoryberg, NM 46284",
+    "client": "Espinoza LLC 7698 Davis Freeway Rachelport, CO 79421",
+    "seller_tax_id": "973-94-2620",
+    "client_tax_id": "968-84-7486",
+    "iban": "GB69HUXE82460947316450"
+  },
+  "items": [
+    {
+      "item_desc": "Divided Black Asymmetrical Dress -size 8 NWT",
+      "item_qty": "1,00",
+      "item_net_price": "7,99",
+      "item_net_worth": "7,99",
+      "item_vat": "10%",
+      "item_gross_worth": "8,79"
+    },
+    {
+      "item_desc": "Eileen Fisher Women's Long Sleeve Fleece Lined Front Pockets Dress XS Gray",
+      "item_qty": "4,00",
+      "item_net_price": "15,99",
+      "item_net_worth": "63,96",
+      "item_vat": "10%",
+      "item_gross_worth": "70,36"
+    },
+    {
+      "item_desc": "db Yellow Link Print Fit and Flare Sleeveless Dress Sz M/L",
+      "item_qty": "3,00",
+      "item_net_price": "14,99",
+      "item_net_worth": "44,97",
+      "item_vat": "10%",
+      "item_gross_worth": "49,47"
+    },
+    {
+      "item_desc": "womens sparkle dress size 2X Holiday Party RED metallic",
+      "item_qty": "5,00",
+      "item_net_price": "9,99",
+      "item_net_worth": "49,95",
+      "item_vat": "10%",
+      "item_gross_worth": "54,95"
+    },
+    {
+      "item_desc": "Lands End Womens 3/4 Sleeve Dress Plus 3X Navy Blue Floral Cotton Knit 482038",
+      "item_qty": "4,00",
+      "item_net_price": "21,23",
+      "item_net_worth": "84,92",
+      "item_vat": "10%",
+      "item_gross_worth": "93,41"
+    },
+    {
+      "item_desc": "Liza Byrd Dress Sz L- Coral Green Medallion Print Short Sleeve 100% Cotton Line",
+      "item_qty": "2,00",
+      "item_net_price": "17,99",
+      "item_net_worth": "35,98",
+      "item_vat": "10%",
+      "item_gross_worth": "39,58"
+    },
+    {
+      "item_desc": "CLIFFORD & WILLS BLACK NET/MESH OVER TAUPE LONG DRESS SIZE 4",
+      "item_qty": "1,00",
+      "item_net_price": "5,99",
+      "item_net_worth": "5,99",
+      "item_vat": "10%",
+      "item_gross_worth": "6,59"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 293,76",
+    "total_vat": "$29,38",
+    "total_gross_worth": "$ 323,14"
+  }
+}

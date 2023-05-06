@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "15665127",
+    "invoice_date": "11/03/2020",
+    "seller": "Greene Ltd USCGC Lane FPO AP22594",
+    "client": "Cruz, Martinez and Jones 406 Baker Street Wendyshire, WI 08892",
+    "seller_tax_id": "928-81-0532",
+    "client_tax_id": "929-70-8255",
+    "iban": "GB59TOAH68983697464363"
+  },
+  "items": [
+    {
+      "item_desc": "Custom Build Dell Desktop Computer i5 I 16GB I 2TB I SSD Windows 10 PC WiFi DVD",
+      "item_qty": "3,00",
+      "item_net_price": "99,00",
+      "item_net_worth": "297,00",
+      "item_vat": "10%",
+      "item_gross_worth": "326,70"
+    },
+    {
+      "item_desc": "Dell OptiPlex 9020 SFF DVD-RW/Barebone PC Desktop Computer NO 05/CPU/HDD/RAM",
+      "item_qty": "2,00",
+      "item_net_price": "49,99",
+      "item_net_worth": "99,98",
+      "item_vat": "10%",
+      "item_gross_worth": "109,98"
+    },
+    {
+      "item_desc": "Dell Precision Workstation Computer Intel Xeon Quad Core 16GB 1TB Windows 10 Pro",
+      "item_qty": "2,00",
+      "item_net_price": "139,00",
+      "item_net_worth": "278,00",
+      "item_vat": "10%",
+      "item_gross_worth": "305,80"
+    },
+    {
+      "item_desc": "Dell Desktop Computer Optiplex 790 USFF Core i3 4GB 250GB HD Windows 10 Pro PC",
+      "item_qty": "4,00",
+      "item_net_price": "99,95",
+      "item_net_worth": "399,80",
+      "item_vat": "10%",
+      "item_gross_worth": "439,78"
+    },
+    {
+      "item_desc": "AMD Quad Core Custom Built Gaming PC Computer Desktop 16GB 2TB Blue LED",
+      "item_qty": "2,00",
+      "item_net_price": "509,99",
+      "item_net_worth": "1019,98",
+      "item_vat": "10%",
+      "item_gross_worth": "1121,98"
+    },
+    {
+      "item_desc": "HP T520 Thin Client Computer AMD GX-212JC 1.2GHz 4GB RAM TESTED !IREAD BELOW!!",
+      "item_qty": "1,00",
+      "item_net_price": "37,75",
+      "item_net_worth": "37,75",
+      "item_vat": "10%",
+      "item_gross_worth": "41,53"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$2132,51",
+    "total_vat": "$ 213,25",
+    "total_gross_worth": "$2345,76"
+  }
+}

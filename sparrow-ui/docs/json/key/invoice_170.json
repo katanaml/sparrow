@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "40345107",
+    "invoice_date": "04/02/2013",
+    "seller": "Thomas-Mitchel 21128 Castillo Dale Suite 547 Stephensborough, UT 28006",
+    "client": "Roberts-Wolfe 20334 Anne Point Apt. 522 West Sean, SC 35533",
+    "seller_tax_id": "904-75-2423",
+    "client_tax_id": "933-91-1306",
+    "iban": "GB87WTNX68187420702306"
+  },
+  "items": [
+    {
+      "item_desc": "New Wallis black floral midi dress sleeveles, size UK 12",
+      "item_qty": "2,00",
+      "item_net_price": "38,00",
+      "item_net_worth": "76,00",
+      "item_vat": "10%",
+      "item_gross_worth": "83,60"
+    },
+    {
+      "item_desc": "Caslon Blue White Sleeveless Belted Ruffle Rayon Dress Sz L",
+      "item_qty": "4,00",
+      "item_net_price": "4,99",
+      "item_net_worth": "19,96",
+      "item_vat": "10%",
+      "item_gross_worth": "21,96"
+    },
+    {
+      "item_desc": "Lulus Women's Black Bell Sleeve Floral Swing Dress Size S",
+      "item_qty": "2,00",
+      "item_net_price": "22,95",
+      "item_net_worth": "45,90",
+      "item_vat": "10%",
+      "item_gross_worth": "50,49"
+    },
+    {
+      "item_desc": "Cherry Halter Rockabilly Black Summer Dress Size 3/4",
+      "item_qty": "5,00",
+      "item_net_price": "3,50",
+      "item_net_worth": "17,50",
+      "item_vat": "10%",
+      "item_gross_worth": "19,25"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 159,36",
+    "total_vat": "$ 15,94",
+    "total_gross_worth": "$ 175,30"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "header": {
+    "invoice_no": "37020779",
+    "invoice_date": "12/23/2019",
+    "seller": "Duke, Levy and Arnold 8058 Ross Alley Apt. 327 Christineburgh, WI90565",
+    "client": "Jenkins-Lewis 166 Sandra Circle Reyesport, MO 30297",
+    "seller_tax_id": "929-98-4501",
+    "client_tax_id": "961-79-9117",
+    "iban": "GB28NIDB28600352656717"
+  },
+  "items": [
+    {
+      "item_desc": "Sperry Top-Sider Boys Toddlers Lace Tie Boat Shoes Brown 13M",
+      "item_qty": "1,00",
+      "item_net_price": "37,69",
+      "item_net_worth": "37,69",
+      "item_vat": "10%",
+      "item_gross_worth": "41,46"
+    },
+    {
+      "item_desc": "5,00",
+      "item_net_price": "64,16",
+      "item_net_worth": "320,80",
+      "item_vat": "10%",
+      "item_gross_worth": "352,88"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$358,49",
+    "total_vat": "$35,85",
+    "total_gross_worth": "$ 394,34"
+  }
+}

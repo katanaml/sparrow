@@ -1,0 +1,58 @@
+{
+  "header": {
+    "invoice_no": "93411242",
+    "invoice_date": "01/07/2017",
+    "seller": "Harrison-Harris 9076 Maria Prairie Suite 382 Nicholsville, NC 06077",
+    "client": "Smith-Hill 65866 Armstrong Meadows Suite 009 East Heather, OK 70218",
+    "seller_tax_id": "965-74-4646",
+    "client_tax_id": "974-85-7776",
+    "iban": "GB42RRTT66211676813047"
+  },
+  "items": [
+    {
+      "item_desc": "Fast HP Desktop Computer Intel Processor 4GB 160GB 17\" LCD DVD Wifi Windows 10",
+      "item_qty": "4,00",
+      "item_net_price": "99,95",
+      "item_net_worth": "399,80",
+      "item_vat": "10%",
+      "item_gross_worth": "439,78"
+    },
+    {
+      "item_desc": "Fast Dell Optiplex Windows 10 Desktop Computer Tower PC Core i3 3.1GHz 4GB 320GB",
+      "item_qty": "5,00",
+      "item_net_price": "89,95",
+      "item_net_worth": "449,75",
+      "item_vat": "10%",
+      "item_gross_worth": "494,73"
+    },
+    {
+      "item_desc": "Dell Optiplex 390 i5 3.10Ghz Quad Core Computer w/4Gb RAM DVDRW noHD Free Ship",
+      "item_qty": "4,00",
+      "item_net_price": "84,99",
+      "item_net_worth": "339,96",
+      "item_vat": "10%",
+      "item_gross_worth": "373,96"
+    },
+    {
+      "item_desc": "Dell Desktop Computer Tower Optiplex Core i5 8GB 1TB HD DVD Wifi Windows 10 Pro",
+      "item_qty": "3,00",
+      "item_net_price": "169,95",
+      "item_net_worth": "509,85",
+      "item_vat": "10%",
+      "item_gross_worth": "560,83"
+    },
+    {
+      "item_desc": "Custom Gaming Computer Ryzen 7 2700 32GBDDR4 Nvidia RTX 2060 RGBSSD 500GB HDD",
+      "item_qty": "5,00",
+      "item_net_price": "1092,27",
+      "item_net_worth": "5461,35",
+      "item_vat": "10%",
+      "item_gross_worth": "6007,49"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$7160,71",
+    "total_vat": "$ 716,07",
+    "total_gross_worth": "$7876,78"
+  }
+}

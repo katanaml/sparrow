@@ -1,0 +1,65 @@
+{
+  "header": {
+    "invoice_no": "30386285",
+    "invoice_date": "09/28/2020",
+    "seller": "Wagner-Weaver 96030 Berry Walks Apt. 416 Port Lancefurt, NV 06191",
+    "client": "Rodriguez and Sons 126 Deanna Stravenue East Jared, OR 03244",
+    "seller_tax_id": "919-90-5010",
+    "client_tax_id": "968-77-8015",
+    "iban": "GB85QCAY53709612387596"
+  },
+  "items": [
+    {
+      "item_desc": "40 Inches Marble Utility Table Top Inlay with Royal Pattern Stone Dinning Table",
+      "item_qty": "3,00",
+      "item_net_price": "1713,75",
+      "item_net_worth": "5 141,25",
+      "item_vat": "10%",
+      "item_gross_worth": "5 655,37"
+    },
+    {
+      "item_desc": "18\"x18\" Marble White Table Top Lapis Inlay Pietradura Floral Home D\u00e9cor Art Gift",
+      "item_qty": "1,00",
+      "item_net_price": "1188,45",
+      "item_net_worth": "1188,45",
+      "item_vat": "10%",
+      "item_gross_worth": "1307,30"
+    },
+    {
+      "item_desc": "4 Pcs Table Feet Durable High Quality Sturdy Chair Feet Table Feet for Home",
+      "item_qty": "3,00",
+      "item_net_price": "25,49",
+      "item_net_worth": "76,47",
+      "item_vat": "10%",
+      "item_gross_worth": "84,12"
+    },
+    {
+      "item_desc": "6'x3' Marble Counter Height Dining Table Top Multi Inlay Furniture Decor E955A",
+      "item_qty": "2,00",
+      "item_net_price": "5469,38",
+      "item_net_worth": "10938,76",
+      "item_vat": "10%",
+      "item_gross_worth": "12 032,64"
+    },
+    {
+      "item_desc": "20 Inches Marble Coffee Table Top Multi Stone Chess Board Table with Inlay Art",
+      "item_qty": "1,00",
+      "item_net_price": "331,50",
+      "item_vat": "10%",
+      "item_gross_worth": "364,65"
+    },
+    {
+      "item_desc": "24\"x24\" Top Marble White Table Carnelian Marquetry Interior Thanksgiving Gift",
+      "item_qty": "2,00",
+      "item_net_price": "2000,00",
+      "item_net_worth": "4000,00",
+      "item_vat": "10%",
+      "item_gross_worth": "4 400,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$21 676,43",
+    "total_vat": "$2167,64",
+    "total_gross_worth": "$ 23 844,07"
+  }
+}

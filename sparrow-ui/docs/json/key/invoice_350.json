@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "97675851",
+    "invoice_date": "05/25/2016",
+    "seller": "Baird PLC 11992 Katherine Centers Hermanfort, WY 69336",
+    "client": "Smith, Reynolds and Dunn 54702 Amanda Light Apt. 767 Bryantbury, UT 94774",
+    "seller_tax_id": "927-99-1999",
+    "client_tax_id": "922-98-7164",
+    "iban": "GB36JVRT41596393361847"
+  },
+  "items": [
+    {
+      "item_desc": "Lives of the Artists, Vol. 2",
+      "item_qty": "4,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "17,96",
+      "item_vat": "10%",
+      "item_gross_worth": "19,76"
+    },
+    {
+      "item_desc": "A Woman of Substance",
+      "item_qty": "2,00",
+      "item_net_price": "4,89",
+      "item_net_worth": "9,78",
+      "item_vat": "10%",
+      "item_gross_worth": "10,76"
+    },
+    {
+      "item_desc": "The Heart of Rock & Soul by Dave Marsh",
+      "item_qty": "2,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "8,98",
+      "item_vat": "10%",
+      "item_gross_worth": "9,88"
+    },
+    {
+      "item_desc": "The Epic of Gilgamesh",
+      "item_qty": "5,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "22,45",
+      "item_vat": "10%",
+      "item_gross_worth": "24,70"
+    },
+    {
+      "item_desc": "CCNA 200-301 50GB AUG 2020 Cisco Video/Official Books/Exam Dumps/Licences",
+      "item_qty": "3,00",
+      "item_net_price": "1,99",
+      "item_net_worth": "5,97",
+      "item_vat": "10%",
+      "item_gross_worth": "6,57"
+    },
+    {
+      "item_desc": "Theodore Boone: The Activist by John Grisham",
+      "item_qty": "1,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "4,49",
+      "item_vat": "10%",
+      "item_gross_worth": "4,94"
+    },
+    {
+      "item_desc": "Sasinowski M-Heir Of Ra BOOK NEW",
+      "item_qty": "4,00",
+      "item_net_price": "17,76",
+      "item_net_worth": "71,04",
+      "item_vat": "10%",
+      "item_gross_worth": "78,14"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 140,67",
+    "total_vat": "$ 14,07",
+    "total_gross_worth": "$ 154,74"
+  }
+}

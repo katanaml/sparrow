@@ -1,0 +1,58 @@
+{
+  "header": {
+    "invoice_no": "48402876",
+    "invoice_date": "02/06/2020",
+    "seller": "Stone-Ruiz 938 Dillon Views Suite 267 Doyleport, SC 14345",
+    "client": "Chapman-Pineda 8840 Daniel Coves Suite 235 Pattersonton, HI 63052",
+    "seller_tax_id": "949-90-2869",
+    "client_tax_id": "930-79-2809",
+    "iban": "GB80ESDN56327720432862"
+  },
+  "items": [
+    {
+      "item_desc": "Dell Optiplex 990 MT Computer PC Quad Core i7 3.4GHz 16GB 2TB HD Windows 10 Pro",
+      "item_qty": "2,00",
+      "item_net_price": "269,95",
+      "item_net_worth": "539,90",
+      "item_vat": "10%",
+      "item_gross_worth": "593,89"
+    },
+    {
+      "item_desc": "Alarco Gaming PC Desktop Computer Intel i5v 8GV 1Tbv WIN 10v NVIDIA GTX 650 1GB",
+      "item_qty": "3,00",
+      "item_net_price": "500,00",
+      "item_net_worth": "1500,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1650,00"
+    },
+    {
+      "item_desc": "Dell Precision Workstation Computer Intel Xeon Quad Core 16GB 1TB Windows 10 Pro",
+      "item_qty": "4,00",
+      "item_net_price": "139,00",
+      "item_net_worth": "556,00",
+      "item_vat": "10%",
+      "item_gross_worth": "611,60"
+    },
+    {
+      "item_desc": "Lenovo C20-00..all in one desktop computer with Wireless Mouse..",
+      "item_qty": "3,00",
+      "item_net_price": "277,64",
+      "item_net_worth": "832,92",
+      "item_vat": "10%",
+      "item_gross_worth": "916,21"
+    },
+    {
+      "item_desc": "HP 6200 Pro Core i7 3.4GHz Quad Core 16GB 500GB Computer",
+      "item_qty": "3,00",
+      "item_net_price": "256,68",
+      "item_net_worth": "770,04",
+      "item_vat": "10%",
+      "item_gross_worth": "847,04"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$4 198,86",
+    "total_vat": "$ 419,89",
+    "total_gross_worth": "$4618,75"
+  }
+}

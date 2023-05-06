@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "82200633",
+    "invoice_date": "04/05/2019",
+    "seller": "Price-Booker 1874 Jamie Stream Crystaltown, WI 69500",
+    "client": "Campbell PLC 796 Simpson Radial Apt. 675 North Whitneymouth, NY 42538",
+    "seller_tax_id": "955-99-2813",
+    "client_tax_id": "921-86-1668",
+    "iban": "GB20ULH49710006620660"
+  },
+  "items": [
+    {
+      "item_desc": "Video Classic Game Console 2GB 1094 Games 3\" HD Screen FC3000 Handheld Black",
+      "item_qty": "3,00",
+      "item_net_price": "25,99",
+      "item_net_worth": "77,97",
+      "item_vat": "10%",
+      "item_gross_worth": "85,77"
+    },
+    {
+      "item_desc": "Nintendo 2DS Super Mario Maker Edition Console Complete EXCELLENT CONDITION",
+      "item_qty": "1,00",
+      "item_net_price": "129,99",
+      "item_net_worth": "129,99",
+      "item_vat": "10%",
+      "item_gross_worth": "142,99"
+    },
+    {
+      "item_desc": "Nintendo Gameboy Pocket Console Green with Box MGB-001 Japan Tested Working",
+      "item_qty": "2,00",
+      "item_net_price": "65,00",
+      "item_net_worth": "130,00",
+      "item_vat": "10%",
+      "item_gross_worth": "143,00"
+    },
+    {
+      "item_desc": "Hyperkin RetroN 3 HD Console for NES SNES Super Famicom Genesis/Mega Drive Black",
+      "item_qty": "4,00",
+      "item_net_price": "40,00",
+      "item_net_worth": "160,00",
+      "item_vat": "10%",
+      "item_gross_worth": "176,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$497,96",
+    "total_vat": "$49,80",
+    "total_gross_worth": "$ 547,76"
+  }
+}

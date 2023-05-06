@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "72481334",
+    "invoice_date": "08/18/2013",
+    "seller": "Bridges Inc 2761 Johnson Loaf Suite 806 Mikeland, DC 25765",
+    "client": "Fleming, Hopkins and Ward 48630 Marcus Stravenue Northjacobmouth, ME 89819",
+    "seller_tax_id": "949-90-8880",
+    "client_tax_id": "949-86-1892",
+    "iban": "GB93NTNZ64784784890692077"
+  },
+  "items": [
+    {
+      "item_desc": "Nintendo Switch Lite Yellow CONSOLE ONLY No Accessories or Charger [B1-2]",
+      "item_qty": "2,00",
+      "item_net_price": "135,00",
+      "item_net_worth": "270,00",
+      "item_vat": "10%",
+      "item_gross_worth": "297,00"
+    },
+    {
+      "item_desc": "Microsoft Xbox One S 1TB Console System Model 1681 w/ One Controller & Cables",
+      "item_qty": "2,00",
+      "item_net_price": "219,99",
+      "item_net_worth": "439,98",
+      "item_vat": "10%",
+      "item_gross_worth": "483,98"
+    },
+    {
+      "item_desc": "Sony PlayStation 5 Console - White Disc Version CONFIRMED PRE ORDER PS5",
+      "item_qty": "1,00",
+      "item_net_price": "499,99",
+      "item_net_worth": "499,99",
+      "item_vat": "10%",
+      "item_gross_worth": "549,99"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$1 209,97",
+    "total_vat": "$ 121,00",
+    "total_gross_worth": "$1330,97"
+  }
+}

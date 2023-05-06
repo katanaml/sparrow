@@ -1,0 +1,26 @@
+{
+  "header": {
+    "invoice_no": "81163184",
+    "invoice_date": "10/23/2017",
+    "seller": "Harrison-Melton 3468 Kevin Court Jenniferborough, ID 77615",
+    "client": "Hoffman-Daniel 916 James Parks Suite 518 Bryanfurt, CO 16408",
+    "seller_tax_id": "976-74-0770",
+    "client_tax_id": "905-92-1060",
+    "iban": "GB43ZKS692151910229248"
+  },
+  "items": [
+    {
+      "item_desc": "Mossimo M Red and Orange Braided Strap Tank Maxi Dress",
+      "item_qty": "4,00",
+      "item_net_price": "0,99",
+      "item_net_worth": "3,96",
+      "item_vat": "10%",
+      "item_gross_worth": "4,36"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$3,96",
+    "total_vat": "$ 0,40",
+    "total_gross_worth": "$4,36"
+  }
+}

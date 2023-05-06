@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "98605220",
+    "invoice_date": "03/17/2016",
+    "seller": "Hernandez, Green and Lloyd 92340 Gonzalez Greens West Patrick, CO 12332",
+    "client": "Matthews-Roman 0773 Claudia Mountain Apt. 279 Chenstad, CO 51180",
+    "seller_tax_id": "953-72-5962",
+    "client_tax_id": "978-83-2347",
+    "iban": "GB75NNPW12043314244332"
+  },
+  "items": [
+    {
+      "item_desc": "Book: The Lee-Enfield by lan Skennerton- Signed Edition",
+      "item_qty": "1,00",
+      "item_net_price": "94,95",
+      "item_net_worth": "94,95",
+      "item_vat": "10%",
+      "item_gross_worth": "104,45"
+    },
+    {
+      "item_desc": "Basic River Canoeing",
+      "item_qty": "3,00",
+      "item_net_price": "4,89",
+      "item_net_worth": "14,67",
+      "item_vat": "10%",
+      "item_gross_worth": "16,14"
+    },
+    {
+      "item_desc": "Hekate Soteira : A Study of Hekate's Role in the Chaldean Oracles and Related...",
+      "item_qty": "1,00",
+      "item_net_price": "24,12",
+      "item_net_worth": "24,12",
+      "item_vat": "10%",
+      "item_gross_worth": "26,53"
+    },
+    {
+      "item_desc": "Motorcycle Journeys Through North America : A Guide for Choosing and Planning...",
+      "item_qty": "3,00",
+      "item_net_price": "6,00",
+      "item_net_worth": "18,00",
+      "item_vat": "10%",
+      "item_gross_worth": "19,80"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$151,74",
+    "total_vat": "$15,17",
+    "total_gross_worth": "$ 166,91"
+  }
+}

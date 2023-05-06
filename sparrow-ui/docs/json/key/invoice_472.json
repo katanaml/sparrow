@@ -1,0 +1,26 @@
+{
+  "header": {
+    "invoice_no": "34967709",
+    "invoice_date": "01/16/2018",
+    "seller": "Burns, King and Serrano 75240 Munoz Bypass Suite 960 East Tylerton, WA 04004",
+    "client": "Bryant-Wall 21372 Nelson Fork Suite 152 North Pamela, OK 82764",
+    "seller_tax_id": "913-91-8891",
+    "client_tax_id": "995-75-2976",
+    "iban": "GB47XEBQ87721203651804"
+  },
+  "items": [
+    {
+      "item_desc": "Nintendo 64 console complete in box with extra controller",
+      "item_qty": "2,00",
+      "item_net_price": "249,99",
+      "item_net_worth": "499,98",
+      "item_vat": "10%",
+      "item_gross_worth": "549,98"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 499,98",
+    "total_vat": "$ 50,00",
+    "total_gross_worth": "$ 549,98"
+  }
+}

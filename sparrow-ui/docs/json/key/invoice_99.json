@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "94914402",
+    "invoice_date": "05/25/2016",
+    "seller": "Hines, Stevens and Wong 98035 James Hills East Jamesville, HI 74123",
+    "client": "Gonzalez, Martin and Hamilton 71310 Owens Mills New Michaelside, NJ 67377",
+    "seller_tax_id": "971-90-7409",
+    "client_tax_id": "979-72-1317",
+    "iban": "GB17VCKB95228636038037"
+  },
+  "items": [
+    {
+      "item_desc": "Lands' End Kids Boys Snow Winter Boots Size 5 Blue Warm Zip Up Easy On Easy Off",
+      "item_qty": "5,00",
+      "item_net_price": "9,50",
+      "item_net_worth": "47,50",
+      "item_vat": "10%",
+      "item_gross_worth": "52,25"
+    },
+    {
+      "item_desc": "Wonder Nation Kids Blue Mout Alien Slippers House Shoes Size 5",
+      "item_qty": "5,00",
+      "item_net_price": "16,99",
+      "item_net_worth": "84,95",
+      "item_vat": "10%",
+      "item_gross_worth": "93,44"
+    },
+    {
+      "item_desc": "adidas Youth Boys Soccer Cleats 4.5 F5 TRX FG J Vivid Yellow Black NEW G65429",
+      "item_qty": "5,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "99,95",
+      "item_vat": "10%",
+      "item_gross_worth": "109,94"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 232,40",
+    "total_vat": "$ 23,24",
+    "total_gross_worth": "$ 255,64"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "52513212",
+    "invoice_date": "03/20/2017",
+    "seller": "Perez, Pace and Bailey 9406 Ashley Fords Suite 962 Jacksonfurt, AR 85423",
+    "client": "Martinez, Logan and Peterson 44346 Lopez Squares Ryanshire, AR 11606",
+    "seller_tax_id": "920-73-9188",
+    "client_tax_id": "977-92-3697",
+    "iban": "GB89FK5W55612564072357"
+  },
+  "items": [
+    {
+      "item_desc": "HP Pavilion MS200 18.5\" ALL-IN-ONE Computer system",
+      "item_qty": "5,00",
+      "item_net_price": "48,00",
+      "item_net_worth": "240,00",
+      "item_vat": "10%",
+      "item_gross_worth": "264,00"
+    },
+    {
+      "item_desc": "STUDENT/WORK COMPUTER WORKSTATION WINDOWS 10",
+      "item_qty": "4,00",
+      "item_net_price": "100,00",
+      "item_net_worth": "400,00",
+      "item_vat": "10%",
+      "item_gross_worth": "440,00"
+    },
+    {
+      "item_desc": "Quality Dell Windows XP Pro Desktop PC Computer Core 2 vPro 4Gb 250Gb DVD WiFi",
+      "item_qty": "1,00",
+      "item_net_price": "119,99",
+      "item_net_worth": "119,99",
+      "item_vat": "10%",
+      "item_gross_worth": "131,99"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 759,99",
+    "total_vat": "$76,00",
+    "total_gross_worth": "$ 835,99"
+  }
+}

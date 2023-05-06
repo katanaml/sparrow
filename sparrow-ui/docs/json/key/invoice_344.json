@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "45325258",
+    "invoice_date": "02/13/2012",
+    "seller": "Krueger LLC 881 Harold Curve Apt. 702 New Michael, NJ 69270",
+    "client": "Vasquez PLC 3870 Kramer Forges Apt. 420 Joelton, MN 40724",
+    "seller_tax_id": "969-78-4889",
+    "client_tax_id": "964-91-5014",
+    "iban": "GB65ACGL92095998134978"
+  },
+  "items": [
+    {
+      "item_desc": "New Nintendo 3DS XL Red System Console Working W/ AC Adapter Bundle",
+      "item_qty": "3,00",
+      "item_net_price": "149,99",
+      "item_net_worth": "449,97",
+      "item_vat": "10%",
+      "item_gross_worth": "494,97"
+    },
+    {
+      "item_desc": "Nintendo 64 N64 Game Console System + Controller Cords WORKING",
+      "item_qty": "5,00",
+      "item_net_price": "100,00",
+      "item_net_worth": "500,00",
+      "item_vat": "10%",
+      "item_gross_worth": "550,00"
+    },
+    {
+      "item_desc": "Nintendo 64 game console unit / controllers / games used untested",
+      "item_qty": "3,00",
+      "item_net_price": "39,99",
+      "item_net_worth": "119,97",
+      "item_vat": "10%",
+      "item_gross_worth": "131,97"
+    },
+    {
+      "item_desc": "Microsoft Xbox One 500GB 1540 Black Game Console TESTED Complete",
+      "item_qty": "2,00",
+      "item_net_price": "139,99",
+      "item_net_worth": "279,98",
+      "item_vat": "10%",
+      "item_gross_worth": "307,98"
+    },
+    {
+      "item_desc": "B310 Nintendo 3DS console Cosmo Black Japan X",
+      "item_qty": "3,00",
+      "item_net_price": "11,99",
+      "item_net_worth": "35,97",
+      "item_vat": "10%",
+      "item_gross_worth": "39,57"
+    },
+    {
+      "item_desc": "Nintendo Switch 32GB Neon Red/Neon Blue Console Slightly Used",
+      "item_qty": "1,00",
+      "item_net_price": "270,00",
+      "item_net_worth": "270,00",
+      "item_vat": "10%",
+      "item_gross_worth": "297,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$1655,89",
+    "total_vat": "$ 165,59",
+    "total_gross_worth": "$1821,48"
+  }
+}

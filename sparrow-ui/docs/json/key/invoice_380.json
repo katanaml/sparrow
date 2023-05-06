@@ -1,0 +1,26 @@
+{
+  "header": {
+    "invoice_no": "35515944",
+    "invoice_date": "08/28/2014",
+    "seller": "Schmidt-Alexander USCGC Berg FPO AA 74352",
+    "client": "Brown Ltd 3152 Brady Ways Apt. 859 South Sharonstad, OR 79299",
+    "seller_tax_id": "917-86-0643",
+    "client_tax_id": "921-99-3546"
+  },
+  "items": [
+    {
+      "iban": "GB78WKRM61075683915613",
+      "item_desc": "30 Inches Marble Patio Table Top Malachite Stone Inlaid Coffee Table Home Decor",
+      "item_qty": "1,00",
+      "item_net_price": "1023,75",
+      "item_net_worth": "1023,75",
+      "item_vat": "10%",
+      "item_gross_worth": "1 126,13"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$1 023,75",
+    "total_vat": "$ 102,38",
+    "total_gross_worth": "$1126,13"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "49166171",
+    "invoice_date": "02/21/2021",
+    "seller": "Stanton PLC 65805 Mccann Locks Suite 032 West Deborah, ID 30590",
+    "client": "Davis-Jackson 3868 Ashley Glens Apt. 777 Thompsonshire, NJ 39579",
+    "seller_tax_id": "941-96-5774",
+    "client_tax_id": "942-80-1437",
+    "iban": "GB64WQXZ66580327062077"
+  },
+  "items": [
+    {
+      "item_desc": "Astronomy: A Visual Guide",
+      "item_qty": "5,00",
+      "item_net_price": "5,02",
+      "item_net_worth": "25,10",
+      "item_vat": "10%",
+      "item_gross_worth": "27,61"
+    },
+    {
+      "item_desc": "The Epic of Gilgamesh",
+      "item_qty": "4,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "17,96",
+      "item_vat": "10%",
+      "item_gross_worth": "19,76"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$43,06",
+    "total_vat": "$4,31",
+    "total_gross_worth": "$47,37"
+  }
+}

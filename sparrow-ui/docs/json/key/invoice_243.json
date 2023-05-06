@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "64281058",
+    "invoice_date": "11/08/2019",
+    "seller": "Zuniga, Short and Jensen 3742 Stephanie Haven Apt. 492 Port Davidfurt, NY 66413",
+    "client": "Wells Ltd 0691 Adam Brook South Brittany, WA 02993",
+    "seller_tax_id": "984-91-8764",
+    "client_tax_id": "951-97-2583",
+    "iban": "GB67BNED14756248228264"
+  },
+  "items": [
+    {
+      "item_desc": "Gaming PC Desktop Computer HDMI RGB Intel i7 RTX 2060, HDD+SSD, Windows 10, Wifi",
+      "item_qty": "5,00",
+      "item_net_price": "999,50",
+      "item_net_worth": "4997,50",
+      "item_vat": "10%",
+      "item_gross_worth": "5 497,25"
+    },
+    {
+      "item_desc": "Ryzen Gaming Computer",
+      "item_qty": "4,00",
+      "item_net_price": "752,00",
+      "item_net_worth": "3008,00",
+      "item_vat": "10%",
+      "item_gross_worth": "3 308,80"
+    },
+    {
+      "item_desc": "Custom Built Windows 98 Retro Gaming Industrial PC Computer P2 B Montego II 5GB",
+      "item_qty": "1,00",
+      "item_net_price": "409,99",
+      "item_net_worth": "409,99",
+      "item_vat": "10%",
+      "item_gross_worth": "450,99"
+    },
+    {
+      "item_desc": "Dell Optiplex Desktop Computer 790 Core i7 8GB RAM 1TB HD DVD Windows 10 PC Wifi",
+      "item_qty": "5,00",
+      "item_net_price": "159,95",
+      "item_net_worth": "799,75",
+      "item_vat": "10%",
+      "item_gross_worth": "879,73"
+    },
+    {
+      "item_desc": "HP Windows 10 Pro Desktop Computer Intel QUAD CORE i5 Wifi, Keyboard & Mouse",
+      "item_qty": "2,00",
+      "item_net_price": "169,95",
+      "item_net_worth": "339,90",
+      "item_vat": "10%",
+      "item_gross_worth": "373,89"
+    },
+    {
+      "item_desc": "Dell Optiplex Desktop Computer PC Quad Core i5 16GB 1TB HD Wifi Windows 10 Pro",
+      "item_qty": "3,00",
+      "item_net_price": "169,95",
+      "item_net_worth": "509,85",
+      "item_vat": "10%",
+      "item_gross_worth": "560,83"
+    },
+    {
+      "item_desc": "Fast i7 RGB Gaming Desktop PC Computer VR-Ready WiFi AAA Fortnite GTAV PUBG IG3",
+      "item_qty": "5,00",
+      "item_net_price": "790,00",
+      "item_net_worth": "3950,00",
+      "item_vat": "10%",
+      "item_gross_worth": "4 345,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 14 014,99",
+    "total_vat": "$1401,50",
+    "total_gross_worth": "$ 15 416,49"
+  }
+}

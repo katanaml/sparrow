@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "57696752",
+    "invoice_date": "10/03/2017",
+    "seller": "Lopez-Smith 1019 Jamie Coves Suite 536 Garciaberg, AK23239",
+    "client": "Rodriguez, Grant and Green 36999 Cynthia Walk Suite 460 Greenchester, NC 24265",
+    "seller_tax_id": "902-87-1700",
+    "client_tax_id": "943-76-5369",
+    "iban": "GB46FUGV21945539731839"
+  },
+  "items": [
+    {
+      "item_desc": "Nautica Kids Boys Navy & Red with White Rubber Sole Running Sneakers Shoes US 10",
+      "item_qty": "4,00",
+      "item_net_price": "500,00",
+      "item_net_worth": "2.000,00",
+      "item_vat": "10%",
+      "item_gross_worth": "2200,00"
+    },
+    {
+      "item_desc": "Nike Kids KD Trey 5 / Nike Black Size 4.5aY",
+      "item_qty": "1,00",
+      "item_net_price": "22,00",
+      "item_net_worth": "22,00",
+      "item_vat": "10%",
+      "item_gross_worth": "24,20"
+    },
+    {
+      "item_desc": "Timberland brown slip on shoes size 4.5 juniors",
+      "item_qty": "5,00",
+      "item_net_price": "2,00",
+      "item_net_worth": "10,00",
+      "item_vat": "10%",
+      "item_gross_worth": "11,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$2032,00",
+    "total_vat": "$ 203,20",
+    "total_gross_worth": "$2235,20"
+  }
+}

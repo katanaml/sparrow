@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "38829380",
+    "invoice_date": "12/25/2017",
+    "seller": "Cook LLC 05622 Williams Ridge Apt. 320 Smithside, NY 16757",
+    "client": "Meza, Griffin and Powell Unit 3668 Box 9888 DPO AA 15880",
+    "seller_tax_id": "921-97-6915",
+    "client_tax_id": "979-96-0266",
+    "iban": "GB77WZUW03936127773887"
+  },
+  "items": [
+    {
+      "item_desc": "48 Inches Marble Dinning Table Top Hand Crafted Conference Table with Royal Look",
+      "item_qty": "3,00",
+      "item_net_price": "2952,00",
+      "item_net_worth": "8856,00",
+      "item_vat": "10%",
+      "item_gross_worth": "9 741,60"
+    },
+    {
+      "item_desc": "14 Inches Black Marble Coffee Cum Chess Board Table Top with Unique Design",
+      "item_qty": "3,00",
+      "item_net_price": "225,25",
+      "item_net_worth": "675,75",
+      "item_vat": "10%",
+      "item_gross_worth": "743,33"
+    },
+    {
+      "item_desc": "12\" White Marble Coffee Table Top Malachite Precious Inlay Decor Furniture W534",
+      "item_qty": "2,00",
+      "item_net_price": "295,73",
+      "item_net_worth": "591,46",
+      "item_vat": "10%",
+      "item_gross_worth": "650,61"
+    },
+    {
+      "item_desc": "12\" Marble Coffee Side Table Top Lapis Peacock Floral Inlay Bedroom Decors W019",
+      "item_qty": "4,00",
+      "item_net_price": "248,78",
+      "item_net_worth": "995,12",
+      "item_vat": "10%",
+      "item_gross_worth": "1094,63"
+    },
+    {
+      "item_desc": "12\"x12\" Wild Agate Stone Side Coffee Table Top Handicrafted Kitchen Decors A042",
+      "item_qty": "4,00",
+      "item_net_price": "259,77",
+      "item_net_worth": "1039,08",
+      "item_vat": "10%",
+      "item_gross_worth": "1142,99"
+    },
+    {
+      "item_desc": "36 Inches Marble Dinning Table Top Inlay Meeting Table with Semi Precious Stone",
+      "item_qty": "1,00",
+      "item_net_price": "1874,25",
+      "item_net_worth": "1874,25",
+      "item_vat": "10%",
+      "item_gross_worth": "2 061,68"
+    },
+    {
+      "item_desc": "26\"x26\" Marble Black Top Coffee Table Inlay Floral Pietradura Art Christmas Gift",
+      "item_qty": "2,00",
+      "item_net_price": "1 489,00",
+      "item_net_worth": "2978,00",
+      "item_vat": "10%",
+      "item_gross_worth": "3 275,80"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 17009,66",
+    "total_vat": "$1700,97",
+    "total_gross_worth": "18710,63"
+  }
+}

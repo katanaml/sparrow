@@ -1,0 +1,18 @@
+{
+  "invoice_no": "16220332",
+  "invoice_date": "05/15/2017",
+  "seller": "Lawson and Sons 78147 Jackson Fords Gilesland, MI 45057",
+  "client": "Mosley LLC 913 Lawrence Mountains New Andrew, KY 46723",
+  "seller_tax_id": "995-72-1473",
+  "client_tax_id": "988-78-0364",
+  "iban": "GB30RUVA78076817247388",
+  "item_desc": "Yilong 2.5'x4' Hand Knotted Silk Garden Scene Rug Indoor Oriental Carpet 352B",
+  "item_qty": "2,00",
+  "item_net_price": "2 000,00",
+  "item_net_worth": "4000,00",
+  "item_vat": "10%",
+  "item_gross_worth": "4 400,00",
+  "total_net_worth": "$62853,39",
+  "total_vat": "$6285,34",
+  "total_gross_worth": "$ 69138,73"
+}

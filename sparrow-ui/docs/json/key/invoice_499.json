@@ -1,0 +1,26 @@
+{
+  "header": {
+    "invoice_no": "61479635",
+    "invoice_date": "07/02/2018",
+    "seller": "Kelley-Thomas 19996 Diane Well Port Jennifer, TX 60910",
+    "client": "Green, Kelly and Matthews 5110 Heather Ways Andersontown, RI 96931",
+    "seller_tax_id": "969-94-5063",
+    "client_tax_id": "963-81-9853",
+    "iban": "GB29ZNFB26250974035092"
+  },
+  "items": [
+    {
+      "item_desc": "Executive style",
+      "item_qty": "5,00",
+      "item_net_price": "5,99",
+      "item_net_worth": "29,95",
+      "item_vat": "10%",
+      "item_gross_worth": "32,95"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 29,95",
+    "total_vat": "$3,00",
+    "total_gross_worth": "$32,95"
+  }
+}

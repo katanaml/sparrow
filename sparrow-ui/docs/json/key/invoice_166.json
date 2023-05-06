@@ -1,0 +1,26 @@
+{
+  "header": {
+    "invoice_no": "57114004",
+    "invoice_date": "03/20/2012",
+    "seller": "Parker-Gonzalez 702 Hill Lake Suite 129 West Samantha, KS 31457",
+    "client": "Gardner, Hernandez and Hart PSC 7928, Box 7446 APO AE 33867",
+    "seller_tax_id": "943-81-9821",
+    "client_tax_id": "956-83-1183",
+    "iban": "GB73KBWT75185699279775"
+  },
+  "items": [
+    {
+      "item_desc": "Seashells of North America: A Guide to Field Ident",
+      "item_qty": "3,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "13,47",
+      "item_vat": "10%",
+      "item_gross_worth": "14,82"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 13,47",
+    "total_vat": "$ 1,35",
+    "total_gross_worth": "$14,82"
+  }
+}

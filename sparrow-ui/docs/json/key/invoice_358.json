@@ -1,0 +1,58 @@
+{
+  "header": {
+    "invoice_no": "73074953",
+    "invoice_date": "11/10/2015",
+    "seller": "Soto-Reynolds 30608 Peterson Crossing Apt. 820 South Christopher, NM 15243",
+    "client": "Ferguson-Garcia 635 Sullivan Oval Leblancmouth, MN 35369",
+    "seller_tax_id": "902-86-2800",
+    "client_tax_id": "933-83-4656",
+    "iban": "GB27AMIQ03614120875982"
+  },
+  "items": [
+    {
+      "item_desc": "12\" White Marble Corner Table Top Paua Shell Mosaic Floral Inlay Home Decor W532",
+      "item_qty": "4,00",
+      "item_net_price": "295,73",
+      "item_net_worth": "1182,92",
+      "item_vat": "10%",
+      "item_gross_worth": "1301,21"
+    },
+    {
+      "item_desc": "21 Inches Round Marble Patio Table Top with Unique Pattern Coffee Table for Home",
+      "item_qty": "1,00",
+      "item_net_price": "424,15",
+      "item_net_worth": "424,15",
+      "item_vat": "10%",
+      "item_gross_worth": "466,56"
+    },
+    {
+      "item_desc": "6'x3' Black Marble Dining Center Table Top Marquetry Inlay Outdoor Decor H3420A",
+      "item_qty": "1,00",
+      "item_net_price": "5756,72",
+      "item_net_worth": "5 756,72",
+      "item_vat": "10%",
+      "item_gross_worth": "6332,39"
+    },
+    {
+      "item_desc": "6'x3' White Large Marble Dining Top Table Marquetry Multi Inlay Home Decor H4327",
+      "item_qty": "2,00",
+      "item_net_price": "5 100,77",
+      "item_net_worth": "10 201,54",
+      "item_vat": "10%",
+      "item_gross_worth": "11 221,69"
+    },
+    {
+      "item_desc": "54 Inches Marble Dinning Table Top Inlay Restaurant Table with Peacock Design",
+      "item_qty": "3,00",
+      "item_net_price": "4600,00",
+      "item_net_worth": "13 800,00",
+      "item_vat": "10%",
+      "item_gross_worth": "15 180,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$31 365,33",
+    "total_vat": "$3136,53",
+    "total_gross_worth": "$ 34 501,86"
+  }
+}

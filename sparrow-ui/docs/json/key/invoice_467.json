@@ -1,0 +1,32 @@
+{
+  "header": {
+    "invoice_no": "60456703",
+    "invoice_date": "09/01/2016",
+    "seller": "Hines Ltd 88927 Martin Brooks Suite 941 Angelastad, WI 16514",
+    "client": "Brown Ltd Unit 8049 Box 4906 DPO AE 32839",
+    "seller_tax_id": "970-94-1776",
+    "client_tax_id": "991-84-7712",
+    "iban": "GB05IPNV34325216718258"
+  },
+  "items": [
+    {
+      "item_desc": "Nintendo Gameboy Color Console Clear with Box Manual CGB-001 GBC Japan Tested 63",
+      "item_qty": "1,00",
+      "item_net_price": "120,00",
+      "item_net_worth": "120,00",
+      "item_vat": "10%",
+      "item_gross_worth": "132,00"
+    },
+    {
+      "item_desc": "Sony PlayStation 3 12 GB Charcoal Black Console (Used)",
+      "item_qty": "2,00",
+      "item_net_price": "109,99",
+      "item_net_worth": "219,98",
+      "item_vat": "10%",
+      "item_gross_worth": "241,98",
+      "total_net_worth": "$ 339,98",
+      "total_vat": "$34,00",
+      "total_gross_worth": "$ 373,98"
+    }
+  ]
+}

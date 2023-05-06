@@ -1,0 +1,58 @@
+{
+  "header": {
+    "invoice_no": "26675003",
+    "invoice_date": "10/24/2012",
+    "seller": "Wright-Lucas 602 Lisa Mews Suite 300 Livingstonton, VT 48889",
+    "client": "Hayes Inc 959 Michael Ridges Carterhaven, MO 19856",
+    "seller_tax_id": "946-79-2529",
+    "client_tax_id": "966-87-8299",
+    "iban": "GB92UKUV22836497179015"
+  },
+  "items": [
+    {
+      "item_desc": "How to Get an Asian Girlfriend by Derek Strong (English) Paperback Book Free Shi",
+      "item_qty": "3,00",
+      "item_net_price": "15,44",
+      "item_net_worth": "46,32",
+      "item_vat": "10%",
+      "item_gross_worth": "50,95"
+    },
+    {
+      "item_desc": "A boy who grew up eating nightmare It's Okay to Not Be Okay Picturebook 00000000",
+      "item_qty": "2,00",
+      "item_net_price": "19,50",
+      "item_net_worth": "39,00",
+      "item_vat": "10%",
+      "item_gross_worth": "42,90"
+    },
+    {
+      "item_desc": "The Graphic Design Reference & Specification Book: Everything Graphic Designers",
+      "item_qty": "2,00",
+      "item_net_price": "20,18",
+      "item_net_worth": "40,36",
+      "item_vat": "10%",
+      "item_gross_worth": "44,40"
+    },
+    {
+      "item_desc": "Language and Woman's Place by Robin Lakoff",
+      "item_qty": "4,00",
+      "item_net_price": "4,09",
+      "item_net_worth": "16,36",
+      "item_vat": "10%",
+      "item_gross_worth": "18,00"
+    },
+    {
+      "item_desc": "American Zoos",
+      "item_qty": "4,00",
+      "item_net_price": "4,89",
+      "item_net_worth": "19,56",
+      "item_vat": "10%",
+      "item_gross_worth": "21,52"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 161,60",
+    "total_vat": "$ 16,16",
+    "total_gross_worth": "$ 177,76"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "27188556",
+    "invoice_date": "03/10/2019",
+    "seller": "Hicks and Sons 6468 Sandra Mountains Apt. 893 South Carlamouth, TN 11722",
+    "client": "Washington and Sons 420 Jonathan Union Suite 057 Mcdonaldbury, CA 32669",
+    "seller_tax_id": "943-87-1893",
+    "client_tax_id": "936-98-2132",
+    "iban": "GB14GIRC85339920238877"
+  },
+  "items": [
+    {
+      "item_desc": "26\"x26\" Top White Marble Coffee Table Historical Taj Mahal Art Black Friday Gift",
+      "item_qty": "4,00",
+      "item_net_price": "2226,00",
+      "item_net_worth": "8904,00",
+      "item_vat": "10%",
+      "item_gross_worth": "9794,40"
+    },
+    {
+      "item_desc": "18\"x14\" Modern Top Oval Coffee Table With 15\" Tall Stand Christmas Gift D\u00e9cor",
+      "item_qty": "4,00",
+      "item_net_price": "1200,00",
+      "item_net_worth": "4800,00",
+      "item_vat": "10%",
+      "item_gross_worth": "5280,00"
+    },
+    {
+      "item_desc": "15\"x15\" White Marble Coffee Table Top With 15\" Tall Stand Semi Precious Art Deco",
+      "item_qty": "4,00",
+      "item_net_price": "575,99",
+      "item_net_worth": "2303,96",
+      "item_vat": "10%",
+      "item_gross_worth": "2 534,36"
+    },
+    {
+      "item_desc": "13 Inch Marble Coffee Table Stone Game Table Mother of Pearl with Check Pattern",
+      "item_qty": "3,00",
+      "item_net_price": "301,75",
+      "item_net_worth": "905,25",
+      "item_vat": "10%",
+      "item_gross_worth": "995,78"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 16 913,21",
+    "total_vat": "$1691,32",
+    "total_gross_worth": "$ 18 604,53"
+  }
+}

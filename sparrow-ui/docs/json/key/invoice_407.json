@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "90118586",
+    "invoice_date": "08/21/2017",
+    "seller": "Taylor and Sons 1669 Cabrera Loop Apt. 577 Jenniferland, SD 77850",
+    "client": "Obrien Ltd 29360 Ashley Harbor East Mary, WI25259",
+    "seller_tax_id": "947-73-2780",
+    "client_tax_id": "976-96-7284",
+    "iban": "GB26UFST52285574070709"
+  },
+  "items": [
+    {
+      "item_desc": "PUMA Pre-School Scuderia Ferrari Drift Cat 5 Ultra II Shoes Boys 12c",
+      "item_qty": "1,00",
+      "item_net_price": "21,22",
+      "item_net_worth": "21,22",
+      "item_vat": "10%",
+      "item_gross_worth": "23,34"
+    },
+    {
+      "item_desc": "Joma Youth Boy Supercopa 201 Soccer Cleats 4.5 Negro Verde Multitaco Black Green",
+      "item_qty": "1,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "19,99",
+      "item_vat": "10%",
+      "item_gross_worth": "21,99"
+    },
+    {
+      "item_desc": "Fila Shoes Sneakers Kids size 11 Red black Gray",
+      "item_qty": "4,00",
+      "item_net_price": "15,00",
+      "item_net_worth": "60,00",
+      "item_vat": "10%",
+      "item_gross_worth": "66,00"
+    },
+    {
+      "item_desc": "Native Charley White Sandals-Size Infant/Child 6-Boys/Girl-Very Good Condition",
+      "item_qty": "1,00",
+      "item_net_price": "13,00",
+      "item_net_worth": "13,00",
+      "item_vat": "10%",
+      "item_gross_worth": "14,30"
+    },
+    {
+      "item_desc": "Teva Hurricane 1019390 All Black Sandals with Hook and Loop Closure, Youth's 5",
+      "item_qty": "4,00",
+      "item_net_price": "9,99",
+      "item_net_worth": "39,96",
+      "item_vat": "10%",
+      "item_gross_worth": "43,96"
+    },
+    {
+      "item_desc": "Skechers Kids' Snap Sprints Sneaker Size 4 Blue/Black 975461",
+      "item_qty": "4,00",
+      "item_net_price": "29,99",
+      "item_net_worth": "119,96",
+      "item_vat": "10%",
+      "item_gross_worth": "131,96"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$274,13",
+    "total_vat": "$27,41",
+    "total_gross_worth": "$ 301,54"
+  }
+}

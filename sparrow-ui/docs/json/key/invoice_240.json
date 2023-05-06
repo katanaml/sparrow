@@ -1,0 +1,26 @@
+{
+  "header": {
+    "invoice_no": "16692901",
+    "invoice_date": "04/03/2018",
+    "seller": "Jackson-Oliver 8041 Hawkins Village Suite 629 Garciahaven, AZ 99709",
+    "client": "Tucker-Diaz 22764 Murphy Garden North Nicoleberg, RI 90466",
+    "seller_tax_id": "911-70-7669",
+    "client_tax_id": "911-83-7666",
+    "iban": "GB93CNVP09591308802379"
+  },
+  "items": [
+    {
+      "item_desc": "Keen Waterproof Hiking Shoes Kids Boys Size 12 Brown Black Outdoor Sneakers",
+      "item_qty": "2,00",
+      "item_net_price": "35,97",
+      "item_net_worth": "71,94",
+      "item_vat": "10%",
+      "item_gross_worth": "79,13"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$71,94",
+    "total_vat": "$7,19",
+    "total_gross_worth": "Total"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "80028090",
+    "invoice_date": "11/20/2018",
+    "seller": "Shaw-Miller 41968 Kevin Locks Vaughnhaven, NC 80627",
+    "client": "Burke-Gordon Unit 0044 Box 4449 DPO AA 80093",
+    "seller_tax_id": "956-85-7426",
+    "client_tax_id": "963-87-6469",
+    "iban": "GB41RTIS55292758535955"
+  },
+  "items": [
+    {
+      "item_desc": "Gaming PC Computer RX 580 8GB Ryzen 5 2x8GB Ram",
+      "item_qty": "1,00",
+      "item_net_price": "400,00",
+      "item_net_worth": "400,00",
+      "item_vat": "10%",
+      "item_gross_worth": "440,00"
+    },
+    {
+      "item_desc": "Alarco Gaming PC Desktop Computer Intel i5 B6JTBMIMIOMF.NVDA GTX 650 1GB",
+      "item_qty": "4,00",
+      "item_net_price": "500,00",
+      "item_net_worth": "2 000,00",
+      "item_vat": "10%",
+      "item_gross_worth": "2200,00"
+    },
+    {
+      "item_desc": "Dell Desktop Computers D Core i5 16GB 2TB HD 512GB SSD 0 Windows 10 PC 22\" LCD",
+      "item_qty": "1,00",
+      "item_net_price": "139,95",
+      "item_net_worth": "139,95",
+      "item_vat": "10%",
+      "item_gross_worth": "153,94"
+    },
+    {
+      "item_desc": "Dell 7010 Desktop Computer Intel Core i5 3.10 Windows 10 pro 64 500gb HD 4gb Ram",
+      "item_qty": "2,00",
+      "item_net_price": "241,60",
+      "item_net_worth": "483,20",
+      "item_vat": "10%",
+      "item_gross_worth": "531,52"
+    },
+    {
+      "item_desc": "Fast i5 RGB Gaming Desktop PC Computer nVidia Gefore WiFi Fortnite GTAV PUBG IG3",
+      "item_qty": "4,00",
+      "item_net_price": "510,00",
+      "item_net_worth": "2040,00",
+      "item_vat": "10%",
+      "item_gross_worth": "2244,00"
+    },
+    {
+      "item_desc": "HP 8300 Slim Desktop Small Computer PC i5 3.2GHz 4GB 500GB Windows 10 Pro WiFi",
+      "item_qty": "3,00",
+      "item_net_price": "99,99",
+      "item_net_worth": "299,97",
+      "item_vat": "10%",
+      "item_gross_worth": "329,97"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$5363,12",
+    "total_vat": "$ 536,31",
+    "total_gross_worth": "$5899,43"
+  }
+}

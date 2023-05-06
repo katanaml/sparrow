@@ -1,0 +1,58 @@
+{
+  "header": {
+    "invoice_no": "49464905",
+    "invoice_date": "07/21/2012",
+    "seller": "Johnson-Higgins 72171 Angela Plaza New Cindyfort, FL 82248",
+    "client": "Macdonald-Hampton 34443 Ricardo Mission South Jonathan, AK 18373",
+    "seller_tax_id": "942-80-1240",
+    "client_tax_id": "907-77-3442",
+    "iban": "GB85ERDG65292515798989"
+  },
+  "items": [
+    {
+      "item_desc": "Gaming PC Desktop Computer 158GB 120GB SSD+1TB Win10 WIFI +Keyboard",
+      "item_qty": "5,00",
+      "item_net_price": "168,88",
+      "item_net_worth": "844,40",
+      "item_vat": "10%",
+      "item_gross_worth": "928,84"
+    },
+    {
+      "item_desc": "Gaming PC Desktop Computer RGB Intel i7, RTX 2060, 16GB RAM, 240GB SSD, 2TB HDD",
+      "item_qty": "3,00",
+      "item_net_price": "903,80",
+      "item_net_worth": "2711,40",
+      "item_vat": "10%",
+      "item_gross_worth": "2982,54"
+    },
+    {
+      "item_desc": "HP Desktop Computer 400 G1 Core i3 3.4GHz 8GB 256GB SSD 19\" LCD Windows 10 PC",
+      "item_qty": "3,00",
+      "item_net_price": "139,95",
+      "item_net_worth": "419,85",
+      "item_vat": "10%",
+      "item_gross_worth": "461,83"
+    },
+    {
+      "item_desc": "HP Computer 8300 Elite USDT, 13-322003.3GHz, 8GB RAM, NO HDD, Windows 7/10 COA",
+      "item_qty": "1,00",
+      "item_net_price": "63,00",
+      "item_net_worth": "63,00",
+      "item_vat": "10%",
+      "item_gross_worth": "69,30"
+    },
+    {
+      "item_desc": "Gaming PC Desktop Computer 158GB 120GB SSD+2TB HD8570 Win10 WIFI",
+      "item_qty": "1,00",
+      "item_net_price": "189,88",
+      "item_net_worth": "189,88",
+      "item_vat": "10%",
+      "item_gross_worth": "208,87"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$4228,53",
+    "total_vat": "$ 422,85",
+    "total_gross_worth": "$4651,38"
+  }
+}

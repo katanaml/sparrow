@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "56014042",
+    "invoice_date": "10/01/2014",
+    "seller": "Nichols-Barajas 3882 Stacy Ville Apt. 488 Lake Kristinatown, ND 48049",
+    "client": "Mckay PLC 5542 Danielle Drive Suite 381 West Mason, ME 76671",
+    "seller_tax_id": "953-87-6813",
+    "client_tax_id": "965-90-8517",
+    "iban": "GB08KXQT197119711661357354"
+  },
+  "items": [
+    {
+      "item_desc": "Jordan Hydro 2 (TD)-Child Size",
+      "item_qty": "2,00",
+      "item_net_price": "5,75",
+      "item_net_worth": "11,50",
+      "item_vat": "10%",
+      "item_gross_worth": "12,65"
+    },
+    {
+      "item_desc": "Sketchers Energy Lights Boys Black Canvas Size 4 With Charging Cable",
+      "item_qty": "4,00",
+      "item_net_price": "12,00",
+      "item_net_worth": "48,00",
+      "item_vat": "10%",
+      "item_gross_worth": "52,80"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$59,50",
+    "total_vat": "$5,95",
+    "total_gross_worth": "$65,45"
+  }
+}

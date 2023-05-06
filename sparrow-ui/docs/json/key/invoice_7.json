@@ -1,0 +1,18 @@
+{
+  "invoice_no": "54212825",
+  "invoice_date": "05/01/2015",
+  "seller": "Hutchinson PLC 7046 Barrett Mount Floresberg, AZ 86083",
+  "client": "Chapman-Long 245 Eric Rest Suite 622 Port Jimmyview, CO 68684",
+  "seller_tax_id": "959-74-2014",
+  "client_tax_id": "953-85-0282",
+  "iban": "GB39WGXJ06397307045703",
+  "item_desc": "Stainless Steel Reusable Vacuum Sealed Champagne Red Wine Bottle Stopper Cap New",
+  "item_qty": "3,00",
+  "item_net_price": "1,20",
+  "item_net_worth": "3,60",
+  "item_vat": "10%",
+  "item_gross_worth": "3,96",
+  "total_net_worth": "$ 501,40",
+  "total_vat": "$ 50,14",
+  "total_gross_worth": "$ 551,54"
+}

@@ -1,0 +1,26 @@
+{
+  "header": {
+    "invoice_no": "72929361",
+    "invoice_date": "06/29/2020",
+    "seller": "Dawson-Strickland 460 Turner Loop North Williamtown, OR 35075",
+    "client": "Hobbs-Stevens Unit 4520 Box 4858 DPO AP 27104",
+    "seller_tax_id": "978-85-9516",
+    "client_tax_id": "998-97-4745",
+    "iban": "GB56WEKG51144252787794"
+  },
+  "items": [
+    {
+      "item_desc": "NWT $1200 J.Crew Silk Chiffon Ivory Wedding Dress with Beading",
+      "item_qty": "1,00",
+      "item_net_price": "295,00",
+      "item_net_worth": "295,00",
+      "item_vat": "10%",
+      "item_gross_worth": "324,50"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 295,00",
+    "total_vat": "$29,50",
+    "total_gross_worth": "$ 324,50"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "70235468",
+    "invoice_date": "08/28/2012",
+    "seller": "Charles, Black and Vasquez 317 Ford Flats Abigailfurt, WA 55783",
+    "client": "Lang, Davenport and Young PSC 6638, Box 9032 APO AA 19943",
+    "seller_tax_id": "907-83-0317",
+    "client_tax_id": "937-83-6035",
+    "iban": "GB80EUY020783816065542"
+  },
+  "items": [
+    {
+      "item_desc": "Rust Proof Three Rows Tool Wine Glass Holder Simple Iron Wire Home Hanging Rack",
+      "item_qty": "4,00",
+      "item_net_price": "11,56",
+      "item_net_worth": "46,24",
+      "item_vat": "10%",
+      "item_gross_worth": "50,86"
+    },
+    {
+      "item_desc": "Wine Glass Holder Shelf Japanese Style Bar Iron Under Cabinet Stemware Rack",
+      "item_qty": "4,00",
+      "item_net_price": "15,19",
+      "item_net_worth": "60,76",
+      "item_vat": "10%",
+      "item_gross_worth": "66,84"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$107,00",
+    "total_vat": "$10,70",
+    "total_gross_worth": "$ 117,70"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "33137636",
+    "invoice_date": "07/20/2015",
+    "seller": "Mckenzie PLC PSC 9675, Box 3115 APO AP 66862",
+    "client": "Schultz PLC PSC 8737, Box 8683 APO AE 12600",
+    "seller_tax_id": "989-72-9794",
+    "client_tax_id": "993-86-5833",
+    "iban": "GB05ZUCN48071007458396"
+  },
+  "items": [
+    {
+      "item_desc": "The Fountainhead: 50th Anniversary Edition",
+      "item_qty": "4,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "17,96",
+      "item_vat": "10%",
+      "item_gross_worth": "19,76"
+    },
+    {
+      "item_desc": "A Million Little Bricks The Unofficial Illustrated History of the LE",
+      "item_qty": "3,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "13,47",
+      "item_vat": "10%",
+      "item_gross_worth": "14,82"
+    },
+    {
+      "item_desc": "In the Footsteps of the Russian Snowman (Paperback or Softback)",
+      "item_qty": "4,00",
+      "item_net_price": "25,87",
+      "item_net_worth": "103,48",
+      "item_vat": "10%",
+      "item_gross_worth": "113,83"
+    },
+    {
+      "item_desc": "The Epic of Gilgamesh",
+      "item_qty": "5,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "22,45",
+      "item_vat": "10%",
+      "item_gross_worth": "24,70"
+    },
+    {
+      "item_desc": "Evolutionary Analysis",
+      "item_qty": "5,00",
+      "item_net_price": "6,43",
+      "item_net_worth": "32,15",
+      "item_vat": "10%",
+      "item_gross_worth": "35,36"
+    },
+    {
+      "item_desc": "300,000 PLR Articles, 2,000 E-books + More",
+      "item_qty": "3,00",
+      "item_net_price": "1,99",
+      "item_net_worth": "5,97",
+      "item_vat": "10%",
+      "item_gross_worth": "6,57"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$195,48",
+    "total_vat": "$19,55",
+    "total_gross_worth": "$ 215,03"
+  }
+}

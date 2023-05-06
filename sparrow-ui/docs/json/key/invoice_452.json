@@ -1,0 +1,58 @@
+{
+  "header": {
+    "invoice_no": "77833987",
+    "invoice_date": "05/20/2013",
+    "seller": "Freeman and Sons 67728 Hebert Parkway Howeburgh, OH 93802",
+    "client": "Houston Group 195 Deanna Rue Robertshire, WY 74880",
+    "seller_tax_id": "973-76-8676",
+    "client_tax_id": "901-88-1175",
+    "iban": "GB43RCPI15397639476218"
+  },
+  "items": [
+    {
+      "item_desc": "Introduction to Thematic Cartography",
+      "item_qty": "1,00",
+      "item_net_price": "8,99",
+      "item_net_worth": "8,99",
+      "item_vat": "10%",
+      "item_gross_worth": "9,89"
+    },
+    {
+      "item_desc": "Sonic Wind The Story of John Paul Stapp and How a Renegade Doctor Be",
+      "item_qty": "1,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "4,49",
+      "item_vat": "10%",
+      "item_gross_worth": "4,94"
+    },
+    {
+      "item_desc": "Entertaining",
+      "item_qty": "1,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "4,49",
+      "item_vat": "10%",
+      "item_gross_worth": "4,94"
+    },
+    {
+      "item_desc": "Rebecca to the Rescue (American Girl (Quality))",
+      "item_qty": "2,00",
+      "item_net_price": "4,89",
+      "item_net_worth": "9,78",
+      "item_vat": "10%",
+      "item_gross_worth": "10,76"
+    },
+    {
+      "item_desc": "Gulag archipelago / Gulag Archipelago Volume 21 1st edition paperbacks",
+      "item_qty": "3,00",
+      "item_net_price": "30,00",
+      "item_net_worth": "90,00",
+      "item_vat": "10%",
+      "item_gross_worth": "99,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 117,75",
+    "total_vat": "$11,78",
+    "total_gross_worth": "$ 129,53"
+  }
+}

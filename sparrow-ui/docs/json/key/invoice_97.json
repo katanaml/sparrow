@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "78785504",
+    "invoice_date": "03/21/2012",
+    "seller": "Solomon-Barnett 432 Jeanne Ramp Apt. 273 North Markfurt, KS 35344",
+    "client": "Campbell-Weiss 0002 Hernandez Harbors Suite 855 Lake Rebekah, WI 18517",
+    "seller_tax_id": "954-83-1788",
+    "client_tax_id": "924-80-6154",
+    "iban": "GB93HXLD30308952272868"
+  },
+  "items": [
+    {
+      "item_desc": "mDesign Metal Wine Rack Storage Organizer, 12 Bottles Dark Gray",
+      "item_qty": "4,00",
+      "item_net_price": "44,99",
+      "item_net_worth": "179,96",
+      "item_vat": "10%",
+      "item_gross_worth": "197,96"
+    },
+    {
+      "item_desc": "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
+      "item_qty": "5,00",
+      "item_net_price": "7,50",
+      "item_net_worth": "37,50",
+      "item_vat": "10%",
+      "item_gross_worth": "41,25"
+    },
+    {
+      "item_desc": "Lolita \"Wine Bouquet\" Hand Painted and Decorated Wine Glass NIB",
+      "item_qty": "1,00",
+      "item_net_price": "20,00",
+      "item_net_worth": "20,00",
+      "item_vat": "10%",
+      "item_gross_worth": "22,00"
+    },
+    {
+      "item_desc": "confetti wine glass",
+      "item_qty": "4,00",
+      "item_net_price": "15,00",
+      "item_net_worth": "60,00",
+      "item_vat": "10%",
+      "item_gross_worth": "66,00"
+    },
+    {
+      "item_desc": "2 Hand Blown Wine Water Goblet Glass Art Mexico Pulled Feather Iridescent Swirl",
+      "item_qty": "3,00",
+      "item_net_price": "29,99",
+      "item_net_worth": "89,97",
+      "item_vat": "10%",
+      "item_gross_worth": "98,97"
+    },
+    {
+      "item_desc": "1PC Tricycle Shape Red Wine Rack Cocktail Holder Wine Display Rack for Home Bar",
+      "item_qty": "4,00",
+      "item_net_price": "32,13",
+      "item_net_worth": "128,52",
+      "item_vat": "10%",
+      "item_gross_worth": "141,37"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$515,95",
+    "total_vat": "$51,60",
+    "total_gross_worth": "$ 567,55"
+  }
+}

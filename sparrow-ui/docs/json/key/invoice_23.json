@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "81432357",
+    "invoice_date": "07/30/2020",
+    "seller": "Tran LLC 286 Marilyn Crescent New jonathanborough, CT 67755",
+    "client": "Golden, Gross and Rivera 299 Megan Bypass Apt. 471 Robertview, CO 69857",
+    "seller_tax_id": "930-70-8573",
+    "client_tax_id": "979-72-2010",
+    "iban": "GB20WXD517725959227934"
+  },
+  "items": [
+    {
+      "item_desc": "18\" Handmade White Top Chess Table Inlaid Mosaic Gemstone Art Halloween Gift Art",
+      "item_qty": "2,00",
+      "item_net_price": "525,00",
+      "item_net_worth": "1050,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1 155,00"
+    },
+    {
+      "item_desc": "Marble Top Side Table Tiger Eye Gem Marquetry Pietradura Garden Decor Arts H469",
+      "item_qty": "3,00",
+      "item_net_price": "341,48",
+      "item_net_worth": "1024,44",
+      "item_vat": "10%",
+      "item_gross_worth": "1126,88"
+    },
+    {
+      "item_desc": "6 Pack Metal Plated Table Locks Dining Training Table Buckles Connectors Hardwar",
+      "item_qty": "3,00",
+      "item_net_price": "12,73",
+      "item_net_worth": "38,19",
+      "item_vat": "10%",
+      "item_gross_worth": "42,01"
+    },
+    {
+      "item_desc": "36 Inches Marble Dinning Table Top Hand Inlaid Office Table with Multi Gemstones",
+      "item_qty": "5,00",
+      "item_net_price": "1451,25",
+      "item_net_worth": "7256,25",
+      "item_vat": "10%",
+      "item_gross_worth": "7981,87"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$9 368,88",
+    "total_vat": "$ 936,89",
+    "total_gross_worth": "$10305,77"
+  }
+}

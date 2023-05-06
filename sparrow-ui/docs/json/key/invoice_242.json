@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "76658127",
+    "invoice_date": "10/23/2011",
+    "seller": "Crawford-Byrd PSC 3342, Box 5976 APO AA 60940",
+    "client": "Sherman PLC 8359 Chapman Loop Torresside, MS 13114",
+    "seller_tax_id": "922-97-5588",
+    "client_tax_id": "973-85-9820",
+    "iban": "GB21ZEZG695359535709532307"
+  },
+  "items": [
+    {
+      "item_desc": "Women Black Dress Mori Girl Puff Sleeve Korean Casual Loose Peter Pan Collar",
+      "item_qty": "4,00",
+      "item_net_price": "13,99",
+      "item_net_worth": "55,96",
+      "item_vat": "10%",
+      "item_gross_worth": "61,56"
+    },
+    {
+      "item_desc": "BCBG Maxazria dress XS",
+      "item_qty": "4,00",
+      "item_net_price": "20,00",
+      "item_net_worth": "80,00",
+      "item_vat": "10%",
+      "item_gross_worth": "88,00"
+    },
+    {
+      "item_desc": "NWT J.Crew Silk Wedding Dress",
+      "item_qty": "1,00",
+      "item_net_price": "395,00",
+      "item_net_worth": "395,00",
+      "item_vat": "10%",
+      "item_gross_worth": "434,50"
+    },
+    {
+      "item_desc": "Divided Black Asymmetrical Dress -size 8 NWT",
+      "item_qty": "5,00",
+      "item_net_price": "7,99",
+      "item_net_worth": "39,95",
+      "item_vat": "10%",
+      "item_gross_worth": "43,95"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$570,91",
+    "total_vat": "$57,09",
+    "total_gross_worth": "628,00"
+  }
+}

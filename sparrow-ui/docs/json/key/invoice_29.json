@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "58097062",
+    "invoice_date": "04/05/2013",
+    "seller": "Wright-Alvarez 8309 Bernard Village Apt. 284 Robinsonshire, VT 35375",
+    "client": "Harper-Flynn 753 Acevedo Crossroad Suite 727 West Marcus, NY 87119",
+    "seller_tax_id": "922-84-4511",
+    "client_tax_id": "964-84-7884",
+    "iban": "GB79CMCC33561352409593"
+  },
+  "items": [
+    {
+      "item_desc": "YILONG 4'x6' Yellow Handmade Carpet Dining Room Hand Knotted Silk Rugs 083B",
+      "item_qty": "1,00",
+      "item_net_price": "3600,00",
+      "item_net_worth": "3600,00",
+      "item_vat": "10%",
+      "item_gross_worth": "3960,00"
+    },
+    {
+      "item_desc": "Cartoon Rabbit Printed Round Carpet Area Rug Children Play Tent Floor Mat Rug",
+      "item_qty": "3,00",
+      "item_net_price": "177,08",
+      "item_net_worth": "531,24",
+      "item_vat": "10%",
+      "item_gross_worth": "584,36"
+    },
+    {
+      "item_desc": "Beige Color Hand Knotted 2'x4' Afghan Kilim Rug Carpet Traditional Ghazni Floral",
+      "item_qty": "4,00",
+      "item_net_price": "170,00",
+      "item_net_worth": "680,00",
+      "item_vat": "10%",
+      "item_gross_worth": "748,00"
+    },
+    {
+      "item_desc": "Chef Pattern Kitchen Floor Rugs Carpet Blanket Area Mats Home Supply 40x60cm",
+      "item_qty": "2,00",
+      "item_net_price": "15,96",
+      "item_net_worth": "31,92",
+      "item_vat": "10%",
+      "item_gross_worth": "35,11"
+    },
+    {
+      "item_desc": "YILONG 6'x9' Handmade Silk Area Rug Chinese Art Deco Classic Indoor Carpet",
+      "item_qty": "2,00",
+      "item_net_price": "12 000,00",
+      "item_net_worth": "24000,00",
+      "item_vat": "10%",
+      "item_gross_worth": "26 400,00"
+    },
+    {
+      "item_desc": "Home Christmas Santa Claus Anti-slip Room Floor Mat Decor Carpet Rug Xmas Decor",
+      "item_qty": "2,00",
+      "item_net_price": "13,09",
+      "item_net_worth": "26,18",
+      "item_vat": "10%",
+      "item_gross_worth": "28,80"
+    },
+    {
+      "item_desc": "New Design Rectangular Hand Woven Chindi Rag Rug Floor Handmade Carpet Aztec Mat",
+      "item_qty": "2,00",
+      "item_net_price": "29,99",
+      "item_net_worth": "59,98",
+      "item_vat": "10%",
+      "item_gross_worth": "65,98"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 28929,32",
+    "total_vat": "$2892,93",
+    "total_gross_worth": "$31822,25"
+  }
+}

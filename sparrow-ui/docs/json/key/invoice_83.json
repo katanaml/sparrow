@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "24734743",
+    "invoice_date": "12/13/2015",
+    "seller": "Tyler-Black 78229 Davis Coves Apt. 526 South Joshuaburgh, PA 81931",
+    "client": "Gross PLC 88767 Frank Ferry Shaneville, NY 20411",
+    "seller_tax_id": "979-82-5545",
+    "client_tax_id": "929-91-8169",
+    "iban": "GB27FMNA07632139513602"
+  },
+  "items": [
+    {
+      "item_desc": "Old Navy Womens Sleeveless Rayon Dress Hawaiian Floral Print Size XS",
+      "item_qty": "3,00",
+      "item_net_price": "12,00",
+      "item_net_worth": "36,00",
+      "item_vat": "10%",
+      "item_gross_worth": "39,60"
+    },
+    {
+      "item_desc": "GUESS dress size 2",
+      "item_qty": "4,00",
+      "item_net_price": "20,00",
+      "item_net_worth": "80,00",
+      "item_vat": "10%",
+      "item_gross_worth": "88,00"
+    },
+    {
+      "item_desc": "LuLaRoe Nicole Dress Size Large 25",
+      "item_qty": "5,00",
+      "item_net_price": "1,99",
+      "item_net_worth": "9,95",
+      "item_vat": "10%",
+      "item_gross_worth": "10,94"
+    },
+    {
+      "item_desc": "Large Blue Long Sleeve Fit & Flare Dress Elastic Waist Crochet Detail Bohemian",
+      "item_qty": "4,00",
+      "item_net_price": "0,99",
+      "item_net_worth": "3,96",
+      "item_vat": "10%",
+      "item_gross_worth": "4,36"
+    },
+    {
+      "item_desc": "Lilly Pulitzer XS Spike the Punch Cassie Cotton Dress with Quarter Sleeves",
+      "item_qty": "3,00",
+      "item_net_price": "44,89",
+      "item_net_worth": "134,67",
+      "item_vat": "10%",
+      "item_gross_worth": "148,14"
+    },
+    {
+      "item_desc": "Mossimo M Red and Orange Braided Strap Tank Maxi Dress",
+      "item_qty": "5,00",
+      "item_net_price": "0,99",
+      "item_net_worth": "4,95",
+      "item_vat": "10%",
+      "item_gross_worth": "5,45"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$269,53",
+    "total_vat": "$26,95",
+    "total_gross_worth": "$ 296,48"
+  }
+}

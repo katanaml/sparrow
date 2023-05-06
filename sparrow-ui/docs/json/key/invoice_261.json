@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "54569960",
+    "invoice_date": "12/06/2020",
+    "seller": "Copeland-Hudson 29285 Montgomery Hills Suite 745 New Susan, WY 54431",
+    "client": "Jones, Butler and Olson Unit 9503 Box 4557 DPO AE 74687",
+    "seller_tax_id": "983-91-5966",
+    "client_tax_id": "971-98-9041"
+  },
+  "items": [
+    {
+      "iban": "GB44RLKX50801437811075",
+      "item_desc": "Chef Wine Bottle Holder",
+      "item_qty": "4,00",
+      "item_net_price": "65,95",
+      "item_net_worth": "263,80",
+      "item_vat": "10%",
+      "item_gross_worth": "290,18"
+    },
+    {
+      "item_desc": "Leidenfcost Vineyards Stemware Wine Glass",
+      "item_qty": "5,00",
+      "item_net_price": "3,99",
+      "item_net_worth": "19,95",
+      "item_vat": "10%",
+      "item_gross_worth": "21,95"
+    },
+    {
+      "item_desc": "Hammered Brass Over Stainless steel Stemless Wine Glasses/ Candle Holders",
+      "item_qty": "1,00",
+      "item_net_price": "9,99",
+      "item_net_worth": "9,99",
+      "item_vat": "10%",
+      "item_gross_worth": "10,99"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 293,74",
+    "total_vat": "$29,37",
+    "total_gross_worth": "$ 323,11"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "25194747",
+    "invoice_date": "05/19/2018",
+    "seller": "Castillo-jones 396 Jones Shore Apt. 781 North Cynthiafurt, MS 28881",
+    "client": "Preston-Webster 2986 Weber Summit Markstad, MN 43966",
+    "seller_tax_id": "917-87-0923",
+    "client_tax_id": "944-70-8920",
+    "iban": "GB490ZCG79609103385168"
+  },
+  "items": [
+    {
+      "item_desc": "Cherokee Boys Grayton Skate Shoes 12 Surf Skate Casual 12K Black Extra Laces 12Y",
+      "item_qty": "3,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "59,97",
+      "item_vat": "10%",
+      "item_gross_worth": "65,97"
+    },
+    {
+      "item_desc": "jordan 4 kids Size 8",
+      "item_qty": "3,00",
+      "item_net_price": "23,00",
+      "item_net_worth": "69,00",
+      "item_vat": "10%",
+      "item_gross_worth": "75,90"
+    },
+    {
+      "item_desc": "Timberland brown slip on shoes size 4.5 juniors",
+      "item_qty": "5,00",
+      "item_net_price": "2,00",
+      "item_net_worth": "10,00",
+      "item_vat": "10%",
+      "item_gross_worth": "11,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 138,97",
+    "total_vat": "$ 13,90",
+    "total_gross_worth": "$ 152,87"
+  }
+}

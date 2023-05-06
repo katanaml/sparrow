@@ -1,0 +1,26 @@
+{
+  "header": {
+    "invoice_no": "57168813",
+    "invoice_date": "10/01/2017",
+    "seller": "Lee, Young and Krause 8648 Johnston Street Markmouth, CT 87013",
+    "client": "Oconnor Inc PSC 4579, Box 9565 APO AP 50180",
+    "seller_tax_id": "978-86-4132",
+    "client_tax_id": "942-86-7271",
+    "iban": "GB65HXDQ13046010291978"
+  },
+  "items": [
+    {
+      "item_desc": "Executive style",
+      "item_qty": "3,00",
+      "item_net_price": "5,99",
+      "item_net_worth": "17,97",
+      "item_vat": "10%",
+      "item_gross_worth": "19,77"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 17,97",
+    "total_vat": "$ 1,80",
+    "total_gross_worth": "$ 19,77"
+  }
+}

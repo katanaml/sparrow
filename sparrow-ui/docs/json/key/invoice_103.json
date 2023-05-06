@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "94689364",
+    "invoice_date": "01/12/2015",
+    "seller": "Schwartz, Flynn and Jackson 59888 Dawn Valley Suite 242 New Marilyn, WA 49740",
+    "client": "Wilson PLC 674 Leon Cape Suite 819 Burtonstad, NE 12662",
+    "seller_tax_id": "943-70-0376",
+    "client_tax_id": "963-73-0110",
+    "iban": "GB67GYBL21403855924419"
+  },
+  "items": [
+    {
+      "item_desc": "Yilong 5'x8' Handknotted Silk Area Rug Home Decor Kid Friendly Carpet L39B",
+      "item_qty": "4,00",
+      "item_net_price": "8000,00",
+      "item_net_worth": "32 000,00",
+      "item_vat": "10%",
+      "item_gross_worth": "35 200,00"
+    },
+    {
+      "item_desc": "Faux Fur Animal Print Hide Skin Rug Cowhide Area Rug Floor Mat Carpet 33.5\"X43\"",
+      "item_qty": "4,00",
+      "item_net_price": "26,03",
+      "item_net_worth": "104,12",
+      "item_vat": "10%",
+      "item_gross_worth": "114,53"
+    },
+    {
+      "item_desc": "Garden Flower Carpet Quilted Bedroom Floor Princess Tapis Lace Rug Carpets",
+      "item_qty": "5,00",
+      "item_net_price": "45,50",
+      "item_net_worth": "227,50",
+      "item_vat": "10%",
+      "item_gross_worth": "250,25"
+    },
+    {
+      "item_desc": "Double Dorje Carpet Tibetan Rug Handwoven by Artisans in Nepal",
+      "item_qty": "3,00",
+      "item_net_price": "297,00",
+      "item_net_worth": "891,00",
+      "item_vat": "10%",
+      "item_gross_worth": "980,10"
+    },
+    {
+      "item_desc": "Egg Bathroom Rug Carpet Area Rugs Rug Floor Mats Nordic Chic Room Decor",
+      "item_qty": "2,00",
+      "item_net_price": "68,10",
+      "item_net_worth": "136,20",
+      "item_vat": "10%",
+      "item_gross_worth": "149,82"
+    },
+    {
+      "item_desc": "Striped Contemporary Gabbeh Kashkoli Oriental Area Rug Handmade Wool Carpet 6x8",
+      "item_qty": "1,00",
+      "item_net_price": "417,24",
+      "item_net_worth": "417,24",
+      "item_vat": "10%",
+      "item_gross_worth": "458,96"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$33776,06",
+    "total_vat": "$3377,61",
+    "total_gross_worth": "$37 153,67"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "23004223",
+    "invoice_date": "03/05/2020",
+    "seller": "Jimenez, Hicks and Bailey 5634 Scott Garden Apt. 650 Susanchester, AR 02803",
+    "client": "Gomez Ltd 0883 Patrick Terrace Josehaven, GA 27723",
+    "seller_tax_id": "983-85-6695",
+    "client_tax_id": "991-90-4224",
+    "iban": "GB55XDOT36152114286113"
+  },
+  "items": [
+    {
+      "item_desc": "Admission Assessment Exam Review 4th Edition by HESI (P.D.F)",
+      "item_qty": "3,00",
+      "item_net_price": "2,50",
+      "item_net_worth": "7,50",
+      "item_vat": "10%",
+      "item_gross_worth": "8,25"
+    },
+    {
+      "item_desc": "The Theory of Social Revolutions by Brooks Adams (English) Paperback Book Free S",
+      "item_qty": "3,00",
+      "item_net_price": "16,99",
+      "item_net_worth": "50,97",
+      "item_vat": "10%",
+      "item_gross_worth": "56,07"
+    },
+    {
+      "item_desc": "All American History Vol 1 Student Reader",
+      "item_qty": "4,00",
+      "item_net_price": "9,99",
+      "item_net_worth": "39,96",
+      "item_vat": "10%",
+      "item_gross_worth": "43,96"
+    },
+    {
+      "item_desc": "Principles of Virology, 2 Volume Set (ASM Books)",
+      "item_qty": "2,00",
+      "item_net_price": "121,90",
+      "item_net_worth": "243,80",
+      "item_vat": "10%",
+      "item_gross_worth": "268,18"
+    },
+    {
+      "item_desc": "How to Repair Home Laundry Appliances",
+      "item_qty": "3,00",
+      "item_net_price": "12,46",
+      "item_net_worth": "37,38",
+      "item_vat": "10%",
+      "item_gross_worth": "41,12"
+    },
+    {
+      "item_desc": "Tales from the Buffalo Bills",
+      "item_qty": "3,00",
+      "item_net_price": "5,50",
+      "item_net_worth": "16,50",
+      "item_vat": "10%",
+      "item_gross_worth": "18,15"
+    },
+    {
+      "item_desc": "Philadelphia Museum of Art: Handbook of the Collec",
+      "item_qty": "3,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "13,47",
+      "item_vat": "10%",
+      "item_gross_worth": "14,82"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 409,58",
+    "total_vat": "$ 40,96",
+    "total_gross_worth": "$ 450,54"
+  }
+}

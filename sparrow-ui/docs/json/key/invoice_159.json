@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "99053443",
+    "invoice_date": "06/04/2019",
+    "seller": "Chavez, Morton and Gonzales PSC 9799, Box 3101 APO AA 71589",
+    "client": "Walters, Cantu and Duran 9356 Burnett Rest Apt. 035 Port Kennethmouth, NE 89318",
+    "seller_tax_id": "935-78-4545",
+    "client_tax_id": "911-94-2974",
+    "iban": "GB78Q5ZR27259773261475"
+  },
+  "items": [
+    {
+      "item_desc": "One Year through the Bible by David R. Veerman",
+      "item_qty": "5,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "22,45",
+      "item_vat": "10%",
+      "item_gross_worth": "24,70"
+    },
+    {
+      "item_desc": "A History of the Indians of the United States (The",
+      "item_qty": "1,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "4,49",
+      "item_vat": "10%",
+      "item_gross_worth": "4,94"
+    },
+    {
+      "item_desc": "Game of Thrones: The Poster Collection (Paperback or Softback)",
+      "item_qty": "5,00",
+      "item_net_price": "20,87",
+      "item_net_worth": "104,35",
+      "item_vat": "10%",
+      "item_gross_worth": "114,79"
+    },
+    {
+      "item_desc": "In the Footsteps of the Russian Snowman (Paperback or Softback)",
+      "item_qty": "3,00",
+      "item_net_price": "25,87",
+      "item_net_worth": "77,61",
+      "item_vat": "10%",
+      "item_gross_worth": "85,37"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 208,90",
+    "total_vat": "$20,89",
+    "total_gross_worth": "$ 229,79"
+  }
+}

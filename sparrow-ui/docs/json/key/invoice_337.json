@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "78873710",
+    "invoice_date": "12/14/2015",
+    "seller": "Weber-Wagner 8833 Moore Unions South Shawnburgh, ID 35022",
+    "client": "Barry, Patterson and Greer 08677 Robertson Passage South Kirkborough, DE 67708",
+    "seller_tax_id": "991-73-5816",
+    "client_tax_id": "982-86-6288",
+    "iban": "GB96CIPM88765783798943"
+  },
+  "items": [
+    {
+      "item_desc": "6'x3' White Marble Dining Center Table Top Bird Inlay Arts Hallway Decor E360",
+      "item_qty": "1,00",
+      "item_net_price": "5594,89",
+      "item_net_worth": "5594,89",
+      "item_vat": "10%",
+      "item_gross_worth": "6154,38"
+    },
+    {
+      "item_desc": "7'x4' Black Marble Pietra dura Dining Table Top Furniture Inlay Patio Decor",
+      "item_qty": "3,00",
+      "item_net_price": "9649,72",
+      "item_net_worth": "28949,16",
+      "item_vat": "10%",
+      "item_gross_worth": "31 844,08"
+    },
+    {
+      "item_desc": "Vintage Art from India Marble Dinning Table Top Round Hallway Table 50 Inches",
+      "item_qty": "1,00",
+      "item_net_price": "3000,00",
+      "item_net_worth": "3 000,00",
+      "item_vat": "10%",
+      "item_gross_worth": "3 300,00"
+    },
+    {
+      "item_desc": "Moves Furniture Tool Transport Shifter Moving Wheel Slider Remover Roller Heavy",
+      "item_qty": "1,00",
+      "item_net_price": "7,60",
+      "item_net_worth": "7,60",
+      "item_vat": "10%",
+      "item_gross_worth": "8,36"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$37551,65",
+    "total_vat": "$3755,16",
+    "total_gross_worth": "$41306,81"
+  }
+}

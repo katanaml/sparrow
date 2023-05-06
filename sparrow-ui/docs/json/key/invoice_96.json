@@ -1,0 +1,58 @@
+{
+  "header": {
+    "invoice_no": "12681565",
+    "invoice_date": "09/07/2015",
+    "seller": "Clay-Koch 2467 John Knolls Apt. 099 Markside, MT 79068",
+    "client": "Thompson-Baker USNV Kennedy FPO AA 01185",
+    "seller_tax_id": "915-72-3800",
+    "client_tax_id": "971-96-6933",
+    "iban": "GB201FBT89821062114124"
+  },
+  "items": [
+    {
+      "item_desc": "N64 Nintendo System Console Lot Bundle W/ 2 Games 1 Controller Tested Working",
+      "item_qty": "5,00",
+      "item_net_price": "95,99",
+      "item_net_worth": "479,95",
+      "item_vat": "10%",
+      "item_gross_worth": "527,95"
+    },
+    {
+      "item_desc": "Original Nintendo Gaming Console with Robot, 9 games & extras",
+      "item_qty": "5,00",
+      "item_net_price": "475,00",
+      "item_net_worth": "2375,00",
+      "item_vat": "10%",
+      "item_gross_worth": "2 612,50"
+    },
+    {
+      "item_desc": "Nintendo BLUE Wii System Game Console Complete with 2 Motion Remotes Tested Work",
+      "item_qty": "2,00",
+      "item_net_price": "99,98",
+      "item_net_worth": "199,96",
+      "item_vat": "10%",
+      "item_gross_worth": "219,96"
+    },
+    {
+      "item_desc": "Nintendo Gameboy Pocket Console Clear Purple with Box MGB-001 Japan Tested 53",
+      "item_qty": "4,00",
+      "item_net_price": "85,00",
+      "item_net_worth": "340,00",
+      "item_vat": "10%",
+      "item_gross_worth": "374,00"
+    },
+    {
+      "item_desc": "Playstation 2 Slim console white SCPH-90000 boxed Japan PS2",
+      "item_qty": "3,00",
+      "item_net_price": "199,00",
+      "item_net_worth": "597,00",
+      "item_vat": "10%",
+      "item_gross_worth": "656,70"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$3991,91",
+    "total_vat": "$ 399,19",
+    "total_gross_worth": "$4391,10"
+  }
+}

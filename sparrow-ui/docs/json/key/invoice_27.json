@@ -1,0 +1,49 @@
+{
+  "header": {
+    "invoice_no": "93281048",
+    "invoice_date": "11/27/2017",
+    "seller": "Reilly, Hicks and Hughes 0413 Joe Ford Goodwinchester, AZ 52058",
+    "client": "Benson, Medina and Hamilton 46561 Charles Groves Blackmouth, ME 72341",
+    "seller_tax_id": "955-92-1246",
+    "client_tax_id": "912-87-0223",
+    "iban": "GB81DFM/63938748923911"
+  },
+  "items": [
+    {
+      "item_desc": "Vintage Art from India Marble Dinning Table Top Round Hallway Table 50 Inches",
+      "item_qty": "3,00",
+      "item_net_price": "3000,00",
+      "item_net_worth": "9000,00",
+      "item_vat": "10%",
+      "item_gross_worth": "9900,00"
+    },
+    {
+      "item_desc": "12\" Marble Side Coffee Table Top Multi Stone Floral Inlay Occasional Decor W260",
+      "item_qty": "1,00",
+      "item_net_price": "259,77",
+      "item_net_worth": "259,77",
+      "item_vat": "10%",
+      "item_gross_worth": "285,75"
+    },
+    {
+      "item_desc": "7'x4' Buy Marble Dining Table With Black Top Marquetry Inlay Hallway Decor E944",
+      "item_qty": "2,00",
+      "item_net_price": "14 721,08",
+      "item_net_worth": "29442,16",
+      "item_vat": "10%",
+      "item_gross_worth": "32 386,38"
+    },
+    {
+      "item_desc": "Real Madrid Inflatable Chair (SG16136)",
+      "item_qty": "2,00",
+      "item_net_price": "43,95",
+      "item_net_worth": "87,90",
+      "item_vat": "10%",
+      "item_gross_worth": "96,69"
+    }
+  ],
+  "summary": {
+    "total_vat": "$3878,98",
+    "total_gross_worth": "$42668,81"
+  }
+}

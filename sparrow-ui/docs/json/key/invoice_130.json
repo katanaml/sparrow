@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "13194726",
+    "invoice_date": "05/29/2021",
+    "seller": "Hopkins and Sons 62283 Flores Tunnel North Luis, IA 69983",
+    "client": "Sims PLC USS Kramer FPO AA 81651",
+    "seller_tax_id": "952-73-7223",
+    "client_tax_id": "995-88-9495",
+    "iban": "GB31LZX520242755934691"
+  },
+  "items": [
+    {
+      "item_desc": "Beach Lunch Lounge Striped Shirt Dress Large Navy Blue White Long Sleeve Causal",
+      "item_qty": "1,00",
+      "item_net_price": "16,99",
+      "item_net_worth": "16,99",
+      "item_vat": "10%",
+      "item_gross_worth": "18,69"
+    },
+    {
+      "item_desc": "Jams World Hawaiian 0 Dress Rayon SZ.L",
+      "item_qty": "5,00",
+      "item_net_price": "65,00",
+      "item_net_worth": "325,00",
+      "item_vat": "10%",
+      "item_gross_worth": "357,50"
+    },
+    {
+      "item_desc": "LuLaRoe Nicole Dress Size Large 26",
+      "item_qty": "2,00",
+      "item_net_price": "1,99",
+      "item_net_worth": "3,98",
+      "item_vat": "10%",
+      "item_gross_worth": "4,38"
+    },
+    {
+      "item_desc": "Johnny Was Medium Linen Wrap Dress Dessert Rose Embroiderd Bohemian",
+      "item_qty": "2,00",
+      "item_net_price": "89,99",
+      "item_net_worth": "179,98",
+      "item_vat": "10%",
+      "item_gross_worth": "197,98"
+    },
+    {
+      "item_desc": "Eileen Fisher Women's Long Sleeve Fleece Lined Front Pockets Dress XS Gray",
+      "item_qty": "2,00",
+      "item_net_price": "15,99",
+      "item_net_worth": "31,98",
+      "item_vat": "10%",
+      "item_gross_worth": "35,18"
+    },
+    {
+      "item_desc": "Hanna Anderson Women's L Large Coral Short Sleeve Casual Fall Tee Shirt Dress",
+      "item_qty": "1,00",
+      "item_net_price": "24,00",
+      "item_net_worth": "24,00",
+      "item_vat": "10%",
+      "item_gross_worth": "26,40"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$581,93",
+    "total_vat": "$58,19",
+    "total_gross_worth": "$ 640,12"
+  }
+}

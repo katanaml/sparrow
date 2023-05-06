@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "84777898",
+    "invoice_date": "06/02/2017",
+    "seller": "Byrd PLC 5954 Stewart Isle Suite 748 South Sarahshire, DC 77638",
+    "client": "Palmer LLC 321 Sarah Forge North Elizabeth, KY 13557",
+    "seller_tax_id": "991-72-8541",
+    "client_tax_id": "947-73-4805",
+    "iban": "GB55NFWY80188862802477"
+  },
+  "items": [
+    {
+      "item_desc": "Vintage Cobalt Blue Spiral Stemmed Wine Glasses Pair",
+      "item_qty": "1,00",
+      "item_net_price": "30,00",
+      "item_net_worth": "30,00",
+      "item_vat": "10%",
+      "item_gross_worth": "33,00"
+    },
+    {
+      "item_desc": "1PC Tricycle Shape Red Wine Rack Cocktail Holder Wine Display Rack for Home Bar",
+      "item_qty": "5,00",
+      "item_net_price": "32,13",
+      "item_net_worth": "160,65",
+      "item_vat": "10%",
+      "item_gross_worth": "176,72"
+    },
+    {
+      "item_desc": "Wine Glass European Style Wine Glass Rack for Home Kitchen Bar Restaurant",
+      "item_qty": "3,00",
+      "item_net_price": "31,79",
+      "item_net_worth": "95,37",
+      "item_vat": "10%",
+      "item_gross_worth": "104,91"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 286,02",
+    "total_vat": "$28,60",
+    "total_gross_worth": "$ 314,62"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "header": {
+    "invoice_no": "63665479",
+    "invoice_date": "02/12/2017",
+    "seller": "Lowery LLC 90317 Michael Flats Suite 502 East Lisaville, DC 67918",
+    "client": "Carrillo-Montoya 089 Adam Knolls Apt. 628 Andreaside, UT 62682",
+    "seller_tax_id": "974-85-9317",
+    "client_tax_id": "918-91-3132",
+    "iban": "GB08JPBK40228601332306"
+  },
+  "items": [
+    {
+      "item_desc": "Vince Camuto Sweater Dress Size Medium Striped Long Sleeve",
+      "item_qty": "5,00",
+      "item_net_price": "32,00",
+      "item_net_worth": "160,00",
+      "item_vat": "10%",
+      "item_gross_worth": "176,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 160,00",
+    "total_vat": "$ 16,00",
+    "total_gross_worth": "$ 176,00"
+  }
+}

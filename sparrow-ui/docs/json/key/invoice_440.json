@@ -1,0 +1,65 @@
+{
+  "header": {
+    "invoice_no": "17545286",
+    "invoice_date": "03/23/2012",
+    "seller": "Obrien Group 1710 Thomas Tunnel Suite 214 Cassandramouth, DE 17634",
+    "seller_tax_id": "996-77-8256",
+    "client_tax_id": "953-80-0773",
+    "iban": "GB64VYG558376037517051"
+  },
+  "items": [
+    {
+      "item_desc": "Nordic Braided Tassels Sofa Rugs Area Rug Soft Mat Palm Leaves Room Carpet",
+      "item_qty": "4,00",
+      "item_net_price": "186,54",
+      "item_net_worth": "746,16",
+      "item_vat": "10%",
+      "item_gross_worth": "820,78"
+    },
+    {
+      "item_desc": "YILONG 6.56'x9.84\" Blue Handknotted Silk Carpet Easy to Clean Indoor Rug YWX137A",
+      "item_qty": "2,00",
+      "item_net_price": "4 800,00",
+      "item_net_worth": "9 600,00",
+      "item_vat": "10%",
+      "item_gross_worth": "10 560,00"
+    },
+    {
+      "item_desc": "6'8 X 5' Handwoven Afghan Kilim Wool Area Rug Kelim Tapis Oriental Carpet #4434",
+      "item_qty": "4,00",
+      "item_net_price": "259,00",
+      "item_net_worth": "1036,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1 139,60"
+    },
+    {
+      "item_desc": "Carton Tiger Print Area Rug Faux Skin Rug Hide Cute Carpet Floor Mat Home Decor",
+      "item_qty": "5,00",
+      "item_net_price": "10,99",
+      "item_net_worth": "54,95",
+      "item_vat": "10%",
+      "item_gross_worth": "60,45"
+    },
+    {
+      "item_desc": "Sheepskin Shaggy Faux Fur Silky Plush Soft Fabric Rectangular Rug Doormat Carpet",
+      "item_qty": "2,00",
+      "item_net_price": "8,99",
+      "item_net_worth": "17,98",
+      "item_vat": "10%",
+      "item_gross_worth": "19,78"
+    },
+    {
+      "item_desc": "YILONG 4'x6' Golden Antique Handmade Silk Area Rugs Home Furniture Carpet 087B",
+      "item_qty": "5,00",
+      "item_net_price": "4800,00",
+      "item_net_worth": "24000,00",
+      "item_vat": "10%",
+      "item_gross_worth": "26 400,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$35455,09",
+    "total_vat": "$3545,51",
+    "total_gross_worth": "$39000,60"
+  }
+}

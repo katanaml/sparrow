@@ -1,0 +1,32 @@
+{
+  "header": {
+    "invoice_no": "72677375",
+    "invoice_date": "08/04/2013",
+    "seller": "Potter, Jackson and Brooks USNV Allen FPO AE 09643",
+    "client": "Gonzalez-Stephens 480 Johnson Underpass Stephanieborough, MN 40920",
+    "seller_tax_id": "941-90-0647",
+    "client_tax_id": "929-94-0157",
+    "iban": "GB57LPB27874128237321"
+  },
+  "items": [
+    {
+      "item_desc": "Nintendo GameCube Console DOL-001 Black w/ Controller, Power, A/V,",
+      "item_qty": "5,00",
+      "item_net_price": "399,95",
+      "item_vat": "10%",
+      "item_gross_worth": "439,95"
+    },
+    {
+      "item_desc": "Super Nintendo Entertainment System SNES Console w/Power Video FAST FREE SHIP->",
+      "item_qty": "1,00",
+      "item_net_worth": "80,00",
+      "item_vat": "10%",
+      "item_gross_worth": "88,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$479,95",
+    "total_vat": "$48,00",
+    "total_gross_worth": "$ 527,95"
+  }
+}

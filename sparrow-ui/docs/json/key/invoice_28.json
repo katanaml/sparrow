@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "89174655",
+    "invoice_date": "01/19/2016",
+    "seller": "Hayden-Young 5394 David Motorway Apt. 573 South Amandaville, NV 46198",
+    "client": "Guerrero Group 53693 Donna Neck Brownburgh, OH 92017",
+    "seller_tax_id": "911-87-3432",
+    "client_tax_id": "970-77-2494",
+    "iban": "GB89RLS95828897014080"
+  },
+  "items": [
+    {
+      "item_desc": "The Great One: The Complete Wayne Gretzky Collection",
+      "item_qty": "2,00",
+      "item_net_price": "4,89",
+      "item_net_worth": "9,78",
+      "item_vat": "10%",
+      "item_gross_worth": "10,76"
+    },
+    {
+      "item_desc": "Care & Repair of Furniture",
+      "item_qty": "1,00",
+      "item_net_price": "4,25",
+      "item_net_worth": "4,25",
+      "item_vat": "10%",
+      "item_gross_worth": "4,68"
+    },
+    {
+      "item_desc": "The Puzzle Palace",
+      "item_qty": "4,00",
+      "item_net_price": "4,49",
+      "item_net_worth": "17,96",
+      "item_vat": "10%",
+      "item_gross_worth": "19,76"
+    },
+    {
+      "item_desc": "Pictures From a Distant Country: Seeing America Through Old Paper Money",
+      "item_qty": "5,00",
+      "item_net_price": "13,84",
+      "item_net_worth": "69,20",
+      "item_vat": "10%",
+      "item_gross_worth": "76,12"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$101,19",
+    "total_vat": "$10,12",
+    "total_gross_worth": "$ 111,31"
+  }
+}

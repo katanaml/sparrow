@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "67113656",
+    "invoice_date": "09/07/2015",
+    "seller": "Henson-Cross 447 Mary Stream Suite 379 North Morgan, NH 41083",
+    "client": "Murray, Mckinney and Hayes 50944 Klein Glens Port Angela, RI 09065",
+    "seller_tax_id": "905-78-6417",
+    "client_tax_id": "981-78-3375",
+    "iban": "GB44NUOR48401692106635"
+  },
+  "items": [
+    {
+      "item_desc": "Nintendo 64 N64 Console Complete in Box Mint Beautiful! From Japan!",
+      "item_qty": "5,00",
+      "item_net_price": "269,99",
+      "item_net_worth": "1349,95",
+      "item_vat": "10%",
+      "item_gross_worth": "1 484,95"
+    },
+    {
+      "item_desc": "Nintendo Switch Lite Yellow CONSOLE ONLY No Accessories or Charger [B1-1]",
+      "item_qty": "2,00",
+      "item_net_price": "135,00",
+      "item_net_worth": "270,00",
+      "item_vat": "10%",
+      "item_gross_worth": "297,00"
+    },
+    {
+      "item_desc": "Xbox 360 console with games",
+      "item_qty": "2,00",
+      "item_net_price": "41,00",
+      "item_net_worth": "82,00",
+      "item_vat": "10%",
+      "item_gross_worth": "90,20"
+    },
+    {
+      "item_desc": "PS5- PlayStation 5 Console Disc Version **Confirmed PREORDER**",
+      "item_qty": "1,00",
+      "item_net_price": "820,00",
+      "item_net_worth": "820,00",
+      "item_vat": "10%",
+      "item_gross_worth": "902,00"
+    },
+    {
+      "item_desc": "Nintendo 64 Console W/ Oem Controller Ice Blue, Expansion Pack",
+      "item_qty": "1,00",
+      "item_net_price": "120,00",
+      "item_net_worth": "120,00",
+      "item_vat": "10%",
+      "item_gross_worth": "132,00"
+    },
+    {
+      "item_desc": "Original Nintendo Gaming Console with Robot, 9 games & extras",
+      "item_qty": "1,00",
+      "item_net_price": "475,00",
+      "item_net_worth": "475,00",
+      "item_vat": "10%",
+      "item_gross_worth": "522,50"
+    },
+    {
+      "item_desc": "PS4 PlayStation 4 500GB Console CUH-1115A Bundle, 1 Controller, 8 Games",
+      "item_qty": "3,00",
+      "item_net_price": "349,99",
+      "item_net_worth": "1049,97",
+      "item_vat": "10%",
+      "item_gross_worth": "1154,97"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$4 166,92",
+    "total_vat": "$ 416,69",
+    "total_gross_worth": "$4583,61"
+  }
+}

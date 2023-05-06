@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "29378439",
+    "invoice_date": "09/16/2011",
+    "seller": "Andrade-Bennett 54803 Reginald Run Apt. 776 Garciaville, MI 49875",
+    "client": "Robinson, Brown and Oliver 47770 Osborne Roads Apt. 099 Gallegosfurt, IN 80790",
+    "seller_tax_id": "959-86-0320",
+    "client_tax_id": "913-71-4613",
+    "iban": "GB79DVQP67594826429760"
+  },
+  "items": [
+    {
+      "item_desc": "Nike Air Force 1 Low 314192-117 Triple White Youth Boys Size 5Y",
+      "item_qty": "4,00",
+      "item_net_price": "54,95",
+      "item_net_worth": "219,80",
+      "iban": "10%",
+      "item_gross_worth": "241,78"
+    },
+    {
+      "item_desc": "The Children's Place Brown Dress Boy Lace Up Shoes Size 12",
+      "item_qty": "1,00",
+      "item_net_price": "8,00",
+      "item_net_worth": "8,00",
+      "iban": "10%",
+      "item_gross_worth": "8,80"
+    },
+    {
+      "item_desc": "Saucony Boys' Ride ISO Sneaker, White/Blue/izi Red, 7 MU US Little Kid",
+      "item_qty": "1,00",
+      "item_net_price": "27,99",
+      "item_net_worth": "27,99",
+      "iban": "10%",
+      "item_gross_worth": "30,79"
+    },
+    {
+      "item_desc": "Cherokee Boys Grayton Skate Shoes 12 Surf Skate Casual 12K Black Extra Laces 12Y",
+      "item_qty": "3,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "59,97",
+      "iban": "10%",
+      "item_gross_worth": "65,97"
+    },
+    {
+      "item_desc": "boys bogs waterproof boots youth size 3",
+      "item_qty": "1,00",
+      "item_net_price": "9,80",
+      "item_net_worth": "9,80",
+      "iban": "10%",
+      "item_gross_worth": "10,78"
+    },
+    {
+      "item_desc": "Skechers Shoes Kids Size 2",
+      "item_qty": "3,00",
+      "item_net_price": "10,00",
+      "item_net_worth": "30,00",
+      "iban": "10%",
+      "item_gross_worth": "33,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 355,56",
+    "total_vat": "$35,56",
+    "total_gross_worth": "$ 391,12"
+  }
+}

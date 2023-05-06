@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "65321852",
+    "invoice_date": "04/11/2021",
+    "seller": "Kaufman, Cooper and Young 33451 Johnson Lake New Ann, NE 54138",
+    "client": "Wells-Carlson 148 Carroll Village Suite 393 South Allisonstad, TX 72090",
+    "seller_tax_id": "930-79-7845",
+    "client_tax_id": "957-82-7504",
+    "iban": "GB85XPMM58300597200061"
+  },
+  "items": [
+    {
+      "item_desc": "New KID CUDI \"WZRD\" Rap Hip Hop Soul Music Men's Black T-Shirt Size S to 3XL",
+      "item_qty": "2,00",
+      "item_net_price": "22,49",
+      "item_net_worth": "44,98",
+      "item_vat": "10%",
+      "item_gross_worth": "49,48"
+    },
+    {
+      "item_desc": "boys bogs waterproof boots youth size 3",
+      "item_qty": "1,00",
+      "item_net_price": "9,80",
+      "item_net_worth": "9,80",
+      "item_vat": "10%",
+      "item_gross_worth": "10,78"
+    },
+    {
+      "item_desc": "Joma Boys Youth Gol-102 Soccer Cleats Shoes Size 3.5 White Red Futbol NEW",
+      "item_qty": "2,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "39,98",
+      "item_vat": "10%",
+      "item_gross_worth": "43,98"
+    },
+    {
+      "item_desc": "Nike Oncore High Jr 6.0 (Kids) Size 4Y Black, Red, White",
+      "item_qty": "4,00",
+      "item_net_price": "25,00",
+      "item_net_worth": "100,00",
+      "item_vat": "10%",
+      "item_gross_worth": "110,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 194,76",
+    "total_vat": "$ 19,48",
+    "total_gross_worth": "$ 214,24"
+  }
+}

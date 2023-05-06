@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "19537372",
+    "invoice_date": "07/28/2012",
+    "seller": "Richardson LLC 97614 Timothy Plaza Mooreview, FL 34546",
+    "client": "Rodriguez Ltd 50515 Jones Key Suite 674 South Cameron, MO 61064",
+    "seller_tax_id": "926-86-4853",
+    "client_tax_id": "979-85-9143",
+    "iban": "GB98XJGI18168385269805"
+  },
+  "items": [
+    {
+      "item_desc": "Custom Built Windows 98 Retro Gaming Industrial PC Computer P2B Montego II 5GB",
+      "item_qty": "2,00",
+      "item_net_price": "409,99",
+      "item_net_worth": "819,98",
+      "item_vat": "10%",
+      "item_gross_worth": "901,98"
+    },
+    {
+      "item_desc": "HP Pro 3500 Microtower Desktop Computer 3.4GHz i3 4GB 500GB Windows 10 Pro",
+      "item_qty": "2,00",
+      "item_net_price": "74,99",
+      "item_net_worth": "149,98",
+      "item_vat": "10%",
+      "item_gross_worth": "164,98"
+    },
+    {
+      "item_desc": "HP XW9400 AMD Dual Core 2216 2.6GHz /8GB/250GB/ PC Computer/ Desktop",
+      "item_qty": "3,00",
+      "item_net_price": "225,00",
+      "item_net_worth": "675,00",
+      "item_vat": "10%",
+      "item_gross_worth": "742,50"
+    },
+    {
+      "item_desc": "Alarco Gaming PC Desktop ComputerIntel i5 8GITENOMF.NVDA GTX 6501GB",
+      "item_qty": "1,00",
+      "item_net_price": "500,00",
+      "item_net_worth": "500,00",
+      "item_vat": "10%",
+      "item_gross_worth": "550,00"
+    },
+    {
+      "item_desc": "Dell Optiplex Windows 10 Pro Desktop Computer PC i5 4th Gen 3.2GHz 8 GB 2 TB HDD",
+      "item_qty": "2,00",
+      "item_net_price": "149,95",
+      "item_net_worth": "299,90",
+      "item_vat": "10%",
+      "item_gross_worth": "329,89"
+    },
+    {
+      "item_desc": "Dell Optiplex All in One Windows 10 Desktop Computer 780 3.0GHZ 4GB 250GB 19 LCD",
+      "item_qty": "1,00",
+      "item_net_price": "129,99",
+      "item_net_worth": "129,99",
+      "item_vat": "10%",
+      "item_gross_worth": "142,99"
+    },
+    {
+      "item_desc": "Desktop Computer Gaming PC Build Your Own Ryzen 3000G 3200G 3.5Ghz+ Vega or GTX",
+      "item_qty": "5,00",
+      "item_net_price": "579,00",
+      "item_net_worth": "2 895,00",
+      "item_vat": "10%",
+      "item_gross_worth": "3 184,50"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$5469,85",
+    "total_vat": "$ 546,99",
+    "total_gross_worth": "$6016,84"
+  }
+}

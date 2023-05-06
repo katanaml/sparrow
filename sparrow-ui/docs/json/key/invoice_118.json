@@ -1,0 +1,58 @@
+{
+  "header": {
+    "invoice_no": "51686132",
+    "invoice_date": "06/27/2015",
+    "seller": "Stephens PLC PSC 4501, Box 4964 APO AA 03160",
+    "client": "White, Blevins and Ellis Unit 7297 Box 4160 DPO AP 42542",
+    "seller_tax_id": "953-96-5860",
+    "client_tax_id": "990-87-4012",
+    "iban": "GB67D5XM44548665165041"
+  },
+  "items": [
+    {
+      "item_desc": "Nintendo Switch Lite Console Gray with Animal Crossing New Horizons Game",
+      "item_qty": "3,00",
+      "item_net_price": "310,00",
+      "item_net_worth": "930,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1023,00"
+    },
+    {
+      "item_desc": "Nintendo Wii U Console Deluxe/Handheld Bundle",
+      "item_qty": "1,00",
+      "item_net_price": "79,99",
+      "item_net_worth": "79,99",
+      "item_vat": "10%",
+      "item_gross_worth": "87,99"
+    },
+    {
+      "item_desc": "Nintendo Wii U WUP-101(02) 32GB Console Black US Model",
+      "item_qty": "3,00",
+      "item_net_price": "40,00",
+      "item_net_worth": "120,00",
+      "item_vat": "10%",
+      "item_gross_worth": "132,00"
+    },
+    {
+      "item_desc": "Nintendo Wii Console With Cables And Accessories And New Super Mario Bros Disc!",
+      "item_qty": "4,00",
+      "item_net_price": "29,99",
+      "item_net_worth": "119,96",
+      "item_vat": "10%",
+      "item_gross_worth": "131,96"
+    },
+    {
+      "item_desc": "Nintendo Switch Lite Yellow CONSOLE ONLY No Accessories or Charger [B1-2]",
+      "item_qty": "1,00",
+      "item_net_price": "135,00",
+      "item_net_worth": "135,00",
+      "item_vat": "10%",
+      "item_gross_worth": "148,50"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$1384,95",
+    "total_vat": "$ 138,50",
+    "total_gross_worth": "$1523,45"
+  }
+}

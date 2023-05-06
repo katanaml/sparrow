@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "54445950",
+    "invoice_date": "05/15/2019",
+    "seller": "Coffey Ltd 8273 Cooper Pike Jacobsonchester, CA 65720",
+    "client": "Johnston, Crosby and Alexander 26453 Santos Brooks Kennethburgh, RI 28039",
+    "seller_tax_id": "919-79-1161",
+    "client_tax_id": "933-77-2646",
+    "iban": "GB49UNPR87058363380300"
+  },
+  "items": [
+    {
+      "item_desc": "15\"x15\" White Marble Chess Top Table Carnelian Inlay Art Black Friday Gift Deco",
+      "item_qty": "2,00",
+      "item_net_price": "600,00",
+      "item_net_worth": "1200,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1320,00"
+    },
+    {
+      "item_desc": "18\" Marble White Top Chess Table Handmade Collectible Black Friday Gift D\u00e9cor",
+      "item_qty": "5,00",
+      "item_net_price": "561,00",
+      "item_net_worth": "2805,00",
+      "item_vat": "10%",
+      "item_gross_worth": "3 085,50"
+    },
+    {
+      "item_desc": "SOFA SET",
+      "item_qty": "3,00",
+      "item_net_price": "250,00",
+      "item_net_worth": "750,00",
+      "item_vat": "10%",
+      "item_gross_worth": "825,00"
+    },
+    {
+      "item_desc": "30 Inches Marble Island Table Top Elephant Design Coffee Table with Multi Stones",
+      "item_qty": "3,00",
+      "item_net_price": "1 199,25",
+      "item_net_worth": "3597,75",
+      "item_vat": "10%",
+      "item_gross_worth": "3 957,53"
+    },
+    {
+      "item_desc": "6'x3' Marvelous Marble Dining Outdoor Table Top Inlay Marquetry Design Art E842B",
+      "item_qty": "2,00",
+      "item_net_price": "5588,90",
+      "item_net_worth": "11 177,80",
+      "item_vat": "10%",
+      "item_gross_worth": "12 295,58"
+    },
+    {
+      "item_desc": "18\"x18\" White Hand Curved Top Coffee Table Inlay Decorative Gift For Her Wedding",
+      "item_qty": "5,00",
+      "item_net_price": "475,22",
+      "item_net_worth": "2376,10",
+      "item_vat": "10%",
+      "item_gross_worth": "2613,71"
+    },
+    {
+      "item_desc": "6'x3' Multi Pietra Dura Design Marble Dining Room Table Top Furniture Decor E764",
+      "item_qty": "5,00",
+      "item_net_price": "5355,17",
+      "item_net_worth": "26775,85",
+      "item_vat": "10%",
+      "item_gross_worth": "29453,44"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$48 682,50",
+    "total_vat": "$4868,25",
+    "total_gross_worth": "$53 550,75"
+  }
+}

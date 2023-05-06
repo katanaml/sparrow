@@ -1,0 +1,66 @@
+{
+  "header": {
+    "invoice_no": "72455228",
+    "invoice_date": "05/11/2021",
+    "seller": "Potts, Reed and Miller USCGC Weeks FPO AA 06868",
+    "client": "Brady LLC 26039 Anita Stravenue North Peter, WA 22187",
+    "seller_tax_id": "913-82-5781",
+    "client_tax_id": "953-75-0545",
+    "iban": "GB54RDGK95400103726634"
+  },
+  "items": [
+    {
+      "item_desc": "PlayStation 5 Console Disc Version PREORDER\"00OO",
+      "item_qty": "1,00",
+      "item_net_price": "899,99",
+      "item_net_worth": "899,99",
+      "item_vat": "10%",
+      "item_gross_worth": "989,99"
+    },
+    {
+      "item_desc": "Sony PlayStation 4 Slim 1TB (Upgraded to SSD) Black Game Console",
+      "item_qty": "2,00",
+      "item_net_price": "150,00",
+      "item_net_worth": "300,00",
+      "item_vat": "10%",
+      "item_gross_worth": "330,00"
+    },
+    {
+      "item_desc": "Nintendo Gameboy Pocket Console Clear Purple with Box MGB-001 Japan Tested 53",
+      "item_qty": "1,00",
+      "item_net_price": "85,00",
+      "item_net_worth": "85,00",
+      "item_vat": "10%",
+      "item_gross_worth": "93,50"
+    },
+    {
+      "item_desc": "NEC PC Engine INTERFACE UNIT IFU-30 CD ROM Console PI-TG001 Tested Japan",
+      "item_qty": "1,00",
+      "item_net_price": "159,99",
+      "item_net_worth": "159,99",
+      "item_vat": "10%",
+      "item_gross_worth": "175,99"
+    },
+    {
+      "item_desc": "SONY Playstation2 Slim Console set \" SCPH-90000 / White \"I TESTED Working 11194",
+      "item_qty": "4,00",
+      "item_net_price": "90,00",
+      "item_net_worth": "360,00",
+      "item_vat": "10%",
+      "item_gross_worth": "396,00"
+    },
+    {
+      "item_desc": "Magnavox Odyssey 2 Microprocessor Console System w Joy Sticks & 15 Games - 1978",
+      "item_qty": "1,00",
+      "item_net_price": "155,00",
+      "item_net_worth": "155,00",
+      "item_vat": "10%",
+      "item_gross_worth": "170,50"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$1959,98",
+    "total_vat": "$ 196,00",
+    "total_gross_worth": "$2155,98"
+  }
+}

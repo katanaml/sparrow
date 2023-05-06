@@ -1,0 +1,18 @@
+{
+  "invoice_no": "37107781",
+  "invoice_date": "07/29/2012",
+  "seller": "Williamson-Hernandez 68869 Jones Port Suite 113 Parksstad, NM 27564",
+  "client": "Lee-Burnett 20130 Jessica Track Apt. 223 Weberhaven, CO 86898",
+  "seller_tax_id": "946-73-8252",
+  "client_tax_id": "994-84-0379",
+  "iban": "GB30TGFD70872253743837",
+  "item_desc": "GAMING PC Desktop Computer RGB BUNDLE Intel CORE i7 16GB RAM Nvidia GTX 1650 1TB",
+  "item_qty": "4,00",
+  "item_net_price": "569,99",
+  "item_net_worth": "2279,96",
+  "item_vat": "10%",
+  "item_gross_worth": "2 507,96",
+  "total_net_worth": "$2549,93",
+  "total_vat": "$ 254,99",
+  "total_gross_worth": "$2804,92"
+}

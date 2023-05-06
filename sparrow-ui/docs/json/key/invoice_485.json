@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "98852451",
+    "invoice_date": "09/02/2019",
+    "seller": "Peterson LLC USS Daniels FPO AP 91825",
+    "client": "Patterson, Pierce and Fuentes 79040 Anderson Fort Michaelport, SD 42110",
+    "seller_tax_id": "979-97-7990",
+    "client_tax_id": "932-87-9276",
+    "iban": "GB94KFMA16445522709946"
+  },
+  "items": [
+    {
+      "item_desc": "New Design Rectangular Hand Woven Chindi Rag Rug Floor Handmade Carpet Aztec Mat",
+      "item_qty": "1,00",
+      "item_net_price": "29,99",
+      "item_net_worth": "29,99",
+      "item_vat": "10%",
+      "item_gross_worth": "32,99"
+    },
+    {
+      "item_desc": "Bedroom Decor Carpets Living Room Line Pattern Green Rug Modern Simple Area Rugs",
+      "item_qty": "1,00",
+      "item_net_price": "33,86",
+      "item_net_worth": "33,86",
+      "item_vat": "10%",
+      "item_gross_worth": "37,25"
+    },
+    {
+      "item_desc": "YILONG 2.5'x4' Small Hand Knotted Silk Carpets Antistatic Floor Area Rug 844B",
+      "item_qty": "1,00",
+      "item_net_price": "2000,00",
+      "item_net_worth": "2 000,00",
+      "item_vat": "10%",
+      "item_gross_worth": "2 200,00"
+    },
+    {
+      "item_desc": "Moroccan Amazigh Handmade Carpet 14'2\" x 7'5\"",
+      "item_qty": "5,00",
+      "item_net_price": "342,00",
+      "item_net_worth": "1710,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1881,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$3773,85",
+    "total_vat": "$ 377,38",
+    "total_gross_worth": "$4151,23"
+  }
+}

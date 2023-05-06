@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "42781500",
+    "invoice_date": "01/19/2015",
+    "seller": "Parker LLC 3027 Edwin Trail Apt. 332 Sarahstad, HI 62113",
+    "client": "Taylor, Keller and Nichols 99562 Contreras Oval Suite 564 Davidview, DC 06204",
+    "seller_tax_id": "931-90-1681",
+    "client_tax_id": "903-99-9920",
+    "iban": "GB28AGKP318531853001981470"
+  },
+  "items": [
+    {
+      "item_desc": "Round Indian Braided Jute Carpet I Hand Woven Brown Round Shape Living Room Rug",
+      "item_qty": "4,00",
+      "item_net_price": "49,99",
+      "item_net_worth": "199,96",
+      "item_vat": "10%",
+      "item_gross_worth": "219,96"
+    },
+    {
+      "item_desc": "3D Stones Florals Corridor Carpet Doorway Mat Soft Antislip Living Room Area Rug",
+      "item_qty": "5,00",
+      "item_net_price": "15,19",
+      "item_net_worth": "75,95",
+      "item_vat": "10%",
+      "item_gross_worth": "83,55"
+    },
+    {
+      "item_desc": "Tie Dyeing Fluffy Rugs Anti-Skid Area Rug Dining Room Carpet Floor Bedroom Mat",
+      "item_qty": "1,00",
+      "item_net_price": "25,48",
+      "item_net_worth": "25,48",
+      "item_vat": "10%",
+      "item_gross_worth": "28,03"
+    },
+    {
+      "item_desc": "Handwoven Carpet Pastel Colour Geometric 5x7 Wool Kilim Rugs Check Living Room",
+      "item_qty": "1,00",
+      "item_net_price": "175,00",
+      "item_net_worth": "175,00",
+      "item_vat": "10%",
+      "item_gross_worth": "192,50"
+    },
+    {
+      "item_desc": "Faux Fur Animal Print Hide Skin Rug Cowhide Area Rug Floor Mat Carpet 33.5\"X43\"",
+      "item_qty": "3,00",
+      "item_net_price": "26,03",
+      "item_net_worth": "78,09",
+      "item_vat": "10%",
+      "item_gross_worth": "85,90"
+    },
+    {
+      "item_desc": "Rug Jute Natural Handmade Vintage Oriental Reversible Oval Shaped Floor Carpet",
+      "item_qty": "3,00",
+      "item_net_price": "49,36",
+      "item_net_worth": "148,08",
+      "item_vat": "10%",
+      "item_gross_worth": "162,89"
+    },
+    {
+      "item_desc": "YILONG 8'x10' Red HandKnotted Silk Carpet Living Room Oriental Area Rugs 185B",
+      "item_qty": "3,00",
+      "item_net_price": "16 000,00",
+      "item_net_worth": "48 000,00",
+      "item_vat": "10%",
+      "item_gross_worth": "52 800,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 48702,56",
+    "total_vat": "$4870,26",
+    "total_gross_worth": "$53572,82"
+  }
+}

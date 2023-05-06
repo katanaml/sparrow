@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "54533510",
+    "invoice_date": "02/10/2021",
+    "seller": "Tucker Inc 160 Kaitlin Flat Griffithhaven, DC90675",
+    "client": "Skinner Group 281 Cameron Alley East Marktown, CT 76958",
+    "seller_tax_id": "925-76-7636",
+    "client_tax_id": "904-87-0658",
+    "iban": "GB15JPFA79210576920492"
+  },
+  "items": [
+    {
+      "item_desc": "The Key to Rebecca by Ken Follett",
+      "item_qty": "5,00",
+      "item_net_price": "5,17",
+      "item_net_worth": "25,85",
+      "item_vat": "10%",
+      "item_gross_worth": "28,44"
+    },
+    {
+      "item_desc": "Escape from the Carnival of Horrors (Give Yourself Goosebumps) by R. L. Stine",
+      "item_qty": "5,00",
+      "item_net_price": "5,01",
+      "item_net_worth": "25,05",
+      "item_vat": "10%",
+      "item_gross_worth": "27,55"
+    },
+    {
+      "item_desc": "Master and God",
+      "item_qty": "1,00",
+      "item_net_price": "7,00",
+      "item_net_worth": "7,00",
+      "item_vat": "10%",
+      "item_gross_worth": "7,70"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 57,90",
+    "total_vat": "$5,79",
+    "total_gross_worth": "$ 63,69"
+  }
+}

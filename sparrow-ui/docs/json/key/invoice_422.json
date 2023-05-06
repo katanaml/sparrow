@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "64678621",
+    "invoice_date": "09/06/2014",
+    "seller": "Sanchez Inc 6392 Adrian Parkway Murphyborough, OK 01882",
+    "client": "Becker Group 40009 Johnson View Apt. 247 East Lisachester, SC 51621",
+    "seller_tax_id": "958-83-2401",
+    "client_tax_id": "951-87-0191",
+    "iban": "GB39NIAV91589079294162"
+  },
+  "items": [
+    {
+      "item_desc": "Lands' End Kids Boys Snow Winter Boots Size 5 Blue Warm Zip Up Easy On Easy Off",
+      "item_qty": "2,00",
+      "item_net_price": "9,50",
+      "item_net_worth": "19,00",
+      "item_vat": "10%",
+      "item_gross_worth": "20,90"
+    },
+    {
+      "item_desc": "Cherokee Boys Grayton Skate Shoes 12 Surf Skate Casual 12K Black Extra Laces 12Y",
+      "item_qty": "4,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "79,96",
+      "item_vat": "10%",
+      "item_gross_worth": "87,96"
+    },
+    {
+      "item_desc": "Joma Boys Youth Gol-102 Soccer Cleats Shoes Size 1.5 White Red 1.5Y NEW",
+      "item_qty": "1,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "19,99",
+      "item_vat": "10%",
+      "item_gross_worth": "21,99"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 118,95",
+    "total_vat": "$ 11,89",
+    "total_gross_worth": "$ 130,84"
+  }
+}

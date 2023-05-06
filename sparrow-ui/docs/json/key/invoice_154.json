@@ -1,0 +1,34 @@
+{
+  "header": {
+    "invoice_no": "66537515",
+    "invoice_date": "11/25/2018",
+    "seller": "Lucas-Bright 404 Adrian Ranch South Victorfurt, CO 37971",
+    "client": "Morris-Trujillo 75345 Alexis Radial Suite 968 Jeanville, CO 37508",
+    "seller_tax_id": "910-77-5920",
+    "client_tax_id": "991-75-0436",
+    "iban": "GB36GFUF93342035354916"
+  },
+  "items": [
+    {
+      "item_desc": "VINTAGE IRON WINE BOTTLE HOLDER CADDY-HAND WROUGHT, CUT, SOLDERED",
+      "item_qty": "5,00",
+      "item_net_price": "22,50",
+      "item_net_worth": "112,50",
+      "item_vat": "10%",
+      "item_gross_worth": "123,75"
+    },
+    {
+      "item_desc": "Press Wine 15L Fruit Cider Apple Crusher Juice Grape Stainless Maker Grapes New",
+      "item_qty": "5,00",
+      "item_net_price": "279,00",
+      "item_net_worth": "1395,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1534,50"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$1507,50",
+    "total_vat": "$ 150,75",
+    "total_gross_worth": "$1658,25"
+  }
+}

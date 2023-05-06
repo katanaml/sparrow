@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "39400829",
+    "invoice_date": "01/12/2012",
+    "seller": "Smith-Guerrero 158 Elizabeth Radial West Shannonland, CA 63867",
+    "client": "Reynolds, Gonzales and Meyer 1898 Hughes Trace Suite 707 Port Christophershire, NM 51907",
+    "seller_tax_id": "954-91-2300",
+    "client_tax_id": "951-95-0183",
+    "iban": "GB81NHI520902698381776"
+  },
+  "items": [
+    {
+      "item_desc": "Intel Compute Stick (32GB, Intel Atom, 1.33GHz, 2GB) PC Desktop",
+      "item_qty": "3,00",
+      "item_net_price": "45,00",
+      "item_net_worth": "135,00",
+      "item_vat": "10%",
+      "item_gross_worth": "148,50"
+    },
+    {
+      "item_desc": "Quality Dell Windows XP Pro Desktop PC Computer Core 2 vPro 4Gb 250Gb DVD WiFi",
+      "item_qty": "4,00",
+      "item_net_price": "119,99",
+      "item_net_worth": "479,96",
+      "item_vat": "10%",
+      "item_gross_worth": "527,96"
+    },
+    {
+      "item_desc": "Dell Desktop Computer PC Core i5 3.1GHz 8GB RAM 500GB HD Wifi DVD Windows 10",
+      "item_qty": "3,00",
+      "item_net_price": "124,95",
+      "item_net_worth": "374,85",
+      "item_vat": "10%",
+      "item_gross_worth": "412,34"
+    },
+    {
+      "item_desc": "Custom Gaming Computer Ryzen 7 2700 32GB DDR4 Nvidia RTX 2060 RGB SSD 500GB HDD",
+      "item_qty": "5,00",
+      "item_net_price": "1 092,27",
+      "item_net_worth": "5461,35",
+      "item_vat": "10%",
+      "item_gross_worth": "6007,49"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$6451,16",
+    "total_vat": "$ 645,12",
+    "total_gross_worth": "$7096,28"
+  }
+}

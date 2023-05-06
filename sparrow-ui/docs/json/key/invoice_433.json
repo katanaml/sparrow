@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "54394190",
+    "invoice_date": "02/23/2021",
+    "seller": "Nelson, Bird and Mendoza 48426 John Village Suite 517 Boydstad, ID 55416",
+    "client": "Allen Inc USS Smith FPO AP 40020",
+    "seller_tax_id": "976-76-5964",
+    "client_tax_id": "925-90-1124",
+    "iban": "GB63GDHN20059173458044"
+  },
+  "items": [
+    {
+      "item_desc": "Microsoft Xbox One S 1TB Console System Model 1681 w/ One Controller & Cables",
+      "item_qty": "1,00",
+      "item_net_price": "219,99",
+      "item_net_worth": "219,99",
+      "item_vat": "10%",
+      "item_gross_worth": "241,99"
+    },
+    {
+      "item_desc": "Nintendo 64 N64 Console Complete in Box Mint Beautiful! From Japan!",
+      "item_qty": "1,00",
+      "item_net_price": "269,99",
+      "item_net_worth": "269,99",
+      "item_vat": "10%",
+      "item_gross_worth": "296,99"
+    },
+    {
+      "item_desc": "Pre Order New Sony PlayStation 5 Console Disk Version Ships Fast 11/12 Confirmed",
+      "item_qty": "3,00",
+      "item_net_price": "850,00",
+      "item_net_worth": "2550,00",
+      "item_vat": "10%",
+      "item_gross_worth": "2 805,00"
+    },
+    {
+      "item_desc": "Sony SCPH-30001R PlayStation 2F Fat Console System w/ Network Adapter",
+      "item_qty": "4,00",
+      "item_net_price": "79,99",
+      "item_net_worth": "319,96",
+      "item_vat": "10%",
+      "item_gross_worth": "351,96"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$3 359,94",
+    "total_vat": "$ 335,99",
+    "total_gross_worth": "$3695,93"
+  }
+}

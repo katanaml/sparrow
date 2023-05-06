@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "62788012",
+    "invoice_date": "03/12/2013",
+    "seller": "Barker-Fletcher 4689 Pamela Court Suite 384 Courtneychester, UT 24853",
+    "client": "Anderson, Webb and Perkins 4124 Ray Via South Elizabeth, HI 42034",
+    "seller_tax_id": "977-94-1841",
+    "client_tax_id": "999-97-8734",
+    "iban": "GB44TFDA45632987322948"
+  },
+  "items": [
+    {
+      "item_desc": "VINTAGE ANTIQUE BRASS TABLE TOP WINE BOTTLE OPENER /WOOD HANDLE",
+      "item_qty": "2,00",
+      "item_net_price": "60,00",
+      "item_net_worth": "120,00",
+      "item_vat": "10%",
+      "item_gross_worth": "132,00"
+    },
+    {
+      "item_desc": "Wall Mounted Upside Down Wine Bottle Rack Goblet Glass Holder Storage Organizer",
+      "item_qty": "5,00",
+      "item_net_price": "14,98",
+      "item_net_worth": "74,90",
+      "item_vat": "10%",
+      "item_gross_worth": "82,39"
+    },
+    {
+      "item_desc": "Wine spoon",
+      "item_qty": "1,00",
+      "item_net_price": "5,00",
+      "item_net_worth": "5,00",
+      "item_vat": "10%",
+      "item_gross_worth": "5,50"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 199,90",
+    "total_vat": "$ 19,99",
+    "total_gross_worth": "$ 219,89"
+  }
+}

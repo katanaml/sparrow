@@ -1,0 +1,58 @@
+{
+  "header": {
+    "invoice_no": "48186352",
+    "invoice_date": "06/10/2013",
+    "seller": "Silva-Horn 7758 Robbins Port Morganmouth, WY 15331",
+    "client": "Gonzalez-Brown 6396 Bishop Tunnel Singletonton, MN 12547",
+    "seller_tax_id": "966-76-5672",
+    "client_tax_id": "939-87-8902",
+    "iban": "GB70ACOV98557167099260"
+  },
+  "items": [
+    {
+      "item_desc": "Adult Girl Version Hermione Granger Cosplay Costume Gryffindor Kid size In Stock",
+      "item_qty": "2,00",
+      "item_net_price": "64,16",
+      "item_net_worth": "128,32",
+      "item_vat": "10%",
+      "item_gross_worth": "141,15"
+    },
+    {
+      "item_desc": "Nike Air Max 90 All Black Leather Running Shoes 833412-001 Size 7Y (Women's 8.5)",
+      "item_qty": "4,00",
+      "item_net_price": "74,99",
+      "item_net_worth": "299,96",
+      "item_vat": "10%",
+      "item_gross_worth": "329,96"
+    },
+    {
+      "item_desc": "INC International Concepts Children Shoes nvyzc7, Black, Size Little Kid 2.5",
+      "item_qty": "3,00",
+      "item_net_price": "88,91",
+      "item_net_worth": "266,73",
+      "item_vat": "10%",
+      "item_gross_worth": "293,40"
+    },
+    {
+      "item_desc": "Florsheim kid's boys Lace Up Oxford Suede Dress Shoes Size 6M Solid Beige",
+      "item_qty": "5,00",
+      "item_net_price": "29,99",
+      "item_net_worth": "149,95",
+      "item_vat": "10%",
+      "item_gross_worth": "164,94"
+    },
+    {
+      "item_desc": "Minecraft Creative Stuffed Plush Kids Childrens Gift Cute Toy Birthday Christmas",
+      "item_qty": "4,00",
+      "item_net_price": "7,25",
+      "item_net_worth": "29,00",
+      "item_vat": "10%",
+      "item_gross_worth": "31,90"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 873,96",
+    "total_vat": "$ 87,40",
+    "total_gross_worth": "$ 961,36"
+  }
+}

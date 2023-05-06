@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "65095335",
+    "invoice_date": "02/15/2017",
+    "seller": "Payne-Davis 2065 Joshua Via Lake Chadmouth, TX 15224",
+    "client": "Flores LLC 45998 Lance Shores Martinchester, NH 74633",
+    "seller_tax_id": "963-77-0670",
+    "client_tax_id": "946-95-4678",
+    "iban": "GB82ORRJ16785128958323"
+  },
+  "items": [
+    {
+      "item_desc": "15\"x15\" White Marble Chess Top Table Carnelian Inlay Art Black Friday Gift Deco",
+      "item_qty": "1,00",
+      "item_net_price": "600,00",
+      "item_net_worth": "600,00",
+      "item_vat": "10%",
+      "item_gross_worth": "660,00"
+    },
+    {
+      "item_desc": "Antique Vintage style hand carved table *Unique*",
+      "item_qty": "2,00",
+      "item_net_price": "13 000,00",
+      "item_net_worth": "26 000,00",
+      "item_vat": "10%",
+      "item_gross_worth": "28 600,00"
+    },
+    {
+      "item_desc": "15\"x15\" White Decorative Coffee Table Top Lapis Lazuli Marquetery Patio D\u00e9cor",
+      "item_qty": "5,00",
+      "item_net_price": "645,77",
+      "item_net_worth": "3228,85",
+      "item_vat": "10%",
+      "item_gross_worth": "3551,73"
+    },
+    {
+      "item_desc": "6'x3' White Marble Dining Table Top Multi Inlay Floral Elephant Art Decor H4952",
+      "item_qty": "2,00",
+      "item_net_price": "6408,49",
+      "item_net_worth": "12 816,98",
+      "item_vat": "10%",
+      "item_gross_worth": "14 098,68"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$42 645,83",
+    "total_vat": "$4264,58",
+    "total_gross_worth": "$46910,41"
+  }
+}

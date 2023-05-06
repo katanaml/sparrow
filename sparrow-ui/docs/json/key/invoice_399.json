@@ -1,0 +1,50 @@
+{
+  "header": {
+    "invoice_no": "60038342",
+    "invoice_date": "01/02/2018",
+    "seller": "Moore PLC 1264 Cantrell Spring Suite 566 North Codyfort, OH 77477",
+    "client": "Gregory, Whitney and Smith 425 Angelica Estates Suite 601 Amyfort, OH 66203",
+    "seller_tax_id": "988-91-7739",
+    "client_tax_id": "906-85-4954",
+    "iban": "GB81XLVV82999811472514"
+  },
+  "items": [
+    {
+      "item_desc": "SONY Playstation2 Console SCPH-50000 \" Peal Color \"I TESTED 11177",
+      "item_qty": "1,00",
+      "item_net_price": "60,00",
+      "item_net_worth": "60,00",
+      "item_vat": "10%",
+      "item_gross_worth": "66,00"
+    },
+    {
+      "item_desc": "Nintendo Wii Console Complete Bundle w/extras tested",
+      "item_qty": "5,00",
+      "item_net_price": "104,99",
+      "item_net_worth": "524,95",
+      "item_vat": "10%",
+      "item_gross_worth": "577,44"
+    },
+    {
+      "item_desc": "Working Super Nintendo SNES Original System Console w/ Mario World!",
+      "item_qty": "3,00",
+      "item_net_price": "85,00",
+      "item_net_worth": "255,00",
+      "item_vat": "10%",
+      "item_gross_worth": "280,50"
+    },
+    {
+      "item_desc": "Sony PlayStation 3 PS3 Super Slim Black Console 20 GB *Tested* Console & Cables",
+      "item_qty": "5,00",
+      "item_net_price": "99,95",
+      "item_net_worth": "499,75",
+      "item_vat": "10%",
+      "item_gross_worth": "549,73"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$1339,70",
+    "total_vat": "$ 133,97",
+    "total_gross_worth": "$1473,67"
+  }
+}

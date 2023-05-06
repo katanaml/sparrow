@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "43846862",
+    "invoice_date": "01/10/2017",
+    "seller": "Phillips PLC USCGC Harrington FPO AE 01096",
+    "client": "Elliott, Moreno and Garcia 085 Schmitt Loaf Apt. 207 Kimberlychester, DE 81788",
+    "seller_tax_id": "950-85-9169",
+    "client_tax_id": "941-78-0381",
+    "iban": "GB32TDGW94197567592729"
+  },
+  "items": [
+    {
+      "item_desc": "Custom Built Windows 98 Retro Gaming Industrial PC Computer P2 B Montego II 5GB",
+      "item_qty": "1,00",
+      "item_net_price": "409,99",
+      "item_net_worth": "409,99",
+      "item_vat": "10%",
+      "item_gross_worth": "450,99"
+    },
+    {
+      "item_desc": "Dell Desktop Computer Tower Optiplex Core i5 8GB 1TB HD DVD Wifi Windows 10 Pro",
+      "item_qty": "4,00",
+      "item_net_price": "169,95",
+      "item_net_worth": "679,80",
+      "item_vat": "10%",
+      "item_gross_worth": "747,78"
+    },
+    {
+      "item_desc": "Coinmine One Intel or AMD with RX 500 8GB 1TB Series Crypto Mining Rig Computer",
+      "item_qty": "2,00",
+      "item_net_price": "599,99",
+      "item_net_worth": "1199,98",
+      "item_vat": "10%",
+      "item_gross_worth": "1 319,98"
+    },
+    {
+      "item_desc": "Dell Optiplex 7040 SFF PC ComputerIntel Core i5-6500 3.2GHz 4GB RAM 500GB HDD",
+      "item_qty": "5,00",
+      "item_net_price": "99,99",
+      "item_net_worth": "499,95",
+      "item_vat": "10%",
+      "item_gross_worth": "549,95"
+    },
+    {
+      "item_desc": "Dell Desktop Computer Intel Core i5 Windows 10 pro 64 250gb 3.1ghz 4gb Ram",
+      "item_qty": "1,00",
+      "item_net_price": "240,24",
+      "item_net_worth": "240,24",
+      "item_vat": "10%",
+      "item_gross_worth": "264,26"
+    },
+    {
+      "item_desc": "Dell OptiPlex 7060 SFF Computer, 8th Gen Core i5, 8GB DDR4, New 240GB SSD, DVD",
+      "item_qty": "2,00",
+      "item_net_price": "202,50",
+      "item_net_worth": "405,00",
+      "item_vat": "10%",
+      "item_gross_worth": "445,50"
+    },
+    {
+      "item_desc": "Gaming PC Desktop Computer RGB Intel i7 GTX 1650, 16GB RAM, 2TB HDD, 240GB SSD",
+      "item_qty": "2,00",
+      "item_net_price": "689,99",
+      "item_net_worth": "1379,98",
+      "item_vat": "10%",
+      "item_gross_worth": "1 517,98"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$4814,94",
+    "total_vat": "$ 481,49",
+    "total_gross_worth": "$5296,43"
+  }
+}

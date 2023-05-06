@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "70123184",
+    "invoice_date": "01/28/2016",
+    "seller": "Kelly, Hernandez and Vaughan 63133 Sean Forge Ericland, WY 91359",
+    "client": "Cooley Ltd 36837 Seth Lane Kevinview, NC29771",
+    "seller_tax_id": "972-72-8665",
+    "client_tax_id": "979-84-9816",
+    "iban": "GB39CXVC62576925140756"
+  },
+  "items": [
+    {
+      "item_desc": "Nike 747998-401 Team Hustle D7 Kids Blue Mid Top Basketball Shoes Size 4Y US",
+      "item_qty": "2,00",
+      "item_net_price": "10,99",
+      "item_net_worth": "21,98",
+      "item_vat": "10%",
+      "item_gross_worth": "24,18"
+    },
+    {
+      "item_desc": "5YOUTH Boys Big Kids Nike Jordan 6-17-23 Basketball White red Black 428818 100",
+      "item_qty": "3,00",
+      "item_net_price": "89,99",
+      "item_net_worth": "269,97",
+      "item_vat": "10%",
+      "item_gross_worth": "296,97"
+    },
+    {
+      "item_desc": "The Children's Place Brown Dress Boy Lace Up Shoes Size 12",
+      "item_qty": "5,00",
+      "item_net_price": "8,00",
+      "item_net_worth": "40,00",
+      "item_vat": "10%",
+      "item_gross_worth": "44,00"
+    },
+    {
+      "item_desc": "jordan 3 white cement size 13.5 kids youth boys",
+      "item_qty": "5,00",
+      "item_net_price": "21,00",
+      "item_net_worth": "105,00",
+      "item_vat": "10%",
+      "item_gross_worth": "115,50"
+    },
+    {
+      "item_desc": "PUMA Pre-School Scuderia Ferrari Drift Cat 5 Ultra II Shoes Boys 12c",
+      "item_qty": "4,00",
+      "item_net_price": "21,22",
+      "item_net_worth": "84,88",
+      "item_vat": "10%",
+      "item_gross_worth": "93,37"
+    },
+    {
+      "item_desc": "Joma Boys Youth Gol-102 Soccer Cleats Shoes Size 3.5 White Red Futbol NEW",
+      "item_qty": "2,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "39,98",
+      "item_vat": "10%",
+      "item_gross_worth": "43,98"
+    },
+    {
+      "item_desc": "Jordan 10 Retro Fusion Red Size",
+      "item_qty": "2,00",
+      "item_net_price": "60,00",
+      "item_net_worth": "120,00",
+      "item_vat": "10%",
+      "item_gross_worth": "132,00"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$ 681,81",
+    "total_vat": "$ 68,18",
+    "total_gross_worth": "$ 749,99"
+  }
+}

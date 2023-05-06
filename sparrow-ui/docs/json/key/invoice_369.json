@@ -1,0 +1,74 @@
+{
+  "header": {
+    "invoice_no": "59506052",
+    "invoice_date": "12/24/2018",
+    "seller": "Chang-Cruz Unit 8647 Box 4536 DPO AP 76863",
+    "client": "Christian-Gardner 400 Mitchell Meadow Suite 160 Port Cassandraborough, CO59008",
+    "seller_tax_id": "956-81-7276",
+    "client_tax_id": "987-99-2947",
+    "iban": "GB73TJHX01221229411854"
+  },
+  "items": [
+    {
+      "item_desc": "NEW Microsoft Xbox 360 Slim 4GB Black Console W/2 Games And Kinect Bundle +EXTRA",
+      "item_qty": "4,00",
+      "item_net_price": "275,00",
+      "item_net_worth": "1100,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1210,00"
+    },
+    {
+      "item_desc": "Nintendo Gameboy Original Console Gray with Box Manual DMB-01 Japan Tested 67",
+      "item_qty": "5,00",
+      "item_net_price": "140,00",
+      "item_net_worth": "700,00",
+      "item_vat": "10%",
+      "item_gross_worth": "770,00"
+    },
+    {
+      "item_desc": "Nintendo Wii Console 2 sets controllers Plus All Cables Included Works Great",
+      "item_qty": "2,00",
+      "item_net_price": "99,99",
+      "item_net_worth": "199,98",
+      "item_vat": "10%",
+      "item_gross_worth": "219,98"
+    },
+    {
+      "item_desc": "Sony PlayStation 2 Console Black (SCPH-39001) w/ 2 Controllers and 5 Games",
+      "item_qty": "3,00",
+      "item_net_price": "79,99",
+      "item_net_worth": "239,97",
+      "item_vat": "10%",
+      "item_gross_worth": "263,97"
+    },
+    {
+      "item_desc": "SONY Playstation2 Console SCPH-39000 \" Aqua Color \"I TESTED 11179",
+      "item_qty": "5,00",
+      "item_net_price": "60,00",
+      "item_net_worth": "300,00",
+      "item_vat": "10%",
+      "item_gross_worth": "330,00"
+    },
+    {
+      "item_desc": "Sony PlayStation 5 Disc Edition Console Preorder + Spiderman: MM Day One Confirm",
+      "item_qty": "1,00",
+      "item_net_price": "1200,00",
+      "item_net_worth": "1200,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1320,00"
+    },
+    {
+      "item_desc": "New Sony Playstation 4 Slim 1TB 3 Game Bundle Console. Sealed!!!",
+      "item_qty": "4,00",
+      "item_net_price": "399,99",
+      "item_net_worth": "1599,96",
+      "item_vat": "10%",
+      "item_gross_worth": "1 759,96"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$5339,91",
+    "total_vat": "$ 533,99",
+    "total_gross_worth": "$5873,90"
+  }
+}
