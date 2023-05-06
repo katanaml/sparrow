@@ -42,7 +42,7 @@ class DataReview:
             st.markdown("---")
             st.subheader(model.subheader_2)
 
-            # get list of files in processed directory
+            # get list of files in inference directory
             processed_file_names = self.get_processed_file_names('docs/inference/')
 
             if 'selection_index' not in st.session_state:
