@@ -41,6 +41,8 @@ pip install -r requirements.txt
 streamlit run main.py
 ```
 
+After annotating files, click Export Labels button to produce JSON mapping with key/value pairs
+
 ## Run in Docker container
 
 1. Build Docker image
