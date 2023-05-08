@@ -1,26 +1,58 @@
 {
   "header": {
-    "invoice_no": "40378170",
-    "invoice_date": "10/15/2012",
-    "seller": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-    "client": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-    "seller_tax_id": "958-74-3511",
-    "client_tax_id": "998-87-7723",
-    "iban": "GB77WRBQ31965128414006"
+    "invoice_no": "56513760",
+    "invoice_date": "10/25/2011",
+    "seller": "Lyons-Murphy 178 Mann Shoals Apt. 732 West Johnview, WI 44188",
+    "client": "Lawrence LLC 2959 Marquez Junction Suite 826 Michaelchester, CA 10095",
+    "seller_tax_id": "975-78-1218",
+    "client_tax_id": "987-70-6179",
+    "iban": "GB22WVAZ26078980173503"
   },
   "items": [
     {
-      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "item_net_worth": "7,50",
+      "item_desc": "Nexlink DG41RQ Desktop Computer Windows 10 w/DVD/CD Rom Drive",
+      "item_qty": "2,00",
+      "item_net_price": "11,95",
+      "item_net_worth": "23,90",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "26,29"
+    },
+    {
+      "item_desc": "Gaming PC Desktop Computer HDMI RGB Intel i7 RTX 2060, HDD+SSD, Windows 10, Wifi",
+      "item_qty": "5,00",
+      "item_net_price": "999,50",
+      "item_net_worth": "4997,50",
+      "item_vat": "10%",
+      "item_gross_worth": "5497,25"
+    },
+    {
+      "item_desc": "Lenovo i5 I 32GB 12TB ISSD Windows 10 Pro Desktop Computer PC WiFi Bluetooth",
+      "item_qty": "1,00",
+      "item_net_price": "139,00",
+      "item_net_worth": "139,00",
+      "item_vat": "10%",
+      "item_gross_worth": "152,90"
+    },
+    {
+      "item_desc": "Gaming PC Desktop Computer RGB Intel i7, RTX 2060, 16GB RAM, 240GB SSD, 2TB HDD",
+      "item_qty": "1,00",
+      "item_net_price": "903,80",
+      "item_net_worth": "903,80",
+      "item_vat": "10%",
+      "item_gross_worth": "994,18"
+    },
+    {
+      "item_desc": "HP 8200 USFF Desktop Computer PC Core i5 4GB 500GB Windows 10 Pro DisplayPort",
+      "item_qty": "4,00",
+      "item_net_price": "99,95",
+      "item_net_worth": "399,80",
+      "item_vat": "10%",
+      "item_gross_worth": "439,78"
     }
   ],
   "summary": {
-    "total_net_worth": "$7,50",
-    "total_vat": "$0,75",
-    "total_gross_worth": "$8,25"
+    "total_net_worth": "$6464,00",
+    "total_vat": "$ 646,40",
+    "total_gross_worth": "$7110,40"
   }
 }

@@ -1,50 +1,58 @@
 {
   "header": {
-    "invoice_no": "61356291",
-    "invoice_date": "09/06/2012",
-    "seller": "Chapman, Kim and Green 64731 James Branch Smithmouth, NC 26872",
-    "client": "Rodriguez-Stevens 2280 Angela Plain Hortonshire, MS 93248",
-    "seller_tax_id": "949-84-9105",
-    "client_tax_id": "939-98-8477",
-    "iban": "GB50ACIE59715038217063"
+    "invoice_no": "96430839",
+    "invoice_date": "01/13/2019",
+    "seller": "Bennett, Chavez and Vazquez Unit 8361 Box 7078 DPO AE 69202",
+    "client": "Alexander-Petersen 647 Joyce Ville Waltonfort, IA 57670",
+    "seller_tax_id": "971-80-5191",
+    "client_tax_id": "934-91-7455",
+    "iban": "GB90RYME18980824175499"
   },
   "items": [
     {
-      "item_desc": "Wine Glasses Goblets Pair Clear Glass",
-      "item_qty": "5,00",
-      "item_net_price": "12,00",
-      "item_net_worth": "60,00",
-      "item_vat": "10%",
-      "item_gross_worth": "66,00"
-    },
-    {
-      "item_desc": "With Hooks Stemware Storage Multiple Uses Iron Wine Rack Hanging Glass",
+      "item_desc": "Dell Optiplex 990 MT Computer PC Quad Core i7 3.4GHz 16GB 2TB HD Windows 10 Pro",
       "item_qty": "4,00",
-      "item_net_price": "28,08",
-      "total_net_worth": "112,32",
+      "item_net_price": "269,95",
+      "item_net_worth": "1079,80",
       "item_vat": "10%",
-      "item_gross_worth": "123,55"
+      "item_gross_worth": "1 187,78"
     },
     {
-      "item_desc": "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
+      "item_desc": "Open Box: Dell XPS 8930 Desktop Computer Intel Core i7 8GB RAM 1TB HDD Black - 8",
       "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "total_net_worth": "7,50",
+      "item_net_price": "718,11",
+      "item_net_worth": "718,11",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "789,92"
     },
     {
-      "item_desc": "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 420 FL OZ (591 ml) NEW",
-      "item_qty": "1,00",
-      "item_net_price": "12,99",
-      "item_net_worth": "12,99",
+      "item_desc": "Dell 9020 i5-4570 I 16GB I 2TB I SSD Windows 10 Pro Desktop Computer PC WiFi DVD",
+      "item_qty": "5,00",
+      "item_net_price": "349,95",
+      "item_net_worth": "1749,75",
       "item_vat": "10%",
-      "item_gross_worth": "14,29"
+      "item_gross_worth": "1924,73"
+    },
+    {
+      "item_desc": "Dell Optiplex 7040 SFF PC ComputerIntel Core i5-6500 3.2GHz 4GB RAM 500GB HDD",
+      "item_qty": "4,00",
+      "item_net_price": "99,99",
+      "item_net_worth": "399,96",
+      "item_vat": "10%",
+      "item_gross_worth": "439,96"
+    },
+    {
+      "item_desc": "HP Desktop Computer PC 0 Core i5 16GB 2TB HD 256GB SSD 22\" LCD D Windows 10",
+      "item_qty": "4,00",
+      "item_net_price": "139,95",
+      "item_net_worth": "559,80",
+      "item_vat": "10%",
+      "item_gross_worth": "615,78"
     }
   ],
   "summary": {
-    "total_net_worth": "$ 192,81",
-    "total_vat": "$19,28",
-    "total_gross_worth": "$ 212,09"
+    "total_net_worth": "$4507,42",
+    "total_vat": "$ 450,74",
+    "total_gross_worth": "$4958,16"
   }
 }

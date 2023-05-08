@@ -10,7 +10,7 @@ def main():
     pdf_converter.convert_to_jpg('docs/input/invoices/Dataset with valid information',
                                  'docs/input/invoices/processed/images')
 
-    #define the source and destination directory
+    # define the source and destination directory
     src_dir = 'docs/input/invoices/processed/images'
     dst_dir = '../sparrow-ui/docs/images'
 

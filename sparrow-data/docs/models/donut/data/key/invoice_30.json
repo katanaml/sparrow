@@ -1,26 +1,66 @@
 {
   "header": {
-    "invoice_no": "40378170",
-    "invoice_date": "10/15/2012",
-    "seller": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-    "client": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-    "seller_tax_id": "958-74-3511",
-    "client_tax_id": "998-87-7723",
-    "iban": "GB77WRBQ31965128414006"
+    "invoice_no": "65524700",
+    "invoice_date": "02/23/2020",
+    "seller": "Kirk-Green 7858 Christopher Pass Wellsside, KY 32616",
+    "client": "Hall-Cole 18526 Smith Loop Lake Jeremiah, VT 31868",
+    "seller_tax_id": "955-86-8810",
+    "client_tax_id": "952-84-7160",
+    "iban": "GB66D5V030328253726805"
   },
   "items": [
     {
-      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "item_net_worth": "7,50",
+      "item_desc": "Dell Desktop Computer 3020 Micro Tiny PC Intel i3 4GB 120GB SSD Windows 10 WiFi",
+      "item_qty": "2,00",
+      "item_net_price": "134,95",
+      "item_net_worth": "269,90",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "296,89"
+    },
+    {
+      "item_desc": "HP Elite 8100 Desktop Computer Package Intel Core 153.2-GHz, 8GB RAM, 500GB H",
+      "item_qty": "4,00",
+      "item_net_price": "209,00",
+      "item_net_worth": "836,00",
+      "item_vat": "10%",
+      "item_gross_worth": "919,60"
+    },
+    {
+      "item_desc": "Dell Desktop Computer Optiplex 790 Tower PC Core i5 8GB 500GB Windows 10 Pro",
+      "item_qty": "5,00",
+      "item_net_price": "149,95",
+      "item_net_worth": "749,75",
+      "item_vat": "10%",
+      "item_gross_worth": "824,73"
+    },
+    {
+      "item_desc": "10-Core Gaming Computer Desktop PC Tower HDMI 8GB DDR4 R7 Graphic CUSTOM BUILT",
+      "item_qty": "5,00",
+      "item_net_price": "348,88",
+      "item_net_worth": "1744,40",
+      "item_vat": "10%",
+      "item_gross_worth": "1918,84"
+    },
+    {
+      "item_desc": "Gaming PC Desktop Computer HDMI RGB Intel i7 RTX 2060, HDD+SSD, Windows 10, Wifi",
+      "item_qty": "5,00",
+      "item_net_price": "903,80",
+      "item_net_worth": "4519,00",
+      "item_vat": "10%",
+      "item_gross_worth": "4 970,90"
+    },
+    {
+      "item_desc": "Computer Desktop Gaming i5 Ram 16 G",
+      "item_qty": "4,00",
+      "item_net_price": "315,00",
+      "item_net_worth": "1260,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1 386,00"
     }
   ],
   "summary": {
-    "total_net_worth": "$7,50",
-    "total_vat": "$0,75",
-    "total_gross_worth": "$8,25"
+    "total_net_worth": "$9379,05",
+    "total_vat": "$ 937,90",
+    "total_gross_worth": "$ 10 316,95"
   }
 }

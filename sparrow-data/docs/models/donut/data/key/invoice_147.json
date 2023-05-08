@@ -1,26 +1,34 @@
 {
   "header": {
-    "invoice_no": "40378170",
-    "invoice_date": "10/15/2012",
-    "seller": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-    "client": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-    "seller_tax_id": "958-74-3511",
-    "client_tax_id": "998-87-7723",
-    "iban": "GB77WRBQ31965128414006"
+    "invoice_no": "90446683",
+    "invoice_date": "02/11/2016",
+    "seller": "Chang-Cooper 452 Miller Plains Apt. 418 Barrettside, UT 97139",
+    "client": "Peterson-Long 92441 Kimberly Curve East Mathew, OH 84858",
+    "seller_tax_id": "911-96-2770",
+    "client_tax_id": "911-96-7248",
+    "iban": "GB19LAZW37358375097586"
   },
   "items": [
     {
-      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "item_net_worth": "7,50",
+      "item_desc": "Cabi 5610 Striped White Blue Launch Maxi Dress Womens Sz",
+      "item_qty": "3,00",
+      "item_net_price": "48,99",
+      "item_net_worth": "146,97",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "161,67"
+    },
+    {
+      "item_desc": "Socialite White Black Striped A Line Dress With Pockets Large",
+      "item_qty": "5,00",
+      "item_net_price": "10,00",
+      "item_net_worth": "50,00",
+      "item_vat": "10%",
+      "item_gross_worth": "55,00"
     }
   ],
   "summary": {
-    "total_net_worth": "$7,50",
-    "total_vat": "$0,75",
-    "total_gross_worth": "$8,25"
+    "total_net_worth": "$ 196,97",
+    "total_vat": "$19,70",
+    "total_gross_worth": "$ 216,67"
   }
 }

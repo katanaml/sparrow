@@ -1,26 +1,58 @@
 {
   "header": {
-    "invoice_no": "40378170",
-    "invoice_date": "10/15/2012",
-    "seller": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-    "client": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-    "seller_tax_id": "958-74-3511",
-    "client_tax_id": "998-87-7723",
-    "iban": "GB77WRBQ31965128414006"
+    "invoice_no": "27543706",
+    "invoice_date": "07/20/2020",
+    "seller": "Kaiser, Hays and Cook 460 Richard Forge Lake Maria, CA 86826",
+    "client": "Holland PLC 10833 Hill Courts Suite 606 Collinsland, CA 60385",
+    "seller_tax_id": "980-78-9083",
+    "client_tax_id": "998-85-0115",
+    "iban": "GB82GOCR29918894344551"
   },
   "items": [
     {
-      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "item_net_worth": "7,50",
+      "item_desc": "Marble Beautiful White Coffee Table Top Malachite Inlay Art Home Decor H5372",
+      "item_qty": "5,00",
+      "item_net_price": "271,01",
+      "item_net_worth": "1355,05",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "1 490,55"
+    },
+    {
+      "item_desc": "15\"x15\" White Decorative Coffee Table Top Lapis Lazuli Marquetery Patio D\u00e9cor",
+      "item_qty": "4,00",
+      "item_net_price": "645,77",
+      "item_net_worth": "2583,08",
+      "item_vat": "10%",
+      "item_gross_worth": "2 841,39"
+    },
+    {
+      "item_desc": "16 Inches Marble Coffee Table Top Inlay with Multi Stone at Border Game Table",
+      "item_qty": "1,00",
+      "item_net_price": "280,50",
+      "item_net_worth": "280,50",
+      "item_vat": "10%",
+      "item_gross_worth": "308,55"
+    },
+    {
+      "item_desc": "18\" Black Marble Coffee Table Top Mother of Pearl Inlay Furniture Decors H1883B",
+      "item_qty": "3,00",
+      "item_net_price": "377,65",
+      "item_net_worth": "1132,95",
+      "item_vat": "10%",
+      "item_gross_worth": "1246,24"
+    },
+    {
+      "item_desc": "7'x4' Pietra Dura Marble Dining Hallway Table Top Inlay Design Patio Decor E977A",
+      "item_qty": "2,00",
+      "item_net_price": "19 506,53",
+      "item_net_worth": "39 013,06",
+      "item_vat": "10%",
+      "item_gross_worth": "42 914,37"
     }
   ],
   "summary": {
-    "total_net_worth": "$7,50",
-    "total_vat": "$0,75",
-    "total_gross_worth": "$8,25"
+    "total_net_worth": "$ 44 364,64",
+    "total_vat": "$4436,46",
+    "total_gross_worth": "48 801,10"
   }
 }

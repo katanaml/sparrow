@@ -1,50 +1,26 @@
 {
   "header": {
-    "invoice_no": "61356291",
-    "invoice_date": "09/06/2012",
-    "seller": "Chapman, Kim and Green 64731 James Branch Smithmouth, NC 26872",
-    "client": "Rodriguez-Stevens 2280 Angela Plain Hortonshire, MS 93248",
-    "seller_tax_id": "949-84-9105",
-    "client_tax_id": "939-98-8477",
-    "iban": "GB50ACIE59715038217063"
+    "invoice_no": "62256280",
+    "invoice_date": "11/08/2020",
+    "seller": "Myers Inc 41819 Garrett Pass Suite 517 New Bryan, NC 40626",
+    "client": "Cook-Smith 88740 Tyler Meadow Suite 201 Garciamouth, KY 01739",
+    "seller_tax_id": "989-81-3221",
+    "client_tax_id": "912-76-2889",
+    "iban": "GB76VXWW63968024546133"
   },
   "items": [
     {
-      "item_desc": "Wine Glasses Goblets Pair Clear Glass",
+      "item_desc": "Yilong 1'x1.5' 400Lines Area Rug High Density Hand knotted Silk Carpet 221H",
       "item_qty": "5,00",
-      "item_net_price": "12,00",
-      "item_net_worth": "60,00",
+      "item_net_price": "540,00",
+      "item_net_worth": "2700,00",
       "item_vat": "10%",
-      "item_gross_worth": "66,00"
-    },
-    {
-      "item_desc": "With Hooks Stemware Storage Multiple Uses Iron Wine Rack Hanging Glass",
-      "item_qty": "4,00",
-      "item_net_price": "28,08",
-      "total_net_worth": "112,32",
-      "item_vat": "10%",
-      "item_gross_worth": "123,55"
-    },
-    {
-      "item_desc": "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "total_net_worth": "7,50",
-      "item_vat": "10%",
-      "item_gross_worth": "8,25"
-    },
-    {
-      "item_desc": "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 420 FL OZ (591 ml) NEW",
-      "item_qty": "1,00",
-      "item_net_price": "12,99",
-      "item_net_worth": "12,99",
-      "item_vat": "10%",
-      "item_gross_worth": "14,29"
+      "item_gross_worth": "2970,00"
     }
   ],
   "summary": {
-    "total_net_worth": "$ 192,81",
-    "total_vat": "$19,28",
-    "total_gross_worth": "$ 212,09"
+    "total_net_worth": "$2 700,00",
+    "total_vat": "$ 270,00",
+    "total_gross_worth": "$2970,00"
   }
 }

@@ -1,50 +1,74 @@
 {
   "header": {
-    "invoice_no": "61356291",
-    "invoice_date": "09/06/2012",
-    "seller": "Chapman, Kim and Green 64731 James Branch Smithmouth, NC 26872",
-    "client": "Rodriguez-Stevens 2280 Angela Plain Hortonshire, MS 93248",
-    "seller_tax_id": "949-84-9105",
-    "client_tax_id": "939-98-8477",
-    "iban": "GB50ACIE59715038217063"
+    "invoice_no": "15686725",
+    "invoice_date": "03/11/2021",
+    "seller": "Whitaker, Gray and Green 39588 Thomas Brook Suite 147 Sullivanshire, NH 40856",
+    "client": "Davidson, Smith and Gill 3577 Michael Fields Marquezstad, IL 48510",
+    "seller_tax_id": "987-82-9377",
+    "client_tax_id": "967-95-5221",
+    "iban": "GB50UPCM86772611595760"
   },
   "items": [
     {
-      "item_desc": "Wine Glasses Goblets Pair Clear Glass",
+      "item_desc": "36\" Round Marble Dining Table Lapis Mosaic Floral Inlay Furniture Decorates B397",
+      "item_qty": "1,00",
+      "item_net_price": "1490,00",
+      "item_net_worth": "1490,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1639,00"
+    },
+    {
+      "item_desc": "12\" Marble Side Coffee Table Top Lapis Peacock & Floral Inlay Patio Decors W299",
+      "item_qty": "3,00",
+      "item_net_price": "248,78",
+      "item_net_worth": "746,34",
+      "item_vat": "10%",
+      "item_gross_worth": "820,97"
+    },
+    {
+      "item_desc": "6'x3' Oval Marble White Top Dining Table Marquetry Collectible Inlay Decor E349",
+      "item_qty": "2,00",
+      "item_net_price": "7193,76",
+      "item_net_worth": "14 387,52",
+      "item_vat": "10%",
+      "item_gross_worth": "15 826,27"
+    },
+    {
+      "item_desc": "52\"x52\" Marble Top Coffee Table Pauashell Inlay Gemstone Art Cyber Monday Gift",
+      "item_qty": "3,00",
+      "item_net_price": "16828,00",
+      "item_net_worth": "50484,00",
+      "item_vat": "10%",
+      "item_gross_worth": "55532,40"
+    },
+    {
+      "item_desc": "48\" Marble Round Dining Table Top Lapis Floral Inlay Arts Restaurant Decor E1053",
+      "item_qty": "1,00",
+      "item_net_price": "8307,53",
+      "item_net_worth": "8307,53",
+      "item_vat": "10%",
+      "item_gross_worth": "9 138,28"
+    },
+    {
+      "item_desc": "27\"x27\" Black Marble Top Coffee Table Floral Inlay Art Black Friday Gift D\u00e9cor",
       "item_qty": "5,00",
-      "item_net_price": "12,00",
-      "item_net_worth": "60,00",
+      "item_net_price": "1588,00",
+      "item_net_worth": "7940,00",
       "item_vat": "10%",
-      "item_gross_worth": "66,00"
+      "item_gross_worth": "8 734,00"
     },
     {
-      "item_desc": "With Hooks Stemware Storage Multiple Uses Iron Wine Rack Hanging Glass",
-      "item_qty": "4,00",
-      "item_net_price": "28,08",
-      "total_net_worth": "112,32",
-      "item_vat": "10%",
-      "item_gross_worth": "123,55"
-    },
-    {
-      "item_desc": "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
+      "item_desc": "50\"x30\" White Coffee Top Table Lapis Pietradura Inlay Handmade Veterans Day Gift",
       "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "total_net_worth": "7,50",
+      "item_net_price": "2 495,00",
+      "item_net_worth": "2495,00",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
-    },
-    {
-      "item_desc": "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 420 FL OZ (591 ml) NEW",
-      "item_qty": "1,00",
-      "item_net_price": "12,99",
-      "item_net_worth": "12,99",
-      "item_vat": "10%",
-      "item_gross_worth": "14,29"
+      "item_gross_worth": "2 744,50"
     }
   ],
   "summary": {
-    "total_net_worth": "$ 192,81",
-    "total_vat": "$19,28",
-    "total_gross_worth": "$ 212,09"
+    "total_net_worth": "$ 85850,39",
+    "total_vat": "$8585,04",
+    "total_gross_worth": "$94435,43"
   }
 }

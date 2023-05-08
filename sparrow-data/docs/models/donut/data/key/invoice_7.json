@@ -1,26 +1,18 @@
 {
-  "header": {
-    "invoice_no": "40378170",
-    "invoice_date": "10/15/2012",
-    "seller": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-    "client": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-    "seller_tax_id": "958-74-3511",
-    "client_tax_id": "998-87-7723",
-    "iban": "GB77WRBQ31965128414006"
-  },
-  "items": [
-    {
-      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "item_net_worth": "7,50",
-      "item_vat": "10%",
-      "item_gross_worth": "8,25"
-    }
-  ],
-  "summary": {
-    "total_net_worth": "$7,50",
-    "total_vat": "$0,75",
-    "total_gross_worth": "$8,25"
-  }
+  "invoice_no": "54212825",
+  "invoice_date": "05/01/2015",
+  "seller": "Hutchinson PLC 7046 Barrett Mount Floresberg, AZ 86083",
+  "client": "Chapman-Long 245 Eric Rest Suite 622 Port Jimmyview, CO 68684",
+  "seller_tax_id": "959-74-2014",
+  "client_tax_id": "953-85-0282",
+  "iban": "GB39WGXJ06397307045703",
+  "item_desc": "Stainless Steel Reusable Vacuum Sealed Champagne Red Wine Bottle Stopper Cap New",
+  "item_qty": "3,00",
+  "item_net_price": "1,20",
+  "item_net_worth": "3,60",
+  "item_vat": "10%",
+  "item_gross_worth": "3,96",
+  "total_net_worth": "$ 501,40",
+  "total_vat": "$ 50,14",
+  "total_gross_worth": "$ 551,54"
 }

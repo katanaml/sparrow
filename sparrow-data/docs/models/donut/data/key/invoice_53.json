@@ -1,26 +1,25 @@
 {
   "header": {
-    "invoice_no": "40378170",
-    "invoice_date": "10/15/2012",
-    "seller": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-    "client": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-    "seller_tax_id": "958-74-3511",
-    "client_tax_id": "998-87-7723",
-    "iban": "GB77WRBQ31965128414006"
+    "invoice_no": "65345089",
+    "invoice_date": "12/24/2020",
+    "seller": "Roberts Group 058 Laura Squares East Saramouth, WA 49444",
+    "client": "958-90-2468",
+    "seller_tax_id": "978-71-2963",
+    "iban": "GB41CYBY20444587829017"
   },
   "items": [
     {
-      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "item_net_worth": "7,50",
+      "item_desc": "10-Core Gaming Computer Desktop PC Tower HDMI 8GB DDR4 R7 Graphic CUSTOM BUILT",
+      "item_qty": "4,00",
+      "item_net_price": "348,88",
+      "item_net_worth": "1395,52",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "1535,07"
     }
   ],
   "summary": {
-    "total_net_worth": "$7,50",
-    "total_vat": "$0,75",
-    "total_gross_worth": "$8,25"
+    "total_net_worth": "$1395,52",
+    "total_vat": "$ 139,55",
+    "total_gross_worth": "$1535,07"
   }
 }

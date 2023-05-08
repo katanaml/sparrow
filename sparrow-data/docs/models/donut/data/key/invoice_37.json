@@ -1,26 +1,34 @@
 {
   "header": {
-    "invoice_no": "40378170",
-    "invoice_date": "10/15/2012",
-    "seller": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-    "client": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-    "seller_tax_id": "958-74-3511",
-    "client_tax_id": "998-87-7723",
-    "iban": "GB77WRBQ31965128414006"
+    "invoice_no": "77545252",
+    "invoice_date": "04/07/2017",
+    "seller": "Flores-Lee 70947 Hill Avenue Port Steventown, NC 98912",
+    "client": "Walton and Sons USS Taylor FPO AA 53007",
+    "seller_tax_id": "933-86-6766",
+    "client_tax_id": "986-70-1517",
+    "iban": "GB71CENJ79347815059655"
   },
   "items": [
     {
-      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "item_net_worth": "7,50",
+      "item_desc": "Elisa Cavaletti Daniela Dallavalle Shift Dress Grey And White .Size M",
+      "item_qty": "4,00",
+      "item_net_price": "60,00",
+      "item_net_worth": "240,00",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "264,00"
+    },
+    {
+      "item_desc": "Jones Wear Dress Women White Pink Floral Sleeveless Formal Tea Dress Size 12",
+      "item_qty": "3,00",
+      "item_net_price": "20,00",
+      "item_net_worth": "60,00",
+      "item_vat": "10%",
+      "item_gross_worth": "66,00"
     }
   ],
   "summary": {
-    "total_net_worth": "$7,50",
-    "total_vat": "$0,75",
-    "total_gross_worth": "$8,25"
+    "total_net_worth": "$300,00",
+    "total_vat": "$30,00",
+    "total_gross_worth": "$ 330,00"
   }
 }

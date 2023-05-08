@@ -1,26 +1,42 @@
 {
   "header": {
-    "invoice_no": "40378170",
-    "invoice_date": "10/15/2012",
-    "seller": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-    "client": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-    "seller_tax_id": "958-74-3511",
-    "client_tax_id": "998-87-7723",
-    "iban": "GB77WRBQ31965128414006"
+    "invoice_no": "24342647",
+    "invoice_date": "05/07/2020",
+    "seller": "Davis, Evans and Cooper 475 Daniel Port Moralesborough, OK44662",
+    "client": "Stephens-Goodman 5197 Rebekah Stravenue Suite 498 New Nicholasland, VA 18645",
+    "seller_tax_id": "933-70-8828",
+    "client_tax_id": "910-72-5904",
+    "iban": "GB05CPFN10349037207241"
   },
   "items": [
     {
-      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "item_net_worth": "7,50",
+      "item_desc": "15\"x15\" White Marble Coffee Table Top With 15\" Tall Stand Semi Precious Art Deco",
+      "item_qty": "4,00",
+      "item_net_price": "575,99",
+      "item_net_worth": "2303,96",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "2 534,36"
+    },
+    {
+      "item_desc": "12\" Marble Lapis Inlay Chess Table Top With 2\" Pieces & 15\" Wooden Stand W537",
+      "item_qty": "3,00",
+      "item_net_price": "444,60",
+      "item_net_worth": "1333,80",
+      "item_vat": "10%",
+      "item_gross_worth": "1467,18"
+    },
+    {
+      "item_desc": "18\"x18\" White Hand Curved Top Coffee Table Inlay Decorative Gift For Her Wedding",
+      "item_qty": "1,00",
+      "item_net_price": "475,22",
+      "item_net_worth": "475,22",
+      "item_vat": "10%",
+      "item_gross_worth": "522,74"
     }
   ],
   "summary": {
-    "total_net_worth": "$7,50",
-    "total_vat": "$0,75",
-    "total_gross_worth": "$8,25"
+    "total_net_worth": "$4 112,98",
+    "total_vat": "411,30",
+    "total_gross_worth": "$4524,28"
   }
 }

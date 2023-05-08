@@ -1,0 +1,42 @@
+{
+  "header": {
+    "invoice_no": "76229289",
+    "invoice_date": "12/04/2018",
+    "seller": "Rodriguez and Sons 60916 James Squares Suite 024 Codytown, NM 42311",
+    "client": "Lucero-Brown 20333 Erik Club Apt. 925 Lake Abigailborough, MN 76772",
+    "seller_tax_id": "943-82-3154",
+    "client_tax_id": "905-72-6065",
+    "iban": "GB62DPIQ05886436296811"
+  },
+  "items": [
+    {
+      "item_desc": "Gaming PC Computer RX 580 8GB Ryzen 5 2x8GB Ram",
+      "item_qty": "3,00",
+      "item_net_price": "400,00",
+      "item_net_worth": "1200,00",
+      "item_vat": "10%",
+      "item_gross_worth": "1320,00"
+    },
+    {
+      "item_desc": "GAMING PC Desktop Computer RGB BUNDLE Intel CORE i7 16GB RAM Nvidia GTX 1650 1TB",
+      "item_qty": "5,00",
+      "item_net_price": "549,99",
+      "item_net_worth": "2749,95",
+      "item_vat": "10%",
+      "item_gross_worth": "3024,95"
+    },
+    {
+      "item_desc": "computer",
+      "item_qty": "4,00",
+      "item_net_price": "299,99",
+      "item_net_worth": "1199,96",
+      "item_vat": "10%",
+      "item_gross_worth": "1319,96"
+    }
+  ],
+  "summary": {
+    "total_net_worth": "$5 149,91",
+    "total_vat": "$ 514,99",
+    "total_gross_worth": "$5664,90"
+  }
+}

@@ -1,26 +1,74 @@
 {
   "header": {
-    "invoice_no": "40378170",
-    "invoice_date": "10/15/2012",
-    "seller": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-    "client": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-    "seller_tax_id": "958-74-3511",
-    "client_tax_id": "998-87-7723",
-    "iban": "GB77WRBQ31965128414006"
+    "invoice_no": "12830936",
+    "invoice_date": "04/27/2021",
+    "seller": "Johnson LLC 5736 Boyer Square Suite 316 Daniellebury, MI 72789",
+    "client": "Smith, Anderson and Ward 4365 Osborn Shoals North Bradleyton, NC 21207",
+    "seller_tax_id": "980-77-0423",
+    "client_tax_id": "914-78-1124",
+    "iban": "GB30QDVO20178698471358"
   },
   "items": [
     {
-      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
+      "item_desc": "FAST Dell Windows 10 Desktop Computer Core 2 Duo 4GB Ram 250GB DVD WiFi 22\" LCD",
       "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "item_net_worth": "7,50",
+      "item_net_price": "169,95",
+      "item_net_worth": "169,95",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "186,95"
+    },
+    {
+      "item_desc": "Desktop Computer Gaming PC Build Your Own Ryzen 3000G 3200G 3.5Ghz+ Vega or GTX",
+      "item_qty": "5,00",
+      "item_net_price": "579,00",
+      "item_net_worth": "2895,00",
+      "item_vat": "10%",
+      "item_gross_worth": "3 184,50"
+    },
+    {
+      "item_desc": "HP ProDesk G1 Desktop Computer Core i3 3.4GHz 8GB 500GB HD 19\" LCD Windows 10 PC",
+      "item_qty": "1,00",
+      "item_net_price": "119,95",
+      "item_net_worth": "119,95",
+      "item_vat": "10%",
+      "item_gross_worth": "131,95"
+    },
+    {
+      "item_desc": "AMD Dual Core 3.9Ghz 4GB DDR3 500GB HDD WiFi Windows 10 Desktop PC Computer",
+      "item_qty": "2,00",
+      "item_net_price": "259,99",
+      "item_net_worth": "519,98",
+      "item_vat": "10%",
+      "item_gross_worth": "571,98"
+    },
+    {
+      "item_desc": "personal computer",
+      "item_qty": "4,00",
+      "item_net_price": "59,00",
+      "item_net_worth": "236,00",
+      "item_vat": "10%",
+      "item_gross_worth": "259,60"
+    },
+    {
+      "item_desc": "desktop computers gaming build from scratch",
+      "item_qty": "2,00",
+      "item_net_price": "188,00",
+      "item_net_worth": "376,00",
+      "item_vat": "10%",
+      "item_gross_worth": "413,60"
+    },
+    {
+      "item_desc": "Gaming PC Desktop Computer Intel i7 RGB, GTX 1660, 16GB RAM, 2TB HDD, 480GB SSD",
+      "item_qty": "2,00",
+      "item_net_price": "809,99",
+      "item_net_worth": "1619,98",
+      "item_vat": "10%",
+      "item_gross_worth": "1 781,98"
     }
   ],
   "summary": {
-    "total_net_worth": "$7,50",
-    "total_vat": "$0,75",
-    "total_gross_worth": "$8,25"
+    "total_net_worth": "$5936,86",
+    "total_vat": "$ 593,69",
+    "total_gross_worth": "$6530,55"
   }
 }

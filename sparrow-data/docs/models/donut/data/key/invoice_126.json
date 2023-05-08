@@ -1,26 +1,26 @@
 {
   "header": {
-    "invoice_no": "40378170",
-    "invoice_date": "10/15/2012",
-    "seller": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-    "client": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-    "seller_tax_id": "958-74-3511",
-    "client_tax_id": "998-87-7723",
-    "iban": "GB77WRBQ31965128414006"
+    "invoice_no": "97159829",
+    "invoice_date": "09/18/2015",
+    "seller": "Bradley-Andrade 9879 Elizabeth Common Lake Jonathan, RI 12335",
+    "client": "Castro PLC Unit 9678 Box 9664 DPO AP 69387",
+    "seller_tax_id": "985-73-8194",
+    "client_tax_id": "994-72-1270",
+    "iban": "GB81LZWO32519172531418"
   },
   "items": [
     {
-      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "item_net_worth": "7,50",
+      "item_desc": "12\" Marble Lapis Inlay Chess Table Top With 2\" Pieces & 15\" Wooden Stand W537",
+      "item_qty": "2,00",
+      "item_net_price": "444,60",
+      "item_net_worth": "889,20",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "978,12"
     }
   ],
   "summary": {
-    "total_net_worth": "$7,50",
-    "total_vat": "$0,75",
-    "total_gross_worth": "$8,25"
+    "total_net_worth": "$ 889,20",
+    "total_vat": "$ 88,92",
+    "total_gross_worth": "$ 978,12"
   }
 }

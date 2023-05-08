@@ -1,50 +1,58 @@
 {
   "header": {
-    "invoice_no": "61356291",
-    "invoice_date": "09/06/2012",
-    "seller": "Chapman, Kim and Green 64731 James Branch Smithmouth, NC 26872",
-    "client": "Rodriguez-Stevens 2280 Angela Plain Hortonshire, MS 93248",
-    "seller_tax_id": "949-84-9105",
-    "client_tax_id": "939-98-8477",
-    "iban": "GB50ACIE59715038217063"
+    "invoice_no": "30955348",
+    "invoice_date": "02/08/2014",
+    "seller": "Kaufman-Hopkins 20762 Wright Island Perryfort, NC 50103",
+    "client": "Fox, Munoz and Brown 459 Joyce Stream Apt. 887 Curtisland, MO 66045",
+    "seller_tax_id": "911-84-3837",
+    "client_tax_id": "973-94-1949",
+    "iban": "GB43UOLO03291966936224"
   },
   "items": [
     {
-      "item_desc": "Wine Glasses Goblets Pair Clear Glass",
+      "item_desc": "Custom Build HP EliteDesk 800 G1 Tower i5-4570 3.20GHz Desktop Computer PC",
+      "item_qty": "2,00",
+      "item_net_price": "124,99",
+      "item_net_worth": "249,98",
+      "item_vat": "10%",
+      "item_gross_worth": "274,98"
+    },
+    {
+      "item_desc": "GAMING PC Desktop Computer RGB BUNDLE Intel CORE i7 16GB RAM Nvidia GTX 1650 1TB",
+      "item_qty": "1,00",
+      "item_net_price": "569,99",
+      "item_net_worth": "569,99",
+      "item_vat": "10%",
+      "item_gross_worth": "626,99"
+    },
+    {
+      "item_desc": "Dell Desktop Computer Optiplex 790 Tower PC Core i5 8GB 500GB Windows 10 Pro",
       "item_qty": "5,00",
-      "item_net_price": "12,00",
-      "item_net_worth": "60,00",
+      "item_net_price": "149,95",
+      "item_net_worth": "749,75",
       "item_vat": "10%",
-      "item_gross_worth": "66,00"
+      "item_gross_worth": "824,73"
     },
     {
-      "item_desc": "With Hooks Stemware Storage Multiple Uses Iron Wine Rack Hanging Glass",
+      "item_desc": "HP ProDesk 400 G5 Mini Desktop Computer i5-9500T 8GB 256GB SSD W10P",
+      "item_qty": "1,00",
+      "item_net_price": "200,50",
+      "item_net_worth": "200,50",
+      "item_vat": "10%",
+      "item_gross_worth": "220,55"
+    },
+    {
+      "item_desc": "Ryzen Gaming Computer",
       "item_qty": "4,00",
-      "item_net_price": "28,08",
-      "total_net_worth": "112,32",
+      "item_net_price": "752,00",
+      "item_net_worth": "3008,00",
       "item_vat": "10%",
-      "item_gross_worth": "123,55"
-    },
-    {
-      "item_desc": "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "total_net_worth": "7,50",
-      "item_vat": "10%",
-      "item_gross_worth": "8,25"
-    },
-    {
-      "item_desc": "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 420 FL OZ (591 ml) NEW",
-      "item_qty": "1,00",
-      "item_net_price": "12,99",
-      "item_net_worth": "12,99",
-      "item_vat": "10%",
-      "item_gross_worth": "14,29"
+      "item_gross_worth": "3 308,80"
     }
   ],
   "summary": {
-    "total_net_worth": "$ 192,81",
-    "total_vat": "$19,28",
-    "total_gross_worth": "$ 212,09"
+    "total_net_worth": "$4778,22",
+    "total_vat": "$ 477,82",
+    "total_gross_worth": "$5256,04"
   }
 }

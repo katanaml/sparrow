@@ -1,26 +1,58 @@
 {
   "header": {
-    "invoice_no": "40378170",
-    "invoice_date": "10/15/2012",
-    "seller": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-    "client": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-    "seller_tax_id": "958-74-3511",
-    "client_tax_id": "998-87-7723",
-    "iban": "GB77WRBQ31965128414006"
+    "invoice_no": "65428348",
+    "invoice_date": "07/27/2017",
+    "seller": "Perez Ltd PSC 1848, Box 8316 APO AA 15675",
+    "client": "Diaz LLC 387 Anthony Garden West Margaretside, NH 43447",
+    "seller_tax_id": "945-81-8549",
+    "client_tax_id": "914-77-7181",
+    "iban": "GB34FPYD88234862125581"
   },
   "items": [
     {
-      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
+      "item_desc": "Jams World Hawaiian D Dress Rayon SZ.L",
       "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "item_net_worth": "7,50",
+      "item_net_price": "65,00",
+      "item_net_worth": "65,00",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "71,50"
+    },
+    {
+      "item_desc": "Liza Byrd Dress Sz L- Coral Green Medallion Print Short Sleeve 100% Cotton Line",
+      "item_qty": "2,00",
+      "item_net_price": "17,99",
+      "item_net_worth": "35,98",
+      "item_vat": "10%",
+      "item_gross_worth": "39,58"
+    },
+    {
+      "item_desc": "SCOTT MCCINTOCK SIZE 12 BLACK PARTY DRESS WITH SPARKLIND TOP",
+      "item_qty": "5,00",
+      "item_net_price": "25,00",
+      "item_net_worth": "125,00",
+      "item_vat": "10%",
+      "item_gross_worth": "137,50"
+    },
+    {
+      "item_desc": "Jams World Hawaiian 0 Dress Rayon SZ.L",
+      "item_qty": "5,00",
+      "item_net_price": "65,00",
+      "item_net_worth": "325,00",
+      "item_vat": "10%",
+      "item_gross_worth": "357,50"
+    },
+    {
+      "item_desc": "Jcrew Mercantile Women's Maxi Dress Size 2 Floral Tiered Lined Pink",
+      "item_qty": "3,00",
+      "item_net_price": "20,00",
+      "total_net_worth": "60,00",
+      "item_vat": "10%",
+      "item_gross_worth": "66,00"
     }
   ],
   "summary": {
-    "total_net_worth": "$7,50",
-    "total_vat": "$0,75",
-    "total_gross_worth": "$8,25"
+    "total_net_worth": "$ 610,98",
+    "total_vat": "$61,10",
+    "total_gross_worth": "$ 672,08"
   }
 }

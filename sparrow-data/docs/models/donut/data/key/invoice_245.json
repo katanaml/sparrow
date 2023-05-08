@@ -1,26 +1,42 @@
 {
   "header": {
-    "invoice_no": "40378170",
-    "invoice_date": "10/15/2012",
-    "seller": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-    "client": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-    "seller_tax_id": "958-74-3511",
-    "client_tax_id": "998-87-7723",
-    "iban": "GB77WRBQ31965128414006"
+    "invoice_no": "61264237",
+    "invoice_date": "10/25/2020",
+    "seller": "Larson,. Jones and Liu 4154 Jennifer Vista Tracyfort, MN 65215",
+    "client": "Cisneros Group 81225 Steven Street Kerrmouth, NY 78258",
+    "seller_tax_id": "916-74-1494",
+    "client_tax_id": "990-87-1503",
+    "iban": "GB69HBKR40305240693626"
   },
   "items": [
     {
-      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "item_net_worth": "7,50",
+      "item_desc": "Lilly Pulitzer Lillywood California 8 Shift Dress",
+      "item_qty": "3,00",
+      "item_net_price": "76,00",
+      "item_net_worth": "228,00",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "250,80"
+    },
+    {
+      "item_desc": "R&M; RICHARDS WOMAN'S BLUE DRESS With Rhinestone Accent Short Sleeves Sz 16W NWT",
+      "item_qty": "1,00",
+      "item_net_price": "29,99",
+      "item_net_worth": "29,99",
+      "item_vat": "10%",
+      "item_gross_worth": "32,99"
+    },
+    {
+      "item_desc": "Large Blue Long Sleeve Fit & Flare Dress Elastic Waist Crochet Detail Bohemian",
+      "item_qty": "4,00",
+      "item_net_price": "0,99",
+      "item_net_worth": "3,96",
+      "item_vat": "10%",
+      "item_gross_worth": "4,36"
     }
   ],
   "summary": {
-    "total_net_worth": "$7,50",
-    "total_vat": "$0,75",
-    "total_gross_worth": "$8,25"
+    "total_net_worth": "$ 261,95",
+    "total_vat": "$ 26,20",
+    "total_gross_worth": "$ 288,15"
   }
 }

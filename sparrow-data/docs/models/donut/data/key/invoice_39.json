@@ -1,26 +1,66 @@
 {
   "header": {
-    "invoice_no": "40378170",
-    "invoice_date": "10/15/2012",
-    "seller": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-    "client": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-    "seller_tax_id": "958-74-3511",
-    "client_tax_id": "998-87-7723",
-    "iban": "GB77WRBQ31965128414006"
+    "invoice_no": "25596256",
+    "invoice_date": "10/14/2020",
+    "seller": "Choi Inc 4261 Keller Trafficway South Dustin, UT 84981",
+    "client": "Boyd, Davis and Mason 277 Katrina Falls Suite 150 Carterton, RI 56751",
+    "seller_tax_id": "946-71-9972",
+    "client_tax_id": "989-92-4630",
+    "iban": "GB95UXLL05973666430772"
   },
   "items": [
     {
-      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "item_net_worth": "7,50",
+      "item_desc": "Diadora Youth Boys Avanti MD JR Soccer Cleats Size 2.5 Yellow Black NEW",
+      "item_qty": "2,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "39,98",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "43,98"
+    },
+    {
+      "item_desc": "Fila Boys Skele-Toes Bay RNR 3 Black Running Shoes 11 Medium (D) Little Kid 9953",
+      "item_qty": "3,00",
+      "item_net_price": "10,25",
+      "item_net_worth": "30,75",
+      "item_vat": "10%",
+      "item_gross_worth": "33,83"
+    },
+    {
+      "item_desc": "6 Pairs Of Jordan's Size 7y",
+      "item_qty": "2,00",
+      "item_net_price": "130,00",
+      "item_net_worth": "260,00",
+      "item_vat": "10%",
+      "item_gross_worth": "286,00"
+    },
+    {
+      "item_desc": "Durango Lill Little Kid Saddle Western Casual Western Tan Boys - Size 2 M",
+      "item_qty": "1,00",
+      "item_net_price": "68,00",
+      "item_net_worth": "68,00",
+      "item_vat": "10%",
+      "item_gross_worth": "74,80"
+    },
+    {
+      "item_desc": "Sperry Top Sider Billfish Boys US Size 3W Youth Childrens Shoes",
+      "item_qty": "2,00",
+      "item_net_price": "0,99",
+      "item_net_worth": "1,98",
+      "item_vat": "10%",
+      "item_gross_worth": "2,18"
+    },
+    {
+      "item_desc": "Boys Slip-On Black Dress Shoes Loafers 3.5 W Wide Width",
+      "item_qty": "1,00",
+      "item_net_price": "19,99",
+      "item_net_worth": "19,99",
+      "item_vat": "10%",
+      "item_gross_worth": "21,99"
     }
   ],
   "summary": {
-    "total_net_worth": "$7,50",
-    "total_vat": "$0,75",
-    "total_gross_worth": "$8,25"
+    "total_net_worth": "$ 420,70",
+    "total_vat": "$42,07",
+    "total_gross_worth": "$ 462,77"
   }
 }

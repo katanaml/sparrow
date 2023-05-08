@@ -1,26 +1,34 @@
 {
   "header": {
-    "invoice_no": "40378170",
-    "invoice_date": "10/15/2012",
-    "seller": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-    "client": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-    "seller_tax_id": "958-74-3511",
-    "client_tax_id": "998-87-7723",
-    "iban": "GB77WRBQ31965128414006"
+    "invoice_no": "94006791",
+    "invoice_date": "09/10/2012",
+    "client": "Holland, Griffin and Coleman 1400 Deborah Junction Garciaville, WA 86657",
+    "client_tax_id": "954-73-5688",
+    "iban": "GB62BPCY62278484325750"
   },
   "items": [
     {
-      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "item_net_worth": "7,50",
-      "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_desc": "HP Z220 Desktop Computer Barebone system",
+      "item_qty": "2,00",
+      "item_net_price": "70,00",
+      "item_net_worth": "140,00",
+      "iban": "10%",
+      "item_gross_worth": "154,00"
+    },
+    {
+      "item_desc": "Custom Build HP EliteDesk 800 G1 Tower i5-4570 3.20GHz Desktop Computer PC",
+      "item_qty": "5,00",
+      "item_net_price": "124,99",
+      "item_net_worth": "624,95",
+      "iban": "10%",
+      "item_gross_worth": "687,44"
     }
   ],
   "summary": {
-    "total_net_worth": "$7,50",
-    "total_vat": "$0,75",
-    "total_gross_worth": "$8,25"
+    "total_net_worth": "$ 764,95",
+    "total_vat": "$76,49"
+  },
+  "None": {
+    "total_gross_worth": "$ 841,44"
   }
 }

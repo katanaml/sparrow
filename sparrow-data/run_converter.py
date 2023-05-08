@@ -9,7 +9,7 @@ def main():
     data_converter.convert_to_sparrow_format('docs/input/invoices/processed/ocr',
                                              'docs/input/invoices/processed/output')
 
-    #define the source and destination directory
+    # define the source and destination directory
     src_dir = 'docs/input/invoices/processed/output'
     dst_dir = '../sparrow-ui/docs/json'
 

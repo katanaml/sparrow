@@ -1,50 +1,66 @@
 {
   "header": {
-    "invoice_no": "61356291",
-    "invoice_date": "09/06/2012",
-    "seller": "Chapman, Kim and Green 64731 James Branch Smithmouth, NC 26872",
-    "client": "Rodriguez-Stevens 2280 Angela Plain Hortonshire, MS 93248",
-    "seller_tax_id": "949-84-9105",
-    "client_tax_id": "939-98-8477",
-    "iban": "GB50ACIE59715038217063"
+    "invoice_no": "22488149",
+    "invoice_date": "12/29/2020",
+    "seller": "Drake Group 4164 Thomas Green Apt. 375 Larryfurt, KS 26301",
+    "client": "Strickland, Ferguson and Ellis 318 Courtney Lock North Luismouth, MT 66049",
+    "seller_tax_id": "943-81-1003",
+    "client_tax_id": "942-73-8721",
+    "iban": "GB83IRDA58398398037166854"
   },
   "items": [
     {
-      "item_desc": "Wine Glasses Goblets Pair Clear Glass",
-      "item_qty": "5,00",
-      "item_net_price": "12,00",
-      "item_net_worth": "60,00",
+      "item_desc": "HP Compaq 6200 Pro SFF Desktop Computer Pentium Windows 10 System 500GB 1TB",
+      "item_qty": "1,00",
+      "item_net_price": "113,96",
+      "item_net_worth": "113,96",
       "item_vat": "10%",
-      "item_gross_worth": "66,00"
+      "item_gross_worth": "125,36"
     },
     {
-      "item_desc": "With Hooks Stemware Storage Multiple Uses Iron Wine Rack Hanging Glass",
+      "item_desc": "HP T520 Thin Client Computer AMD GX-212JC 1.2GHz 4GB RAM TESTED !IREAD BELOW!!",
       "item_qty": "4,00",
-      "item_net_price": "28,08",
-      "total_net_worth": "112,32",
+      "item_net_price": "37,75",
+      "item_net_worth": "151,00",
       "item_vat": "10%",
-      "item_gross_worth": "123,55"
+      "item_gross_worth": "166,10"
     },
     {
-      "item_desc": "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "total_net_worth": "7,50",
+      "item_desc": "Dell Desktop Computer Intel Core i5 Windows 10 pro 64 250gb 3.1ghz 4gb Ram",
+      "item_qty": "3,00",
+      "item_net_price": "240,24",
+      "item_net_worth": "720,72",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "792,79"
     },
     {
-      "item_desc": "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 420 FL OZ (591 ml) NEW",
-      "item_qty": "1,00",
-      "item_net_price": "12,99",
-      "item_net_worth": "12,99",
+      "item_desc": "Custom Build HP Desktop Computer 16GB I 2TB ISSD I Windows 10 Windows 7 PC WiFi",
+      "item_qty": "4,00",
+      "item_net_price": "329,00",
+      "item_net_worth": "1316,00",
       "item_vat": "10%",
-      "item_gross_worth": "14,29"
+      "item_gross_worth": "1447,60"
+    },
+    {
+      "item_desc": "Desktop Computer Super Writemaster Intel Core Duo",
+      "item_qty": "2,00",
+      "item_net_price": "22,71",
+      "item_net_worth": "45,42",
+      "item_vat": "10%",
+      "item_gross_worth": "49,96"
+    },
+    {
+      "item_desc": "Gaming PC Desktop Computer i5 8GB 120GB SSD+1TB Win10 WIFI +K Keyboard",
+      "item_qty": "2,00",
+      "item_net_price": "168,88",
+      "item_net_worth": "337,76",
+      "item_vat": "10%",
+      "item_gross_worth": "371,54"
     }
   ],
   "summary": {
-    "total_net_worth": "$ 192,81",
-    "total_vat": "$19,28",
-    "total_gross_worth": "$ 212,09"
+    "total_net_worth": "$2684,86",
+    "total_vat": "$ 268,49",
+    "total_gross_worth": "$2953,35"
   }
 }

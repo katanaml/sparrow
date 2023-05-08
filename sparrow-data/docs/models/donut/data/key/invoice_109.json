@@ -1,26 +1,18 @@
 {
-  "header": {
-    "invoice_no": "40378170",
-    "invoice_date": "10/15/2012",
-    "seller": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-    "client": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-    "seller_tax_id": "958-74-3511",
-    "client_tax_id": "998-87-7723",
-    "iban": "GB77WRBQ31965128414006"
-  },
-  "items": [
-    {
-      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "item_net_worth": "7,50",
-      "item_vat": "10%",
-      "item_gross_worth": "8,25"
-    }
-  ],
-  "summary": {
-    "total_net_worth": "$7,50",
-    "total_vat": "$0,75",
-    "total_gross_worth": "$8,25"
-  }
+  "invoice_no": "87278875",
+  "invoice_date": "07/06/2019",
+  "seller": "Jackson-Martinez 719 Reyes Mill Apt. 833 Joshuabury, NM 79134",
+  "client": "Foster, Travis and Harris 9816 Matthew Meadows Suite 574 New Scott, DC 38726",
+  "seller_tax_id": "954-98-4076",
+  "client_tax_id": "938-94-3648",
+  "iban": "GB960NEJ/7402455114924",
+  "item_desc": "Joma Boys Youth Gol-102 Soccer Cleats Shoes Size 1.5 White Red 1.5Y NEW",
+  "item_qty": "1,00",
+  "item_net_price": "19,99",
+  "item_net_worth": "19,99",
+  "item_vat": "10%",
+  "item_gross_worth": "21,99",
+  "total_net_worth": "$ 68,74",
+  "total_vat": "$ 6,87",
+  "total_gross_worth": "$75,61"
 }

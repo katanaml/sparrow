@@ -1,50 +1,66 @@
 {
   "header": {
-    "invoice_no": "61356291",
-    "invoice_date": "09/06/2012",
-    "seller": "Chapman, Kim and Green 64731 James Branch Smithmouth, NC 26872",
-    "client": "Rodriguez-Stevens 2280 Angela Plain Hortonshire, MS 93248",
-    "seller_tax_id": "949-84-9105",
-    "client_tax_id": "939-98-8477",
-    "iban": "GB50ACIE59715038217063"
+    "invoice_no": "79426901",
+    "invoice_date": "02/09/2015",
+    "seller": "Morrison, Hernandez and Hayes 6606 Dunn Alley Lake Sarah, ID 19002",
+    "client": "Perez PLC PSC 0469, Box 8452 APO AA 24755",
+    "seller_tax_id": "948-75-5821",
+    "client_tax_id": "974-73-5480",
+    "iban": "GB30TPHC72501170235860"
   },
   "items": [
     {
-      "item_desc": "Wine Glasses Goblets Pair Clear Glass",
+      "item_desc": "AMD Custom Built Quad Core Ryzen 5 Gaming PC Computer 8GB DDR4 Vega 11 SSD",
       "item_qty": "5,00",
-      "item_net_price": "12,00",
-      "item_net_worth": "60,00",
+      "item_net_price": "599,99",
+      "item_net_worth": "2999,95",
       "item_vat": "10%",
-      "item_gross_worth": "66,00"
+      "item_gross_worth": "3 299,95"
     },
     {
-      "item_desc": "With Hooks Stemware Storage Multiple Uses Iron Wine Rack Hanging Glass",
+      "item_desc": "Custom Build Dell Desktop Computer i5 I 16GB I2TB I SSD Windows 10 PC WiFi DVD",
+      "item_qty": "5,00",
+      "item_net_price": "99,00",
+      "item_net_worth": "495,00",
+      "item_vat": "10%",
+      "item_gross_worth": "544,50"
+    },
+    {
+      "item_desc": "Dell Desktop Computer Intel Core i5 Windows 10 pro 64 250gb 3.1ghz 4gb Ram",
       "item_qty": "4,00",
-      "item_net_price": "28,08",
-      "total_net_worth": "112,32",
+      "item_net_price": "240,24",
+      "item_net_worth": "960,96",
       "item_vat": "10%",
-      "item_gross_worth": "123,55"
+      "item_gross_worth": "1057,06"
     },
     {
-      "item_desc": "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "total_net_worth": "7,50",
+      "item_desc": "Dell OptiPlex 390 SFF Computer Windows 7 Pro i3 3.10GHZ 4GB RAM 232GB HDD",
+      "item_qty": "5,00",
+      "item_net_price": "59,95",
+      "item_net_worth": "299,75",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "329,73"
     },
     {
-      "item_desc": "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 420 FL OZ (591 ml) NEW",
+      "item_desc": "CLEARANCE! Fast Dell Desktop Computer PC DUAL CORE WINDOWS 10 4/8/16GB RAM",
       "item_qty": "1,00",
-      "item_net_price": "12,99",
-      "item_net_worth": "12,99",
+      "item_net_price": "209,00",
+      "item_net_worth": "209,00",
       "item_vat": "10%",
-      "item_gross_worth": "14,29"
+      "item_gross_worth": "229,90"
+    },
+    {
+      "item_desc": "Gaming PC Desktop Computer Intel i7 RGB, GTX 1660, 16GB RAM, 2TB HDD, 480GB SSD",
+      "item_qty": "3,00",
+      "item_net_price": "809,99",
+      "item_net_worth": "2429,97",
+      "item_vat": "10%",
+      "item_gross_worth": "2672,97"
     }
   ],
   "summary": {
-    "total_net_worth": "$ 192,81",
-    "total_vat": "$19,28",
-    "total_gross_worth": "$ 212,09"
+    "total_net_worth": "$7394,63",
+    "total_vat": "$ 739,46",
+    "total_gross_worth": "$8134,09"
   }
 }

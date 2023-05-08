@@ -1,50 +1,74 @@
 {
   "header": {
-    "invoice_no": "61356291",
-    "invoice_date": "09/06/2012",
-    "seller": "Chapman, Kim and Green 64731 James Branch Smithmouth, NC 26872",
-    "client": "Rodriguez-Stevens 2280 Angela Plain Hortonshire, MS 93248",
-    "seller_tax_id": "949-84-9105",
-    "client_tax_id": "939-98-8477",
-    "iban": "GB50ACIE59715038217063"
+    "invoice_no": "23152691",
+    "invoice_date": "08/01/2015",
+    "seller": "Whitaker Ltd 57724 Hall Flats Apt. 570 Robertsonstad, KS 16218",
+    "client": "Stout-Miller 80207 Samantha Streets Suite 926 Thomaschester, DE 30356",
+    "seller_tax_id": "931-73-0965",
+    "client_tax_id": "938-72-5881",
+    "iban": "GB71ALPL38952311779111"
   },
   "items": [
     {
-      "item_desc": "Wine Glasses Goblets Pair Clear Glass",
-      "item_qty": "5,00",
-      "item_net_price": "12,00",
-      "item_net_worth": "60,00",
-      "item_vat": "10%",
-      "item_gross_worth": "66,00"
-    },
-    {
-      "item_desc": "With Hooks Stemware Storage Multiple Uses Iron Wine Rack Hanging Glass",
+      "item_desc": "personal computer",
       "item_qty": "4,00",
-      "item_net_price": "28,08",
-      "total_net_worth": "112,32",
+      "item_net_price": "59,00",
+      "item_net_worth": "236,00",
       "item_vat": "10%",
-      "item_gross_worth": "123,55"
+      "item_gross_worth": "259,60"
     },
     {
-      "item_desc": "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
+      "item_desc": "HP All-in-One Computer 22\" Full-HD Display Intel 2.90GHz 4GB 1TB HD Win10 - TEAL",
       "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "total_net_worth": "7,50",
+      "item_net_price": "449,99",
+      "item_net_worth": "449,99",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "494,99"
     },
     {
-      "item_desc": "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 420 FL OZ (591 ml) NEW",
-      "item_qty": "1,00",
-      "item_net_price": "12,99",
-      "item_net_worth": "12,99",
+      "item_desc": "Dell Optiplex SFF Desktop Computer Windows 10 4GB 160GB",
+      "item_qty": "4,00",
+      "item_net_price": "89,99",
+      "item_net_worth": "359,96",
       "item_vat": "10%",
-      "item_gross_worth": "14,29"
+      "item_gross_worth": "395,96"
+    },
+    {
+      "item_desc": "HP Elite 8300 Business USFF Desktop Computer i3 4GB 250GB Windows 10",
+      "item_qty": "2,00",
+      "item_net_price": "84,99",
+      "item_net_worth": "169,98",
+      "item_vat": "10%",
+      "item_gross_worth": "186,98"
+    },
+    {
+      "item_desc": "SAMA RGB Gaming PC Desktop Computer i5 3.7GHz Nvidia GTX 1060 16GB Windows 10",
+      "item_qty": "5,00",
+      "item_net_price": "400,00",
+      "item_net_worth": "2 000,00",
+      "item_vat": "10%",
+      "item_gross_worth": "2 200,00"
+    },
+    {
+      "item_desc": "Lenovo C20-00...all in one desktop computer ...with Wireless Mouse.....",
+      "item_qty": "3,00",
+      "item_net_price": "277,64",
+      "item_net_worth": "832,92",
+      "item_vat": "10%",
+      "item_gross_worth": "916,21"
+    },
+    {
+      "item_desc": "Dell Optiplex 7040 SFF PC Computer Intel Core i5-6500 3.2GHz 4GB RAM 500GB HDD",
+      "item_qty": "3,00",
+      "item_net_price": "99,99",
+      "item_net_worth": "299,97",
+      "item_vat": "10%",
+      "item_gross_worth": "329,97"
     }
   ],
   "summary": {
-    "total_net_worth": "$ 192,81",
-    "total_vat": "$19,28",
-    "total_gross_worth": "$ 212,09"
+    "total_net_worth": "$4348,82",
+    "total_vat": "$ 434,88",
+    "total_gross_worth": "$4783,70"
   }
 }

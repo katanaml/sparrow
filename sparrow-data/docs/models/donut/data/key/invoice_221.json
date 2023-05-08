@@ -1,26 +1,26 @@
 {
   "header": {
-    "invoice_no": "40378170",
-    "invoice_date": "10/15/2012",
-    "seller": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-    "client": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-    "seller_tax_id": "958-74-3511",
-    "client_tax_id": "998-87-7723",
-    "iban": "GB77WRBQ31965128414006"
+    "invoice_no": "88273503",
+    "invoice_date": "01/17/2021",
+    "seller": "Clark and Sons 678 Sonya Shores Port Christophershire, ND 03997",
+    "client": "Rodriguez-yennings PSC 1100, Box 6819 APO AP 69267",
+    "seller_tax_id": "983-90-0612",
+    "client_tax_id": "941-79-6390",
+    "iban": "GB58KHJM79703180709994"
   },
   "items": [
     {
-      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "item_net_worth": "7,50",
+      "item_desc": "AMD Dual Core 3.9Ghz 4GB DDR3 500GB WiFi Windows 10 office Desktop PC Computer",
+      "item_qty": "2,00",
+      "item_net_price": "249,99",
+      "item_net_worth": "499,98",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "549,98"
     }
   ],
   "summary": {
-    "total_net_worth": "$7,50",
-    "total_vat": "$0,75",
-    "total_gross_worth": "$8,25"
+    "total_net_worth": "$ 499,98",
+    "total_vat": "$ 50,00",
+    "total_gross_worth": "$ 549,98"
   }
 }

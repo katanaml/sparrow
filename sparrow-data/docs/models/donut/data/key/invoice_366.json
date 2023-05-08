@@ -1,50 +1,66 @@
 {
   "header": {
-    "invoice_no": "61356291",
-    "invoice_date": "09/06/2012",
-    "seller": "Chapman, Kim and Green 64731 James Branch Smithmouth, NC 26872",
-    "client": "Rodriguez-Stevens 2280 Angela Plain Hortonshire, MS 93248",
-    "seller_tax_id": "949-84-9105",
-    "client_tax_id": "939-98-8477",
-    "iban": "GB50ACIE59715038217063"
+    "invoice_no": "96051364",
+    "invoice_date": "04/28/2020",
+    "seller": "Jackson Ltd 134 Catherine Valley Apt. 756 Lake Jennifer, NE 09531",
+    "client": "Williams, Fowler and Phillips 115 Mccormick Knolls North Kevin, TN 27580",
+    "seller_tax_id": "914-85-0938",
+    "client_tax_id": "963-87-9620",
+    "iban": "GB61XXNT90578783067262"
   },
   "items": [
     {
-      "item_desc": "Wine Glasses Goblets Pair Clear Glass",
-      "item_qty": "5,00",
-      "item_net_price": "12,00",
-      "item_net_worth": "60,00",
-      "item_vat": "10%",
-      "item_gross_worth": "66,00"
-    },
-    {
-      "item_desc": "With Hooks Stemware Storage Multiple Uses Iron Wine Rack Hanging Glass",
+      "item_desc": "49\"x22\" Marble Top Center Table Carnelian Mosaic Italian Art Christmas Gift Arts",
       "item_qty": "4,00",
-      "item_net_price": "28,08",
-      "total_net_worth": "112,32",
+      "item_net_price": "2400,00",
+      "item_net_worth": "9600,00",
       "item_vat": "10%",
-      "item_gross_worth": "123,55"
+      "item_gross_worth": "10 560,00"
     },
     {
-      "item_desc": "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "total_net_worth": "7,50",
+      "item_desc": "6'x3' Marble Dining Center Table With Black Top Floral Collectible Inlaid E963",
+      "item_qty": "3,00",
+      "item_net_price": "6040,40",
+      "item_net_worth": "18 121,20",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "19 933,32"
     },
     {
-      "item_desc": "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 420 FL OZ (591 ml) NEW",
-      "item_qty": "1,00",
-      "item_net_price": "12,99",
-      "item_net_worth": "12,99",
+      "item_desc": "7'x4' Blue Random Marble Dining Hallway Table Top Lapis Lazuli Inlay Decor E947A",
+      "item_qty": "5,00",
+      "item_net_price": "8194,09",
+      "item_net_worth": "40970,45",
       "item_vat": "10%",
-      "item_gross_worth": "14,29"
+      "item_gross_worth": "45 067,50"
+    },
+    {
+      "item_desc": "36\" Marble White Top Counter Table Lapis Inlaid Pietradura Art Christmas Gifts",
+      "item_qty": "3,00",
+      "item_net_price": "3 200,00",
+      "item_net_worth": "9 600,00",
+      "item_vat": "10%",
+      "item_gross_worth": "10 560,00"
+    },
+    {
+      "item_desc": "6'x3' White Marble Dining Table Top Multi Inlay Floral Elephant Art Decor H4952",
+      "item_qty": "5,00",
+      "item_net_price": "6408,49",
+      "item_net_worth": "32042,45",
+      "item_vat": "10%",
+      "item_gross_worth": "35 246,69"
+    },
+    {
+      "item_desc": "6'x3' Marble Dining Center Table Marquetry Inlay Italian Mosaic Patio Arts H3112",
+      "item_qty": "5,00",
+      "item_net_price": "6647,61",
+      "total_net_worth": "33238,05",
+      "item_vat": "10%",
+      "item_gross_worth": "36 561,85"
     }
   ],
   "summary": {
-    "total_net_worth": "$ 192,81",
-    "total_vat": "$19,28",
-    "total_gross_worth": "$ 212,09"
+    "total_net_worth": "$143572,15",
+    "total_vat": "$ 14357,22",
+    "total_gross_worth": "$ 1579 929,37"
   }
 }

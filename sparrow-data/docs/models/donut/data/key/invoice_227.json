@@ -1,26 +1,74 @@
 {
   "header": {
-    "invoice_no": "40378170",
-    "invoice_date": "10/15/2012",
-    "seller": "Patel, Thompson and Montgomery 356 Kyle Vista New James, MA 46228",
-    "client": "Jackson, Odonnell and Jackson 267 John Track Suite 841 Jenniferville, PA 98601",
-    "seller_tax_id": "958-74-3511",
-    "client_tax_id": "998-87-7723",
-    "iban": "GB77WRBQ31965128414006"
+    "invoice_no": "75499908",
+    "invoice_date": "11/15/2017",
+    "seller": "Salazar PLC 97182 Shannon Overpass Suite 556 Joseshire, IL 91853",
+    "client": "Daniel LLC 6265 Patrick Burgs Suite 561 West Angel, NJ 72443",
+    "seller_tax_id": "906-86-8437",
+    "client_tax_id": "969-85-2885",
+    "iban": "GB96ENFL31227940085712"
   },
   "items": [
     {
-      "item_desc": "Leed's Wine Companion Bottle Corkscrew Opener Gift Box Set with Foil Cutter",
-      "item_qty": "1,00",
-      "item_net_price": "7,50",
-      "item_net_worth": "7,50",
+      "item_desc": "Kate Spade NY Sleeveless Ponte Fit & Flare Solid Black Dress Size 6",
+      "item_qty": "5,00",
+      "item_net_price": "49,99",
+      "item_net_worth": "249,95",
       "item_vat": "10%",
-      "item_gross_worth": "8,25"
+      "item_gross_worth": "274,95"
+    },
+    {
+      "item_desc": "Guess Dress Size 6",
+      "item_qty": "4,00",
+      "item_net_price": "20,00",
+      "item_net_worth": "80,00",
+      "item_vat": "10%",
+      "item_gross_worth": "88,00"
+    },
+    {
+      "item_desc": "Women Elegant Fashion O-Neck Knee Length Short Sleeve Retro Floral Print Dress",
+      "item_qty": "1,00",
+      "item_net_price": "12,00",
+      "item_net_worth": "12,00",
+      "item_vat": "10%",
+      "item_gross_worth": "13,20"
+    },
+    {
+      "item_desc": "Vintage AGB Black Velvet Maxi Dress L Mandarin Collar",
+      "item_qty": "5,00",
+      "item_net_price": "69,96",
+      "item_net_worth": "349,80",
+      "item_vat": "10%",
+      "item_gross_worth": "384,78"
+    },
+    {
+      "item_desc": "Jcrew Mercantile Women's Maxi Dress Size 2 Floral Tiered Lined",
+      "item_qty": "5,00",
+      "item_net_price": "20,00",
+      "item_net_worth": "100,00",
+      "item_vat": "10%",
+      "item_gross_worth": "110,00"
+    },
+    {
+      "item_desc": "Tommy Bahama Women's V Neck Linen Floral Dress Size M Beige Short Sleeve Tan",
+      "item_qty": "4,00",
+      "item_net_price": "34,99",
+      "item_net_worth": "139,96",
+      "item_vat": "10%",
+      "item_gross_worth": "153,96"
+    },
+    {
+      "item_desc": "Zara Yellow Shift Dress XS",
+      "item_qty": "5,00",
+      "item_net_price": "24,75",
+      "item_net_worth": "123,75",
+      "item_vat": "10%",
+      "item_gross_worth": "136,13"
     }
   ],
   "summary": {
-    "total_net_worth": "$7,50",
-    "total_vat": "$0,75",
-    "total_gross_worth": "$8,25"
+    "total_net_worth": "$1055,46",
+    "total_vat": "$ 105,55",
+    "total_gross_worth": "$1161,01"
   }
 }
