@@ -2,7 +2,7 @@ git+https://github.com/huggingface/transformers.git
 datasets
 sentencepiece
 tensorboard
-pytorch-lightning
+pytorch-lightning==1.9.5
 wandb
 Pillow
 donut-python
