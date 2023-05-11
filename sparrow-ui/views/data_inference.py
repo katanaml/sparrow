@@ -193,7 +193,7 @@ class DataInference:
                     }
 
                     with st.spinner("Extracting data from document..."):
-                        response = requests.post(api_url, data=data, files=files)
+                        response = requests.post(api_url, data=data, files=files, timeout=180)
                 if response.status_code != 200:
                     print('Request failed with status code:', response.status_code)
                     print('Response:', response.text)
