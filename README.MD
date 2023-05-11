@@ -12,6 +12,10 @@ Research repo - [sparrow-research](https://github.com/katanaml/sparrow-research)
 * **[sparrow-ml](https://github.com/katanaml/sparrow/tree/main/sparrow-ml)** - Sparrow ML module
 * **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui)** - Sparrow UI module
 
+### Inference
+
+![Inference Results](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/inference_actual.png)
+
 ## Author
 
 [Katana ML](https://katanaml.io), [Andrej Baranovskij](https://github.com/abaranovskis-redsamurai)
