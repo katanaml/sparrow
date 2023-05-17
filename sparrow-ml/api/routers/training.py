@@ -16,6 +16,7 @@ def invoke_training(max_epochs, val_check_interval, warmup_steps, model_in_use, 
 
     if model_in_use == 'donut':
         processing_time = run_training_donut(max_epochs, val_check_interval, warmup_steps)
+        utils.log_stats(settings.training_stats_file, [processing_time, settings.model])
         print(f"Processing time training: {processing_time:.2f} seconds")
 
 
@@ -52,9 +53,26 @@ async def run_evaluate(background_tasks: BackgroundTasks,
     return {"message": "Sparrow ML model evaluation started in the background"}
 
 
-@router.get("/statistics")
-async def get_statistics():
+@router.get("/statistics/training")
+async def get_statistics_training():
     file_path = settings.training_stats_file
+
+    # Check if the file exists, and read its content
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as file:
+            try:
+                content = json.load(file)
+            except json.JSONDecodeError:
+                content = []
+    else:
+        content = []
+
+    return content
+
+
+@router.get("/statistics/evaluate")
+async def get_statistics_evaluate():
+    file_path = settings.evaluate_stats_file
 
     # Check if the file exists, and read its content
     if os.path.exists(file_path):
