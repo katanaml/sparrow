@@ -3,12 +3,8 @@ import time
 import torch
 from transformers import DonutProcessor, VisionEncoderDecoderModel
 from config import settings
-from huggingface_hub import login
 from functools import lru_cache
 import os
-
-
-login(settings.huggingface_key)
 
 
 @lru_cache(maxsize=1)
@@ -58,5 +54,7 @@ def process_document_donut(image):
 
     end_time = time.time()
     processing_time = end_time - start_time
+
+    print(f"Inference done, worker PID: {worker_pid}")
 
     return processor.token2json(sequence), processing_time

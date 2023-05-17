@@ -57,7 +57,7 @@ async def run_inference(file: Optional[UploadFile] = File(None), image_url: Opti
         # parse file name from url
         file_name = image_url.split("/")[-1]
         utils.log_stats(settings.inference_stats_file, [processing_time, count_values(result), file_name, settings.model])
-        print(f"Processing time: {processing_time:.2f} seconds")
+        print(f"Processing time inference: {processing_time:.2f} seconds")
     else:
         result = {"info": "No input provided"}
 
