@@ -1,4 +1,4 @@
 datasets==2.10.1
 Pillow==9.5.0
-fastapi==0.95.0
+fastapi==0.95.2
 uvicorn[standard]
