@@ -162,7 +162,7 @@ def logout_widget():
     with st.sidebar:
         st.markdown("---")
         # st.write("User:", "John Doe")
-        st.write("Version:", "1.1.0")
+        st.write("Version:", "2.0.0")
         # st.button("Logout")
         # st.markdown("---")
 
