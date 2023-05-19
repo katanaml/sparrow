@@ -19,13 +19,14 @@ class Dashboard:
 
         dailyInferenceTitle = "Top Daily Inference"
 
-        trainingLossTitle = "Training Loss"
+        accuracyTitle = "Mean Accuracy"
 
-        titleTrainingLoss = "## Training Loss"
+        titleModelEval = "## Evaluation Accuracy"
         titleInferencePerformance = "## Inference Performance"
         titleDatasetInfo = "## Dataset Info"
         titleDataAnnotation = "## Data Annotation"
         titleTrainingPerformance = "## Training Performance"
+        titleEvaluationPerformance = "## Evaluation Performance"
 
         status_file = "docs/status.json"
         annotation_files_dir = "docs/json"
@@ -41,13 +42,21 @@ class Dashboard:
         else:
             print(f"Error: Unable to fetch data from the API (status code {response.status_code})")
 
-        api_url_t = "https://katanaml-org-sparrow-ml.hf.space/api-training/v1/sparrow-ml/statistics"
+        api_url_t = "https://katanaml-org-sparrow-ml.hf.space/api-training/v1/sparrow-ml/statistics/training"
         json_data_training = []
         response_t = requests.get(api_url_t)
         if response_t.status_code == 200:
             json_data_training = response_t.json()
         else:
             print(f"Error: Unable to fetch data from the API (status code {response_t.status_code})")
+
+        api_url_e = "https://katanaml-org-sparrow-ml.hf.space/api-training/v1/sparrow-ml/statistics/evaluate"
+        json_data_evaluate = []
+        response_e = requests.get(api_url_e)
+        if response_e.status_code == 200:
+            json_data_evaluate = response_e.json()
+        else:
+            print(f"Error: Unable to fetch data from the API (status code {response_e.status_code})")
 
         with st.container():
             col1, col2, col3, col4, col5 = st.columns(5)
@@ -172,26 +181,33 @@ class Dashboard:
                           delta_color="inverse")
 
             with col5:
-                training_loss_avg = 0
+                models_unique = []
+                models_dict = {}
+                for i in range(0, len(json_data_evaluate)):
+                    if json_data_evaluate[i][3] not in models_unique:
+                        models_unique.append(json_data_evaluate[i][3])
+                        models_dict[json_data_evaluate[i][3]] = json_data_evaluate[i][1]['mean_accuracy']
 
-                # calculate training loss average
-                for i in range(0, len(json_data_training)):
-                    training_loss_avg = training_loss_avg + json_data_training[i][1]
-                training_loss_avg = round(training_loss_avg / len(json_data_training), 2)
+                avg_accuracy = 0
+                for key, value in models_dict.items():
+                    avg_accuracy = avg_accuracy + value
+                avg_accuracy = round(avg_accuracy / len(models_dict), 2)
 
-                delta_loss = 0
-                if len(json_data_training) > 5:
-                    # calculate training loss average for last 3 values
-                    training_loss_avg_last = (json_data_training[len(json_data_training) - 1][1] +
-                                                json_data_training[len(json_data_training) - 2][1] +
-                                                json_data_training[len(json_data_training) - 3][1]) / 3
+                if len(models_unique) > 3:
+                    # calculate average accuracy for last 3 values
+                    avg_accuracy_last = 0
+                    for i in range(1, 4):
+                        avg_accuracy_last = avg_accuracy_last + models_dict[models_unique[len(models_unique) - i]]
+                    avg_accuracy_last = round(avg_accuracy_last / 3, 2)
+                else:
+                    avg_accuracy_last = avg_accuracy
 
-                    if training_loss_avg_last > training_loss_avg:
-                        delta_loss = round(100 - ((training_loss_avg * 100) / training_loss_avg_last), 2)
-                    else:
-                        delta_loss = round(100 - ((training_loss_avg_last * 100) / training_loss_avg), 2) * -1
+                if avg_accuracy_last > avg_accuracy:
+                    delta_accuracy = round(100 - ((avg_accuracy * 100) / avg_accuracy_last), 2)
+                else:
+                    delta_accuracy = round(100 - ((avg_accuracy_last * 100) / avg_accuracy), 2) * -1
 
-                st.metric(label=model.trainingLossTitle, value=training_loss_avg, delta=str(delta_loss) + "%",
+                st.metric(label=model.accuracyTitle, value=avg_accuracy, delta=str(delta_accuracy) + "%",
                           delta_color="inverse")
 
             st.markdown("---")
@@ -224,24 +240,14 @@ class Dashboard:
                 st.line_chart(data)
 
             with col2:
-                st.write(model.titleTrainingLoss)
-
-                models_dict = {}
-
-                models = []
-                for i in range(0, len(json_data_training)):
-                    models.append(json_data_training[i][3])
+                st.write(model.titleModelEval)
 
                 models_unique = []
-                for item in models:
-                    if item not in models_unique:
-                        models_unique.append(item)
-
-                for i, key in enumerate(models_unique):
-                    models_dict[key] = []
-
-                for i in range(0, len(json_data_training)):
-                    models_dict[json_data_training[i][3]].append(json_data_training[i][1])
+                models_dict = {}
+                for i in range(0, len(json_data_evaluate)):
+                    if json_data_evaluate[i][3] not in models_unique:
+                        models_unique.append(json_data_evaluate[i][3])
+                        models_dict[json_data_evaluate[i][3]] = json_data_evaluate[i][1]['accuracies']
 
                 data = pd.DataFrame(models_dict)
                 st.line_chart(data)
@@ -249,7 +255,7 @@ class Dashboard:
         st.markdown("---")
 
         with st.container():
-            col1, col2, col3 = st.columns(3)
+            col1, col2, col3, col4 = st.columns(4)
 
             with col1:
                 with st.container():
@@ -305,31 +311,36 @@ class Dashboard:
 
                     models_dict = {}
 
-                    models = []
                     for i in range(0, len(json_data_training)):
-                        models.append(json_data_training[i][3])
+                        models_dict[i] = round(json_data_training[i][0])
 
-                    models_unique = []
-                    for item in models:
-                        if item not in models_unique:
-                            models_unique.append(item)
-
-                    for i, key in enumerate(models_unique):
-                        models_dict[key] = []
-
-                    for i in range(0, len(json_data_training)):
-                        models_dict[json_data_training[i][3]].append(json_data_training[i][2])
-
-                    for key in models_dict:
-                        models_dict[key] = round((sum(models_dict[key]) / len(models_dict[key])) / 60)
-
-                    data = pd.DataFrame({"Models": models_dict.keys(), "Value": list(models_dict.values())})
+                    data = pd.DataFrame({"Runs": models_dict.keys(), "Value": list(models_dict.values())})
 
                     # Create a horizontal bar chart
                     chart = alt.Chart(data).mark_bar().encode(
                         x='Value:Q',
-                        y=alt.Y('Models:N', sort='-x'),
-                        color=alt.Color('Models:N', legend=None)
+                        y=alt.Y('Runs:N', sort='-x'),
+                        color=alt.Color('Runs:N', legend=None)
+                    )
+
+                    st.altair_chart(chart)
+
+            with col4:
+                with st.container():
+                    st.write(model.titleEvaluationPerformance)
+
+                    runs_dict = {}
+
+                    for i in range(0, len(json_data_evaluate)):
+                        runs_dict[i] = round(json_data_evaluate[i][0])
+
+                    data = pd.DataFrame({"Runs": runs_dict.keys(), "Value": list(runs_dict.values())})
+
+                    # Create a horizontal bar chart
+                    chart = alt.Chart(data).mark_bar().encode(
+                        x='Value:Q',
+                        y=alt.Y('Runs:N', sort='-x'),
+                        color=alt.Color('Runs:N', legend=None)
                     )
 
                     st.altair_chart(chart)
