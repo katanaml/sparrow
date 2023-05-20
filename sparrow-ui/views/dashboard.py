@@ -255,7 +255,7 @@ class Dashboard:
         st.markdown("---")
 
         with st.container():
-            col1, col2, col3, col4 = st.columns(4)
+            col1, col2, col3 = st.columns(3)
 
             with col1:
                 with st.container():
@@ -325,25 +325,26 @@ class Dashboard:
 
                     st.altair_chart(chart)
 
-            with col4:
-                with st.container():
-                    st.write(model.titleEvaluationPerformance)
+        st.markdown("---")
 
-                    runs_dict = {}
+        with st.container():
+            st.write(model.titleEvaluationPerformance)
 
-                    for i in range(0, len(json_data_evaluate)):
-                        runs_dict[i] = round(json_data_evaluate[i][0])
+            runs_dict = {}
 
-                    data = pd.DataFrame({"Runs": runs_dict.keys(), "Value": list(runs_dict.values())})
+            for i in range(0, len(json_data_evaluate)):
+                runs_dict[i] = round(json_data_evaluate[i][0])
 
-                    # Create a horizontal bar chart
-                    chart = alt.Chart(data).mark_bar().encode(
-                        x='Value:Q',
-                        y=alt.Y('Runs:N', sort='-x'),
-                        color=alt.Color('Runs:N', legend=None)
-                    )
+            data = pd.DataFrame({"Runs": runs_dict.keys(), "Value": list(runs_dict.values())})
 
-                    st.altair_chart(chart)
+            # Create a horizontal bar chart
+            chart = alt.Chart(data).mark_bar().encode(
+                x='Value:Q',
+                y=alt.Y('Runs:N', sort='-x'),
+                color=alt.Color('Runs:N', legend=None)
+            )
+
+            st.altair_chart(chart)
 
 
     def calculate_annotation_stats(self, model):
