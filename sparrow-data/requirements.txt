@@ -1,8 +1,10 @@
 pdf2image==1.16.2
 torch==1.13.1
-python-doctr==0.6.0
 torchvision
 torchaudio
 datasets==2.10.1
 fastapi==0.95.2
+python-doctr==0.6.0
+paddleocr==2.6.1.3
+paddlepaddle==2.4.2
 uvicorn[standard]

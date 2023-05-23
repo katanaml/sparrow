@@ -45,7 +45,7 @@ async def run_inference(file: Optional[UploadFile] = File(None), image_url: Opti
         if model_in_use == 'donut':
             result, processing_time = process_document_donut(image)
         utils.log_stats(settings.inference_stats_file, [processing_time, count_values(result), file.filename, settings.model])
-        print(f"Processing time: {processing_time:.2f} seconds")
+        print(f"Processing time inference: {processing_time:.2f} seconds")
     elif image_url:
         # test image url: https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-data/docs/input/invoices/processed/images/invoice_10.jpg
         with urllib.request.urlopen(image_url) as url:

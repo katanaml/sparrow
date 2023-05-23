@@ -24,6 +24,7 @@ def encode_pil_image(image: Image) -> str:
     img_data = buffer.getvalue()
     return base64.b64encode(img_data).decode('utf-8')
 
+
 @router.get("/dataset_info")
 async def get_dataset_info():
     dataset = load_dataset(settings.dataset_name)
