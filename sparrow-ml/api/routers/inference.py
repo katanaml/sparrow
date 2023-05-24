@@ -48,8 +48,12 @@ async def run_inference(file: Optional[UploadFile] = File(None), image_url: Opti
         print(f"Processing time inference: {processing_time:.2f} seconds")
     elif image_url:
         # test image url: https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-data/docs/input/invoices/processed/images/invoice_10.jpg
-        with urllib.request.urlopen(image_url) as url:
-            image = Image.open(BytesIO(url.read()))
+        with urllib.request.urlopen(image_url) as response:
+            content_type = response.info().get_content_type()
+            if content_type in ["image/jpeg", "image/jpg"]:
+                image = Image.open(BytesIO(response.read()))
+            else:
+                return {"error": "Invalid file type. Only JPG images are allowed."}
 
         processing_time = 0
         if model_in_use == 'donut':

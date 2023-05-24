@@ -9,6 +9,8 @@ import os
 import time
 from functools import lru_cache
 from paddleocr import PaddleOCR
+from pdf2image import convert_from_bytes
+import io
 
 
 router = APIRouter()
@@ -18,15 +20,26 @@ def load_ocr_model():
     model = PaddleOCR(use_angle_cls=True, lang='en')
     return model
 
-def invoke_ocr(doc):
+
+def invoke_ocr(doc, content_type):
     worker_pid = os.getpid()
     print(f"Handling OCR request with worker PID: {worker_pid}")
     start_time = time.time()
 
     model = load_ocr_model()
 
-    doc.save("data/tmp.jpeg", "JPEG")
-    result = model.ocr("data/tmp.jpeg", cls=True)
+    bytes_img = io.BytesIO()
+
+    format_img = "JPEG"
+    if content_type == "image/png":
+        format_img = "PNG"
+
+    doc.save(bytes_img, format=format_img)
+    bytes_data = bytes_img.getvalue()
+    bytes_img.close()
+
+    result = model.ocr(bytes_data, cls=True)
+
     values = []
     for idx in range(len(result)):
         res = result[idx]
@@ -49,22 +62,35 @@ async def run_ocr(file: Optional[UploadFile] = File(None), image_url: Optional[s
 
     result = []
     if file:
-        # Ensure the uploaded file is a JPG image
-        if file.content_type not in ["image/jpeg", "image/jpg", "image/png"]:
-            return {"error": "Invalid file type. Only JPG and PNG images are allowed."}
+        if file.content_type in ["image/jpeg", "image/jpg", "image/png"]:
+            doc = Image.open(BytesIO(await file.read()))
+        elif file.content_type == "application/pdf":
+            pdf_bytes = await file.read()
+            pages = convert_from_bytes(pdf_bytes, 300)
+            doc = pages[0]
+        else:
+            return {"error": "Invalid file type. Only JPG/PNG images and PDF are allowed."}
 
-        doc = Image.open(BytesIO(await file.read()))
-
-        result, processing_time = invoke_ocr(doc)
+        result, processing_time = invoke_ocr(doc, file.content_type)
 
         utils.log_stats(settings.ocr_stats_file, [processing_time, file.filename])
         print(f"Processing time OCR: {processing_time:.2f} seconds")
     elif image_url:
         # test image url: https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-data/docs/input/invoices/processed/images/invoice_10.jpg
-        with urllib.request.urlopen(image_url) as url:
-            doc = Image.open(BytesIO(url.read()))
+        # test PDF: https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-data/docs/input/receipts/2021/us/bestbuy-20211211_006.pdf
+        with urllib.request.urlopen(image_url) as response:
+            content_type = response.info().get_content_type()
 
-        result, processing_time = invoke_ocr(doc)
+            if content_type in ["image/jpeg", "image/jpg", "image/png"]:
+                doc = Image.open(BytesIO(response.read()))
+            elif content_type == "application/octet-stream":
+                pdf_bytes = response.read()
+                pages = convert_from_bytes(pdf_bytes, 300)
+                doc = pages[0]
+            else:
+                return {"error": "Invalid file type. Only JPG/PNG images and PDF are allowed."}
+
+        result, processing_time = invoke_ocr(doc, content_type)
 
         # parse file name from url
         file_name = image_url.split("/")[-1]
