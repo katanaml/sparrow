@@ -11,6 +11,7 @@ from functools import lru_cache
 from paddleocr import PaddleOCR
 from pdf2image import convert_from_bytes
 import io
+from routers.ocr_utils import merge_data
 
 
 router = APIRouter()
@@ -44,8 +45,9 @@ def invoke_ocr(doc, content_type):
     for idx in range(len(result)):
         res = result[idx]
         for line in res:
-            print(line)
-            values.append(line[1][0])
+            values.append(line)
+
+    values = merge_data(values)
 
     end_time = time.time()
     processing_time = end_time - start_time
