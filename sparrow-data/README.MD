@@ -113,6 +113,18 @@ curl -X 'GET' \
   -H 'accept: application/json'
 ```
 
+3. OCR service
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api-ocr/v1/sparrow-data/ocr' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'file=@inout-20211211_001.jpg;type=image/jpeg' \
+  -F 'image_url=' \
+  -F 'sparrow_key=your_key'
+```
+
 Replace URL with your own
 
 ## Deploy to Hugging Face Spaces
