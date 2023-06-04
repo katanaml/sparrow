@@ -6,6 +6,6 @@ pytorch-lightning==1.9.5
 wandb
 Pillow
 donut-python
-fastapi==0.95.2
+fastapi==0.96.0
 uvicorn[standard]
 python-multipart
