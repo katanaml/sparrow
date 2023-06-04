@@ -64,7 +64,7 @@ curl -X 'POST' \
   -F 'file=' \
   -F 'image_url=https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-data/docs/input/invoices/processed/images/invoice_10.jpg'
   -F 'model_in_use=donut'
-  -F 'sparrow_key=2ec6602fa3fe013f3fa8859d008bd66e'
+  -F 'sparrow_key=your_key'
 ```
 
 Replace URLs with your own
