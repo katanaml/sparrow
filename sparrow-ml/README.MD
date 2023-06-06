@@ -142,7 +142,12 @@ Navigate to 'cli' folder and run 'chmod +x sparrow'. Add to system path to make 
 ```
 ./sparrow --api_url https://katanaml-org-sparrow-ml.hf.space/api-training/v1/sparrow-ml/training 
           --type training 
+          --max_epochs 30 
+          --val_check_interval 0.4 
+          --warmup_steps 81 
+          --model_in_use donut 
           --sparrow_key <key>
+
 ```
 
 ## Deploy to Hugging Face Spaces
