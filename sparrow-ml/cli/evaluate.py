@@ -1,11 +1,8 @@
 import requests
 
 
-def training_call(api_url, max_epochs, val_check_interval, warmup_steps, model_in_use, sparrow_key):
+def evaluate_call(api_url, model_in_use, sparrow_key):
     data = {
-        'max_epochs': max_epochs,
-        'val_check_interval': val_check_interval,
-        'warmup_steps': warmup_steps,
         'model_in_use': model_in_use,
         'sparrow_key': sparrow_key
     }
