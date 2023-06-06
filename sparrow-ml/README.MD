@@ -150,6 +150,15 @@ Navigate to 'cli' folder and run 'chmod +x sparrow'. Add to system path to make 
 
 ```
 
+3. Evaluate
+
+```
+./sparrow --api_url https://katanaml-org-sparrow-ml.hf.space/api-training/v1/sparrow-ml/evaluate 
+          --type evaluate 
+          --model_in_use donut 
+          --sparrow_key <key>
+```
+
 ## Deploy to Hugging Face Spaces
 
 1. Create new space - https://huggingface.co/spaces. Follow instructions from readme doc
