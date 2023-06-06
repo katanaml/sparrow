@@ -82,18 +82,42 @@ Replace URL with your own
 3. Training
 
 ```
-curl -X 'GET' \
+curl -X 'POST' \
   'http://127.0.0.1:8000/api-training/v1/sparrow-ml/training' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -d 'max_epochs=30&val_check_interval=0.4&warmup_steps=81&model_in_use=donut&sparrow_key=your_key'
+```
+
+Replace URL with your own
+
+4. Evaluate
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api-training/v1/sparrow-ml/evaluate' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -d 'model_in_use=donut&sparrow_key=your_key'
+```
+
+Replace URL with your own
+
+5. Training statistics
+
+```
+curl -X 'GET' \
+  'http://127.0.0.1:8000/api-training/v1/sparrow-ml/statistics/training' \
   -H 'accept: application/json'
 ```
 
 Replace URL with your own
 
-4. Training statistics
+6. Evaluate statistics
 
 ```
 curl -X 'GET' \
-  'http://127.0.0.1:8000/api-training/v1/sparrow-ml/statistics' \
+  'http://127.0.0.1:8000/api-training/v1/sparrow-ml/statistics/evaluate' \
   -H 'accept: application/json'
 ```
 
