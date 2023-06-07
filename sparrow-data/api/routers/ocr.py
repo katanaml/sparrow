@@ -11,6 +11,7 @@ from functools import lru_cache
 from paddleocr import PaddleOCR
 from pdf2image import convert_from_bytes
 import io
+import json
 from routers.ocr_utils import merge_data
 
 
@@ -102,3 +103,20 @@ async def run_ocr(file: Optional[UploadFile] = File(None), image_url: Optional[s
         result = {"info": "No input provided"}
 
     return result
+
+
+@router.get("/statistics")
+async def get_statistics():
+    file_path = settings.ocr_stats_file
+
+    # Check if the file exists, and read its content
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as file:
+            try:
+                content = json.load(file)
+            except json.JSONDecodeError:
+                content = []
+    else:
+        content = []
+
+    return content
