@@ -113,6 +113,8 @@ curl -X 'GET' \
   -H 'accept: application/json'
 ```
 
+Replace URL with your own
+
 3. OCR service
 
 ```
