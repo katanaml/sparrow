@@ -139,6 +139,18 @@ curl -X 'GET' \
 
 Replace URL with your own
 
+## CLI
+
+Navigate to 'cli' folder and run 'chmod +x sparrowdata'. Add to system path to make it executable globally on the system.
+
+1. OCR
+
+```
+./sparrowdata --api_url http://127.0.0.1:8000/api-ocr/v1/sparrow-data/ocr \
+              --file_path ../docs/models/donut/data/img/test/invoice_2.jpg \
+              --sparrow_key your_key
+```
+
 ## Deploy to Hugging Face Spaces
 
 1. Create new space - https://huggingface.co/spaces. Follow instructions from readme doc
