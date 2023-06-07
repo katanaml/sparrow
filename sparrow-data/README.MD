@@ -129,6 +129,16 @@ curl -X 'POST' \
 
 Replace URL with your own
 
+4. OCR statistics
+
+```
+curl -X 'GET' \
+  'http://127.0.0.1:8000/api-ocr/v1/sparrow-data/statistics' \
+  -H 'accept: application/json'
+```
+
+Replace URL with your own
+
 ## Deploy to Hugging Face Spaces
 
 1. Create new space - https://huggingface.co/spaces. Follow instructions from readme doc
