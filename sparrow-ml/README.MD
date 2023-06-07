@@ -58,12 +58,12 @@ docker run -it --name sparrow-ml -p 7860:7860 katanaml/sparrow-ml:latest
 
 ```
 curl -X 'POST' \
-  'http://127.0.0.1:8000/api-inference/v1/sparrow-ml/inference' \
+  'https://katanaml-org-sparrow-ml.hf.space/api-inference/v1/sparrow-ml/inference' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
   -F 'file=' \
-  -F 'image_url=https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-data/docs/input/invoices/processed/images/invoice_10.jpg'
-  -F 'model_in_use=donut'
+  -F 'image_url=https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-data/docs/input/invoices/processed/images/invoice_10.jpg' \
+  -F 'model_in_use=donut' \
   -F 'sparrow_key=your_key'
 ```
 
@@ -73,7 +73,7 @@ Replace URLs with your own
 
 ```
 curl -X 'GET' \
-  'http://127.0.0.1:8000/api-inference/v1/sparrow-ml/statistics' \
+  'https://katanaml-org-sparrow-ml.hf.space/api-inference/v1/sparrow-ml/statistics' \
   -H 'accept: application/json'
 ```
 
@@ -83,7 +83,7 @@ Replace URL with your own
 
 ```
 curl -X 'POST' \
-  'http://127.0.0.1:8000/api-training/v1/sparrow-ml/training' \
+  'https://katanaml-org-sparrow-ml.hf.space/api-training/v1/sparrow-ml/training' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/x-www-form-urlencoded' \
   -d 'max_epochs=30&val_check_interval=0.4&warmup_steps=81&model_in_use=donut&sparrow_key=your_key'
@@ -95,7 +95,7 @@ Replace URL with your own
 
 ```
 curl -X 'POST' \
-  'http://127.0.0.1:8000/api-training/v1/sparrow-ml/evaluate' \
+  'https://katanaml-org-sparrow-ml.hf.space/api-training/v1/sparrow-ml/evaluate' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/x-www-form-urlencoded' \
   -d 'model_in_use=donut&sparrow_key=your_key'
@@ -107,7 +107,7 @@ Replace URL with your own
 
 ```
 curl -X 'GET' \
-  'http://127.0.0.1:8000/api-training/v1/sparrow-ml/statistics/training' \
+  'https://katanaml-org-sparrow-ml.hf.space/api-training/v1/sparrow-ml/statistics/training' \
   -H 'accept: application/json'
 ```
 
@@ -117,7 +117,7 @@ Replace URL with your own
 
 ```
 curl -X 'GET' \
-  'http://127.0.0.1:8000/api-training/v1/sparrow-ml/statistics/evaluate' \
+  'https://katanaml-org-sparrow-ml.hf.space/api-training/v1/sparrow-ml/statistics/evaluate' \
   -H 'accept: application/json'
 ```
 
@@ -130,22 +130,22 @@ Navigate to 'cli' folder and run 'chmod +x sparrow'. Add to system path to make 
 1. Inference
 
 ```
-./sparrow --api_url https://katanaml-org-sparrow-ml.hf.space/api-inference/v1/sparrow-ml/inference 
-          --type inference 
-          --file_path ../data/img/invoice_0.jpg 
-          --model_in_use donut 
+./sparrow --api_url https://katanaml-org-sparrow-ml.hf.space/api-inference/v1/sparrow-ml/inference \
+          --type inference \
+          --file_path ../data/img/invoice_0.jpg \
+          --model_in_use donut \
           --sparrow_key <key>
 ```
 
 2. Training
 
 ```
-./sparrow --api_url https://katanaml-org-sparrow-ml.hf.space/api-training/v1/sparrow-ml/training 
-          --type training 
-          --max_epochs 30 
-          --val_check_interval 0.4 
-          --warmup_steps 81 
-          --model_in_use donut 
+./sparrow --api_url https://katanaml-org-sparrow-ml.hf.space/api-training/v1/sparrow-ml/training \
+          --type training \
+          --max_epochs 30 \
+          --val_check_interval 0.4 \
+          --warmup_steps 81 \
+          --model_in_use donut \
           --sparrow_key <key>
 
 ```
@@ -153,9 +153,9 @@ Navigate to 'cli' folder and run 'chmod +x sparrow'. Add to system path to make 
 3. Evaluate
 
 ```
-./sparrow --api_url https://katanaml-org-sparrow-ml.hf.space/api-training/v1/sparrow-ml/evaluate 
-          --type evaluate 
-          --model_in_use donut 
+./sparrow --api_url https://katanaml-org-sparrow-ml.hf.space/api-training/v1/sparrow-ml/evaluate \
+          --type evaluate \
+          --model_in_use donut / 
           --sparrow_key <key>
 ```
 
