@@ -1,8 +1,12 @@
-FROM python:3.7-slim
+FROM python:3.7
 
 WORKDIR /code
 
 COPY requirements-fastapi.txt ./
+
+# Installing libGL
+RUN apt-get update && apt-get install -y \
+    libgl1-mesa-dev
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements-fastapi.txt
 
@@ -17,4 +21,4 @@ WORKDIR $HOME/app
 
 COPY --chown=user . $HOME/app/
 
-CMD ["uvicorn", "endpoints:app", "--host", "0.0.0.0", "--port", "7860", "--workers", "4"]
+CMD ["uvicorn", "endpoints:app", "--host", "0.0.0.0", "--port", "7860"]
