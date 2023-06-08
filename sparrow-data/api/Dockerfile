@@ -8,6 +8,8 @@ COPY requirements-fastapi.txt ./
 RUN apt-get update && apt-get install -y \
     libgl1-mesa-dev
 
+RUN apt-get install -y poppler-utils libpoppler-cpp-dev
+
 RUN pip install --no-cache-dir --upgrade -r /code/requirements-fastapi.txt
 
 RUN useradd -m -u 1000 user
