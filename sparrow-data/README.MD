@@ -70,7 +70,7 @@ cd api
 ```
 
 ```
-uvicorn endpoints:app --workers 4
+uvicorn endpoints:app --workers 1
 ```
 
 2. FastAPI Swagger
@@ -99,7 +99,7 @@ docker run -it --name sparrow-data -p 7860:7860 katanaml/sparrow-data:latest
 
 ```
 curl -X 'GET' \
-  'http://127.0.0.1:8000/api-dataset/v1/sparrow-data/dataset_info' \
+  'https://katanaml-org-sparrow-data.hf.space/api-dataset/v1/sparrow-data/dataset_info' \
   -H 'accept: application/json'
 ```
 
@@ -109,7 +109,7 @@ Replace URL with your own
 
 ```
 curl -X 'GET' \
-  'http://127.0.0.1:8000/api-dataset/v1/sparrow-data/ground_truth' \
+  'https://katanaml-org-sparrow-data.hf.space/api-dataset/v1/sparrow-data/ground_truth' \
   -H 'accept: application/json'
 ```
 
@@ -119,11 +119,11 @@ Replace URL with your own
 
 ```
 curl -X 'POST' \
-  'http://127.0.0.1:8000/api-ocr/v1/sparrow-data/ocr' \
+  'https://katanaml-org-sparrow-data.hf.space/api-ocr/v1/sparrow-data/ocr' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
-  -F 'file=@inout-20211211_001.jpg;type=image/jpeg' \
-  -F 'image_url=' \
+  -F 'file=' \
+  -F 'image_url=https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-data/docs/input/invoices/processed/images/invoice_10.jpg' \
   -F 'sparrow_key=your_key'
 ```
 
@@ -133,7 +133,7 @@ Replace URL with your own
 
 ```
 curl -X 'GET' \
-  'http://127.0.0.1:8000/api-ocr/v1/sparrow-data/statistics' \
+  'https://katanaml-org-sparrow-data.hf.space/api-ocr/v1/sparrow-data/statistics' \
   -H 'accept: application/json'
 ```
 
@@ -146,7 +146,7 @@ Navigate to 'cli' folder and run 'chmod +x sparrowdata'. Add to system path to m
 1. OCR
 
 ```
-./sparrowdata --api_url http://127.0.0.1:8000/api-ocr/v1/sparrow-data/ocr \
+./sparrowdata --api_url https://katanaml-org-sparrow-data.hf.space/api-ocr/v1/sparrow-data/ocr \
               --file_path ../docs/models/donut/data/img/test/invoice_2.jpg \
               --sparrow_key your_key
 ```
