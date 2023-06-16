@@ -1,0 +1,66 @@
+openapi: 3.0.1
+info:
+  title: Receipt Assistant
+  description: A plugin that allows the user to read, store and review receipts using ChatGPT. If you do not know the user's username, ask them first before making queries to the plugin. Otherwise, use the username "global".
+  version: 'v1'
+servers:
+  - url: http://localhost:5003
+paths:
+  /upload_receipt_info/{username}:
+    get:
+      operationId: getUploadReceiptInfo
+      summary: Get info how to upload a receipt
+      parameters:
+        - in: path
+          name: username
+          schema:
+              type: string
+          required: true
+          description: The name of the user.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getUploadReceiptInfoResponse'
+  /receipt_data/{username}:
+    get:
+      operationId: getReceiptData
+      summary: Fetch receipt data based on provided receipt id
+      parameters:
+        - in: path
+          name: username
+          schema:
+              type: string
+          required: true
+          description: The name of the user.
+        - in: query
+          name: receipt_id
+          required: true
+          schema:
+              type: string
+          description: Receipt id to fetch processed data.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getReceiptDataResponse'
+components:
+  schemas:
+    getUploadReceiptInfoResponse:
+      type: object
+      properties:
+        upload_receipt_info:
+          type: string
+          description: Info how to upload a receipt.
+    getReceiptDataResponse:
+      type: object
+      properties:
+          receipt_data:
+            type: array
+            items:
+              type: string
+            description: Array with receipt data from OCR result.

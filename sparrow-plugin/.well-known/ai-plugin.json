@@ -1,0 +1,17 @@
+{
+    "schema_version": "v1",
+    "name_for_human": "Receipt Assistant",
+    "name_for_model": "receipt_assistant",
+    "description_for_human": "Manage receipts with Sparrow. You can read, store and review your receipts.",
+    "description_for_model": "Plugin for managing receipts, including reading, storing and reviewing.",
+    "auth": {
+      "type": "none"
+    },
+    "api": {
+      "type": "openapi",
+      "url": "http://localhost:5003/openapi.yaml"
+    },
+    "logo_url": "http://localhost:5003/logo.png",
+    "contact_email": "abaranovskis@redsamuraiconsulting.com",
+    "legal_info_url": "https://www.katanaml.io/page-contacts.html"
+  }
