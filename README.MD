@@ -15,6 +15,7 @@ Research repo - [sparrow-research](https://github.com/katanaml/sparrow-research)
 * **[sparrow-data](https://github.com/katanaml/sparrow/tree/main/sparrow-data)** - Sparrow Data module
 * **[sparrow-ml](https://github.com/katanaml/sparrow/tree/main/sparrow-ml)** - Sparrow ML module
 * **[sparrow-plugin](https://github.com/katanaml/sparrow/tree/main/sparrow-plugin)** - Sparrow ChatGPT plugin
+* **[sparrow-plugin](https://github.com/katanaml/sparrow/tree/main/sparrow-plugin-ui)** - Sparrow UI for ChatGPT plugin
 * **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui)** - Sparrow UI module
 
 ### Inference
