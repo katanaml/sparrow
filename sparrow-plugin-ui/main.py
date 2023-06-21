@@ -87,7 +87,7 @@ def ui_file_upload():
 def file_upload(uploaded_file):
     success_key = "123456"
 
-    api_url = "https://katanaml-org-sparrow-data.hf.space/api-ocr/v1/sparrow-data/ocr"
+    api_url = "http://127.0.0.1:8000/api-ocr/v1/sparrow-data/ocr"
 
     # Prepare the payload
     files = {
@@ -96,6 +96,7 @@ def file_upload(uploaded_file):
 
     data = {
         'image_url': '',
+        'postprocessing': 'true',
         'sparrow_key': settings.sparrow_key
     }
 
@@ -108,8 +109,7 @@ def file_upload(uploaded_file):
 
         return "Error, contact support"
 
-    print('Response:', response.text)
-
+    success_key = response.json()
     return success_key
 
 

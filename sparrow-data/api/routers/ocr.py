@@ -13,6 +13,7 @@ from pdf2image import convert_from_bytes
 import io
 import json
 from routers.ocr_utils import merge_data
+from routers.ocr_utils import store_data
 
 
 router = APIRouter()
@@ -58,7 +59,7 @@ def invoke_ocr(doc, content_type):
 
 @router.post("/ocr")
 async def run_ocr(file: Optional[UploadFile] = File(None), image_url: Optional[str] = Form(None),
-                  sparrow_key: str = Form(None)):
+                  postprocessing: Optional[bool] = Form(False), sparrow_key: str = Form(None)):
 
     if sparrow_key != settings.sparrow_key:
         return {"error": "Invalid Sparrow key."}
@@ -78,6 +79,11 @@ async def run_ocr(file: Optional[UploadFile] = File(None), image_url: Optional[s
 
         utils.log_stats(settings.ocr_stats_file, [processing_time, file.filename])
         print(f"Processing time OCR: {processing_time:.2f} seconds")
+
+        if postprocessing:
+            print("Postprocessing...")
+            result = store_data(result)
+            print(f"Stored data with key: {result}")
     elif image_url:
         # test image url: https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-data/docs/input/invoices/processed/images/invoice_10.jpg
         # test PDF: https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-data/docs/input/receipts/2021/us/bestbuy-20211211_006.pdf
@@ -99,6 +105,11 @@ async def run_ocr(file: Optional[UploadFile] = File(None), image_url: Optional[s
         file_name = image_url.split("/")[-1]
         utils.log_stats(settings.ocr_stats_file, [processing_time, file_name])
         print(f"Processing time OCR: {processing_time:.2f} seconds")
+
+        if postprocessing:
+            print("Postprocessing...")
+            result = store_data(result)
+            print(f"Stored data with key: {result}")
     else:
         result = {"info": "No input provided"}
 
