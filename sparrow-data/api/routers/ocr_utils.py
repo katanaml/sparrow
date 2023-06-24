@@ -3,6 +3,7 @@ import string
 from bson import ObjectId
 from pydantic import BaseModel, Field, ValidationError
 from typing import List
+import datetime
 
 
 class PyObjectId(ObjectId):
@@ -61,6 +62,7 @@ async def store_data(data, db):
     else:
         # Convert the Pydantic model instance into a dictionary
         receipt_dict = receipt.dict()
+        receipt_dict["created_at"] = datetime.datetime.utcnow()
 
         # Insert the dictionary into MongoDB
         result = await db["uploads"].insert_one(receipt_dict)

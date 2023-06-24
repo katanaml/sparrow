@@ -34,6 +34,14 @@ async def create_unique_index(db, collection_name, field):
     print(f"Unique index created or already exists: {index_result}")
 
 
+async def create_ttl_index(db, collection_name, field, expire_after_seconds):
+    # Get a reference to your collection
+    collection = db[collection_name]
+    # Create an index on the specified field
+    index_result = await collection.create_index([(field, ASCENDING)], expireAfterSeconds=expire_after_seconds)
+    print(f"TTL index created or already exists: {index_result}")
+
+
 @router.on_event("startup")
 async def startup_event():
     if "MONGODB_URL" in os.environ:
@@ -44,6 +52,7 @@ async def startup_event():
         print("Connected to MongoDB!")
 
         await create_unique_index(db, 'uploads', 'receipt_key')
+        await create_ttl_index(db, 'uploads', 'created_at', 15*60)
 
 
 @router.on_event("shutdown")
