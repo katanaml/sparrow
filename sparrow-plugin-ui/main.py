@@ -96,7 +96,7 @@ def file_upload(uploaded_file):
 
     data = {
         'image_url': '',
-        'postprocessing': 'true',
+        'post_processing': 'true',
         'sparrow_key': settings.sparrow_key
     }
 

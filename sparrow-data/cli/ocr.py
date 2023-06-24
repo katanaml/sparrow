@@ -1,7 +1,7 @@
 import requests
 
 
-def ocr_call(api_url, file_path, sparrow_key):
+def ocr_call(api_url, file_path, post_processing, sparrow_key):
     with open(file_path, "rb") as file:
         # Prepare the payload
         files = {
@@ -10,6 +10,7 @@ def ocr_call(api_url, file_path, sparrow_key):
 
         data = {
             'image_url': '',
+            'post_processing': post_processing,
             'sparrow_key': sparrow_key
         }
 
