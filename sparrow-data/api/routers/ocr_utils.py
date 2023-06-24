@@ -34,7 +34,7 @@ class ReceiptModel(BaseModel):
         schema_extra = {
             'example': {
                 'receipt_key': 'RzSZ0BTnuG',
-                'array': [['YOUR GUEST NUMBER IS'], ['43'], ['IN-N-OUT BURGER LINQ']]
+                'content': [['YOUR GUEST NUMBER IS'], ['43'], ['IN-N-OUT BURGER LINQ']]
             },
             'title': 'ReceiptModel',
             'description': 'A model representing a receipt with a key and its contents.',
