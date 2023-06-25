@@ -106,7 +106,6 @@ async def get_receipt_data(key, db):
         await db["uploads"].delete_one({"receipt_key": key})
 
         receipt['content'] = decrypt(receipt['content'], base64.b64decode(secure_key))
-        print(receipt['content'])
 
         return receipt['content']
 
