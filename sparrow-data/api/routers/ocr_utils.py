@@ -4,6 +4,30 @@ from bson import ObjectId
 from pydantic import BaseModel, Field, ValidationError
 from typing import List
 import datetime
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
+from Crypto.Random import get_random_bytes
+from base64 import b64encode, b64decode
+import base64
+
+
+# Define a key. Note: it must be of length 16, 24, or 32.
+secure_key = ""
+
+
+def encrypt(plain_text: str, key: bytes) -> str:
+    cipher = AES.new(key, AES.MODE_CBC)
+    iv = cipher.iv
+    encrypted_text = cipher.encrypt(pad(plain_text.encode(), AES.block_size))
+    return b64encode(iv + encrypted_text).decode()
+
+
+def decrypt(encrypted_text: str, key: bytes) -> str:
+    decrypted_text = b64decode(encrypted_text)
+    iv = decrypted_text[:16]
+    cipher = AES.new(key, AES.MODE_CBC, iv=iv)
+    decrypted_text = unpad(cipher.decrypt(decrypted_text[16:]), AES.block_size)
+    return decrypted_text.decode()
 
 
 class PyObjectId(ObjectId):
@@ -62,6 +86,8 @@ async def store_data(data, db):
     else:
         # Convert the Pydantic model instance into a dictionary
         receipt_dict = receipt.dict()
+
+        receipt_dict["content"] = encrypt(str(receipt_dict["content"]), base64.b64decode(secure_key))
         receipt_dict["created_at"] = datetime.datetime.utcnow()
 
         # Insert the dictionary into MongoDB
@@ -79,6 +105,10 @@ async def get_receipt_data(key, db):
     receipt = await db["uploads"].find_one({"receipt_key": key})
     if receipt is not None:
         await db["uploads"].delete_one({"receipt_key": key})
+
+        receipt['content'] = decrypt(receipt['content'], base64.b64decode(secure_key))
+        print(receipt['content'])
+
         return receipt['content']
 
     return None
