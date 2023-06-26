@@ -85,8 +85,6 @@ def ui_file_upload():
 
 
 def file_upload(uploaded_file):
-    success_key = "123456"
-
     api_url = "http://127.0.0.1:8000/api-ocr/v1/sparrow-data/ocr"
 
     # Prepare the payload

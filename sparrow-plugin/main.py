@@ -3,6 +3,7 @@ import json
 import quart
 import quart_cors
 from quart import request
+import requests
 
 app = quart_cors.cors(quart.Quart(__name__), allow_origin="https://chat.openai.com")
 
@@ -68,14 +69,28 @@ _RECEIPT_INFO = [
 @app.get("/upload_receipt_info/<string:username>")
 async def get_upload_receipt_info(username):
     print("Get upload receipt info for user: " + username)
-    return quart.Response(response='This is the URL: http://127.0.0.1:7860', status=200)
+    return quart.Response(response='This is the URL: http://localhost:7860', status=200)
 
 
 @app.get("/receipt_data/<string:username>")
 async def get_receipt_data(username):
     receipt_id = request.args.get("receipt_id")
     print("Get receipt data for user: " + username, "receipt_id: " + receipt_id)
-    return quart.Response(response=json.dumps(_RECEIPT_INFO), status=200)
+
+    url = 'http://127.0.0.1:8000/api-ocr/v1/sparrow-data/receipt_by_id'
+
+    params = {
+        'receipt_id': receipt_id,
+        'sparrow_key': ''
+    }
+
+    response = requests.get(url, params=params)
+
+    if response.status_code != 200:
+        error_text = "Error: " + str(response.status_code) + " " + response.text
+        return quart.Response(response=error_text, status=400)
+
+    return quart.Response(response=response.json(), status=200)
 
 
 @app.get("/logo.png")

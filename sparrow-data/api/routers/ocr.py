@@ -163,16 +163,16 @@ async def run_ocr(file: Optional[UploadFile] = File(None), image_url: Optional[s
     return JSONResponse(status_code=status.HTTP_200_OK, content=result)
 
 
-@router.get("/receipt_by_key/")
-async def get_receipt_by_key(receipt_key: str, sparrow_key: str):
+@router.get("/receipt_by_id/")
+async def get_receipt_by_id(receipt_id: str, sparrow_key: str):
     if sparrow_key != settings.sparrow_key:
         return {"error": "Invalid Sparrow key."}
 
     if "MONGODB_URL" in os.environ:
-        result = await get_receipt_data(receipt_key, db)
+        result = await get_receipt_data(receipt_id, db)
 
         if result is None:
-            raise HTTPException(status_code=404, detail=f"Receipt {receipt_key} not found")
+            raise HTTPException(status_code=404, detail=f"Receipt {receipt_id} not found")
 
         return result
 
