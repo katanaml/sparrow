@@ -144,7 +144,7 @@ Replace URL with your own
 
 ```
 curl -X 'GET' \
-  'https://katanaml-org-sparrow-data.hf.space/api-ocr/v1/sparrow-data/receipt_by_id/?receipt_id=your_id&sparrow_key=your_key' \
+  'https://katanaml-org-sparrow-data.hf.space/api-chatgpt-plugin/v1/sparrow-data/receipt_by_id/?receipt_id=your_id&sparrow_key=your_key' \
   -H 'accept: application/json'
 ```
 
