@@ -48,6 +48,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/getReceiptDataResponse'
+  /receipt_data_processed/{username}:
+    post:
+      operationId: addReceiptDataProcessed
+      summary: Store ChatGPT output processed receipt data (JSON format) in database
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: The name of the user.
+        - in: query
+          name: receipt_id
+          required: true
+          schema:
+            type: string
+          description: Receipt id to store the data.
+        - in: query
+          name: receipt_json
+          required: true
+          schema:
+            type: string
+          description: Receipt JSON data processed by ChatGPT.
+      responses:
+        "200":
+          description: OK
 components:
   schemas:
     getUploadReceiptInfoResponse:

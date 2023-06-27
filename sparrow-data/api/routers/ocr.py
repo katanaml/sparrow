@@ -1,5 +1,5 @@
 from fastapi import APIRouter, File, UploadFile, Form, HTTPException, status
-from fastapi.responses import Response, JSONResponse
+from fastapi.responses import JSONResponse
 from config import settings
 from PIL import Image
 import urllib.request
@@ -12,9 +12,8 @@ from paddleocr import PaddleOCR
 from pdf2image import convert_from_bytes
 import io
 import json
-from routers.ocr_utils import merge_data
-from routers.ocr_utils import store_data
-from routers.ocr_utils import get_receipt_data
+from routers.data_utils import merge_data
+from routers.data_utils import store_data
 import motor.motor_asyncio
 from typing import Optional
 from pymongo import ASCENDING
@@ -49,7 +48,7 @@ async def startup_event():
         global db
         client = motor.motor_asyncio.AsyncIOMotorClient(os.environ["MONGODB_URL"])
         db = client.chatgpt_plugin
-        print("Connected to MongoDB!")
+        print("Connected to MongoDB from OCR!")
 
         await create_unique_index(db, 'uploads', 'receipt_key')
         await create_ttl_index(db, 'uploads', 'created_at', 15*60)
@@ -161,22 +160,6 @@ async def run_ocr(file: Optional[UploadFile] = File(None), image_url: Optional[s
         raise HTTPException(status_code=404, detail=f"Failed to process the input.")
 
     return JSONResponse(status_code=status.HTTP_200_OK, content=result)
-
-
-@router.get("/receipt_by_id/")
-async def get_receipt_by_id(receipt_id: str, sparrow_key: str):
-    if sparrow_key != settings.sparrow_key:
-        return {"error": "Invalid Sparrow key."}
-
-    if "MONGODB_URL" in os.environ:
-        result = await get_receipt_data(receipt_id, db)
-
-        if result is None:
-            raise HTTPException(status_code=404, detail=f"Receipt {receipt_id} not found")
-
-        return result
-
-    return {"error": "No MongoDB URL provided."}
 
 
 @router.get("/statistics")
