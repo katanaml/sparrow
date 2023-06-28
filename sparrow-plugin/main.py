@@ -117,7 +117,7 @@ async def get_receipt_data_processed(username):
 
 # Deleting structured processed receipt data from DB by ID
 @app.delete("/receipt_data_processed/<string:username>")
-async def get_receipt_data_processed(username):
+async def remove_receipt_data_processed(username):
     receipt_id = request.args.get("receipt_id")
     print("Delete receipt data from DB for user: " + username, "receipt_id: " + receipt_id)
 
@@ -134,7 +134,7 @@ async def get_receipt_data_processed_ids(username):
 
 # Fetching subset of fields of all stored receipts in DB
 @app.get("/receipt_data_processed_fields/<string:username>")
-async def get_receipt_data_processed_ids(username):
+async def get_receipt_data_processed_fields(username):
     print("Get receipt data fields from DB for user: " + username)
 
     return quart.Response(response='OK', status=200)
