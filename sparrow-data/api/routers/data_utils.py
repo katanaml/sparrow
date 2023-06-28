@@ -14,11 +14,6 @@ import base64
 secure_key = ""
 
 
-# key_bytes = secrets.token_bytes(32)
-# key = base64.b64encode(key_bytes).decode('utf-8')
-# print(key)
-
-
 def encrypt(plain_text: str, key: bytes) -> str:
     cipher = AES.new(key, AES.MODE_CBC)
     iv = cipher.iv
