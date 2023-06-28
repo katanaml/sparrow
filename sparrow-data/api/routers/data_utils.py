@@ -11,7 +11,7 @@ import base64
 
 
 # Define a key. Note: it must be of length 16, 24, or 32.
-secure_key = "WXOSf3qIQKVECezkUghV2AHtdpVfVH1AYM5uU7cuHVc="
+secure_key = ""
 
 
 def encrypt(plain_text: str, key: bytes) -> str:
