@@ -3,11 +3,11 @@ from config import settings
 import os
 import motor.motor_asyncio
 from routers.data_utils import get_receipt_data
-from routers.data_utils import store_receipt_processed_data
-from routers.data_utils import get_receipt_processed_data
-from routers.data_utils import delete_receipt_processed_data
-from routers.data_utils import get_user_receipt_processed_ids
-from routers.data_utils import get_user_receipt_content_processed
+from routers.data_utils import store_receipt_db_data
+from routers.data_utils import get_receipt_db_data
+from routers.data_utils import delete_receipt_db_data
+from routers.data_utils import get_user_receipt_db_ids
+from routers.data_utils import get_user_receipt_content_db
 from pymongo.errors import PyMongoError
 import json
 
@@ -52,8 +52,8 @@ async def get_receipt_by_id(receipt_id: str, sparrow_key: str):
     return HTTPException(status_code=400, detail=f"No MongoDB URL provided.")
 
 
-@router.post("/store_receipt_processed")
-async def run_store_receipt_processed(chatgpt_user: str = Form(None), receipt_id: str = Form(None),
+@router.post("/store_receipt_db")
+async def run_store_receipt_db(chatgpt_user: str = Form(None), receipt_id: str = Form(None),
                             receipt_content: str = Form(None), sparrow_key: str = Form(None)):
 
     if sparrow_key != settings.sparrow_key:
@@ -63,7 +63,7 @@ async def run_store_receipt_processed(chatgpt_user: str = Form(None), receipt_id
 
     if "MONGODB_URL" in os.environ:
         try:
-            result = await store_receipt_processed_data(chatgpt_user, receipt_id, receipt_content, db)
+            result = await store_receipt_db_data(chatgpt_user, receipt_id, receipt_content, db)
         except PyMongoError:
             return HTTPException(status_code=400, detail=f"Saving data failed.")
 
@@ -73,13 +73,13 @@ async def run_store_receipt_processed(chatgpt_user: str = Form(None), receipt_id
     return HTTPException(status_code=400, detail=f"No MongoDB URL provided.")
 
 
-@router.get("/receipt_processed_by_id")
-async def get_receipt_processed_by_id(chatgpt_user: str, receipt_id: str, sparrow_key: str):
+@router.get("/receipt_db_by_id")
+async def get_receipt_db_by_id(chatgpt_user: str, receipt_id: str, sparrow_key: str):
     if sparrow_key != settings.sparrow_key:
         return {"error": "Invalid Sparrow key."}
 
     if "MONGODB_URL" in os.environ:
-        result = await get_receipt_processed_data(chatgpt_user, receipt_id, db)
+        result = await get_receipt_db_data(chatgpt_user, receipt_id, db)
 
         if result is None:
             raise HTTPException(status_code=404, detail=f"Receipt {receipt_id} not found")
@@ -89,13 +89,13 @@ async def get_receipt_processed_by_id(chatgpt_user: str, receipt_id: str, sparro
     return HTTPException(status_code=400, detail=f"No MongoDB URL provided.")
 
 
-@router.delete("/receipt_processed_by_id")
-async def delete_receipt_processed_by_id(chatgpt_user: str, receipt_id: str, sparrow_key: str):
+@router.delete("/receipt_db_by_id")
+async def delete_receipt_db_by_id(chatgpt_user: str, receipt_id: str, sparrow_key: str):
     if sparrow_key != settings.sparrow_key:
         return {"error": "Invalid Sparrow key."}
 
     if "MONGODB_URL" in os.environ:
-        result = await delete_receipt_processed_data(chatgpt_user, receipt_id, db)
+        result = await delete_receipt_db_data(chatgpt_user, receipt_id, db)
 
         if result.deleted_count == 0:
             raise HTTPException(status_code=404, detail=f"Receipt {receipt_id} not found")
@@ -105,13 +105,13 @@ async def delete_receipt_processed_by_id(chatgpt_user: str, receipt_id: str, spa
     return HTTPException(status_code=400, detail=f"No MongoDB URL provided.")
 
 
-@router.get("/receipt_processed_ids_by_user")
-async def get_receipt_processed_ids_by_user(chatgpt_user: str, sparrow_key: str):
+@router.get("/receipt_db_ids_by_user")
+async def get_receipt_db_ids_by_user(chatgpt_user: str, sparrow_key: str):
     if sparrow_key != settings.sparrow_key:
         return {"error": "Invalid Sparrow key."}
 
     if "MONGODB_URL" in os.environ:
-        result = await get_user_receipt_processed_ids(chatgpt_user, db)
+        result = await get_user_receipt_db_ids(chatgpt_user, db)
 
         if result is None:
             raise HTTPException(status_code=404, detail=f"User {chatgpt_user} not found")
@@ -121,13 +121,13 @@ async def get_receipt_processed_ids_by_user(chatgpt_user: str, sparrow_key: str)
     return HTTPException(status_code=400, detail=f"No MongoDB URL provided.")
 
 
-@router.get("/receipt_processed_content_by_user")
-async def get_receipt_processed_content_by_user(chatgpt_user: str, sparrow_key: str):
+@router.get("/receipt_db_content_by_user")
+async def get_receipt_db_content_by_user(chatgpt_user: str, sparrow_key: str):
     if sparrow_key != settings.sparrow_key:
         return {"error": "Invalid Sparrow key."}
 
     if "MONGODB_URL" in os.environ:
-        result = await get_user_receipt_content_processed(chatgpt_user, db)
+        result = await get_user_receipt_content_db(chatgpt_user, db)
 
         return result
 

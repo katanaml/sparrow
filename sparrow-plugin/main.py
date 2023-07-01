@@ -1,5 +1,3 @@
-import json
-
 import quart
 import quart_cors
 from quart import request
@@ -30,7 +28,7 @@ async def get_receipt_data(username):
         'sparrow_key': settings.sparrow_key
     }
 
-    response = requests.get(url, params=params)
+    response = requests.get(url, params=params, timeout=180)
 
     if response.status_code != 200:
         error_text = "Error: " + str(response.status_code) + " " + response.text
@@ -40,13 +38,13 @@ async def get_receipt_data(username):
 
 
 # Storing structured processed receipt data into DB
-@app.post("/receipt_data_processed/<string:username>")
-async def add_receipt_data_processed(username):
+@app.post("/receipt_storage_db/<string:username>")
+async def add_receipt_data_to_db(username):
     receipt_id = request.args.get("receipt_id")
     receipt_json = request.args.get("receipt_json")
-    print("Add receipt data for user: " + username, "receipt_id: " + receipt_id, "receipt_json: " + receipt_json)
+    print("Add receipt data for user: " + username, "receipt_id: " + receipt_id)
 
-    url = settings.api_url_add_receipt_data_processed
+    url = settings.api_url_add_receipt_data_to_db
 
     data = {
         'chatgpt_user': username,
@@ -61,37 +59,91 @@ async def add_receipt_data_processed(username):
 
 
 # Fetching structured processed receipt data from DB by ID
-@app.get("/receipt_data_processed/<string:username>")
-async def get_receipt_data_processed(username):
+@app.get("/receipt_storage_db/<string:username>")
+async def get_receipt_data_from_db(username):
     receipt_id = request.args.get("receipt_id")
     print("Get receipt data from DB for user: " + username, "receipt_id: " + receipt_id)
 
-    return quart.Response(response='OK', status=200)
+    url = settings.api_url_get_receipt_data_from_db
+
+    params = {
+        'chatgpt_user': username,
+        'receipt_id': receipt_id,
+        'sparrow_key': settings.sparrow_key
+    }
+
+    response = requests.get(url, params=params, timeout=180)
+
+    if response.status_code != 200:
+        error_text = "Error: " + str(response.status_code) + " " + response.text
+        return quart.Response(response=error_text, status=400)
+
+    return quart.Response(response=response, status=200)
 
 
 # Deleting structured processed receipt data from DB by ID
-@app.delete("/receipt_data_processed/<string:username>")
-async def remove_receipt_data_processed(username):
+@app.delete("/receipt_storage_db/<string:username>")
+async def remove_receipt_data_from_db(username):
     receipt_id = request.args.get("receipt_id")
     print("Delete receipt data from DB for user: " + username, "receipt_id: " + receipt_id)
 
-    return quart.Response(response='OK', status=200)
+    url = settings.api_url_remove_receipt_data_from_db
+
+    params = {
+        'chatgpt_user': username,
+        'receipt_id': receipt_id,
+        'sparrow_key': settings.sparrow_key
+    }
+
+    response = requests.delete(url, params=params, timeout=180)
+
+    if response.status_code != 200:
+        error_text = "Error: " + str(response.status_code) + " " + response.text
+        return quart.Response(response=error_text, status=400)
+
+    return quart.Response(response)
 
 
 # Fetching list of processed receipt data IDs from DB
-@app.get("/receipt_data_processed_ids/<string:username>")
-async def get_receipt_data_processed_ids(username):
+@app.get("/receipts_storage_ids_db/<string:username>")
+async def get_receipts_data_ids_from_db(username):
     print("Get receipt data IDs from DB for user: " + username)
 
-    return quart.Response(response='OK', status=200)
+    url = settings.api_url_get_receipts_data_ids_from_db
+
+    params = {
+        'chatgpt_user': username,
+        'sparrow_key': settings.sparrow_key
+    }
+
+    response = requests.get(url, params=params, timeout=180)
+
+    if response.status_code != 200:
+        error_text = "Error: " + str(response.status_code) + " " + response.text
+        return quart.Response(response=error_text, status=400)
+
+    return quart.Response(response=response, status=200)
 
 
-# Fetching subset of fields of all stored receipts in DB
-@app.get("/receipt_data_processed_fields/<string:username>")
-async def get_receipt_data_processed_fields(username):
-    print("Get receipt data fields from DB for user: " + username)
+# Fetching content of all stored receipts in DB
+@app.get("/receipts_storage_content_db/<string:username>")
+async def get_receipts_data_content_from_db(username):
+    print("Get receipt data content from DB for user: " + username)
 
-    return quart.Response(response='OK', status=200)
+    url = settings.api_url_get_receipts_data_content_from_db
+
+    params = {
+        'chatgpt_user': username,
+        'sparrow_key': settings.sparrow_key
+    }
+
+    response = requests.get(url, params=params, timeout=180)
+
+    if response.status_code != 200:
+        error_text = "Error: " + str(response.status_code) + " " + response.text
+        return quart.Response(response=error_text, status=400)
+
+    return quart.Response(response=response, status=200)
 
 
 @app.get("/logo.png")

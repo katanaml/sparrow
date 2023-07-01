@@ -48,9 +48,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/getReceiptDataResponse'
-  /receipt_data_processed/{username}:
+  /receipt_storage_db/{username}:
     post:
-      operationId: addReceiptDataProcessed
+      operationId: addReceiptDataToDB
       summary: Store ChatGPT output processed receipt data (JSON format) in database
       parameters:
         - in: path
@@ -74,6 +74,84 @@ paths:
       responses:
         "200":
           description: OK
+    get:
+      operationId: getReceiptDataFromDB
+      summary: Fetch previously stored receipt content from backend DB based on provided receipt id
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: The name of the user.
+        - in: query
+          name: receipt_id
+          required: true
+          schema:
+            type: string
+          description: Receipt id to fetch stored data.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getReceiptDataDBResponse'
+    delete:
+      operationId: deleteReceiptDataFromDB
+      summary: Delete previously stored receipt content from backend DB based on provided receipt id
+      parameters:
+        - in: path
+          name: username
+          schema:
+              type: string
+          required: true
+          description: The name of the user.
+        - in: query
+          name: receipt_id
+          required: true
+          schema:
+              type: string
+          description: Receipt id to delete stored data.
+      responses:
+          "200":
+            description: OK
+  /receipts_storage_ids_db/{username}:
+    get:
+      operationId: getReceiptsDataIdsFromDB
+      summary: Fetch all previously stored receipt ids from backend DB
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: The name of the user.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getReceiptsDataIdsDBResponse'
+  /receipts_storage_content_db/{username}:
+    get:
+      operationId: getReceiptsDataContentFromDB
+      summary: Fetch all previously stored receipt content from backend DB
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: The name of the user.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getReceiptsDataContentDBResponse'
 components:
   schemas:
     getUploadReceiptInfoResponse:
@@ -90,3 +168,25 @@ components:
             items:
               type: string
             description: Array with receipt data from OCR result.
+    getReceiptDataDBResponse:
+      type: object
+      properties:
+        receipt_content:
+          type: string
+          description: JSON data representing stored receipt content.
+    getReceiptsDataIdsDBResponse:
+      type: object
+      properties:
+        receipt_ids:
+          type: array
+          items:
+            type: string
+          description: Array with receipt ids.
+    getReceiptsDataContentDBResponse:
+      type: object
+      properties:
+        receipt_content:
+          type: array
+          items:
+            type: string
+          description: Receipt content JSON.

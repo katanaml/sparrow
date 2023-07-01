@@ -67,11 +67,11 @@ class ReceiptModel(BaseModel):
         }
 
 
-class ReceiptProcessedModel(BaseModel):
+class ReceiptDBModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     user: str = Field(..., description="The user who uploaded the receipt.")
     receipt_key: str = Field(..., description="The unique key for the receipt.")
-    content: str = Field(..., description="A string representing processed receipt data.")
+    content: str = Field(..., description="A string representing DB receipt data.")
 
     class Config:
         allow_population_by_field_name = True
@@ -84,7 +84,7 @@ class ReceiptProcessedModel(BaseModel):
                 'content': '{"store": "CVS Pharmacy", "location": "3300 S LAS VEGAS BLVD, LAS VEGAS, NV, 89109"}'
             },
             'title': 'ReceiptProcessedModel',
-            'description': 'A model representing a receipt processed contents.',
+            'description': 'A model representing a receipt DB contents.',
         }
 
 
@@ -140,11 +140,11 @@ async def get_receipt_data(key, db):
     return None
 
 
-async def store_receipt_processed_data(chatgpt_user, receipt_id, receipt_content, db):
+async def store_receipt_db_data(chatgpt_user, receipt_id, receipt_content, db):
     print("Storing receipt data...")
 
     try:
-        receipt = ReceiptProcessedModel(user=chatgpt_user, receipt_key=receipt_id, content=receipt_content)
+        receipt = ReceiptDBModel(user=chatgpt_user, receipt_key=receipt_id, content=receipt_content)
     except ValidationError as e:
         print(f"An error occurred: {e}")
     else:
@@ -169,7 +169,7 @@ async def store_receipt_processed_data(chatgpt_user, receipt_id, receipt_content
     return None
 
 
-async def get_receipt_processed_data(chatgpt_user, receipt_id, db):
+async def get_receipt_db_data(chatgpt_user, receipt_id, db):
     print(f"Getting receipt data for key: {receipt_id}")
 
     receipt = await db["receipts"].find_one({"user": chatgpt_user, "receipt_key": receipt_id})
@@ -180,7 +180,7 @@ async def get_receipt_processed_data(chatgpt_user, receipt_id, db):
     return None
 
 
-async def get_user_receipt_processed_ids(chatgpt_user, db):
+async def get_user_receipt_db_ids(chatgpt_user, db):
     print(f"Getting user receipts ids for user: {chatgpt_user}")
 
     receipts_processed = await db["receipts"].find({"user": chatgpt_user}).to_list(length=100)
@@ -193,7 +193,7 @@ async def get_user_receipt_processed_ids(chatgpt_user, db):
     return receipts
 
 
-async def delete_receipt_processed_data(chatgpt_user, receipt_id, db):
+async def delete_receipt_db_data(chatgpt_user, receipt_id, db):
     print(f"Deleting receipt data for key: {receipt_id}")
 
     result = await db["receipts"].delete_one({"user": chatgpt_user, "receipt_key": receipt_id})
@@ -206,7 +206,7 @@ async def delete_receipt_processed_data(chatgpt_user, receipt_id, db):
     return result
 
 
-async def get_user_receipt_content_processed(chatgpt_user, db):
+async def get_user_receipt_content_db(chatgpt_user, db):
     print(f"Getting user receipts fields for user: {chatgpt_user}")
 
     receipts_processed = await db["receipts"].find({"user": chatgpt_user}).to_list(length=100)
