@@ -11,10 +11,11 @@ import base64
 from pymongo.errors import DuplicateKeyError
 from pymongo.errors import PyMongoError
 import json
+from config import settings
 
 
 # Define a key. Note: it must be of length 16, 24, or 32.
-secure_key = ""
+secure_key = settings.secure_key
 
 
 def encrypt(plain_text: str, key: bytes) -> str:
