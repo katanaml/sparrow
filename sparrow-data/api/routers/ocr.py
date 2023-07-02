@@ -31,7 +31,6 @@ async def create_unique_index(collection, *fields):
     return await collection.create_index(index_fields, unique=True)
 
 
-
 async def create_ttl_index(db, collection_name, field, expire_after_seconds):
     # Get a reference to your collection
     collection = db[collection_name]
