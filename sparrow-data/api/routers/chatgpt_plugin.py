@@ -63,6 +63,11 @@ async def run_store_receipt_db(chatgpt_user: str = Form(None), receipt_id: str =
 
     if "MONGODB_URL" in os.environ:
         try:
+            json.loads(receipt_content)
+        except json.decoder.JSONDecodeError:
+            return HTTPException(status_code=400, detail=f"Receipt content is not valid JSON.")
+
+        try:
             result = await store_receipt_db_data(chatgpt_user, receipt_id, receipt_content, db)
         except PyMongoError:
             return HTTPException(status_code=400, detail=f"Saving data failed.")
