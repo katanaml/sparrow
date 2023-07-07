@@ -142,7 +142,7 @@ Replace URL with your own
 
 ## Endpoints - ChatGPT Plugin
 
-1. Get OCR content fore receipt
+1. Get OCR content for receipt
 
 ```
 curl -X 'GET' \
