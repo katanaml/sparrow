@@ -44,7 +44,7 @@ async def startup_event():
     if "MONGODB_URL" in os.environ:
         global client
         global db
-        client = motor.motor_asyncio.AsyncIOMotorClient(os.environ["MONGODB_URL"])
+        client = motor.motor_asyncio.AsyncIOMotorClient(os.environ.get("MONGODB_URL"))
         db = client.chatgpt_plugin
 
         index_result = await create_unique_index(db['uploads'], 'receipt_key')

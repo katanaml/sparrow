@@ -44,3 +44,4 @@ sparrow-plugin-ui/.idea/misc.xml
 sparrow-plugin-ui/.idea/modules.xml
 sparrow-plugin-ui/.idea/sparrow-plugin-ui.iml
 sparrow-plugin-ui/.idea/vcs.xml
+sparrow-data/api/set_env_vars.sh
