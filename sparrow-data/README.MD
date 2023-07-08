@@ -61,7 +61,7 @@ python run_donut_test.py
 
 ## FastAPI Service
 
-Set **huggingface_key** in config.py
+Set environment variables in set_env_vars.sh
 
 1. Run
 
@@ -70,7 +70,7 @@ cd api
 ```
 
 ```
-uvicorn endpoints:app --workers 1
+RUN_LOCALLY=true ./start.sh
 ```
 
 2. FastAPI Swagger
@@ -90,7 +90,7 @@ docker build --tag katanaml/sparrow-data .
 2. Run Docker container
 
 ```
-docker run -it --name sparrow-data -p 7860:7860 katanaml/sparrow-data:latest
+docker run -e RUN_LOCALLY=true -it --name sparrow-data -p 7860:7860 katanaml/sparrow-data:latest
 ```
 
 ## Endpoints

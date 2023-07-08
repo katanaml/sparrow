@@ -12,6 +12,12 @@ RUN apt-get install -y poppler-utils libpoppler-cpp-dev
 
 RUN pip install --no-cache-dir --upgrade -r /code/requirements-fastapi.txt
 
+COPY set_env_vars.sh /set_env_vars.sh
+COPY start.sh /start.sh
+
+# Make the scripts executable
+RUN chmod +x /set_env_vars.sh /start.sh
+
 RUN useradd -m -u 1000 user
 
 USER user
@@ -23,4 +29,4 @@ WORKDIR $HOME/app
 
 COPY --chown=user . $HOME/app/
 
-CMD ["uvicorn", "endpoints:app", "--host", "0.0.0.0", "--port", "7860"]
+CMD ["/start.sh"]
