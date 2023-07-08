@@ -4,6 +4,8 @@
 
 Manage receipts with Sparrow. You can read, store and review your receipts. This plugin works with ChatGPT to process OCR output from [Sparrow Data](https://github.com/katanaml/sparrow/tree/main/sparrow-data) service.
 
+![Inference Results](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/chatgpt_plugin.png)
+
 ## Usage
 
 To install the required packages for this plugin, run the following command:
