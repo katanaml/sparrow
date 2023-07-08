@@ -4,6 +4,8 @@
 
 This app implements Sparrow file upload UI functionality for Receipt Assistant ChatGPT plugin.
 
+![Inference Results](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/chatgpt_plugin_ui.png)
+
 ## Instructions
 
 1. Install
