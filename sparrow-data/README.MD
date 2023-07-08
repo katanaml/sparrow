@@ -140,11 +140,65 @@ curl -X 'GET' \
 
 Replace URL with your own
 
-5. Get OCR content for ChatGPT plugin
+## Endpoints - ChatGPT Plugin
+
+1. Get OCR content for receipt
 
 ```
 curl -X 'GET' \
-  'https://katanaml-org-sparrow-data.hf.space/api-chatgpt-plugin/v1/sparrow-data/receipt_by_id/?receipt_id=your_id&sparrow_key=your_key' \
+  'https://katanaml-org-sparrow-data.hf.space/api-chatgpt-plugin/v1/sparrow-data/receipt_by_id?receipt_id=34563&sparrow_key=your_key' \
+  -H 'accept: application/json'
+```
+
+Replace URL with your own
+
+2. Post Receipt JSON content to DB
+
+```
+curl -X 'POST' \
+  'https://katanaml-org-sparrow-data.hf.space/api-chatgpt-plugin/v1/sparrow-data/store_receipt_db' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -d 'chatgpt_user=user&receipt_id=12345&receipt_content=%7Breceipt%7D&sparrow_key=your_key'
+```
+
+Replace URL with your own
+
+3. Get receipt JSON from DB by ID
+
+```
+curl -X 'GET' \
+  'https://katanaml-org-sparrow-data.hf.space/api-chatgpt-plugin/v1/sparrow-data/receipt_db_by_id?chatgpt_user=user&receipt_id=12345&sparrow_key=your_key' \
+  -H 'accept: application/json'
+```
+
+Replace URL with your own
+
+4. Delete receipt JSON from DB by ID
+
+```
+curl -X 'DELETE' \
+  'https://katanaml-org-sparrow-data.hf.space/api-chatgpt-plugin/v1/sparrow-data/receipt_db_by_id?chatgpt_user=user&receipt_id=13456&sparrow_key=your_key' \
+  -H 'accept: application/json'
+```
+
+Replace URL with your own
+
+5. Get all IDs for receipts stored in DB
+
+```
+curl -X 'GET' \
+  'https://katanaml-org-sparrow-data.hf.space/api-chatgpt-plugin/v1/sparrow-data/receipt_db_ids_by_user?chatgpt_user=user&sparrow_key=your_key' \
+  -H 'accept: application/json'
+```
+
+Replace URL with your own
+
+6. Get all receipts content stored in DB
+
+```
+curl -X 'GET' \
+  'https://katanaml-org-sparrow-data.hf.space/api-chatgpt-plugin/v1/sparrow-data/receipt_db_content_by_user?chatgpt_user=user&sparrow_key=your_key' \
   -H 'accept: application/json'
 ```
 
