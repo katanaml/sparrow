@@ -61,7 +61,7 @@ python run_donut_test.py
 
 ## FastAPI Service
 
-Set environment variables in set_env_vars.sh
+Set environment variables in **set_env_vars.sh**
 
 1. Run
 
