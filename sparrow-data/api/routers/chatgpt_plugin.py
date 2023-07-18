@@ -25,7 +25,7 @@ async def startup_event():
         global client
         global db
         client = motor.motor_asyncio.AsyncIOMotorClient(os.environ.get("MONGODB_URL"))
-        db = client.chatgpt_plugin
+        db = client.receipt_assistant
         print("Connected to MongoDB from ChatGPT plugin!")
 
 

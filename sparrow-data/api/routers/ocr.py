@@ -45,7 +45,7 @@ async def startup_event():
         global client
         global db
         client = motor.motor_asyncio.AsyncIOMotorClient(os.environ.get("MONGODB_URL"))
-        db = client.chatgpt_plugin
+        db = client.receipt_assistant
 
         index_result = await create_unique_index(db['uploads'], 'receipt_key')
         print(f"Unique index created or already exists: {index_result}")
