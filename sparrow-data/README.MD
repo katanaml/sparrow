@@ -90,7 +90,7 @@ docker build --tag katanaml/sparrow-data .
 2. Run Docker container
 
 ```
-docker run -e RUN_LOCALLY=true -it --name sparrow-data -p 7860:7860 katanaml/sparrow-data:latest
+docker run -e RUN_LOCALLY=true -it --name sparrow-data -p 8000:8000 katanaml/sparrow-data:latest
 ```
 
 ## Endpoints
