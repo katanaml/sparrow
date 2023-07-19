@@ -26,4 +26,3 @@ def log_stats(file_path, new_data):
     # Write the updated content back to the file
     with open(file_path, 'w') as file:
         json.dump(content, file)
-
