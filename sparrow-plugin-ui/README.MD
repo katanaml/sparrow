@@ -8,6 +8,8 @@ This app implements Sparrow file upload UI functionality for Receipt Assistant C
 
 ## Instructions
 
+Set environment variables in **set_env_vars.sh**
+
 1. Install
 
 Streamlit docs:
@@ -20,7 +22,7 @@ pip install -r requirements.txt
 2. Run
 
 ```
-streamlit run main.py
+RUN_LOCALLY=true ./start.sh
 ```
 
 ## Run in Docker container
