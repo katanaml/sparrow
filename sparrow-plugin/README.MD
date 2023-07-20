@@ -14,10 +14,26 @@ To install the required packages for this plugin, run the following command:
 pip install -r requirements.txt
 ```
 
-To run the plugin, enter the following command:
+Set environment variables in **set_env_vars.sh**
+
+1. Run
 
 ```
-python main.py
+RUN_LOCALLY=true ./start.sh
+```
+
+**Run in Docker container**
+
+1. Build Docker image
+
+```
+docker build --tag katanaml/sparrow-plugin .
+```
+
+2. Run Docker container
+
+```
+docker run -e RUN_LOCALLY=true -it --name sparrow-plugin -p 5003:5003 katanaml/sparrow-plugin:latest
 ```
 
 Once the local server is running:

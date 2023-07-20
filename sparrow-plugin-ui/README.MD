@@ -36,7 +36,7 @@ docker build --tag katanaml/sparrow-plugin-ui .
 2. Run Docker container
 
 ```
-docker run -it --name sparrow-plugin-ui -p 7860:7860 katanaml/sparrow-plugin-ui:latest
+docker run -e RUN_LOCALLY=true -it --name sparrow-plugin-ui -p 7860:7860 katanaml/sparrow-plugin-ui:latest
 ```
 
 ## Deploy to Hugging Face Spaces
