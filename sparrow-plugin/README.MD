@@ -19,10 +19,6 @@ Set environment variables in **set_env_vars.sh**
 1. Run
 
 ```
-cd api
-```
-
-```
 RUN_LOCALLY=true ./start.sh
 ```
 
