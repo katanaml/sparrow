@@ -13,5 +13,5 @@
     },
     "logo_url": "http://localhost:5003/logo.png",
     "contact_email": "abaranovskis@redsamuraiconsulting.com",
-    "legal_info_url": "https://www.katanaml.io/page-contacts.html"
+    "legal_info_url": "http://localhost:5003/legal.html"
   }
