@@ -1,6 +1,6 @@
 import quart
 import quart_cors
-from quart import request
+from quart import request, send_from_directory
 import requests
 from config import settings
 
@@ -166,6 +166,11 @@ async def openapi_spec():
     with open("openapi.yaml") as f:
         text = f.read()
         return quart.Response(text, mimetype="text/yaml")
+
+
+@app.route('/legal.html')
+async def legal():
+    return await send_from_directory('static', 'legal.html')
 
 
 def main():
