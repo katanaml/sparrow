@@ -34,6 +34,8 @@ async def get_upload_receipt_info():
     if sub != -1:
         print("Get upload receipt info for user: " + sub)
         return quart.Response(response='This is the URL: ' + settings.sparrow_ui_url, status=200)
+    else:
+        return quart.Response(response='Unauthorized', status=401)
 
 
 # Fetching OCR'ed raw receipt data into ChatGPT
@@ -59,6 +61,8 @@ async def get_receipt_data():
             return quart.Response(response=error_text, status=400)
 
         return quart.Response(response=response.json(), status=200)
+    else:
+        return quart.Response(response='Unauthorized', status=401)
 
 
 # Storing structured processed receipt data into DB
@@ -83,6 +87,8 @@ async def add_receipt_data_to_db():
         response = requests.post(url, data=data, timeout=180)
 
         return quart.Response(response)
+    else:
+        return quart.Response(response='Unauthorized', status=401)
 
 
 # Fetching structured processed receipt data from DB by ID
@@ -109,6 +115,8 @@ async def get_receipt_data_from_db():
             return quart.Response(response=error_text, status=400)
 
         return quart.Response(response=response, status=200)
+    else:
+        return quart.Response(response='Unauthorized', status=401)
 
 
 # Deleting structured processed receipt data from DB by ID
@@ -135,6 +143,8 @@ async def remove_receipt_data_from_db():
             return quart.Response(response=error_text, status=400)
 
         return quart.Response(response)
+    else:
+        return quart.Response(response='Unauthorized', status=401)
 
 
 # Fetching list of processed receipt data IDs from DB
@@ -159,6 +169,8 @@ async def get_receipts_data_ids_from_db():
             return quart.Response(response=error_text, status=400)
 
         return quart.Response(response=response, status=200)
+    else:
+        return quart.Response(response='Unauthorized', status=401)
 
 
 # Fetching content of all stored receipts in DB
@@ -183,6 +195,8 @@ async def get_receipts_data_content_from_db():
             return quart.Response(response=error_text, status=400)
 
         return quart.Response(response=response, status=200)
+    else:
+        return quart.Response(response='Unauthorized', status=401)
 
 
 @app.get("/logo.png")
