@@ -10,13 +10,6 @@ paths:
     get:
       operationId: getUploadReceiptInfo
       summary: Get info how to upload a receipt
-      parameters:
-        - in: path
-          name: username
-          schema:
-              type: string
-          required: true
-          description: The name of the user.
       responses:
         "200":
           description: OK
@@ -29,12 +22,6 @@ paths:
       operationId: getReceiptData
       summary: Fetch receipt data based on provided receipt id
       parameters:
-        - in: path
-          name: username
-          schema:
-              type: string
-          required: true
-          description: The name of the user.
         - in: query
           name: receipt_id
           required: true
@@ -53,12 +40,6 @@ paths:
       operationId: addReceiptDataToDB
       summary: Store ChatGPT output processed receipt data (JSON format) in database
       parameters:
-        - in: path
-          name: username
-          schema:
-            type: string
-          required: true
-          description: The name of the user.
         - in: query
           name: receipt_id
           required: true
@@ -78,12 +59,6 @@ paths:
       operationId: getReceiptDataFromDB
       summary: Fetch previously stored receipt content from backend DB based on provided receipt id
       parameters:
-        - in: path
-          name: username
-          schema:
-            type: string
-          required: true
-          description: The name of the user.
         - in: query
           name: receipt_id
           required: true
@@ -101,12 +76,6 @@ paths:
       operationId: deleteReceiptDataFromDB
       summary: Delete previously stored receipt content from backend DB based on provided receipt id
       parameters:
-        - in: path
-          name: username
-          schema:
-              type: string
-          required: true
-          description: The name of the user.
         - in: query
           name: receipt_id
           required: true
@@ -120,13 +89,6 @@ paths:
     get:
       operationId: getReceiptsDataIdsFromDB
       summary: Fetch all previously stored receipt ids from backend DB
-      parameters:
-        - in: path
-          name: username
-          schema:
-            type: string
-          required: true
-          description: The name of the user.
       responses:
         "200":
           description: OK
@@ -138,13 +100,6 @@ paths:
     get:
       operationId: getReceiptsDataContentFromDB
       summary: Fetch all previously stored receipt content from backend DB
-      parameters:
-        - in: path
-          name: username
-          schema:
-            type: string
-          required: true
-          description: The name of the user.
       responses:
         "200":
           description: OK

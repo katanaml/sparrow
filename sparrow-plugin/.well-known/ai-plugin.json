@@ -5,7 +5,14 @@
     "description_for_human": "Manage receipts with Sparrow. You can read, store and review your receipts.",
     "description_for_model": "Plugin for managing receipts, including reading, storing and reviewing.",
     "auth": {
-      "type": "none"
+      "type": "oauth",
+      "client_url": "https://abc.logto.app/oidc/auth",
+      "scope": "openid profile",
+      "authorization_url": "https://abc.logto.app/oidc/token",
+      "authorization_content_type": "application/json",
+      "verification_tokens": {
+        "openai": "your_openai_token"
+      }
     },
     "api": {
       "type": "openapi",
