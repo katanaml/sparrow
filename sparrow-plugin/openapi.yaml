@@ -6,7 +6,7 @@ info:
 servers:
   - url: http://localhost:5003
 paths:
-  /upload_receipt_info/{username}:
+  /upload_receipt_info:
     get:
       operationId: getUploadReceiptInfo
       summary: Get info how to upload a receipt
@@ -17,7 +17,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/getUploadReceiptInfoResponse'
-  /receipt_data/{username}:
+  /receipt_data:
     get:
       operationId: getReceiptData
       summary: Fetch receipt data based on provided receipt id
@@ -35,7 +35,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/getReceiptDataResponse'
-  /receipt_storage_db/{username}:
+  /receipt_storage_db:
     post:
       operationId: addReceiptDataToDB
       summary: Store ChatGPT output processed receipt data (JSON format) in database
@@ -85,7 +85,7 @@ paths:
       responses:
           "200":
             description: OK
-  /receipts_storage_ids_db/{username}:
+  /receipts_storage_ids_db:
     get:
       operationId: getReceiptsDataIdsFromDB
       summary: Fetch all previously stored receipt ids from backend DB
@@ -96,7 +96,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/getReceiptsDataIdsDBResponse'
-  /receipts_storage_content_db/{username}:
+  /receipts_storage_content_db:
     get:
       operationId: getReceiptsDataContentFromDB
       summary: Fetch all previously stored receipt content from backend DB
