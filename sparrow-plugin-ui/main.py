@@ -4,6 +4,9 @@ from pathlib import Path
 import base64
 import requests
 from config import settings
+from io import BytesIO
+import os
+import mimetypes
 
 
 __version__ = "1.0.0"
@@ -84,6 +87,48 @@ def ui_file_upload():
             st.success(f"Success! Copy this key into ChatGPT: {success_key}", icon="✅")
 
 
+def ui_sample_receipts():
+    sample_receipts = {
+        "Receipt 1": "sample_receipts/inout-20211211_001.jpg",
+        "Receipt 2": "sample_receipts/ross-20211211_010.jpg",
+        "Receipt 3": "sample_receipts/wholefoods-20211211_005.jpg"
+    }
+
+    # Display images side by side
+    col1, col2, col3 = st.columns(3)
+    selected_receipt = None
+
+    with col1:
+        col1_left, col1_button, col1_right = st.columns([1, 2, 1])
+        with col1_button:
+            if st.button("Upload", key="upload1"):
+                selected_receipt = "Receipt 1"
+        img = st.image(sample_receipts["Receipt 1"], width=200)
+    with col2:
+        col2_left, col2_button, col2_right = st.columns([1, 2, 1])
+        with col2_button:
+            if st.button("Upload", key="upload2"):
+                selected_receipt = "Receipt 2"
+        img = st.image(sample_receipts["Receipt 2"], width=200)
+    with col3:
+        col3_left, col3_button, col3_right = st.columns([1, 2, 1])
+        with col3_button:
+            if st.button("Upload", key="upload3"):
+                selected_receipt = "Receipt 3"
+        img = st.image(sample_receipts["Receipt 3"], width=200)
+
+    if selected_receipt is not None:
+        file_path = sample_receipts[selected_receipt]
+        with open(sample_receipts[selected_receipt], "rb") as f:
+            bytes_data = f.read()
+            buffer = BytesIO(bytes_data)
+            buffer.name = os.path.basename(file_path)  # Add the 'name' attribute
+            buffer.type = mimetypes.guess_type(file_path)[0]  # Add the 'type' attribute
+
+            success_key = file_upload(buffer)
+            st.success(f"Success! Copy this key into ChatGPT: {success_key}", icon="✅")
+
+
 def file_upload(uploaded_file):
     api_url = settings.api_data_url
 
@@ -115,3 +160,8 @@ with st.sidebar:
     ui_info()
 
 ui_file_upload()
+
+st.divider()
+st.write('## Sample receipts')
+ui_sample_receipts()
+
