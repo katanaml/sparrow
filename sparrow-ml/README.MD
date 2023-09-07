@@ -2,7 +2,7 @@
 
 ## Description
 
-This module implements Sparrow ML model fine-tuning and inference. We are using Donut model to run document data extraction task. Fine-tuning is done using Hugging Face API.
+This module implements Sparrow ML model fine-tuning and inference. We are using Donut model to run document data extraction task. Fine-tuning is done using Hugging Face API. Other ML models, such as LLMs, will be added in the future.
 
 ## Install
 
