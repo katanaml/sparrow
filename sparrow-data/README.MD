@@ -69,7 +69,7 @@ If you want only to test how OCR works, you can run scripts in /ocr folder
 python ocr_paddleocr.py
 ```
 
-2. TrOCR
+2. Doctr
 
 ```
 python ocr_doctr.py
