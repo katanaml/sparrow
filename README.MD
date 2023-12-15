@@ -10,11 +10,11 @@ Sparrow helps to extract and process data from scanned documents and pictures. I
 
 ### Modules
 
-* **[sparrow-data](https://github.com/katanaml/sparrow/tree/main/sparrow-data)** - Sparrow Data module
-* **[sparrow-ml](https://github.com/katanaml/sparrow/tree/main/sparrow-ml)** - Sparrow ML module
-* **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui)** - Sparrow UI module
+* **[sparrow-data](https://github.com/katanaml/sparrow/tree/main/sparrow-data)** - Sparrow Data module. Data for Donut ML model fine-tuning and OCR services
+* **[sparrow-ml](https://github.com/katanaml/sparrow/tree/main/sparrow-ml)** - Sparrow ML module. Donut ML model fine-tuning and LLM services
+* **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui)** - Sparrow UI module. UI for Donut ML model services
 
-### Inference
+### Inference with Donut ML model
 
 ![Inference Results](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/inference_actual.png)
 
