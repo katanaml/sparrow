@@ -1,4 +1,4 @@
-# On-premise data processing LLM RAG
+# On-premise data extraction LLM RAG
 
 ___
 
