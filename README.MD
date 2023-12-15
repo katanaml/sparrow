@@ -8,6 +8,8 @@
 
 Sparrow helps to extract and process data from scanned documents and pictures. It works with forms, invoices, receipts and other structured data.
 
+It implements various methods to extract data. Version 1 of Skipper was focused on Donut ML model. Version 2 focus is on-premise LLMs.
+
 ### Modules
 
 * **[sparrow-data](https://github.com/katanaml/sparrow/tree/main/sparrow-data)** - Sparrow Data module. Data for Donut ML model fine-tuning and OCR services
