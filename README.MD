@@ -1,7 +1,7 @@
 # Sparrow - Data extraction from documents with ML
 
 <p align="center">
-  <img width="300" height="300" src="https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_logo_1.png">
+  <img width="300" height="300" src="https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/sparrow_logo_1.png">
 </p>
 
 ## Description
@@ -12,11 +12,11 @@ Sparrow helps to extract and process data from scanned documents and pictures. I
 
 * **[sparrow-data](https://github.com/katanaml/sparrow/tree/main/sparrow-data)** - Sparrow Data module
 * **[sparrow-ml](https://github.com/katanaml/sparrow/tree/main/sparrow-ml)** - Sparrow ML module
-* **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui)** - Sparrow UI data annotation tool
+* **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui)** - Sparrow UI module
 
 ### Inference
 
-![Inference Results](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/inference_actual.png)
+![Inference Results](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/inference_actual.png)
 
 ## Author
 
