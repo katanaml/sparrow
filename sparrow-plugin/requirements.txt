@@ -1,4 +1,0 @@
-quart
-quart-cors
-requests
-pydantic==1.10.9
