@@ -59,22 +59,6 @@ python run_donut_upload.py
 python run_donut_test.py
 ```
 
-## Plain OCR
-
-If you want only to test how OCR works, you can run scripts in /ocr folder
-
-1. PaddleOCR
-
-```
-python ocr_paddleocr.py
-```
-
-2. Doctr
-
-```
-python ocr_doctr.py
-```
-
 ## FastAPI Service
 
 Set environment variables in **set_env_vars.sh**
