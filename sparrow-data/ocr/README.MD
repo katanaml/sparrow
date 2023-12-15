@@ -12,19 +12,6 @@ This module implements OCR functionality for Sparrow ML.
 pip install -r requirements.txt
 ```
 
-2. Install Poppler, required for pdf2image to work (macos example)
-
-```
-brew install poppler
-```
-
-3. Mindee docTR OCR installation with dependencies
-
-```
-pip install torch torchvision torchaudio
-pip install python-doctr
-```
-
 ## Plain OCR
 
 If you want to test how OCR works, you can run scripts
