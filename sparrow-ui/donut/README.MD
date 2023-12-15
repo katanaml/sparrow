@@ -6,23 +6,23 @@
 
 #### Dashboard UI:
 
-![Sparrow Dashboard](https://github.com/katanaml/sparrow/blob/main/donut/sparrow-ui/assets/dashboard.png)
+![Sparrow Dashboard](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/dashboard.png)
 
 #### Annotation UI:
 
-![Sparrow Annotation](https://github.com/katanaml/sparrow/blob/main/donut/sparrow-ui/assets/annotation.png)
+![Sparrow Annotation](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/annotation.png)
 
 #### Inference UI:
 
-![Sparrow Inference](https://github.com/katanaml/sparrow/blob/main/donut/sparrow-ui/assets/inference.png)
+![Sparrow Inference](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/inference.png)
 
 #### Review UI:
 
-![Sparrow Review](https://github.com/katanaml/sparrow/blob/main/donut/sparrow-ui/assets/review.png)
+![Sparrow Review](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/review.png)
 
 #### Labels/Groups CRUD UI:
 
-![Sparrow CRUD](https://github.com/katanaml/sparrow/blob/main/donut/sparrow-ui/assets/crud.png)
+![Sparrow CRUD](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/crud.png)
 
 ## Instructions
 
