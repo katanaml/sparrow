@@ -1,0 +1,8 @@
+pdf2image==1.16.2
+torch==1.13.1
+torchvision
+torchaudio
+datasets==2.10.1
+python-doctr==0.6.0
+paddleocr==2.7.0.3
+paddlepaddle==2.5.2
