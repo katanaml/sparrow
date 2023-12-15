@@ -1,4 +1,4 @@
-# Invoice data processing LLM RAG
+# On-premise data processing LLM RAG
 
 ___
 
