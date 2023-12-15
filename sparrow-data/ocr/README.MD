@@ -27,7 +27,7 @@ pip install python-doctr
 
 ## Plain OCR
 
-If you want only to test how OCR works, you can run scripts
+If you want to test how OCR works, you can run scripts
 
 1. PaddleOCR
 
