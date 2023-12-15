@@ -13,7 +13,7 @@ It implements various methods to extract data. Version 1 of Skipper was focused 
 ### Modules
 
 * **[sparrow-data](https://github.com/katanaml/sparrow/tree/main/sparrow-data)** - Sparrow Data module. Data for Donut ML model fine-tuning and OCR services
-* **[sparrow-ml](https://github.com/katanaml/sparrow/tree/main/sparrow-ml)** - Sparrow ML module. Donut ML model fine-tuning and LLM services
+* **[sparrow-ml](https://github.com/katanaml/sparrow/tree/main/sparrow-ml)** - Sparrow ML module. Donut ML model fine-tuning and LLM RAG services
 * **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui)** - Sparrow UI module. UI for Donut ML model services
 
 ### Inference with Donut ML model
