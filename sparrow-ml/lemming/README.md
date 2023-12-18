@@ -1,4 +1,4 @@
-# On-premise data extraction LLM RAG
+# Sparrow RAG - on-premise data extraction LLM RAG
 
 ___
 
