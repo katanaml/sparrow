@@ -12,17 +12,17 @@ import yaml
 
 class InvoiceInfo(BaseModel):
     invoice_number: int
-    invoice_date: str
-    client_name: str
-    client_address: str
-    client_tax_id: str
-    seller_name: str
-    seller_address: str
-    seller_tax_id: str
-    iban: str
-    names_of_invoice_items: List[str]
-    gross_worth_of_invoice_items: List[float]
-    total_gross_worth: str
+    # invoice_date: str
+    # client_name: str
+    # client_address: str
+    # client_tax_id: str
+    # seller_name: str
+    # seller_address: str
+    # seller_tax_id: str
+    # iban: str
+    # names_of_invoice_items: List[str]
+    # gross_worth_of_invoice_items: List[float]
+    # total_gross_worth: str
 
 
 def load_embedding_model(model_name):

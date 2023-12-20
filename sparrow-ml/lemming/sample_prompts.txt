@@ -1,4 +1,4 @@
-python main.py "retrieve invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name,
+python engine.py "retrieve invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name,
 seller_address, seller_tax_id, iban, names_of_invoice_items, gross_worth_of_invoice_items and total_gross_worth"
 
 {
@@ -27,3 +27,12 @@ seller_address, seller_tax_id, iban, names_of_invoice_items, gross_worth_of_invo
 }
 ==================================================
 Time to retrieve answer: 58.056333630000154
+
+
+python engine.py "retrieve invoice_number"
+
+{
+    "invoice_number": 61356291
+}
+==================================================
+Time to retrieve answer: 46.90969079799834
