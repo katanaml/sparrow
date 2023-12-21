@@ -25,10 +25,14 @@ def get_rag_response(query, chain, debug=False):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('input',
+    parser.add_argument('inputs',
                         type=str,
-                        default='What is the invoice number value?',
+                        default='invoice_number',
                         help='Enter the query to pass into the LLM')
+    parser.add_argument('types',
+                        type=str,
+                        default='int',
+                        help='Enter types of elements passed in the query')
     parser.add_argument('--debug',
                         action='store_true',
                         default=False,
@@ -37,26 +41,31 @@ if __name__ == "__main__":
 
     start = timeit.default_timer()
 
-    rag_chain = build_rag_pipeline(args.debug)
+    query = 'retrieve ' + args.inputs
+    query_types = args.types
+    print(query)
+    print(query_types)
 
-    step = 0
-    answer = False
-    while not answer:
-        step += 1
-        if step > 1:
-            print('Refining answer...')
-            # add wait time, before refining to avoid spamming the server
-            time.sleep(5)
-        if step > 3:
-            # if we have refined 3 times, and still no answer, break
-            answer = 'No answer found.'
-            break
-        print('Retrieving answer...')
-        answer = get_rag_response(args.input, rag_chain, args.debug)
+    # rag_chain = build_rag_pipeline(args.debug)
+    #
+    # step = 0
+    # answer = False
+    # while not answer:
+    #     step += 1
+    #     if step > 1:
+    #         print('Refining answer...')
+    #         # add wait time, before refining to avoid spamming the server
+    #         time.sleep(5)
+    #     if step > 3:
+    #         # if we have refined 3 times, and still no answer, break
+    #         answer = 'No answer found.'
+    #         break
+    #     print('Retrieving answer...')
+    #     answer = get_rag_response(args.inputs, rag_chain, args.debug)
 
     end = timeit.default_timer()
 
-    print(f'\nJSON answer:\n{answer}')
-    print('=' * 50)
+    # print(f'\nJSON answer:\n{answer}')
+    # print('=' * 50)
 
     print(f"Time to retrieve answer: {end - start}")
