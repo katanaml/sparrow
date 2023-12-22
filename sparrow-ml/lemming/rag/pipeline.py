@@ -4,25 +4,41 @@ from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from llama_index.llms import Ollama
 from llama_index.vector_stores import WeaviateVectorStore
 import weaviate
-from pydantic import BaseModel
+from pydantic import create_model
 from typing import List
 import box
 import yaml
 
 
-class InvoiceInfo(BaseModel):
-    invoice_number: int
-    # invoice_date: str
-    # client_name: str
-    # client_address: str
-    # client_tax_id: str
-    # seller_name: str
-    # seller_address: str
-    # seller_tax_id: str
-    # iban: str
-    # names_of_invoice_items: List[str]
-    # gross_worth_of_invoice_items: List[float]
-    # total_gross_worth: str
+# class InvoiceInfo(BaseModel):
+#     invoice_number: int
+#     # invoice_date: str
+#     # client_name: str
+#     # client_address: str
+#     # client_tax_id: str
+#     # seller_name: str
+#     # seller_address: str
+#     # seller_tax_id: str
+#     # iban: str
+#     # names_of_invoice_items: List[str]
+#     # gross_worth_of_invoice_items: List[float]
+#     # total_gross_worth: str
+
+def build_response_class(query_inputs, query_types):
+    type_mapping = {
+        'int': int,
+        'str': str,
+        'float': float
+    }
+
+    query_types = [type_mapping[type_str] for type_str in query_types]
+
+    fields = {name: (type_, ...) for name, type_ in zip(query_inputs, query_types)}
+
+    # Create a dynamic model
+    DynamicModel = create_model('DynamicModel', **fields)
+
+    return DynamicModel
 
 
 def load_embedding_model(model_name):
@@ -48,7 +64,7 @@ def build_index(chunk_size, llm, embed_model, weaviate_client, index_name):
     return index
 
 
-def build_rag_pipeline(debug=False):
+def build_rag_pipeline(query_inputs, query_types, debug=False):
     # Import config vars
     with open('config.yml', 'r', encoding='utf8') as ymlfile:
         cfg = box.Box(yaml.safe_load(ymlfile))
@@ -65,11 +81,14 @@ def build_rag_pipeline(debug=False):
     print("Building index...")
     index = build_index(cfg.CHUNK_SIZE, llm, embeddings, client, cfg.INDEX_NAME)
 
+    print("Building response class...")
+    DynamicModel = build_response_class(query_inputs, query_types)
+
     print("Constructing query engine...")
 
     query_engine = index.as_query_engine(
         streaming=False,
-        output_cls=InvoiceInfo,
+        output_cls=DynamicModel,
         response_mode="compact"
     )
 

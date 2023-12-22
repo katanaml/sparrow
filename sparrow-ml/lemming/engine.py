@@ -43,29 +43,30 @@ if __name__ == "__main__":
 
     query = 'retrieve ' + args.inputs
     query_types = args.types
-    print(query)
-    print(query_types)
 
-    # rag_chain = build_rag_pipeline(args.debug)
-    #
-    # step = 0
-    # answer = False
-    # while not answer:
-    #     step += 1
-    #     if step > 1:
-    #         print('Refining answer...')
-    #         # add wait time, before refining to avoid spamming the server
-    #         time.sleep(5)
-    #     if step > 3:
-    #         # if we have refined 3 times, and still no answer, break
-    #         answer = 'No answer found.'
-    #         break
-    #     print('Retrieving answer...')
-    #     answer = get_rag_response(args.inputs, rag_chain, args.debug)
+    query_inputs_arr = [param.strip() for param in args.inputs.split(',')]
+    query_types_arr = [param.strip() for param in query_types.split(',')]
+
+    rag_chain = build_rag_pipeline(query_inputs_arr, query_types_arr, args.debug)
+
+    step = 0
+    answer = False
+    while not answer:
+        step += 1
+        if step > 1:
+            print('Refining answer...')
+            # add wait time, before refining to avoid spamming the server
+            time.sleep(5)
+        if step > 3:
+            # if we have refined 3 times, and still no answer, break
+            answer = 'No answer found.'
+            break
+        print('Retrieving answer...')
+        answer = get_rag_response(query, rag_chain, args.debug)
 
     end = timeit.default_timer()
 
-    # print(f'\nJSON answer:\n{answer}')
-    # print('=' * 50)
+    print(f'\nJSON answer:\n{answer}')
+    print('=' * 50)
 
     print(f"Time to retrieve answer: {end - start}")
