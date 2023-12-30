@@ -1,5 +1,7 @@
-python engine.py "retrieve invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name,
-seller_address, seller_tax_id, iban, names_of_invoice_items, gross_worth_of_invoice_items and total_gross_worth"
+python engine.py "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
+seller_tax_id, iban, names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "int, str, str, str, str,
+str, str, str, str, List[str], List[float], str"
+
 
 {
     "invoice_number": 61356291,
@@ -26,13 +28,27 @@ seller_address, seller_tax_id, iban, names_of_invoice_items, gross_worth_of_invo
     "total_gross_worth": "$212,09"
 }
 ==================================================
-Time to retrieve answer: 58.056333630000154
+Time to retrieve answer: 63.74948522399791
 
 
-python engine.py "retrieve invoice_number"
+python engine.py "invoice_number" "int"
 
 {
     "invoice_number": 61356291
 }
 ==================================================
-Time to retrieve answer: 46.90969079799834
+Time to retrieve answer: 15.325319556002796
+
+
+python engine.py "gross_worth_of_invoice_items" "List[float]"
+
+{
+    "gross_worth_of_invoice_items": [
+        66.0,
+        123.55,
+        8.25,
+        14.29
+    ]
+}
+==================================================
+Time to retrieve answer: 17.55766561099881

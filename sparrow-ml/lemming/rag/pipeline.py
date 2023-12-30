@@ -4,25 +4,10 @@ from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from llama_index.llms import Ollama
 from llama_index.vector_stores import WeaviateVectorStore
 import weaviate
-from pydantic import create_model, BaseModel
+from pydantic import create_model
 from typing import List
 import box
 import yaml
-
-
-class InvoiceInfo(BaseModel):
-    # invoice_number: int
-    # invoice_date: str
-    # client_name: str
-    # client_address: str
-    # client_tax_id: str
-    # seller_name: str
-    # seller_address: str
-    # seller_tax_id: str
-    # iban: str
-    # names_of_invoice_items: List[str]
-    gross_worth_of_invoice_items: List[float]
-    # total_gross_worth: str
 
 
 # Function to safely evaluate type strings
@@ -95,13 +80,13 @@ def build_rag_pipeline(query_inputs, query_types, debug=False):
     index = build_index(cfg.CHUNK_SIZE, llm, embeddings, client, cfg.INDEX_NAME)
 
     print("Building dynamic response class...")
-    DynamicModel = build_response_class(query_inputs, query_types)
+    ResponseModel = build_response_class(query_inputs, query_types)
 
     print("Constructing query engine...")
 
     query_engine = index.as_query_engine(
         streaming=False,
-        output_cls=InvoiceInfo,
+        output_cls=ResponseModel,
         response_mode="compact"
     )
 
