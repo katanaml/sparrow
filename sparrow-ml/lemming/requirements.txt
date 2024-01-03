@@ -4,3 +4,5 @@ sentence-transformers
 weaviate-client
 pypdf
 python-box
+unstructured[all-docs]
+# add pdf2htmlEX support for RAG pipeline with LlamaIndex and Unstructured
