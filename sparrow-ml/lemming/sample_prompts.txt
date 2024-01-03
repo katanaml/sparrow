@@ -1,4 +1,4 @@
-python engine.py "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
+./sparrow "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
 seller_tax_id, iban, names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "int, str, str, str, str,
 str, str, str, str, List[str], List[float], str"
 
@@ -31,7 +31,7 @@ str, str, str, str, List[str], List[float], str"
 Time to retrieve answer: 63.74948522399791
 
 
-python engine.py "invoice_number" "int"
+./sparrow "invoice_number" "int"
 
 {
     "invoice_number": 61356291
@@ -40,7 +40,7 @@ python engine.py "invoice_number" "int"
 Time to retrieve answer: 15.325319556002796
 
 
-python engine.py "gross_worth_of_invoice_items" "List[float]"
+./sparrow "gross_worth_of_invoice_items" "List[float]"
 
 {
     "gross_worth_of_invoice_items": [
