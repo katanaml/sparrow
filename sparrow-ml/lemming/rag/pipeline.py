@@ -8,6 +8,7 @@ from pydantic import create_model
 from typing import List
 import box
 import yaml
+from rich.progress import Progress, SpinnerColumn, TextColumn
 
 
 # Function to safely evaluate type strings
@@ -67,31 +68,57 @@ def build_rag_pipeline(query_inputs, query_types, debug=False):
     with open('config.yml', 'r', encoding='utf8') as ymlfile:
         cfg = box.Box(yaml.safe_load(ymlfile))
 
-    print("Connecting to Weaviate")
-    client = weaviate.Client(cfg.WEAVIATE_URL)
+    text_column = TextColumn("[progress.description]{task.description}")
+    with Progress(
+            SpinnerColumn(),
+            text_column,
+            transient=False,
+    ) as progress:
+        progress.add_task(description="Connecting to Weaviate...", total=None)
+        client = weaviate.Client(cfg.WEAVIATE_URL)
 
-    print("Loading Ollama...")
-    llm = Ollama(model=cfg.LLM, base_url=cfg.OLLAMA_BASE_URL, temperature=0)
+    with Progress(
+            SpinnerColumn(),
+            text_column,
+            transient=False,
+    ) as progress:
+        progress.add_task(description="Loading Ollama...", total=None)
+        llm = Ollama(model=cfg.LLM, base_url=cfg.OLLAMA_BASE_URL, temperature=0)
 
-    print("Loading embedding model...")
-    embeddings = load_embedding_model(model_name=cfg.EMBEDDINGS)
+    with Progress(
+            SpinnerColumn(),
+            text_column,
+            transient=False,
+    ) as progress:
+        progress.add_task(description="Loading embedding model...", total=None)
+        embeddings = load_embedding_model(model_name=cfg.EMBEDDINGS)
 
-    print("Building index...")
-    index = build_index(cfg.CHUNK_SIZE, llm, embeddings, client, cfg.INDEX_NAME)
+    with Progress(
+            SpinnerColumn(),
+            text_column,
+            transient=False,
+    ) as progress:
+        progress.add_task(description="Building index...", total=None)
+        index = build_index(cfg.CHUNK_SIZE, llm, embeddings, client, cfg.INDEX_NAME)
 
-    print("Building dynamic response class...")
-    ResponseModel = build_response_class(query_inputs, query_types)
+    with Progress(
+            SpinnerColumn(),
+            text_column,
+            transient=False,
+    ) as progress:
+        progress.add_task(description="Building dynamic response class...", total=None)
+        ResponseModel = build_response_class(query_inputs, query_types)
 
-    print("Constructing query engine...")
-
-    query_engine = index.as_query_engine(
-        streaming=False,
-        output_cls=ResponseModel,
-        response_mode="compact"
-    )
-
-    # query_engine = index.as_query_engine(
-    #     streaming=False
-    # )
+    with Progress(
+            SpinnerColumn(),
+            text_column,
+            transient=False,
+    ) as progress:
+        progress.add_task(description="Constructing query engine...", total=None)
+        query_engine = index.as_query_engine(
+            streaming=False,
+            output_cls=ResponseModel,
+            response_mode="compact"
+        )
 
     return query_engine
