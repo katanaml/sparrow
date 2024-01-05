@@ -8,7 +8,7 @@ from pydantic import create_model
 from typing import List
 import box
 import yaml
-from rich.progress import Progress, SpinnerColumn, TextColumn
+from rich.progress import Progress, SpinnerColumn, TextColumn, track
 
 
 # Function to safely evaluate type strings
@@ -68,57 +68,36 @@ def build_rag_pipeline(query_inputs, query_types, debug=False):
     with open('config.yml', 'r', encoding='utf8') as ymlfile:
         cfg = box.Box(yaml.safe_load(ymlfile))
 
-    text_column = TextColumn("[progress.description]{task.description}")
-    with Progress(
-            SpinnerColumn(),
-            text_column,
-            transient=False,
-    ) as progress:
-        progress.add_task(description="Connecting to Weaviate...", total=None)
-        client = weaviate.Client(cfg.WEAVIATE_URL)
+    client = invoke_pipeline_step(lambda: weaviate.Client(cfg.WEAVIATE_URL),
+                                  "Connecting to Weaviate...")
 
-    with Progress(
-            SpinnerColumn(),
-            text_column,
-            transient=False,
-    ) as progress:
-        progress.add_task(description="Loading Ollama...", total=None)
-        llm = Ollama(model=cfg.LLM, base_url=cfg.OLLAMA_BASE_URL, temperature=0)
+    llm = invoke_pipeline_step(lambda: Ollama(model=cfg.LLM, base_url=cfg.OLLAMA_BASE_URL, temperature=0),
+                               "Loading Ollama...")
 
-    with Progress(
-            SpinnerColumn(),
-            text_column,
-            transient=False,
-    ) as progress:
-        progress.add_task(description="Loading embedding model...", total=None)
-        embeddings = load_embedding_model(model_name=cfg.EMBEDDINGS)
+    embeddings = invoke_pipeline_step(lambda: load_embedding_model(model_name=cfg.EMBEDDINGS),
+                                      "Loading embedding model...")
 
-    with Progress(
-            SpinnerColumn(),
-            text_column,
-            transient=False,
-    ) as progress:
-        progress.add_task(description="Building index...", total=None)
-        index = build_index(cfg.CHUNK_SIZE, llm, embeddings, client, cfg.INDEX_NAME)
+    index = invoke_pipeline_step(lambda: build_index(cfg.CHUNK_SIZE, llm, embeddings, client, cfg.INDEX_NAME),
+                                 "Building index...")
 
-    with Progress(
-            SpinnerColumn(),
-            text_column,
-            transient=False,
-    ) as progress:
-        progress.add_task(description="Building dynamic response class...", total=None)
-        ResponseModel = build_response_class(query_inputs, query_types)
+    ResponseModel = invoke_pipeline_step(lambda: build_response_class(query_inputs, query_types),
+                                         "Building dynamic response class...")
 
-    with Progress(
-            SpinnerColumn(),
-            text_column,
-            transient=False,
-    ) as progress:
-        progress.add_task(description="Constructing query engine...", total=None)
-        query_engine = index.as_query_engine(
-            streaming=False,
-            output_cls=ResponseModel,
-            response_mode="compact"
-        )
+    query_engine = invoke_pipeline_step(lambda: index.as_query_engine(
+        streaming=False,
+        output_cls=ResponseModel,
+        response_mode="compact"
+    ), "Constructing query engine...")
 
     return query_engine
+
+
+def invoke_pipeline_step(task_call, task_description):
+    with Progress(
+            SpinnerColumn(),
+            TextColumn("[progress.description]{task.description}"),
+            transient=False,
+    ) as progress:
+        progress.add_task(description=task_description, total=None)
+        ret = task_call()
+    return ret
