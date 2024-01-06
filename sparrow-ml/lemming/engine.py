@@ -40,6 +40,11 @@ def main(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch
 
     rag_chain = build_rag_pipeline(query_inputs_arr, query_types_arr, debug)
 
+    end = timeit.default_timer()
+    print(f"\nTime to prepare RAG pipeline: {end - start}\n")
+
+    start = timeit.default_timer()
+
     step = 0
     answer = False
     while not answer:
@@ -63,8 +68,8 @@ def main(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch
 
     end = timeit.default_timer()
 
-    print(f"\nJSON response:")
-    print(answer)
+    print(f"\nJSON response:\n")
+    print(answer + '\n')
     print('=' * 50)
 
     print(f"Time to retrieve answer: {end - start}")
