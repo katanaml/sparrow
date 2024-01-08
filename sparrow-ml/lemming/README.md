@@ -31,8 +31,9 @@ python ingest.py
 6. Run the script, to process data with LLM RAG and return the answer: 
 
 ```
-python main.py "retrieve invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name,
-seller_address, seller_tax_id, iban, names_of_invoice_items, gross_worth_of_invoice_items and total_gross_worth"
+./sparrow.sh "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
+seller_tax_id, iban, names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "int, str, str, str, str,
+str, str, str, str, List[str], List[float], str"
 ```
 
 Answer:
