@@ -6,6 +6,10 @@ from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 import box
 import yaml
 import warnings
+from rich.progress import Progress, SpinnerColumn, TextColumn
+import typer
+import timeit
+from rich import print
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -39,20 +43,39 @@ def build_index(weaviate_client, embed_model, documents, index_name):
     return index
 
 
-if __name__ == "__main__":
+def invoke_pipeline_step(task_call, task_description):
+    with Progress(
+            SpinnerColumn(),
+            TextColumn("[progress.description]{task.description}"),
+            transient=False,
+    ) as progress:
+        progress.add_task(description=task_description, total=None)
+        ret = task_call()
+    return ret
+
+
+def main():
     # Import config vars
     with open('config.yml', 'r', encoding='utf8') as ymlfile:
         cfg = box.Box(yaml.safe_load(ymlfile))
 
-    print("Connecting to Weaviate")
-    client = weaviate.Client(cfg.WEAVIATE_URL)
+    start = timeit.default_timer()
 
-    print("Loading documents...")
-    documents = load_documents(cfg.DATA_PATH)
+    client = invoke_pipeline_step(lambda: weaviate.Client(cfg.WEAVIATE_URL),
+                                  "Connecting to Weaviate...")
 
-    print("Loading embedding model...")
-    embeddings = load_embedding_model(model_name=cfg.EMBEDDINGS)
+    documents = invoke_pipeline_step(lambda: load_documents(cfg.DATA_PATH),
+                                     "Loading documents...")
 
-    print("Building index...")
-    index = build_index(client, embeddings, documents, cfg.INDEX_NAME)
+    embeddings = invoke_pipeline_step(lambda: load_embedding_model(cfg.EMBEDDINGS),
+                                      "Loading embedding model...")
 
+    index = invoke_pipeline_step(lambda: build_index(client, embeddings, documents, cfg.INDEX_NAME),
+                                 "Building index...")
+
+    end = timeit.default_timer()
+    print(f"\nTime to ingest data: {end - start}\n")
+
+
+if __name__ == "__main__":
+    typer.run(main)

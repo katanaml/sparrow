@@ -8,7 +8,7 @@ from pydantic import create_model
 from typing import List
 import box
 import yaml
-from rich.progress import Progress, SpinnerColumn, TextColumn, track
+from rich.progress import Progress, SpinnerColumn, TextColumn
 
 
 # Function to safely evaluate type strings
