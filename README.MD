@@ -26,6 +26,26 @@ Sparrow offers a diverse range of services, as outlined previously. Our current 
 
 ## Installation
 
+### Lemming
+
+1. Install Weaviate local DB with Docker:
+   
+```
+docker compose up -d
+```
+
+2. Install the requirements: 
+
+```
+pip install -r requirements.txt
+```
+
+3. Install <a href="https://ollama.ai">Ollama</a> and pull LLM model specified in config.yml
+
+### Donut
+
+### OCR
+
 ## Usage
 
 ## Examples
