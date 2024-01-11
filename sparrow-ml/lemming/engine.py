@@ -26,7 +26,7 @@ def get_rag_response(query, chain, debug=False):
     return False
 
 
-def main(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch")],
+def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch")],
          types: Annotated[str, typer.Argument(help="The list of types of the fields")],
          debug: Annotated[bool, typer.Argument(help="Enable debug mode")] = False):
 
@@ -41,8 +41,12 @@ def main(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch
     rag_chain = build_rag_pipeline(query_inputs_arr, query_types_arr, debug)
 
     end = timeit.default_timer()
-    print(f"\nTime to prepare RAG pipeline: {end - start}\n")
+    print(f"Time to prepare RAG pipeline: {end - start}")
 
+    process_query(query, rag_chain, debug)
+
+
+def process_query(query, rag_chain, debug=False, local=True):
     start = timeit.default_timer()
 
     step = 0
@@ -58,12 +62,16 @@ def main(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch
             answer = 'No answer found.'
             break
 
-        with Progress(
-                SpinnerColumn(),
-                TextColumn("[progress.description]{task.description}"),
-                transient=False,
-        ) as progress:
-            progress.add_task(description="Retrieving answer...", total=None)
+        if local:
+            with Progress(
+                    SpinnerColumn(),
+                    TextColumn("[progress.description]{task.description}"),
+                    transient=False,
+            ) as progress:
+                progress.add_task(description="Retrieving answer...", total=None)
+                answer = get_rag_response(query, rag_chain, debug)
+        else:
+            print('Retrieving answer...')
             answer = get_rag_response(query, rag_chain, debug)
 
     end = timeit.default_timer()
@@ -74,6 +82,8 @@ def main(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch
 
     print(f"Time to retrieve answer: {end - start}")
 
+    return answer
+
 
 if __name__ == "__main__":
-    typer.run(main)
+    typer.run(run)

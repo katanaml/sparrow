@@ -63,41 +63,54 @@ def build_index(chunk_size, llm, embed_model, weaviate_client, index_name):
     return index
 
 
-def build_rag_pipeline(query_inputs, query_types, debug=False):
+def build_rag_pipeline(query_inputs, query_types, debug=False, local=True):
     # Import config vars
     with open('config.yml', 'r', encoding='utf8') as ymlfile:
         cfg = box.Box(yaml.safe_load(ymlfile))
 
     client = invoke_pipeline_step(lambda: weaviate.Client(cfg.WEAVIATE_URL),
-                                  "Connecting to Weaviate...")
+                                  "Connecting to Weaviate...",
+                                  local)
 
-    llm = invoke_pipeline_step(lambda: Ollama(model=cfg.LLM, base_url=cfg.OLLAMA_BASE_URL, temperature=0),
-                               "Loading Ollama...")
+    llm = invoke_pipeline_step(lambda: Ollama(model=cfg.LLM, base_url=cfg.OLLAMA_BASE_URL, temperature=0,
+                                              request_timeout=900),
+                               "Loading Ollama...",
+                               local)
 
     embeddings = invoke_pipeline_step(lambda: load_embedding_model(model_name=cfg.EMBEDDINGS),
-                                      "Loading embedding model...")
+                                      "Loading embedding model...",
+                                      local)
 
     index = invoke_pipeline_step(lambda: build_index(cfg.CHUNK_SIZE, llm, embeddings, client, cfg.INDEX_NAME),
-                                 "Building index...")
+                                 "Building index...",
+                                 local)
 
     ResponseModel = invoke_pipeline_step(lambda: build_response_class(query_inputs, query_types),
-                                         "Building dynamic response class...")
+                                         "Building dynamic response class...",
+                                         local)
 
     query_engine = invoke_pipeline_step(lambda: index.as_query_engine(
-        streaming=False,
-        output_cls=ResponseModel,
-        response_mode="compact"
-    ), "Constructing query engine...")
+                                            streaming=False,
+                                            output_cls=ResponseModel,
+                                            response_mode="compact"
+                                        ),
+                                        "Constructing query engine...",
+                                        local)
 
     return query_engine
 
 
-def invoke_pipeline_step(task_call, task_description):
-    with Progress(
-            SpinnerColumn(),
-            TextColumn("[progress.description]{task.description}"),
-            transient=False,
-    ) as progress:
-        progress.add_task(description=task_description, total=None)
+def invoke_pipeline_step(task_call, task_description, local):
+    if local:
+        with Progress(
+                SpinnerColumn(),
+                TextColumn("[progress.description]{task.description}"),
+                transient=False,
+        ) as progress:
+            progress.add_task(description=task_description, total=None)
+            ret = task_call()
+    else:
+        print(task_description)
         ret = task_call()
+
     return ret
