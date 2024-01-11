@@ -48,7 +48,15 @@ Follow the install steps outlined here:
 
 1. Donut Data <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-data/donut">install steps</a>
 
+2. Donut ML <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-ml/donut">install steps</a>
+
+3. Donut UI <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-ui/donut">install steps</a>
+
 ### OCR
+
+Follow the install steps outlined here:
+
+1. Sparrow OCR services <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr">install steps</a>
 
 ## Usage
 
