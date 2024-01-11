@@ -1,4 +1,5 @@
 # Sparrow
+Data extraction with ML and LLM
 
 <p align="center">
   <img width="300" height="300" src="https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/sparrow_logo_5.png">
