@@ -4,7 +4,7 @@
   <img width="300" height="300" src="https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/sparrow_logo_5.png">
 </p>
 
-## Description
+## The Principle
 
 Sparrow helps to extract and process data from scanned documents and pictures. It works with forms, invoices, receipts and other structured data.
 
@@ -16,7 +16,9 @@ It implements various methods to extract data. Version 1 of Skipper was focused 
 * **[sparrow-ml](https://github.com/katanaml/sparrow/tree/main/sparrow-ml)** - Sparrow ML module. Donut ML model fine-tuning and LLM RAG services
 * **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui)** - Sparrow UI module. UI for Donut ML model services and dashboard UI for LLM RAG
 
-## Quick Start
+## Installation
+
+## The Practice - Usage
 
 ## Examples
 
