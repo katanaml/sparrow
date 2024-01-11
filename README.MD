@@ -17,6 +17,11 @@ Sparrow is an innovative open-source solution designed for efficient data extrac
 * **[sparrow-ml-lemming](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/lemming)** - A specialized service for the LLM RAG pipeline, enhancing the capabilities of language model processing.
 * **[sparrow-ui-donut](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/donut)** - A user-friendly interface for managing Donut ML model data labeling services and a dashboard.
 
+- **For LLM RAG Enthusiasts** - Opt for the `lemming` service, specifically designed to cater to your needs in LLM RAG applications.
+- **For Traditional ML Implementations** - The `donut` service is available for those seeking machine learning solutions independent of LLM.
+
+Sparrow offers a diverse range of services, as outlined previously. Our current developmental focus is primarily on enhancing and expanding the capabilities of the `lemming` service.
+
 ## Installation
 
 ## Usage
