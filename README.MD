@@ -9,13 +9,13 @@ Data extraction with ML and LLM
 
 Sparrow is an innovative open-source solution designed for efficient data extraction and processing from various documents and images. It seamlessly handles forms, invoices, receipts, and other unstructured data sources. Sparrow stands out with its modular architecture, offering independent services such as OCR, Donut fine-tuning/inference, and a data labeling UI, all optimized for robust performance. Our current development efforts are focused on enhancing the LLM pipeline, promising exciting new features and capabilities. Our vision for Sparrow is to become the leading tool in data extraction, catering to diverse business domains. With a strong commitment to local data processing, we aim to empower customers with secure, cutting-edge technology. Join us in this journey to redefine data handling in the enterprise world.
 
-### Modules
+### Services
 
-* **[sparrow-data](https://github.com/katanaml/sparrow/tree/main/sparrow-data/donut)** - Sparrow Data service. Data preparation for Donut ML model fine-tuning and OCR
-* **[sparrow-data](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - Sparrow Data OCR service. Standalone OCR implementation
-* **[sparrow-ml](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/donut)** - Sparrow ML service for Donut ML model fine-tuning and inference
-* **[sparrow-ml](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/donut)** - Sparrow ML service for LLM RAG pipeline
-* **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/donut)** - Sparrow UI service. UI for Donut ML model services and dashboard UI for LLM RAG
+* **[sparrow-data](https://github.com/katanaml/sparrow/tree/main/sparrow-data/donut)** - This service focuses on data preparation specifically for the Donut ML model, including fine-tuning and OCR integration.
+* **[sparrow-data](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - A standalone OCR service, providing robust optical character recognition as part of the Sparrow suite.
+* **[sparrow-ml](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/donut)** - Dedicated to the Donut ML model, this service handles both fine-tuning and inference, streamlining the machine learning workflow.
+* **[sparrow-ml](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/lemming)** - A specialized service for the LLM RAG pipeline, enhancing the capabilities of language model processing.
+* **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/donut)** - A user-friendly interface for managing Donut ML model data labeling services and a dashboard.
 
 ## Installation
 
