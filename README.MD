@@ -62,6 +62,8 @@ Follow the install steps outlined here:
 
 ## Examples
 
+### Inference with Lemming LLM RAG
+
 ### Inference with Donut ML model
 
 ![Inference Results](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/inference_actual.png)
