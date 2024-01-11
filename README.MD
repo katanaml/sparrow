@@ -44,6 +44,10 @@ pip install -r requirements.txt
 
 ### Donut
 
+Follow the install steps outlined here:
+
+1. Donut Data <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-data/donut">install steps</a>
+
 ### OCR
 
 ## Usage
