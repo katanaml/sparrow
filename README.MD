@@ -11,7 +11,7 @@ Sparrow is an innovative open-source solution designed for efficient data extrac
 
 ### Modules
 
-* **[sparrow-data](https://github.com/katanaml/sparrow/tree/main/sparrow-data/donut)** - Sparrow Data service. Data preparation for Donut ML model fine-tuning and related OCR services
+* **[sparrow-data](https://github.com/katanaml/sparrow/tree/main/sparrow-data/donut)** - Sparrow Data service. Data preparation for Donut ML model fine-tuning and OCR
 * **[sparrow-data](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - Sparrow Data OCR service. Standalone OCR implementation
 * **[sparrow-ml](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/donut)** - Sparrow ML service for Donut ML model fine-tuning and inference
 * **[sparrow-ml](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/donut)** - Sparrow ML service for LLM RAG pipeline
