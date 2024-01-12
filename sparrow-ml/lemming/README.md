@@ -64,3 +64,21 @@ Answer:
     "total_gross_worth": "$212,09"
 }
 ```
+
+### FastAPI endpoint
+
+There is option to run local LLM RAG as API
+
+1. Run endpoint
+
+```
+python api.py
+```
+
+2. Access endpoint docs
+
+```
+http://127.0.0.1:8000/api/v1/sparrow-llm/docs
+```
+
+![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/lemming_2.png)
