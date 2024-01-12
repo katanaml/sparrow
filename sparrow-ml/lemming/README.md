@@ -2,8 +2,6 @@
 
 ___
 
-## Quickstart
-
 ### RAG runs offline on a local machine
 
 1. Install Weaviate local DB with Docker:
