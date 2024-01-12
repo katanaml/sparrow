@@ -109,6 +109,24 @@ Answer:
 }
 ```
 
+### FastAPI endpoint
+
+There is an option to run local LLM RAG as an API
+
+1. Run endpoint
+
+```
+python api.py
+```
+
+2. Access endpoint docs
+
+```
+http://127.0.0.1:8000/api/v1/sparrow-llm/docs
+```
+
+![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/lemming_2.png)
+
 ### Donut
 
 Follow the steps outlined here:
