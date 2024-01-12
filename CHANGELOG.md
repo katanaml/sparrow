@@ -1,11 +1,11 @@
 # ChangeLog
 
-## [0.1.0] - 2024-01-12
+## [v0.1.0] - 2024-01-12
 
 ### New Features
 
 - Lemming LLM RAG
 
-### Bug Fixes / Nits
+### What's Changed
 
 - 
