@@ -26,6 +26,8 @@ Sparrow offers a diverse range of services, as outlined previously. Our current 
 
 ## Installation
 
+You can install only one service, Lemming or Donut. There is no dependency between them and each can run standalone.
+
 ### Lemming
 
 1. Install Weaviate local DB with Docker:
@@ -67,7 +69,7 @@ Follow the install steps outlined here:
 2. Run the script, to convert text to vector embeddings and save in Weaviate: 
 
 ```
-python ingest.py
+./sparrow.sh ingest
 ```
 
 3. Run the script, to process data with LLM RAG and return the answer: 
@@ -106,6 +108,22 @@ Answer:
     "total_gross_worth": "$212,09"
 }
 ```
+
+### Donut
+
+Follow the steps outlined here:
+
+1. Donut Data <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-data/donut">usage steps</a>
+
+2. Donut ML <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-ml/donut">usage steps</a>
+
+3. Donut UI <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-ui/donut">usage steps</a>
+
+### OCR
+
+Follow the steps outlined here:
+
+1. Sparrow OCR services <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr">usage steps</a>
 
 ## Examples
 
