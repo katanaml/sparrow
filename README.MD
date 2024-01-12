@@ -109,21 +109,29 @@ Answer:
 }
 ```
 
-### FastAPI endpoint
+### FastAPI Endpoint for Local LLM RAG
 
-There is an option to run local LLM RAG as an API
+Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services.
 
-1. Run endpoint
+To set this up:
+
+1. Start the Endpoint
+
+Launch the endpoint by executing the following command in your terminal:
 
 ```
 python api.py
 ```
 
-2. Access endpoint docs
+2. Access the Endpoint Documentation
+
+You can view detailed documentation for the API by navigating to:
 
 ```
 http://127.0.0.1:8000/api/v1/sparrow-llm/docs
 ```
+
+For visual reference, a screenshot of the FastAPI endpoint
 
 ![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/lemming_2.png)
 
