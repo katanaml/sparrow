@@ -26,7 +26,7 @@ Sparrow offers a diverse range of services, as outlined previously. Our current 
 
 ## Installation
 
-You can install only one service, Lemming or Donut. There is no dependency between them and each can run standalone.
+You have the flexibility to install either the Lemming or the Donut service independently. Each service is designed to operate as a standalone entity, without any dependencies on the other. This modular approach ensures that you can select the service that best meets your specific needs.
 
 ### Lemming
 
