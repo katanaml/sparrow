@@ -109,7 +109,9 @@ Answer:
 
 ## Examples
 
-### Inference with Lemming LLM RAG
+### Inference with local LLM RAG
+
+![local RAG](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/lemming_1.png)
 
 ### Inference with Donut ML model
 
