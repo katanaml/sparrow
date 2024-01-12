@@ -67,7 +67,9 @@ Answer:
 
 ### FastAPI Endpoint for Local LLM RAG
 
-Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. To set this up:
+Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services.
+
+To set this up:
 
 1. Start the Endpoint
 
