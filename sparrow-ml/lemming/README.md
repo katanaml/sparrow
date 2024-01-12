@@ -25,7 +25,7 @@ pip install -r requirements.txt
 5. Run the script, to convert text to vector embeddings and save in Weaviate: 
 
 ```
-python ingest.py
+./sparrow.sh ingest
 ```
 
 6. Run the script, to process data with LLM RAG and return the answer: 
