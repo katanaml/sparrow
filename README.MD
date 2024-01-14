@@ -174,6 +174,12 @@ Follow the steps outlined here:
 
 ![Inference Results](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/inference_actual.png)
 
+## Commercial usage
+
+Sparrow is available for free commercial use. This offer applies to organizations with a gross revenue below $5 million USD in the past 12 months.
+
+For businesses exceeding this revenue limit and seeking to bypass GPL license restrictions for inference, please contact me at abaranovskis@redsamuraiconsulting.com to discuss dual licensing options.
+
 ## Author
 
 [Katana ML](https://katanaml.io), [Andrej Baranovskij](https://github.com/abaranovskis-redsamurai)
