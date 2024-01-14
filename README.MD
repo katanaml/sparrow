@@ -135,6 +135,19 @@ For visual reference, a screenshot of the FastAPI endpoint
 
 ![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/lemming_2.png)
 
+Example of API call through CURL
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "fields": "invoice_number",
+  "types": "int"
+}'
+```
+
 ### Donut
 
 Follow the steps outlined here:
