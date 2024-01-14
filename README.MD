@@ -178,7 +178,7 @@ Follow the steps outlined here:
 
 Sparrow is available for free commercial use. This offer applies to organizations with a gross revenue below $5 million USD in the past 12 months.
 
-For businesses exceeding this revenue limit and seeking to bypass GPL license restrictions for inference, please contact me at abaranovskis@redsamuraiconsulting.com to discuss dual licensing options.
+For businesses exceeding this revenue limit and seeking to bypass GPL license restrictions for inference, please contact me at abaranovskis@redsamuraiconsulting.com to discuss dual licensing options. The same applies if you are looking for custom workflows to automate business processes, consulting options, and support/maintenance options.
 
 ## Author
 
