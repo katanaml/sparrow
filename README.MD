@@ -168,6 +168,16 @@ Follow the steps outlined here:
 
 ### Inference with local LLM RAG
 
+Request:
+
+```
+./sparrow.sh "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
+seller_tax_id, iban, names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "int, str, str, str, str,
+str, str, str, str, List[str], List[float], str"
+```
+
+Response:
+
 ![local RAG](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/lemming_1.png)
 
 ### Inference with Donut ML model
