@@ -182,6 +182,8 @@ Response:
 
 ### Inference with Donut ML model
 
+Sparrow UI:
+
 ![Inference Results](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/inference_actual.png)
 
 ## Commercial usage
