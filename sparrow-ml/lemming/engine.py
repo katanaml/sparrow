@@ -21,7 +21,8 @@ def get_rag_response(query, chain, debug=False):
         data = json.dumps(data, indent=4)
         return data
     except (json.decoder.JSONDecodeError, TypeError):
-        print("The response is not in JSON format.")
+        print("The response is not in JSON format:\n")
+        print(result)
 
     return False
 

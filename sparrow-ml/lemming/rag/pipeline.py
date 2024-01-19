@@ -89,6 +89,7 @@ def build_rag_pipeline(query_inputs, query_types, debug=False, local=True):
                                          "Building dynamic response class...",
                                          local)
 
+    # amy want to try with similarity_top_k=5, default is 2
     query_engine = invoke_pipeline_step(lambda: index.as_query_engine(
                                             streaming=False,
                                             output_cls=ResponseModel,

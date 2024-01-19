@@ -16,9 +16,13 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 
 def load_documents(docs_path):
+    # Add support to process multiple documents
     documents = SimpleDirectoryReader(docs_path, required_exts=[".pdf"]).load_data()
-    print(f"Loaded {len(documents)} documents")
-    print(f"First document: {documents[0]}")
+    print(f"\nLoaded {len(documents)} documents")
+    print(f"\nFirst document: {documents[0]}")
+    print("\nFirst document content:\n")
+    print(documents[0])
+    print()
     return documents
 
 
@@ -29,15 +33,20 @@ def load_embedding_model(model_name):
     return embeddings
 
 
-def build_index(weaviate_client, embed_model, documents, index_name):
-    service_context = ServiceContext.from_defaults(embed_model=embed_model, llm=None)
+def build_index(weaviate_client, embed_model, documents, index_name, chunk_size):
+    # Delete index if it already exists, to avoid data corruption
+    weaviate_client.schema.delete_class(index_name)
+
+    service_context = ServiceContext.from_defaults(embed_model=embed_model,
+                                                   llm=None,
+                                                   chunk_size=chunk_size)
     vector_store = WeaviateVectorStore(weaviate_client=weaviate_client, index_name=index_name)
     storage_context = StorageContext.from_defaults(vector_store=vector_store)
 
     index = VectorStoreIndex.from_documents(
         documents,
         service_context=service_context,
-        storage_context=storage_context,
+        storage_context=storage_context
     )
 
     return index
@@ -70,7 +79,7 @@ def main():
     embeddings = invoke_pipeline_step(lambda: load_embedding_model(cfg.EMBEDDINGS),
                                       "Loading embedding model...")
 
-    index = invoke_pipeline_step(lambda: build_index(client, embeddings, documents, cfg.INDEX_NAME),
+    index = invoke_pipeline_step(lambda: build_index(client, embeddings, documents, cfg.INDEX_NAME, cfg.CHUNK_SIZE),
                                  "Building index...")
 
     end = timeit.default_timer()
