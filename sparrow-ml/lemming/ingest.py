@@ -13,11 +13,12 @@ from rich import print
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", category=UserWarning)
 
 
 def load_documents(docs_path):
     # Add support to process multiple documents
-    documents = SimpleDirectoryReader(docs_path, required_exts=[".pdf"]).load_data()
+    documents = SimpleDirectoryReader(docs_path, required_exts=[".pdf", ".PDF"]).load_data()
     print(f"\nLoaded {len(documents)} documents")
     print(f"\nFirst document: {documents[0]}")
     print("\nFirst document content:\n")

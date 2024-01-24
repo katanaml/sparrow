@@ -10,6 +10,7 @@ from rich import print
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", category=UserWarning)
 
 
 def get_rag_response(query, chain, debug=False):
