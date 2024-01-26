@@ -20,10 +20,20 @@ pip install -r requirements.txt
 
 4. Copy text PDF files to the `data` folder or use the sample data provided in the `data` folder.
 
-5. Run the script, to convert text to vector embeddings and save in Weaviate: 
+5. Run the script, to convert text to vector embeddings and save in Weaviate. By default it will use LlamaIndex plugin: 
 
 ```
 ./sparrow.sh ingest
+```
+
+You can specify plugin name explicitly, for example:
+
+```
+./sparrow.sh ingest Haystack
+```
+
+```
+./sparrow.sh ingest LlamaIndex
 ```
 
 6. Run the script, to process data with LLM RAG and return the answer: 
