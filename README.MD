@@ -66,10 +66,20 @@ Follow the install steps outlined here:
 
 1. Copy text PDF files to the `data` folder or use the sample data provided in the `data` folder.
 
-2. Run the script, to convert text to vector embeddings and save in Weaviate: 
+2. Run the script, to convert text to vector embeddings and save in Weaviate. By default it will use LlamaIndex plugin: 
 
 ```
 ./sparrow.sh ingest
+```
+
+You can specify plugin name explicitly, for example:
+
+```
+./sparrow.sh ingest Haystack
+```
+
+```
+./sparrow.sh ingest LlamaIndex
 ```
 
 3. Run the script, to process data with LLM RAG and return the answer: 
