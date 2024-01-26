@@ -29,8 +29,8 @@ def get_rag_response(query, chain, debug=False):
 
 
 def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch")],
-         types: Annotated[str, typer.Argument(help="The list of types of the fields")],
-         debug: Annotated[bool, typer.Argument(help="Enable debug mode")] = False):
+        types: Annotated[str, typer.Argument(help="The list of types of the fields")],
+        debug: Annotated[bool, typer.Argument(help="Enable debug mode")] = False):
 
     start = timeit.default_timer()
 
