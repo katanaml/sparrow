@@ -1,8 +1,0 @@
-streamlit==1.22.0
-streamlit_option_menu
-streamlit-sparrow-labeling==0.1.1
-streamlit_nested_layout
-streamlit-javascript
-natsort
-streamlit-aggrid==0.3.3
-pandas<2.0
