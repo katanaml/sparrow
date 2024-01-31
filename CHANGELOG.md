@@ -1,5 +1,17 @@
 # ChangeLog
 
+## [v0.1.2] - 2024-01-31
+
+### New Features
+
+- Added support for plugin architecture. This allows to use within Sparrow various toolkits, such as LlamaIndex or Haystack
+
+### What's Changed
+
+- Significant code refactoring
+
+  
+
 ## [v0.1.1] - 2024-01-19
 
 ### New Features
