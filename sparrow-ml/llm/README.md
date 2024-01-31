@@ -36,7 +36,7 @@ You can specify plugin name explicitly, for example:
 ./sparrow.sh ingest LlamaIndex
 ```
 
-6. Run the script, to process data with LLM RAG and return the answer: 
+6. Run the script, to process data with LLM RAG and return the answer. By default, it will use LlamaIndex plugin. You can specify other plugins (see ingest example), such as Haystack: 
 
 ```
 ./sparrow.sh "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
@@ -97,7 +97,7 @@ http://127.0.0.1:8000/api/v1/sparrow-llm/docs
 
 For visual reference, a screenshot of the FastAPI endpoint
 
-![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/lemming_2.png)
+![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/lemming_2.png)
 
 Example of API call through CURL
 
