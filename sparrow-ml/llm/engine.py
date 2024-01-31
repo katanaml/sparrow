@@ -24,5 +24,11 @@ def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch"
     rag.run_pipeline(user_selected_plugin, query_inputs_arr, query_types_arr, query, debug)
 
 
+def run_from_api(user_selected_plugin, query_inputs_arr, query_types_arr, query, debug):
+    rag = get_pipeline(user_selected_plugin)
+    answer = rag.run_pipeline(user_selected_plugin, query_inputs_arr, query_types_arr, query, debug, False)
+    return answer
+
+
 if __name__ == "__main__":
     typer.run(run)
