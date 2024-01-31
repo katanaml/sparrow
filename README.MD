@@ -102,7 +102,7 @@ Answer:
 
 **FastAPI Endpoint for Local LLM RAG**
 
-Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services.
+Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the plugin to be used for the inference. By default, LlamaIndex plugin is used.
 
 To set this up:
 
@@ -124,7 +124,7 @@ http://127.0.0.1:8000/api/v1/sparrow-llm/docs
 
 For visual reference, a screenshot of the FastAPI endpoint
 
-![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/lemming_2.png)
+![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/lemming_2_.png)
 
 Example of API call through CURL
 
@@ -135,7 +135,8 @@ curl -X 'POST' \
   -H 'Content-Type: application/json' \
   -d '{
   "fields": "invoice_number",
-  "types": "int"
+  "types": "int",
+  "plugin": "LlamaIndex"
 }'
 ```
 
