@@ -143,7 +143,7 @@ http://127.0.0.1:8000/api/v1/sparrow-llm/docs
 
 For visual reference, a screenshot of the FastAPI endpoint
 
-![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/lemming_2.png)
+![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/lemming_2.png)
 
 Example of API call through CURL
 
@@ -188,7 +188,7 @@ str, str, str, str, List[str], List[float], str"
 
 Response:
 
-![local RAG](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/lemming_1.png)
+![local RAG](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/lemming_1.png)
 
 ### Inference with Donut ML model
 
