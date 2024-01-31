@@ -161,8 +161,6 @@ Response:
 
 ![local RAG](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/lemming_1.png)
 
-### Inference with Donut ML model
-
 ## Commercial usage
 
 Sparrow is available for free commercial use. This offer applies to organizations with gross revenue below $5 million USD in the past 12 months.
