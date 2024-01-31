@@ -7,28 +7,19 @@ Data extraction with ML and LLM
 
 ## The Principle
 
-Sparrow is an innovative open-source solution designed for efficient data extraction and processing from various documents and images. It seamlessly handles forms, invoices, receipts, and other unstructured data sources. Sparrow stands out with its modular architecture, offering independent services such as OCR, Donut fine-tuning/inference, and a data labeling UI, all optimized for robust performance. Our current development efforts are focused on enhancing the LLM pipeline (Lemming), promising exciting new features and capabilities. Our vision for Sparrow is to become the leading tool in data extraction, catering to diverse business domains. With a strong commitment to local data processing, we aim to empower customers with secure, cutting-edge technology. Join us in this journey to redefine data handling in the enterprise world.
+Sparrow is an innovative open-source solution for efficient data extraction and processing from various documents and images. It seamlessly handles forms, invoices, receipts, and other unstructured data sources. Sparrow stands out with its modular architecture, offering independent services and pipelines all optimized for robust performance. One of the critical functionalities of Sparrow - pluggable architecture. You can easily integrate and run data extraction pipelines using tools and frameworks like LlamaIndex, Haystack, or Unstructured. Sparrow enables local LLM data extraction pipelines through Ollama or Apple MLX. With Sparrow solution you get API, which helps to process and transform your data into structured output, ready to be integrated with custom workflows.
 
 ### Services
 
-* **[sparrow-data-donut](https://github.com/katanaml/sparrow/tree/main/sparrow-data/donut)** - This service focuses on data preparation specifically for the Donut ML model, including fine-tuning and OCR integration.
-* **[sparrow-data-ocr](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - A standalone OCR service, providing robust optical character recognition as part of the Sparrow suite.
-* **[sparrow-ml-donut](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/donut)** - Dedicated to the Donut ML model, this service handles both fine-tuning and inference, streamlining the machine learning workflow.
-* **[sparrow-ml-lemming](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/lemming)** - A specialized service for the LLM RAG pipeline, enhancing the capabilities of language model processing.
-* **[sparrow-ui-donut](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/donut)** - A user-friendly interface for managing Donut ML model data labeling services and a dashboard.
+* **[sparrow-data-ocr](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - OCR service, providing optical character recognition as part of the Sparrow.
+* **[sparrow-ml-llm](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** - LLM RAG pipeline, Sparrow service for data extraction and document processing.
+* **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/)** - Dashboard UI for LLM RAG pipeline.
 
-Summary:
-
-- **For LLM RAG Enthusiasts** - Opt for the `lemming` service, specifically designed to cater to your needs in LLM RAG applications.
-- **For Traditional ML Implementations** - The `donut` service is available for those seeking machine learning solutions independent of LLM.
-
-Sparrow offers a diverse range of services, as outlined previously. Our current developmental focus is primarily on enhancing and expanding the capabilities of the `lemming` service.
+Sparrow implementation with Donut ML model - <a href="https://github.com/katanaml/sparrow-donut">sparrow-donut</a>
 
 ## Installation
 
-You have the flexibility to install either the Lemming or the Donut service independently. Each service is designed to operate as a standalone entity, without any dependencies on the other. This modular approach ensures that you can select the service that best meets your specific needs.
-
-### Lemming
+### LLM
 
 1. Install Weaviate local DB with Docker:
    
@@ -44,16 +35,6 @@ pip install -r requirements.txt
 
 3. Install <a href="https://ollama.ai">Ollama</a> and pull LLM model specified in config.yml
 
-### Donut
-
-Follow the install steps outlined here:
-
-1. Donut Data <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-data/donut">install steps</a>
-
-2. Donut ML <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-ml/donut">install steps</a>
-
-3. Donut UI <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-ui/donut">install steps</a>
-
 ### OCR
 
 Follow the install steps outlined here:
@@ -62,7 +43,7 @@ Follow the install steps outlined here:
 
 ## Usage
 
-### Lemming
+### LLM
 
 1. Copy text PDF files to the `data` folder or use the sample data provided in the `data` folder.
 
@@ -82,7 +63,7 @@ You can specify plugin name explicitly, for example:
 ./sparrow.sh ingest LlamaIndex
 ```
 
-3. Run the script, to process data with LLM RAG and return the answer: 
+3. Run the script, to process data with LLM RAG and return the answer. By default, it will use LlamaIndex plugin. You can specify other plugins (see ingest example), such as Haystack: 
 
 ```
 ./sparrow.sh "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
@@ -143,7 +124,7 @@ http://127.0.0.1:8000/api/v1/sparrow-llm/docs
 
 For visual reference, a screenshot of the FastAPI endpoint
 
-![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/lemming_2.png)
+![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/lemming_2.png)
 
 Example of API call through CURL
 
@@ -157,16 +138,6 @@ curl -X 'POST' \
   "types": "int"
 }'
 ```
-
-### Donut
-
-Follow the steps outlined here:
-
-1. Donut Data <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-data/donut">usage steps</a>
-
-2. Donut ML <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-ml/donut">usage steps</a>
-
-3. Donut UI <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-ui/donut">usage steps</a>
 
 ### OCR
 
@@ -188,17 +159,11 @@ str, str, str, str, List[str], List[float], str"
 
 Response:
 
-![local RAG](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/lemming_1.png)
-
-### Inference with Donut ML model
-
-Sparrow UI:
-
-![Inference Results](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/donut/assets/inference_actual.png)
+![local RAG](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/lemming_1.png)
 
 ## Commercial usage
 
-Sparrow is available for free commercial use. This offer applies to organizations with a gross revenue below $5 million USD in the past 12 months.
+Sparrow is available for free commercial use. This offer applies to organizations with gross revenue below $5 million USD in the past 12 months.
 
 For businesses exceeding this revenue limit and seeking to bypass GPL license restrictions for inference, please contact me at abaranovskis@redsamuraiconsulting.com to discuss dual licensing options. The same applies if you are looking for custom workflows to automate business processes, consulting options, and support/maintenance options.
 
