@@ -27,7 +27,7 @@ app.add_middleware(
 class Query(BaseModel):
     fields: str
     types: str
-    plugin: str
+    plugin: str = "LlamaIndex"
 
 
 @app.get("/")
