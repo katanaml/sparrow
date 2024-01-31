@@ -1,0 +1,12 @@
+llama-index==0.9.33
+langchain==0.1.1
+sentence-transformers
+weaviate-client
+pypdf
+python-box
+unstructured[all-docs]
+typer[all]
+fastapi==0.108.0
+uvicorn[standard]
+ollama-haystack
+# add pdf2htmlEX support for RAG pipeline with LlamaIndex and Unstructured
