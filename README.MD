@@ -63,7 +63,7 @@ You can specify plugin name explicitly, for example:
 ./sparrow.sh ingest LlamaIndex
 ```
 
-3. Run the script, to process data with LLM RAG and return the answer: 
+3. Run the script, to process data with LLM RAG and return the answer. By default, it will use LlamaIndex plugin. You can specify other plugins (see ingest example), such as Haystack: 
 
 ```
 ./sparrow.sh "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
