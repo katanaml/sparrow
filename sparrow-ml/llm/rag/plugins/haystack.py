@@ -1,4 +1,5 @@
 from rag.plugins.interface import Pipeline
+from typing import Any
 
 
 class HaystackPipeline(Pipeline):
@@ -8,5 +9,6 @@ class HaystackPipeline(Pipeline):
                      query_types: [str],
                      query: str,
                      debug: bool = False,
-                     local: bool = True) -> None:
+                     local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
+        return '{"answer": "Not implemented yet"}'

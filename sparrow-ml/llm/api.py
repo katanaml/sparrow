@@ -1,14 +1,11 @@
 from fastapi import FastAPI, Body
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from rag.pipeline import build_rag_pipeline
-from engine import process_query
-import timeit
+from engine import run_from_api
 import uvicorn
 import warnings
 from typing import Annotated
 import json
-from rich import print
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -30,6 +27,7 @@ app.add_middleware(
 class Query(BaseModel):
     fields: str
     types: str
+    plugin: str
 
 
 @app.get("/")
@@ -45,25 +43,23 @@ def inference(
                 examples=[
                     {
                         "fields": "invoice_number",
-                        "types": "int"
+                        "types": "int",
+                        "plugin": "LlamaIndex"
                     }
                 ]
             )
         ]):
-    start = timeit.default_timer()
-
     query = 'retrieve ' + q.fields
     query_types = q.types
 
     query_inputs_arr = [param.strip() for param in q.fields.split(',')]
     query_types_arr = [param.strip() for param in query_types.split(',')]
 
-    rag_chain = build_rag_pipeline(query_inputs_arr, query_types_arr, False, False)
+    try:
+        answer = run_from_api(q.plugin, query_inputs_arr, query_types_arr, query, False)
+    except ValueError as e:
+        answer = '{"answer": "Invalid plugin name"}'
 
-    end = timeit.default_timer()
-    print(f"Time to prepare RAG pipeline: {end - start}")
-
-    answer = process_query(query, rag_chain, False, False)
     answer = json.loads(answer)
 
     return {"message": answer}

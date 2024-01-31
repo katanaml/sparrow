@@ -15,6 +15,7 @@ import timeit
 import time
 import json
 from rich import print
+from typing import Any
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -28,7 +29,7 @@ class LlamaIndexPipeline(Pipeline):
                      query_types: [str],
                      query: str,
                      debug: bool = False,
-                     local: bool = True) -> None:
+                     local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
 
         start = timeit.default_timer()
@@ -38,7 +39,8 @@ class LlamaIndexPipeline(Pipeline):
         end = timeit.default_timer()
         print(f"Time to prepare RAG pipeline: {end - start}")
 
-        self.process_query(query, rag_chain, debug, local)
+        answer = self.process_query(query, rag_chain, debug, local)
+        return answer
 
     def build_rag_pipeline(self, query_inputs, query_types, debug, local):
         # Import config vars

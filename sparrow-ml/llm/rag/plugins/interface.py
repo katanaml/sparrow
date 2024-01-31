@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Any
 import warnings
 
 
@@ -15,7 +16,7 @@ class Pipeline(ABC):
                      query_types: [str],
                      query: str,
                      debug: bool = False,
-                     local: bool = True) -> None:
+                     local: bool = True) -> Any:
         pass
 
 
