@@ -66,4 +66,4 @@ class HaystackIngest(Ingest):
         print("Haystack ingest is not used, you should run inference directly. Ingest will execute as a part of the inference.")
 
         end = timeit.default_timer()
-        print(f"Time to prepare embeddings: {end - start}")
+        print(f"Time to ingest data: {end - start}")
