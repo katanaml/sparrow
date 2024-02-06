@@ -4,7 +4,7 @@ from haystack.components.routers import FileTypeRouter
 from haystack.components.preprocessors import DocumentSplitter, DocumentCleaner
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder
 from haystack.pipeline import Pipeline
-from haystack_integrations.document_stores.chroma import ChromaDocumentStore
+from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.writers import DocumentWriter
 import timeit
 import os
@@ -28,7 +28,7 @@ class HaystackIngest(Ingest):
 
         start = timeit.default_timer()
 
-        document_store = ChromaDocumentStore()
+        document_store = InMemoryDocumentStore()
         file_type_router = FileTypeRouter(mime_types=["application/pdf"])
         pdf_converter = PyPDFToDocument()
 
