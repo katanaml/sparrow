@@ -10,10 +10,8 @@ from haystack.components.embedders import SentenceTransformersTextEmbedder
 from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
 from haystack.components.builders import PromptBuilder
 from haystack_integrations.components.generators.ollama import OllamaGenerator
-from typing import List
-from colorama import Fore
+from pydantic import create_model
 import json
-from pydantic import BaseModel
 from haystack import component
 import pydantic
 from typing import Optional, List
@@ -40,11 +38,46 @@ class HaystackPipeline(PipelineInterface):
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
 
-        class Invoice(BaseModel):
-            invoice_number: str
 
-        json_schema = Invoice.schema_json(indent=2)
+        ResponseModel, json_schema = self.build_response_class(query_inputs, query_types)
 
+        output_validator = self.build_validator(ResponseModel)
+
+        document_store = self.run_preprocessing_pipeline()
+
+        answer = self.run_inference_pipeline(document_store, json_schema, output_validator)
+
+        return answer
+
+    # Function to safely evaluate type strings
+    def safe_eval_type(self, type_str, context):
+        try:
+            return eval(type_str, {}, context)
+        except NameError:
+            raise ValueError(f"Type '{type_str}' is not recognized")
+
+    def build_response_class(self, query_inputs, query_types_as_strings):
+        # Controlled context for eval
+        context = {
+            'List': List,
+            'str': str,
+            'int': int,
+            'float': float
+            # Include other necessary types or typing constructs here
+        }
+
+        # Convert string representations to actual types
+        query_types = [self.safe_eval_type(type_str, context) for type_str in query_types_as_strings]
+
+        # Create fields dictionary
+        fields = {name: (type_, ...) for name, type_ in zip(query_inputs, query_types)}
+
+        DynamicModel = create_model('DynamicModel', **fields)
+
+        json_schema = DynamicModel.schema_json(indent=2)
+        return DynamicModel, json_schema
+
+    def build_validator(self, Invoice):
         @component
         class OutputValidator:
             def __init__(self, pydantic_model: pydantic.BaseModel):
@@ -64,16 +97,14 @@ class HaystackPipeline(PipelineInterface):
                     output_dict = json.loads(replies[0])
                     self.pydantic_model.model_validate(output_dict)
                     print(
-                        Fore.GREEN
-                        + f"OutputValidator at Iteration {self.iteration_counter}: Valid JSON from LLM - No need for looping: {replies[0]}"
+                        f"\nOutputValidator at Iteration {self.iteration_counter}: Valid JSON from LLM - No need for looping."
                     )
                     return {"valid_replies": replies}
 
                 # If the LLM's reply is corrupted or not valid, return "invalid_replies" and the "error_message" for LLM to try again
                 except (ValueError, ValidationError) as e:
                     print(
-                        Fore.RED
-                        + f"OutputValidator at Iteration {self.iteration_counter}: Invalid JSON from LLM - Let's try again.\n"
+                          f"\nOutputValidator at Iteration {self.iteration_counter}: Invalid JSON from LLM - Let's try again.\n"
                           f"Output from LLM:\n {replies[0]} \n"
                           f"Error from OutputValidator: {e}"
                     )
@@ -81,11 +112,14 @@ class HaystackPipeline(PipelineInterface):
 
         output_validator = OutputValidator(pydantic_model=Invoice)
 
+        return output_validator
+
+    def run_preprocessing_pipeline(self):
+        start = timeit.default_timer()
+
         file_list = [os.path.join(cfg.DATA_PATH, f) for f in os.listdir(cfg.DATA_PATH)
                      if os.path.isfile(os.path.join(cfg.DATA_PATH, f)) and not f.startswith('.')
                      and not f.lower().endswith('.jpg')]
-
-        start = timeit.default_timer()
 
         document_store = InMemoryDocumentStore()
         pdf_converter = PyPDFToDocument()
@@ -97,7 +131,8 @@ class HaystackPipeline(PipelineInterface):
             split_overlap=2
         )
 
-        document_embedder = SentenceTransformersDocumentEmbedder(model="sentence-transformers/all-MiniLM-L6-v2")
+        document_embedder = SentenceTransformersDocumentEmbedder(model="sentence-transformers/all-MiniLM-L6-v2",
+                                                                 progress_bar=False)
         document_writer = DocumentWriter(document_store)
 
         preprocessing_pipeline = Pipeline()
@@ -121,12 +156,15 @@ class HaystackPipeline(PipelineInterface):
         print(f"Number of documents in document store: {document_store.count_documents()}")
 
         end = timeit.default_timer()
-        print(f"Time to ingest data: {end - start}")
+        print(f"\nTime to ingest data: {end - start}")
 
+        return document_store
+
+    def run_inference_pipeline(self, document_store, json_schema, output_validator):
         start = timeit.default_timer()
 
-        generator = OllamaGenerator(model="starling-lm:7b-alpha-q4_K_M",
-                                    url="http://192.168.68.107:11434/api/generate")
+        generator = OllamaGenerator(model="starling-lm:7b-alpha-q5_K_M",
+                                    url="http://127.0.0.1:11434/api/generate")
 
         template = """
         Given only the following document information, retrieve answer.
@@ -140,10 +178,19 @@ class HaystackPipeline(PipelineInterface):
         {% endfor %}
 
         Question: {{ question }}?
+
+        {% if invalid_replies and error_message %}
+          You already created the following output in a previous attempt: {{invalid_replies}}
+          However, this doesn't comply with the format requirements from above and triggered this Python exception: {{error_message}}
+          Correct the output and try again. Just return the corrected output without any extra explanations.
+        {% endif %}
         """
 
+        text_embedder = SentenceTransformersTextEmbedder(model="sentence-transformers/all-MiniLM-L6-v2",
+                                                             progress_bar=False)
+
         pipe = Pipeline(max_loops_allowed=3)
-        pipe.add_component("embedder", SentenceTransformersTextEmbedder(model="sentence-transformers/all-MiniLM-L6-v2"))
+        pipe.add_component("embedder", text_embedder)
         pipe.add_component("retriever", InMemoryEmbeddingRetriever(document_store=document_store, top_k=3))
         pipe.add_component("prompt_builder", PromptBuilder(template=template))
         pipe.add_component("llm", generator)
@@ -153,6 +200,9 @@ class HaystackPipeline(PipelineInterface):
         pipe.connect("retriever", "prompt_builder.documents")
         pipe.connect("prompt_builder", "llm")
         pipe.connect("llm", "output_validator")
+        # If a component has more than one output or input, explicitly specify the connections:
+        pipe.connect("output_validator.invalid_replies", "prompt_builder.invalid_replies")
+        pipe.connect("output_validator.error_message", "prompt_builder.error_message")
 
         question = (
             "retrieve invoice_number"
@@ -166,10 +216,11 @@ class HaystackPipeline(PipelineInterface):
         )
 
         valid_reply = response["output_validator"]["valid_replies"][0]
-        print(valid_reply)
-
+        valid_json = json.loads(valid_reply)
+        print(f"\nJSON response:\n")
+        print(valid_json)
 
         end = timeit.default_timer()
-        print(f"Time to retrieve answer: {end - start}")
+        print(f"\nTime to retrieve answer: {end - start}")
 
-        return '{"answer": "Not implemented yet"}'
+        return valid_json

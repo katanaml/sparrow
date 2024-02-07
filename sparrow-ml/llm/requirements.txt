@@ -8,5 +8,6 @@ unstructured[all-docs]
 typer[all]
 fastapi==0.108.0
 uvicorn[standard]
-ollama-haystack
+ollama-haystack==0.0.3
+haystack-ai==2.0.0b5
 # add pdf2htmlEX support for RAG pipeline with LlamaIndex and Unstructured
