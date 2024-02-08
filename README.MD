@@ -138,7 +138,7 @@ curl -X 'POST' \
   -d '{
   "fields": "invoice_number",
   "types": "int",
-  "plugin": "LlamaIndex"
+  "agent": "LlamaIndex"
 }'
 ```
 
