@@ -9,6 +9,8 @@ Data extraction with ML and LLM
 
 Sparrow is an innovative open-source solution for efficient data extraction and processing from various documents and images. It seamlessly handles forms, invoices, receipts, and other unstructured data sources. Sparrow stands out with its modular architecture, offering independent services and pipelines all optimized for robust performance. One of the critical functionalities of Sparrow - pluggable architecture. You can easily integrate and run data extraction pipelines using tools and frameworks like LlamaIndex, Haystack, or Unstructured. Sparrow enables local LLM data extraction pipelines through Ollama or Apple MLX. With Sparrow solution you get API, which helps to process and transform your data into structured output, ready to be integrated with custom workflows.
 
+Sparrow Agents - with Sparrow you can build independent LLM agents, and use API to invoke them from your system.
+
 ### Services
 
 * **[sparrow-data-ocr](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - OCR service, providing optical character recognition as part of the Sparrow.
@@ -47,13 +49,13 @@ Follow the install steps outlined here:
 
 1. Copy text PDF files to the `data` folder or use the sample data provided in the `data` folder.
 
-2. Run the script, to convert text to vector embeddings and save in Weaviate. By default it will use LlamaIndex plugin: 
+2. Run the script, to convert text to vector embeddings and save in Weaviate. By default it will use LlamaIndex agent: 
 
 ```
 ./sparrow.sh ingest
 ```
 
-You can specify plugin name explicitly, for example:
+You can specify agent name explicitly, for example:
 
 ```
 ./sparrow.sh ingest Haystack
@@ -63,7 +65,7 @@ You can specify plugin name explicitly, for example:
 ./sparrow.sh ingest LlamaIndex
 ```
 
-3. Run the script, to process data with LLM RAG and return the answer. By default, it will use LlamaIndex plugin. You can specify other plugins (see ingest example), such as Haystack: 
+3. Run the script, to process data with LLM RAG and return the answer. By default, it will use LlamaIndex agent. You can specify other agents (see ingest example), such as Haystack: 
 
 ```
 ./sparrow.sh "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
