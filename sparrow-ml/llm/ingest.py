@@ -1,5 +1,5 @@
 import warnings
-from ingest.plugins.interface import get_ingest
+from ingest.agents.interface import get_ingest
 import typer
 from typing_extensions import Annotated
 
@@ -8,10 +8,10 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
-def run(plugin: Annotated[str, typer.Argument(help="Ingest plugin")] = "LlamaIndex"):
-    user_selected_plugin = plugin  # Modify this as needed
-    ingest = get_ingest(user_selected_plugin)
-    ingest.run_ingest(user_selected_plugin)
+def run(agent: Annotated[str, typer.Argument(help="Ingest agent")] = "LlamaIndex"):
+    user_selected_agent = agent  # Modify this as needed
+    ingest = get_ingest(user_selected_agent)
+    ingest.run_ingest(user_selected_agent)
 
 
 if __name__ == "__main__":

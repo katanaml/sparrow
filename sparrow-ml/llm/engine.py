@@ -1,7 +1,7 @@
 import warnings
 import typer
 from typing_extensions import Annotated
-from rag.plugins.interface import get_pipeline
+from rag.agents.interface import get_pipeline
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -10,7 +10,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch")],
         types: Annotated[str, typer.Argument(help="The list of types of the fields")],
-        plugin: Annotated[str, typer.Argument(help="Ingest plugin")] = "LlamaIndex",
+        agent: Annotated[str, typer.Argument(help="Ingest agent")] = "LlamaIndex",
         debug: Annotated[bool, typer.Argument(help="Enable debug mode")] = False):
 
     query = 'retrieve ' + inputs
@@ -19,14 +19,14 @@ def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch"
     query_inputs_arr = [param.strip() for param in inputs.split(',')]
     query_types_arr = [param.strip() for param in query_types.split(',')]
 
-    user_selected_plugin = plugin  # Modify this as needed
-    rag = get_pipeline(user_selected_plugin)
-    rag.run_pipeline(user_selected_plugin, query_inputs_arr, query_types_arr, query, debug)
+    user_selected_agent = agent  # Modify this as needed
+    rag = get_pipeline(user_selected_agent)
+    rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query, debug)
 
 
-def run_from_api(user_selected_plugin, query_inputs_arr, query_types_arr, query, debug):
-    rag = get_pipeline(user_selected_plugin)
-    answer = rag.run_pipeline(user_selected_plugin, query_inputs_arr, query_types_arr, query, debug, False)
+def run_from_api(user_selected_agent, query_inputs_arr, query_types_arr, query, debug):
+    rag = get_pipeline(user_selected_agent)
+    answer = rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query, debug, False)
     return answer
 
 
