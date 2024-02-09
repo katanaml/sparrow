@@ -21,6 +21,7 @@ import os
 import box
 import yaml
 from rich import print
+from rich.progress import Progress, SpinnerColumn, TextColumn
 
 
 # Import config vars
@@ -38,14 +39,17 @@ class HaystackPipeline(PipelineInterface):
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
 
+        ResponseModel, json_schema = self.invoke_pipeline_step(lambda: self.build_response_class(query_inputs, query_types),
+                                                               "Building dynamic response class...",
+                                                               local)
 
-        ResponseModel, json_schema = self.build_response_class(query_inputs, query_types)
+        output_validator = self.invoke_pipeline_step(lambda: self.build_validator(ResponseModel),
+                                                     "Building output validator...",
+                                                     local)
 
-        output_validator = self.build_validator(ResponseModel)
+        document_store = self.run_preprocessing_pipeline(local)
 
-        document_store = self.run_preprocessing_pipeline()
-
-        answer = self.run_inference_pipeline(document_store, json_schema, output_validator)
+        answer = self.run_inference_pipeline(document_store, json_schema, output_validator, query, local)
 
         return answer
 
@@ -75,6 +79,7 @@ class HaystackPipeline(PipelineInterface):
         DynamicModel = create_model('DynamicModel', **fields)
 
         json_schema = DynamicModel.schema_json(indent=2)
+
         return DynamicModel, json_schema
 
     def build_validator(self, Invoice):
@@ -97,7 +102,7 @@ class HaystackPipeline(PipelineInterface):
                     output_dict = json.loads(replies[0])
                     self.pydantic_model.model_validate(output_dict)
                     print(
-                        f"\nOutputValidator at Iteration {self.iteration_counter}: Valid JSON from LLM - No need for looping."
+                        f"OutputValidator at Iteration {self.iteration_counter}: Valid JSON from LLM - No need for looping."
                     )
                     return {"valid_replies": replies}
 
@@ -114,7 +119,7 @@ class HaystackPipeline(PipelineInterface):
 
         return output_validator
 
-    def run_preprocessing_pipeline(self):
+    def run_preprocessing_pipeline(self, local):
         start = timeit.default_timer()
 
         file_list = [os.path.join(cfg.DATA_PATH, f) for f in os.listdir(cfg.DATA_PATH)
@@ -126,45 +131,47 @@ class HaystackPipeline(PipelineInterface):
 
         document_cleaner = DocumentCleaner()
         document_splitter = DocumentSplitter(
-            split_by="sentence",
-            split_length=10,
-            split_overlap=2
+            split_by=cfg.SPLIT_BY_HAYSTACK,
+            split_length=cfg.SPLIT_LENGTH_HAYSTACK,
+            split_overlap=cfg.SPLIT_OVERLAP_HAYSTACK
         )
 
-        document_embedder = SentenceTransformersDocumentEmbedder(model="sentence-transformers/all-MiniLM-L6-v2",
+        document_embedder = SentenceTransformersDocumentEmbedder(model=cfg.EMBEDDINGS_HAYSTACK,
                                                                  progress_bar=False)
         document_writer = DocumentWriter(document_store)
 
-        preprocessing_pipeline = Pipeline()
-        preprocessing_pipeline.add_component(instance=pdf_converter, name="pypdf_converter")
-        preprocessing_pipeline.add_component(instance=document_cleaner, name="document_cleaner")
-        preprocessing_pipeline.add_component(instance=document_splitter, name="document_splitter")
-        preprocessing_pipeline.add_component(instance=document_embedder, name="document_embedder")
-        preprocessing_pipeline.add_component(instance=document_writer, name="document_writer")
+        preprocessing_pipe = Pipeline()
+        preprocessing_pipe.add_component(instance=pdf_converter, name="pypdf_converter")
+        preprocessing_pipe.add_component(instance=document_cleaner, name="document_cleaner")
+        preprocessing_pipe.add_component(instance=document_splitter, name="document_splitter")
+        preprocessing_pipe.add_component(instance=document_embedder, name="document_embedder")
+        preprocessing_pipe.add_component(instance=document_writer, name="document_writer")
 
-        preprocessing_pipeline.connect("pypdf_converter", "document_cleaner")
-        preprocessing_pipeline.connect("document_cleaner", "document_splitter")
-        preprocessing_pipeline.connect("document_splitter", "document_embedder")
-        preprocessing_pipeline.connect("document_embedder", "document_writer")
+        preprocessing_pipe.connect("pypdf_converter", "document_cleaner")
+        preprocessing_pipe.connect("document_cleaner", "document_splitter")
+        preprocessing_pipe.connect("document_splitter", "document_embedder")
+        preprocessing_pipe.connect("document_embedder", "document_writer")
 
         # preprocessing_pipeline.draw("pipeline.png")
 
-        preprocessing_pipeline.run({
-            "pypdf_converter": {"sources": file_list}
-        })
+        self.invoke_pipeline_step(lambda: preprocessing_pipe.run({
+                                            "pypdf_converter": {"sources": file_list}
+                                          }),
+                                  "Running data ingestion pipeline...",
+                                  local)
 
-        print(f"Number of documents in document store: {document_store.count_documents()}")
+        print(f"\nNumber of documents in document store: {document_store.count_documents()}")
 
         end = timeit.default_timer()
-        print(f"\nTime to ingest data: {end - start}")
+        print(f"\nTime to ingest data: {end - start}\n")
 
         return document_store
 
-    def run_inference_pipeline(self, document_store, json_schema, output_validator):
+    def run_inference_pipeline(self, document_store, json_schema, output_validator, query, local):
         start = timeit.default_timer()
 
-        generator = OllamaGenerator(model="starling-lm:7b-alpha-q5_K_M",
-                                    url="http://127.0.0.1:11434/api/generate")
+        generator = OllamaGenerator(model=cfg.LLM_HAYSTACK,
+                                    url=cfg.OLLAMA_BASE_URL_HAYSTACK + "/api/generate")
 
         template = """
         Given only the following document information, retrieve answer.
@@ -186,13 +193,17 @@ class HaystackPipeline(PipelineInterface):
         {% endif %}
         """
 
-        text_embedder = SentenceTransformersTextEmbedder(model="sentence-transformers/all-MiniLM-L6-v2",
-                                                             progress_bar=False)
+        text_embedder = SentenceTransformersTextEmbedder(model=cfg.EMBEDDINGS_HAYSTACK,
+                                                         progress_bar=False)
 
-        pipe = Pipeline(max_loops_allowed=3)
+        retriever = InMemoryEmbeddingRetriever(document_store=document_store, top_k=3)
+
+        prompt_builder = PromptBuilder(template=template)
+
+        pipe = Pipeline(max_loops_allowed=cfg.MAX_LOOPS_ALLOWED_HAYSTACK)
         pipe.add_component("embedder", text_embedder)
-        pipe.add_component("retriever", InMemoryEmbeddingRetriever(document_store=document_store, top_k=3))
-        pipe.add_component("prompt_builder", PromptBuilder(template=template))
+        pipe.add_component("retriever", retriever)
+        pipe.add_component("prompt_builder", prompt_builder)
         pipe.add_component("llm", generator)
         pipe.add_component("output_validator", output_validator)
 
@@ -205,22 +216,42 @@ class HaystackPipeline(PipelineInterface):
         pipe.connect("output_validator.error_message", "prompt_builder.error_message")
 
         question = (
-            "retrieve invoice_number"
+            query
         )
 
-        response = pipe.run(
-            {
-                "embedder": {"text": question},
-                "prompt_builder": {"question": question, "schema": json_schema}
-            }
-        )
+        response = self.invoke_pipeline_step(
+                            lambda: pipe.run(
+                                        {
+                                            "embedder": {"text": question},
+                                            "prompt_builder": {"question": question, "schema": json_schema}
+                                        }
+                                    ),
+            "Running inference pipeline...",
+                          local)
+
+        end = timeit.default_timer()
 
         valid_reply = response["output_validator"]["valid_replies"][0]
         valid_json = json.loads(valid_reply)
         print(f"\nJSON response:\n")
         print(valid_json)
+        print('\n' + ('=' * 50))
 
-        end = timeit.default_timer()
-        print(f"\nTime to retrieve answer: {end - start}")
+        print(f"Time to retrieve answer: {end - start}")
 
         return valid_json
+
+    def invoke_pipeline_step(self, task_call, task_description, local):
+        if local:
+            with Progress(
+                    SpinnerColumn(),
+                    TextColumn("[progress.description]{task.description}"),
+                    transient=False,
+            ) as progress:
+                progress.add_task(description=task_description, total=None)
+                ret = task_call()
+        else:
+            print(task_description)
+            ret = task_call()
+
+        return ret
