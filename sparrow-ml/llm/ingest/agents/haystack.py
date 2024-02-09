@@ -1,4 +1,4 @@
-from ingest.plugins.interface import Ingest
+from ingest.agents.interface import Ingest
 from haystack.components.converters import PyPDFToDocument
 from haystack.components.routers import FileTypeRouter
 from haystack.components.preprocessors import DocumentSplitter, DocumentCleaner

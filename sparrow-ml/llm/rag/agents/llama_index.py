@@ -1,4 +1,4 @@
-from rag.plugins.interface import Pipeline
+from rag.agents.interface import Pipeline
 from llama_index import VectorStoreIndex, ServiceContext
 from llama_index.embeddings import LangchainEmbedding
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings

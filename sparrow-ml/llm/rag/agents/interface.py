@@ -21,13 +21,13 @@ class Pipeline(ABC):
 
 
 # Factory Method
-def get_pipeline(plugin_name: str) -> Pipeline:
-    if plugin_name == "LlamaIndex":
+def get_pipeline(agent_name: str) -> Pipeline:
+    if agent_name == "LlamaIndex":
         from .llama_index import LlamaIndexPipeline
         return LlamaIndexPipeline()
-    elif plugin_name == "Haystack":
+    elif agent_name == "Haystack":
         from .haystack import HaystackPipeline
         return HaystackPipeline()
     else:
-        raise ValueError(f"Unknown plugin: {plugin_name}")
+        raise ValueError(f"Unknown agent: {agent_name}")
 

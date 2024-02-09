@@ -1,4 +1,4 @@
-from rag.plugins.interface import Pipeline as PipelineInterface
+from rag.agents.interface import Pipeline as PipelineInterface
 from typing import Any
 from haystack.components.converters import PyPDFToDocument
 from haystack.components.preprocessors import DocumentSplitter, DocumentCleaner

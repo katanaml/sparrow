@@ -14,13 +14,13 @@ class Ingest(ABC):
 
 
 # Factory Method
-def get_ingest(plugin_name: str) -> Ingest:
-    if plugin_name == "LlamaIndex":
+def get_ingest(agent_name: str) -> Ingest:
+    if agent_name == "LlamaIndex":
         from .llama_index import LlamaIndexIngest
         return LlamaIndexIngest()
-    elif plugin_name == "Haystack":
+    elif agent_name == "Haystack":
         from .haystack import HaystackIngest
         return HaystackIngest()
     else:
-        raise ValueError(f"Unknown plugin: {plugin_name}")
+        raise ValueError(f"Unknown agent: {agent_name}")
 

@@ -27,7 +27,7 @@ app.add_middleware(
 class Query(BaseModel):
     fields: str
     types: str
-    plugin: str = "LlamaIndex"
+    agent: str = "LlamaIndex"
 
 
 @app.get("/")
@@ -44,7 +44,7 @@ def inference(
                     {
                         "fields": "invoice_number",
                         "types": "int",
-                        "plugin": "LlamaIndex"
+                        "agent": "LlamaIndex"
                     }
                 ]
             )
@@ -56,11 +56,12 @@ def inference(
     query_types_arr = [param.strip() for param in query_types.split(',')]
 
     try:
-        answer = run_from_api(q.plugin, query_inputs_arr, query_types_arr, query, False)
+        answer = run_from_api(q.agent, query_inputs_arr, query_types_arr, query, False)
     except ValueError as e:
-        answer = '{"answer": "Invalid plugin name"}'
+        answer = '{"answer": "Invalid agent name"}'
 
-    answer = json.loads(answer)
+    if isinstance(answer, (str, bytes, bytearray)):
+        answer = json.loads(answer)
 
     return {"message": answer}
 
