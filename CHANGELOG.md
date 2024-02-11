@@ -1,5 +1,17 @@
 # ChangeLog
 
+## [v0.1.3] - 2024-02-11
+
+### New Features
+
+- Added Haystack agent for structured data
+
+### What's Changed
+
+- Changed plugins to agents
+
+  
+
 ## [v0.1.2] - 2024-01-31
 
 ### New Features
