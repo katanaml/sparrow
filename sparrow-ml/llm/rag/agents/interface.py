@@ -28,6 +28,9 @@ def get_pipeline(agent_name: str) -> Pipeline:
     elif agent_name == "Haystack":
         from .haystack import HaystackPipeline
         return HaystackPipeline()
+    elif agent_name == "LlamaIndex_Llava":
+        from .llama_index_multimodal_ollama import LlavaPipeline
+        return LlavaPipeline()
     else:
         raise ValueError(f"Unknown agent: {agent_name}")
 
