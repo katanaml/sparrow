@@ -65,7 +65,7 @@ You can specify agent name explicitly, for example:
 ./sparrow.sh ingest llamaindex
 ```
 
-3. Run the script, to process data with LLM RAG and return the answer. By default, it will use `llamaindex` agent. You can specify other agents (see ingest example), such as 'haystack': 
+3. Run the script, to process data with LLM RAG and return the answer. By default, it will use `llamaindex` agent. You can specify other agents (see ingest example), such as `haystack`: 
 
 ```
 ./sparrow.sh "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
@@ -104,7 +104,7 @@ Answer:
 
 **FastAPI Endpoint for Local LLM RAG**
 
-Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the plugin to be used for the inference. By default, LlamaIndex plugin is used.
+Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the plugin to be used for the inference. By default, `llamaindex` agent is used.
 
 To set this up:
 
