@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 4. Copy text PDF files to the `data` folder or use the sample data provided in the `data` folder.
 
-5. Run the script, to convert text to vector embeddings and save in Weaviate. By default it will use LlamaIndex agent: 
+5. Run the script, to convert text to vector embeddings and save in Weaviate. By default it will use `llamaindex` agent: 
 
 ```
 ./sparrow.sh ingest
@@ -31,14 +31,14 @@ pip install -r requirements.txt
 You can specify agent name explicitly, for example:
 
 ```
-./sparrow.sh ingest Haystack
+./sparrow.sh ingest --agent haystack
 ```
 
 ```
-./sparrow.sh ingest LlamaIndex
+./sparrow.sh ingest --agent llamaindex
 ```
 
-6. Run the script, to process data with LLM RAG and return the answer. By default, it will use LlamaIndex agent. You can specify other agents (see ingest example), such as Haystack: 
+6. Run the script, to process data with LLM RAG and return the answer. By default, it will use `llamaindex` agent. You can specify other agents (see ingest example), such as `haystack`: 
 
 ```
 ./sparrow.sh "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
@@ -77,7 +77,7 @@ Answer:
 
 ### FastAPI Endpoint for Local LLM RAG
 
-Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the agent to be used for the inference. By default, LlamaIndex agent is used.
+Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the agent to be used for the inference. By default, `llamaindex` agent is used.
 
 To set this up:
 
