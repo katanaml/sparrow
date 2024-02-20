@@ -10,8 +10,8 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch")],
         types: Annotated[str, typer.Argument(help="The list of types of the fields")],
-        agent: Annotated[str, typer.Argument(help="Ingest agent")] = "LlamaIndex",
-        debug: Annotated[bool, typer.Argument(help="Enable debug mode")] = False):
+        agent: Annotated[str, typer.Option(help="Ingest agent")] = "llamaindex",
+        debug: Annotated[bool, typer.Option(help="Enable debug mode")] = False):
 
     query = 'retrieve ' + inputs
     query_types = types

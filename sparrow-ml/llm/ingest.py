@@ -8,7 +8,7 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
-def run(agent: Annotated[str, typer.Argument(help="Ingest agent")] = "LlamaIndex"):
+def run(agent: Annotated[str, typer.Option(help="Ingest agent")] = "llamaindex"):
     user_selected_agent = agent  # Modify this as needed
     ingest = get_ingest(user_selected_agent)
     ingest.run_ingest(user_selected_agent)

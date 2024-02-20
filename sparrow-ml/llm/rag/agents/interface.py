@@ -22,15 +22,15 @@ class Pipeline(ABC):
 
 # Factory Method
 def get_pipeline(agent_name: str) -> Pipeline:
-    if agent_name == "LlamaIndex":
-        from .llama_index import LlamaIndexPipeline
+    if agent_name == "llamaindex":
+        from .llamaindex import LlamaIndexPipeline
         return LlamaIndexPipeline()
-    elif agent_name == "Haystack":
+    elif agent_name == "haystack":
         from .haystack import HaystackPipeline
         return HaystackPipeline()
-    elif agent_name == "LlamaIndex_Llava":
-        from .llama_index_multimodal_ollama import LlavaPipeline
-        return LlavaPipeline()
+    elif agent_name == "vllamaindex":
+        from .vllamaindex import VLlamaIndexPipeline
+        return VLlamaIndexPipeline()
     else:
         raise ValueError(f"Unknown agent: {agent_name}")
 
