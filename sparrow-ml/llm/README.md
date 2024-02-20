@@ -31,11 +31,11 @@ pip install -r requirements.txt
 You can specify agent name explicitly, for example:
 
 ```
-./sparrow.sh ingest haystack
+./sparrow.sh ingest --agent haystack
 ```
 
 ```
-./sparrow.sh ingest llamaindex
+./sparrow.sh ingest --agent llamaindex
 ```
 
 6. Run the script, to process data with LLM RAG and return the answer. By default, it will use `llamaindex` agent. You can specify other agents (see ingest example), such as `haystack`: 
