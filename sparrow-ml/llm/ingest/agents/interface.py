@@ -15,10 +15,10 @@ class Ingest(ABC):
 
 # Factory Method
 def get_ingest(agent_name: str) -> Ingest:
-    if agent_name == "LlamaIndex":
-        from .llama_index import LlamaIndexIngest
+    if agent_name == "llamaindex":
+        from .llamaindex import LlamaIndexIngest
         return LlamaIndexIngest()
-    elif agent_name == "Haystack":
+    elif agent_name == "haystack":
         from .haystack import HaystackIngest
         return HaystackIngest()
     else:

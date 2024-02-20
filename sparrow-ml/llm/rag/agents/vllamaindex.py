@@ -17,7 +17,7 @@ with open('config.yml', 'r', encoding='utf8') as ymlfile:
     cfg = box.Box(yaml.safe_load(ymlfile))
 
 
-class LlavaPipeline(Pipeline):
+class VLlamaIndexPipeline(Pipeline):
     def run_pipeline(self,
                      payload: str,
                      query_inputs: [str],
