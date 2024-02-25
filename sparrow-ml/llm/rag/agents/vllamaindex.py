@@ -5,7 +5,7 @@ import os
 import box
 import yaml
 from rich import print
-import ollama
+from ollama import Client
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -31,10 +31,12 @@ class VLlamaIndexPipeline(Pipeline):
                      if os.path.isfile(os.path.join(cfg.DATA_PATH, f)) and not f.startswith('.')
                      and not f.lower().endswith('.pdf')]
 
+        query = "retrieve values of invoice number, invoice date fields from given document. im interested in actual values, no need to provide any descriptions"
         print("Query: " + query + "\n")
 
-        res = ollama.chat(
-            model="llava:7b-v1.6-mistral-q5_K_M",
+        client = Client(host='http://127.0.0.1:11434')
+        res = client.chat(
+            model="llava:13b",
             messages=[
                 {
                     'role': 'user',

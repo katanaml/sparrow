@@ -1,9 +1,9 @@
 from rag.agents.interface import Pipeline
-from llama_index import VectorStoreIndex, ServiceContext
-from llama_index.embeddings import LangchainEmbedding
+from llama_index.core import VectorStoreIndex, ServiceContext
+from llama_index.embeddings.langchain import LangchainEmbedding
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
-from llama_index.llms import Ollama
-from llama_index.vector_stores import WeaviateVectorStore
+from llama_index.llms.ollama import Ollama
+from llama_index.vector_stores.weaviate import WeaviateVectorStore
 import weaviate
 from pydantic import create_model
 from typing import List

@@ -1,8 +1,8 @@
 from .interface import Ingest
 import weaviate
-from llama_index import StorageContext, SimpleDirectoryReader, ServiceContext, VectorStoreIndex
-from llama_index.vector_stores import WeaviateVectorStore
-from llama_index.embeddings import LangchainEmbedding
+from llama_index.core import StorageContext, SimpleDirectoryReader, ServiceContext, VectorStoreIndex
+from llama_index.vector_stores.weaviate import WeaviateVectorStore
+from llama_index.embeddings.langchain import LangchainEmbedding
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 import box
 import yaml

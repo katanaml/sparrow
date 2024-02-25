@@ -3,7 +3,7 @@ from typing import Any
 from haystack.components.converters import PyPDFToDocument
 from haystack.components.preprocessors import DocumentSplitter, DocumentCleaner
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder
-from haystack.pipeline import Pipeline
+from haystack import Pipeline
 from haystack.document_stores.in_memory import InMemoryDocumentStore
 from haystack.components.writers import DocumentWriter
 from haystack.components.embedders import SentenceTransformersTextEmbedder
