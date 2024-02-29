@@ -1,16 +1,17 @@
 from rag.agents.interface import Pipeline
+from rich.progress import Progress, SpinnerColumn, TextColumn
 from typing import Any
+from pydantic import create_model
+from typing import List
 import warnings
-import os
 import box
 import yaml
 import timeit
 from rich import print
-from pathlib import Path
 from llama_index.core import SimpleDirectoryReader
-from PIL import Image
-import matplotlib.pyplot as plt
 from llama_index.multi_modal_llms.ollama import OllamaMultiModal
+from llama_index.core.program import MultiModalLLMCompletionProgram
+from llama_index.core.output_parsers import PydanticOutputParser
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -34,24 +35,93 @@ class VLlamaIndexPipeline(Pipeline):
 
         start = timeit.default_timer()
 
-        file_list = [os.path.join(cfg.DATA_PATH, f) for f in os.listdir(cfg.DATA_PATH)
-                     if os.path.isfile(os.path.join(cfg.DATA_PATH, f)) and not f.startswith('.')
-                     and not f.lower().endswith('.pdf')]
+        # Import config vars
+        with open('config.yml', 'r', encoding='utf8') as ymlfile:
+            cfg = box.Box(yaml.safe_load(ymlfile))
 
-        print("Query: " + query + "\n")
 
-        mm_model = OllamaMultiModal(model="llava:13b")
+        mm_model = self.invoke_pipeline_step(lambda: OllamaMultiModal(model=cfg.LLM_VLLAMAINDEX),
+                                             "Loading Ollama MultiModal...",
+                                             local)
 
         # load as image documents
-        image_documents = SimpleDirectoryReader(cfg.DATA_PATH + "temp/").load_data()
+        image_documents = self.invoke_pipeline_step(lambda: SimpleDirectoryReader(cfg.DATA_PATH,
+                                                                                  required_exts=[".jpg", ".JPG", ".JPEG"]).load_data(),
+                                                    "Loading image documents...",
+                                                    local)
 
+        ResponseModel = self.invoke_pipeline_step(lambda: self.build_response_class(query_inputs, query_types),
+                                                  "Building dynamic response class...",
+                                                  local)
+
+        prompt_template_str = """\
+        {query_str}
+
+        Return the answer as a Pydantic object. The Pydantic schema is given below:
+
+        """
+        mm_program = MultiModalLLMCompletionProgram.from_defaults(
+            output_parser=PydanticOutputParser(ResponseModel),
+            image_documents=image_documents,
+            prompt_template_str=prompt_template_str,
+            multi_modal_llm=mm_model,
+            verbose=True,
+        )
+
+        response = self.invoke_pipeline_step(lambda: mm_program(query_str=query),
+                                             "Running inference...",
+                                             local)
 
         end = timeit.default_timer()
 
         print(f"\nJSON response:\n")
-        print("answer" + '\n')
+        for res in response:
+            print(res)
         print('=' * 50)
 
-        print(f"Time to retrieve answer: {end - start}\n")
+        print(f"Time to retrieve answer: {end - start}")
+
+
+    # Function to safely evaluate type strings
+    def safe_eval_type(self, type_str, context):
+        try:
+            return eval(type_str, {}, context)
+        except NameError:
+            raise ValueError(f"Type '{type_str}' is not recognized")
+
+    def build_response_class(self, query_inputs, query_types_as_strings):
+        # Controlled context for eval
+        context = {
+            'List': List,
+            'str': str,
+            'int': int,
+            'float': float
+            # Include other necessary types or typing constructs here
+        }
+
+        # Convert string representations to actual types
+        query_types = [self.safe_eval_type(type_str, context) for type_str in query_types_as_strings]
+
+        # Create fields dictionary
+        fields = {name: (type_, ...) for name, type_ in zip(query_inputs, query_types)}
+
+        DynamicModel = create_model('DynamicModel', **fields)
+
+        return DynamicModel
+
+    def invoke_pipeline_step(self, task_call, task_description, local):
+        if local:
+            with Progress(
+                    SpinnerColumn(),
+                    TextColumn("[progress.description]{task.description}"),
+                    transient=False,
+            ) as progress:
+                progress.add_task(description=task_description, total=None)
+                ret = task_call()
+        else:
+            print(task_description)
+            ret = task_call()
+
+        return ret
 
 
