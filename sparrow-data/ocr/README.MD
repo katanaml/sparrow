@@ -22,12 +22,6 @@ If you want to test how OCR works, you can run scripts
 python ocr_paddleocr.py
 ```
 
-2. Doctr
-
-```
-python ocr_doctr.py
-```
-
 ## Author
 
 [Katana ML](https://katanaml.io), [Andrej Baranovskij](https://github.com/abaranovskis-redsamurai)
