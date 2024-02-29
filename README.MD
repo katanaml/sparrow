@@ -102,6 +102,12 @@ Answer:
 }
 ```
 
+4. To run multimodal agent, use `vllamaindex` flag:
+
+```
+./sparrow.sh "guest_no, cashier_name" "int, str" --agent vllamaindex
+```
+
 **FastAPI Endpoint for Local LLM RAG**
 
 Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the plugin to be used for the inference. By default, `llamaindex` agent is used.
@@ -128,7 +134,7 @@ For visual reference, a screenshot of the FastAPI endpoint
 
 ![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/lemming_2_.png)
 
-Example of API call through CURL
+Example of API call through CURL:
 
 ```
 curl -X 'POST' \
@@ -139,6 +145,20 @@ curl -X 'POST' \
   "fields": "invoice_number",
   "types": "int",
   "agent": "llamaindex"
+}'
+```
+
+Example of API call for multimodal request:
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "fields": "guest_no, cashier_name",
+  "types": "int, str",
+  "agent": "vllamaindex"
 }'
 ```
 
