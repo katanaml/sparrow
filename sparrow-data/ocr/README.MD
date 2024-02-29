@@ -14,7 +14,7 @@ pip install -r requirements.txt
 
 ## Plain OCR
 
-If you want to test how OCR works, you can run scripts
+If you want to test how OCR works, you can run script
 
 1. PaddleOCR
 
