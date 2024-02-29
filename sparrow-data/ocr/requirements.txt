@@ -3,6 +3,10 @@ torch==1.13.1
 torchvision
 torchaudio
 datasets==2.10.1
-python-doctr==0.6.0
 paddleocr==2.7.0.3
 paddlepaddle==2.5.2
+python-poppler==0.4.1
+Pillow==10.2.0
+python-multipart
+fastapi==0.110.0
+uvicorn[standard]
