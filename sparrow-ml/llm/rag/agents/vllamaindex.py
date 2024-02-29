@@ -68,9 +68,14 @@ class VLlamaIndexPipeline(Pipeline):
             verbose=True,
         )
 
-        response = self.invoke_pipeline_step(lambda: mm_program(query_str=query),
-                                             "Running inference...",
-                                             local)
+        try:
+            response = self.invoke_pipeline_step(lambda: mm_program(query_str=query),
+                                                 "Running inference...",
+                                                 local)
+        except ValueError as e:
+            print(f"Error: {e}")
+            msg = 'Inference failed'
+            return '{"answer": "' + msg + '"}'
 
         end = timeit.default_timer()
 
@@ -80,6 +85,8 @@ class VLlamaIndexPipeline(Pipeline):
         print('=' * 50)
 
         print(f"Time to retrieve answer: {end - start}")
+
+        return response
 
 
     # Function to safely evaluate type strings

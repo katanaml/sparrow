@@ -44,7 +44,7 @@ def inference(
                     {
                         "fields": "invoice_number",
                         "types": "int",
-                        "agent": "LlamaIndex"
+                        "agent": "llamaindex"
                     }
                 ]
             )
