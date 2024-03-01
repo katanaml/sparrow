@@ -2,7 +2,7 @@
 
 ## Description
 
-This module implements OCR functionality for Sparrow ML.
+This module implements OCR functionality for Sparrow.
 
 ## Install
 
