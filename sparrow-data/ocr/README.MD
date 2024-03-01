@@ -12,7 +12,7 @@ This module implements OCR functionality for Sparrow ML.
 pip install -r requirements.txt
 ```
 
-## Plain OCR
+## Sparrow OCR
 
 If you want to test how OCR works, you can run this API request through CURL
 
