@@ -14,12 +14,15 @@ pip install -r requirements.txt
 
 ## Plain OCR
 
-If you want to test how OCR works, you can run script
-
-1. PaddleOCR
+If you want to test how OCR works, you can run this API request through CURL
 
 ```
-python ocr_paddleocr.py
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/v1/sparrow-ocr/inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'file=' \
+  -F 'image_url=https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-ml/llm/data/inout-20211211_001.jpg'
 ```
 
 ## Author
