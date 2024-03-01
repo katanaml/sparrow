@@ -27,7 +27,7 @@ app.add_middleware(
 class Query(BaseModel):
     fields: str
     types: str
-    agent: str = "LlamaIndex"
+    agent: str = "llamaindex"
 
 
 @app.get("/")
