@@ -35,11 +35,6 @@ class VLlamaIndexPipeline(Pipeline):
 
         start = timeit.default_timer()
 
-        # Import config vars
-        with open('config.yml', 'r', encoding='utf8') as ymlfile:
-            cfg = box.Box(yaml.safe_load(ymlfile))
-
-
         mm_model = self.invoke_pipeline_step(lambda: OllamaMultiModal(model=cfg.LLM_VLLAMAINDEX),
                                              "Loading Ollama MultiModal...",
                                              local)

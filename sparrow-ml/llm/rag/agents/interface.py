@@ -31,6 +31,9 @@ def get_pipeline(agent_name: str) -> Pipeline:
     elif agent_name == "vllamaindex":
         from .vllamaindex import VLlamaIndexPipeline
         return VLlamaIndexPipeline()
+    elif agent_name == "vprocessor":
+        from .vprocessor import VProcessorPipeline
+        return VProcessorPipeline()
     else:
         raise ValueError(f"Unknown agent: {agent_name}")
 
