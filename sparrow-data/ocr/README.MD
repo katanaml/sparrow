@@ -18,7 +18,7 @@ If you want to test how OCR works, you can run this API request through CURL
 
 ```
 curl -X 'POST' \
-  'http://127.0.0.1:8000/api/v1/sparrow-ocr/inference' \
+  'http://127.0.0.1:8001/api/v1/sparrow-ocr/inference' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
   -F 'file=' \
