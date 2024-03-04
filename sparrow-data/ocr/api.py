@@ -23,7 +23,7 @@ async def root():
 
 
 if __name__ == "__main__":
-    uvicorn.run("api:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("api:app", host="0.0.0.0", port=8001, reload=True)
 
 # run the app with: python api.py
 # go to http://127.0.0.1:8000/api/v1/sparrow-ocr/docs to see the Swagger UI
