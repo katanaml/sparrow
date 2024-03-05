@@ -15,6 +15,7 @@ class Pipeline(ABC):
                      query_inputs: [str],
                      query_types: [str],
                      query: str,
+                     file_path: str = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
         pass
