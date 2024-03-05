@@ -29,26 +29,37 @@ class VProcessorPipeline(Pipeline):
                      query_inputs: [str],
                      query_types: [str],
                      query: str,
+                     file_path: str = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
 
         start = timeit.default_timer()
 
-        data = {
-            'file': '',
-            'image_url': 'https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-ml/llm/data/inout-20211211_001.jpg'
-        }
+        if file_path is None:
+            msg = "Please provide a file to process."
+            print(msg)
+            return msg
 
-        response = self.invoke_pipeline_step(lambda: requests.post('http://127.0.0.1:8001/api/v1/sparrow-ocr/inference', data=data, timeout=180),
-                                             "Running OCR...",
-                                             local)
+        with open(file_path, "rb") as file:
+            files = {'file': (file_path, file, 'image/jpeg')}
 
-        if response.status_code != 200:
-            print('Request failed with status code:', response.status_code)
-            print('Response:', response.text)
+            data = {
+                'file': ''
+            }
 
-            return "Error, contact support"
+            response = self.invoke_pipeline_step(lambda: requests.post(cfg.VPROCESSOR_OCR_ENDPOINT,
+                                                                       data=data,
+                                                                       files=files,
+                                                                       timeout=180),
+                                                 "Running OCR...",
+                                                 local)
+
+            if response.status_code != 200:
+                print('Request failed with status code:', response.status_code)
+                print('Response:', response.text)
+
+                return "Failed to process file. Please try again."
 
         data = response.json()
 
@@ -65,8 +76,8 @@ class VProcessorPipeline(Pipeline):
         using this structured data, coming from OCR {receipt_data}.\
         """
 
-        llm_ollama = self.invoke_pipeline_step(lambda: Ollama(model=cfg.LLM,
-                                                              base_url=cfg.OLLAMA_BASE_URL,
+        llm_ollama = self.invoke_pipeline_step(lambda: Ollama(model=cfg.LLM_VPROCESSOR,
+                                                              base_url=cfg.OLLAMA_BASE_URL_VPROCESSOR,
                                                               temperature=0,
                                                               request_timeout=900),
                                                "Loading Ollama...",

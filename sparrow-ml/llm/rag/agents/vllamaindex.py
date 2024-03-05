@@ -29,6 +29,7 @@ class VLlamaIndexPipeline(Pipeline):
                      query_inputs: [str],
                      query_types: [str],
                      query: str,
+                     file_path: str = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
