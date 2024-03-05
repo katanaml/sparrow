@@ -1,5 +1,11 @@
 from rag.agents.interface import Pipeline
+from llama_index.core.program import LLMTextCompletionProgram
+import json
+from llama_index.llms.ollama import Ollama
+from pydantic import BaseModel
+from typing import List
 from rich.progress import Progress, SpinnerColumn, TextColumn
+import requests
 import warnings
 import box
 import yaml
@@ -29,8 +35,91 @@ class VProcessorPipeline(Pipeline):
 
         start = timeit.default_timer()
 
+        data = {
+            'file': '',
+            'image_url': 'https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-ml/llm/data/inout-20211211_001.jpg'
+        }
+
+        response = self.invoke_pipeline_step(lambda: requests.post('http://127.0.0.1:8001/api/v1/sparrow-ocr/inference', data=data, timeout=180),
+                                             "Running OCR...",
+                                             local)
+
+        if response.status_code != 200:
+            print('Request failed with status code:', response.status_code)
+            print('Response:', response.text)
+
+            return "Error, contact support"
+
+        data = response.json()
+
+        class Receipt(BaseModel):
+            guest_no: int
+            cashier_name: str
+            transaction_number: str
+            receipt_items: List[str]
+            total_amount_due: str
+            receipt_date: str
+
+        prompt_template_str = """\
+        retrieve guest_no, cashier_name, transaction_number, names_of_receipt_items, total_amount_due, receipt_date. \
+        using this structured data, coming from OCR {receipt_data}.\
+        """
+
+        llm_ollama = self.invoke_pipeline_step(lambda: Ollama(model=cfg.LLM,
+                                                              base_url=cfg.OLLAMA_BASE_URL,
+                                                              temperature=0,
+                                                              request_timeout=900),
+                                               "Loading Ollama...",
+                                               local)
+
+        program = LLMTextCompletionProgram.from_defaults(
+            output_cls=Receipt,
+            prompt_template_str=prompt_template_str,
+            llm=llm_ollama,
+            verbose=True,
+        )
+
+        output = self.invoke_pipeline_step(lambda: program(receipt_data=data),
+                                           "Running inference...",
+                                           local)
+
+        answer = self.beautify_json(output.model_dump_json())
+
         end = timeit.default_timer()
 
+        print(f"\nJSON response:\n")
+        print(answer + '\n')
         print('=' * 50)
 
         print(f"Time to retrieve answer: {end - start}")
+
+        return answer
+
+
+    def invoke_pipeline_step(self, task_call, task_description, local):
+        if local:
+            with Progress(
+                    SpinnerColumn(),
+                    TextColumn("[progress.description]{task.description}"),
+                    transient=False,
+            ) as progress:
+                progress.add_task(description=task_description, total=None)
+                ret = task_call()
+        else:
+            print(task_description)
+            ret = task_call()
+
+        return ret
+
+
+    def beautify_json(self, result):
+        try:
+            # Convert and pretty print
+            data = json.loads(str(result))
+            data = json.dumps(data, indent=4)
+            return data
+        except (json.decoder.JSONDecodeError, TypeError):
+            print("The response is not in JSON format:\n")
+            print(result)
+
+        return {}
