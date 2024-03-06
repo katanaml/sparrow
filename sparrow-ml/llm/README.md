@@ -113,12 +113,11 @@ Example of API call through CURL:
 curl -X 'POST' \
   'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
   -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "fields": "invoice_number",
-  "types": "int",
-  "agent": "LlamaIndex"
-}'
+  -H 'Content-Type: multipart/form-data' \
+  -F 'fields=invoice_number' \
+  -F 'types=int' \
+  -F 'agent=llamaindex' \
+  -F 'file='
 ```
 
 Example of API call for multimodal request:
@@ -127,12 +126,11 @@ Example of API call for multimodal request:
 curl -X 'POST' \
   'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
   -H 'accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "fields": "guest_no, cashier_name",
-  "types": "int, str",
-  "agent": "vllamaindex"
-}'
+  -H 'Content-Type: multipart/form-data' \
+  -F 'fields=guest_no, cashier_name' \
+  -F 'types=int, str' \
+  -F 'agent=vllamaindex' \
+  -F 'file='
 ```
 
 ## Author
