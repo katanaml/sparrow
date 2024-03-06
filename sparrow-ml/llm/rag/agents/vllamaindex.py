@@ -3,6 +3,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 from typing import Any
 from pydantic import create_model
 from typing import List
+from fastapi import UploadFile
 import warnings
 import box
 import yaml
@@ -30,6 +31,7 @@ class VLlamaIndexPipeline(Pipeline):
                      query_types: [str],
                      query: str,
                      file_path: str = None,
+                     file: UploadFile = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
