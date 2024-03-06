@@ -1,6 +1,5 @@
-from fastapi import FastAPI, Body
+from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 from engine import run_from_api
 import uvicorn
 import warnings
@@ -24,39 +23,37 @@ app.add_middleware(
 )
 
 
-class Query(BaseModel):
-    fields: str
-    types: str
-    agent: str = "llamaindex"
-
-
 @app.get("/")
 def root():
     return {"message": "Sparrow LLM API"}
 
 
 @app.post("/api/v1/sparrow-llm/inference", tags=["LLM Inference"])
-def inference(
-        q: Annotated[
-            Query,
-            Body(
-                examples=[
-                    {
-                        "fields": "invoice_number",
-                        "types": "int",
-                        "agent": "llamaindex"
-                    }
-                ]
-            )
-        ]):
-    query = 'retrieve ' + q.fields
-    query_types = q.types
+async def inference(
+        fields: Annotated[str, Form()] = 'invoice_number',
+        types: Annotated[str, Form()] = 'int',
+        agent: Annotated[str, Form()] = 'llamaindex',
+        file: UploadFile = File(None)
+        ):
+    # doc = None
+    # if file:
+    #     if file.content_type in ["image/jpeg", "image/jpg", "image/png"]:
+    #         doc = Image.open(BytesIO(await file.read()))
+    #     elif file.content_type == "application/pdf":
+    #         pdf_bytes = await file.read()
+    #         pages = convert_from_bytes(pdf_bytes, 300)
+    #         doc = pages[0]
+    #     else:
+    #         return {"error": "Invalid file type. Only JPG/PNG images and PDF are allowed."}
 
-    query_inputs_arr = [param.strip() for param in q.fields.split(',')]
+    query = 'retrieve ' + fields
+    query_types = types
+
+    query_inputs_arr = [param.strip() for param in fields.split(',')]
     query_types_arr = [param.strip() for param in query_types.split(',')]
 
     try:
-        answer = run_from_api(q.agent, query_inputs_arr, query_types_arr, query, False)
+        answer = run_from_api(agent, query_inputs_arr, query_types_arr, query, file, False)
     except ValueError as e:
         answer = '{"answer": "Invalid agent name"}'
 
