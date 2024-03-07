@@ -21,14 +21,22 @@ def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch"
     query_types_arr = [param.strip() for param in query_types.split(',')]
 
     user_selected_agent = agent  # Modify this as needed
-    rag = get_pipeline(user_selected_agent)
-    rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query, file_path, None, debug)
+
+    try:
+        rag = get_pipeline(user_selected_agent)
+        rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query, file_path, None, debug)
+    except ValueError as e:
+        print(f"Caught an exception: {e}")
 
 
 def run_from_api(user_selected_agent, query_inputs_arr, query_types_arr, query, file, debug):
-    rag = get_pipeline(user_selected_agent)
-    answer = rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query, None, file,
-                              debug, False)
+    try:
+        rag = get_pipeline(user_selected_agent)
+        answer = rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query, None, file,
+                                  debug, False)
+    except ValueError as e:
+        raise e
+
     return answer
 
 

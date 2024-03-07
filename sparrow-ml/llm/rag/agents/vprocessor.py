@@ -40,17 +40,35 @@ class VProcessorPipeline(Pipeline):
 
         if file_path is None and file is None:
             msg = "Please provide a file to process."
-            print(msg)
-            return msg
+            raise ValueError(msg)
 
-        data, files = self.prepare_files(file_path, file)
+        if file_path is not None:
+            with open(file_path, "rb") as file:
+                files = {'file': (file_path, file, 'image/jpeg')}
 
-        response = self.invoke_pipeline_step(lambda: requests.post(cfg.VPROCESSOR_OCR_ENDPOINT,
-                                                                   data=data,
-                                                                   files=files,
-                                                                   timeout=180),
-                                             "Running OCR...",
-                                             local)
+                data = {
+                    'image_url': ''
+                }
+
+                response = self.invoke_pipeline_step(lambda: requests.post(cfg.VPROCESSOR_OCR_ENDPOINT,
+                                                                           data=data,
+                                                                           files=files,
+                                                                           timeout=180),
+                                                     "Running OCR...",
+                                                     local)
+        else:
+            files = {'file': (file.filename, file.file, file.content_type)}
+
+            data = {
+                'image_url': ''
+            }
+
+            response = self.invoke_pipeline_step(lambda: requests.post(cfg.VPROCESSOR_OCR_ENDPOINT,
+                                                                       data=data,
+                                                                       files=files,
+                                                                       timeout=180),
+                                                 "Running OCR...",
+                                                 local)
 
         if response.status_code != 200:
             print('Request failed with status code:', response.status_code)
