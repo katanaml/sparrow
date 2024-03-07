@@ -81,6 +81,12 @@ Answer:
 ./sparrow.sh "guest_no, cashier_name" "int, str" --agent vllamaindex
 ```
 
+8. Use `vprocessor` agent to run OCR + LLM, this works best to process scanned docs
+
+```
+./sparrow.sh "guest_no, cashier_name, transaction_number, names_of_receipt_items, authorized_amount, receipt_date" "int, str, int, List[str], str, str" --agent vprocessor --file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/inout-20211211_001.jpg
+```
+
 ### FastAPI Endpoint for Local LLM RAG
 
 Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the agent to be used for the inference. By default, `llamaindex` agent is used.
@@ -131,6 +137,19 @@ curl -X 'POST' \
   -F 'types=int, str' \
   -F 'agent=vllamaindex' \
   -F 'file='
+```
+
+Example of API call for OCR + LLM request:
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'fields=guest_no, cashier_name, transaction_number, names_of_receipt_items, authorized_amount, receipt_date' \
+  -F 'types=int, str, int, List[str], str, str' \
+  -F 'agent=vprocessor' \
+  -F 'file=@inout-20211211_001.jpg;type=image/jpeg'
 ```
 
 ## Author
