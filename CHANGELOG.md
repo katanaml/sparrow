@@ -1,5 +1,18 @@
 # ChangeLog
 
+## [v0.1.4] - 2024-03-07
+
+### New Features
+
+- OCR + LLM support, new vprocessor agent
+
+### What's Changed
+
+- Improved FastAPI endpoints
+
+
+
+
 ## [v0.1.3] - 2024-02-11
 
 ### New Features
