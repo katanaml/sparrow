@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile, Form
+from fastapi import FastAPI, File, UploadFile, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from engine import run_from_api
 import uvicorn
@@ -35,17 +35,6 @@ async def inference(
         agent: Annotated[str, Form()] = 'llamaindex',
         file: UploadFile = File(None)
         ):
-    # doc = None
-    # if file:
-    #     if file.content_type in ["image/jpeg", "image/jpg", "image/png"]:
-    #         doc = Image.open(BytesIO(await file.read()))
-    #     elif file.content_type == "application/pdf":
-    #         pdf_bytes = await file.read()
-    #         pages = convert_from_bytes(pdf_bytes, 300)
-    #         doc = pages[0]
-    #     else:
-    #         return {"error": "Invalid file type. Only JPG/PNG images and PDF are allowed."}
-
     query = 'retrieve ' + fields
     query_types = types
 
@@ -55,7 +44,7 @@ async def inference(
     try:
         answer = run_from_api(agent, query_inputs_arr, query_types_arr, query, file, False)
     except ValueError as e:
-        answer = '{"answer": "Invalid agent name"}'
+        raise HTTPException(status_code=418, detail=str(e))
 
     if isinstance(answer, (str, bytes, bytearray)):
         answer = json.loads(answer)
