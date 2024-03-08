@@ -1,4 +1,4 @@
-from ingest.agents.interface import Ingest
+from vectors.agents.interface import Ingest
 from haystack.components.converters import PyPDFToDocument
 from haystack.components.routers import FileTypeRouter
 from haystack.components.preprocessors import DocumentSplitter, DocumentCleaner
@@ -20,7 +20,7 @@ with open('config.yml', 'r', encoding='utf8') as ymlfile:
 
 class HaystackIngest(Ingest):
     def run_ingest(self, payload: str) -> None:
-        print(f"\nRunning ingest with {payload}\n")
+        print(f"\nRunning vectors with {payload}\n")
 
         file_list = [os.path.join(cfg.DATA_PATH, f) for f in os.listdir(cfg.DATA_PATH)
                      if os.path.isfile(os.path.join(cfg.DATA_PATH, f)) and not f.startswith('.')
@@ -63,7 +63,7 @@ class HaystackIngest(Ingest):
         })
 
         print(f"Number of documents in document store: {document_store.count_documents()}")
-        print("Haystack ingest is not used, you should run inference directly. Ingest will execute as a part of the inference.")
+        print("Haystack vectors is not used, you should run inference directly. Ingest will execute as a part of the inference.")
 
         end = timeit.default_timer()
-        print(f"Time to ingest data: {end - start}")
+        print(f"Time to vectors data: {end - start}")

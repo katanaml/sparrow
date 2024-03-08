@@ -1,6 +1,7 @@
 from fastapi import FastAPI, File, UploadFile, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from engine import run_from_api
+from engine import run_from_api_engine
+from ingest import run_from_api_ingest
 import uvicorn
 import warnings
 from typing import Annotated
@@ -30,10 +31,10 @@ def root():
 
 @app.post("/api/v1/sparrow-llm/inference", tags=["LLM Inference"])
 async def inference(
-        fields: Annotated[str, Form()] = 'invoice_number',
-        types: Annotated[str, Form()] = 'int',
-        agent: Annotated[str, Form()] = 'llamaindex',
-        file: UploadFile = File(None)
+        fields: Annotated[str, Form()],
+        types: Annotated[str, Form()],
+        agent: Annotated[str, Form()],
+        file: UploadFile = File()
         ):
     query = 'retrieve ' + fields
     query_types = types
@@ -42,7 +43,23 @@ async def inference(
     query_types_arr = [param.strip() for param in query_types.split(',')]
 
     try:
-        answer = await run_from_api(agent, query_inputs_arr, query_types_arr, query, file, False)
+        answer = await run_from_api_engine(agent, query_inputs_arr, query_types_arr, query, file, False)
+    except ValueError as e:
+        raise HTTPException(status_code=418, detail=str(e))
+
+    if isinstance(answer, (str, bytes, bytearray)):
+        answer = json.loads(answer)
+
+    return {"message": answer}
+
+
+@app.post("/api/v1/sparrow-llm/ingest", tags=["LLM Ingest"])
+async def ingest(
+        agent: Annotated[str, Form()],
+        file: UploadFile = File()
+        ):
+    try:
+        answer = await run_from_api_ingest(agent, file, False)
     except ValueError as e:
         raise HTTPException(status_code=418, detail=str(e))
 

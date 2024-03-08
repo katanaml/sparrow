@@ -29,16 +29,12 @@ class VLlamaIndexPipeline(Pipeline):
                      query_inputs: [str],
                      query_types: [str],
                      query: str,
-                     file_path: str = None,
+                     file_path: str,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
 
         start = timeit.default_timer()
-
-        if file_path is None:
-            msg = "Please provide a file to process."
-            raise ValueError(msg)
 
         mm_model = self.invoke_pipeline_step(lambda: OllamaMultiModal(model=cfg.LLM_VLLAMAINDEX),
                                              "Loading Ollama MultiModal...",
