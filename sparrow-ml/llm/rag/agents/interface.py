@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from typing import Any
-from fastapi import UploadFile
 import warnings
 
 
@@ -17,7 +16,6 @@ class Pipeline(ABC):
                      query_types: [str],
                      query: str,
                      file_path: str = None,
-                     file: UploadFile = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
         pass

@@ -42,7 +42,7 @@ async def inference(
     query_types_arr = [param.strip() for param in query_types.split(',')]
 
     try:
-        answer = run_from_api(agent, query_inputs_arr, query_types_arr, query, file, False)
+        answer = await run_from_api(agent, query_inputs_arr, query_types_arr, query, file, False)
     except ValueError as e:
         raise HTTPException(status_code=418, detail=str(e))
 
