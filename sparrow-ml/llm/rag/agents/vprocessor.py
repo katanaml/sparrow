@@ -2,7 +2,6 @@ from rag.agents.interface import Pipeline
 from llama_index.core.program import LLMTextCompletionProgram
 import json
 from llama_index.llms.ollama import Ollama
-from fastapi import UploadFile
 from typing import List
 from pydantic import create_model
 from rich.progress import Progress, SpinnerColumn, TextColumn
@@ -31,33 +30,18 @@ class VProcessorPipeline(Pipeline):
                      query_types: [str],
                      query: str,
                      file_path: str = None,
-                     file: UploadFile = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
 
         start = timeit.default_timer()
 
-        if file_path is None and file is None:
+        if file_path is None:
             msg = "Please provide a file to process."
             raise ValueError(msg)
 
-        if file_path is not None:
-            with open(file_path, "rb") as file:
-                files = {'file': (file_path, file, 'image/jpeg')}
-
-                data = {
-                    'image_url': ''
-                }
-
-                response = self.invoke_pipeline_step(lambda: requests.post(cfg.VPROCESSOR_OCR_ENDPOINT,
-                                                                           data=data,
-                                                                           files=files,
-                                                                           timeout=180),
-                                                     "Running OCR...",
-                                                     local)
-        else:
-            files = {'file': (file.filename, file.file, file.content_type)}
+        with open(file_path, "rb") as file:
+            files = {'file': (file_path, file, 'image/jpeg')}
 
             data = {
                 'image_url': ''

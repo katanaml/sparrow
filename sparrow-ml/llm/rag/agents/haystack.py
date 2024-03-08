@@ -1,6 +1,5 @@
 from rag.agents.interface import Pipeline as PipelineInterface
 from typing import Any
-from fastapi import UploadFile
 from haystack.components.converters import PyPDFToDocument
 from haystack.components.preprocessors import DocumentSplitter, DocumentCleaner
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder
@@ -37,7 +36,6 @@ class HaystackPipeline(PipelineInterface):
                      query_types: [str],
                      query: str,
                      file_path: str = None,
-                     file: UploadFile = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")

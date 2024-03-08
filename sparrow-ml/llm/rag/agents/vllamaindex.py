@@ -3,7 +3,6 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 from typing import Any
 from pydantic import create_model
 from typing import List
-from fastapi import UploadFile
 import warnings
 import box
 import yaml
@@ -31,20 +30,24 @@ class VLlamaIndexPipeline(Pipeline):
                      query_types: [str],
                      query: str,
                      file_path: str = None,
-                     file: UploadFile = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
 
         start = timeit.default_timer()
 
+        if file_path is None:
+            msg = "Please provide a file to process."
+            raise ValueError(msg)
+
         mm_model = self.invoke_pipeline_step(lambda: OllamaMultiModal(model=cfg.LLM_VLLAMAINDEX),
                                              "Loading Ollama MultiModal...",
                                              local)
 
         # load as image documents
-        image_documents = self.invoke_pipeline_step(lambda: SimpleDirectoryReader(cfg.DATA_PATH,
-                                                                                  required_exts=[".jpg", ".JPG", ".JPEG"]).load_data(),
+        image_documents = self.invoke_pipeline_step(lambda: SimpleDirectoryReader(input_files=[file_path],
+                                                                                  required_exts=[".jpg", ".JPG",
+                                                                                                 ".JPEG"]).load_data(),
                                                     "Loading image documents...",
                                                     local)
 

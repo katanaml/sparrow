@@ -7,7 +7,6 @@ from llama_index.vector_stores.weaviate import WeaviateVectorStore
 import weaviate
 from pydantic import create_model
 from typing import List
-from fastapi import UploadFile
 import box
 import yaml
 from rich.progress import Progress, SpinnerColumn, TextColumn
@@ -30,7 +29,6 @@ class LlamaIndexPipeline(Pipeline):
                      query_types: [str],
                      query: str,
                      file_path: str = None,
-                     file: UploadFile = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
