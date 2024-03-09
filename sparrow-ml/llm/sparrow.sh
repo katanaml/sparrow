@@ -4,7 +4,7 @@ command -v python3 >/dev/null 2>&1 || { echo >&2 "Python 3 is required but it's 
 
 PYTHON_SCRIPT_PATH="engine.py"
 
-# Check if the "vectors" flag is passed
+# Check if the "ingest" flag is passed
 if [ "$1" == "ingest" ]; then
     PYTHON_SCRIPT_PATH="ingest.py"
     shift # Shift the arguments to exclude the first one

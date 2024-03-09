@@ -1,5 +1,5 @@
 import warnings
-from vectors.agents.interface import get_ingest
+from embeddings.agents.interface import get_ingest
 import typer
 from typing_extensions import Annotated
 
