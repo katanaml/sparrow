@@ -45,11 +45,9 @@ Follow the install steps outlined here:
 
 ## Usage
 
-### LLM
-
 1. Copy text PDF files to the `data` folder or use sample data provided in the `data` folder.
 
-#### Ingest
+### Ingest
 
 This step is required for `llamaindex` or `haystack` agents only.
 
@@ -65,7 +63,7 @@ Example with `haystack` agent:
 ./sparrow.sh ingest --file-path /data/invoice_1.pdf --agent haystack --index-name Sparrow_haystack_doc1
 ```
 
-#### Inference
+### Inference
 
 3. Run the script, to process data with LLM RAG and return the answer. By default, it will use `llamaindex` agent. You can specify other agents (see ingest example), such as `haystack`: 
 
@@ -180,12 +178,6 @@ curl -X 'POST' \
   -F 'agent=vprocessor' \
   -F 'file=@inout-20211211_001.jpg;type=image/jpeg'
 ```
-
-### OCR
-
-Follow the steps outlined here:
-
-1. Sparrow OCR services <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr">usage steps</a>
 
 ## Examples
 
