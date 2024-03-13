@@ -45,7 +45,7 @@ Follow the install steps outlined here:
 
 ## Usage
 
-1. Copy text PDF files to the `data` folder or use sample data provided in the `data` folder.
+Copy text PDF files to the `data` folder or use sample data provided in the `data` folder.
 
 ### Ingest
 
@@ -65,12 +65,12 @@ Example with `haystack` agent:
 
 ### Inference
 
-3. Run the script, to process data with LLM RAG and return the answer. By default, it will use `llamaindex` agent. You can specify other agents (see ingest example), such as `haystack`: 
+Run the script, to process data with LLM RAG and return the answer. By default, it will use `llamaindex` agent. You can specify other agents (see ingest example), such as `haystack`: 
 
 ```
 ./sparrow.sh "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
 seller_tax_id, iban, names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "int, str, str, str, str,
-str, str, str, str, List[str], List[float], str"
+str, str, str, str, List[str], List[float], str" --agent llamaindex --index-name Sparrow_llamaindex_doc1
 ```
 
 Answer:
@@ -102,16 +102,24 @@ Answer:
 }
 ```
 
-4. To run multimodal agent, use `vllamaindex` flag:
+Example with `haystack` agent:
 
 ```
-./sparrow.sh "guest_no, cashier_name" "int, str" --agent vllamaindex
+./sparrow.sh "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
+seller_tax_id, iban, names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "int, str, str, str, str,
+str, str, str, str, List[str], List[float], str" --agent haystack --index-name Sparrow_haystack_doc1
 ```
 
-5. Use `vprocessor` agent to run OCR + LLM, this works best to process scanned docs
+To run multimodal agent, use `vllamaindex` flag:
 
 ```
-./sparrow.sh "guest_no, cashier_name, transaction_number, names_of_receipt_items, authorized_amount, receipt_date" "int, str, int, List[str], str, str" --agent vprocessor --file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/inout-20211211_001.jpg
+./sparrow.sh "guest_no, cashier_name" "int, str" --agent vllamaindex --file-path /data/inout-20211211_001.jpg
+```
+
+Use `vprocessor` agent to run OCR + LLM, this works best to process scanned docs
+
+```
+./sparrow.sh "guest_no, cashier_name, transaction_number, names_of_receipt_items, authorized_amount, receipt_date" "int, str, int, List[str], str, str" --agent vprocessor --file-path /data/inout-20211211_001.jpg
 ```
 
 **FastAPI Endpoint for Local LLM RAG**
