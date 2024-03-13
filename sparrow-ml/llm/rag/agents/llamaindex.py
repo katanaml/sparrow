@@ -29,13 +29,14 @@ class LlamaIndexPipeline(Pipeline):
                      query_types: [str],
                      query: str,
                      file_path: str,
+                     index_name: str,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
 
         start = timeit.default_timer()
 
-        rag_chain = self.build_rag_pipeline(query_inputs, query_types, debug, local)
+        rag_chain = self.build_rag_pipeline(query_inputs, query_types, index_name, debug, local)
 
         end = timeit.default_timer()
         print(f"Time to prepare RAG pipeline: {end - start}")
@@ -43,7 +44,7 @@ class LlamaIndexPipeline(Pipeline):
         answer = self.process_query(query, rag_chain, debug, local)
         return answer
 
-    def build_rag_pipeline(self, query_inputs, query_types, debug, local):
+    def build_rag_pipeline(self, query_inputs, query_types, index_name, debug, local):
         # Import config vars
         with open('config.yml', 'r', encoding='utf8') as ymlfile:
             cfg = box.Box(yaml.safe_load(ymlfile))
@@ -62,7 +63,7 @@ class LlamaIndexPipeline(Pipeline):
                                                local)
 
         index = self.invoke_pipeline_step(
-            lambda: self.build_index(cfg.CHUNK_SIZE, llm, embeddings, client, cfg.INDEX_NAME),
+            lambda: self.build_index(cfg.CHUNK_SIZE, llm, embeddings, client, index_name),
             "Building index...",
             local)
 

@@ -1,11 +1,9 @@
 # AGENT FOR LLAMAINDEX
-DATA_PATH: 'data/'
 #LLM: 'starling-lm:7b-alpha-q4_K_M'
 LLM: 'starling-lm:7b-alpha-q5_K_M'
 #LLM: 'gemma:7b'
 EMBEDDINGS: 'sentence-transformers/all-mpnet-base-v2'
 WEAVIATE_URL: 'http://localhost:8080'
-INDEX_NAME: 'Sparrow'
 CHUNK_SIZE: 3000
 OLLAMA_BASE_URL: 'http://127.0.0.1:11434'
 #OLLAMA_BASE_URL: 'http://192.168.68.107:11434'

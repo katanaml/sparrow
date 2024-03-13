@@ -1,13 +1,9 @@
 from rag.agents.interface import Pipeline as PipelineInterface
 from typing import Any
-from haystack.components.converters import PyPDFToDocument
-from haystack.components.preprocessors import DocumentSplitter, DocumentCleaner
-from haystack.components.embedders import SentenceTransformersDocumentEmbedder
 from haystack import Pipeline
-from haystack.document_stores.in_memory import InMemoryDocumentStore
-from haystack.components.writers import DocumentWriter
+from haystack_integrations.document_stores.weaviate.document_store import WeaviateDocumentStore
 from haystack.components.embedders import SentenceTransformersTextEmbedder
-from haystack.components.retrievers.in_memory import InMemoryEmbeddingRetriever
+from haystack_integrations.components.retrievers.weaviate.embedding_retriever import WeaviateEmbeddingRetriever
 from haystack.components.builders import PromptBuilder
 from haystack_integrations.components.generators.ollama import OllamaGenerator
 from pydantic import create_model
@@ -17,11 +13,15 @@ import pydantic
 from typing import Optional, List
 from pydantic import ValidationError
 import timeit
-import os
 import box
 import yaml
 from rich import print
 from rich.progress import Progress, SpinnerColumn, TextColumn
+import warnings
+
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", category=UserWarning)
 
 
 # Import config vars
@@ -36,6 +36,7 @@ class HaystackPipeline(PipelineInterface):
                      query_types: [str],
                      query: str,
                      file_path: str,
+                     index_name: str,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
@@ -48,7 +49,7 @@ class HaystackPipeline(PipelineInterface):
                                                      "Building output validator...",
                                                      local)
 
-        document_store = self.run_preprocessing_pipeline(local)
+        document_store = self.run_preprocessing_pipeline(index_name, local)
 
         answer = self.run_inference_pipeline(document_store, json_schema, output_validator, query, local)
 
@@ -121,51 +122,13 @@ class HaystackPipeline(PipelineInterface):
 
         return output_validator
 
-    def run_preprocessing_pipeline(self, local):
-        start = timeit.default_timer()
+    def run_preprocessing_pipeline(self, index_name, local):
+        document_store = WeaviateDocumentStore(url=cfg.WEAVIATE_URL, collection_settings={"class": index_name})
 
-        file_list = [os.path.join(cfg.DATA_PATH, f) for f in os.listdir(cfg.DATA_PATH)
-                     if os.path.isfile(os.path.join(cfg.DATA_PATH, f)) and not f.startswith('.')
-                     and not f.lower().endswith('.jpg')]
+        print(f"\nNumber of documents in document store: {document_store.count_documents()}\n")
 
-        document_store = InMemoryDocumentStore()
-        pdf_converter = PyPDFToDocument()
-
-        document_cleaner = DocumentCleaner()
-        document_splitter = DocumentSplitter(
-            split_by=cfg.SPLIT_BY_HAYSTACK,
-            split_length=cfg.SPLIT_LENGTH_HAYSTACK,
-            split_overlap=cfg.SPLIT_OVERLAP_HAYSTACK
-        )
-
-        document_embedder = SentenceTransformersDocumentEmbedder(model=cfg.EMBEDDINGS_HAYSTACK,
-                                                                 progress_bar=False)
-        document_writer = DocumentWriter(document_store)
-
-        preprocessing_pipe = Pipeline()
-        preprocessing_pipe.add_component(instance=pdf_converter, name="pypdf_converter")
-        preprocessing_pipe.add_component(instance=document_cleaner, name="document_cleaner")
-        preprocessing_pipe.add_component(instance=document_splitter, name="document_splitter")
-        preprocessing_pipe.add_component(instance=document_embedder, name="document_embedder")
-        preprocessing_pipe.add_component(instance=document_writer, name="document_writer")
-
-        preprocessing_pipe.connect("pypdf_converter", "document_cleaner")
-        preprocessing_pipe.connect("document_cleaner", "document_splitter")
-        preprocessing_pipe.connect("document_splitter", "document_embedder")
-        preprocessing_pipe.connect("document_embedder", "document_writer")
-
-        # preprocessing_pipeline.draw("pipeline.png")
-
-        self.invoke_pipeline_step(lambda: preprocessing_pipe.run({
-                                            "pypdf_converter": {"sources": file_list}
-                                          }),
-                                  "Running data ingestion pipeline...",
-                                  local)
-
-        print(f"\nNumber of documents in document store: {document_store.count_documents()}")
-
-        end = timeit.default_timer()
-        print(f"\nTime to ingest data: {end - start}\n")
+        if document_store.count_documents() == 0:
+            raise ValueError("Document store is empty. Please check your data source.")
 
         return document_store
 
@@ -198,7 +161,7 @@ class HaystackPipeline(PipelineInterface):
         text_embedder = SentenceTransformersTextEmbedder(model=cfg.EMBEDDINGS_HAYSTACK,
                                                          progress_bar=False)
 
-        retriever = InMemoryEmbeddingRetriever(document_store=document_store, top_k=3)
+        retriever = WeaviateEmbeddingRetriever(document_store=document_store, top_k=3)
 
         prompt_builder = PromptBuilder(template=template)
 

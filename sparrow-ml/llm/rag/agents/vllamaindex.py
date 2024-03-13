@@ -30,11 +30,15 @@ class VLlamaIndexPipeline(Pipeline):
                      query_types: [str],
                      query: str,
                      file_path: str,
+                     index_name: str,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
 
         start = timeit.default_timer()
+
+        if file_path is None:
+            raise ValueError("File path is required for vllamaindex pipeline")
 
         mm_model = self.invoke_pipeline_step(lambda: OllamaMultiModal(model=cfg.LLM_VLLAMAINDEX),
                                              "Loading Ollama MultiModal...",

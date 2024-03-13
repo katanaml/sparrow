@@ -3,11 +3,10 @@ from haystack.components.converters import PyPDFToDocument
 from haystack.components.routers import FileTypeRouter
 from haystack.components.preprocessors import DocumentSplitter, DocumentCleaner
 from haystack.components.embedders import SentenceTransformersDocumentEmbedder
-from haystack.pipeline import Pipeline
-from haystack.document_stores.in_memory import InMemoryDocumentStore
+from haystack import Pipeline
+from haystack_integrations.document_stores.weaviate.document_store import WeaviateDocumentStore
 from haystack.components.writers import DocumentWriter
 import timeit
-import os
 import box
 import yaml
 from rich import print
@@ -19,16 +18,17 @@ with open('config.yml', 'r', encoding='utf8') as ymlfile:
 
 
 class HaystackIngest(Ingest):
-    def run_ingest(self, payload: str) -> None:
+    def run_ingest(self,
+                   payload: str,
+                   file_path: str,
+                   index_name: str) -> None:
         print(f"\nRunning embeddings with {payload}\n")
 
-        file_list = [os.path.join(cfg.DATA_PATH, f) for f in os.listdir(cfg.DATA_PATH)
-                     if os.path.isfile(os.path.join(cfg.DATA_PATH, f)) and not f.startswith('.')
-                     and not f.lower().endswith('.jpg')]
+        file_list = [file_path]
 
         start = timeit.default_timer()
 
-        document_store = InMemoryDocumentStore()
+        document_store = WeaviateDocumentStore(url=cfg.WEAVIATE_URL, collection_settings={"class": index_name})
         file_type_router = FileTypeRouter(mime_types=["application/pdf"])
         pdf_converter = PyPDFToDocument()
 
@@ -63,7 +63,6 @@ class HaystackIngest(Ingest):
         })
 
         print(f"Number of documents in document store: {document_store.count_documents()}")
-        print("Haystack embeddings is not used, you should run inference directly. Ingest will execute as a part of the inference.")
 
         end = timeit.default_timer()
         print(f"Time to embeddings data: {end - start}")

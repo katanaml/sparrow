@@ -30,11 +30,15 @@ class VProcessorPipeline(Pipeline):
                      query_types: [str],
                      query: str,
                      file_path: str,
+                     index_name: str,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
 
         start = timeit.default_timer()
+
+        if file_path is None:
+            raise ValueError("File path is required for vprocessor pipeline")
 
         with open(file_path, "rb") as file:
             files = {'file': (file_path, file, 'image/jpeg')}
