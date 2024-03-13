@@ -12,8 +12,9 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch")],
         types: Annotated[str, typer.Argument(help="The list of types of the fields")],
-        file_path: Annotated[str, typer.Option(help="The file to process")],
+        file_path: Annotated[str, typer.Option(help="The file to process")] = None,
         agent: Annotated[str, typer.Option(help="Ingest agent")] = "llamaindex",
+        index_name: Annotated[str, typer.Option(help="Index to identify embeddings")] = None,
         debug: Annotated[bool, typer.Option(help="Enable debug mode")] = False):
 
     query = 'retrieve ' + inputs
@@ -26,7 +27,7 @@ def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch"
 
     try:
         rag = get_pipeline(user_selected_agent)
-        rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query, file_path, debug)
+        rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query, file_path, index_name, debug)
     except ValueError as e:
         print(f"Caught an exception: {e}")
 
@@ -35,16 +36,20 @@ async def run_from_api_engine(user_selected_agent, query_inputs_arr, query_types
     try:
         rag = get_pipeline(user_selected_agent)
 
-        with tempfile.TemporaryDirectory() as temp_dir:
-            temp_file_path = os.path.join(temp_dir, file.filename)
+        if file is not None:
+            with tempfile.TemporaryDirectory() as temp_dir:
+                temp_file_path = os.path.join(temp_dir, file.filename)
 
-            # Save the uploaded file to the temporary directory
-            with open(temp_file_path, 'wb') as temp_file:
-                content = await file.read()
-                temp_file.write(content)
+                # Save the uploaded file to the temporary directory
+                with open(temp_file_path, 'wb') as temp_file:
+                    content = await file.read()
+                    temp_file.write(content)
 
-            answer = rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query,
-                                      temp_file_path, debug, False)
+                answer = rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query,
+                                          temp_file_path, debug, False)
+        else:
+            answer = rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query, None,
+                                      debug, False)
     except ValueError as e:
         raise e
 

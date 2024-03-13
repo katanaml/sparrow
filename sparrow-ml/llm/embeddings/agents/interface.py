@@ -9,7 +9,10 @@ warnings.filterwarnings("ignore", category=UserWarning)
 # Abstract Interface
 class Ingest(ABC):
     @abstractmethod
-    def run_ingest(self, payload: str) -> None:
+    def run_ingest(self,
+                   payload: str,
+                   file_path: str,
+                   index_name: str) -> None:
         pass
 
 

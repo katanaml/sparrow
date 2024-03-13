@@ -34,7 +34,7 @@ async def inference(
         fields: Annotated[str, Form()],
         types: Annotated[str, Form()],
         agent: Annotated[str, Form()],
-        file: UploadFile = File()
+        file: UploadFile = File(None)
         ):
     query = 'retrieve ' + fields
     query_types = types

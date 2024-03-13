@@ -17,7 +17,10 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 
 class LlamaIndexIngest(Ingest):
-    def run_ingest(self, payload: str) -> None:
+    def run_ingest(self,
+                   payload: str,
+                   file_path: str,
+                   index_name: str) -> None:
         print(f"\nRunning ingest with {payload}\n")
 
         # Import config vars
@@ -26,23 +29,24 @@ class LlamaIndexIngest(Ingest):
 
         start = timeit.default_timer()
 
-        client = self.invoke_pipeline_step(lambda: weaviate.Client(cfg.WEAVIATE_URL), "Connecting to Weaviate...")
+        client = self.invoke_pipeline_step(lambda: weaviate.Client(cfg.WEAVIATE_URL),
+                                           "Connecting to Weaviate...")
 
-        documents = self.invoke_pipeline_step(lambda: self.load_documents(cfg.DATA_PATH),
+        documents = self.invoke_pipeline_step(lambda: self.load_documents(file_path),
                                          "Loading documents...")
 
         embeddings = self.invoke_pipeline_step(lambda: self.load_embedding_model(cfg.EMBEDDINGS),
                                           "Loading embedding model...")
 
-        index = self.invoke_pipeline_step(lambda: self.build_index(client, embeddings, documents, cfg.INDEX_NAME, cfg.CHUNK_SIZE),
-                                     "Building index...")
+        index = self.invoke_pipeline_step(lambda: self.build_index(client, embeddings, documents, index_name,
+                                                                   cfg.CHUNK_SIZE),
+                                          "Building index...")
 
         end = timeit.default_timer()
         print(f"\nTime to ingest data: {end - start}\n")
 
-    def load_documents(self, docs_path):
-        # Add support to process multiple documents
-        documents = SimpleDirectoryReader(docs_path, required_exts=[".pdf", ".PDF"]).load_data()
+    def load_documents(self, file_path):
+        documents = SimpleDirectoryReader(input_files=[file_path], required_exts=[".pdf", ".PDF"]).load_data()
         print(f"\nLoaded {len(documents)} documents")
         print(f"\nFirst document: {documents[0]}")
         print("\nFirst document content:\n")
