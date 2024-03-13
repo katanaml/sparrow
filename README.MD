@@ -47,22 +47,18 @@ Follow the install steps outlined here:
 
 ### LLM
 
-1. Copy text PDF files to the `data` folder or use the sample data provided in the `data` folder.
+1. Copy text PDF files to the `data` folder or use sample data provided in the `data` folder.
 
-2. Run the script, to convert text to vector embeddings and save in Weaviate. By default it will use LlamaIndex agent: 
-
-```
-./sparrow.sh ingest
-```
-
-You can specify agent name explicitly, for example:
+2. Run the script, to convert text to vector embeddings and save in Weaviate. By default it will use `llamaindex` agent. Example with `llamaindex`:  
 
 ```
-./sparrow.sh ingest --agent haystack
+./sparrow.sh ingest --file-path /data/invoice_1.pdf --agent llamaindex --index-name Sparrow_llamaindex_doc1
 ```
 
+Example with `haystack` agent:
+
 ```
-./sparrow.sh ingest --agent llamaindex
+./sparrow.sh ingest --file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf --agent haystack --index-name Sparrow_haystack_doc1
 ```
 
 3. Run the script, to process data with LLM RAG and return the answer. By default, it will use `llamaindex` agent. You can specify other agents (see ingest example), such as `haystack`: 
