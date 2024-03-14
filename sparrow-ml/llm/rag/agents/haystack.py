@@ -101,7 +101,7 @@ class HaystackPipeline(PipelineInterface):
                 ## Try to parse the LLM's reply ##
                 # If the LLM's reply is a valid object, return `"valid_replies"`
                 try:
-                    output_dict = json.loads(replies[0])
+                    output_dict = json.loads(replies[0].strip())
                     # Disable data validation for now
                     # self.pydantic_model.model_validate(output_dict)
                     print(

@@ -32,7 +32,7 @@ def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch"
         print(f"Caught an exception: {e}")
 
 
-async def run_from_api_engine(user_selected_agent, query_inputs_arr, query_types_arr, query, file, debug):
+async def run_from_api_engine(user_selected_agent, query_inputs_arr, query_types_arr, query, index_name, file, debug):
     try:
         rag = get_pipeline(user_selected_agent)
 
@@ -46,10 +46,10 @@ async def run_from_api_engine(user_selected_agent, query_inputs_arr, query_types
                     temp_file.write(content)
 
                 answer = rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query,
-                                          temp_file_path, debug, False)
+                                          temp_file_path, index_name, debug, False)
         else:
             answer = rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query, None,
-                                      debug, False)
+                                      index_name, debug, False)
     except ValueError as e:
         raise e
 
