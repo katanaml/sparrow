@@ -279,6 +279,42 @@ Response:
 }
 ```
 
+### Inference with OCR + local LLM RAG
+
+Document:
+
+![document OCR RAG](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/ross-20211211_010.jpg)
+
+Request:
+
+```
+./sparrow.sh "store_name, receipt_id, receipt_item_names, receipt_item_prices, receipt_date, receipt_store_id,
+receipt_sold, receipt_returned, receipt_total" "str, str, List[str], List[str], str, int, int,
+int, str" --agent vprocessor --file-path /data/ross-20211211_010.jpg
+```
+
+Response:
+
+```json
+{
+    "store_name": "Ross",
+    "receipt_id": "Receipt # 0421-01-1602-1330-0",
+    "receipt_item_names": [
+        "400226513665 x hanes b1ue 4pk",
+        "400239602790 fruit premium 4pk"
+    ],
+    "receipt_item_prices": [
+        "$9.99R",
+        "$12.99R"
+    ],
+    "receipt_date": "11/26/21 10:35:05 AM",
+    "receipt_store_id": 421,
+    "receipt_sold": 2,
+    "receipt_returned": 0,
+    "receipt_total": "$25.33"
+}
+```
+
 ## Commercial usage
 
 Sparrow is available for free commercial use. This offer applies to organizations with gross revenue below $5 million USD in the past 12 months.
