@@ -240,7 +240,7 @@ curl -X 'POST' \
 
 Document:
 
-![document RAG](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/invoice_1.png)
+![document RAG](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/invoice_1.jpg)
 
 Request:
 
