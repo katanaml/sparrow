@@ -146,9 +146,39 @@ http://127.0.0.1:8000/api/v1/sparrow-llm/docs
 
 For visual reference, a screenshot of the FastAPI endpoint
 
-![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/lemming_2_.png)
+![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/lemming_2.png)
 
-Example of API call through CURL:
+API calls:
+
+### Ingest
+
+Ingest call with `llamaindex` agent:
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/v1/sparrow-llm/ingest' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'agent=llamaindex' \
+  -F 'index_name=Sparrow_llamaindex_doc2' \
+  -F 'file=@invoice_1.pdf;type=application/pdf'
+```
+
+Ingest call with `haystack` agent:
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/v1/sparrow-llm/ingest' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'agent=haystack' \
+  -F 'index_name=Sparrow_haystack_doc2' \
+  -F 'file=@invoice_1.pdf;type=application/pdf'
+```
+
+### Inference
+
+Inference call with `llamaindex` agent:
 
 ```
 curl -X 'POST' \
@@ -158,10 +188,25 @@ curl -X 'POST' \
   -F 'fields=invoice_number' \
   -F 'types=int' \
   -F 'agent=llamaindex' \
+  -F 'index_name=Sparrow_llamaindex_doc2' \
   -F 'file='
 ```
 
-Example of API call for multimodal request:
+Inference call with `haystack` agent:
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'fields=invoice_number' \
+  -F 'types=int' \
+  -F 'agent=haystack' \
+  -F 'index_name=Sparrow_haystack_doc2' \
+  -F 'file='
+```
+
+Inference call with multimodal agent `vllamaindex`:
 
 ```
 curl -X 'POST' \
@@ -171,10 +216,11 @@ curl -X 'POST' \
   -F 'fields=guest_no, cashier_name' \
   -F 'types=int, str' \
   -F 'agent=vllamaindex' \
-  -F 'file='
+  -F 'index_name=' \
+  -F 'file=@inout-20211211_001.jpg;type=image/jpeg'
 ```
 
-Example of API call for OCR + LLM request:
+Inference call with OCR + LLM agent `vprocessor`:
 
 ```
 curl -X 'POST' \
@@ -184,6 +230,7 @@ curl -X 'POST' \
   -F 'fields=guest_no, cashier_name, transaction_number, names_of_receipt_items, authorized_amount, receipt_date' \
   -F 'types=int, str, int, List[str], str, str' \
   -F 'agent=vprocessor' \
+  -F 'index_name=' \
   -F 'file=@inout-20211211_001.jpg;type=image/jpeg'
 ```
 
@@ -196,7 +243,7 @@ Request:
 ```
 ./sparrow.sh "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
 seller_tax_id, iban, names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "int, str, str, str, str,
-str, str, str, str, List[str], List[float], str"
+str, str, str, str, List[str], List[float], str" --agent llamaindex --index-name Sparrow_llamaindex_doc1
 ```
 
 Response:
