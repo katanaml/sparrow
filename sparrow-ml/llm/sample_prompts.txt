@@ -1,6 +1,6 @@
 ./sparrow.sh "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
 seller_tax_id, iban, names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "int, str, str, str, str,
-str, str, str, str, List[str], List[str], str"
+str, str, str, str, List[str], List[str], str" --agent llamaindex --index-name Sparrow_llamaindex_doc1
 
 
 {
@@ -31,7 +31,7 @@ str, str, str, str, List[str], List[str], str"
 Time to retrieve answer: 63.74948522399791
 
 
-./sparrow.sh "invoice_number" "int"
+./sparrow.sh "invoice_number" "int" --agent llamaindex --index-name Sparrow_llamaindex_doc1
 
 {
     "invoice_number": 61356291
@@ -40,7 +40,7 @@ Time to retrieve answer: 63.74948522399791
 Time to retrieve answer: 15.325319556002796
 
 
-./sparrow.sh "gross_worth_of_invoice_items" "List[float]"
+./sparrow.sh "gross_worth_of_invoice_items" "List[float]" --agent llamaindex --index-name Sparrow_llamaindex_doc1
 
 {
     "gross_worth_of_invoice_items": [
@@ -52,3 +52,28 @@ Time to retrieve answer: 15.325319556002796
 }
 ==================================================
 Time to retrieve answer: 17.55766561099881
+
+
+./sparrow.sh "store_name, receipt_id, receipt_item_names, receipt_item_prices, receipt_date, receipt_store_id,
+receipt_sold, receipt_returned, receipt_total" "str, str, List[str], List[str], str, int, int,
+int, str" --agent vprocessor --file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/ross-20211211_010.jpg
+
+{
+    "store_name": "Ross",
+    "receipt_id": "Receipt # 0421-01-1602-1330-0",
+    "receipt_item_names": [
+        "400226513665 x hanes b1ue 4pk",
+        "400239602790 fruit premium 4pk"
+    ],
+    "receipt_item_prices": [
+        "$9.99R",
+        "$12.99R"
+    ],
+    "receipt_date": "11/26/21 10:35:05 AM",
+    "receipt_store_id": 421,
+    "receipt_sold": 2,
+    "receipt_returned": 0,
+    "receipt_total": "$25.33"
+}
+==================================================
+Time to retrieve answer: 106.27733000399894
