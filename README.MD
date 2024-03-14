@@ -238,6 +238,10 @@ curl -X 'POST' \
 
 ### Inference with local LLM RAG
 
+Document:
+
+![document RAG](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/invoice_1.png)
+
 Request:
 
 ```
@@ -248,7 +252,32 @@ str, str, str, str, List[str], List[float], str" --agent llamaindex --index-name
 
 Response:
 
-![local RAG](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/lemming_1.png)
+```json
+{
+    "invoice_number": 61356291,
+    "invoice_date": "09/06/2012",
+    "client_name": "Rodriguez-Stevens",
+    "client_address": "2280 Angela Plain, Hortonshire, MS 93248",
+    "client_tax_id": "939-98-8477",
+    "seller_name": "Chapman, Kim and Green",
+    "seller_address": "64731 James Branch, Smithmouth, NC 26872",
+    "seller_tax_id": "949-84-9105",
+    "iban": "GB50ACIE59715038217063",
+    "names_of_invoice_items": [
+        "Wine Glasses Goblets Pair Clear Glass",
+        "With Hooks Stemware Storage Multiple Uses Iron Wine Rack Hanging Glass",
+        "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
+        "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 4 20 FL OZ (591 ml) NEW"
+    ],
+    "gross_worth_of_invoice_items": [
+        66.0,
+        123.55,
+        8.25,
+        14.29
+    ],
+    "total_gross_worth": "$212,09"
+}
+```
 
 ## Commercial usage
 
