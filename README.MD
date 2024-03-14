@@ -122,7 +122,7 @@ Use `vprocessor` agent to run OCR + LLM, this works best to process scanned docs
 ./sparrow.sh "guest_no, cashier_name, transaction_number, names_of_receipt_items, authorized_amount, receipt_date" "int, str, int, List[str], str, str" --agent vprocessor --file-path /data/inout-20211211_001.jpg
 ```
 
-##FastAPI Endpoint for Local LLM RAG
+## FastAPI Endpoint for Local LLM RAG
 
 Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the plugin to be used for the inference. By default, `llamaindex` agent is used.
 
