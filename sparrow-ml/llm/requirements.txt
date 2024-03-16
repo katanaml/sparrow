@@ -21,6 +21,8 @@ haystack-ai==2.0.0
 weaviate-haystack==1.0.2
 ollama==0.1.6
 python-multipart
+yfinance==0.2.37
+instructor==0.6.4
 # add pdf2htmlEX support for RAG pipeline with LlamaIndex and Unstructured
 
 # LlamaIndex upgrade:

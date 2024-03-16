@@ -36,6 +36,9 @@ def get_pipeline(agent_name: str) -> Pipeline:
     elif agent_name == "vprocessor":
         from .vprocessor import VProcessorPipeline
         return VProcessorPipeline()
+    elif agent_name == "fcall":
+        from .fcall import FCall
+        return FCall()
     else:
         raise ValueError(f"Unknown agent: {agent_name}")
 

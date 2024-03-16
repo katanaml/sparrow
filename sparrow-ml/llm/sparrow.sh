@@ -10,6 +10,11 @@ if [ "$1" == "ingest" ]; then
     shift # Shift the arguments to exclude the first one
 fi
 
+if [ "$1" == "assistant" ]; then
+    PYTHON_SCRIPT_PATH="assistant.py"
+    shift # Shift the arguments to exclude the first one
+fi
+
 python3 "${PYTHON_SCRIPT_PATH}" "$@"
 
 # make script executable with: chmod +x sparrow.sh
