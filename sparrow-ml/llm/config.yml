@@ -30,3 +30,8 @@ LLM_VLLAMAINDEX: 'llava:13b'
 VPROCESSOR_OCR_ENDPOINT: 'http://127.0.0.1:8001/api/v1/sparrow-ocr/inference'
 LLM_VPROCESSOR: 'starling-lm:7b-alpha-q5_K_M'
 OLLAMA_BASE_URL_VPROCESSOR: 'http://127.0.0.1:11434'
+
+
+# AGENT FOR FUNCTION CALL
+OLLAMA_BASE_URL_FUNCTION: 'http://127.0.0.1:11434/v1'
+LLM_FUNCTION: 'starling-lm:7b-alpha-q5_K_M'

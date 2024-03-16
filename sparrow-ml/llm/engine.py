@@ -13,7 +13,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch")],
         types: Annotated[str, typer.Argument(help="The list of types of the fields")],
         file_path: Annotated[str, typer.Option(help="The file to process")] = None,
-        agent: Annotated[str, typer.Option(help="Ingest agent")] = "llamaindex",
+        agent: Annotated[str, typer.Option(help="Selected agent")] = "llamaindex",
         index_name: Annotated[str, typer.Option(help="Index to identify embeddings")] = None,
         debug: Annotated[bool, typer.Option(help="Enable debug mode")] = False):
 
