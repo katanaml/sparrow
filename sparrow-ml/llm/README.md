@@ -105,7 +105,7 @@ LLM function call example:
 ./sparrow.sh assistant --agent "fcall" --query "Exxon"
 ```
 
-Response:
+Answer:
 
 ```json
 {
