@@ -135,6 +135,9 @@ Response:
   "company": "Exxon",
   "ticker": "XOM"
 }
+```
+
+```
 The stock price of the Exxon is 111.2699966430664. USD
 ```
 
