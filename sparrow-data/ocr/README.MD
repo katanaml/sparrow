@@ -12,6 +12,12 @@ This module implements OCR functionality for Sparrow.
 pip install -r requirements.txt
 ```
 
+2. Run Sparrow OCR app
+
+```
+python api.py
+```
+
 ## Sparrow OCR
 
 If you want to test how OCR works, you can run this API request through CURL
