@@ -1,0 +1,9 @@
+ollama==0.1.7
+python-multipart
+yfinance==0.2.37
+instructor==0.6.7
+python-box
+PyYAML
+
+# Force reinstall:
+# pip install --force-reinstall -r requirements_instructor.txt
