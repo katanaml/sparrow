@@ -6,10 +6,23 @@ This module implements OCR functionality for Sparrow.
 
 ## Install
 
-1. Install
+1. Install. Make sure your pip version is updated to avoid errors.
 
 ```
 pip install -r requirements.txt
+```
+
+If you are on Linux, it might be required to install poppler:
+
+```
+!apt-get install poppler-utils libpoppler-cpp-dev
+!pip install -v -v python-poppler
+```
+
+2. Run Sparrow OCR app
+
+```
+python api.py
 ```
 
 ## Sparrow OCR
