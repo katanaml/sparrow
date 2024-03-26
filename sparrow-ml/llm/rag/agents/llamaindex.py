@@ -4,7 +4,7 @@ from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.ollama import Ollama
 from llama_index.vector_stores.weaviate import WeaviateVectorStore
 import weaviate
-from pydantic.v1 import create_model, BaseModel
+from pydantic.v1 import create_model
 from typing import List
 import box
 import yaml
