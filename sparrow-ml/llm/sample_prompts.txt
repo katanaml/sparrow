@@ -77,3 +77,14 @@ int, str" --agent vprocessor --file-path /Users/andrejb/infra/shared/katana-git/
 }
 ==================================================
 Time to retrieve answer: 106.27733000399894
+
+
+./sparrow.sh assistant --agent "fcall" --query "Exxon"
+
+{
+  "company": "ExxonMobil",
+  "ticker": "XOM"
+}
+The stock price of the ExxonMobil is 113.48999786376953. USD
+==================================================
+Time to retrieve answer: 16.426633964991197

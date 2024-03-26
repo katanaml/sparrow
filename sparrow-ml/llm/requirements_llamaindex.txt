@@ -1,13 +1,12 @@
-llama-index==0.10.22
+llama-index==0.10.23
 llama-index-embeddings-langchain==0.1.2
 llama-index-llms-ollama==0.1.2
 llama-index-vector-stores-weaviate==0.1.4
 llama-index-multi-modal-llms-ollama==0.1.3
-llama-index-readers-file==0.1.11
+llama-index-readers-file==0.1.12
 llama-index-embeddings-huggingface==0.1.4
 llama-index-vector-stores-qdrant==0.1.4
 llama-index-embeddings-clip==0.1.4
-langchain==0.1.13
 sentence-transformers
 weaviate-client==3.26.2
 pypdf

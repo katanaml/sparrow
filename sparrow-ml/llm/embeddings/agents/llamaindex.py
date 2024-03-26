@@ -1,9 +1,8 @@
 from .interface import Ingest
 import weaviate
-from llama_index.core import StorageContext, SimpleDirectoryReader, ServiceContext, VectorStoreIndex
+from llama_index.core import StorageContext, SimpleDirectoryReader, Settings, VectorStoreIndex
 from llama_index.vector_stores.weaviate import WeaviateVectorStore
-from llama_index.embeddings.langchain import LangchainEmbedding
-from langchain.embeddings.huggingface import HuggingFaceEmbeddings
+from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 import box
 import yaml
 from rich.progress import Progress, SpinnerColumn, TextColumn
@@ -55,24 +54,21 @@ class LlamaIndexIngest(Ingest):
         return documents
 
     def load_embedding_model(self, model_name):
-        embeddings = LangchainEmbedding(
-            HuggingFaceEmbeddings(model_name=model_name)
-        )
-        return embeddings
+        return HuggingFaceEmbedding(model_name=model_name)
 
     def build_index(self, weaviate_client, embed_model, documents, index_name, chunk_size):
         # Delete index if it already exists, to avoid data corruption
         weaviate_client.schema.delete_class(index_name)
 
-        service_context = ServiceContext.from_defaults(embed_model=embed_model,
-                                                       llm=None,
-                                                       chunk_size=chunk_size)
+        Settings.chunk_size = chunk_size
+        Settings.llm = None
+        Settings.embed_model = embed_model
+
         vector_store = WeaviateVectorStore(weaviate_client=weaviate_client, index_name=index_name)
         storage_context = StorageContext.from_defaults(vector_store=vector_store)
 
         index = VectorStoreIndex.from_documents(
             documents,
-            service_context=service_context,
             storage_context=storage_context
         )
 
