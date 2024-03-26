@@ -1,11 +1,10 @@
 from rag.agents.interface import Pipeline
-from llama_index.core import VectorStoreIndex, ServiceContext
-from llama_index.embeddings.langchain import LangchainEmbedding
-from langchain.embeddings.huggingface import HuggingFaceEmbeddings
+from llama_index.core import VectorStoreIndex, Settings
+from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.llms.ollama import Ollama
 from llama_index.vector_stores.weaviate import WeaviateVectorStore
 import weaviate
-from pydantic import create_model
+from pydantic.v1 import create_model, BaseModel
 from typing import List
 import box
 import yaml
@@ -43,6 +42,7 @@ class LlamaIndexPipeline(Pipeline):
 
         answer = self.process_query(query, rag_chain, debug, local)
         return answer
+
 
     def build_rag_pipeline(self, query_inputs, query_types, index_name, debug, local):
         # Import config vars
@@ -110,22 +110,17 @@ class LlamaIndexPipeline(Pipeline):
         return DynamicModel
 
     def load_embedding_model(self, model_name):
-        embeddings = LangchainEmbedding(
-            HuggingFaceEmbeddings(model_name=model_name)
-        )
-        return embeddings
+        return HuggingFaceEmbedding(model_name=model_name)
 
     def build_index(self, chunk_size, llm, embed_model, weaviate_client, index_name):
-        service_context = ServiceContext.from_defaults(
-            chunk_size=chunk_size,
-            llm=llm,
-            embed_model=embed_model
-        )
+        Settings.chunk_size = chunk_size
+        Settings.llm = llm
+        Settings.embed_model = embed_model
 
         vector_store = WeaviateVectorStore(weaviate_client=weaviate_client, index_name=index_name)
 
         index = VectorStoreIndex.from_vector_store(
-            vector_store, service_context=service_context
+            vector_store=vector_store
         )
 
         return index
