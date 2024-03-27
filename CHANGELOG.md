@@ -1,5 +1,19 @@
 # ChangeLog
 
+## [v0.1.5] - 2024-03-27
+
+### New Features
+
+- Virtual Environments support
+
+### What's Changed
+
+- Fixes in LlamaIndex agent to run with latest LlamaIndex versions
+- LLM function calling agent
+
+
+
+
 ## [v0.1.4] - 2024-03-07
 
 ### New Features
