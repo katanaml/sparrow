@@ -92,13 +92,13 @@ Activate each environment and install its dependencies using the corresponding `
 
 For `llamaindex` environment:
 
-Activate the environment:
+1. Activate the environment:
 
 ```
 source .env_llamaindex/bin/activate
 ```
 
-Install dependencies:
+2. Install dependencies:
 
 ```
 pip install -r requirements_llamaindex.txt
