@@ -54,6 +54,9 @@ Time to retrieve answer: 15.325319556002796
 Time to retrieve answer: 17.55766561099881
 
 
+./sparrow.sh "guest_no, cashier_name" "int, str" --agent vllamaindex --file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/inout-20211211_001.jpg
+
+
 ./sparrow.sh "store_name, receipt_id, receipt_item_names, receipt_item_prices, receipt_date, receipt_store_id,
 receipt_sold, receipt_returned, receipt_total" "str, str, List[str], List[str], str, int, int,
 int, str" --agent vprocessor --file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/ross-20211211_010.jpg

@@ -6,19 +6,111 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 
 ### RAG runs offline on a local machine
 
-1. Install Weaviate local DB with Docker:
+- **Install Weaviate local DB with Docker:**
    
 ```
 docker compose up -d
 ```
 
-2. Install the requirements: 
+- **Sparrow setup** 
+
+*Setup Python Environment (Sparrow is tested with Python 3.10.4) with `pyenv`:*
+
+1. Install `pyenv`:
+
+If you haven't already installed `pyenv`, you can do so using Homebrew with the following command:
 
 ```
-pip install -r requirements.txt
+brew update
+brew install pyenv
+
 ```
 
-3. Install <a href="https://ollama.ai">Ollama</a> and pull LLM model specified in config.yml
+2. Install the desired Python version:
+
+With `pyenv` installed, you can now install a specific version of Python. For example, to install Python 3.10.4, you would use:
+
+```
+pyenv install 3.10.4
+```
+
+You can check available Python versions by running `pyenv install --list`.
+
+3. Set the global Python version:
+
+Once the installation is complete, you can set the desired Python version as the default (global) version on your system:
+
+```
+pyenv global 3.10.4
+```
+
+This command sets Python 3.10.4 as the default version for all shells.
+
+4. Verify the change:
+
+To ensure the change was successful, you can verify the current Python version by running:
+
+```
+python --version
+```
+
+If the output doesn’t reflect the change, you may need to restart your terminal or add `pyenv` to your shell's initialization script as follows:
+
+5. Configure your shell's initialization script:
+
+Add `pyenv` to your shell by adding the following lines to your `~/.bash_profile`, `~/.zprofile`, `~/.bashrc`, or `~/.zshrc` file:
+
+```
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+```
+
+After adding these lines, restart your terminal or source your profile script with `source ~/.bash_profile` (or the appropriate file for your shell).
+
+*Create Virtual Environments to Run Sparrow Agents*
+
+1. Create virtual environments in `sparrow-ml/llm` folder:
+
+```
+python -m venv .env_llamaindex
+python -m venv .env_haystack
+python -m venv .env_instructor
+```
+
+`.env_llamaindex` is used for LLM RAG with `llamaindex`, `vllamaindex` and `vprocessor` agents, `.env_haystack` is used for LLM RAG with `haystack` agent, and `.env_instructor` is used for LLM function calling with `fcall` agent.
+
+2. Create virtual environment in `sparrow-data/ocr` folder:
+
+```
+python -m venv .env_ocr
+```
+
+*Activate Virtual Environments and Install Dependencies*
+
+Activate each environment and install its dependencies using the corresponding `requirements.txt` file.
+
+For `llamaindex` environment:
+
+Activate the environment:
+
+```
+source .env_llamaindex/bin/activate
+```
+
+Install dependencies:
+
+```
+pip install -r requirements_llamaindex.txt
+```
+
+Repeat the same for `haystack` and `instructor` environments.
+
+*Run Sparrow*
+
+You can run Sparrow on CLI or through API. To run on CLI, use `sparrow.sh` script. Run it from corresponding virtual environment, depending which agent you want to execute.
+
+- **Install <a href="https://ollama.ai">Ollama</a> and pull LLM model specified in config.yml**
 
 ## Usage
 
@@ -130,6 +222,12 @@ Launch the endpoint by executing the following command in your terminal:
 
 ```
 python api.py
+```
+
+If you want to run agents from different Python virtual environments simultaneously, you can specify port, to avoid conflicts:
+
+```
+python api.py --port 8001
 ```
 
 2. Access the Endpoint Documentation
