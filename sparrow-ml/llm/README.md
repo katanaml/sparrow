@@ -328,10 +328,16 @@ curl -X 'POST' \
   -F 'file=@inout-20211211_001.jpg;type=image/jpeg'
 ```
 
+## Commercial usage
+
+Sparrow is available for free commercial use. This offer applies to organizations with gross revenue below $5 million USD in the past 12 months.
+
+For businesses exceeding this revenue limit and seeking to bypass GPL license restrictions, please contact me at abaranovskis@redsamuraiconsulting.com to discuss dual licensing options. The same applies if you are looking for custom workflows to automate business processes, consulting options, and support/maintenance options.
+
 ## Author
 
 [Katana ML](https://katanaml.io), [Andrej Baranovskij](https://github.com/abaranovskis-redsamurai)
 
 ## License
 
-Licensed under the Apache License, Version 2.0. Copyright 2020-2024 Katana ML, Andrej Baranovskij. [Copy of the license](https://github.com/katanaml/sparrow/blob/main/LICENSE).
+Licensed under the GPL 3.0. Copyright 2020-2024 Katana ML, Andrej Baranovskij. [Copy of the license](https://github.com/katanaml/sparrow/blob/main/LICENSE).
