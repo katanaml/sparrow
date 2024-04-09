@@ -367,6 +367,36 @@ curl -X 'POST' \
   -F 'file=@inout-20211211_001.jpg;type=image/jpeg'
 ```
 
+Inference call with `unstructured-light` agent:
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'fields=invoice_number, invoice_date, total_gross_worth' \
+  -F 'types=int, str, str' \
+  -F 'agent=unstructured-light' \
+  -F 'index_name=' \
+  -F 'options=' \
+  -F 'file=@invoice_1.pdf;type=application/pdf'
+```
+
+Inference call with `unstructured-light` agent, using only tables option:
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'fields=names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth' \
+  -F 'types=List[str], List[str], str' \
+  -F 'agent=unstructured-light' \
+  -F 'index_name=' \
+  -F 'options=tables' \
+  -F 'file=@invoice_1.pdf;type=application/pdf'
+```
+
 ## Examples
 
 ### Inference with local LLM RAG
