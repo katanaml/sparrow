@@ -241,7 +241,7 @@ Use `unstructured-light` agent to run RAG pipeline with Unstructured library. It
 /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
 ```
 
-With `unstructured-light` it is possible to specify table data processing only
+With `unstructured-light` it is possible to specify option for table data processing only
 
 ```
 ./sparrow.sh "names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "List[str], List[str], str"
