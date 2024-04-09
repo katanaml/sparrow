@@ -93,9 +93,10 @@ After adding these lines, restart your terminal or source your profile script wi
 python -m venv .env_llamaindex
 python -m venv .env_haystack
 python -m venv .env_instructor
+python -m venv .env_unstructured
 ```
 
-`.env_llamaindex` is used for LLM RAG with `llamaindex`, `vllamaindex` and `vprocessor` agents, `.env_haystack` is used for LLM RAG with `haystack` agent, and `.env_instructor` is used for LLM function calling with `fcall` agent.
+`.env_llamaindex` is used for LLM RAG with `llamaindex`, `vllamaindex` and `vprocessor` agents, `.env_haystack` is used for LLM RAG with `haystack` agent, and `.env_instructor` is used for LLM function calling with `fcall` agent. `.env_unstructured` for `unstructured-light` agent.
 
 2. Create virtual environment in `sparrow-data/ocr` folder:
 
@@ -121,7 +122,7 @@ source .env_llamaindex/bin/activate
 pip install -r requirements_llamaindex.txt
 ```
 
-Repeat the same for `haystack` and `instructor` environments.
+Repeat the same for `haystack`, `instructor` and `unstructured` environments.
 
 *Run Sparrow*
 
