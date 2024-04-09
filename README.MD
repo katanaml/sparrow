@@ -234,6 +234,21 @@ Answer:
 The stock price of the Exxon is 111.2699966430664. USD
 ```
 
+Use `unstructured-light` agent to run RAG pipeline with Unstructured library. It helps to improve data pre-processing for LLM
+
+```
+./sparrow.sh "invoice_number, invoice_date, total_gross_worth" "int, str, str" --agent unstructured-light --file-path
+/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
+```
+
+With `unstructured-light` it is possible to specify table data processing only
+
+```
+./sparrow.sh "names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "List[str], List[str], str"
+--agent unstructured-light --file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
+--options tables
+```
+
 ## FastAPI Endpoint for Local LLM RAG
 
 Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the plugin to be used for the inference. By default, `llamaindex` agent is used.
