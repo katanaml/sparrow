@@ -1,0 +1,20 @@
+unstructured[all-docs]==0.12.5
+unstructured-inference==0.7.23
+langchain==0.1.13
+langchain-community==0.0.29
+chromadb
+sentence_transformers
+python-box
+rich
+typer[all]
+fastapi==0.110.0
+uvicorn[standard]
+ollama==0.1.7
+python-multipart
+weaviate-client==3.26.2
+
+# upgrade unstructured library to latest version
+
+
+# Force reinstall:
+# pip install --force-reinstall -r requirements_unstructured.txt

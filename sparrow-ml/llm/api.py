@@ -36,6 +36,7 @@ async def inference(
         types: Annotated[str, Form()],
         agent: Annotated[str, Form()],
         index_name: Annotated[str, Form()] = None,
+        options: Annotated[str, Form()] = None,
         file: UploadFile = File(None)
         ):
     query = 'retrieve ' + fields
@@ -45,7 +46,7 @@ async def inference(
     query_types_arr = [param.strip() for param in query_types.split(',')]
 
     try:
-        answer = await run_from_api_engine(agent, query_inputs_arr, query_types_arr, query, index_name, file,
+        answer = await run_from_api_engine(agent, query_inputs_arr, query_types_arr, query, index_name, options, file,
                                            False)
     except ValueError as e:
         raise HTTPException(status_code=418, detail=str(e))

@@ -15,6 +15,7 @@ def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch"
         file_path: Annotated[str, typer.Option(help="The file to process")] = None,
         agent: Annotated[str, typer.Option(help="Selected agent")] = "llamaindex",
         index_name: Annotated[str, typer.Option(help="Index to identify embeddings")] = None,
+        options: Annotated[str, typer.Option(help="Options to pass to the agent")] = None,
         debug: Annotated[bool, typer.Option(help="Enable debug mode")] = False):
 
     query = 'retrieve ' + inputs
@@ -27,12 +28,14 @@ def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch"
 
     try:
         rag = get_pipeline(user_selected_agent)
-        rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query, file_path, index_name, debug)
+        rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query, file_path, index_name, options,
+                         debug)
     except ValueError as e:
         print(f"Caught an exception: {e}")
 
 
-async def run_from_api_engine(user_selected_agent, query_inputs_arr, query_types_arr, query, index_name, file, debug):
+async def run_from_api_engine(user_selected_agent, query_inputs_arr, query_types_arr, query, index_name, options,
+                              file, debug):
     try:
         rag = get_pipeline(user_selected_agent)
 
@@ -46,10 +49,10 @@ async def run_from_api_engine(user_selected_agent, query_inputs_arr, query_types
                     temp_file.write(content)
 
                 answer = rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query,
-                                          temp_file_path, index_name, debug, False)
+                                          temp_file_path, index_name, options, debug, False)
         else:
             answer = rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query, None,
-                                      index_name, debug, False)
+                                      index_name, options, debug, False)
     except ValueError as e:
         raise e
 

@@ -63,4 +63,5 @@ sparrow-ml/llm/.idea/copilot/chatSessions/00000000000.xd
 sparrow-ml/llm/.env_haystack/
 sparrow-ml/llm/.env_llamaindex/
 sparrow-ml/llm/.env_instructor/
+sparrow-ml/llm/.env_unstructured/
 sparrow-data/ocr/.env_ocr/

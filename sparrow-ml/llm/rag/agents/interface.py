@@ -17,6 +17,7 @@ class Pipeline(ABC):
                      query: str,
                      file_path: str,
                      index_name: str,
+                     options: str = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
         pass
@@ -39,6 +40,9 @@ def get_pipeline(agent_name: str) -> Pipeline:
     elif agent_name == "fcall":
         from .fcall import FCall
         return FCall()
+    elif agent_name == "unstructured-light":
+        from .unstructured_light import UnstructuredLightPipeline
+        return UnstructuredLightPipeline()
     else:
         raise ValueError(f"Unknown agent: {agent_name}")
 
