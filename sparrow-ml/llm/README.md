@@ -4,6 +4,15 @@ ___
 
 Sparrow Agents - with Sparrow you can build independent LLM agents, and use API to invoke them from your system.
 
+**List of available agents:**
+
+- llamaindex - RAG pipeline with LlamaIndex for PDF processing
+- vllamaindex - RAG pipeline with LLamaIndex multimodal for image processing
+- vprocessor - RAG pipeline with OCR and LlamaIndex for image processing
+- haystack - RAG pipeline with Haystack for PDF processing
+- fcall - Function call pipeline
+- unstructured-light - RAG pipeline with Unstructured and LangChain
+
 ### RAG runs offline on a local machine
 
 - **Install Weaviate local DB with Docker:**
@@ -76,9 +85,10 @@ After adding these lines, restart your terminal or source your profile script wi
 python -m venv .env_llamaindex
 python -m venv .env_haystack
 python -m venv .env_instructor
+python -m venv .env_unstructured
 ```
 
-`.env_llamaindex` is used for LLM RAG with `llamaindex`, `vllamaindex` and `vprocessor` agents, `.env_haystack` is used for LLM RAG with `haystack` agent, and `.env_instructor` is used for LLM function calling with `fcall` agent.
+`.env_llamaindex` is used for LLM RAG with `llamaindex`, `vllamaindex` and `vprocessor` agents, `.env_haystack` is used for LLM RAG with `haystack` agent, and `.env_instructor` is used for LLM function calling with `fcall` agent. `.env_unstructured` is used for `unstructured-light` agent.
 
 2. Create virtual environment in `sparrow-data/ocr` folder:
 
@@ -104,7 +114,7 @@ source .env_llamaindex/bin/activate
 pip install -r requirements_llamaindex.txt
 ```
 
-Repeat the same for `haystack` and `instructor` environments.
+Repeat the same for `haystack`, `instructor`, `unstructured` environments.
 
 *Run Sparrow*
 
@@ -208,6 +218,21 @@ Answer:
 
 ```
 The stock price of the Exxon is 111.2699966430664. USD
+```
+
+Use `unstructured-light` agent to run RAG pipeline with Unstructured library. It helps to improve data pre-processing for LLM
+
+```
+./sparrow.sh "invoice_number, invoice_date, total_gross_worth" "int, str, str" --agent unstructured-light --file-path
+/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
+```
+
+With `unstructured-light` it is possible to specify option for table data processing only
+
+```
+./sparrow.sh "names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "List[str], List[str], str"
+--agent unstructured-light --file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
+--options tables
 ```
 
 ## FastAPI Endpoint for Local LLM RAG
@@ -326,6 +351,36 @@ curl -X 'POST' \
   -F 'agent=vprocessor' \
   -F 'index_name=' \
   -F 'file=@inout-20211211_001.jpg;type=image/jpeg'
+```
+
+Inference call with `unstructured-light` agent:
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'fields=invoice_number, invoice_date, total_gross_worth' \
+  -F 'types=int, str, str' \
+  -F 'agent=unstructured-light' \
+  -F 'index_name=' \
+  -F 'options=' \
+  -F 'file=@invoice_1.pdf;type=application/pdf'
+```
+
+Inference call with `unstructured-light` agent, using only tables option:
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'fields=names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth' \
+  -F 'types=List[str], List[str], str' \
+  -F 'agent=unstructured-light' \
+  -F 'index_name=' \
+  -F 'options=tables' \
+  -F 'file=@invoice_1.pdf;type=application/pdf'
 ```
 
 ## Commercial usage
