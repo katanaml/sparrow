@@ -4,6 +4,15 @@ ___
 
 Sparrow Agents - with Sparrow you can build independent LLM agents, and use API to invoke them from your system.
 
+**List of available agents:**
+
+- llamaindex - RAG pipeline with LlamaIndex for PDF processing
+- vllamaindex - RAG pipeline with LLamaIndex multimodal for image processing
+- vprocessor - RAG pipeline with OCR and LlamaIndex for image processing
+- haystack - RAG pipeline with Haystack for PDF processing
+- fcall - Function call pipeline
+- unstructured-light - RAG pipeline with Unstructured and LangChain
+
 ### RAG runs offline on a local machine
 
 - **Install Weaviate local DB with Docker:**
