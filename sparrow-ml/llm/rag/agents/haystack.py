@@ -37,6 +37,7 @@ class HaystackPipeline(PipelineInterface):
                      query: str,
                      file_path: str,
                      index_name: str,
+                     options: str = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")

@@ -54,7 +54,8 @@ Time to retrieve answer: 15.325319556002796
 Time to retrieve answer: 17.55766561099881
 
 
-./sparrow.sh "guest_no, cashier_name" "int, str" --agent vllamaindex --file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/inout-20211211_001.jpg
+./sparrow.sh "guest_no, cashier_name" "int, str" --agent vllamaindex --file-path
+/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/inout-20211211_001.jpg
 
 
 ./sparrow.sh "store_name, receipt_id, receipt_item_names, receipt_item_prices, receipt_date, receipt_store_id,
@@ -91,3 +92,38 @@ Time to retrieve answer: 106.27733000399894
 The stock price of the ExxonMobil is 113.48999786376953. USD
 ==================================================
 Time to retrieve answer: 16.426633964991197
+
+
+./sparrow.sh "invoice_number, invoice_date, total_gross_worth" "int, str, str" --agent unstructured-light --file-path
+/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
+
+{
+    "invoice_number": 61356291,
+    "invoice_date": "09/06/2012",
+    "total_gross_worth": "$ 212,09"
+}
+==================================================
+Time to retrieve answer: 93.95840702600253
+
+
+./sparrow.sh "names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "List[str], List[str], str"
+--agent unstructured-light --file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
+--options tables
+
+{
+    "names_of_invoice_items": [
+        "Wine Glasses Goblets Pair Clear Glass",
+        "With Hooks Stemware Storage Multiple Uses Iron Wine Rack Hanging Glass",
+        "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
+        "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 4 20 FL OZ (591 ml) NEW"
+    ],
+    "gross_worth_of_invoice_items": [
+        "$66.00",
+        "$123.55",
+        "$8.25",
+        "$14.29"
+    ],
+    "total_gross_worth": "$212.09"
+}
+==================================================
+Time to retrieve answer: 109.55890596199606

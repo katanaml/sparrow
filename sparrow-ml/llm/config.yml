@@ -36,3 +36,16 @@ OLLAMA_BASE_URL_VPROCESSOR: 'http://127.0.0.1:11434'
 # AGENT FOR FUNCTION CALL
 OLLAMA_BASE_URL_FUNCTION: 'http://127.0.0.1:11434/v1'
 LLM_FUNCTION: 'starling-lm:7b-alpha-q5_K_M'
+
+
+# AGENT FOR UNSTRUCTURED LIGHT
+LLM_UNSTRUCTURED_LIGHT: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
+# Strategy for analyzing PDFs and extracting table structure
+LLM_UNSTRUCTURED_LIGHT_STRATEGY: 'hi_res'
+# Best model for table extraction. Other options are detectron2_onnx and chipper depending on file layout
+LLM_UNSTRUCTURED_LIGHT_MODEL: 'yolox'
+LLM_UNSTRUCTURED_LIGHT_CHUNK_SIZE: 1000
+LLM_UNSTRUCTURED_LIGHT_OVERLAP: 200
+LLM_UNSTRUCTURED_LIGHT_EMBEDDINGS: 'all-MiniLM-L6-v2'
+LLM_UNSTRUCTURED_LIGHT_DEVICE: 'cpu'
+LLM_UNSTRUCTURED_LIGHT_NORMALIZE_EMBEDDINGS: True
