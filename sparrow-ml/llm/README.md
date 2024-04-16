@@ -12,6 +12,7 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 - haystack - RAG pipeline with Haystack for PDF processing
 - fcall - Function call pipeline
 - unstructured-light - RAG pipeline with Unstructured and LangChain
+- unstructured - RAG pipeline with Weaviate vector DB query, Unstructured and LangChain
 
 ### RAG runs offline on a local machine
 
@@ -88,7 +89,7 @@ python -m venv .env_instructor
 python -m venv .env_unstructured
 ```
 
-`.env_llamaindex` is used for LLM RAG with `llamaindex`, `vllamaindex` and `vprocessor` agents, `.env_haystack` is used for LLM RAG with `haystack` agent, and `.env_instructor` is used for LLM function calling with `fcall` agent. `.env_unstructured` is used for `unstructured-light` agent.
+`.env_llamaindex` is used for LLM RAG with `llamaindex`, `vllamaindex` and `vprocessor` agents, `.env_haystack` is used for LLM RAG with `haystack` agent, and `.env_instructor` is used for LLM function calling with `fcall` agent. `.env_unstructured` is used for `unstructured-light` and `unstructured` agents.
 
 2. Create virtual environment in `sparrow-data/ocr` folder:
 
@@ -235,6 +236,13 @@ With `unstructured-light` it is possible to specify option for table data proces
 --options tables
 ```
 
+Use `unstructured` agent to run RAG pipeline with Weaviate query (no separate step to ingest data is required) and Unstructured library
+
+```
+./sparrow.sh "invoice_number, invoice_date, total_gross_worth" "int, str, str" --agent unstructured --file-path /data/invoice_1.pdf
+```
+
+
 ## FastAPI Endpoint for Local LLM RAG
 
 Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the plugin to be used for the inference. By default, `llamaindex` agent is used.
@@ -380,6 +388,21 @@ curl -X 'POST' \
   -F 'agent=unstructured-light' \
   -F 'index_name=' \
   -F 'options=tables' \
+  -F 'file=@invoice_1.pdf;type=application/pdf'
+```
+
+Inference call with `unstructured` agent:
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'fields=names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth' \
+  -F 'types=List[str], List[str], str' \
+  -F 'agent=unstructured' \
+  -F 'index_name=' \
+  -F 'options=' \
   -F 'file=@invoice_1.pdf;type=application/pdf'
 ```
 
