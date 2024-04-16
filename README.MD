@@ -14,12 +14,12 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 **List of available agents:**
 
 - **llamaindex** - RAG pipeline with LlamaIndex for PDF processing
-- vllamaindex - RAG pipeline with LLamaIndex multimodal for image processing
-- vprocessor - RAG pipeline with OCR and LlamaIndex for image processing
-- haystack - RAG pipeline with Haystack for PDF processing
-- fcall - Function call pipeline
-- unstructured-light - RAG pipeline with Unstructured and LangChain
-- unstructured - RAG pipeline with Weaviate vector DB query, Unstructured and LangChain
+- **vllamaindex** - RAG pipeline with LLamaIndex multimodal for image processing
+- **vprocessor** - RAG pipeline with OCR and LlamaIndex for image processing
+- **haystack** - RAG pipeline with Haystack for PDF processing
+- **fcall** - Function call pipeline
+- **unstructured-light** - RAG pipeline with Unstructured and LangChain
+- **unstructured** - RAG pipeline with Weaviate vector DB query, Unstructured and LangChain
 
 ### Services
 
