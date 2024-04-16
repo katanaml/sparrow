@@ -250,14 +250,14 @@ Use `unstructured-light` agent to run RAG pipeline with Unstructured library. It
 ./sparrow.sh "invoice_number, invoice_date, total_gross_worth" "int, str, str" --agent unstructured-light --file-path /data/invoice_1.pdf
 ```
 
-With `unstructured-light` it is possible to specify option for table data processing only
+With `unstructured-light` it is possible to specify option for table data processing only. This agent supports PDF, JPG and PNG files
 
 ```
 ./sparrow.sh "names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "List[str], List[str], str"
 --agent unstructured-light --file-path /data/invoice_1.pdf --options tables
 ```
 
-Use `unstructured` agent to run RAG pipeline with Weaviate query (no separate step to ingest data is required) and Unstructured library
+Use `unstructured` agent to run RAG pipeline with Weaviate query (no separate step to ingest data is required) and Unstructured library. This agent supports PDF, JPG and PNG files
 
 ```
 ./sparrow.sh "invoice_number, invoice_date, total_gross_worth" "int, str, str" --agent unstructured --file-path /data/invoice_1.pdf
@@ -381,7 +381,7 @@ curl -X 'POST' \
   -F 'file=@inout-20211211_001.jpg;type=image/jpeg'
 ```
 
-Inference call with `unstructured-light` agent:
+Inference call with `unstructured-light` agent, this agent supports also JPG and PNG files:
 
 ```
 curl -X 'POST' \
@@ -396,7 +396,7 @@ curl -X 'POST' \
   -F 'file=@invoice_1.pdf;type=application/pdf'
 ```
 
-Inference call with `unstructured-light` agent, using only tables option:
+Inference call with `unstructured-light` agent, using only tables option. This agent supports also JPG and PNG files:
 
 ```
 curl -X 'POST' \
@@ -411,7 +411,7 @@ curl -X 'POST' \
   -F 'file=@invoice_1.pdf;type=application/pdf'
 ```
 
-Inference call with `unstructured` agent:
+Inference call with `unstructured` agent, this agent supports also JPG and PNG files:
 
 ```
 curl -X 'POST' \
