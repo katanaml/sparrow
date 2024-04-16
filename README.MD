@@ -420,7 +420,7 @@ curl -X 'POST' \
   -H 'Content-Type: multipart/form-data' \
   -F 'fields=names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth' \
   -F 'types=List[str], List[str], str' \
-  -F 'agent=unstructured-light' \
+  -F 'agent=unstructured' \
   -F 'index_name=' \
   -F 'options=' \
   -F 'file=@invoice_1.pdf;type=application/pdf'
