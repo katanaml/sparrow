@@ -19,6 +19,7 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 - haystack - RAG pipeline with Haystack for PDF processing
 - fcall - Function call pipeline
 - unstructured-light - RAG pipeline with Unstructured and LangChain
+- unstructured - RAG pipeline with Weaviate vector DB query, Unstructured and LangChain
 
 ### Services
 
@@ -105,7 +106,7 @@ python -m venv .env_instructor
 python -m venv .env_unstructured
 ```
 
-`.env_llamaindex` is used for LLM RAG with `llamaindex`, `vllamaindex` and `vprocessor` agents, `.env_haystack` is used for LLM RAG with `haystack` agent, and `.env_instructor` is used for LLM function calling with `fcall` agent. `.env_unstructured` is used for `unstructured-light` agent.
+`.env_llamaindex` is used for LLM RAG with `llamaindex`, `vllamaindex` and `vprocessor` agents, `.env_haystack` is used for LLM RAG with `haystack` agent, and `.env_instructor` is used for LLM function calling with `fcall` agent. `.env_unstructured` is used for `unstructured-light` and `unstructured` agent.
 
 2. Create virtual environment in `sparrow-data/ocr` folder:
 
@@ -246,16 +247,20 @@ The stock price of the Exxon is 111.2699966430664. USD
 Use `unstructured-light` agent to run RAG pipeline with Unstructured library. It helps to improve data pre-processing for LLM
 
 ```
-./sparrow.sh "invoice_number, invoice_date, total_gross_worth" "int, str, str" --agent unstructured-light --file-path
-/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
+./sparrow.sh "invoice_number, invoice_date, total_gross_worth" "int, str, str" --agent unstructured-light --file-path /data/invoice_1.pdf
 ```
 
 With `unstructured-light` it is possible to specify option for table data processing only
 
 ```
 ./sparrow.sh "names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "List[str], List[str], str"
---agent unstructured-light --file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
---options tables
+--agent unstructured-light --file-path /data/invoice_1.pdf --options tables
+```
+
+Use `unstructured` agent to run RAG pipeline with Weaviate query (no separate step to ingest data is required) and Unstructured library
+
+```
+./sparrow.sh "invoice_number, invoice_date, total_gross_worth" "int, str, str" --agent unstructured --file-path /data/invoice_1.pdf
 ```
 
 ## FastAPI Endpoint for Local LLM RAG
@@ -403,6 +408,21 @@ curl -X 'POST' \
   -F 'agent=unstructured-light' \
   -F 'index_name=' \
   -F 'options=tables' \
+  -F 'file=@invoice_1.pdf;type=application/pdf'
+```
+
+Inference call with `unstructured` agent:
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'fields=names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth' \
+  -F 'types=List[str], List[str], str' \
+  -F 'agent=unstructured-light' \
+  -F 'index_name=' \
+  -F 'options=' \
   -F 'file=@invoice_1.pdf;type=application/pdf'
 ```
 
