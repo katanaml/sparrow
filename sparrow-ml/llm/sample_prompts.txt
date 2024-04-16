@@ -170,3 +170,54 @@ Time to retrieve answer: 85.94320003400207
 }
 ==================================================
 Time to retrieve answer: 24.074920559010934
+
+
+./sparrow.sh "store_name, receipt_id, receipt_item_names, receipt_item_prices, receipt_date, receipt_store_id, receipt_sold,
+receipt_returned, receipt_total" "str, str, List[str], List[str], str, int, int,
+int, str" --agent unstructured --file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/ross-20211211_010.jpg
+
+{
+    "store_name": "IT OSS DRESS FOR LESS PASADENA, CA 91107 626-351-5334 # 0421-01-1602-1330-",
+    "receipt_id": "0421-01-1602-1330-",
+    "receipt_item_names": [
+        "A iain an 6513665 x hanes blue 4pk 9.99R 4nbes9e05500",
+        "fruit premium 4pk 12:98"
+    ],
+    "receipt_item_prices": [
+        "$9.99",
+        "$12.98"
+    ],
+    "receipt_date": "11/26/21 10:35:05 AM",
+    "receipt_store_id": 421,
+    "receipt_sold": 2,
+    "receipt_returned": 0,
+    "receipt_total": "$25.00"
+}
+
+==================================================
+Time to retrieve answer: 76.49691557901679
+
+
+./sparrow.sh "store_name, receipt_id, receipt_item_names, receipt_item_prices, receipt_date, receipt_store_id, receipt_sold,
+receipt_returned, receipt_total" "str, str, List[str], List[str], str, int, int, int,
+str" --agent unstructured-light --file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/ross-20211211_010.jpg
+
+{
+    "store_name": "Ross Dress for Less",
+    "receipt_id": "0421-01-1602-1330-0",
+    "receipt_item_names": [
+        "A iain an 6513665 x hanes blue 4pk",
+        "9.99R 4nbes9e05500 fruit premium 4pk"
+    ],
+    "receipt_item_prices": [
+        "$22.98",
+        "$22.98"
+    ],
+    "receipt_date": "11/26/21",
+    "receipt_store_id": 421,
+    "receipt_sold": 2,
+    "receipt_returned": 0,
+    "receipt_total": "$25"
+}
+==================================================
+Time to retrieve answer: 80.8209542609984
