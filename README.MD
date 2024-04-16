@@ -244,7 +244,7 @@ Answer:
 The stock price of the Exxon is 111.2699966430664. USD
 ```
 
-Use `unstructured-light` agent to run RAG pipeline with Unstructured library. It helps to improve data pre-processing for LLM
+Use `unstructured-light` agent to run RAG pipeline with Unstructured library. It helps to improve data pre-processing for LLM. This agent supports PDF, JPG and PNG files
 
 ```
 ./sparrow.sh "invoice_number, invoice_date, total_gross_worth" "int, str, str" --agent unstructured-light --file-path /data/invoice_1.pdf
