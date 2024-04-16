@@ -1,5 +1,6 @@
 from rag.agents.interface import Pipeline
 from unstructured.partition.pdf import partition_pdf
+from unstructured.partition.image import partition_image
 from unstructured.staging.base import elements_to_json
 from langchain_community.document_loaders import TextLoader
 from langchain.text_splitter import CharacterTextSplitter
@@ -58,8 +59,8 @@ class UnstructuredLightPipeline(Pipeline):
 
         # Extracts the elements from the PDF
         elements = self.invoke_pipeline_step(
-            lambda: self.process_pdf(file_path, strategy, model_name),
-            "Extracting elements from the PDF...",
+            lambda: self.process_file(file_path, strategy, model_name),
+            "Extracting elements from the document...",
             local
         )
 
@@ -124,13 +125,23 @@ class UnstructuredLightPipeline(Pipeline):
 
         return answer
 
-    def process_pdf(self, file_path, strategy, model_name):
-        elements = partition_pdf(
-            filename=file_path,
-            strategy=strategy,
-            infer_table_structure=True,
-            model_name=model_name
-        )
+    def process_file(self, file_path, strategy, model_name):
+        elements = None
+
+        if file_path.lower().endswith('.pdf'):
+            elements = partition_pdf(
+                filename=file_path,
+                strategy=strategy,
+                infer_table_structure=True,
+                model_name=model_name
+            )
+        elif file_path.lower().endswith(('.jpg', '.jpeg', '.png')):
+            elements = partition_image(
+                filename=file_path,
+                strategy=strategy,
+                infer_table_structure=True,
+                model_name=model_name
+            )
 
         return elements
 

@@ -67,7 +67,7 @@ class UnstructuredPipeline(Pipeline):
 
             files = self.invoke_pipeline_step(
                 lambda: self.process_files(temp_output_dir, temp_input_dir),
-                "Processing file with Unstructured...",
+                "Processing file with unstructured...",
                 local
             )
 
