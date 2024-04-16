@@ -43,6 +43,9 @@ def get_pipeline(agent_name: str) -> Pipeline:
     elif agent_name == "unstructured-light":
         from .unstructured_light import UnstructuredLightPipeline
         return UnstructuredLightPipeline()
+    elif agent_name == "unstructured":
+        from .unstructured import UnstructuredPipeline
+        return UnstructuredPipeline()
     else:
         raise ValueError(f"Unknown agent: {agent_name}")
 

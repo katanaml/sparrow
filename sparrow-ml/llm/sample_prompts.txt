@@ -127,3 +127,46 @@ Time to retrieve answer: 93.95840702600253
 }
 ==================================================
 Time to retrieve answer: 109.55890596199606
+
+
+./sparrow.sh "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
+seller_tax_id, iban, names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "int, str, str, str, str,
+str, str, str, str, List[str], List[str], str" --agent unstructured --file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
+
+{
+    "invoice_number": 61356291,
+    "invoice_date": "09/06/2012",
+    "client_name": "Rodriguez-Stevens",
+    "client_address": "2280 Angela Plain Hortonshire, MS 93248",
+    "client_tax_id": "939-98-8477",
+    "seller_name": "Chapman, Kim and Green",
+    "seller_address": "64731 James Branch Smithmouth, NC 26872",
+    "seller_tax_id": "949-84-9105",
+    "iban": "GB50ACIE59715038217063",
+    "names_of_invoice_items": [
+        "Wine Glasses Goblets Pair Clear Glass",
+        "With Hooks Stemware Storage Multiple Uses Iron Wine Rack Hanging Glass",
+        "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
+        "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 4 20 FL OZ (591 ml) NEW"
+    ],
+    "gross_worth_of_invoice_items": [
+        "6,00",
+        "123,55",
+        "8,25",
+        "14,29"
+    ],
+    "total_gross_worth": "$ 192,81"
+}
+==================================================
+Time to retrieve answer: 85.94320003400207
+
+./sparrow.sh "invoice_number, invoice_date, total_gross_worth" "int, str, str" --agent unstructured --file-path
+/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
+
+{
+    "invoice_number": 61356291,
+    "invoice_date": "09/06/2012",
+    "total_gross_worth": "$ 212,09"
+}
+==================================================
+Time to retrieve answer: 24.074920559010934
