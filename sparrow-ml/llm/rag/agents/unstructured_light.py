@@ -4,7 +4,7 @@ from unstructured.partition.image import partition_image
 from unstructured.staging.base import elements_to_json
 from langchain_community.document_loaders import TextLoader
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings
+from langchain_community.embeddings import OllamaEmbeddings
 from langchain.chains import RetrievalQA
 from langchain_community.vectorstores import Chroma
 from langchain_community.llms import Ollama
@@ -90,9 +90,7 @@ class UnstructuredLightPipeline(Pipeline):
         )
 
         db = self.invoke_pipeline_step(
-            lambda: self.prepare_vector_store(docs, cfg.LLM_UNSTRUCTURED_LIGHT_EMBEDDINGS,
-                                              cfg.LLM_UNSTRUCTURED_LIGHT_DEVICE,
-                                              cfg.LLM_UNSTRUCTURED_LIGHT_NORMALIZE_EMBEDDINGS),
+            lambda: self.prepare_vector_store(docs, cfg.LLM_UNSTRUCTURED_LIGHT_EMBEDDINGS),
             "Preparing vector store...",
             local
         )
@@ -160,15 +158,12 @@ class UnstructuredLightPipeline(Pipeline):
 
         return docs
 
-    def prepare_vector_store(self, docs, model_name, device, normalize_embeddings):
-        model_name = model_name
-        model_kwargs = {"device": device}
-        encode_kwargs = {"normalize_embeddings": normalize_embeddings}
-        embeddings = HuggingFaceBgeEmbeddings(
-            model_name=model_name, model_kwargs=model_kwargs, encode_kwargs=encode_kwargs
+    def prepare_vector_store(self, docs, model_name):
+        db = Chroma.from_documents(
+            documents=docs,
+            collection_name="sparrow-rag",
+            embedding=OllamaEmbeddings(model=model_name)
         )
-
-        db = Chroma.from_documents(docs, embeddings)
 
         return db
 
