@@ -2,6 +2,7 @@ unstructured[all-docs]==0.13.2
 unstructured-inference==0.7.25
 langchain==0.1.16
 langchain-community==0.0.33
+langchain-core==0.1.43
 chromadb
 sentence_transformers
 python-box
