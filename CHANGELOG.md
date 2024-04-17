@@ -1,5 +1,18 @@
 # ChangeLog
 
+## [v0.1.6] - 2024-04-17
+
+### New Features
+
+- New agents with Unstructured
+
+### What's Changed
+
+- Added unstructured-light and unstructured agents for better data pre-processing
+
+
+
+
 ## [v0.1.5] - 2024-03-27
 
 ### New Features
