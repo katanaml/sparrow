@@ -1,5 +1,5 @@
 # AGENT FOR LLAMAINDEX
-# Tested with below LLMs
+# Tested with these LLMs
 #LLM: 'starling-lm:7b-alpha-q4_K_M'
 #LLM: 'starling-lm:7b-alpha-q5_K_M'
 LLM: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
@@ -15,7 +15,7 @@ SPLIT_BY_HAYSTACK: 'sentence'
 SPLIT_LENGTH_HAYSTACK: 10
 SPLIT_OVERLAP_HAYSTACK: 2
 EMBEDDINGS_HAYSTACK: 'sentence-transformers/all-MiniLM-L6-v2'
-# Tested with below LLMs
+# Tested with these LLMs
 #LLM_HAYSTACK: 'starling-lm:7b-alpha-q4_K_M'
 #LLM_HAYSTACK: 'starling-lm:7b-alpha-q5_K_M'
 LLM_HAYSTACK: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
@@ -26,13 +26,13 @@ MAX_LOOPS_ALLOWED_HAYSTACK: 3
 
 
 # AGENT FOR VLLAMAINDEX
-# Tested with below LLMs
+# Tested with these LLMs
 LLM_VLLAMAINDEX: 'llava:13b'
 
 
 # AGENT FOR VPROCESSOR
 OCR_ENDPOINT_VPROCESSOR: 'http://127.0.0.1:8001/api/v1/sparrow-ocr/inference'
-# Tested with below LLMs
+# Tested with these LLMs
 #LLM_VPROCESSOR: 'starling-lm:7b-alpha-q5_K_M'
 #LLM_VPROCESSOR: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
 LLM_VPROCESSOR: 'llama3:8b-instruct-q5_K_M'
@@ -41,12 +41,12 @@ OLLAMA_BASE_URL_VPROCESSOR: 'http://127.0.0.1:11434'
 
 # AGENT FOR FUNCTION CALL
 OLLAMA_BASE_URL_FUNCTION: 'http://127.0.0.1:11434/v1'
-# Tested with below LLMs
+# Tested with these LLMs
 LLM_FUNCTION: 'llama3:8b-instruct-q5_K_M'
 
 
 # AGENT FOR UNSTRUCTURED LIGHT
-# Tested with below LLMs
+# Tested with these LLMs
 LLM_UNSTRUCTURED_LIGHT: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
 # Strategy for analyzing PDFs and extracting table structure
 STRATEGY_UNSTRUCTURED_LIGHT: 'hi_res'
@@ -60,7 +60,7 @@ BASE_URL_UNSTRUCTURED_LIGHT: 'http://127.0.0.1:11434'
 
 
 # AGENT FOR UNSTRUCTURED
-# Tested with below LLMs
+# Tested with these LLMs
 LLM_UNSTRUCTURED: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
 OUTPUT_DIR_UNSTRUCTURED: 'data/json'
 INPUT_DIR_UNSTRUCTURED: 'data/pdf'
