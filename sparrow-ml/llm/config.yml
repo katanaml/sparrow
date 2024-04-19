@@ -1,12 +1,13 @@
 # AGENT FOR LLAMAINDEX
+# Tested with below LLMs
 #LLM: 'starling-lm:7b-alpha-q4_K_M'
-LLM: 'starling-lm:7b-alpha-q5_K_M'
-#LLM: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
+#LLM: 'starling-lm:7b-alpha-q5_K_M'
+LLM: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
+#LLM: 'llama3:8b-instruct-q5_K_M'
 EMBEDDINGS: 'sentence-transformers/all-mpnet-base-v2'
 WEAVIATE_URL: 'http://localhost:8080'
 CHUNK_SIZE: 3000
 OLLAMA_BASE_URL: 'http://127.0.0.1:11434'
-#OLLAMA_BASE_URL: 'http://192.168.68.107:11434'
 
 
 # AGENT FOR HAYSTACK
@@ -14,59 +15,58 @@ SPLIT_BY_HAYSTACK: 'sentence'
 SPLIT_LENGTH_HAYSTACK: 10
 SPLIT_OVERLAP_HAYSTACK: 2
 EMBEDDINGS_HAYSTACK: 'sentence-transformers/all-MiniLM-L6-v2'
+# Tested with below LLMs
 #LLM_HAYSTACK: 'starling-lm:7b-alpha-q4_K_M'
-LLM_HAYSTACK: 'starling-lm:7b-alpha-q5_K_M'
-#LLM_HAYSTACK: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
+#LLM_HAYSTACK: 'starling-lm:7b-alpha-q5_K_M'
+LLM_HAYSTACK: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
+#LLM_HAYSTACK: 'llama3:8b-instruct-q5_K_M'
 OLLAMA_BASE_URL_HAYSTACK: 'http://127.0.0.1:11434'
 #OLLAMA_BASE_URL_HAYSTACK: 'http://192.168.68.107:11434'
 MAX_LOOPS_ALLOWED_HAYSTACK: 3
 
 
 # AGENT FOR VLLAMAINDEX
+# Tested with below LLMs
 LLM_VLLAMAINDEX: 'llava:13b'
 
 
 # AGENT FOR VPROCESSOR
-VPROCESSOR_OCR_ENDPOINT: 'http://127.0.0.1:8001/api/v1/sparrow-ocr/inference'
-LLM_VPROCESSOR: 'starling-lm:7b-alpha-q5_K_M'
+OCR_ENDPOINT_VPROCESSOR: 'http://127.0.0.1:8001/api/v1/sparrow-ocr/inference'
+# Tested with below LLMs
+#LLM_VPROCESSOR: 'starling-lm:7b-alpha-q5_K_M'
 #LLM_VPROCESSOR: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
+LLM_VPROCESSOR: 'llama3:8b-instruct-q5_K_M'
 OLLAMA_BASE_URL_VPROCESSOR: 'http://127.0.0.1:11434'
 
 
 # AGENT FOR FUNCTION CALL
 OLLAMA_BASE_URL_FUNCTION: 'http://127.0.0.1:11434/v1'
-LLM_FUNCTION: 'starling-lm:7b-alpha-q5_K_M'
+# Tested with below LLMs
+LLM_FUNCTION: 'llama3:8b-instruct-q5_K_M'
 
 
 # AGENT FOR UNSTRUCTURED LIGHT
+# Tested with below LLMs
 LLM_UNSTRUCTURED_LIGHT: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
 # Strategy for analyzing PDFs and extracting table structure
-LLM_UNSTRUCTURED_LIGHT_STRATEGY: 'hi_res'
+STRATEGY_UNSTRUCTURED_LIGHT: 'hi_res'
 # Best model for table extraction. Other options are detectron2_onnx and chipper depending on file layout
-LLM_UNSTRUCTURED_LIGHT_MODEL: 'yolox'
-LLM_UNSTRUCTURED_LIGHT_CHUNK_SIZE: 1000
-LLM_UNSTRUCTURED_LIGHT_OVERLAP: 200
+MODEL_UNSTRUCTURED_LIGHT: 'yolox'
+CHUNK_SIZE_UNSTRUCTURED_LIGHT: 1000
+OVERLAP_UNSTRUCTURED_LIGHT: 200
 # ollama pull nomic-embed-text
-LLM_UNSTRUCTURED_LIGHT_EMBEDDINGS: 'nomic-embed-text'
+EMBEDDINGS_UNSTRUCTURED_LIGHT: 'nomic-embed-text'
+BASE_URL_UNSTRUCTURED_LIGHT: 'http://127.0.0.1:11434'
 
 
 # AGENT FOR UNSTRUCTURED
+# Tested with below LLMs
 LLM_UNSTRUCTURED: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
-LLM_UNSTRUCTURED_OUTPUT_DIR: 'data/json'
-LLM_UNSTRUCTURED_INPUT_DIR: 'data/pdf'
-LLM_UNSTRUCTURED_WEAVIATE_URL: 'http://localhost:8080'
-LLM_UNSTRUCTURED_EMBEDDINGS: 'all-MiniLM-L6-v2'
-LLM_UNSTRUCTURED_DEVICE: 'cpu'
-LLM_UNSTRUCTURED_CHUNK_UNDER_N_CHARS: 250
-LLM_UNSTRUCTURED_CHUNK_NEW_AFTER_N_CHARS: 500
-
-
-# AGENT FOR OLLAMA LIGHT
-LLM_OLLAMA_LIGHT: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
-# Strategy for analyzing PDFs and extracting table structure
-LLM_OLLAMA_LIGHT_STRATEGY: 'hi_res'
-# Best model for table extraction. Other options are detectron2_onnx and chipper depending on file layout
-LLM_OLLAMA_LIGHT_MODEL: 'yolox'
-LLM_OLLAMA_LIGHT_CHUNK_SIZE: 1000
-LLM_OLLAMA_LIGHT_OVERLAP: 200
-LLM_OLLAMA_LIGHT_EMBEDDINGS: 'nomic-embed-text'
+OUTPUT_DIR_UNSTRUCTURED: 'data/json'
+INPUT_DIR_UNSTRUCTURED: 'data/pdf'
+WEAVIATE_URL_UNSTRUCTURED: 'http://localhost:8080'
+EMBEDDINGS_UNSTRUCTURED: 'all-MiniLM-L6-v2'
+DEVICE_UNSTRUCTURED: 'cpu'
+CHUNK_UNDER_N_CHARS_UNSTRUCTURED: 250
+CHUNK_NEW_AFTER_N_CHARS_UNSTRUCTURED: 500
+BASE_URL_UNSTRUCTURED: 'http://127.0.0.1:11434'
