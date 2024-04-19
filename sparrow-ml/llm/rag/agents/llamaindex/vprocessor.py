@@ -48,7 +48,7 @@ class VProcessorPipeline(Pipeline):
                 'image_url': ''
             }
 
-            response = self.invoke_pipeline_step(lambda: requests.post(cfg.VPROCESSOR_OCR_ENDPOINT,
+            response = self.invoke_pipeline_step(lambda: requests.post(cfg.OCR_ENDPOINT_VPROCESSOR,
                                                                        data=data,
                                                                        files=files,
                                                                        timeout=180),

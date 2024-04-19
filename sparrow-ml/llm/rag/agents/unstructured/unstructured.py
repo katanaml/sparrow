@@ -46,13 +46,16 @@ class UnstructuredPipeline(Pipeline):
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
 
+        if len(query_inputs) == 1:
+            raise ValueError("Please provide more than one query input")
+
         start = timeit.default_timer()
 
-        output_dir = cfg.LLM_UNSTRUCTURED_OUTPUT_DIR
-        input_dir = cfg.LLM_UNSTRUCTURED_INPUT_DIR
-        weaviate_url = cfg.LLM_UNSTRUCTURED_WEAVIATE_URL
-        embedding_model_name = cfg.LLM_UNSTRUCTURED_EMBEDDINGS
-        device = cfg.LLM_UNSTRUCTURED_DEVICE
+        output_dir = cfg.OUTPUT_DIR_UNSTRUCTURED
+        input_dir = cfg.INPUT_DIR_UNSTRUCTURED
+        weaviate_url = cfg.WEAVIATE_URL_UNSTRUCTURED
+        embedding_model_name = cfg.EMBEDDINGS_UNSTRUCTURED
+        device = cfg.DEVICE_UNSTRUCTURED
 
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_input_dir = os.path.join(temp_dir, input_dir)
@@ -78,7 +81,8 @@ class UnstructuredPipeline(Pipeline):
             )
 
         llm = self.invoke_pipeline_step(
-            lambda: Ollama(model=cfg.LLM_UNSTRUCTURED),
+            lambda: Ollama(model=cfg.LLM_UNSTRUCTURED,
+                           base_url=cfg.BASE_URL_UNSTRUCTURED),
             "Initializing Ollama...",
             local
         )
@@ -134,8 +138,8 @@ class UnstructuredPipeline(Pipeline):
             client=client,
             embedding_model=embedding_model,
             device=device,
-            chunk_under_n_chars=cfg.LLM_UNSTRUCTURED_CHUNK_UNDER_N_CHARS,
-            chunk_new_after_n_chars=cfg.LLM_UNSTRUCTURED_CHUNK_NEW_AFTER_N_CHARS
+            chunk_under_n_chars=cfg.CHUNK_UNDER_N_CHARS_UNSTRUCTURED,
+            chunk_new_after_n_chars=cfg.CHUNK_NEW_AFTER_N_CHARS_UNSTRUCTURED
         )
 
         if debug:

@@ -137,7 +137,8 @@ class HaystackPipeline(PipelineInterface):
         start = timeit.default_timer()
 
         generator = OllamaGenerator(model=cfg.LLM_HAYSTACK,
-                                    url=cfg.OLLAMA_BASE_URL_HAYSTACK + "/api/generate")
+                                    url=cfg.OLLAMA_BASE_URL_HAYSTACK + "/api/generate",
+                                    timeout=900)
 
         template = """
         Given only the following document information, retrieve answer.

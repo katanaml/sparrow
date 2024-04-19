@@ -49,8 +49,8 @@ class UnstructuredLightPipeline(Pipeline):
 
         start = timeit.default_timer()
 
-        strategy = cfg.LLM_UNSTRUCTURED_LIGHT_STRATEGY
-        model_name = cfg.LLM_UNSTRUCTURED_LIGHT_MODEL
+        strategy = cfg.STRATEGY_UNSTRUCTURED_LIGHT
+        model_name = cfg.MODEL_UNSTRUCTURED_LIGHT
 
         # check if string options contains word table
         extract_tables = False
@@ -84,19 +84,20 @@ class UnstructuredLightPipeline(Pipeline):
                 )
 
         docs = self.invoke_pipeline_step(
-            lambda: self.split_text(documents, cfg.LLM_UNSTRUCTURED_LIGHT_CHUNK_SIZE, cfg.LLM_UNSTRUCTURED_LIGHT_OVERLAP),
+            lambda: self.split_text(documents, cfg.CHUNK_SIZE_UNSTRUCTURED_LIGHT, cfg.OVERLAP_UNSTRUCTURED_LIGHT),
             "Splitting text...",
             local
         )
 
         db = self.invoke_pipeline_step(
-            lambda: self.prepare_vector_store(docs, cfg.LLM_UNSTRUCTURED_LIGHT_EMBEDDINGS),
+            lambda: self.prepare_vector_store(docs, cfg.EMBEDDINGS_UNSTRUCTURED_LIGHT),
             "Preparing vector store...",
             local
         )
 
         llm = self.invoke_pipeline_step(
-            lambda: Ollama(model=cfg.LLM_UNSTRUCTURED_LIGHT),
+            lambda: Ollama(model=cfg.LLM_UNSTRUCTURED_LIGHT,
+                           base_url=cfg.BASE_URL_UNSTRUCTURED_LIGHT),
             "Initializing Ollama...",
             local
         )

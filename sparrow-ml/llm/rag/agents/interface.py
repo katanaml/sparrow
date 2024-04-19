@@ -26,25 +26,25 @@ class Pipeline(ABC):
 # Factory Method
 def get_pipeline(agent_name: str) -> Pipeline:
     if agent_name == "llamaindex":
-        from .llamaindex import LlamaIndexPipeline
+        from rag.agents.llamaindex.llamaindex import LlamaIndexPipeline
         return LlamaIndexPipeline()
     elif agent_name == "haystack":
-        from .haystack import HaystackPipeline
+        from rag.agents.haystack.haystack import HaystackPipeline
         return HaystackPipeline()
     elif agent_name == "vllamaindex":
-        from .vllamaindex import VLlamaIndexPipeline
+        from rag.agents.llamaindex.vllamaindex import VLlamaIndexPipeline
         return VLlamaIndexPipeline()
     elif agent_name == "vprocessor":
-        from .vprocessor import VProcessorPipeline
+        from rag.agents.llamaindex.vprocessor import VProcessorPipeline
         return VProcessorPipeline()
     elif agent_name == "fcall":
-        from .fcall import FCall
+        from rag.agents.instructor.fcall import FCall
         return FCall()
     elif agent_name == "unstructured-light":
-        from .unstructured_light import UnstructuredLightPipeline
+        from rag.agents.unstructured.unstructured_light import UnstructuredLightPipeline
         return UnstructuredLightPipeline()
     elif agent_name == "unstructured":
-        from .unstructured import UnstructuredPipeline
+        from rag.agents.unstructured.unstructured import UnstructuredPipeline
         return UnstructuredPipeline()
     else:
         raise ValueError(f"Unknown agent: {agent_name}")

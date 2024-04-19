@@ -31,10 +31,11 @@ str, str, str, str, List[str], List[str], str" --agent llamaindex --index-name S
 Time to retrieve answer: 63.74948522399791
 
 
-./sparrow.sh "invoice_number" "int" --agent llamaindex --index-name Sparrow_llamaindex_doc1
+./sparrow.sh "invoice_number, invoice_date" "int, str" --agent llamaindex --index-name Sparrow_llamaindex_doc1
 
 {
-    "invoice_number": 61356291
+    "invoice_number": 61356291,
+    "invoice_date": "09/06/2012"
 }
 ==================================================
 Time to retrieve answer: 15.325319556002796
@@ -56,6 +57,12 @@ Time to retrieve answer: 17.55766561099881
 
 ./sparrow.sh "guest_no, cashier_name" "int, str" --agent vllamaindex --file-path
 /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/inout-20211211_001.jpg
+
+{
+  "guest_no": 49,
+  "cashier_name": "Cashier Name"
+}
+
 
 
 ./sparrow.sh "store_name, receipt_id, receipt_item_names, receipt_item_prices, receipt_date, receipt_store_id,
@@ -94,8 +101,8 @@ The stock price of the ExxonMobil is 113.48999786376953. USD
 Time to retrieve answer: 16.426633964991197
 
 
-./sparrow.sh "invoice_number, invoice_date, total_gross_worth" "int, str, str" --agent unstructured-light --file-path
-/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
+./sparrow.sh "invoice_number, invoice_date, total_gross_worth" "int, str, str" --agent unstructured-light
+--file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
 
 {
     "invoice_number": 61356291,

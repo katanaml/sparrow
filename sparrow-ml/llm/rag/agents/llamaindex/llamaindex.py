@@ -34,6 +34,9 @@ class LlamaIndexPipeline(Pipeline):
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
 
+        if len(query_inputs) == 1:
+            raise ValueError("Please provide more than one query input")
+
         start = timeit.default_timer()
 
         rag_chain = self.build_rag_pipeline(query_inputs, query_types, index_name, debug, local)
