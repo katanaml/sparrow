@@ -27,6 +27,8 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 
 See detailed instructions below.
 
+## Installation
+
 ### RAG runs offline on a local machine
 
 - **Install Weaviate local DB with Docker:**
