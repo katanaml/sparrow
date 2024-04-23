@@ -1,5 +1,17 @@
 # ChangeLog
 
+## [v0.1.7] - 2024-04-23
+
+### New Features
+
+- New Instructor agent
+
+### What's Changed
+
+- Added instructor agent for better JSON response generation
+
+
+
 ## [v0.1.6] - 2024-04-17
 
 ### New Features
