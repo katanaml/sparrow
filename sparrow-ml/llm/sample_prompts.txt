@@ -228,3 +228,25 @@ str" --agent unstructured-light --file-path /Users/andrejb/infra/shared/katana-g
 }
 ==================================================
 Time to retrieve answer: 80.8209542609984
+
+
+./sparrow.sh "names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "List[str], List[str], str" --agent instructor --file-path /Users/andrejb/infra/s
+hared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
+
+{
+    "names_of_invoice_items": [
+        "Wine Glasses Goblets Pair Clear Glass",
+        "With Hooks Stemware Storage Multiple Uses Iron Wine Rack Hanging Glass",
+        "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
+        "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 4 20 FL OZ (591 ml) NEW"
+    ],
+    "gross_worth_of_invoice_items": [
+        "66,00",
+        "123,55",
+        "8,25",
+        "14,29"
+    ],
+    "total_gross_worth": "212,09"
+}
+==================================================
+Time to retrieve answer: 97.52105149999261
