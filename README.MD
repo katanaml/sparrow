@@ -20,6 +20,7 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 - **fcall** - Function call pipeline
 - **unstructured-light** - RAG pipeline with Unstructured and LangChain, supports PDF and image processing
 - **unstructured** - RAG pipeline with Weaviate vector DB query, Unstructured and LangChain, supports PDF and image processing
+- **instructor** - RAG pipeline with Unstructured and Instructor libraries, supports PDF and image processing. Works great for JSON response generation
 
 ### Services
 
@@ -106,7 +107,7 @@ python -m venv .env_instructor
 python -m venv .env_unstructured
 ```
 
-`.env_llamaindex` is used for LLM RAG with `llamaindex`, `vllamaindex` and `vprocessor` agents, `.env_haystack` is used for LLM RAG with `haystack` agent, and `.env_instructor` is used for LLM function calling with `fcall` agent. `.env_unstructured` is used for `unstructured-light` and `unstructured` agents.
+`.env_llamaindex` is used for LLM RAG with `llamaindex`, `vllamaindex` and `vprocessor` agents, `.env_haystack` is used for LLM RAG with `haystack` agent, and `.env_instructor` is used for LLM function calling with `fcall` agent and for `instructor` RAG agent. `.env_unstructured` is used for `unstructured-light` and `unstructured` agents.
 
 2. Create virtual environment in `sparrow-data/ocr` folder:
 
@@ -261,6 +262,12 @@ Use `unstructured` agent to run RAG pipeline with Weaviate query (no separate st
 
 ```
 ./sparrow.sh "invoice_number, invoice_date, total_gross_worth" "int, str, str" --agent unstructured --file-path /data/invoice_1.pdf
+```
+
+Use `instructor` agent to run RAG pipeline with Unstructured and Instructor libraries. Unstructured helps to pre-process data for better LLM responses. Instructor simplifies RAG pipeline and ensures JSON responses. This agent supports both PDF, JPG and PNG files
+
+```
+./sparrow.sh "names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "List[str], List[str], str" --agent instructor --file-path /data/invoice_1.pdf
 ```
 
 ## FastAPI Endpoint for Local LLM RAG
@@ -421,6 +428,21 @@ curl -X 'POST' \
   -F 'fields=names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth' \
   -F 'types=List[str], List[str], str' \
   -F 'agent=unstructured' \
+  -F 'index_name=' \
+  -F 'options=' \
+  -F 'file=@invoice_1.pdf;type=application/pdf'
+```
+
+Inference call with `instructor` agent, this agent supports also JPG and PNG files:
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'fields=names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth' \
+  -F 'types=List[str], List[str], str' \
+  -F 'agent=instructor' \
   -F 'index_name=' \
   -F 'options=' \
   -F 'file=@invoice_1.pdf;type=application/pdf'
