@@ -40,6 +40,9 @@ def get_pipeline(agent_name: str) -> Pipeline:
     elif agent_name == "fcall":
         from rag.agents.instructor.fcall import FCall
         return FCall()
+    elif agent_name == "instructor":
+        from rag.agents.instructor.instructor import InstructorPipeline
+        return InstructorPipeline()
     elif agent_name == "unstructured-light":
         from rag.agents.unstructured.unstructured_light import UnstructuredLightPipeline
         return UnstructuredLightPipeline()
