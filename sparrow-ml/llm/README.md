@@ -15,6 +15,18 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 - **unstructured** - RAG pipeline with Weaviate vector DB query, Unstructured and LangChain, supports PDF and image processing
 - **instructor** - RAG pipeline with Unstructured and Instructor libraries, supports PDF and image processing. Works great for JSON response generation
 
+## Quickstart
+
+1. Install Weaviate vector DB, if you are planning to use Sparrow agent, which runs Weaviate (for example `llamaindex` or `unstructured`)
+2. Install `pyenv` and then install Python into your environment
+3. Create virtual environment for the Sparrow agent you want to run
+4. Install requirements for the Sparrow agent you want to use. Keep in mind, depending on OS, it could be required to do additional install steps for some of the libraries (for example PaddleOCR or Unstructured)
+5. Run Sparrow either from CLI or from API. You need to start API endpoint
+6. Pass field names and types you want to extract from the document
+7. Some of the Sparrow agents (`vprocessor`, `instructor`, etc.) support both PDF and image formats
+
+See detailed instructions below.
+
 ### RAG runs offline on a local machine
 
 - **Install Weaviate local DB with Docker:**
