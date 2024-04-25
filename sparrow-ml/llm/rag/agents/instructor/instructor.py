@@ -171,6 +171,8 @@ class InstructorPipeline(Pipeline):
                 extracted_elements.append(entry["text"])
             elif entry["type"] == "NarrativeText" and extract_tables is False:
                 extracted_elements.append(entry["text"])
+            elif entry["type"] == "UncategorizedText" and extract_tables is False:
+                extracted_elements.append(entry["text"])
 
         # Write the extracted elements to the output file
         new_extension = 'txt'  # You can change this to any extension you want
