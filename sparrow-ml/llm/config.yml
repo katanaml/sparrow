@@ -74,9 +74,11 @@ BASE_URL_UNSTRUCTURED: 'http://127.0.0.1:11434'
 
 # AGENT FOR INSTRUCTOR
 OLLAMA_BASE_URL_INSTRUCTOR: 'http://127.0.0.1:11434/v1'
+#OLLAMA_BASE_URL_INSTRUCTOR: 'http://192.168.68.107:11434/v1'
 # Tested with these LLMs
-LLM_INSTRUCTOR: 'llama3:8b-instruct-q5_K_M'
+#LLM_INSTRUCTOR: 'llama3:8b-instruct-q5_K_M'
 #LLM_INSTRUCTOR: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
+LLM_INSTRUCTOR: 'wizardlm2:7b-q5_K_M'
 # Strategy for analyzing PDFs and extracting table structure
 STRATEGY_INSTRUCTOR: 'hi_res'
 # Best model for table extraction. Other options are detectron2_onnx and chipper depending on file layout
