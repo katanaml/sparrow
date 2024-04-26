@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "sparrow-parse"
+version = "0.1.7-dev1"
+description = "Sparrow Parse is a Python package for parsing and extracting information from documents."
+authors = ["Andrej Baranovskij <andrejus.baranovskis@gmail.com>"]
+license = "GPL-3.0"
+readme = "README.md"
+homepage = "https://github.com/katanaml/katana-skipper"
+repository = "https://github.com/katanaml/sparrow"
+keywords = ["llm", "rag", "vision"]
+classifiers = [
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Topic :: Software Development",
+    "Programming Language :: Python :: 3.10",
+]
+include = [
+    "LICENSE",
+]
+
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.31.0"
+
+
+[tool.poetry.scripts]
+sparrow-parse = 'sparrow_parse:main'
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

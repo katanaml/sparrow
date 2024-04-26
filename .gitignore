@@ -65,3 +65,13 @@ sparrow-ml/llm/.env_llamaindex/
 sparrow-ml/llm/.env_instructor/
 sparrow-ml/llm/.env_unstructured/
 sparrow-data/ocr/.env_ocr/
+sparrow-data/parse/.env_parse
+sparrow-data/parse/.idea/inspectionProfiles/profiles_settings.xml
+sparrow-data/parse/.idea/inspectionProfiles/Project_Default.xml
+sparrow-data/parse/.idea/misc.xml
+sparrow-data/parse/.idea/modules.xml
+sparrow-data/parse/.idea/parse.iml
+sparrow-data/parse/.idea/vcs.xml
+sparrow-data/parse/dist/sparrow_parse-0.1.7-py3-none-any.whl
+sparrow-data/parse/dist/sparrow_parse-0.1.7.tar.gz
+sparrow-data/parse/poetry.lock
