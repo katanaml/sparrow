@@ -15,6 +15,8 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 - **unstructured** - RAG pipeline with Weaviate vector DB query, Unstructured and LangChain, supports PDF and image processing
 - **instructor** - RAG pipeline with Unstructured and Instructor libraries, supports PDF and image processing. Works great for JSON response generation
 
+![Sparrow](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_architecture.png)
+
 ## Quickstart
 
 1. Install Weaviate vector DB, if you are planning to use Sparrow agent, which runs Weaviate (for example `llamaindex` or `unstructured`)
