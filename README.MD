@@ -3,6 +3,8 @@
 [![GitHub Stars](https://img.shields.io/github/stars/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/issues)
 [![Current Version](https://img.shields.io/badge/version-1.1.0-green.svg)](https://github.com/katanaml/sparrow)
+
+
 Data processing with ML and LLM
 
 <p align="center">
