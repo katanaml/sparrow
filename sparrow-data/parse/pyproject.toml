@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "sparrow-parse"
-version = "0.1.7-dev1"
+version = "0.1.7"
 description = "Sparrow Parse is a Python package for parsing and extracting information from documents."
 authors = ["Andrej Baranovskij <andrejus.baranovskis@gmail.com>"]
 license = "GPL-3.0"
 readme = "README.md"
-homepage = "https://github.com/katanaml/katana-skipper"
+homepage = "https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse"
 repository = "https://github.com/katanaml/sparrow"
 keywords = ["llm", "rag", "vision"]
 classifiers = [
