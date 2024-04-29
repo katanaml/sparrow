@@ -25,6 +25,18 @@ processor = PDFProcessor()
 result = processor.process_file(file_path, strategy, model_name)
 ```
 
+Build for development
+
+```
+poetry build
+```
+
+Publish to PyPi
+
+```
+poetry publish
+```
+
 ## Commercial usage
 
 Sparrow is available under the GPL 3.0 license, promoting freedom to use, modify, and distribute the software while ensuring any modifications remain open source under the same license. This aligns with our commitment to supporting the open-source community and fostering collaboration.
