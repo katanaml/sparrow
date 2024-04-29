@@ -2,31 +2,27 @@
 
 ## Description
 
-This module implements Sparrow library with helpful methods for data pre-processing.
+This module implements Sparrow Parse [library](https://pypi.org/project/sparrow-parse/) with helpful methods for data pre-processing.
 
 ## Install
 
-
-
-## Run Sparrow OCR app
-
-You may need to change port in api.py
-
 ```
-python api.py
+pip install sparrow-parse
 ```
 
-## Sparrow OCR
+## Use
 
-If you want to test how OCR works, you can run this API request through CURL
+Import
 
 ```
-curl -X 'POST' \
-  'http://127.0.0.1:8001/api/v1/sparrow-ocr/inference' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: multipart/form-data' \
-  -F 'file=' \
-  -F 'image_url=https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-ml/llm/data/inout-20211211_001.jpg'
+from sparrow_parse.pdf.pdf_processor import PDFProcessor
+```
+
+Usage
+
+```
+processor = PDFProcessor()
+result = processor.process_file(file_path, strategy, model_name)
 ```
 
 ## Commercial usage
