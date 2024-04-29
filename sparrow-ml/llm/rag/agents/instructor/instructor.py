@@ -5,6 +5,7 @@ from unstructured.partition.pdf import partition_pdf
 from unstructured.partition.image import partition_image
 from unstructured.staging.base import elements_to_json
 from pydantic import create_model
+# from sparrow_parse.pdf.pdf_processor import PDFProcessor
 from typing import List
 from rich.progress import Progress, SpinnerColumn, TextColumn
 import tempfile
@@ -48,6 +49,9 @@ class InstructorPipeline(Pipeline):
 
         strategy = cfg.STRATEGY_INSTRUCTOR
         model_name = cfg.MODEL_INSTRUCTOR
+
+        # processor = PDFProcessor()
+        # result = processor.process_file(file_path, strategy, model_name)
 
         # check if string options contains word table
         extract_tables = False

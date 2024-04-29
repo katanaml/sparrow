@@ -11,6 +11,8 @@ typer[all]
 fastapi==0.110.2
 uvicorn[standard]
 python-multipart
+sparrow-parse
+
 
 # Force reinstall:
 # pip install --force-reinstall -r requirements_instructor.txt
