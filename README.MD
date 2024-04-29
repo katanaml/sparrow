@@ -33,6 +33,7 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 ### Services
 
 * **[sparrow-data-ocr](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - OCR service, providing optical character recognition as part of the Sparrow.
+* **[sparrow-data-parse](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse)** - Sparrow library with helpful methods for data pre-processing to be ready for LLM
 * **[sparrow-ml-llm](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** - LLM RAG pipeline, Sparrow service for data extraction and document processing.
 * **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/)** - Dashboard UI for LLM RAG pipeline.
 
