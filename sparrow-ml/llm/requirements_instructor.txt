@@ -1,17 +1,15 @@
 ollama==0.1.8
 python-multipart
 yfinance==0.2.38
-instructor==1.2.2
+instructor==1.2.5
 python-box
 PyYAML
-unstructured[all-docs]==0.13.3
-unstructured-inference==0.7.27
 rich
 typer[all]
 fastapi==0.110.2
 uvicorn[standard]
-python-multipart
-sparrow-parse
+sparrow-parse==0.1.9
+anthropic
 
 
 # Force reinstall:
