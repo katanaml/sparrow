@@ -15,17 +15,17 @@ pip install sparrow-parse
 Import
 
 ```
-from sparrow_parse.pdf.pdf_processor import PDFProcessor
+from sparrow_parse.extractor.file_processor import FileProcessor
 ```
 
 Usage
 
 ```
-processor = PDFProcessor()
-result = processor.process_file(file_path, strategy, model_name)
+processor = FileProcessor()
+content = processor.extract_data(file_path, strategy, model_name, options, local, debug)
 ```
 
-Build for development
+## Library build
 
 ```
 poetry build
