@@ -35,8 +35,8 @@ class HaystackIngest(Ingest):
         document_cleaner = DocumentCleaner()
         document_splitter = DocumentSplitter(
             split_by="word",
-            split_length=150,
-            split_overlap=50
+            split_length=cfg.SPLIT_LENGTH_HAYSTACK,
+            split_overlap=cfg.SPLIT_OVERLAP_HAYSTACK
         )
 
         document_embedder = SentenceTransformersDocumentEmbedder(model="sentence-transformers/all-MiniLM-L6-v2")
