@@ -2,7 +2,7 @@
 # Tested with these LLMs
 #LLM: 'starling-lm:7b-alpha-q4_K_M'
 #LLM: 'starling-lm:7b-alpha-q5_K_M'
-LLM: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
+LLM: 'adrienbrault/nous-hermes2theta-llama3-8b:q5_K_M'
 #LLM: 'llama3:8b-instruct-q5_K_M'
 EMBEDDINGS: 'sentence-transformers/all-mpnet-base-v2'
 WEAVIATE_URL: 'http://localhost:8080'
@@ -19,7 +19,7 @@ EMBEDDINGS_HAYSTACK: 'sentence-transformers/all-MiniLM-L6-v2'
 # Tested with these LLMs
 #LLM_HAYSTACK: 'starling-lm:7b-alpha-q4_K_M'
 #LLM_HAYSTACK: 'starling-lm:7b-alpha-q5_K_M'
-LLM_HAYSTACK: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
+LLM_HAYSTACK: 'adrienbrault/nous-hermes2theta-llama3-8b:q5_K_M'
 #LLM_HAYSTACK: 'llama3:8b-instruct-q5_K_M'
 OLLAMA_BASE_URL_HAYSTACK: 'http://127.0.0.1:11434'
 #OLLAMA_BASE_URL_HAYSTACK: 'http://192.168.68.107:11434'
@@ -43,7 +43,7 @@ OLLAMA_BASE_URL_VPROCESSOR: 'http://127.0.0.1:11434'
 # AGENT FOR FUNCTION CALL
 OLLAMA_BASE_URL_FUNCTION: 'http://127.0.0.1:11434/v1'
 # Tested with these LLMs
-LLM_FUNCTION: 'llama3:8b-instruct-q5_K_M'
+LLM_FUNCTION: 'adrienbrault/nous-hermes2theta-llama3-8b:q5_K_M'
 
 
 # AGENT FOR UNSTRUCTURED LIGHT
@@ -77,10 +77,10 @@ BASE_URL_UNSTRUCTURED: 'http://127.0.0.1:11434'
 OLLAMA_BASE_URL_INSTRUCTOR: 'http://127.0.0.1:11434/v1'
 #OLLAMA_BASE_URL_INSTRUCTOR: 'http://192.168.68.107:11434/v1'
 # Tested with these LLMs
-#LLM_INSTRUCTOR: 'adrienbrault/nous-hermes2pro-llama3-8b:q5_K_M'
+LLM_INSTRUCTOR: 'adrienbrault/nous-hermes2theta-llama3-8b:q5_K_M'
 #LLM_INSTRUCTOR: 'adrienbrault/nous-hermes2pro:Q5_K_M-json'
-LLM_INSTRUCTOR: 'wizardlm2:7b-q5_K_M'
+#LLM_INSTRUCTOR: 'wizardlm2:7b-q5_K_M'
 # Strategy for analyzing PDFs and extracting table structure
 STRATEGY_INSTRUCTOR: 'hi_res'
-# Best model for table extraction. Other options are detectron2_onnx and chipper depending on file layout
+# Using yolox model by default. Other option is detectron2_onnx, depending on file layout
 MODEL_INSTRUCTOR: 'yolox'

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sparrow-parse"
-version = "0.1.9"
+version = "0.1.17"
 description = "Sparrow Parse is a Python package for parsing and extracting information from documents."
 authors = ["Andrej Baranovskij <andrejus.baranovskis@gmail.com>"]
 license = "GPL-3.0"
@@ -22,9 +22,12 @@ include = [
 [tool.poetry.dependencies]
 python = ">=3.9,<3.12"
 torch = {version = "2.2.2", source = "pypi"}
-unstructured = {version = "0.13.6", extras = ["all-docs"]}
-unstructured-inference = "0.7.29"
+unstructured = {version = "0.14.4", extras = ["all-docs"]}
+unstructured-inference = "0.7.33"
 rich = "^13.7.1"
+pymupdf4llm = "0.0.5"
+transformers = "4.41.2"
+sentence-transformers = "3.0.0"
 
 
 [tool.poetry.scripts]

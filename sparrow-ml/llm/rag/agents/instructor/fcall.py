@@ -7,7 +7,7 @@ import timeit
 import box
 import yaml
 from rich import print
-from typing import Any
+from typing import Any, List
 import warnings
 
 
@@ -23,7 +23,7 @@ class FCall(Pipeline):
                      query: str,
                      file_path: str,
                      index_name: str,
-                     options: str = None,
+                     options: List[str] = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")

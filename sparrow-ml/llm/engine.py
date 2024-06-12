@@ -1,6 +1,6 @@
 import warnings
 import typer
-from typing_extensions import Annotated
+from typing_extensions import Annotated, List
 from rag.agents.interface import get_pipeline
 import tempfile
 import os
@@ -15,7 +15,7 @@ def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch"
         file_path: Annotated[str, typer.Option(help="The file to process")] = None,
         agent: Annotated[str, typer.Option(help="Selected agent")] = "llamaindex",
         index_name: Annotated[str, typer.Option(help="Index to identify embeddings")] = None,
-        options: Annotated[str, typer.Option(help="Options to pass to the agent")] = None,
+        options: Annotated[List[str], typer.Option(help="Options to pass to the agent")] = None,
         debug: Annotated[bool, typer.Option(help="Enable debug mode")] = False):
 
     query = 'retrieve ' + inputs
