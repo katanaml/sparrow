@@ -22,7 +22,6 @@ class HTMLExtractor(object):
             i += 1
             json_result, targets_unprocessed = self.read_data_from_table(target_columns, table, column_keywords,
                                                                          group_by_rows, local, debug)
-            # print(json_result)
             answer = self.add_answer_section(answer, "items" + str(i), json_result)
 
         answer = self.format_json_output(answer)
@@ -49,7 +48,7 @@ class HTMLExtractor(object):
             print(f"Columns: {columns}")
             print(f"Target columns: {target_columns}")
 
-        most_similar_indices, targets_unprocessed = self.invoke_pipeline_step(
+        indices, targets, targets_unprocessed = self.invoke_pipeline_step(
             lambda: self.calculate_similarity(columns, target_columns, debug),
             "Calculating cosine similarity between columns and target values...",
             local
@@ -60,7 +59,7 @@ class HTMLExtractor(object):
 
         # Extracting data
         extracted_data = self.invoke_pipeline_step(
-            lambda: self.extract_columns_from_table(data, most_similar_indices, target_columns, group_by_rows),
+            lambda: self.extract_columns_from_table(data, indices, targets, group_by_rows),
             "Extracting data from the table...",
             local
         )
@@ -77,7 +76,7 @@ class HTMLExtractor(object):
         target_embeddings = model.encode(target_columns)
 
         # List to store indices of the most similar columns
-        most_similar_indices = []
+        most_similar_indices = {}
         targets_unprocessed = []
 
         # Calculate cosine similarity between each column and target value
@@ -90,16 +89,38 @@ class HTMLExtractor(object):
             most_similar_column = columns[most_similar_idx]
             similarity_score = similarities[most_similar_idx].item()
             if similarity_score > 0.3:
-                most_similar_indices.append(most_similar_idx)  # Store the index
+                if most_similar_idx in most_similar_indices:
+                    if similarity_score > most_similar_indices[most_similar_idx][1]:
+                        targets_unprocessed.append(most_similar_indices[most_similar_idx][0])
+                        most_similar_indices[most_similar_idx] = (target, similarity_score)
+                    else:
+                        targets_unprocessed.append(target)
+                else:
+                    most_similar_indices[most_similar_idx] = (target, similarity_score)
             else:
                 targets_unprocessed.append(target)
             if debug:
                 print(
                     f"The most similar column to '{target}' is '{most_similar_column}' with a similarity score of {similarity_score:.4f} and order ID {most_similar_idx}")
 
-        return most_similar_indices, targets_unprocessed
+        most_similar_indices = dict(sorted(most_similar_indices.items()))
 
-    def extract_columns_from_table(self, html_table, column_ids, custom_column_names, group_by_rows=False):
+        indices = []
+        targets = []
+
+        for idx, (target, _) in most_similar_indices.items():
+            indices.append(idx)
+            targets.append(target)
+
+        if debug:
+            print()
+            for idx, (target, score) in most_similar_indices.items():
+                print(f"Target: '{target}', Column: '{columns[idx]}', Column ID: {idx}, Score: {score:.4f}")
+            print()
+
+        return indices, targets, targets_unprocessed
+
+    def extract_columns_from_table(self, html_table, column_ids, target_columns, group_by_rows=False):
         soup = BeautifulSoup(html_table, 'html.parser')
         table = soup.find('table')
 
@@ -108,7 +129,7 @@ class HTMLExtractor(object):
             extracted_data = []
         else:
             # Initialize the extracted data with custom column names
-            extracted_data = {custom_column_names[i]: [] for i in range(len(column_ids))}
+            extracted_data = {target_columns[i]: [] for i in range(len(column_ids))}
 
         # Extract row information
         rows = table.find_all('tr')
@@ -125,13 +146,13 @@ class HTMLExtractor(object):
                     for idx, col_id in enumerate(column_ids):
                         value = cells[col_id].text.strip() if col_id < len(cells) else ''
                         value = value.replace('|', '').strip()
-                        row_data[custom_column_names[idx]] = value
+                        row_data[target_columns[idx]] = value
                     extracted_data.append(row_data)
                 else:
                     for idx, col_id in enumerate(column_ids):
                         value = cells[col_id].text.strip() if col_id < len(cells) else ''
                         value = value.replace('|', '').strip()
-                        extracted_data[custom_column_names[idx]].append(value)
+                        extracted_data[target_columns[idx]].append(value)
 
         return extracted_data
 
@@ -204,9 +225,8 @@ if __name__ == "__main__":
 
     answer, targets_unprocessed = extractor.read_data(
         # ['description', 'qty', 'net_price', 'net_worth', 'vat', 'gross_worth'],
-        # ['transaction_date', 'value_date', 'description', 'cheque', 'withdrawal', 'deposit', 'balance'],
-        ['deposits', 'account_number', 'od_limit', 'currency_balance', 'sgd_balance'],
-        # ['account_number', 'maturity_date', 'balance'],
+        ['transaction_date', 'value_date', 'description', 'cheque', 'withdrawal', 'deposit', 'balance',
+         'deposits', 'account_number', 'od_limit', 'currency_balance', 'sgd_balance', 'maturity_date'],
         data_list,
         # None,
         ['deposits', 'account_number', 'od_limit', 'currency_balance', 'sgd_balance', 'transaction_date',
