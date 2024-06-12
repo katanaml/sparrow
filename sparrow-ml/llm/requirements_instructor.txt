@@ -1,14 +1,14 @@
-ollama==0.1.8
+ollama==0.2.0
 python-multipart
-yfinance==0.2.38
-instructor==1.2.5
+yfinance==0.2.40
+instructor==1.3.0
 python-box
 PyYAML
 rich
 typer[all]
-fastapi==0.110.2
+fastapi==0.111.0
 uvicorn[standard]
-sparrow-parse==0.1.9
+# sparrow-parse==0.1.9
 anthropic
 
 

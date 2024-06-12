@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Any
+from typing import List
 import warnings
 
 
@@ -17,7 +18,7 @@ class Pipeline(ABC):
                      query: str,
                      file_path: str,
                      index_name: str,
-                     options: str = None,
+                     options: List[str] = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
         pass

@@ -39,7 +39,7 @@ class UnstructuredLightPipeline(Pipeline):
                      query: str,
                      file_path: str,
                      index_name: str,
-                     options: str = None,
+                     options: List[str] = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
@@ -52,9 +52,10 @@ class UnstructuredLightPipeline(Pipeline):
         strategy = cfg.STRATEGY_UNSTRUCTURED_LIGHT
         model_name = cfg.MODEL_UNSTRUCTURED_LIGHT
 
-        # check if string options contains word table
         extract_tables = False
-        if options is not None and "tables" in options:
+        # Initialize options as an empty list if it is None
+        options = options or []
+        if "tables" in options:
             extract_tables = True
 
         # Extracts the elements from the PDF
