@@ -12,7 +12,7 @@ pip install sparrow-parse
 
 ## Pre-processing
 
-1. Unstructured
+### Unstructured
 
 ```
 from sparrow_parse.extractor.unstructured_processor import UnstructuredProcessor
@@ -42,7 +42,7 @@ Example:
 
 *debug* - True
 
-2. Markdown
+### Markdown
 
 ```
 from sparrow_parse.extractor.markdown_processor import MarkdownProcessor
