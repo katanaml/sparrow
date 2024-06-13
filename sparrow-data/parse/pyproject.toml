@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sparrow-parse"
-version = "0.1.17"
+version = "0.2.0"
 description = "Sparrow Parse is a Python package for parsing and extracting information from documents."
 authors = ["Andrej Baranovskij <andrejus.baranovskis@gmail.com>"]
 license = "GPL-3.0"

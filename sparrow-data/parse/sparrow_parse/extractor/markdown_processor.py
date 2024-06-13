@@ -128,18 +128,10 @@ class MarkdownProcessor(object):
 
 if __name__ == "__main__":
     processor = MarkdownProcessor()
+
     # content, table_content = processor.extract_data(
     #     '/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf',
     #     ['tables', 'markdown'],
     #     True,
     #     True)
-    content, table_content = processor.extract_data(
-        '/Users/andrejb/Documents/work/schreiber/invoice_data/test/2618407.pdf',
-        ['tables', 'markdown'],
-        True,
-        True)
-    # content, table_content = processor.extract_data(
-    #     '/Users/andrejb/Documents/work/epik/bankstatement/POSB_2_1.pdf',
-    #     ['tables', 'markdown'],
-    #     True,
-    #     True)
+
