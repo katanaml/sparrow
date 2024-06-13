@@ -30,9 +30,9 @@ content, table_content = processor.extract_data(
 
 Example:
 
-*file_path* - '/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf'
+*file_path* - `/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf`
 
-*strategy* - 'hi_res'
+*strategy* - `hi_res`
 
 *model_name* - 'yolox'
 
@@ -74,19 +74,31 @@ from sparrow_parse.extractor.html_extractor import HTMLExtractor
 extractor = HTMLExtractor()
 
 answer, targets_unprocessed = extractor.read_data(
-        ['description', 'qty', 'net_price', 'net_worth', 'vat', 'gross_worth'],
-        # ['transaction_date', 'value_date', 'description', 'cheque', 'withdrawal', 'deposit', 'balance',
-        #  'deposits', 'account_number', 'od_limit', 'currency_balance', 'sgd_balance', 'maturity_date'],
-        data_list,
-        None,
-        # ['deposits', 'account_number', 'od_limit', 'currency_balance', 'sgd_balance', 'transaction_date',
-        #  'value_date', 'description', 'cheque', 'withdrawal', 'deposit', 'balance', 'maturity_date'],
-        True,
-        True,
-        True,
-        True)
+        target_columns,  # list of table columns data to fetch
+        data, # list of HTML tables
+        column_keywords,  # list of valid column names, can be empty
+        group_by_rows,  # JSON result grouping
+        update_targets,  # Set to true, if page contains multiple tables with the same columns
+        local,  # True if running from CLI, or False if running from FastAPI
+        debug)  # Debug
 
 ```
+
+Example:
+
+*target_columns* - ['description', 'qty', 'net_price', 'net_worth', 'vat', 'gross_worth']
+
+*data* - list of HTML tables
+
+*column_keywords* - None
+
+*group_by_rows* - True
+
+*update_targets* - True
+
+*local* - True
+
+*debug* - True
 
 ## Library build
 
