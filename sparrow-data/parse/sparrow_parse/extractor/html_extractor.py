@@ -12,17 +12,24 @@ class HTMLExtractor(object):
     def __init__(self):
         pass
 
-    def read_data(self, target_columns, data, column_keywords=None, group_by_rows=True, local=True, debug=False):
+    def read_data(self, target_columns, data, column_keywords=None, group_by_rows=True, update_targets=False,
+                  local=True, debug=False):
         answer = {}
 
         json_result, targets_unprocessed = [], []
 
         i = 0
         for table in data:
+            if not target_columns:
+                break
+
             i += 1
             json_result, targets_unprocessed = self.read_data_from_table(target_columns, table, column_keywords,
                                                                          group_by_rows, local, debug)
             answer = self.add_answer_section(answer, "items" + str(i), json_result)
+
+            if update_targets:
+                target_columns = targets_unprocessed
 
         answer = self.format_json_output(answer)
 
@@ -214,26 +221,27 @@ class HTMLExtractor(object):
 
 
 if __name__ == "__main__":
-    with open('../data/invoice_1_table.txt', 'r') as file:
-        file_content = file.read()
-
-    file_content = file_content.strip()[1:-1].strip()
-    data_list = re.split(r"',\s*'", file_content)
-    data_list = [item.strip(" '") for item in data_list]
+    # with open('../data/invoice_1_table.txt', 'r') as file:
+    #     file_content = file.read()
+    #
+    # file_content = file_content.strip()[1:-1].strip()
+    # data_list = re.split(r"',\s*'", file_content)
+    # data_list = [item.strip(" '") for item in data_list]
 
     extractor = HTMLExtractor()
 
-    answer, targets_unprocessed = extractor.read_data(
-        # ['description', 'qty', 'net_price', 'net_worth', 'vat', 'gross_worth'],
-        ['transaction_date', 'value_date', 'description', 'cheque', 'withdrawal', 'deposit', 'balance',
-         'deposits', 'account_number', 'od_limit', 'currency_balance', 'sgd_balance', 'maturity_date'],
-        data_list,
-        # None,
-        ['deposits', 'account_number', 'od_limit', 'currency_balance', 'sgd_balance', 'transaction_date',
-         'value_date', 'description', 'cheque', 'withdrawal', 'deposit', 'balance', 'maturity_date'],
-        True,
-        True,
-        True)
-
-    print(answer)
-    print(targets_unprocessed)
+    # answer, targets_unprocessed = extractor.read_data(
+    #     ['description', 'qty', 'net_price', 'net_worth', 'vat', 'gross_worth'],
+    #     # ['transaction_date', 'value_date', 'description', 'cheque', 'withdrawal', 'deposit', 'balance',
+    #     #  'deposits', 'account_number', 'od_limit', 'currency_balance', 'sgd_balance', 'maturity_date'],
+    #     data_list,
+    #     None,
+    #     # ['deposits', 'account_number', 'od_limit', 'currency_balance', 'sgd_balance', 'transaction_date',
+    #     #  'value_date', 'description', 'cheque', 'withdrawal', 'deposit', 'balance', 'maturity_date'],
+    #     True,
+    #     True,
+    #     True,
+    #     True)
+    #
+    # print(answer)
+    # print(targets_unprocessed)
