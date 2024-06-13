@@ -2,7 +2,7 @@
 
 ## Description
 
-This module implements Sparrow Parse [library](https://pypi.org/project/sparrow-parse/) with helpful methods for data pre-processing, parsing and extracting information from documents.
+This module implements Sparrow Parse [library](https://pypi.org/project/sparrow-parse/) with helpful methods for data pre-processing, parsing and extracting information.
 
 ## Install
 
@@ -21,11 +21,11 @@ processor = UnstructuredProcessor()
 
 content, table_content = processor.extract_data(
         file_path,  # file to process
-        'hi_res',  # data processing strategy supported by unstructured
-        'yolox',  # model supported by unstructured
-        ['tables', 'html'],  # table extraction into HTML format
-        True,  # True if running from CLI, or False if running from FastAPI
-        True)  # Debug
+        strategy,  # data processing strategy supported by unstructured
+        model_name,  # model supported by unstructured
+        options,  # table extraction into HTML format
+        local,  # True if running from CLI, or False if running from FastAPI
+        debug)  # Debug
 ```
 
 Example:
@@ -50,11 +50,21 @@ from sparrow_parse.extractor.markdown_processor import MarkdownProcessor
 processor = MarkdownProcessor()
 
 content, table_content = processor.extract_data(
-        '/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf',
-        ['tables', 'markdown'],
-        True,
-        True)
+        file_path,  # file to process
+        options,  # table extraction into HTML format
+        local,  # True if running from CLI, or False if running from FastAPI
+        debug)  # Debug
 ```
+
+Example:
+
+*file_path* - '/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf'
+
+*options* - ['tables', 'markdown']
+
+*local* - True
+
+*debug* - True
 
 ## Parsing and extraction
 
