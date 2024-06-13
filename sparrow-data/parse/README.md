@@ -31,10 +31,15 @@ content, table_content = processor.extract_data(
 Example:
 
 file_path - '/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf'
+
 strategy - 'hi_res'
+
 model_name - 'yolox'
+
 options - ['tables', 'html']
+
 local - True
+
 debug - True
 
 2. Markdown
