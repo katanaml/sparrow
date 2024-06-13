@@ -34,13 +34,13 @@ Example:
 
 *strategy* - `hi_res`
 
-*model_name* - 'yolox'
+*model_name* - `yolox`
 
-*options* - ['tables', 'html']
+*options* - `['tables', 'html']`
 
-*local* - True
+*local* - `True`
 
-*debug* - True
+*debug* - `True`
 
 ### Markdown
 
@@ -58,13 +58,13 @@ content, table_content = processor.extract_data(
 
 Example:
 
-*file_path* - '/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf'
+*file_path* - `/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf`
 
-*options* - ['tables', 'markdown']
+*options* - `['tables', 'markdown']`
 
-*local* - True
+*local* - `True`
 
-*debug* - True
+*debug* - `True`
 
 ## Parsing and extraction
 
@@ -76,7 +76,7 @@ extractor = HTMLExtractor()
 answer, targets_unprocessed = extractor.read_data(
         target_columns,  # list of table columns data to fetch
         data, # list of HTML tables
-        column_keywords,  # list of valid column names, can be empty
+        column_keywords,  # list of valid column names, can be empty. Useful to filter junk content
         group_by_rows,  # JSON result grouping
         update_targets,  # Set to true, if page contains multiple tables with the same columns
         local,  # True if running from CLI, or False if running from FastAPI
@@ -86,19 +86,19 @@ answer, targets_unprocessed = extractor.read_data(
 
 Example:
 
-*target_columns* - ['description', 'qty', 'net_price', 'net_worth', 'vat', 'gross_worth']
+*target_columns* - `['description', 'qty', 'net_price', 'net_worth', 'vat', 'gross_worth']`
 
-*data* - list of HTML tables
+*data* - `list of HTML tables`
 
-*column_keywords* - None
+*column_keywords* - `None`
 
-*group_by_rows* - True
+*group_by_rows* - `True`
 
-*update_targets* - True
+*update_targets* - `True`
 
-*local* - True
+*local* - `True`
 
-*debug* - True
+*debug* - `True`
 
 ## Library build
 
