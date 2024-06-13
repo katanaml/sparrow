@@ -2,7 +2,7 @@
 
 ## Description
 
-This module implements Sparrow Parse [library](https://pypi.org/project/sparrow-parse/) with helpful methods for data pre-processing.
+This module implements Sparrow Parse [library](https://pypi.org/project/sparrow-parse/) with helpful methods for data pre-processing, parsing and extracting information from documents.
 
 ## Install
 
@@ -10,20 +10,39 @@ This module implements Sparrow Parse [library](https://pypi.org/project/sparrow-
 pip install sparrow-parse
 ```
 
-## Use
+## Pre-processing
 
-Import
-
-```
-from sparrow_parse.extractor.file_processor import FileProcessor
-```
-
-Usage
+1. Unstructured
 
 ```
-processor = FileProcessor()
-content = processor.extract_data(file_path, strategy, model_name, options, local, debug)
+from sparrow_parse.extractor.unstructured_processor import UnstructuredProcessor
+
+processor = UnstructuredProcessor()
+
+content, table_content = processor.extract_data(
+        '/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf',
+        'hi_res',
+        'yolox',
+        ['tables', 'html'],
+        True,
+        True)
 ```
+
+2. Markdown
+
+```
+from sparrow_parse.extractor.markdown_processor import MarkdownProcessor
+
+processor = MarkdownProcessor()
+
+content, table_content = processor.extract_data(
+        '/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf',
+        ['tables', 'markdown'],
+        True,
+        True)
+```
+
+## Parsing and extraction
 
 ## Library build
 
