@@ -2,7 +2,7 @@
 
 ## Description
 
-This module implements Sparrow Parse [library](https://pypi.org/project/sparrow-parse/) with helpful methods for data pre-processing.
+This module implements Sparrow Parse [library](https://pypi.org/project/sparrow-parse/) with helpful methods for data pre-processing, parsing and extracting information.
 
 ## Install
 
@@ -10,20 +10,95 @@ This module implements Sparrow Parse [library](https://pypi.org/project/sparrow-
 pip install sparrow-parse
 ```
 
-## Use
+## Pre-processing
 
-Import
-
-```
-from sparrow_parse.extractor.file_processor import FileProcessor
-```
-
-Usage
+### Unstructured
 
 ```
-processor = FileProcessor()
-content = processor.extract_data(file_path, strategy, model_name, options, local, debug)
+from sparrow_parse.extractor.unstructured_processor import UnstructuredProcessor
+
+processor = UnstructuredProcessor()
+
+content, table_content = processor.extract_data(
+        file_path,  # file to process
+        strategy,  # data processing strategy supported by unstructured
+        model_name,  # model supported by unstructured
+        options,  # table extraction into HTML format
+        local,  # True if running from CLI, or False if running from FastAPI
+        debug)  # Debug
 ```
+
+Example:
+
+*file_path* - `/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf`
+
+*strategy* - `hi_res`
+
+*model_name* - `yolox`
+
+*options* - `['tables', 'html']`
+
+*local* - `True`
+
+*debug* - `True`
+
+### Markdown
+
+```
+from sparrow_parse.extractor.markdown_processor import MarkdownProcessor
+
+processor = MarkdownProcessor()
+
+content, table_content = processor.extract_data(
+        file_path,  # file to process
+        options,  # table extraction into HTML format
+        local,  # True if running from CLI, or False if running from FastAPI
+        debug)  # Debug
+```
+
+Example:
+
+*file_path* - `/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf`
+
+*options* - `['tables', 'markdown']`
+
+*local* - `True`
+
+*debug* - `True`
+
+## Parsing and extraction
+
+```
+from sparrow_parse.extractor.html_extractor import HTMLExtractor
+
+extractor = HTMLExtractor()
+
+answer, targets_unprocessed = extractor.read_data(
+        target_columns,  # list of table columns data to fetch
+        data, # list of HTML tables
+        column_keywords,  # list of valid column names, can be empty. Useful to filter junk content
+        group_by_rows,  # JSON result grouping
+        update_targets,  # Set to true, if page contains multiple tables with the same columns
+        local,  # True if running from CLI, or False if running from FastAPI
+        debug)  # Debug
+
+```
+
+Example:
+
+*target_columns* - `['description', 'qty', 'net_price', 'net_worth', 'vat', 'gross_worth']`
+
+*data* - `list of HTML tables`
+
+*column_keywords* - `None`
+
+*group_by_rows* - `True`
+
+*update_targets* - `True`
+
+*local* - `True`
+
+*debug* - `True`
 
 ## Library build
 
