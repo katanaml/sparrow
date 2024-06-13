@@ -20,13 +20,22 @@ from sparrow_parse.extractor.unstructured_processor import UnstructuredProcessor
 processor = UnstructuredProcessor()
 
 content, table_content = processor.extract_data(
-        '/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf',
-        'hi_res',
-        'yolox',
-        ['tables', 'html'],
-        True,
-        True)
+        file_path,  # file to process
+        'hi_res',  # data processing strategy supported by unstructured
+        'yolox',  # model supported by unstructured
+        ['tables', 'html'],  # table extraction into HTML format
+        True,  # True if running from CLI, or False if running from FastAPI
+        True)  # Debug
 ```
+
+Example:
+
+file_path - '/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf'
+strategy - 'hi_res'
+model_name - 'yolox'
+options - ['tables', 'html']
+local - True
+debug - True
 
 2. Markdown
 
@@ -43,6 +52,26 @@ content, table_content = processor.extract_data(
 ```
 
 ## Parsing and extraction
+
+```
+from sparrow_parse.extractor.html_extractor import HTMLExtractor
+
+extractor = HTMLExtractor()
+
+answer, targets_unprocessed = extractor.read_data(
+        ['description', 'qty', 'net_price', 'net_worth', 'vat', 'gross_worth'],
+        # ['transaction_date', 'value_date', 'description', 'cheque', 'withdrawal', 'deposit', 'balance',
+        #  'deposits', 'account_number', 'od_limit', 'currency_balance', 'sgd_balance', 'maturity_date'],
+        data_list,
+        None,
+        # ['deposits', 'account_number', 'od_limit', 'currency_balance', 'sgd_balance', 'transaction_date',
+        #  'value_date', 'description', 'cheque', 'withdrawal', 'deposit', 'balance', 'maturity_date'],
+        True,
+        True,
+        True,
+        True)
+
+```
 
 ## Library build
 
