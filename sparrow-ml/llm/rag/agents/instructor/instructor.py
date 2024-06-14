@@ -1,9 +1,9 @@
 from rag.agents.interface import Pipeline
 from openai import OpenAI
 import instructor
-from sparrow_parse.extractor.unstructured_processor import UnstructuredProcessor
-from sparrow_parse.extractor.markdown_processor import MarkdownProcessor
+from .helpers.instructor_helper import execute_sparrow_processor, merge_dicts
 from sparrow_parse.extractor.html_extractor import HTMLExtractor
+from sparrow_parse.extractor.unstructured_processor import UnstructuredProcessor
 from pydantic import create_model
 from typing import List
 from rich.progress import Progress, SpinnerColumn, TextColumn
@@ -52,14 +52,8 @@ class InstructorPipeline(Pipeline):
         validate_options = self.validate_options(options)
         if validate_options:
             if options and "tables" in options:
-                content, table_content = None, None
-                if "html" in options:
-                    processor = UnstructuredProcessor()
-                    content, table_content = processor.extract_data(file_path, strategy, model_name,
-                                                                    ['tables', 'html'], local, debug)
-                elif "markdown" in options:
-                    processor = MarkdownProcessor()
-                    content, table_content = processor.extract_data(file_path, ['tables', 'markdown'], local, debug)
+                content, table_contents = execute_sparrow_processor(options, file_path, strategy, model_name, local,
+                                                                   debug)
 
                 query_inputs_form, query_types_form = self.filter_fields_query(query_inputs, query_types, "form")
                 if debug:
@@ -70,23 +64,15 @@ class InstructorPipeline(Pipeline):
                     answer = self.execute(query_inputs_form, query_types_form, content, query_form, 'form',
                                           debug, local)
 
-                # Convert the answer JSON string to a dictionary
-                answer = json.loads(answer)
-
-                if table_content is not None:
+                answer_table = {}
+                if table_contents is not None:
                     query_targets, query_targets_types = self.filter_fields_query(query_inputs, query_types, "table")
                     extractor = HTMLExtractor()
-                    i = 0
-                    for table in table_content:
-                        if len(query_targets) > 0:
-                            i += 1
-                            content_table = table
-                            answer_table, targets_unprocessed = extractor.read_data(query_targets, content_table,
-                                                                                    None,
-                                                                                    True, local, debug)
-                            query_targets = targets_unprocessed
-                            answer = self.add_answer_section(answer, "items" + str(i), answer_table)
 
+                    answer_table, targets_unprocessed = extractor.read_data(query_targets, table_contents,None,
+                        True,True, local, debug)
+
+                answer = merge_dicts(answer, answer_table)
                 answer = self.format_json_output(answer)
             else:
                 # No options provided
@@ -100,7 +86,8 @@ class InstructorPipeline(Pipeline):
         end = timeit.default_timer()
 
         print(f"\nJSON response:\n")
-        print(answer + '\n')
+        print(answer)
+        print('\n')
         print('=' * 50)
 
         print(f"Time to retrieve answer: {end - start}")
@@ -205,17 +192,6 @@ class InstructorPipeline(Pipeline):
         if sorted(options) in (sorted(combination) for combination in valid_combinations):
             return True
         return False
-
-    def add_answer_section(self, answer, section_name, answer_table):
-        if not isinstance(answer, dict):
-            raise ValueError("The answer should be a dictionary.")
-
-        # Parse answer_table if it is a JSON string
-        if isinstance(answer_table, str):
-            answer_table = json.loads(answer_table)
-
-        answer[section_name] = answer_table
-        return answer
 
     def format_json_output(self, answer):
         formatted_json = json.dumps(answer, indent=4)
