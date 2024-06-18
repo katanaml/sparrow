@@ -36,7 +36,7 @@ Example:
 
 *model_name* - `yolox`
 
-*options* - `['tables', 'html']`
+*options* - `['tables', 'unstructured']`
 
 *local* - `True`
 
