@@ -30,10 +30,13 @@ class InstructorPipeline(Pipeline):
                      payload: str,
                      query_inputs: [str],
                      query_types: [str],
+                     keywords: [str],
                      query: str,
                      file_path: str,
                      index_name: str,
                      options: List[str] = None,
+                     group_by_rows: bool = True,
+                     update_targets: bool = True,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
@@ -69,8 +72,8 @@ class InstructorPipeline(Pipeline):
                     query_targets, query_targets_types = self.filter_fields_query(query_inputs, query_types, "table")
                     extractor = HTMLExtractor()
 
-                    answer_table, targets_unprocessed = extractor.read_data(query_targets, table_contents,None,
-                        True,True, local, debug)
+                    answer_table, targets_unprocessed = extractor.read_data(query_targets, table_contents, keywords,
+                                                                            group_by_rows, update_targets, local, debug)
 
                 answer = merge_dicts(answer, answer_table)
                 answer = self.format_json_output(answer)
