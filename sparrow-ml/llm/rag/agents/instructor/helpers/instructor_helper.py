@@ -5,10 +5,10 @@ import json
 
 def execute_sparrow_processor(options, file_path, strategy, model_name, local, debug):
     content, table_content = None, None
-    if "html" in options:
+    if "unstructured" in options:
         processor = UnstructuredProcessor()
         content, table_content = processor.extract_data(file_path, strategy, model_name,
-                                                        ['tables', 'html'], local, debug)
+                                                        ['tables', 'unstructured'], local, debug)
     elif "markdown" in options:
         processor = MarkdownProcessor()
         content, table_content = processor.extract_data(file_path, ['tables', 'markdown'], local, debug)

@@ -98,7 +98,7 @@ class UnstructuredProcessor(object):
         if options is None:
             content = self.process_json_file(file_path)
 
-        if options and "tables" in options and "html" in options:
+        if options and "tables" in options and "unstructured" in options:
             content = self.process_json_file(file_path, "form")
 
             table_content = self.process_json_file(file_path, "table")
@@ -173,7 +173,7 @@ if __name__ == "__main__":
     #     '/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf',
     #     'hi_res',
     #     'yolox',
-    #     ['tables', 'html'],
+    #     ['tables', 'unstructured'],
     #     True,
     #     True)
 

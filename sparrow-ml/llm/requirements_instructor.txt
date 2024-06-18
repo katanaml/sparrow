@@ -8,8 +8,8 @@ rich
 typer[all]
 fastapi==0.111.0
 uvicorn[standard]
-sparrow-parse==0.2.1
-anthropic
+sparrow-parse==0.2.3
+numpy==1.26.4
 
 
 # Force reinstall:
