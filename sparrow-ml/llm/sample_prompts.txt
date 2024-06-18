@@ -250,3 +250,51 @@ hared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
 }
 ==================================================
 Time to retrieve answer: 97.52105149999261
+
+
+./sparrow.sh "invoice_number, invoice_date, description, quantity, net_price, net_worth, vat, gross_worth, total_gross_worth"
+"str, str, List[str], List[str], List[str], List[str], List[str], List[str], str" --agent instructor --file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
+--options tables --options unstructured --debug
+
+{
+    "invoice_number": "61356291",
+    "invoice_date": "09/06/2012",
+    "total_gross_worth": "212.09",
+    "items1": [
+        {
+            "description": "Wine Glasses Goblets Pair Clear Glass",
+            "quantity": "5,00",
+            "net_price": "12,00",
+            "net_worth": "60,00",
+            "vat": "10%",
+            "gross_worth": "66,00"
+        },
+        {
+            "description": "With Hooks Stemware Storage Multiple Uses Iron Wine Rack Hanging Glass",
+            "quantity": "4,00",
+            "net_price": "28,08",
+            "net_worth": "112,32",
+            "vat": "10%",
+            "gross_worth": "123,55"
+        },
+        {
+            "description": "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
+            "quantity": "1,00",
+            "net_price": "7,50",
+            "net_worth": "7,50",
+            "vat": "10%",
+            "gross_worth": "8,25"
+        },
+        {
+            "description": "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 4 20 FL OZ (591 ml) NEW",
+            "quantity": "1,00",
+            "net_price": "12,99",
+            "net_worth": "12,99",
+            "vat": "10%",
+            "gross_worth": "14,29"
+        }
+    ]
+}
+==================================================
+Time to retrieve answer: 24.45439903100487
+

@@ -182,7 +182,7 @@ class InstructorPipeline(Pipeline):
     def validate_options(self, options: List[str]) -> bool:
         # Define valid combinations
         valid_combinations = [
-            ["tables", "html"],
+            ["tables", "unstructured"],
             ["tables", "markdown"]
         ]
 
