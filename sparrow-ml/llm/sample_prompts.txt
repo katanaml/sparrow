@@ -252,9 +252,9 @@ hared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
 Time to retrieve answer: 97.52105149999261
 
 
-./sparrow.sh "invoice_number, invoice_date, description, quantity, net_price, net_worth, vat, gross_worth, total_gross_worth"
-"str, str, List[str], List[str], List[str], List[str], List[str], List[str], str" --agent instructor --file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
---options tables --options unstructured --debug
+./sparrow.sh "invoice_number, invoice_date, description, quantity, net_price, net_worth, vat, gross_worth, total_gross_worth" "str, str, List[str], List[str],
+List[str], List[str], List[str], List[str], str" --agent instructor --file-path /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
+--options tables --options unstructured --group-by-rows --update-targets  --debug
 
 {
     "invoice_number": "61356291",

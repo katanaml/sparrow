@@ -12,10 +12,13 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch")],
         types: Annotated[str, typer.Argument(help="The list of types of the fields")],
+        keywords: Annotated[str, typer.Argument(help="The list of table column keywords")] = None,
         file_path: Annotated[str, typer.Option(help="The file to process")] = None,
         agent: Annotated[str, typer.Option(help="Selected agent")] = "llamaindex",
         index_name: Annotated[str, typer.Option(help="Index to identify embeddings")] = None,
         options: Annotated[List[str], typer.Option(help="Options to pass to the agent")] = None,
+        group_by_rows: Annotated[bool, typer.Option(help="Group JSON collection by rows")] = True,
+        update_targets: Annotated[bool, typer.Option(help="Update targets")] = True,
         debug: Annotated[bool, typer.Option(help="Enable debug mode")] = False):
 
     query = 'retrieve ' + inputs
@@ -28,8 +31,9 @@ def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch"
 
     try:
         rag = get_pipeline(user_selected_agent)
-        rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query, file_path, index_name, options,
-                         debug)
+        rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, keywords, query, file_path,
+                         index_name, options, group_by_rows, update_targets, debug)
+
     except ValueError as e:
         print(f"Caught an exception: {e}")
 

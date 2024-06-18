@@ -34,10 +34,13 @@ class HaystackPipeline(PipelineInterface):
                      payload: str,
                      query_inputs: [str],
                      query_types: [str],
+                     keywords: [str],
                      query: str,
                      file_path: str,
                      index_name: str,
                      options: List[str] = None,
+                     group_by_rows: bool = True,
+                     update_targets: bool = True,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
