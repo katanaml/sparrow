@@ -75,6 +75,7 @@ class InstructorPipeline(Pipeline):
                     answer_table, targets_unprocessed = extractor.read_data(query_targets, table_contents, keywords,
                                                                             group_by_rows, update_targets, local, debug)
 
+
                 answer = merge_dicts(answer, answer_table)
                 answer = self.format_json_output(answer)
             else:

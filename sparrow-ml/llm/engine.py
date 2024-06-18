@@ -26,12 +26,13 @@ def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch"
 
     query_inputs_arr = [param.strip() for param in inputs.split(',')]
     query_types_arr = [param.strip() for param in query_types.split(',')]
+    keywords_arr = [param.strip() for param in keywords.split(',')] if keywords is not None else None
 
     user_selected_agent = agent  # Modify this as needed
 
     try:
         rag = get_pipeline(user_selected_agent)
-        rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, keywords, query, file_path,
+        rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, keywords_arr, query, file_path,
                          index_name, options, group_by_rows, update_targets, debug)
 
     except ValueError as e:
