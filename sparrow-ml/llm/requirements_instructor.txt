@@ -8,7 +8,7 @@ rich
 typer[all]
 fastapi==0.111.0
 uvicorn[standard]
-sparrow-parse==0.2.3
+sparrow-parse==0.2.4
 numpy==1.26.4
 
 
