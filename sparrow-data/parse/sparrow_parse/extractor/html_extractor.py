@@ -24,7 +24,7 @@ class HTMLExtractor(object):
 
             json_result, targets_unprocessed = self.read_data_from_table(target_columns, table, column_keywords,
                                                                          group_by_rows, local, debug)
-            answer = self.add_answer_section(answer, "items" + str(i), json_result)
+            answer = self.add_answer_section(answer, "items" + str(i + 1), json_result)
 
             if update_targets:
                 target_columns = targets_unprocessed
