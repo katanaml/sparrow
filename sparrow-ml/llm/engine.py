@@ -6,6 +6,12 @@ import tempfile
 import os
 
 
+# Disable parallelism in the Huggingface tokenizers library to prevent potential deadlocks and ensure consistent behavior.
+# This is especially important in environments where multiprocessing is used, as forking after parallelism can lead to issues.
+# Note: Disabling parallelism may impact performance, but it ensures safer and more predictable execution.
+os.environ['TOKENIZERS_PARALLELISM'] = 'false'
+
+
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 

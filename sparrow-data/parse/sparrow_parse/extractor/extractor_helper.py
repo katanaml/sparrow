@@ -273,6 +273,8 @@ def merge_rows_with_rowspan(html):
 
 
 def detect_and_remove_junk_columns(html_table, target_columns, debug=False):
+    html_table = clean_html_table_header_names(html_table)
+
     # Wrap the HTML string in a StringIO object
     html_buffer = StringIO(html_table)
 
@@ -356,6 +358,9 @@ def clean_html_table_header_names(html_table: str) -> str:
     headers = table.find_all("th")
     for th in headers:
         clean_header = re.sub(r"[^a-zA-Z0-9\s]", "", th.get_text())
+        # Check if the cleaned name is empty
+        if not clean_header.strip():
+            clean_header = "-"
         th.string.replace_with(clean_header)
 
     html_table = str(soup)
