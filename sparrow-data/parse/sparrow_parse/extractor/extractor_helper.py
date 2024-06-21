@@ -3,9 +3,10 @@ from sentence_transformers import SentenceTransformer, util
 import pandas as pd
 import re
 from io import StringIO
+from rich import print
 
 
-def merge_html_table_headers(html_table, column_keywords, debug=False):
+def merge_html_table_headers(html_table, column_keywords, similarity_threshold, debug=False):
     soup = BeautifulSoup(html_table, 'html.parser')
 
     # Find all thead elements
@@ -18,7 +19,7 @@ def merge_html_table_headers(html_table, column_keywords, debug=False):
         html_table = normalize_html_table(html_table, debug)
         html_table = fix_rowspan_elements(html_table)
         html_table = merge_rows_with_rowspan(html_table)
-        html_table = detect_and_remove_junk_columns(html_table, column_keywords, debug)
+        html_table = detect_and_remove_junk_columns(html_table, column_keywords, similarity_threshold, debug)
     else:
         # If there is only one thead, return the original table
         return html_table
@@ -272,7 +273,7 @@ def merge_rows_with_rowspan(html):
     return str(new_table_soup.table)
 
 
-def detect_and_remove_junk_columns(html_table, target_columns, debug=False):
+def detect_and_remove_junk_columns(html_table, target_columns, similarity_threshold_param, debug=False):
     html_table = clean_html_table_header_names(html_table)
 
     # Wrap the HTML string in a StringIO object
@@ -295,7 +296,7 @@ def detect_and_remove_junk_columns(html_table, target_columns, debug=False):
 
     # Identify junk columns based on similarity threshold
     junk_columns = []
-    similarity_threshold = 0.5  # Adjust this threshold as needed
+    similarity_threshold = similarity_threshold_param
 
     for idx, col_embedding in enumerate(column_embeddings):
         similarities = util.pytorch_cos_sim(col_embedding, target_embeddings)[0]
@@ -357,11 +358,11 @@ def clean_html_table_header_names(html_table: str) -> str:
     # Extract the headers and clean them
     headers = table.find_all("th")
     for th in headers:
-        clean_header = re.sub(r"[^a-zA-Z0-9\s]", "", th.get_text())
-        # Check if the cleaned name is empty
-        if not clean_header.strip():
-            clean_header = "-"
-        th.string.replace_with(clean_header)
+        if th.string:
+            # Clean the header
+            clean_header = re.sub(r"[^a-zA-Z0-9\s]", "", th.get_text())
+            # Keep it empty if the cleaned name is empty
+            th.string.replace_with(clean_header.strip() if clean_header.strip() else "")
 
     html_table = str(soup)
 

@@ -12,8 +12,8 @@ class HTMLExtractor(object):
     def __init__(self):
         pass
 
-    def read_data(self, target_columns, data, column_keywords=None, group_by_rows=True, update_targets=False,
-                  local=True, debug=False):
+    def read_data(self, target_columns, data, similarity_threshold_junk, similarity_threshold_column_id,
+                  column_keywords=None, group_by_rows=True, update_targets=False, local=True, debug=False):
         answer = {}
 
         json_result, targets_unprocessed = [], []
@@ -22,7 +22,8 @@ class HTMLExtractor(object):
             if not target_columns:
                 break
 
-            json_result, targets_unprocessed = self.read_data_from_table(target_columns, table, column_keywords,
+            json_result, targets_unprocessed = self.read_data_from_table(target_columns, table, similarity_threshold_junk,
+                                                                         similarity_threshold_column_id, column_keywords,
                                                                          group_by_rows, local, debug)
             answer = self.add_answer_section(answer, "items" + str(i + 1), json_result)
 
@@ -33,9 +34,10 @@ class HTMLExtractor(object):
 
         return answer, targets_unprocessed
 
-    def read_data_from_table(self, target_columns, data, column_keywords=None, group_by_rows=True, local=True, debug=False):
+    def read_data_from_table(self, target_columns, data, similarity_threshold_junk, similarity_threshold_column_id,
+                             column_keywords=None, group_by_rows=True, local=True, debug=False):
         data = self.invoke_pipeline_step(
-            lambda: merge_html_table_headers(data, column_keywords, debug),
+            lambda: merge_html_table_headers(data, column_keywords, similarity_threshold_junk, debug),
             "Merging HTML table headers...",
             local
         )
@@ -54,7 +56,7 @@ class HTMLExtractor(object):
             print(f"Target columns: {target_columns}")
 
         indices, targets, targets_unprocessed = self.invoke_pipeline_step(
-            lambda: self.calculate_similarity(columns, target_columns, debug),
+            lambda: self.calculate_similarity(columns, target_columns, similarity_threshold_column_id, debug),
             "Calculating cosine similarity between columns and target values...",
             local
         )
@@ -73,7 +75,7 @@ class HTMLExtractor(object):
 
         return json_result, targets_unprocessed
 
-    def calculate_similarity(self, columns, target_columns, debug):
+    def calculate_similarity(self, columns, target_columns, similarity_threshold_column_id, debug):
         model = SentenceTransformer('all-mpnet-base-v2')
 
         # Compute embeddings for columns and target values
@@ -93,7 +95,7 @@ class HTMLExtractor(object):
             most_similar_idx = similarities.argmax().item()
             most_similar_column = columns[most_similar_idx]
             similarity_score = similarities[most_similar_idx].item()
-            if similarity_score > 0.3:
+            if similarity_score > similarity_threshold_column_id:
                 if most_similar_idx in most_similar_indices:
                     if similarity_score > most_similar_indices[most_similar_idx][1]:
                         targets_unprocessed.append(most_similar_indices[most_similar_idx][0])
@@ -232,13 +234,15 @@ if __name__ == "__main__":
     extractor = HTMLExtractor()
 
     # answer, targets_unprocessed = extractor.read_data(
-    #     ['description', 'qty', 'net_price', 'net_worth', 'vat', 'gross_worth'],
-    #     # ['transaction_date', 'value_date', 'description', 'cheque', 'withdrawal', 'deposit', 'balance',
-    #     #  'deposits', 'account_number', 'od_limit', 'currency_balance', 'sgd_balance', 'maturity_date'],
+    #     # ['description', 'qty', 'net_price', 'net_worth', 'vat', 'gross_worth'],
+    #     ['transaction_date', 'value_date', 'description', 'cheque', 'withdrawal', 'deposit', 'balance',
+    #      'deposits', 'account_number', 'od_limit', 'currency_balance', 'sgd_balance', 'maturity_date'],
     #     data_list,
-    #     None,
-    #     # ['deposits', 'account_number', 'od_limit', 'currency_balance', 'sgd_balance', 'transaction_date',
-    #     #  'value_date', 'description', 'cheque', 'withdrawal', 'deposit', 'balance', 'maturity_date'],
+    #     0.5,
+    #     0.3,
+    #     # None,
+    #     ['deposits', 'account_number', 'od_limit', 'currency_balance', 'sgd_balance', 'transaction_date',
+    #      'value_date', 'description', 'cheque', 'withdrawal', 'deposit', 'balance', 'maturity_date'],
     #     True,
     #     True,
     #     True,
