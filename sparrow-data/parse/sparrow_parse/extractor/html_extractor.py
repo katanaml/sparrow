@@ -244,7 +244,7 @@ if __name__ == "__main__":
     #     ['deposits', 'account_number', 'od_limit', 'currency_balance', 'sgd_balance', 'transaction_date',
     #      'value_date', 'description', 'cheque', 'withdrawal', 'deposit', 'balance', 'maturity_date'],
     #     True,
-    #     True,
+    #     False,
     #     True,
     #     True)
     #
