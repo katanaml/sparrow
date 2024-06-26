@@ -100,6 +100,27 @@ Example:
 
 *debug* - `True`
 
+## PDF optimization
+
+```
+from sparrow_parse.extractor.pdf_optimizer import PDFOptimizer
+
+pdf_optimizer = PDFOptimizer()
+
+num_pages, output_files, temp_dir = pdf_optimizer.split_pdf_to_pages(file_path,
+                                                                     output_directory,
+                                                                     convert_to_images)
+
+```
+
+Example:
+
+*file_path* - `/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf`
+
+*output_directory* - set to not `None`, for debug purposes only
+
+*convert_to_images* - default `False`, to split into PDF files
+
 ## Library build
 
 ```
