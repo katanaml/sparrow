@@ -8,8 +8,9 @@ rich
 typer[all]
 fastapi==0.111.0
 uvicorn[standard]
-sparrow-parse==0.2.4
+sparrow-parse==0.2.9
 numpy==1.26.4
+PyPDF2==3.0.1
 
 
 # Force reinstall:

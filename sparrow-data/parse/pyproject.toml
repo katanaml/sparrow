@@ -25,7 +25,7 @@ torch = {version = "2.2.2", source = "pypi"}
 unstructured = {version = "0.14.5", extras = ["all-docs"]}
 unstructured-inference = "0.7.33"
 rich = "^13.7.1"
-pymupdf4llm = "0.0.5"
+pymupdf4llm = "0.0.6"
 transformers = "4.41.2"
 sentence-transformers = "3.0.1"
 numpy = "1.26.4"
