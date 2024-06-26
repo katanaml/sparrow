@@ -84,3 +84,5 @@ LLM_INSTRUCTOR: 'adrienbrault/nous-hermes2theta-llama3-8b:q5_K_M'
 STRATEGY_INSTRUCTOR: 'hi_res'
 # Using yolox model by default. Other option is detectron2_onnx, depending on file layout
 MODEL_INSTRUCTOR: 'yolox'
+SIMILARITY_THRESHOLD_JUNK_COLUMNS_INSTRUCTOR: 0.5
+SIMILARITY_THRESHOLD_COLUMN_ID_INSTRUCTOR: 0.3

@@ -1,7 +1,8 @@
 from rag.agents.interface import Pipeline
 from openai import OpenAI
 import instructor
-from .helpers.instructor_helper import execute_sparrow_processor, merge_dicts
+from .helpers.instructor_helper import execute_sparrow_processor, merge_dicts, pre_process_pdf, track_query_output
+from .helpers.instructor_helper import add_answer_page
 from sparrow_parse.extractor.html_extractor import HTMLExtractor
 from sparrow_parse.extractor.unstructured_processor import UnstructuredProcessor
 from pydantic import create_model
@@ -10,6 +11,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 import timeit
 from rich import print
 from typing import Any
+import shutil
 import json
 import box
 import yaml
@@ -49,35 +51,62 @@ class InstructorPipeline(Pipeline):
 
         strategy = cfg.STRATEGY_INSTRUCTOR
         model_name = cfg.MODEL_INSTRUCTOR
+        similarity_threshold_junk = cfg.SIMILARITY_THRESHOLD_JUNK_COLUMNS_INSTRUCTOR
+        similarity_threshold_column_id = cfg.SIMILARITY_THRESHOLD_COLUMN_ID_INSTRUCTOR
 
         answer = '{}'
+        answer_form = '{}'
 
         validate_options = self.validate_options(options)
         if validate_options:
             if options and "tables" in options:
-                content, table_contents = execute_sparrow_processor(options, file_path, strategy, model_name, local,
-                                                                   debug)
+                num_pages, output_files, temp_dir = pre_process_pdf(file_path, False)
 
-                query_inputs_form, query_types_form = self.filter_fields_query(query_inputs, query_types, "form")
                 if debug:
-                    print(f"Query form inputs: {query_inputs_form}")
-                    print(f"Query form types: {query_types_form}")
-                if len(query_inputs_form) > 0:
-                    query_form = "retrieve " + ", ".join(query_inputs_form)
-                    answer = self.execute(query_inputs_form, query_types_form, content, query_form, 'form',
-                                          debug, local)
+                    print(f'The PDF file has {num_pages} pages.')
+                    print('The pages are stored in the following files:')
+                    for file in output_files:
+                        print(file)
 
-                answer_table = {}
-                if table_contents is not None:
-                    query_targets, query_targets_types = self.filter_fields_query(query_inputs, query_types, "table")
-                    extractor = HTMLExtractor()
+                # support for multipage docs
+                query_inputs_form, query_types_form = self.filter_fields_query(query_inputs, query_types, "form")
 
-                    answer_table, targets_unprocessed = extractor.read_data(query_targets, table_contents, keywords,
-                                                                            group_by_rows, update_targets, local, debug)
+                for i, page in enumerate(output_files):
+                    content, table_contents = execute_sparrow_processor(options, page, strategy, model_name, local, debug)
 
+                    if debug:
+                        print(f"Query form inputs: {query_inputs_form}")
+                        print(f"Query form types: {query_types_form}")
+                    if len(query_inputs_form) > 0:
+                        query_form = "retrieve " + ", ".join(query_inputs_form)
+                        answer_form = self.execute(query_inputs_form, query_types_form, content, query_form, 'form', debug, local)
+                        query_inputs_form, query_types_form = track_query_output(query_inputs_form, answer_form, query_types_form)
+                        if debug:
+                            print(f"Answer from LLM: {answer_form}")
+                            print(f"Unprocessed query targets: {query_inputs_form}")
 
-                answer = merge_dicts(answer, answer_table)
-                answer = self.format_json_output(answer)
+                    answer_table = {}
+                    if table_contents is not None:
+                        query_targets, query_targets_types = self.filter_fields_query(query_inputs, query_types, "table")
+                        extractor = HTMLExtractor()
+
+                        answer_table, targets_unprocessed = extractor.read_data(query_targets, table_contents,
+                                                                                similarity_threshold_junk,
+                                                                                similarity_threshold_column_id,
+                                                                                keywords, group_by_rows, update_targets,
+                                                                                local, debug)
+
+                    if num_pages > 1:
+                        answer_current = merge_dicts(answer_form, answer_table)
+                        answer_current_page = add_answer_page({}, "page" + str(i + 1), answer_current)
+                        answer = merge_dicts(answer, json.dumps(answer_current_page))
+                        answer_form = '{}'
+                    else:
+                        answer = merge_dicts(answer_form, answer_table)
+
+                    answer = self.format_json_output(answer)
+
+                shutil.rmtree(temp_dir, ignore_errors=True)
             else:
                 # No options provided
                 processor = UnstructuredProcessor()
