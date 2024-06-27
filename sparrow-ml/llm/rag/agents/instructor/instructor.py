@@ -1,10 +1,11 @@
 from rag.agents.interface import Pipeline
 from openai import OpenAI
 import instructor
-from .helpers.instructor_helper import execute_sparrow_processor, merge_dicts, pre_process_pdf, track_query_output
+from .helpers.instructor_helper import execute_sparrow_processor, merge_dicts, track_query_output
 from .helpers.instructor_helper import add_answer_page
 from sparrow_parse.extractor.html_extractor import HTMLExtractor
 from sparrow_parse.extractor.unstructured_processor import UnstructuredProcessor
+from sparrow_parse.extractor.pdf_optimizer import PDFOptimizer
 from pydantic import create_model
 from typing import List
 from rich.progress import Progress, SpinnerColumn, TextColumn
@@ -53,6 +54,8 @@ class InstructorPipeline(Pipeline):
         model_name = cfg.MODEL_INSTRUCTOR
         similarity_threshold_junk = cfg.SIMILARITY_THRESHOLD_JUNK_COLUMNS_INSTRUCTOR
         similarity_threshold_column_id = cfg.SIMILARITY_THRESHOLD_COLUMN_ID_INSTRUCTOR
+        pdf_split_output_dir = None if cfg.PDF_SPLIT_OUTPUT_DIR_INSTRUCTOR == "" else cfg.PDF_SPLIT_OUTPUT_DIR_INSTRUCTOR
+        pdf_convert_to_images = cfg.PDF_CONVERT_TO_IMAGES_INSTRUCTOR
 
         answer = '{}'
         answer_form = '{}'
@@ -60,7 +63,10 @@ class InstructorPipeline(Pipeline):
         validate_options = self.validate_options(options)
         if validate_options:
             if options and "tables" in options:
-                num_pages, output_files, temp_dir = pre_process_pdf(file_path, False)
+                pdf_optimizer = PDFOptimizer()
+                num_pages, output_files, temp_dir = pdf_optimizer.split_pdf_to_pages(file_path,
+                                                                                     pdf_split_output_dir,
+                                                                                     pdf_convert_to_images)
 
                 if debug:
                     print(f'The PDF file has {num_pages} pages.')
