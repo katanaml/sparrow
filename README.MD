@@ -302,9 +302,16 @@ List[str], List[str], List[str], List[str], str" --agent instructor --file-path 
 Properties:
 
 `--options tables` - use Sparrow Parse
+
+
 `--options unstructured` - use Unstructured to convert tables into HTML, other option currently available is `markdown`
+
+
 `--group-by-rows` - results grouping in JSON format, other option `--no-group-by-rows`
+
+
 `--update-targets` - if there are multiple tables per page with the same column names, will process only first occurence. Set to `--no-update-targets` to process multiple tables per page with the same column names
+
 
 Sample response:
 
