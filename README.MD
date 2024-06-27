@@ -291,6 +291,65 @@ Use `instructor` agent to run RAG pipeline with Unstructured and Instructor libr
 ./sparrow.sh "names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "List[str], List[str], str" --agent instructor --file-path /data/invoice_1.pdf
 ```
 
+In combination with `instructor` agent, you can use Sparrow Parse library to process tables. This hybrid RAG approach, allows to process form data with LLM and table data with Sparrow Parse
+
+```
+./sparrow.sh "invoice_number, invoice_date, description, quantity, net_price, net_worth, vat, gross_worth, total_gross_worth" "str, str, List[str], List[str],
+List[str], List[str], List[str], List[str], str" --agent instructor --file-path /data/invoice_1.pdf
+--options tables --options unstructured --group-by-rows --update-targets
+```
+
+Properties:
+
+`--options tables` - use Sparrow Parse
+`--options unstructured` - use Unstructured to convert tables into HTML, other option currently available is `markdown`
+`--group-by-rows` - results grouping in JSON format, other option `--no-group-by-rows`
+`--update-targets` - if there are multiple tables per page with the same column names, will process only first occurence. Set to `--no-update-targets` to process multiple tables per page with the same column names
+
+Sample response:
+
+```
+{
+    "invoice_number": "61356291",
+    "invoice_date": "09/06/2012",
+    "total_gross_worth": "$212.09",
+    "items1": [
+        {
+            "description": "Wine Glasses Goblets Pair Clear Glass",
+            "quantity": "5,00",
+            "net_price": "12,00",
+            "net_worth": "60,00",
+            "vat": "10%",
+            "gross_worth": "66,00"
+        },
+        {
+            "description": "With Hooks Stemware Storage Multiple Uses Iron Wine Rack Hanging Glass",
+            "quantity": "4,00",
+            "net_price": "28,08",
+            "net_worth": "112,32",
+            "vat": "10%",
+            "gross_worth": "123,55"
+        },
+        {
+            "description": "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
+            "quantity": "1,00",
+            "net_price": "7,50",
+            "net_worth": "7,50",
+            "vat": "10%",
+            "gross_worth": "8,25"
+        },
+        {
+            "description": "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 4 20 FL OZ (591 ml) NEW",
+            "quantity": "1,00",
+            "net_price": "12,99",
+            "net_worth": "12,99",
+            "vat": "10%",
+            "gross_worth": "14,29"
+        }
+    ]
+}
+```
+
 ## FastAPI Endpoint for Local LLM RAG
 
 Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the plugin to be used for the inference. By default, `llamaindex` agent is used.
