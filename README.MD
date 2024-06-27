@@ -312,6 +312,7 @@ Properties:
 
 `--update-targets` - if there are multiple tables per page with the same column names, will process only first occurence. Set to `--no-update-targets` to process multiple tables per page with the same column names
 
+When Sparrow Parse option is selected, each field with `List` type will be automatically processed by Sparrow Parse, not by LLM. If you wish to extract collection data using LLM, when Sparrow Parse option is set, you can use `Array` type, for example `Array[str]`
 
 Sample response:
 
