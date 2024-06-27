@@ -265,7 +265,7 @@ Use `instructor` agent to run RAG pipeline with Unstructured and Instructor libr
 ./sparrow.sh "names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "List[str], List[str], str" --agent instructor --file-path /data/invoice_1.pdf
 ```
 
-In combination with `instructor` agent, you can use **Sparrow** Parse library to process tables. This hybrid RAG approach, allows to process form data with LLM and table data with Sparrow Parse
+In combination with `instructor` agent, you can use **Sparrow Parse** library to process tables. This hybrid RAG approach, allows to process form data with LLM and table data with Sparrow Parse
 
 ```
 ./sparrow.sh "invoice_number, invoice_date, description, quantity, net_price, net_worth, vat, gross_worth, total_gross_worth" "str, str, List[str], List[str],
