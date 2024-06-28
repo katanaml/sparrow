@@ -514,6 +514,24 @@ curl -X 'POST' \
   -F 'file=@invoice_1.pdf;type=application/pdf'
 ```
 
+Inference call with `instructor` agent and Sparrow parse, this agent supports also JPG and PNG files:
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'group_by_rows=true' \
+  -F 'agent=instructor' \
+  -F 'keywords=' \
+  -F 'update_targets=true' \
+  -F 'index_name=' \
+  -F 'types=str, str, List[str], List[str], List[str], List[str], List[str], List[str], str' \
+  -F 'fields=invoice_number, invoice_date, description, quantity, net_price, net_worth, vat, gross_worth, total_gross_worth' \
+  -F 'file=@invoice_1.pdf;type=application/pdf' \
+  -F 'options=tables,unstructured'
+```
+
 ## Commercial usage
 
 Sparrow is available under the GPL 3.0 license, promoting freedom to use, modify, and distribute the software while ensuring any modifications remain open source under the same license. This aligns with our commitment to supporting the open-source community and fostering collaboration.
