@@ -45,8 +45,8 @@ def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch"
         print(f"Caught an exception: {e}")
 
 
-async def run_from_api_engine(user_selected_agent, query_inputs_arr, query_types_arr, query, index_name, options,
-                              file, debug):
+async def run_from_api_engine(user_selected_agent, query_inputs_arr, query_types_arr, keywords_arr, query, index_name,
+                              options_arr, file, group_by_rows, update_targets, debug):
     try:
         rag = get_pipeline(user_selected_agent)
 
@@ -59,11 +59,13 @@ async def run_from_api_engine(user_selected_agent, query_inputs_arr, query_types
                     content = await file.read()
                     temp_file.write(content)
 
-                answer = rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query,
-                                          temp_file_path, index_name, options, debug, False)
+                answer = rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, keywords_arr, query,
+                                          temp_file_path, index_name, options_arr, group_by_rows, update_targets,
+                                          debug, False)
         else:
-            answer = rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, query, None,
-                                      index_name, options, debug, False)
+            answer = rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, keywords_arr, query,
+                                      None, index_name, options_arr, group_by_rows, update_targets,
+                                      debug, False)
     except ValueError as e:
         raise e
 

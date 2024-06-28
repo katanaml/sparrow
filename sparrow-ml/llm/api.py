@@ -35,8 +35,11 @@ async def inference(
         fields: Annotated[str, Form()],
         types: Annotated[str, Form()],
         agent: Annotated[str, Form()],
+        keywords: Annotated[str, Form()] = None,
         index_name: Annotated[str, Form()] = None,
         options: Annotated[str, Form()] = None,
+        group_by_rows: Annotated[bool, Form()] = True,
+        update_targets: Annotated[bool, Form()] = True,
         file: UploadFile = File(None)
         ):
     query = 'retrieve ' + fields
@@ -44,10 +47,12 @@ async def inference(
 
     query_inputs_arr = [param.strip() for param in fields.split(',')]
     query_types_arr = [param.strip() for param in query_types.split(',')]
+    keywords_arr = [param.strip() for param in keywords.split(',')] if keywords is not None else None
+    options_arr = [param.strip() for param in options.split(',')] if options is not None else None
 
     try:
-        answer = await run_from_api_engine(agent, query_inputs_arr, query_types_arr, query, index_name, options, file,
-                                           False)
+        answer = await run_from_api_engine(agent, query_inputs_arr, query_types_arr, keywords_arr, query, index_name,
+                                           options_arr, file, group_by_rows, update_targets, False)
     except ValueError as e:
         raise HTTPException(status_code=418, detail=str(e))
 
