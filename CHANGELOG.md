@@ -1,5 +1,17 @@
 # ChangeLog
 
+## [v0.1.8] - 2024-07-02
+
+### New Features
+
+- Sparrow Parse integration
+
+### What's Changed
+
+- Sparrow Parse is integrated into Instructor agent. README updated with example for Instructor agent
+
+  
+
 ## [v0.1.7] - 2024-04-23
 
 ### New Features
