@@ -148,13 +148,13 @@ Copy text PDF files to the `data` folder or use sample data provided in the `dat
 
 This step is required for `llamaindex` or `haystack` agents only.
 
-Run the script, to convert text to vector embeddings and save in Weaviate. By default it will use `llamaindex` agent. Example with `llamaindex` agent:  
+✅ Run the script, to convert text to vector embeddings and save in Weaviate. By default it will use `llamaindex` agent. Example with `llamaindex` agent:  
 
 ```
 ./sparrow.sh ingest --file-path /data/invoice_1.pdf --agent llamaindex --index-name Sparrow_llamaindex_doc1
 ```
 
-Example with `haystack` agent:
+✅ Example with `haystack` agent:
 
 ```
 ./sparrow.sh ingest --file-path /data/invoice_1.pdf --agent haystack --index-name Sparrow_haystack_doc1
@@ -162,7 +162,7 @@ Example with `haystack` agent:
 
 ### Inference
 
-Run the script, to process data with LLM RAG and return the answer. By default, it will use `llamaindex` agent. You can specify other agents (see ingest example), such as `haystack`: 
+✅ Run the script, to process data with LLM RAG and return the answer. By default, it will use `llamaindex` agent. You can specify other agents (see ingest example), such as `haystack`: 
 
 ```
 ./sparrow.sh "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
@@ -199,7 +199,7 @@ Answer:
 }
 ```
 
-Example with `haystack` agent:
+✅ Example with `haystack` agent:
 
 ```
 ./sparrow.sh "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
@@ -207,19 +207,19 @@ seller_tax_id, iban, names_of_invoice_items, gross_worth_of_invoice_items, total
 str, str, str, str, List[str], List[float], str" --agent haystack --index-name Sparrow_haystack_doc1
 ```
 
-To run multimodal agent, use `vllamaindex` flag:
+✅ To run multimodal agent, use `vllamaindex` flag:
 
 ```
 ./sparrow.sh "guest_no, cashier_name" "int, str" --agent vllamaindex --file-path /data/inout-20211211_001.jpg
 ```
 
-Use `vprocessor` agent to run OCR + LLM, this works best to process scanned docs
+✅ Use `vprocessor` agent to run OCR + LLM, this works best to process scanned docs
 
 ```
 ./sparrow.sh "guest_no, cashier_name, transaction_number, names_of_receipt_items, authorized_amount, receipt_date" "int, str, int, List[str], str, str" --agent vprocessor --file-path /data/inout-20211211_001.jpg
 ```
 
-LLM function call example:
+✅ LLM function call example:
 
 ```
 ./sparrow.sh assistant --agent "fcall" --query "Exxon"
@@ -238,14 +238,14 @@ Answer:
 The stock price of the Exxon is 111.2699966430664. USD
 ```
 
-Use `unstructured-light` agent to run RAG pipeline with Unstructured library. It helps to improve data pre-processing for LLM. This agent supports PDF, JPG and PNG files
+✅ Use `unstructured-light` agent to run RAG pipeline with Unstructured library. It helps to improve data pre-processing for LLM. This agent supports PDF, JPG and PNG files
 
 ```
 ./sparrow.sh "invoice_number, invoice_date, total_gross_worth" "int, str, str" --agent unstructured-light --file-path
 /Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf
 ```
 
-With `unstructured-light` it is possible to specify option for table data processing only. This agent supports PDF, JPG and PNG files
+✅ With `unstructured-light` it is possible to specify option for table data processing only. This agent supports PDF, JPG and PNG files
 
 ```
 ./sparrow.sh "names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "List[str], List[str], str"
@@ -253,19 +253,19 @@ With `unstructured-light` it is possible to specify option for table data proces
 --options tables
 ```
 
-Use `unstructured` agent to run RAG pipeline with Weaviate query (no separate step to ingest data is required) and Unstructured library. This agent supports PDF, JPG and PNG files
+✅ Use `unstructured` agent to run RAG pipeline with Weaviate query (no separate step to ingest data is required) and Unstructured library. This agent supports PDF, JPG and PNG files
 
 ```
 ./sparrow.sh "invoice_number, invoice_date, total_gross_worth" "int, str, str" --agent unstructured --file-path /data/invoice_1.pdf
 ```
 
-Use `instructor` agent to run RAG pipeline with Unstructured and Instructor libraries. Unstructured helps to pre-process data for better LLM responses. Instructor simplifies RAG pipeline and ensures JSON responses. This agent supports both PDF, JPG and PNG files
+✅ Use `instructor` agent to run RAG pipeline with Unstructured and Instructor libraries. Unstructured helps to pre-process data for better LLM responses. Instructor simplifies RAG pipeline and ensures JSON responses. This agent supports both PDF, JPG and PNG files
 
 ```
 ./sparrow.sh "names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "List[str], List[str], str" --agent instructor --file-path /data/invoice_1.pdf
 ```
 
-In combination with `instructor` agent, you can use **Sparrow Parse** library to process tables. This hybrid RAG approach, allows to process form data with LLM and table data with Sparrow Parse
+✅ In combination with `instructor` agent, you can use **Sparrow Parse** library to process tables. This hybrid RAG approach, allows to process form data with LLM and table data with Sparrow Parse
 
 ```
 ./sparrow.sh "invoice_number, invoice_date, description, quantity, net_price, net_worth, vat, gross_worth, total_gross_worth" "str, str, List[str], List[str],
@@ -372,7 +372,7 @@ API calls:
 
 ### Ingest
 
-Ingest call with `llamaindex` agent:
+✅ Ingest call with `llamaindex` agent:
 
 ```
 curl -X 'POST' \
@@ -384,7 +384,7 @@ curl -X 'POST' \
   -F 'file=@invoice_1.pdf;type=application/pdf'
 ```
 
-Ingest call with `haystack` agent:
+✅ Ingest call with `haystack` agent:
 
 ```
 curl -X 'POST' \
@@ -398,7 +398,7 @@ curl -X 'POST' \
 
 ### Inference
 
-Inference call with `llamaindex` agent:
+✅ Inference call with `llamaindex` agent:
 
 ```
 curl -X 'POST' \
@@ -412,7 +412,7 @@ curl -X 'POST' \
   -F 'file='
 ```
 
-Inference call with `haystack` agent:
+✅ Inference call with `haystack` agent:
 
 ```
 curl -X 'POST' \
@@ -426,7 +426,7 @@ curl -X 'POST' \
   -F 'file='
 ```
 
-Inference call with multimodal agent `vllamaindex`:
+✅ Inference call with multimodal agent `vllamaindex`:
 
 ```
 curl -X 'POST' \
@@ -440,7 +440,7 @@ curl -X 'POST' \
   -F 'file=@inout-20211211_001.jpg;type=image/jpeg'
 ```
 
-Inference call with OCR + LLM agent `vprocessor`:
+✅ Inference call with OCR + LLM agent `vprocessor`:
 
 ```
 curl -X 'POST' \
@@ -454,7 +454,7 @@ curl -X 'POST' \
   -F 'file=@inout-20211211_001.jpg;type=image/jpeg'
 ```
 
-Inference call with `unstructured-light` agent, this agent supports also JPG and PNG files:
+✅ Inference call with `unstructured-light` agent, this agent supports also JPG and PNG files:
 
 ```
 curl -X 'POST' \
@@ -469,7 +469,7 @@ curl -X 'POST' \
   -F 'file=@invoice_1.pdf;type=application/pdf'
 ```
 
-Inference call with `unstructured-light` agent, using only tables option. This agent supports also JPG and PNG files:
+✅ Inference call with `unstructured-light` agent, using only tables option. This agent supports also JPG and PNG files:
 
 ```
 curl -X 'POST' \
@@ -484,7 +484,7 @@ curl -X 'POST' \
   -F 'file=@invoice_1.pdf;type=application/pdf'
 ```
 
-Inference call with `unstructured` agent, this agent supports also JPG and PNG files:
+✅ Inference call with `unstructured` agent, this agent supports also JPG and PNG files:
 
 ```
 curl -X 'POST' \
@@ -499,7 +499,7 @@ curl -X 'POST' \
   -F 'file=@invoice_1.pdf;type=application/pdf'
 ```
 
-Inference call with `instructor` agent, this agent supports also JPG and PNG files:
+✅ Inference call with `instructor` agent, this agent supports also JPG and PNG files:
 
 ```
 curl -X 'POST' \
@@ -514,7 +514,7 @@ curl -X 'POST' \
   -F 'file=@invoice_1.pdf;type=application/pdf'
 ```
 
-Inference call with `instructor` agent and Sparrow parse, this agent supports also JPG and PNG files:
+✅ Inference call with `instructor` agent and Sparrow parse, this agent supports also JPG and PNG files:
 
 ```
 curl -X 'POST' \
