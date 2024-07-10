@@ -176,13 +176,13 @@ Copy text PDF files to the `data` folder or use sample data provided in the `dat
 
 This step is required for `llamaindex` or `haystack` agents only.
 
-Run the script, to convert text to vector embeddings and save in Weaviate. By default it will use `llamaindex` agent. Example with `llamaindex` agent:  
+✅ Run the script, to convert text to vector embeddings and save in Weaviate. By default it will use `llamaindex` agent. Example with `llamaindex` agent:  
 
 ```
 ./sparrow.sh ingest --file-path /data/invoice_1.pdf --agent llamaindex --index-name Sparrow_llamaindex_doc1
 ```
 
-Example with `haystack` agent:
+✅ Example with `haystack` agent:
 
 ```
 ./sparrow.sh ingest --file-path /data/invoice_1.pdf --agent haystack --index-name Sparrow_haystack_doc1
