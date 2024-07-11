@@ -65,7 +65,8 @@ def invoke_ocr(doc, content_type):
 
 
 @router.post("/inference")
-async def inference(file: Optional[UploadFile] = File(None), image_url: Optional[str] = Form(None)):
+async def inference(file: UploadFile = File(None),
+                    image_url: Optional[str] = Form(None)):
     result = None
     if file:
         if file.content_type in ["image/jpeg", "image/jpg", "image/png"]:
