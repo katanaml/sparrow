@@ -123,14 +123,10 @@ Example:
 
 ## Library build
 
-```
-poetry build
-```
-
-Publish to PyPi
+Create Python virtual environment
 
 ```
-poetry publish
+python -m venv .env_sparrow_parse
 ```
 
 ## Commercial usage
