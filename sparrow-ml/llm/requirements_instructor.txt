@@ -1,14 +1,14 @@
 ollama==0.2.1
 python-multipart
 yfinance==0.2.40
-instructor==1.3.3
+instructor==1.3.5
 python-box
 PyYAML
 rich
 typer[all]
-fastapi==0.111.0
+fastapi==0.111.1
 uvicorn[standard]
-sparrow-parse==0.3.0
+sparrow-parse==0.3.2
 numpy==1.26.4
 
 
