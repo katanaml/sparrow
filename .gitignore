@@ -75,3 +75,7 @@ sparrow-data/parse/.idea/vcs.xml
 sparrow-data/parse/dist/sparrow_parse-0.1.7-py3-none-any.whl
 sparrow-data/parse/dist/sparrow_parse-0.1.7.tar.gz
 sparrow-data/parse/poetry.lock
+sparrow-data/parse/.env_sparrow_parse
+sparrow-data/parse/build
+sparrow-data/parse/dist
+sparrow-data/parse/sparrow_parse.egg-info
