@@ -129,6 +129,26 @@ Create Python virtual environment
 python -m venv .env_sparrow_parse
 ```
 
+Install Python libraries
+
+```
+pip install -r requirements.txt
+```
+
+Build package
+
+```
+pip install setuptools wheel
+python setup.py sdist bdist_wheel
+```
+
+Upload to PyPI
+
+```
+pip install twine
+twine upload dist/*
+```
+
 ## Commercial usage
 
 Sparrow is available under the GPL 3.0 license, promoting freedom to use, modify, and distribute the software while ensuring any modifications remain open source under the same license. This aligns with our commitment to supporting the open-source community and fostering collaboration.
