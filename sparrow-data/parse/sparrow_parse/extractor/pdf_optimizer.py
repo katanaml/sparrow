@@ -1,4 +1,4 @@
-import PyPDF2
+import pypdf
 from pdf2image import convert_from_path
 import os
 import tempfile
@@ -17,12 +17,12 @@ class PDFOptimizer(object):
         if not convert_to_images:
             # Open the PDF file
             with open(file_path, 'rb') as pdf_file:
-                reader = PyPDF2.PdfReader(pdf_file)
+                reader = pypdf.PdfReader(pdf_file)
                 number_of_pages = len(reader.pages)
 
                 # Split the PDF into separate files per page
                 for page_num in range(number_of_pages):
-                    writer = PyPDF2.PdfWriter()
+                    writer = pypdf.PdfWriter()
                     writer.add_page(reader.pages[page_num])
 
                     output_filename = os.path.join(temp_dir, f'page_{page_num + 1}.pdf')
