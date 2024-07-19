@@ -220,4 +220,4 @@ class TableDetector(object):
 if __name__ == "__main__":
     table_detector = TableDetector()
 
-    table_detector.detect_table("/Users/andrejb/Documents/work//bankstatement/doc.jpg", None, local=True, debug=False)
+    table_detector.detect_table("/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg", None, local=True, debug=False)
