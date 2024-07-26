@@ -13,10 +13,10 @@ class UnstructuredProcessor(object):
     def __init__(self):
         pass
 
-    def extract_data(self, file_path, strategy, model_name, options, local=True, debug=False):
+    def extract_data(self, file_path, strategy, model_name, options, lang='en', local=True, debug=False):
         # Extracts the elements from the PDF
         elements = self.invoke_pipeline_step(
-            lambda: self.process_file(file_path, strategy, model_name),
+            lambda: self.process_file(file_path, strategy, model_name, lang),
             "Extracting elements from the document...",
             local
         )
@@ -51,7 +51,7 @@ class UnstructuredProcessor(object):
 
         return content, table_content
 
-    def process_file(self, file_path, strategy, model_name):
+    def process_file(self, file_path, strategy, model_name, lang):
         elements = None
 
         if file_path.lower().endswith('.pdf'):
@@ -60,7 +60,7 @@ class UnstructuredProcessor(object):
                 strategy=strategy,
                 infer_table_structure=True,
                 hi_res_model_name=model_name,
-                languages=['en']
+                languages=[lang]
             )
         elif file_path.lower().endswith(('.jpg', '.jpeg', '.png')):
             elements = partition_image(
@@ -68,7 +68,7 @@ class UnstructuredProcessor(object):
                 strategy=strategy,
                 infer_table_structure=True,
                 hi_res_model_name=model_name,
-                languages=['en']
+                languages=[lang]
             )
 
         return elements
@@ -168,11 +168,14 @@ class UnstructuredProcessor(object):
 
 
 if __name__ == "__main__":
-    processor = UnstructuredProcessor()
+    # processor = UnstructuredProcessor()
     # content, table_content = processor.extract_data(
-    #     '/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf',
+    #     '../sample/fr_train_0.jpg',
     #     'hi_res',
     #     'yolox',
     #     ['tables', 'unstructured'],
+    #     'fr',
     #     True,
     #     True)
+    # print(content)
+    # print(table_content)

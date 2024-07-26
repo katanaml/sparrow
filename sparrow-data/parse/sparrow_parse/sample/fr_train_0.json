@@ -1,0 +1,997 @@
+[
+    {
+        "element_id": "a1a1a41e9647390d7ba1ac2c7c214fde",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        1570.0,
+                        458.0
+                    ],
+                    [
+                        1570.0,
+                        532.0
+                    ],
+                    [
+                        2052.0,
+                        532.0
+                    ],
+                    [
+                        2052.0,
+                        458.0
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1
+        },
+        "text": "Formulaire d'inscription 1/9",
+        "type": "Title"
+    },
+    {
+        "element_id": "6c7b46aca488c9d2b09c6aa17a68c300",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        205.3,
+                        560.1
+                    ],
+                    [
+                        205.3,
+                        684.6
+                    ],
+                    [
+                        1433.2,
+                        684.6
+                    ],
+                    [
+                        1433.2,
+                        560.1
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "detection_class_prob": 0.39555,
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1
+        },
+        "text": "INFORMATION DE BASE IDENTIFICATION ET DESCRIPTION DU PROJET",
+        "type": "Title"
+    },
+    {
+        "element_id": "224112bd4ebda368442933361345d867",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        189.8,
+                        842.1
+                    ],
+                    [
+                        189.8,
+                        887.1
+                    ],
+                    [
+                        1278.7,
+                        887.1
+                    ],
+                    [
+                        1278.7,
+                        842.1
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "detection_class_prob": 0.39065,
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1,
+            "parent_id": "6c7b46aca488c9d2b09c6aa17a68c300"
+        },
+        "text": "Informations g\u00e9n\u00e9rales",
+        "type": "NarrativeText"
+    },
+    {
+        "element_id": "8c1b423be7930d07f460f1e68a07fd53",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        228.6,
+                        940.7
+                    ],
+                    [
+                        228.6,
+                        984.8
+                    ],
+                    [
+                        990.1,
+                        984.8
+                    ],
+                    [
+                        990.1,
+                        940.7
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "detection_class_prob": 0.34813,
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1,
+            "parent_id": "6c7b46aca488c9d2b09c6aa17a68c300"
+        },
+        "text": "A. INFORMATION INSTITUTIONNELLE",
+        "type": "NarrativeText"
+    },
+    {
+        "element_id": "836e1985f2f9f21f35d8400f0f2431ad",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        199.8,
+                        1043.9
+                    ],
+                    [
+                        199.8,
+                        1094.0
+                    ],
+                    [
+                        2198.4,
+                        1094.0
+                    ],
+                    [
+                        2198.4,
+                        1043.9
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "detection_class_prob": 0.72419,
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1,
+            "parent_id": "6c7b46aca488c9d2b09c6aa17a68c300"
+        },
+        "text": "1. Organisation ou institution charg\u00e9e de la mise en oeuvre du projet pr\u00e9sent\u00e9 au concours:",
+        "type": "NarrativeText"
+    },
+    {
+        "element_id": "364914e8eff49b64be2ec8d6c4ddd552",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        194.0,
+                        1145.0
+                    ],
+                    [
+                        194.0,
+                        1199.0
+                    ],
+                    [
+                        319.0,
+                        1199.0
+                    ],
+                    [
+                        319.0,
+                        1145.0
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1
+        },
+        "text": "Nom L",
+        "type": "Title"
+    },
+    {
+        "element_id": "69e335d7bd66817284ed3819c08ad404",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        494.0,
+                        1153.0
+                    ],
+                    [
+                        494.0,
+                        1181.0
+                    ],
+                    [
+                        613.0,
+                        1181.0
+                    ],
+                    [
+                        613.0,
+                        1153.0
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1
+        },
+        "text": "Martin",
+        "type": "Title"
+    },
+    {
+        "element_id": "5fe9164dec2aa1e4e4494e6955c18d69",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        596.0,
+                        1226.0
+                    ],
+                    [
+                        596.0,
+                        1261.0
+                    ],
+                    [
+                        942.0,
+                        1261.0
+                    ],
+                    [
+                        942.0,
+                        1226.0
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1
+        },
+        "text": "77 rue Colin, PARIS",
+        "type": "Title"
+    },
+    {
+        "element_id": "6389fe615dd98854c55fd239847e6d81",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        192.0,
+                        1232.0
+                    ],
+                    [
+                        192.0,
+                        1359.0
+                    ],
+                    [
+                        1161.0,
+                        1359.0
+                    ],
+                    [
+                        1161.0,
+                        1232.0
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1,
+            "parent_id": "5fe9164dec2aa1e4e4494e6955c18d69"
+        },
+        "text": "Adresse postale l Pays ou \u00c9tat/R\u00e9gion ou d\u00e9partement/Commune ou ville",
+        "type": "NarrativeText"
+    },
+    {
+        "element_id": "f3d1ddd035f1d25070d86b6bfcf32f98",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        1309.0,
+                        1322.0
+                    ],
+                    [
+                        1309.0,
+                        1351.0
+                    ],
+                    [
+                        1421.0,
+                        1351.0
+                    ],
+                    [
+                        1421.0,
+                        1322.0
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1
+        },
+        "text": "France",
+        "type": "Title"
+    },
+    {
+        "element_id": "9df1047675e07baf0fb1267f2907ad1f",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        201.3,
+                        1487.1
+                    ],
+                    [
+                        201.3,
+                        1636.6
+                    ],
+                    [
+                        2219.7,
+                        1636.6
+                    ],
+                    [
+                        2219.7,
+                        1487.1
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "detection_class_prob": 0.40665,
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1,
+            "parent_id": "f3d1ddd035f1d25070d86b6bfcf32f98",
+            "text_as_html": "<table></table>"
+        },
+        "text": "T\u00e9l\u00e9phone(s) | 0668273627 Courrier \u00e9lectronique (de l\u2019institution) l martin@hotmail.com Site/Internet/page institutionnelle www.martin.com",
+        "type": "Table"
+    },
+    {
+        "element_id": "e881f17a5af8ab65e4dd83ed1174a040",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        192.0,
+                        1717.0
+                    ],
+                    [
+                        192.0,
+                        1751.0
+                    ],
+                    [
+                        224.0,
+                        1751.0
+                    ],
+                    [
+                        224.0,
+                        1717.0
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1,
+            "parent_id": "f3d1ddd035f1d25070d86b6bfcf32f98"
+        },
+        "text": "2.",
+        "type": "UncategorizedText"
+    },
+    {
+        "element_id": "dbbf080c20eb7fe2c478cdd67ad65834",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        252.0,
+                        1715.0
+                    ],
+                    [
+                        252.0,
+                        1800.0
+                    ],
+                    [
+                        1256.0,
+                        1800.0
+                    ],
+                    [
+                        1256.0,
+                        1715.0
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1,
+            "parent_id": "f3d1ddd035f1d25070d86b6bfcf32f98"
+        },
+        "text": "Cat\u00e9gorie d'organisation: (Marquer d\u2019un X la cat\u00e9gorie correspondant \u00e0 votre organisation)",
+        "type": "NarrativeText"
+    },
+    {
+        "element_id": "9ae3c9c49b3e9b9bb6730d1bdc37928e",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        177.1,
+                        1833.8
+                    ],
+                    [
+                        177.1,
+                        2168.7
+                    ],
+                    [
+                        2238.1,
+                        2168.7
+                    ],
+                    [
+                        2238.1,
+                        1833.8
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "detection_class_prob": 0.68679,
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1,
+            "parent_id": "f3d1ddd035f1d25070d86b6bfcf32f98",
+            "table_as_cells": [
+                {
+                    "content": "Communaut\u00e9 religieuse l:l",
+                    "h": 1,
+                    "w": 1,
+                    "x": 0,
+                    "y": 2
+                },
+                {
+                    "content": "l:l Organisation",
+                    "h": 1,
+                    "w": 1,
+                    "x": 1,
+                    "y": 0
+                },
+                {
+                    "content": "- h\u00f4tels de ville",
+                    "h": 1,
+                    "w": 1,
+                    "x": 1,
+                    "y": 1
+                },
+                {
+                    "content": "Autre",
+                    "h": 1,
+                    "w": 1,
+                    "x": 1,
+                    "y": 2
+                },
+                {
+                    "content": "",
+                    "h": 1,
+                    "w": 1,
+                    "x": 2,
+                    "y": 0
+                },
+                {
+                    "content": "l:l",
+                    "h": 1,
+                    "w": 1,
+                    "x": 2,
+                    "y": 1
+                },
+                {
+                    "content": "cat\u00e9gorie",
+                    "h": 1,
+                    "w": 1,
+                    "x": 2,
+                    "y": 2
+                },
+                {
+                    "content": "sociale ou communautaire",
+                    "h": 1,
+                    "w": 1,
+                    "x": 3,
+                    "y": 0
+                },
+                {
+                    "content": "ONG nationale ou",
+                    "h": 1,
+                    "w": 1,
+                    "x": 3,
+                    "y": 1
+                },
+                {
+                    "content": "(sp\u00e9cifier) l:l",
+                    "h": 1,
+                    "w": 1,
+                    "x": 3,
+                    "y": 2
+                },
+                {
+                    "content": "l:l",
+                    "h": 1,
+                    "w": 1,
+                    "x": 4,
+                    "y": 0
+                },
+                {
+                    "content": "locale \u00db",
+                    "h": 1,
+                    "w": 1,
+                    "x": 4,
+                    "y": 1
+                },
+                {
+                    "content": "",
+                    "h": 1,
+                    "w": 1,
+                    "x": 4,
+                    "y": 2
+                },
+                {
+                    "content": "",
+                    "h": 1,
+                    "w": 1,
+                    "x": 5,
+                    "y": 2
+                },
+                {
+                    "content": "Entreprise \u00e0 but lucratif ONG internationale",
+                    "h": 2,
+                    "w": 1,
+                    "x": 5,
+                    "y": 0
+                },
+                {
+                    "content": "Commune - H\u00f4tel de ville Association locales de communes",
+                    "h": 2,
+                    "w": 1,
+                    "x": 0,
+                    "y": 0
+                }
+            ],
+            "text_as_html": "<table><thead><th rowspan=\"2\">Commune - H\u00f4tel de ville Association locales de communes</th><th>l:l Organisation</th><th></th><th>sociale ou communautaire</th><th>l:l</th><th rowspan=\"2\">Entreprise \u00e0 but lucratif ONG internationale</th></thead><thead><th></th><th>- h\u00f4tels de ville</th><th>l:l</th><th>ONG nationale ou</th><th>locale \u00db</th><th></th></thead><tr><td>Communaut\u00e9 religieuse l:l</td><td>Autre</td><td>cat\u00e9gorie</td><td>(sp\u00e9cifier) l:l</td><td></td><td></td></tr></table>"
+        },
+        "text": "Commune - H\u00f4tel de ville l:l Organisation sociale ou communautaire l:l Entreprise \u00e0 but lucratif l:l Association locales de communes - h\u00f4tels de ville l:l ONG nationale ou locale l:l ONG internationale \u00db Communaut\u00e9 religieuse D Autre cat\u00e9gorie (sp\u00e9cifier) l:l",
+        "type": "Table"
+    },
+    {
+        "element_id": "39954f6bcf43a15f4d7a7dc3d8653188",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        184.3,
+                        2233.8
+                    ],
+                    [
+                        184.3,
+                        2286.3
+                    ],
+                    [
+                        1056.9,
+                        2286.3
+                    ],
+                    [
+                        1056.9,
+                        2233.8
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "detection_class_prob": 0.45718,
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1,
+            "parent_id": "f3d1ddd035f1d25070d86b6bfcf32f98"
+        },
+        "text": "3. Repr\u00e9sentant l\u00e9gal de l'organisation:",
+        "type": "ListItem"
+    },
+    {
+        "element_id": "15c0eb9f24e516c43a732ab728dd2317",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        185.4,
+                        2354.1
+                    ],
+                    [
+                        185.4,
+                        2676.9
+                    ],
+                    [
+                        2240.0,
+                        2676.9
+                    ],
+                    [
+                        2240.0,
+                        2354.1
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "detection_class_prob": 0.7751,
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1,
+            "parent_id": "f3d1ddd035f1d25070d86b6bfcf32f98",
+            "table_as_cells": [
+                {
+                    "content": "Fonction |",
+                    "h": 1,
+                    "w": 1,
+                    "x": 0,
+                    "y": 0
+                },
+                {
+                    "content": "T\u00e9l\u00e9phone |",
+                    "h": 1,
+                    "w": 1,
+                    "x": 0,
+                    "y": 1
+                },
+                {
+                    "content": "S\u00e9cr\u00e9taire",
+                    "h": 1,
+                    "w": 1,
+                    "x": 1,
+                    "y": 0
+                },
+                {
+                    "content": "0667829812",
+                    "h": 1,
+                    "w": 1,
+                    "x": 1,
+                    "y": 1
+                }
+            ],
+            "text_as_html": "<table><thead><th>Fonction |</th><th>S\u00e9cr\u00e9taire</th></thead><tr><td>T\u00e9l\u00e9phone |</td><td>0667829812</td></tr></table>"
+        },
+        "text": "Nom | Pascal Fonctionl , VS\u00e9cr\u00e9tg\u00e6\u00ffire T\u00e9l\u00e9phoneJ 0667829812 Courrierl pascal@hotmail.com",
+        "type": "Table"
+    },
+    {
+        "element_id": "51f0e5e4b5fa61323f49a43b714805f1",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        179.2,
+                        2750.3
+                    ],
+                    [
+                        179.2,
+                        2800.0
+                    ],
+                    [
+                        1443.4,
+                        2800.0
+                    ],
+                    [
+                        1443.4,
+                        2750.3
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "detection_class_prob": 0.45491,
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1,
+            "parent_id": "f3d1ddd035f1d25070d86b6bfcf32f98"
+        },
+        "text": "4. Personne responsable du projet pr\u00e9sent\u00e9 au concours:",
+        "type": "ListItem"
+    },
+    {
+        "element_id": "e14d663d0d9138585d386eeda97fff28",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        182.3,
+                        2842.3
+                    ],
+                    [
+                        182.3,
+                        3158.9
+                    ],
+                    [
+                        2232.0,
+                        3158.9
+                    ],
+                    [
+                        2232.0,
+                        2842.3
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "detection_class_prob": 0.60771,
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1,
+            "parent_id": "f3d1ddd035f1d25070d86b6bfcf32f98",
+            "table_as_cells": [
+                {
+                    "content": "Responsabilit\u00e9 ou fonction",
+                    "h": 1,
+                    "w": 1,
+                    "x": 0,
+                    "y": 0
+                },
+                {
+                    "content": "T\u00e9l\u00e9phone |",
+                    "h": 1,
+                    "w": 1,
+                    "x": 0,
+                    "y": 1
+                },
+                {
+                    "content": "Cour rierl",
+                    "h": 1,
+                    "w": 1,
+                    "x": 0,
+                    "y": 2
+                },
+                {
+                    "content": "Dir\u00e9ctrice",
+                    "h": 1,
+                    "w": 1,
+                    "x": 1,
+                    "y": 0
+                },
+                {
+                    "content": "0678239821",
+                    "h": 1,
+                    "w": 1,
+                    "x": 1,
+                    "y": 1
+                },
+                {
+                    "content": "MARIE@hotmail.com",
+                    "h": 1,
+                    "w": 1,
+                    "x": 1,
+                    "y": 2
+                },
+                {
+                    "content": "",
+                    "h": 1,
+                    "w": 1,
+                    "x": 2,
+                    "y": 0
+                },
+                {
+                    "content": "",
+                    "h": 1,
+                    "w": 1,
+                    "x": 2,
+                    "y": 1
+                },
+                {
+                    "content": "",
+                    "h": 1,
+                    "w": 1,
+                    "x": 2,
+                    "y": 2
+                }
+            ],
+            "text_as_html": "<table><thead><th>Responsabilit\u00e9 ou fonction</th><th>Dir\u00e9ctrice</th><th></th></thead><tr><td>T\u00e9l\u00e9phone |</td><td>0678239821</td><td></td></tr><tr><td>Cour rierl</td><td>MARIE@hotmail.com</td><td></td></tr></table>"
+        },
+        "text": "Nom l Marie Responsabilit\u00e9 ou fonction | Dir\u00e9ctrice T\u00e9l\u00e9phone | 0678239821 COUFF\u00ce\u00c7I\u201d| - MARIE@hotmail.com",
+        "type": "Table"
+    },
+    {
+        "element_id": "6b9962ed1d5e7c626deb40deaa411974",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        2156.0,
+                        457.0
+                    ],
+                    [
+                        2156.0,
+                        485.0
+                    ],
+                    [
+                        2175.0,
+                        485.0
+                    ],
+                    [
+                        2175.0,
+                        457.0
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1
+        },
+        "text": "Y",
+        "type": "Title"
+    },
+    {
+        "element_id": "b7a8b044cf28c1a715879c527ed10d80",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        2116.0,
+                        530.0
+                    ],
+                    [
+                        2116.0,
+                        607.0
+                    ],
+                    [
+                        2209.0,
+                        607.0
+                    ],
+                    [
+                        2209.0,
+                        530.0
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "file_directory": "../sample",
+            "filename": "fr_train_0.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1
+        },
+        "text": "\u00abN",
+        "type": "Title"
+    }
+]
