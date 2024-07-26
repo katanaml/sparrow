@@ -1,0 +1,669 @@
+[
+    {
+        "element_id": "2c391df21c26ba29719782fdb7e1bb2d",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        160.2,
+                        370.1
+                    ],
+                    [
+                        160.2,
+                        492.5
+                    ],
+                    [
+                        558.8,
+                        492.5
+                    ],
+                    [
+                        558.8,
+                        370.1
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "detection_class_prob": 0.55955,
+            "file_directory": "../samples",
+            "filename": "fr_train_2.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1
+        },
+        "text": "Universit\u00e9 \u00c2 de Limoges",
+        "type": "Image"
+    },
+    {
+        "element_id": "12b658438eb6dfab40a16b3b58d13037",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        323.9,
+                        501.5
+                    ],
+                    [
+                        323.9,
+                        744.2
+                    ],
+                    [
+                        2257.0,
+                        744.2
+                    ],
+                    [
+                        2257.0,
+                        501.5
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "detection_class_prob": 0.36132,
+            "file_directory": "../samples",
+            "filename": "fr_train_2.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1,
+            "text_as_html": "<table></table>"
+        },
+        "text": "MANDAT DE PRELEVEMENT SEPA Joindre un Relev\u00e9 d\u2019identit\u00e9 bancaire (RIB avec IBAN et BIC Remettre ce document au secr\u00e9tariat de scolarit\u00e9",
+        "type": "Table"
+    },
+    {
+        "element_id": "3df9d8d40ec580ba8e84422d645da90a",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        169.4,
+                        816.0
+                    ],
+                    [
+                        169.4,
+                        1038.7
+                    ],
+                    [
+                        1448.5,
+                        1038.7
+                    ],
+                    [
+                        1448.5,
+                        816.0
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "detection_class_prob": 0.92504,
+            "file_directory": "../samples",
+            "filename": "fr_train_2.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1
+        },
+        "text": "En signant ce formulaire de mandat, vous autorisez (A) l\u2019Universit\u00e9 de Limoges \u00e0 envoyer des instructions \u00e0 votre banque pour d\u00e9biter votre compte selon l'\u00e9ch\u00e9ancier ci-dessous mentionn\u00e9, et (B) votre banque d\u00e9biter votre compte conform\u00e9ment aux instructions de l\u2019Universit\u00e9 de Limoges.",
+        "type": "NarrativeText"
+    },
+    {
+        "element_id": "6592d1a97e6517bf1cae059a584f7850",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        1441.0,
+                        908.0
+                    ],
+                    [
+                        1441.0,
+                        937.0
+                    ],
+                    [
+                        1460.0,
+                        937.0
+                    ],
+                    [
+                        1460.0,
+                        908.0
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "file_directory": "../samples",
+            "filename": "fr_train_2.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1
+        },
+        "text": "\u00e0",
+        "type": "Title"
+    },
+    {
+        "element_id": "8900a7438fd90672fe55ff24d9034b51",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        1586.4,
+                        798.4
+                    ],
+                    [
+                        1586.4,
+                        834.2
+                    ],
+                    [
+                        2198.8,
+                        834.2
+                    ],
+                    [
+                        2198.8,
+                        798.4
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "detection_class_prob": 0.59452,
+            "file_directory": "../samples",
+            "filename": "fr_train_2.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1,
+            "parent_id": "6592d1a97e6517bf1cae059a584f7850"
+        },
+        "text": "IDENTIFIANT CREANCIER SEPA",
+        "type": "NarrativeText"
+    },
+    {
+        "element_id": "e622ad011d5f59cfaf11f3346eafc5fd",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        1682.0,
+                        912.0
+                    ],
+                    [
+                        1682.0,
+                        954.0
+                    ],
+                    [
+                        2104.0,
+                        954.0
+                    ],
+                    [
+                        2104.0,
+                        912.0
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "file_directory": "../samples",
+            "filename": "fr_train_2.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1,
+            "parent_id": "6592d1a97e6517bf1cae059a584f7850"
+        },
+        "text": "FR71ZZZ591014",
+        "type": "UncategorizedText"
+    },
+    {
+        "element_id": "7e528e555b5db838d5db70454e77d648",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        159.0,
+                        1116.8
+                    ],
+                    [
+                        159.0,
+                        1672.7
+                    ],
+                    [
+                        2277.5,
+                        1672.7
+                    ],
+                    [
+                        2277.5,
+                        1116.8
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "detection_class_prob": 0.86225,
+            "file_directory": "../samples",
+            "filename": "fr_train_2.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1,
+            "parent_id": "6592d1a97e6517bf1cae059a584f7850",
+            "table_as_cells": [
+                {
+                    "content": "DESIGNATION DU",
+                    "h": 1,
+                    "w": 1,
+                    "x": 0,
+                    "y": 0
+                },
+                {
+                    "content": "Nom, pr\u00e9nom : Bernard",
+                    "h": 1,
+                    "w": 1,
+                    "x": 0,
+                    "y": 1
+                },
+                {
+                    "content": "Adresse : 77, rue Colin,",
+                    "h": 1,
+                    "w": 1,
+                    "x": 0,
+                    "y": 2
+                },
+                {
+                    "content": "Code Postal : 75000 Ville : Paris",
+                    "h": 1,
+                    "w": 1,
+                    "x": 0,
+                    "y": 3
+                },
+                {
+                    "content": "TITULAIRE DU COMPTE A",
+                    "h": 1,
+                    "w": 1,
+                    "x": 1,
+                    "y": 0
+                },
+                {
+                    "content": "_ Laur\u00e9lie",
+                    "h": 1,
+                    "w": 1,
+                    "x": 1,
+                    "y": 1
+                },
+                {
+                    "content": "Paris",
+                    "h": 1,
+                    "w": 1,
+                    "x": 1,
+                    "y": 2
+                },
+                {
+                    "content": "",
+                    "h": 1,
+                    "w": 1,
+                    "x": 1,
+                    "y": 3
+                },
+                {
+                    "content": "DEBITER",
+                    "h": 1,
+                    "w": 1,
+                    "x": 2,
+                    "y": 0
+                },
+                {
+                    "content": "",
+                    "h": 1,
+                    "w": 1,
+                    "x": 2,
+                    "y": 1
+                },
+                {
+                    "content": "",
+                    "h": 1,
+                    "w": 1,
+                    "x": 2,
+                    "y": 2
+                },
+                {
+                    "content": "",
+                    "h": 1,
+                    "w": 1,
+                    "x": 2,
+                    "y": 3
+                },
+                {
+                    "content": "DESIGNATION DU CREANCIER",
+                    "h": 1,
+                    "w": 1,
+                    "x": 3,
+                    "y": 0
+                },
+                {
+                    "content": "UNIVERSITE DE LIMOGES",
+                    "h": 1,
+                    "w": 1,
+                    "x": 3,
+                    "y": 1
+                },
+                {
+                    "content": "Agence Comptable",
+                    "h": 1,
+                    "w": 1,
+                    "x": 3,
+                    "y": 2
+                },
+                {
+                    "content": "BP 23204 87032 LIMOGES Cedex 01",
+                    "h": 1,
+                    "w": 1,
+                    "x": 3,
+                    "y": 3
+                }
+            ],
+            "text_as_html": "<table><thead><th>DESIGNATION DU</th><th>TITULAIRE DU COMPTE A</th><th>DEBITER</th><th>DESIGNATION DU CREANCIER</th></thead><tr><td>Nom, pr\u00e9nom : Bernard</td><td>_ Laur\u00e9lie</td><td></td><td>UNIVERSITE DE LIMOGES</td></tr><tr><td>Adresse : 77, rue Colin,</td><td>Paris</td><td></td><td>Agence Comptable</td></tr><tr><td>Code Postal : 75000 Ville : Paris</td><td></td><td></td><td>BP 23204 87032 LIMOGES Cedex 01</td></tr></table>"
+        },
+        "text": "DESIGNATION DU TITULAIRE DU COMPTE A DEBITER DESIGNATION DU CREANCIER Nom, pr\u00e9nom : Bernard _ Laur\u00e9lie UNIVERSITE DE LIMOGES Agence Comptable Adresse : 77, rue Colin, Paris 33, rue Fran\u00e7ois Mitterrand BP 23204 Code Postal : Fsbo\u00f9 87032 LIMOGES Cedex 01 Ville: \u2014 Paris Pays : France",
+        "type": "Table"
+    },
+    {
+        "element_id": "3c3a140a22637fbbd0bf714160f40b1d",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        212.0,
+                        1776.6
+                    ],
+                    [
+                        212.0,
+                        2377.3
+                    ],
+                    [
+                        2169.8,
+                        2377.3
+                    ],
+                    [
+                        2169.8,
+                        1776.6
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "detection_class_prob": 0.40393,
+            "file_directory": "../samples",
+            "filename": "fr_train_2.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1
+        },
+        "text": "DESIGNATION DU COMPTE A DEBITER __ IDENTIFICATION INTERNATIONALE (IBAN) | S N E S R S F P S S Q S S Q S 1 E S S S S S O P IDENTIFICATION INTERNATIONALE DE LA BANQUE (BIC | , , Q R Q P R Q R f",
+        "type": "Image"
+    },
+    {
+        "element_id": "4a81f8a2dc332f68bb3463ce82a1992f",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        203.0,
+                        2477.0
+                    ],
+                    [
+                        203.0,
+                        2509.0
+                    ],
+                    [
+                        319.0,
+                        2509.0
+                    ],
+                    [
+                        319.0,
+                        2477.0
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "file_directory": "../samples",
+            "filename": "fr_train_2.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1
+        },
+        "text": "Date :",
+        "type": "Title"
+    },
+    {
+        "element_id": "25d2743e2892598412687975a0141f29",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        1088.0,
+                        2474.0
+                    ],
+                    [
+                        1088.0,
+                        2566.0
+                    ],
+                    [
+                        1570.0,
+                        2566.0
+                    ],
+                    [
+                        1570.0,
+                        2474.0
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "file_directory": "../samples",
+            "filename": "fr_train_2.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1
+        },
+        "text": "Signature obligatoire du titulaire du compte :",
+        "type": "Title"
+    },
+    {
+        "element_id": "9ef5e53e1b2a84098d8ac03977ee8523",
+        "metadata": {
+            "coordinates": {
+                "layout_height": 3508,
+                "layout_width": 2480,
+                "points": [
+                    [
+                        166.6,
+                        2685.1
+                    ],
+                    [
+                        166.6,
+                        3130.9
+                    ],
+                    [
+                        2263.6,
+                        3130.9
+                    ],
+                    [
+                        2263.6,
+                        2685.1
+                    ]
+                ],
+                "system": "PixelSpace"
+            },
+            "detection_class_prob": 0.3586,
+            "file_directory": "../samples",
+            "filename": "fr_train_2.jpg",
+            "filetype": "JPEG",
+            "languages": [
+                "fr"
+            ],
+            "last_modified": "2024-07-26T15:19:09",
+            "page_number": 1,
+            "parent_id": "25d2743e2892598412687975a0141f29",
+            "table_as_cells": [
+                {
+                    "content": "Nomet pr\u00e9nom",
+                    "h": 1,
+                    "w": 1,
+                    "x": 0,
+                    "y": 2
+                },
+                {
+                    "content": "",
+                    "h": 1,
+                    "w": 1,
+                    "x": 0,
+                    "y": 3
+                },
+                {
+                    "content": "Dates : Montants :",
+                    "h": 1,
+                    "w": 1,
+                    "x": 0,
+                    "y": 4
+                },
+                {
+                    "content": "du d\u00e9biteur :",
+                    "h": 1,
+                    "w": 1,
+                    "x": 1,
+                    "y": 2
+                },
+                {
+                    "content": "",
+                    "h": 1,
+                    "w": 1,
+                    "x": 1,
+                    "y": 3
+                },
+                {
+                    "content": "1\u00ea7e \u00e9ch\u00e9ance 1\u00e8e \u00e9ch\u00e9ance",
+                    "h": 1,
+                    "w": 1,
+                    "x": 1,
+                    "y": 4
+                },
+                {
+                    "content": "\u2026\u2026 Dubois Th\u00c90",
+                    "h": 1,
+                    "w": 1,
+                    "x": 2,
+                    "y": 2
+                },
+                {
+                    "content": ".09/09/2019",
+                    "h": 1,
+                    "w": 1,
+                    "x": 2,
+                    "y": 3
+                },
+                {
+                    "content": ": | : 5000",
+                    "h": 1,
+                    "w": 1,
+                    "x": 2,
+                    "y": 4
+                },
+                {
+                    "content": "en e",
+                    "h": 1,
+                    "w": 1,
+                    "x": 3,
+                    "y": 2
+                },
+                {
+                    "content": "",
+                    "h": 1,
+                    "w": 1,
+                    "x": 3,
+                    "y": 3
+                },
+                {
+                    "content": "2\u00e8we \u00e9ch\u00e9ance : \u2026\u2026 2\u00e8me \u00e9ch\u00e9ance :",
+                    "h": 1,
+                    "w": 1,
+                    "x": 3,
+                    "y": 4
+                },
+                {
+                    "content": "eaeiececerecereraearee ec cec ec",
+                    "h": 1,
+                    "w": 1,
+                    "x": 4,
+                    "y": 2
+                },
+                {
+                    "content": "",
+                    "h": 1,
+                    "w": 1,
+                    "x": 4,
+                    "y": 3
+                },
+                {
+                    "content": "g\u00e9ve Gch\u00e9ance = \u2026\u2026 inm\u00e8re 3\u00e8me \u00e9ch\u00e9ance :",
+                    "h": 1,
+                    "w": 1,
+                    "x": 4,
+                    "y": 4
+                },
+                {
+                    "content": "UFR :",
+                    "h": 1,
+                    "w": 5,
+                    "x": 0,
+                    "y": 0
+                },
+                {
+                    "content": "Nom et pr\u00e9nom de l\u2019\u00e9tudiant : \u2026\u2026! DuUras MOrlS \u2026 \u2026\u2026 <\u00e9rovceciumceneemepmeetecenentresiaeitnentoneanerentans se",
+                    "h": 1,
+                    "w": 5,
+                    "x": 0,
+                    "y": 1
+                }
+            ],
+            "text_as_html": "<table><tr><td colspan=\"5\">UFR :</td></tr><tr><td colspan=\"5\">Nom et pr\u00e9nom de l\u2019\u00e9tudiant : \u2026\u2026! DuUras MOrlS \u2026 \u2026\u2026 &lt;\u00e9rovceciumceneemepmeetecenentresiaeitnentoneanerentans se</td></tr><tr><td>Nomet pr\u00e9nom</td><td>du d\u00e9biteur :</td><td>\u2026\u2026 Dubois Th\u00c90</td><td>en e</td><td>eaeiececerecereraearee ec cec ec</td></tr><tr><td></td><td></td><td>.09/09/2019</td><td></td><td></td></tr><tr><td>Dates : Montants :</td><td>1\u00ea7e \u00e9ch\u00e9ance 1\u00e8e \u00e9ch\u00e9ance</td><td>: | : 5000</td><td>2\u00e8we \u00e9ch\u00e9ance : \u2026\u2026 2\u00e8me \u00e9ch\u00e9ance :</td><td>g\u00e9ve Gch\u00e9ance = \u2026\u2026 inm\u00e8re 3\u00e8me \u00e9ch\u00e9ance :</td></tr></table>"
+        },
+        "text": "R\u00e9serv\u00e9 aux services de scolarit\u00e9 de l\u2019Universit\u00e9 \u2014 \u00c0 renseigner obligatoirement en totalit\u00e9 UFR : Nom et pr\u00e9nom de l\u2019\u00e9tudiant : \u2026\u2026! DuUras MOrlS \u2026 \u2026\u2026 <\u00e9rovceciumceneemepmeetecenentresiaeitnentoneanerentans se Nom et pr\u00e9nom du d\u00e9biteur : \u2026\u2026 Dubois Th\u00c90 en e eaeiececerecereraearee ec cec ec Dates : 1\u00ea7e \u00e9ch\u00e9ance : .09/09/2019 | 2\u00e8we \u00e9ch\u00e9ance : \u2026\u2026 g\u00e9ve Gch\u00e9ance = \u2026\u2026 inm\u00e8re Montants : 1\u00e8e \u00e9ch\u00e9ance : 5000 2\u00e8me \u00e9ch\u00e9ance : \u2026\u2026 3\u00e8me \u00e9ch\u00e9ance : \u2026\u2026",
+        "type": "Table"
+    }
+]
