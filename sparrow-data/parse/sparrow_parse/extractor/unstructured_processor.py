@@ -13,10 +13,10 @@ class UnstructuredProcessor(object):
     def __init__(self):
         pass
 
-    def extract_data(self, file_path, strategy, model_name, options, lang='en', local=True, debug=False):
+    def extract_data(self, file_path, strategy, model_name, options, langs=['en'], local=True, debug=False):
         # Extracts the elements from the PDF
         elements = self.invoke_pipeline_step(
-            lambda: self.process_file(file_path, strategy, model_name, lang),
+            lambda: self.process_file(file_path, strategy, model_name, langs),
             "Extracting elements from the document...",
             local
         )
@@ -51,7 +51,7 @@ class UnstructuredProcessor(object):
 
         return content, table_content
 
-    def process_file(self, file_path, strategy, model_name, lang):
+    def process_file(self, file_path, strategy, model_name, langs=[]):
         elements = None
 
         if file_path.lower().endswith('.pdf'):
@@ -60,7 +60,7 @@ class UnstructuredProcessor(object):
                 strategy=strategy,
                 infer_table_structure=True,
                 hi_res_model_name=model_name,
-                languages=[lang]
+                languages=langs
             )
         elif file_path.lower().endswith(('.jpg', '.jpeg', '.png')):
             elements = partition_image(
@@ -68,7 +68,7 @@ class UnstructuredProcessor(object):
                 strategy=strategy,
                 infer_table_structure=True,
                 hi_res_model_name=model_name,
-                languages=[lang]
+                languages=langs
             )
 
         return elements
@@ -174,7 +174,7 @@ if __name__ == "__main__":
     #     'hi_res',
     #     'yolox',
     #     ['tables', 'unstructured'],
-    #     'fr',
+    #     ['fr'],
     #     True,
     #     True)
     # print(content)
