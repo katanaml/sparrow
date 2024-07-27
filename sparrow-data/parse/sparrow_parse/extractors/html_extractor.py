@@ -3,9 +3,8 @@ from sentence_transformers import SentenceTransformer, util
 from bs4 import BeautifulSoup
 import json
 from rich.progress import Progress, SpinnerColumn, TextColumn
-from .extractor_helper import merge_html_table_headers
-from .extractor_helper import clean_html_table_header_names
-import re
+from sparrow_parse.helpers.html_extractor_helper import merge_html_table_headers
+from sparrow_parse.helpers.html_extractor_helper import clean_html_table_header_names
 
 
 class HTMLExtractor(object):
@@ -222,7 +221,7 @@ class HTMLExtractor(object):
 
 if __name__ == "__main__":
     # to run for debugging, navigate to sparrow_parse and run the following command:
-    # python -m extractor.html_extractor
+    # python -m extractors.html_extractor
 
     # with open('data/invoice_1_table.txt', 'r') as file:
     #     file_content = file.read()
@@ -233,7 +232,7 @@ if __name__ == "__main__":
 
     extractor = HTMLExtractor()
 
-    # answer, targets_unprocessed = extractor.read_data(
+    # answer, targets_unprocessed = extractors.read_data(
     #     # ['description', 'qty', 'net_price', 'net_worth', 'vat', 'gross_worth'],
     #     ['transaction_date', 'value_date', 'description', 'cheque', 'withdrawal', 'deposit', 'balance',
     #      'deposits', 'account_number', 'od_limit', 'currency_balance', 'sgd_balance', 'maturity_date'],

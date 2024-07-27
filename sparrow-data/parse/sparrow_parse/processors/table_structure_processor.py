@@ -1,9 +1,11 @@
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich import print
 from transformers import AutoModelForObjectDetection
+from transformers import TableTransformerForObjectDetection
 import torch
 from PIL import Image
 from torchvision import transforms
+from PIL import ImageDraw
 import os
 
 
@@ -25,7 +27,7 @@ class TableDetector(object):
 
     def detect_table(self, file_path, options, local=True, debug=False):
         model, device = self.invoke_pipeline_step(
-            lambda: self.load_model(),
+            lambda: self.load_table_detection_model(),
             "Loading table detection model...",
             local
         )
@@ -42,19 +44,50 @@ class TableDetector(object):
             local
         )
 
-        self.invoke_pipeline_step(
+        cropped_table = self.invoke_pipeline_step(
             lambda: self.crop_table(file_path, image, objects),
             "Cropping tables from the image...",
             local
         )
 
-    def load_model(self):
+        structure_model = self.invoke_pipeline_step(
+            lambda: self.load_table_structure_model(device),
+            "Loading table structure recognition model...",
+            local
+        )
+
+        structure_outputs = self.invoke_pipeline_step(
+            lambda: self.get_table_structure(cropped_table, structure_model, device),
+            "Getting table structure from cropped table...",
+            local
+        )
+
+        structure_cells = self.invoke_pipeline_step(
+            lambda: self.get_structure_cells(structure_model, cropped_table, structure_outputs),
+            "Getting structure cells from cropped table...",
+            local
+        )
+
+        self.invoke_pipeline_step(
+            lambda: self.process_structure_cells(structure_cells, cropped_table, file_path),
+            "Processing structure cells...",
+            local
+        )
+
+
+    def load_table_detection_model(self):
         model = AutoModelForObjectDetection.from_pretrained("microsoft/table-transformer-detection", revision="no_timm")
 
         device = "cuda" if torch.cuda.is_available() else "cpu"
         model.to(device)
 
         return model, device
+
+    def load_table_structure_model(self, device):
+        structure_model = TableTransformerForObjectDetection.from_pretrained("microsoft/table-structure-recognition-v1.1-all")
+        structure_model.to(device)
+
+        return structure_model
 
     def prepare_image(self, file_path, model, device):
         image = Image.open(file_path).convert("RGB")
@@ -91,6 +124,8 @@ class TableDetector(object):
 
         tables_crops = self.objects_to_crops(image, tokens, objects, detection_class_thresholds, padding=crop_padding)
 
+        cropped_table = None
+
         if len(tables_crops) == 0:
             print("No tables detected.")
             return
@@ -99,11 +134,14 @@ class TableDetector(object):
                 cropped_table = table_crop['image'].convert("RGB")
                 file_name_table = self.append_filename(file_path, f"table_{i}")
                 cropped_table.save(file_name_table)
+                break
         else:
             cropped_table = tables_crops[0]['image'].convert("RGB")
 
             file_name_table = self.append_filename(file_path, "table")
             cropped_table.save(file_name_table)
+
+        return cropped_table
 
     # for output bounding box post-processing
     def box_cxcywh_to_xyxy(self, x):
@@ -175,6 +213,51 @@ class TableDetector(object):
             table_crops.append(cropped_table)
 
         return table_crops
+
+    def get_table_structure(self, cropped_table, structure_model, device):
+        structure_transform = transforms.Compose([
+            self.MaxResize(1000),
+            transforms.ToTensor(),
+            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        ])
+
+        pixel_values = structure_transform(cropped_table).unsqueeze(0)
+        pixel_values = pixel_values.to(device)
+
+        with torch.no_grad():
+            outputs = structure_model(pixel_values)
+
+        return outputs
+
+    def get_structure_cells(self, structure_model, cropped_table, outputs):
+        structure_id2label = structure_model.config.id2label
+        structure_id2label[len(structure_id2label)] = "no object"
+
+        cells = self.outputs_to_objects(outputs, cropped_table.size, structure_id2label)
+
+        return cells
+
+    def process_structure_cells(self, structure_cells, cropped_table, file_path):
+        structure_cells = [cell for cell in structure_cells if cell['label'] != 'table spanning cell']
+        structure_cells = [cell for cell in structure_cells if cell['score'] >= 0.9]
+
+        # table, table column header, table row, table column
+        # structure_cells = [cell for cell in structure_cells if cell['label'] == 'table']
+        # structure_cells = [cell for cell in structure_cells if cell['label'] == 'table column header']
+        # structure_cells = [cell for cell in structure_cells if cell['label'] == 'table column header'
+        #                    or cell['label'] == 'table column']
+        # structure_cells = [cell for cell in structure_cells if cell['label'] == 'table column header'
+        #                    or cell['label'] == 'table column' or cell['label'] == 'table row']
+        print(structure_cells)
+
+        cropped_table_visualized = cropped_table.copy()
+        draw = ImageDraw.Draw(cropped_table_visualized)
+
+        for cell in structure_cells:
+            draw.rectangle(cell["bbox"], outline="red")
+
+        file_name_table_grid = self.append_filename(file_path, "table_grid")
+        cropped_table_visualized.save(file_name_table_grid)
 
     def append_filename(self, file_path, word):
         directory, filename = os.path.split(file_path)
