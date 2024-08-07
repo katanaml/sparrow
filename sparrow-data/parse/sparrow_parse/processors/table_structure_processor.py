@@ -7,11 +7,13 @@ from PIL import Image
 from torchvision import transforms
 from PIL import ImageDraw
 import os
+import numpy as np
+import easyocr
 
 
 class TableDetector(object):
     def __init__(self):
-        pass
+        self.reader = easyocr.Reader(['en']) # this needs to run only once to load the model into memory
 
     class MaxResize(object):
         def __init__(self, max_size=800):
@@ -62,14 +64,14 @@ class TableDetector(object):
             local
         )
 
-        structure_cells = self.invoke_pipeline_step(
+        table_data = self.invoke_pipeline_step(
             lambda: self.get_structure_cells(structure_model, cropped_table, structure_outputs),
             "Getting structure cells from cropped table...",
             local
         )
 
         self.invoke_pipeline_step(
-            lambda: self.process_structure_cells(structure_cells, cropped_table, file_path),
+            lambda: self.process_table_structure(table_data, cropped_table, file_path),
             "Processing structure cells...",
             local
         )
@@ -237,27 +239,110 @@ class TableDetector(object):
 
         return cells
 
-    def process_structure_cells(self, structure_cells, cropped_table, file_path):
-        structure_cells = [cell for cell in structure_cells if cell['label'] != 'table spanning cell']
-        structure_cells = [cell for cell in structure_cells if cell['score'] >= 0.9]
+    def process_table_structure(self, table_data, cropped_table, file_path):
+        table_data = [cell for cell in table_data if cell['label'] != 'table spanning cell']
+        table_data = [cell for cell in table_data if cell['score'] >= 0.9]
 
         # table, table column header, table row, table column
         # structure_cells = [cell for cell in structure_cells if cell['label'] == 'table']
-        # structure_cells = [cell for cell in structure_cells if cell['label'] == 'table column header']
+        table_data = [cell for cell in table_data if cell['label'] == 'table column header'
+                      or cell['label'] == 'table' or cell['label'] == 'table column']
         # structure_cells = [cell for cell in structure_cells if cell['label'] == 'table column header'
         #                    or cell['label'] == 'table column']
         # structure_cells = [cell for cell in structure_cells if cell['label'] == 'table column header'
         #                    or cell['label'] == 'table column' or cell['label'] == 'table row']
-        print(structure_cells)
+        # print(table_data)
 
         cropped_table_visualized = cropped_table.copy()
         draw = ImageDraw.Draw(cropped_table_visualized)
 
-        for cell in structure_cells:
-            draw.rectangle(cell["bbox"], outline="red")
+        header_cells = self.get_header_cell_coordinates(table_data)
+        if header_cells is not None:
+        # Output the coordinates of each cell
+            print("Header cell coordinates:")
+            print(header_cells)
 
-        file_name_table_grid = self.append_filename(file_path, "table_grid")
-        cropped_table_visualized.save(file_name_table_grid)
+            header_data = self.do_ocr_with_coordinates(header_cells, cropped_table)
+            print("Header data:")
+            print(header_data)
+
+            for cell_data in header_cells['row0']:
+                draw.rectangle(cell_data["cell"], outline="red")
+
+            file_name_table_grid = self.append_filename(file_path, "table_grid_header")
+            cropped_table_visualized.save(file_name_table_grid)
+
+    def get_header_cell_coordinates(self, table_data):
+        header_column = None
+        columns = []
+
+        # Separate header and columns
+        for item in table_data:
+            if item['label'] == 'table column header':
+                header_column = item['bbox']
+            elif item['label'] == 'table column':
+                columns.append(item['bbox'])
+
+        if not header_column:
+            return None
+
+        header_top = header_column[1]
+        header_bottom = header_column[3]
+
+        cells = []
+
+        # Calculate cell coordinates based on header and column intersections
+        for column in columns:
+            cell_left = column[0]
+            cell_right = column[2]
+            cell_top = header_top
+            cell_bottom = header_bottom
+
+            cells.append({
+                'cell': (cell_left, cell_top, cell_right, cell_bottom)
+            })
+
+        # Sort cells by the left coordinate (cell_left) to order them from left to right
+        cells.sort(key=lambda x: x['cell'][0])
+
+        header_row = {"row0": cells}
+
+        return header_row
+
+    def do_ocr_with_coordinates(self, cell_coordinates, cropped_table):
+        data = {}
+        max_num_columns = 0
+
+        # Iterate over each row in cell_coordinates
+        for row_key in cell_coordinates:
+            row_text = []
+            for cell in cell_coordinates[row_key]:
+                # Crop cell out of image
+                cell_image = cropped_table.crop(cell['cell'])
+                cell_image_np = np.array(cell_image)
+
+                # Apply OCR
+                result = self.reader.readtext(cell_image_np)
+                if result:
+                    text = " ".join([x[1] for x in result])
+                    row_text.append(text)
+                else:
+                    row_text.append("")  # If no text is detected, append an empty string
+
+            if len(row_text) > max_num_columns:
+                max_num_columns = len(row_text)
+
+            data[row_key] = row_text
+
+        print("Max number of columns:", max_num_columns)
+
+        # Pad rows which don't have max_num_columns elements
+        for row_key, row_data in data.items():
+            if len(row_data) < max_num_columns:
+                row_data += [""] * (max_num_columns - len(row_data))
+            data[row_key] = row_data
+
+        return data
 
     def append_filename(self, file_path, word):
         directory, filename = os.path.split(file_path)
