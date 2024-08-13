@@ -244,19 +244,25 @@ class TableDetector(object):
         table_data = [cell for cell in table_data if cell['score'] >= 0.9]
 
         # table, table column header, table row, table column
-        # structure_cells = [cell for cell in structure_cells if cell['label'] == 'table']
-        table_data = [cell for cell in table_data if cell['label'] == 'table column header'
-                      or cell['label'] == 'table' or cell['label'] == 'table column']
-        # structure_cells = [cell for cell in structure_cells if cell['label'] == 'table column header'
-        #                    or cell['label'] == 'table column']
-        # structure_cells = [cell for cell in structure_cells if cell['label'] == 'table column header'
-        #                    or cell['label'] == 'table column' or cell['label'] == 'table row']
-        # print(table_data)
+        table_data_header = [cell for cell in table_data if cell['label'] == 'table column header'
+                             or cell['label'] == 'table' or cell['label'] == 'table column']
+        print("Table header data:")
+        print(table_data_header)
+        table_data_rows = [cell for cell in table_data if cell['label'] == 'table column'
+                           or cell['label'] == 'table' or cell['label'] == 'table row']
+
+        table_data_rows = self.remove_matching_table_row(table_data_header, table_data_rows, tolerance=1.0)
+
+        print("Table row data:")
+        print(table_data_rows)
+
+        cropped_table_header_visualized = cropped_table.copy()
+        draw_header = ImageDraw.Draw(cropped_table_header_visualized)
 
         cropped_table_visualized = cropped_table.copy()
         draw = ImageDraw.Draw(cropped_table_visualized)
 
-        header_cells = self.get_header_cell_coordinates(table_data)
+        header_cells = self.get_header_cell_coordinates(table_data_header)
         if header_cells is not None:
         # Output the coordinates of each cell
             print("Header cell coordinates:")
@@ -267,9 +273,25 @@ class TableDetector(object):
             print(header_data)
 
             for cell_data in header_cells['row0']:
-                draw.rectangle(cell_data["cell"], outline="red")
+                draw_header.rectangle(cell_data["cell"], outline="red")
 
-            file_name_table_grid = self.append_filename(file_path, "table_grid_header")
+            file_name_table_grid_header = self.append_filename(file_path, "table_grid_header")
+            cropped_table_header_visualized.save(file_name_table_grid_header)
+
+        table_cells = self.get_table_cell_coordinates(table_data_rows)
+        if table_cells is not None:
+            print("Table cell coordinates:")
+            print(table_cells)
+
+            table_data = self.do_ocr_with_coordinates(table_cells, cropped_table)
+            print("Table data:")
+            print(table_data)
+
+            for row_key, row_cells in table_cells.items():
+                for cell_data in row_cells:
+                    draw.rectangle(cell_data["cell"], outline="blue")
+
+            file_name_table_grid = self.append_filename(file_path, "table_grid_cells")
             cropped_table_visualized.save(file_name_table_grid)
 
     def get_header_cell_coordinates(self, table_data):
@@ -308,6 +330,46 @@ class TableDetector(object):
         header_row = {"row0": cells}
 
         return header_row
+
+    def get_table_cell_coordinates(self, table_data):
+        rows = []
+        columns = []
+
+        # Separate rows and columns
+        for item in table_data:
+            if item['label'] == 'table row':
+                rows.append(item['bbox'])
+            elif item['label'] == 'table column':
+                columns.append(item['bbox'])
+
+        if not rows or not columns:
+            return None
+
+        # Sort rows by the top coordinate to ensure they are processed from top to bottom
+        rows.sort(key=lambda x: x[1])
+
+        row_cells = {}
+
+        # Calculate cell coordinates based on row and column intersections
+        for row_idx, row in enumerate(rows):
+            row_top = row[1]
+            row_bottom = row[3]
+            cells = []
+            for column in columns:
+                cell_left = column[0]
+                cell_right = column[2]
+                cell_top = row_top
+                cell_bottom = row_bottom
+
+                cells.append({
+                    'cell': (cell_left, cell_top, cell_right, cell_bottom)
+                })
+
+            # Sort cells within the row by the left coordinate to ensure they are ordered from left to right
+            cells.sort(key=lambda x: x['cell'][0])
+            row_cells[f'row{row_idx}'] = cells
+
+        return row_cells
 
     def do_ocr_with_coordinates(self, cell_coordinates, cropped_table):
         data = {}
@@ -368,6 +430,32 @@ class TableDetector(object):
         iob = interArea / float(boxAArea)
 
         return iob
+
+    def remove_matching_table_row(self, header_data, row_data, tolerance=1.0):
+        # Extract the bounding box of the table column header
+        header_bbox = None
+        for item in header_data:
+            if item['label'] == 'table column header':
+                header_bbox = np.array(item['bbox'])
+                break
+
+        if header_bbox is None:
+            print("No 'table column header' found in header data.")
+            return row_data
+
+        # Iterate over the table row data and remove rows with similar bbox
+        updated_row_data = []
+        for row in row_data:
+            if row['label'] == 'table row':
+                row_bbox = np.array(row['bbox'])
+                # Calculate the difference between the bboxes
+                if np.allclose(row_bbox, header_bbox, atol=tolerance):
+                    continue  # Skip this row as it matches the header bbox
+
+            # Add row to the updated list if it doesn't match
+            updated_row_data.append(row)
+
+        return updated_row_data
 
     def invoke_pipeline_step(self, task_call, task_description, local):
         if local:
