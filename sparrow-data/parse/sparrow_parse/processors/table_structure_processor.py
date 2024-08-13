@@ -240,31 +240,39 @@ class TableDetector(object):
         return cells
 
     def process_table_structure(self, table_data, cropped_table, file_path):
+        cropped_table_raw_visualized = cropped_table.copy()
+        draw_raw = ImageDraw.Draw(cropped_table_raw_visualized)
+        cropped_table_header_visualized = cropped_table.copy()
+        draw_header = ImageDraw.Draw(cropped_table_header_visualized)
+        cropped_table_visualized = cropped_table.copy()
+        draw = ImageDraw.Draw(cropped_table_visualized)
+
+        table_data_filtered = [item for item in table_data if item['label'] == 'table row']
+        for cell in table_data_filtered:
+            draw_raw.rectangle(cell["bbox"], outline="red")
+        file_name_table_grid_raw = self.append_filename(file_path, "table_raw")
+        cropped_table_raw_visualized.save(file_name_table_grid_raw)
+        print("Table row raw data:")
+        print(table_data_filtered)
+
         table_data = [cell for cell in table_data if cell['label'] != 'table spanning cell']
-        table_data = [cell for cell in table_data if cell['score'] >= 0.9]
+        table_data = [cell for cell in table_data if cell['label'] != 'table']
+        table_data = [cell for cell in table_data if cell['score'] >= 0.8]
 
         # table, table column header, table row, table column
         table_data_header = [cell for cell in table_data if cell['label'] == 'table column header'
                              or cell['label'] == 'table' or cell['label'] == 'table column']
         print("Table header data:")
         print(table_data_header)
+
         table_data_rows = [cell for cell in table_data if cell['label'] == 'table column'
-                           or cell['label'] == 'table' or cell['label'] == 'table row']
-
-        table_data_rows = self.remove_matching_table_row(table_data_header, table_data_rows, tolerance=1.0)
-
+                           or cell['label'] == 'table row']
+        table_data_rows = self.remove_matching_table_row(table_data_header, table_data_rows)
         print("Table row data:")
         print(table_data_rows)
 
-        cropped_table_header_visualized = cropped_table.copy()
-        draw_header = ImageDraw.Draw(cropped_table_header_visualized)
-
-        cropped_table_visualized = cropped_table.copy()
-        draw = ImageDraw.Draw(cropped_table_visualized)
-
         header_cells = self.get_header_cell_coordinates(table_data_header)
         if header_cells is not None:
-        # Output the coordinates of each cell
             print("Header cell coordinates:")
             print(header_cells)
 
@@ -289,7 +297,7 @@ class TableDetector(object):
 
             for row_key, row_cells in table_cells.items():
                 for cell_data in row_cells:
-                    draw.rectangle(cell_data["cell"], outline="blue")
+                    draw.rectangle(cell_data["cell"], outline="red")
 
             file_name_table_grid = self.append_filename(file_path, "table_grid_cells")
             cropped_table_visualized.save(file_name_table_grid)
@@ -476,4 +484,5 @@ class TableDetector(object):
 if __name__ == "__main__":
     table_detector = TableDetector()
 
+    # table_detector.detect_table("/Users/andrejb/Documents/work/epik/bankstatement/bonds_table.png", None, local=True, debug=False)
     table_detector.detect_table("/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg", None, local=True, debug=False)
