@@ -267,7 +267,7 @@ class TableDetector(object):
 
         table_data_rows = [cell for cell in table_data if cell['label'] == 'table column'
                            or cell['label'] == 'table row']
-        table_data_rows = self.remove_matching_table_row(table_data_header, table_data_rows)
+        table_data_rows = self.remove_overlapping_table_header_rows(table_data_header, table_data_rows)
         print("Table row data:")
         print(table_data_rows)
 
@@ -439,29 +439,59 @@ class TableDetector(object):
 
         return iob
 
-    def remove_matching_table_row(self, header_data, row_data, tolerance=1.0):
+    def remove_overlapping_table_header_rows(self, header_data, row_data, tolerance=1.0):
+        # Function to calculate the Intersection over Union (IoU) of two bounding boxes
+        def calculate_iou(bbox1, bbox2):
+            x1_min, y1_min, x1_max, y1_max = bbox1
+            x2_min, y2_min, x2_max, y2_max = bbox2
+
+            # Determine the coordinates of the intersection rectangle
+            inter_min_x = max(x1_min, x2_min)
+            inter_min_y = max(y1_min, y2_min)
+            inter_max_x = min(x1_max, x2_max)
+            inter_max_y = min(y1_max, y2_max)
+
+            # Compute the area of intersection
+            inter_area = max(0, inter_max_x - inter_min_x) * max(0, inter_max_y - inter_min_y)
+
+            # Compute the area of both bounding boxes
+            bbox1_area = (x1_max - x1_min) * (y1_max - y1_min)
+            bbox2_area = (x2_max - x2_min) * (y2_max - y2_min)
+
+            # Compute the Intersection over Union (IoU)
+            iou = inter_area / float(bbox1_area + bbox2_area - inter_area)
+            return iou
+
         # Extract the bounding box of the table column header
         header_bbox = None
         for item in header_data:
             if item['label'] == 'table column header':
-                header_bbox = np.array(item['bbox'])
+                header_bbox = item['bbox']
                 break
 
         if header_bbox is None:
             print("No 'table column header' found in header data.")
             return row_data
 
-        # Iterate over the table row data and remove rows with similar bbox
+        # Initialize a counter for removed rows
+        removed_count = 0
+
+        # Iterate over the table row data and remove rows with overlapping bbox
         updated_row_data = []
         for row in row_data:
             if row['label'] == 'table row':
-                row_bbox = np.array(row['bbox'])
-                # Calculate the difference between the bboxes
-                if np.allclose(row_bbox, header_bbox, atol=tolerance):
-                    continue  # Skip this row as it matches the header bbox
+                row_bbox = row['bbox']
+                # Check for overlap (IoU > 0) or very similar bounding box
+                iou = calculate_iou(header_bbox, row_bbox)
+                if iou > 0 or np.allclose(row_bbox, header_bbox, atol=tolerance):
+                    removed_count += 1  # Increment the removed counter
+                    continue  # Skip this row as it overlaps or matches the header bbox
 
-            # Add row to the updated list if it doesn't match
+            # Add row to the updated list if it doesn't overlap
             updated_row_data.append(row)
+
+        # Print the number of removed rows
+        print(f"Number of removed rows: {removed_count}")
 
         return updated_row_data
 
@@ -484,5 +514,5 @@ class TableDetector(object):
 if __name__ == "__main__":
     table_detector = TableDetector()
 
-    # table_detector.detect_table("/Users/andrejb/Documents/work/epik/bankstatement/bonds_table.png", None, local=True, debug=False)
-    table_detector.detect_table("/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg", None, local=True, debug=False)
+    table_detector.detect_table("/Users/andrejb/Documents/work/epik/bankstatement/OCBC_1_1.jpg", None, local=True, debug=False)
+    # table_detector.detect_table("/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg", None, local=True, debug=False)
