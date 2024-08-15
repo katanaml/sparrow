@@ -247,17 +247,20 @@ class TableDetector(object):
         cropped_table_visualized = cropped_table.copy()
         draw = ImageDraw.Draw(cropped_table_visualized)
 
-        table_data_filtered = [item for item in table_data if item['label'] == 'table row']
+        table_data = [cell for cell in table_data if cell['label'] != 'table spanning cell']
+        table_data = [cell for cell in table_data if cell['label'] != 'table']
+        table_data = [cell for cell in table_data if cell['score'] >= 0.8]
+
+        table_data = self.merge_overlapping_columns(cropped_table, table_data)
+
+        table_data_filtered = [item for item in table_data if item['label'] == 'table column']
+        # table_data_filtered = table_data
         for cell in table_data_filtered:
             draw_raw.rectangle(cell["bbox"], outline="red")
         file_name_table_grid_raw = self.append_filename(file_path, "table_raw")
         cropped_table_raw_visualized.save(file_name_table_grid_raw)
-        print("Table row raw data:")
+        print("Table raw data:")
         print(table_data_filtered)
-
-        table_data = [cell for cell in table_data if cell['label'] != 'table spanning cell']
-        table_data = [cell for cell in table_data if cell['label'] != 'table']
-        table_data = [cell for cell in table_data if cell['score'] >= 0.8]
 
         # table, table column header, table row, table column
         table_data_header = [cell for cell in table_data if cell['label'] == 'table column header'
@@ -494,6 +497,100 @@ class TableDetector(object):
         print(f"Number of removed rows: {removed_count}")
 
         return updated_row_data
+
+    def filter_table_columns(self, data):
+        return [item for item in data if item['label'] == 'table column']
+
+    def extract_text_boundaries(self, image, box):
+        """
+        Extract the start and end coordinates of the text within a bounding box,
+        and translate them back to the original image coordinates.
+
+        Args:
+        - image: The image in which the box is located.
+        - box: The bounding box (x_min, y_min, x_max, y_max).
+        - reader: The EasyOCR reader object.
+
+        Returns:
+        - text_start: The x-coordinate of the start of the text in the original image.
+        - text_end: The x-coordinate of the end of the text in the original image.
+        """
+        x_min, y_min, x_max, y_max = box
+        cropped_image = image.crop((x_min, y_min, x_max, y_max))
+        result = self.reader.readtext(np.array(cropped_image))
+
+        if result:
+            text_coordinates = result[0][0]  # Extract the coordinates of the text within the cropped image
+
+            # Translate the coordinates back to the original image coordinates
+            text_start = min(point[0] + x_min for point in text_coordinates)
+            text_end = max(point[0] + x_min for point in text_coordinates)
+
+            return text_start, text_end
+
+        return None, None
+
+    def merge_overlapping_columns(self, image, data, proximity_threshold=20):
+        """
+            Merge only those bounding boxes where the text is split directly by the box line,
+            while keeping other labels intact.
+
+            Args:
+            - image: The image in which the boxes are located.
+            - data: List of dictionary items with bounding boxes and labels.
+            - reader: The EasyOCR reader object.
+            - proximity_threshold: The maximum distance between text boundaries to consider merging.
+
+            Returns:
+            - Updated list of dictionary items with merged bounding boxes and other entries preserved.
+            """
+        table_columns = self.filter_table_columns(data)
+        other_entries = [item for item in data if item['label'] != 'table column']
+        merged_boxes = []
+        table_columns = sorted(table_columns, key=lambda x: x['bbox'][0])  # Sort by x_min
+        print(table_columns)
+
+        while table_columns:
+            box_data = table_columns.pop(0)
+            x_min, y_min, x_max, y_max = box_data['bbox']
+
+            to_merge = []
+            for i, other_box_data in enumerate(table_columns):
+                ox_min, oy_min, ox_max, oy_max = other_box_data['bbox']
+
+                # Only consider merging if the boxes are adjacent horizontally
+                if x_min < ox_max and x_max > ox_min:
+                    # Extract text boundaries from both boxes
+                    text_start_1, text_end_1 = self.extract_text_boundaries(image, box_data['bbox'])
+                    text_start_2, text_end_2 = self.extract_text_boundaries(image, other_box_data['bbox'])
+
+                    # Check if the text from one box ends very close to where the text in the next box starts
+                    if text_end_1 is not None and text_start_2 is not None and text_start_2 - text_end_1 <= proximity_threshold:
+                        print(text_start_2 - text_end_1)
+                        print(box_data)
+                        print(other_box_data)
+                        x_max = max(x_max, ox_max)
+                        y_max = max(y_max, oy_max)
+                        y_min = min(y_min, oy_min)
+                        to_merge.append(i)
+
+            # Merge the boxes
+            for index in sorted(to_merge, reverse=True):
+                table_columns.pop(index)
+
+            merged_boxes.append({
+                'label': box_data['label'],
+                'score': box_data['score'],
+                'bbox': [x_min, y_min, x_max, y_max]
+            })
+
+        # Combine the merged boxes with other entries
+        final_output = merged_boxes + other_entries
+
+        # Sort final output by the y-coordinate to maintain the original order
+        final_output = sorted(final_output, key=lambda x: x['bbox'][1])
+
+        return final_output
 
     def invoke_pipeline_step(self, task_call, task_description, local):
         if local:
