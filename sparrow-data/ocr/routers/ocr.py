@@ -4,7 +4,7 @@ from typing import Optional
 from functools import lru_cache
 from paddleocr import PaddleOCR
 from PIL import Image
-import urllib.request
+from urllib.request import Request, urlopen
 from io import BytesIO
 from pdf2image import convert_from_bytes
 import os
@@ -84,7 +84,9 @@ async def inference(file: UploadFile = File(None),
     elif image_url:
         # test image url: https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-ml/llm/data/inout-20211211_001.jpg
         # test PDF: https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-ml/llm/data/invoice_1.pdf
-        with urllib.request.urlopen(image_url) as response:
+        headers = {'User-Agent': 'Mozilla/5.0'} # to avoid 403 error
+        req = Request(image_url, headers=headers)
+        with urlopen(req) as response:
             content_type = response.info().get_content_type()
 
             if content_type in ["image/jpeg", "image/jpg", "image/png"]:
