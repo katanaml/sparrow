@@ -84,7 +84,7 @@ async def inference(file: UploadFile = File(None),
     elif image_url:
         # test image url: https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-ml/llm/data/inout-20211211_001.jpg
         # test PDF: https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-ml/llm/data/invoice_1.pdf
-        headers = {'User-Agent': 'Mozilla/5.0'} # to avoid 403 error
+        headers = {"User-Agent": "Mozilla/5.0"} # to avoid 403 error
         req = Request(image_url, headers=headers)
         with urlopen(req) as response:
             content_type = response.info().get_content_type()
