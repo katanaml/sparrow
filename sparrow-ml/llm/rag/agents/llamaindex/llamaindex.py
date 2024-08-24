@@ -132,12 +132,12 @@ class LlamaIndexPipeline(Pipeline):
 
         return index
 
-    def process_query(self, query, rag_chain, debug=False, local=True):
+    def process_query(self, query, rag_chain, debug=False, local=True) -> str:
         start = timeit.default_timer()
 
         step = 0
-        answer = False
-        while not answer:
+        answer = None
+        while answer is None:
             step += 1
             if step > 1:
                 print('Refining answer...')
@@ -170,8 +170,17 @@ class LlamaIndexPipeline(Pipeline):
 
         return answer
 
-    def get_rag_response(self, query, chain, debug=False):
-        result = chain.query(query)
+    def get_rag_response(self, query, chain, debug=False) -> str | None:
+        try:
+            result = chain.query(query)
+        except ValueError as error:
+            text = error.args[0]
+            starting_str = "Could not extract json string from output: \n"
+            if (index := text.find(starting_str)) != -1:
+                json_str = text[index + len(starting_str) :]
+                result = json_str + "}"
+            else:
+                return
 
         try:
             # Convert and pretty print
@@ -182,7 +191,7 @@ class LlamaIndexPipeline(Pipeline):
             print("The response is not in JSON format:\n")
             print(result)
 
-        return False
+        # return False
 
     def invoke_pipeline_step(self, task_call, task_description, local):
         if local:
