@@ -1,4 +1,5 @@
 llama-index==0.10.23
+llama-index-core==0.10.23.post1
 llama-index-embeddings-langchain==0.1.2
 llama-index-llms-ollama==0.1.2
 llama-index-vector-stores-weaviate==0.1.4
