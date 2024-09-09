@@ -252,8 +252,9 @@ class TableDetector(object):
         table_data = [cell for cell in table_data if cell['score'] >= 0.8]
 
         table_data = self.merge_overlapping_columns(cropped_table, table_data)
+        table_data = self.adjust_overlapping_rows(cropped_table, table_data)
 
-        table_data_filtered = [item for item in table_data if item['label'] == 'table column']
+        table_data_filtered = [item for item in table_data if item['label'] == 'table row']
         # table_data_filtered = table_data
         for cell in table_data_filtered:
             draw_raw.rectangle(cell["bbox"], outline="red")
@@ -501,6 +502,9 @@ class TableDetector(object):
     def filter_table_columns(self, data):
         return [item for item in data if item['label'] == 'table column']
 
+    def filter_table_rows(self, data):
+        return [item for item in data if item['label'] == 'table row']
+
     def extract_text_boundaries(self, image, box):
         """
         Extract the start and end coordinates of the text within a bounding box,
@@ -548,7 +552,6 @@ class TableDetector(object):
         other_entries = [item for item in data if item['label'] != 'table column']
         merged_boxes = []
         table_columns = sorted(table_columns, key=lambda x: x['bbox'][0])  # Sort by x_min
-        print(table_columns)
 
         while table_columns:
             box_data = table_columns.pop(0)
@@ -566,9 +569,6 @@ class TableDetector(object):
 
                     # Check if the text from one box ends very close to where the text in the next box starts
                     if text_end_1 is not None and text_start_2 is not None and text_start_2 - text_end_1 <= proximity_threshold:
-                        print(text_start_2 - text_end_1)
-                        print(box_data)
-                        print(other_box_data)
                         x_max = max(x_max, ox_max)
                         y_max = max(y_max, oy_max)
                         y_min = min(y_min, oy_min)
@@ -591,6 +591,9 @@ class TableDetector(object):
         final_output = sorted(final_output, key=lambda x: x['bbox'][1])
 
         return final_output
+
+    def adjust_overlapping_rows(self, image, data, proximity_threshold=10):
+        return data
 
     def invoke_pipeline_step(self, task_call, task_description, local):
         if local:
