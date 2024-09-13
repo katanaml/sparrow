@@ -79,3 +79,5 @@ sparrow-data/parse/.env_sparrow_parse
 sparrow-data/parse/build
 sparrow-data/parse/dist
 sparrow-data/parse/sparrow_parse.egg-info
+/sparrow-ml/infra/infra/.env_infra
+/sparrow-ml/infra/infra/.idea
