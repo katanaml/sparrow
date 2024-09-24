@@ -8,6 +8,7 @@ sentence-transformers==3.0.1
 numpy==1.26.4
 pypdf==4.3.0
 easyocr==1.7.1
+gradio_client
 
 
 # Force reinstall:
