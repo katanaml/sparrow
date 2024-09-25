@@ -13,12 +13,13 @@ Data processing with ML and LLM
 
 ## The Principle
 
-Sparrow is an innovative open-source solution for efficient data extraction and processing from various documents and images. It seamlessly handles forms, invoices, receipts, and other unstructured data sources. Sparrow stands out with its modular architecture, offering independent services and pipelines all optimized for robust performance. One of the critical functionalities of Sparrow - pluggable architecture. You can easily integrate and run data extraction pipelines using tools and frameworks like LlamaIndex, Haystack, or Unstructured. Sparrow enables local LLM data extraction pipelines through Ollama or Apple MLX. With Sparrow solution you get API, which helps to process and transform your data into structured output, ready to be integrated with custom workflows.
+Sparrow is an innovative open-source solution for efficient data extraction and processing from various documents and images. It seamlessly handles forms, invoices, receipts, and other unstructured data sources. Sparrow stands out with its modular architecture, offering independent services and pipelines all optimized for robust performance. One of the critical functionalities of Sparrow - pluggable architecture. You can easily integrate and run data extraction pipelines using tools and frameworks like Sparrow Parse (with vision-language models support) LlamaIndex, Haystack, or Unstructured. Sparrow enables local LLM data extraction pipelines through Ollama or Apple MLX. Sparrow Parse with VL model can run either on premise, or it can execute inference on cloud GPU. With Sparrow solution you get API, which helps to process and transform your data into structured output, ready to be integrated with custom workflows.
 
 Sparrow Agents - with Sparrow you can build independent LLM agents, and use API to invoke them from your system.
 
 **List of available agents:**
 
+- **sparrow-parse** - direct data extraction pipeline using VL LLM
 - **llamaindex** - RAG pipeline with LlamaIndex for PDF processing
 - **vllamaindex** - RAG pipeline with LLamaIndex multimodal for image processing
 - **vprocessor** - RAG pipeline with OCR and LlamaIndex for image processing
@@ -41,7 +42,7 @@ Sparrow implementation with Donut ML model - <a href="https://github.com/katanam
 
 ## Quickstart
 
-1. Install Weaviate vector DB, if you are planning to use Sparrow agent, which runs Weaviate (for example `llamaindex` or `unstructured`)
+1. Install Weaviate vector DB, if you are planning to use Sparrow agent, which runs Weaviate (for example `llamaindex` or `unstructured`). `sparrow-parse` agent doesnt require Weaviate
 2. Install `pyenv` and then install Python into your environment
 3. Create virtual environment for the Sparrow agent you want to run
 4. Install requirements for the Sparrow agent you want to use. Keep in mind, depending on OS, it could be required to do additional install steps for some of the libraries (for example PaddleOCR or Unstructured)
@@ -55,7 +56,7 @@ See detailed instructions below.
 
 ### LLM
 
-- **Install Weaviate local DB with Docker:**
+- **Install Weaviate local DB with Docker (check if agent requires vector DB):**
    
 ```
 docker compose up -d
@@ -122,15 +123,16 @@ After adding these lines, restart your terminal or source your profile script wi
 1. Create virtual environments in `sparrow-ml/llm` folder:
 
 ```
+python -m venv .env_sparrow_parse
 python -m venv .env_llamaindex
 python -m venv .env_haystack
 python -m venv .env_instructor
 python -m venv .env_unstructured
 ```
 
-`.env_llamaindex` is used for LLM RAG with `llamaindex`, `vllamaindex` and `vprocessor` agents, `.env_haystack` is used for LLM RAG with `haystack` agent, and `.env_instructor` is used for LLM function calling with `fcall` agent and for `instructor` RAG agent. `.env_unstructured` is used for `unstructured-light` and `unstructured` agents.
+`.env_llamaindex` is used for LLM RAG with `llamaindex`, `vllamaindex` and `vprocessor` agents, `.env_haystack` is used for LLM RAG with `haystack` agent, and `.env_instructor` is used for LLM function calling with `fcall` agent and for `instructor` RAG agent. `.env_unstructured` is used for `unstructured-light` and `unstructured` agents. `.env_sparrow_parse` is used for `sparrow-parse` agent.
 
-2. Create virtual environment in `sparrow-data/ocr` folder:
+2. Create virtual environment in `sparrow-data/ocr` folder, only if you plan to run OCR service:
 
 ```
 python -m venv .env_ocr
@@ -140,31 +142,31 @@ python -m venv .env_ocr
 
 Activate each environment and install its dependencies using the corresponding `requirements.txt` file.
 
-For `llamaindex` environment:
+For `sparrow-parse` environment:
 
 1. Activate the environment:
 
 ```
-source .env_llamaindex/bin/activate
+source .env_sparrow_parse/bin/activate
 ```
 
 2. Install dependencies:
 
 ```
-pip install -r requirements_llamaindex.txt
+pip install -r requirements_sparrow_parse.txt
 ```
 
-Repeat the same for `haystack`, `instructor` and `unstructured` environments.
+Repeat the same for `llamaindex`, `haystack`, `instructor` and `unstructured` environments.
 
 *Run Sparrow*
 
-You can run Sparrow on CLI or through API. To run on CLI, use `sparrow.sh` script. Run it from corresponding virtual environment, depending which agent you want to execute.
+You can run Sparrow on CLI or through API. To run on CLI, use `sparrow.sh` script. Run it from corresponding virtual environment, depending which agent you want to execute. `sparrow-parse` agent is using VL LLM model and it doesn't use Ollama at the moment. `sparrow-parse` agent runs VL LLM either locally or using cloud GPU.
 
 - **Install <a href="https://ollama.ai">Ollama</a> and pull LLM model specified in config.yml**
 
 ### OCR
 
-Follow the install steps outlined here:
+Follow the install steps outlined here, if you plan to use OCR service:
 
 1. Sparrow OCR services <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr">install steps</a>
 
