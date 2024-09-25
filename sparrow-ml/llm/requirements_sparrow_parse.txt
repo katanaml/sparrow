@@ -1,0 +1,8 @@
+python-box
+python-multipart
+PyYAML
+rich
+typer[all]
+fastapi==0.115.0
+uvicorn[standard]
+sparrow-parse==0.3.4

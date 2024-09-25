@@ -53,6 +53,9 @@ def get_pipeline(agent_name: str) -> Pipeline:
     elif agent_name == "unstructured":
         from rag.agents.unstructured.unstructured import UnstructuredPipeline
         return UnstructuredPipeline()
+    elif agent_name == "sparrow-parse":
+        from rag.agents.sparrow_parse.sparrow_parse import SparrowParsePipeline
+        return SparrowParsePipeline()
     else:
         raise ValueError(f"Unknown agent: {agent_name}")
 
