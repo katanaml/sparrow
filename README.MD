@@ -5,7 +5,7 @@
 [![Current Version](https://img.shields.io/badge/version-0.1.8-green.svg)](https://github.com/katanaml/sparrow)
 
 
-Data processing with ML and LLM
+Data processing with ML, LLM and Vision LLM
 
 <p align="center">
   <img width="300" height="300" src="https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_logo_5.png">
