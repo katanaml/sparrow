@@ -68,6 +68,8 @@ Example:
 
 ## Parsing and extraction
 
+### HTML extractor
+
 ```
 from sparrow_parse.extractor.html_extractor import HTMLExtractor
 
@@ -99,6 +101,36 @@ Example:
 *local* - `True`
 
 *debug* - `True`
+
+### Sparrow Parse VL (vision-language) extractor
+
+```
+extractor = VLLMExtractor()
+
+# export HF_TOKEN="hf_"
+config = {
+    "method": "huggingface",  # Could be 'huggingface' or 'local_gpu'
+    "hf_space": "katanaml/sparrow-qwen2-vl-7b",
+    "hf_token": os.getenv('HF_TOKEN'),
+    # Additional fields for local GPU inference
+    # "device": "cuda", "model_path": "model.pth"
+}
+
+# Use the factory to get the correct instance
+factory = InferenceFactory(config)
+model_inference_instance = factory.get_inference_instance()
+
+input_data = [
+    {
+        "image": "/Users/andrejb/Documents/work/epik/bankstatement/bonds_table.png",
+        "text_input": "retrieve financial instruments data. return response in JSON format"
+    }
+]
+
+# Now you can run inference without knowing which implementation is used
+result = extractor.run_inference(model_inference_instance, input_data, generic_query=False, debug=True)
+print("Inference Result:", result)
+```
 
 ## PDF optimization
 
