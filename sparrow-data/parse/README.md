@@ -102,7 +102,7 @@ Example:
 
 *debug* - `True`
 
-### Sparrow Parse VL (vision-language) extractor
+### Sparrow Parse VL (vision-language model) extractor
 
 ```
 extractor = VLLMExtractor()

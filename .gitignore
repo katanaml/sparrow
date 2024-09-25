@@ -64,6 +64,7 @@ sparrow-ml/llm/.env_haystack/
 sparrow-ml/llm/.env_llamaindex/
 sparrow-ml/llm/.env_instructor/
 sparrow-ml/llm/.env_unstructured/
+sparrow-ml/llm/.env_sparrow_parse/
 sparrow-data/ocr/.env_ocr/
 sparrow-data/parse/.env_parse
 sparrow-data/parse/.idea/inspectionProfiles/profiles_settings.xml
