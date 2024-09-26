@@ -6,3 +6,7 @@ typer[all]
 fastapi==0.115.0
 uvicorn[standard]
 sparrow-parse==0.3.4
+
+
+# Force reinstall:
+# pip install --force-reinstall -r requirements_sparrow_parse.txt
