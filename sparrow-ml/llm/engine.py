@@ -4,6 +4,7 @@ from typing_extensions import Annotated, List
 from rag.agents.interface import get_pipeline
 import tempfile
 import os
+from rich import print
 
 
 # Disable parallelism in the Huggingface tokenizers library to prevent potential deadlocks and ensure consistent behavior.
@@ -17,7 +18,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 
 def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch")],
-        types: Annotated[str, typer.Argument(help="The list of types of the fields")],
+        types: Annotated[str, typer.Argument(help="The list of types of the fields")] = None,
         keywords: Annotated[str, typer.Argument(help="The list of table column keywords")] = None,
         file_path: Annotated[str, typer.Option(help="The file to process")] = None,
         agent: Annotated[str, typer.Option(help="Selected agent")] = "llamaindex",
@@ -30,16 +31,24 @@ def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch"
     query = 'retrieve ' + inputs
     query_types = types
 
-    query_inputs_arr = [param.strip() for param in inputs.split(',')]
-    query_types_arr = [param.strip() for param in query_types.split(',')]
+    query_inputs_arr = [param.strip() for param in inputs.split(',')] if query_types else []
+    query_types_arr = [param.strip() for param in query_types.split(',')] if query_types else []
     keywords_arr = [param.strip() for param in keywords.split(',')] if keywords is not None else None
+
+    if not query_types:
+        query = inputs
 
     user_selected_agent = agent  # Modify this as needed
 
     try:
         rag = get_pipeline(user_selected_agent)
-        rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, keywords_arr, query, file_path,
-                         index_name, options, group_by_rows, update_targets, debug)
+        answer = rag.run_pipeline(user_selected_agent, query_inputs_arr, query_types_arr, keywords_arr, query, file_path,
+                                  index_name, options, group_by_rows, update_targets, debug)
+
+        print(f"\nJSON response:\n")
+        print(answer)
+        print('\n')
+        print('=' * 50)
 
     except ValueError as e:
         print(f"Caught an exception: {e}")
