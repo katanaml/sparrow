@@ -54,8 +54,10 @@ class SparrowParsePipeline(Pipeline):
         llm_output = self.invoke_pipeline_step(lambda: self.execute_query(cfg, query_all_data, query, file_path, debug),
                                         "Executing query", local)
 
-        validation_result = self.invoke_pipeline_step(lambda: self.validate_result(llm_output, query_all_data, query_schema, debug),
-                                                  "Validating result", local)
+        validation_result = None
+        if query_all_data is False:
+            validation_result = self.invoke_pipeline_step(lambda: self.validate_result(llm_output, query_all_data, query_schema, debug),
+                                                      "Validating result", local)
 
         end = timeit.default_timer()
 
@@ -109,15 +111,14 @@ class SparrowParsePipeline(Pipeline):
 
 
     def validate_result(self, llm_output, query_all_data, query_schema, debug):
-        if query_all_data is False:
-            validator = Validator(query_schema)
+        validator = Validator(query_schema)
 
-            validation_result = validator.validate_json_against_schema(llm_output, validator.generated_schema)
-            if validation_result is not None:
-                return validation_result
-            else:
-                if debug:
-                    print("LLM output is valid according to the schema.")
+        validation_result = validator.validate_json_against_schema(llm_output, validator.generated_schema)
+        if validation_result is not None:
+            return validation_result
+        else:
+            if debug:
+                print("LLM output is valid according to the schema.")
 
 
     def is_valid_json(self, json_string):
