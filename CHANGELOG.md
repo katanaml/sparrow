@@ -1,5 +1,16 @@
 # ChangeLog
 
+## [v0.2.0] - 2024-09-04
+
+## Sparrow Parse with Vision LLM support
+
+This release starts new phase in Sparrow development - Vision LLM support for document data processing.
+
+1. Sparrow Parse library supports Vision LLM
+2. Sparrow Parse provides factory class implementation to run inference locally or on cloud GPU
+3. Sparrow supports JSON as input query
+4. JSON query validation and LLM response JSON validation is performed
+
 ## [v0.1.8] - 2024-07-02
 
 ### New Features
