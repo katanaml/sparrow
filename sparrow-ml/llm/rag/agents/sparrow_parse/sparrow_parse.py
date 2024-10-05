@@ -7,8 +7,8 @@ import yaml
 from rich import print
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from typing import Any, List
-import json
 from .sparrow_validator import Validator
+from .sparrow_utils import is_valid_json, get_json_keys_as_string
 import warnings
 import os
 
@@ -48,8 +48,11 @@ class SparrowParsePipeline(Pipeline):
             query_all_data = True
             query = None
         else:
-            query, query_schema = self.invoke_pipeline_step(lambda: self.prepare_query_and_schema(query, debug),
-                                                      "Preparing query and schema", local)
+            try:
+                query, query_schema = self.invoke_pipeline_step(lambda: self.prepare_query_and_schema(query, debug),
+                                                          "Preparing query and schema", local)
+            except ValueError as e:
+                return str(e)
 
         llm_output = self.invoke_pipeline_step(lambda: self.execute_query(cfg, query_all_data, query, file_path, debug),
                                         "Executing query", local)
@@ -67,17 +70,15 @@ class SparrowParsePipeline(Pipeline):
 
 
     def prepare_query_and_schema(self, query, debug):
-        is_query_valid = self.is_valid_json(query)
+        is_query_valid = is_valid_json(query)
         if not is_query_valid:
-            return "Invalid query. Please provide a valid JSON query."
+            raise ValueError("Invalid query. Please provide a valid JSON query.")
 
-        query_keys = self.get_json_keys_as_string(query)
+        query_keys = get_json_keys_as_string(query)
         query_schema = query
         query = "retrieve " + query_keys
 
         query = query + ". return response in JSON format, by strictly following this JSON schema: " + query_schema
-        if debug:
-            print("Query:", query)
 
         return query, query_schema
 
@@ -119,41 +120,6 @@ class SparrowParsePipeline(Pipeline):
         else:
             if debug:
                 print("LLM output is valid according to the schema.")
-
-
-    def is_valid_json(self, json_string):
-        try:
-            json.loads(json_string)
-            return True
-        except json.JSONDecodeError:
-            return False
-
-
-    def get_json_keys_as_string(self, json_string):
-        try:
-            # Load the JSON string into a Python object
-            json_data = json.loads(json_string)
-
-            # If it's a list of dictionaries, collect keys in order
-            if isinstance(json_data, list):
-                keys = []
-                for item in json_data:
-                    if isinstance(item, dict):
-                        for key in item:
-                            if key not in keys:  # To avoid duplicates while preserving order
-                                keys.append(key)
-                return ', '.join(keys)
-
-            # If it's a single dictionary
-            elif isinstance(json_data, dict):
-                return ', '.join(json_data.keys())
-
-            else:
-                return ''  # Not a valid JSON structure with keys
-
-        except json.JSONDecodeError:
-            print("Invalid JSON string.")
-            return ''
 
 
     def invoke_pipeline_step(self, task_call, task_description, local):
