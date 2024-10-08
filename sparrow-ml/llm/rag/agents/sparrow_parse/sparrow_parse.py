@@ -2,8 +2,6 @@ from rag.agents.interface import Pipeline
 from sparrow_parse.vllm.inference_factory import InferenceFactory
 from sparrow_parse.extractors.vllm_extractor import VLLMExtractor
 import timeit
-import box
-import yaml
 from rich import print
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from typing import Any, List
@@ -37,10 +35,6 @@ class SparrowParsePipeline(Pipeline):
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {payload}\n")
 
-        # Import config vars
-        with open('config.yml', 'r', encoding='utf8') as ymlfile:
-            cfg = box.Box(yaml.safe_load(ymlfile))
-
         start = timeit.default_timer()
 
         query_all_data = False
@@ -54,8 +48,8 @@ class SparrowParsePipeline(Pipeline):
             except ValueError as e:
                 return str(e)
 
-        llm_output = self.invoke_pipeline_step(lambda: self.execute_query(cfg, query_all_data, query, file_path, debug),
-                                        "Executing query", local)
+        llm_output = self.invoke_pipeline_step(lambda: self.execute_query(options, query_all_data, query, file_path, debug),
+                                               "Executing query", local)
 
         validation_result = None
         if query_all_data is False:
@@ -83,15 +77,20 @@ class SparrowParsePipeline(Pipeline):
         return query, query_schema
 
 
-    def execute_query(self, cfg, query_all_data, query, file_path, debug):
+    def execute_query(self, options, query_all_data, query, file_path, debug):
         extractor = VLLMExtractor()
 
         # export HF_TOKEN="hf_"
-        config = {
-            "method": cfg.VLLM_INFRA_SPARROW_PARSE,  # Could be 'huggingface' or 'local_gpu'
-            "hf_space": cfg.VLLM_HF_SPACE_SPARROW_PARSE,
-            "hf_token": os.getenv('HF_TOKEN')
-        }
+        config = {}
+        if options[0] == 'huggingface':
+            config = {
+                "method": options[0],  # Could be 'huggingface' or 'local_gpu'
+                "hf_space": options[1],
+                "hf_token": os.getenv('HF_TOKEN')
+            }
+        else:
+            # Handle other cases if needed
+            return "First element is not 'huggingface'"
 
         # Use the factory to get the correct instance
         factory = InferenceFactory(config)
