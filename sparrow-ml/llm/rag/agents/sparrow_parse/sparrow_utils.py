@@ -5,7 +5,8 @@ def is_valid_json(json_string):
     try:
         json.loads(json_string)
         return True
-    except json.JSONDecodeError:
+    except json.JSONDecodeError as e:
+        print("JSONDecodeError:", e)
         return False
 
 
@@ -13,6 +14,14 @@ def get_json_keys_as_string(json_string):
     try:
         # Load the JSON string into a Python object
         json_data = json.loads(json_string)
+
+        # If the input is a list, treat it like a dictionary by merging all the keys
+        if isinstance(json_data, list):
+            merged_dict = {}
+            for item in json_data:
+                if isinstance(item, dict):
+                    merged_dict.update(item)
+            json_data = merged_dict  # Now json_data is a dictionary
 
         # A helper function to recursively gather keys while preserving order
         def extract_keys(data, keys):

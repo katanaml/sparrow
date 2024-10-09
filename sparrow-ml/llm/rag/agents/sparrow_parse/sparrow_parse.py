@@ -46,7 +46,7 @@ class SparrowParsePipeline(Pipeline):
                 query, query_schema = self.invoke_pipeline_step(lambda: self.prepare_query_and_schema(query, debug),
                                                           "Preparing query and schema", local)
             except ValueError as e:
-                return str(e)
+                raise e
 
         llm_output = self.invoke_pipeline_step(lambda: self.execute_query(options, query_all_data, query, file_path, debug),
                                                "Executing query", local)

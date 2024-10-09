@@ -7,9 +7,16 @@ import warnings
 from typing import Annotated
 import json
 import argparse
+from dotenv import load_dotenv
+import os
+from rich import print
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+
+# Load environment variables from .env file
+load_dotenv()
 
 
 # add asyncio to the pipeline
@@ -33,31 +40,41 @@ def root():
 @app.post("/api/v1/sparrow-llm/inference", tags=["LLM Inference"])
 async def inference(
         fields: Annotated[str, Form()],
-        types: Annotated[str, Form()],
         agent: Annotated[str, Form()],
+        types: Annotated[str, Form()] = None,
         keywords: Annotated[str, Form()] = None,
         index_name: Annotated[str, Form()] = None,
         options: Annotated[str, Form()] = None,
         group_by_rows: Annotated[bool, Form()] = True,
         update_targets: Annotated[bool, Form()] = True,
+        debug: Annotated[bool, Form()] = False,
         file: UploadFile = File(None)
         ):
     query = 'retrieve ' + fields
     query_types = types
 
-    query_inputs_arr = [param.strip() for param in fields.split(',')]
-    query_types_arr = [param.strip() for param in query_types.split(',')]
+    query_inputs_arr = [param.strip() for param in fields.split(',')] if query_types else []
+    query_types_arr = [param.strip() for param in query_types.split(',')] if query_types else []
     keywords_arr = [param.strip() for param in keywords.split(',')] if keywords is not None else None
     options_arr = [param.strip() for param in options.split(',')] if options is not None else None
 
+    if not query_types:
+        query = fields
+
     try:
         answer = await run_from_api_engine(agent, query_inputs_arr, query_types_arr, keywords_arr, query, index_name,
-                                           options_arr, file, group_by_rows, update_targets, False)
+                                           options_arr, file, group_by_rows, update_targets, debug)
     except ValueError as e:
         raise HTTPException(status_code=418, detail=str(e))
 
     if isinstance(answer, (str, bytes, bytearray)):
         answer = json.loads(answer)
+
+    if debug:
+        print(f"\nJSON response:\n")
+        print(answer)
+        print('\n')
+        print('=' * 50)
 
     return {"message": answer}
 
