@@ -67,14 +67,15 @@ async def inference(
     except ValueError as e:
         raise HTTPException(status_code=418, detail=str(e))
 
-    if isinstance(answer, (str, bytes, bytearray)):
-        answer = json.loads(answer)
+    try:
+        if isinstance(answer, (str, bytes, bytearray)):
+            answer = json.loads(answer)
+    except json.JSONDecodeError as e:
+        raise HTTPException(status_code=418, detail=answer)
 
     if debug:
         print(f"\nJSON response:\n")
         print(answer)
-        print('\n')
-        print('=' * 50)
 
     return {"message": answer}
 

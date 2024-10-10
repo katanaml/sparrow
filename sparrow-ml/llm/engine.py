@@ -47,9 +47,6 @@ def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch"
 
         print(f"\nJSON response:\n")
         print(answer)
-        print('\n')
-        print('=' * 50)
-
     except ValueError as e:
         print(f"Caught an exception: {e}")
 

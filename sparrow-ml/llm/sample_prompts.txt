@@ -297,3 +297,94 @@ List[str], List[str], List[str], List[str], str" --agent instructor --file-path 
 }
 ==================================================
 Time to retrieve answer: 24.45439903100487
+
+
+./sparrow.sh "{\"invoice_no\":\"example\", \"invoice_date\":\"example\", \"seller_name\":\"example\", \"seller_address\":\"example\",
+\"seller_taxid\":\"example\", \"seller_iban\":\"example\", \"client_name\":\"example\", \"client_address\":\"example\",
+\"client_taxid\":\"example\", \"invoice_items\":[{\"description\":\"example\", \"quantity\":0.00, \"net_price\":0.00,
+\"net_worth\":0.00, \"vat\":\"example\", \"gross_worth\":0.00}], \"invoice_summary\":[{\"net_worth\":0.00, \"vat\":0.00, \"gross_worth\":0.00}]}"
+--agent "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg"
+
+{
+  "invoice_no": "61356291",
+  "invoice_date": "09/06/2012",
+  "seller_name": "Chapman, Kim and Green",
+  "seller_address": "64731 James Branch, Smithmouth, NC 26872",
+  "seller_taxid": "949-84-9105",
+  "seller_iban": "GB50ACIE59715038217063",
+  "client_name": "Rodriguez-Stevens",
+  "client_address": "2280 Angela Plain, Hortonshire, MS 93248",
+  "client_taxid": "939-98-8477",
+  "invoice_items": [
+    {
+      "description": "Wine Glasses Goblets Pair Clear Glass",
+      "quantity": 5.0,
+      "net_price": 12.0,
+      "net_worth": 60.0,
+      "vat": "10%",
+      "gross_worth": 66.0
+    },
+    {
+      "description": "With Hooks Stemware Storage Multiple Uses Iron Wine Rack Hanging Glass",
+      "quantity": 4.0,
+      "net_price": 28.08,
+      "net_worth": 112.32,
+      "vat": "10%",
+      "gross_worth": 123.55
+    },
+    {
+      "description": "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
+      "quantity": 1.0,
+      "net_price": 7.5,
+      "net_worth": 7.5,
+      "vat": "10%",
+      "gross_worth": 8.25
+    },
+    {
+      "description": "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 4 20 FL OZ (591 ml) NEW",
+      "quantity": 1.0,
+      "net_price": 12.99,
+      "net_worth": 12.99,
+      "vat": "10%",
+      "gross_worth": 14.29
+    }
+  ],
+  "invoice_summary": [
+    {
+      "net_worth": 192.81,
+      "vat": 19.28,
+      "gross_worth": 212.09
+    }
+  ]
+}
+
+Time to retrieve answer: 47.84319644900097
+
+
+./sparrow.sh "[{\"instrument_name\":\"example\", \"valuation\":0}]" --agent "sparrow-parse" --debug --options huggingface
+--options katanaml/sparrow-qwen2-vl-7b --file-path "/Users/andrejb/Documents/work/epik/bankstatement/bonds_table.png"
+
+[
+  {
+    "instrument_name": "UNITS BLACKROCK FIX INC DUB FDS PLC ISHS EUR INV GRD CP BD IDX/INST/E",
+    "valuation": 19049
+  },
+  {
+    "instrument_name": "UNITS ISHARES III PLC CORE EUR GOVT BOND UCITS ETF/EUR",
+    "valuation": 83488
+  },
+  {
+    "instrument_name": "UNITS ISHARES III PLC EUR CORP BOND 1-5YR UCITS ETF/EUR",
+    "valuation": 213030
+  },
+  {
+    "instrument_name": "UNIT ISHARES VI PLC/JP MORGAN USD E BOND EUR HED UCITS ETF DIST/HDGD/",
+    "valuation": 32774
+  },
+  {
+    "instrument_name": "UNITS XTRACKERS II SICAV/EUR HY CORP BOND UCITS ETF/-1D-/DISTR.",
+    "valuation": 23643
+  }
+]
+
+Time to retrieve answer: 22.78700271800335
