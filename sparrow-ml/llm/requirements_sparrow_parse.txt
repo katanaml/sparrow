@@ -7,6 +7,7 @@ sparrow-parse==0.3.4
 genson==1.3.0
 jsonschema==4.23.0
 python-dotenv
+python-box
 
 
 # Force reinstall:
