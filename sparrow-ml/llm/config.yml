@@ -1,3 +1,5 @@
+PROTECTED_ACCESS: False
+
 # AGENT FOR LLAMAINDEX
 # Tested with these LLMs
 #LLM: 'starling-lm:7b-alpha-q4_K_M'

@@ -8,6 +8,8 @@ from typing import Annotated
 import json
 import argparse
 from dotenv import load_dotenv
+import box
+import yaml
 import os
 from rich import print
 
@@ -18,6 +20,9 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 # Load environment variables from .env file
 load_dotenv()
 
+# Import config vars
+with open('config.yml', 'r', encoding='utf8') as ymlfile:
+    cfg = box.Box(yaml.safe_load(ymlfile))
 
 # add asyncio to the pipeline
 
@@ -48,8 +53,19 @@ async def inference(
         group_by_rows: Annotated[bool, Form()] = True,
         update_targets: Annotated[bool, Form()] = True,
         debug: Annotated[bool, Form()] = False,
+        sparrow_key: Annotated[str, Form()] = None,
         file: UploadFile = File(None)
         ):
+
+    protected_access = cfg.PROTECTED_ACCESS
+    if protected_access:
+        # Retrieve all environment variables that start with 'SPARROW_KEY_'
+        sparrow_keys = {key: value for key, value in os.environ.items() if key.startswith('SPARROW_KEY_')}
+
+        # Check if the provided sparrow_key matches any of the environment variables
+        if sparrow_key not in sparrow_keys.values():
+            raise HTTPException(status_code=403, detail="Protected access. Agent not allowed.")
+
     query = 'retrieve ' + fields
     query_types = types
 
@@ -84,8 +100,18 @@ async def inference(
 async def ingest(
         agent: Annotated[str, Form()],
         index_name: Annotated[str, Form()],
+        sparrow_key: Annotated[str, Form()] = None,
         file: UploadFile = File()
         ):
+    protected_access = cfg.PROTECTED_ACCESS
+    if protected_access:
+        # Retrieve all environment variables that start with 'SPARROW_KEY_'
+        sparrow_keys = {key: value for key, value in os.environ.items() if key.startswith('SPARROW_KEY_')}
+
+        # Check if the provided sparrow_key matches any of the environment variables
+        if sparrow_key not in sparrow_keys.values():
+            raise HTTPException(status_code=403, detail="Protected access. Agent not allowed.")
+
     try:
         answer = await run_from_api_ingest(agent, index_name, file, False)
     except ValueError as e:
