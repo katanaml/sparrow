@@ -85,3 +85,5 @@ sparrow-data/parse/sparrow_parse.egg-info
 /sparrow-ml/infra/.env_infra
 /sparrow-ml/infra/.idea
 sparrow-ml/llm/.env
+sparrow-ui/shell/.env_shell
+/sparrow-ui/shell/.idea

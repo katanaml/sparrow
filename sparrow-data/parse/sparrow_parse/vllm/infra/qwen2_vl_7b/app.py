@@ -100,7 +100,7 @@ def run_inference(image, text_input=None, model_id="Qwen/Qwen2-VL-7B-Instruct"):
     inputs = inputs.to("cuda")
 
     # Inference: Generation of the output
-    generated_ids = model.generate(**inputs, max_new_tokens=1024)
+    generated_ids = model.generate(**inputs, max_new_tokens=4096)
     generated_ids_trimmed = [
         out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
     ]
@@ -134,5 +134,5 @@ with gr.Blocks(css=css) as demo:
 
         submit_btn.click(run_inference, [input_img, text_input], [output_text])
 
-demo.queue(api_open=False)
+demo.queue(api_open=True)
 demo.launch(debug=True)
