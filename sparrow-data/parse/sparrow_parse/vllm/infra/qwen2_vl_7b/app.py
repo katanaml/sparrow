@@ -14,11 +14,21 @@ import os
 DESCRIPTION = "[Sparrow Qwen2-VL-7B Backend](https://github.com/katanaml/sparrow)"
 
 
-def array_to_image_path(image_array, max_width=1250, max_height=1750):
-    if image_array is None:
+def array_to_image_path(image_filepath, max_width=1250, max_height=1750):
+    if image_filepath is None:
         raise ValueError("No image provided. Please upload an image before submitting.")
-    # Convert numpy array to PIL Image
-    img = Image.fromarray(np.uint8(image_array))
+
+    # Open the uploaded image using its filepath
+    img = Image.open(image_filepath)
+
+    # Extract the file extension from the uploaded file
+    input_image_extension = image_filepath.split('.')[-1].lower()  # Extract extension from filepath
+
+    # Set file extension based on the original file, otherwise default to PNG
+    if input_image_extension in ['jpg', 'jpeg', 'png']:
+        file_extension = input_image_extension
+    else:
+        file_extension = 'png'  # Default to PNG if extension is unavailable or invalid
 
     # Get the current dimensions of the image
     width, height = img.size
@@ -41,7 +51,7 @@ def array_to_image_path(image_array, max_width=1250, max_height=1750):
 
     # Generate a unique filename using timestamp
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"image_{timestamp}.png"
+    filename = f"image_{timestamp}.{file_extension}"
 
     # Save the image
     img.save(filename)
@@ -49,12 +59,12 @@ def array_to_image_path(image_array, max_width=1250, max_height=1750):
     # Get the full path of the saved image
     full_path = os.path.abspath(filename)
 
-    return full_path, new_width, new_height
+    return full_path
 
 
 @spaces.GPU
 def run_inference(image, text_input=None, model_id="Qwen/Qwen2-VL-7B-Instruct"):
-    image_path, width, height = array_to_image_path(image)
+    image_path = array_to_image_path(image)
 
     try:
         model = Qwen2VLForConditionalGeneration.from_pretrained(
@@ -73,9 +83,7 @@ def run_inference(image, text_input=None, model_id="Qwen/Qwen2-VL-7B-Instruct"):
                 "content": [
                     {
                         "type": "image",
-                        "image": image_path,
-                        "resized_height": height,
-                        "resized_width": width,
+                        "image": image_path
                     },
                     {
                         "type": "text",
@@ -127,9 +135,9 @@ with gr.Blocks(css=css) as demo:
     with gr.Tab(label="Qwen2-VL-7B Input"):
         with gr.Row():
             with gr.Column():
-                input_img = gr.Image(label="Input Document Image")
+                input_img = gr.Image(label="Input Document Image", type="filepath")
                 text_input = gr.Textbox(label="Query")
-                submit_btn = gr.Button(value="Submit")
+                submit_btn = gr.Button(value="Submit", variant="primary")
             with gr.Column():
                 output_text = gr.Textbox(label="Response")
 

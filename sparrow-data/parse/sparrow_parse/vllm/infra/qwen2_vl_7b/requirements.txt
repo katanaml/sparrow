@@ -6,3 +6,4 @@ torchvision
 git+https://github.com/huggingface/transformers.git
 accelerate
 qwen-vl-utils
+gradio==4.44.1
