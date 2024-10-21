@@ -1,12 +1,9 @@
 import gradio as gr
 import spaces
-import torch
-from transformers import Qwen2VLForConditionalGeneration, AutoTokenizer, AutoProcessor
+from transformers import Qwen2VLForConditionalGeneration, AutoProcessor
 from qwen_vl_utils import process_vision_info
 from PIL import Image
 from datetime import datetime
-import numpy as np
-import subprocess
 import os
 
 # subprocess.run('pip install flash-attn --no-build-isolation', env={'FLASH_ATTENTION_SKIP_CUDA_BUILD': "TRUE"}, shell=True)
@@ -59,12 +56,12 @@ def array_to_image_path(image_filepath, max_width=1250, max_height=1750):
     # Get the full path of the saved image
     full_path = os.path.abspath(filename)
 
-    return full_path
+    return full_path, new_width, new_height
 
 
 @spaces.GPU
 def run_inference(image, text_input=None, model_id="Qwen/Qwen2-VL-7B-Instruct"):
-    image_path = array_to_image_path(image)
+    image_path, width, height = array_to_image_path(image)
 
     try:
         model = Qwen2VLForConditionalGeneration.from_pretrained(
@@ -83,7 +80,9 @@ def run_inference(image, text_input=None, model_id="Qwen/Qwen2-VL-7B-Instruct"):
                 "content": [
                     {
                         "type": "image",
-                        "image": image_path
+                        "image": image_path,
+                        "resized_height": height,
+                        "resized_width": width
                     },
                     {
                         "type": "text",
