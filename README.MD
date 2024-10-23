@@ -145,7 +145,7 @@ See detailed instructions below.
 
 *Python environment*
 
-For more details, check out the [extended section](python_environment.md).
+For more details, check out the [extended section](environment_setup.md).
 
 *Run Sparrow*
 
