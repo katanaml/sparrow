@@ -26,9 +26,15 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 * **[sparrow-ml-llm](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** - Sparrow main engine that runs various agents
 * **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/)** - Dashboard UI for Sparrow
 
-## Examples
+## Sparrow UI
 
-### Inference with local LLM RAG
+![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui.png)
+
+## Examples - on-premise data extraction
+
+### Bank statement
+
+![Bank statement](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/bank_statement.png)
 
 ## Quickstart
 
