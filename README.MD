@@ -133,13 +133,11 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 
 ## Quickstart
 
-1. Install Weaviate vector DB, if you are planning to use Sparrow agent, which runs Weaviate (for example `llamaindex` or `unstructured`). `sparrow-parse` agent doesnt require Weaviate
-2. Install `pyenv` and then install Python into your environment
-3. Create virtual environment for the Sparrow agent you want to run
-4. Install requirements for the Sparrow agent you want to use. Keep in mind, depending on OS, it could be required to do additional install steps for some of the libraries (for example PaddleOCR or Unstructured)
-5. Run Sparrow either from CLI or from API. You need to start API endpoint
-6. Pass field names and types you want to extract from the document
-7. Some of the Sparrow agents (`vprocessor`, `instructor`, etc.) support both PDF and image formats
+1. Install `pyenv` and then install Python into your environment
+2. Create virtual environment for the Sparrow agent you want to run
+3. Install requirements for the Sparrow agent you want to use. Keep in mind, depending on OS, it could be required to do additional install steps for some of the libraries (for example PaddleOCR)
+4. Run Sparrow either from CLI or from API. You need to start API endpoint
+5. Pass query in the form of JSON schema to extract data from the document
 
 See detailed instructions below.
 
@@ -147,13 +145,7 @@ See detailed instructions below.
 
 ### LLM
 
-- **Install Weaviate local DB with Docker (check if agent requires vector DB):**
-   
-```
-docker compose up -d
-```
-
-- **Sparrow setup** 
+- **Python environment** 
 
 *Setup Python Environment (Sparrow is tested with Python 3.10.4) with `pyenv`:*
 
@@ -254,12 +246,6 @@ Repeat the same for `llamaindex`, `haystack`, `instructor` and `unstructured` en
 You can run Sparrow on CLI or through API. To run on CLI, use `sparrow.sh` script. Run it from corresponding virtual environment, depending which agent you want to execute. `sparrow-parse` agent is using VL LLM model and it doesn't use Ollama at the moment. `sparrow-parse` agent runs VL LLM either locally or using cloud GPU.
 
 - **Install <a href="https://ollama.ai">Ollama</a> and pull LLM model specified in config.yml**
-
-### OCR
-
-Follow the install steps outlined here, if you plan to use OCR service:
-
-1. Sparrow OCR services <a href="https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr">install steps</a>
 
 ## Usage
 
