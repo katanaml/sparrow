@@ -36,6 +36,101 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 
 ![Bank statement](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/bank_statement.png)
 
+```json
+{
+  "bank": "First Platypus Bank",
+  "address": "1234 Kings St., New York, NY 12123",
+  "account_holder": "Mary G. Orta",
+  "account_number": "1234567890123",
+  "statement_date": "3/1/2022",
+  "period_covered": "2/1/2022 - 3/1/2022",
+  "account_summary": {
+    "balance_on_march_1": "$25,032.23",
+    "total_money_in": "$10,234.23",
+    "total_money_out": "$10,532.51"
+  },
+  "transactions": [
+    {
+      "date": "02/01",
+      "description": "PGD EasyPay Debit",
+      "withdrawal": "203.24",
+      "deposit": "",
+      "balance": "22,098.23"
+    },
+    {
+      "date": "02/02",
+      "description": "AB&B Online Payment*****",
+      "withdrawal": "71.23",
+      "deposit": "",
+      "balance": "22,027.00"
+    },
+    {
+      "date": "02/04",
+      "description": "Check No. 2345",
+      "withdrawal": "",
+      "deposit": "450.00",
+      "balance": "22,477.00"
+    },
+    {
+      "date": "02/05",
+      "description": "Payroll Direct Dep 23422342 Giants",
+      "withdrawal": "",
+      "deposit": "2,534.65",
+      "balance": "25,011.65"
+    },
+    {
+      "date": "02/06",
+      "description": "Signature POS Debit - TJP",
+      "withdrawal": "84.50",
+      "deposit": "",
+      "balance": "24,927.15"
+    },
+    {
+      "date": "02/07",
+      "description": "Check No. 234",
+      "withdrawal": "1,400.00",
+      "deposit": "",
+      "balance": "23,527.15"
+    },
+    {
+      "date": "02/08",
+      "description": "Check No. 342",
+      "withdrawal": "",
+      "deposit": "25.00",
+      "balance": "23,552.15"
+    },
+    {
+      "date": "02/09",
+      "description": "FPB AutoPay***** Credit Card",
+      "withdrawal": "456.02",
+      "deposit": "",
+      "balance": "23,096.13"
+    },
+    {
+      "date": "02/08",
+      "description": "Check No. 123",
+      "withdrawal": "",
+      "deposit": "25.00",
+      "balance": "23,552.15"
+    },
+    {
+      "date": "02/09",
+      "description": "FPB AutoPay***** Credit Card",
+      "withdrawal": "156.02",
+      "deposit": "",
+      "balance": "23,096.13"
+    },
+    {
+      "date": "02/08",
+      "description": "Cash Deposit",
+      "withdrawal": "",
+      "deposit": "25.00",
+      "balance": "23,552.15"
+    }
+  ]
+}
+```
+
 ## Quickstart
 
 1. Install Weaviate vector DB, if you are planning to use Sparrow agent, which runs Weaviate (for example `llamaindex` or `unstructured`). `sparrow-parse` agent doesnt require Weaviate
