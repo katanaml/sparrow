@@ -19,18 +19,18 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 
 **List of available agents:**
 
-- **sparrow-parse** - direct data extraction pipeline using VL LLM, this is the main Sparrow agent for data extraction. Works great for JSON response generation
-- **fcall** - Sample function calling pipeline
+- **sparrow-parse** - data extraction pipeline using VL LLM. Works great for JSON response generation
+- **fcall** - Function calling pipeline
 - **instructor** - RAG pipeline with Unstructured and Instructor libraries, supports PDF and image processing
 
 ![Sparrow](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_architecture.jpeg)
 
 ### Sparrow Components
 
-* **[sparrow-data-ocr](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - OCR service, providing optical character recognition as part of the Sparrow.
-* **[sparrow-data-parse](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse)** - Sparrow library with helpful methods for data pre-processing for LLM.
-* **[sparrow-ml-llm](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** - LLM RAG pipeline, Sparrow service for data extraction and document processing.
-* **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/)** - Dashboard UI for LLM RAG pipeline.
+* **[sparrow-data-ocr](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - OCR service, providing optical character recognition.
+* **[sparrow-data-parse](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse)** - Sparrow library enabling Sparrow Parse agent functionality.
+* **[sparrow-ml-llm](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** - Sparrow main engine that runs various agents.
+* **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/)** - Dashboard UI for Sparrow.
 
 Old Sparrow implementation with Donut ML model - <a href="https://github.com/katanaml/sparrow-donut">sparrow-donut</a>
 
