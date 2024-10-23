@@ -11,34 +11,28 @@ Data processing with ML, LLM and Vision LLM
   <img width="300" height="300" src="https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_logo_5.png">
 </p>
 
-## The Principle
+## Overview
 
-Sparrow is an innovative open-source solution for efficient data extraction and processing from various documents and images. It seamlessly handles forms, invoices, receipts, and other unstructured data sources. Sparrow stands out with its modular architecture, offering independent services and pipelines all optimized for robust performance. One of the critical functionalities of Sparrow - pluggable architecture. You can easily integrate and run data extraction pipelines using tools and frameworks like Sparrow Parse (with vision-language models support) LlamaIndex, Haystack, or Unstructured. Sparrow enables local LLM data extraction pipelines through Ollama or Apple MLX. Sparrow Parse with VL model can run either on premise, or it can execute inference on cloud GPU. With Sparrow solution you get API, which helps to process and transform your data into structured output, ready to be integrated with custom workflows.
+Sparrow is an innovative open-source solution for efficient data extraction and processing from various documents and images. It seamlessly handles forms, invoices, receipts, and other unstructured data sources. Sparrow stands out with its modular architecture, offering independent services and agents all optimized for robust performance. One of the critical functionalities of Sparrow - pluggable architecture. You can easily integrate and run data extraction pipelines using tools and frameworks like Sparrow Parse (with vision-language models support) or Instructor with Unstructured. Sparrow enables local LLM data extraction pipelines through various backends, such as vLLM, Ollama, PyTorch or Apple MLX. Sparrow Parse with VL model can run either on premise, or it can execute inference on cloud GPU. With Sparrow solution you get API, which helps to process and transform your data into structured output, ready to be integrated with custom workflows.
 
 Sparrow Agents - with Sparrow you can build independent LLM agents, and use API to invoke them from your system.
 
 **List of available agents:**
 
-- **sparrow-parse** - direct data extraction pipeline using VL LLM
-- **llamaindex** - RAG pipeline with LlamaIndex for PDF processing
-- **vllamaindex** - RAG pipeline with LLamaIndex multimodal for image processing
-- **vprocessor** - RAG pipeline with OCR and LlamaIndex for image processing
-- **haystack** - RAG pipeline with Haystack for PDF processing
-- **fcall** - Function call pipeline
-- **unstructured-light** - RAG pipeline with Unstructured and LangChain, supports PDF and image processing
-- **unstructured** - RAG pipeline with Weaviate vector DB query, Unstructured and LangChain, supports PDF and image processing
-- **instructor** - RAG pipeline with Unstructured and Instructor libraries, supports PDF and image processing. Works great for JSON response generation
+- **sparrow-parse** - direct data extraction pipeline using VL LLM, this is the main Sparrow agent for data extraction. Works great for JSON response generation
+- **fcall** - Sample function calling pipeline
+- **instructor** - RAG pipeline with Unstructured and Instructor libraries, supports PDF and image processing
 
 ![Sparrow](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_architecture.jpeg)
 
-### Services
+### Sparrow Components
 
 * **[sparrow-data-ocr](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - OCR service, providing optical character recognition as part of the Sparrow.
 * **[sparrow-data-parse](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse)** - Sparrow library with helpful methods for data pre-processing for LLM.
 * **[sparrow-ml-llm](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** - LLM RAG pipeline, Sparrow service for data extraction and document processing.
 * **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/)** - Dashboard UI for LLM RAG pipeline.
 
-Sparrow implementation with Donut ML model - <a href="https://github.com/katanaml/sparrow-donut">sparrow-donut</a>
+Old Sparrow implementation with Donut ML model - <a href="https://github.com/katanaml/sparrow-donut">sparrow-donut</a>
 
 ## Quickstart
 
