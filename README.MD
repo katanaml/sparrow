@@ -17,11 +17,7 @@ Sparrow is an innovative open-source solution for efficient data extraction and 
 
 Sparrow Agents - with Sparrow you can build independent LLM agents, and use API to invoke them from your system.
 
-**List of available agents:**
-
 - **sparrow-parse** - data extraction pipeline using VL LLM. Works great for JSON response generation
-- **fcall** - Function calling pipeline
-- **instructor** - RAG pipeline with Unstructured and Instructor libraries, supports PDF and image processing
 
 ![Sparrow](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_architecture.jpeg)
 
@@ -32,7 +28,9 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 * **[sparrow-ml-llm](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** - Sparrow main engine that runs various agents.
 * **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/)** - Dashboard UI for Sparrow.
 
-Old Sparrow implementation with Donut ML model - <a href="https://github.com/katanaml/sparrow-donut">sparrow-donut</a>
+## Examples
+
+### Inference with local LLM RAG
 
 ## Quickstart
 
