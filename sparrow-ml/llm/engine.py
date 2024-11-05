@@ -21,7 +21,7 @@ def run(inputs: Annotated[str, typer.Argument(help="The list of fields to fetch"
         types: Annotated[str, typer.Argument(help="The list of types of the fields")] = None,
         keywords: Annotated[str, typer.Argument(help="The list of table column keywords")] = None,
         file_path: Annotated[str, typer.Option(help="The file to process")] = None,
-        agent: Annotated[str, typer.Option(help="Selected agent")] = "llamaindex",
+        agent: Annotated[str, typer.Option(help="Selected agent")] = "sparrow-parse",
         index_name: Annotated[str, typer.Option(help="Index to identify embeddings")] = None,
         options: Annotated[List[str], typer.Option(help="Options to pass to the agent")] = None,
         group_by_rows: Annotated[bool, typer.Option(help="Group JSON collection by rows")] = True,
