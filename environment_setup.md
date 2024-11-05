@@ -89,4 +89,4 @@ source .env_sparrow_parse/bin/activate
 pip install -r requirements_sparrow_parse.txt
 ```
 
-Repeat the same for `instructor` environments.
+Repeat the same for `instructor` environment.
