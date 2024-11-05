@@ -32,7 +32,7 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 
 ![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui.png)
 
-## Examples - on-premise data extraction
+## Examples - data extraction with Sparrow
 
 ### Bank statement
 
@@ -145,11 +145,11 @@ See detailed instructions below.
 
 ## Installation
 
-*Python environment*
+1. Python environment
 
 For more details, check out the [extended section](environment_setup.md).
 
-*Run Sparrow*
+2. Run Sparrow
 
 You can run Sparrow on CLI or through API. To run on CLI, use `sparrow.sh` script. Run it from corresponding virtual environment, depending which agent you want to execute. `sparrow-parse` agent is using VL LLM model and it doesn't use Ollama. `sparrow-parse` agent runs VL LLM either locally or using cloud GPU.
 
