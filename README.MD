@@ -155,6 +155,39 @@ You can run Sparrow on CLI or through API. To run on CLI, use `sparrow.sh` scrip
 
 ## Inference
 
+✅ Sparrow Parse agent runnng GPU backend on Hugging Face
+
+```
+./sparrow.sh "[{"instrument_name":"string", "valuation":0}]" --agent "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/data/bonds_table.png"
+```
+
+Answer:
+
+```json
+[
+  {
+    "instrument_name": "UNITS BLACKROCK FIX INC DUB FDS PLC ISHS EUR INV GRD CP BD IDX/INST/E",
+    "valuation": 19049
+  },
+  {
+    "instrument_name": "UNITS ISHARES III PLC CORE EUR GOVT BOND UCITS ETF/EUR",
+    "valuation": 83488
+  },
+  {
+    "instrument_name": "UNITS ISHARES III PLC EUR CORP BOND 1-5YR UCITS ETF/EUR",
+    "valuation": 213030
+  },
+  {
+    "instrument_name": "UNIT ISHARES VI PLC/JP MORGAN USD E BOND EUR HED UCITS ETF DIST/HDGD/",
+    "valuation": 32774
+  },
+  {
+    "instrument_name": "UNITS XTRACKERS II SICAV/EUR HY CORP BOND UCITS ETF/-1D-/DISTR.",
+    "valuation": 23643
+  }
+]
+```
+
 ✅ LLM function call example:
 
 ```
