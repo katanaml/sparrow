@@ -21,18 +21,18 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 
 ### Sparrow Components
 
-* **[sparrow-ml-llm](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** - Sparrow main engine that runs various agents
-* **[sparrow-data-parse](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse)** - Sparrow library enabling Sparrow Parse agent functionality using VL LLM. Works great for structured JSON response generation
-* **[sparrow-data-ocr](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - OCR service, providing optical character recognition
-* **[sparrow-ui](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/)** - Dashboard UI for Sparrow
+* **[Sparrow ML LLM](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** - Sparrow main engine that runs various agents
+* **[Sparrow Data Parse](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse)** - Sparrow library enabling Sparrow Parse agent functionality using VL LLM. Works great for structured JSON response generation
+* **[Sparrow Data OCR](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - OCR service, providing optical character recognition
+* **[Sparrow UI](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/)** - Dashboard UI for Sparrow
 
 ## Sparrow UI
 
-[Sparrow](https://katanaml-sparrow-ui.hf.space) demo app
+[Sparrow](https://katanaml-sparrow-ui.hf.space) UI shell app
 
 ![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui.png)
 
-## Examples - on-premise data extraction
+## Examples - data extraction with Sparrow
 
 ### Bank statement
 
@@ -145,15 +145,48 @@ See detailed instructions below.
 
 ## Installation
 
-*Python environment*
+1. Python environment
 
 For more details, check out the [extended section](environment_setup.md).
 
-*Run Sparrow*
+2. Run Sparrow
 
 You can run Sparrow on CLI or through API. To run on CLI, use `sparrow.sh` script. Run it from corresponding virtual environment, depending which agent you want to execute. `sparrow-parse` agent is using VL LLM model and it doesn't use Ollama. `sparrow-parse` agent runs VL LLM either locally or using cloud GPU.
 
 ## Inference
+
+✅ Sparrow Parse agent runnng GPU backend on Hugging Face
+
+```
+./sparrow.sh "[{"instrument_name":"string", "valuation":0}]" --agent "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/data/bonds_table.png"
+```
+
+Answer:
+
+```json
+[
+  {
+    "instrument_name": "UNITS BLACKROCK FIX INC DUB FDS PLC ISHS EUR INV GRD CP BD IDX/INST/E",
+    "valuation": 19049
+  },
+  {
+    "instrument_name": "UNITS ISHARES III PLC CORE EUR GOVT BOND UCITS ETF/EUR",
+    "valuation": 83488
+  },
+  {
+    "instrument_name": "UNITS ISHARES III PLC EUR CORP BOND 1-5YR UCITS ETF/EUR",
+    "valuation": 213030
+  },
+  {
+    "instrument_name": "UNIT ISHARES VI PLC/JP MORGAN USD E BOND EUR HED UCITS ETF DIST/HDGD/",
+    "valuation": 32774
+  },
+  {
+    "instrument_name": "UNITS XTRACKERS II SICAV/EUR HY CORP BOND UCITS ETF/-1D-/DISTR.",
+    "valuation": 23643
+  }
+]
+```
 
 ✅ LLM function call example:
 
