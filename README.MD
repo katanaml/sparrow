@@ -245,11 +245,29 @@ For visual reference, a screenshot of the FastAPI endpoint
 
 ![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/lemming_2_.png)
 
-API calls:
+### API call inference
 
-### Inference
+✅ `sparrow-parse` agent, this agent runs Visual LLM in the backend
 
-✅ Inference call with `instructor` agent, this agent supports also JPG and PNG files:
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'group_by_rows=' \
+  -F 'agent=sparrow-parse' \
+  -F 'keywords=' \
+  -F 'sparrow_key=' \
+  -F 'update_targets=' \
+  -F 'debug=true' \
+  -F 'index_name=' \
+  -F 'types=' \
+  -F 'fields=[{"instrument_name":"string","valuation":0}]' \
+  -F 'file=@bonds_table.png;type=image/png' \
+  -F 'options=huggingface,katanaml/sparrow-qwen2-vl-7b'
+```
+
+✅ `instructor` agent, this agent supports also JPG and PNG files:
 
 ```
 curl -X 'POST' \
