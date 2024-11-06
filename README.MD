@@ -133,6 +133,35 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 }
 ```
 
+### Bonds table
+
+![Bank statement](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/bonds_table.png)
+
+```json
+[
+  {
+    "instrument_name": "UNITS BLACKROCK FIX INC DUB FDS PLC ISHS EUR INV GRD CP BD IDX/INST/E",
+    "valuation": 19049
+  },
+  {
+    "instrument_name": "UNITS ISHARES III PLC CORE EUR GOVT BOND UCITS ETF/EUR",
+    "valuation": 83488
+  },
+  {
+    "instrument_name": "UNITS ISHARES III PLC EUR CORP BOND 1-5YR UCITS ETF/EUR",
+    "valuation": 213030
+  },
+  {
+    "instrument_name": "UNIT ISHARES VI PLC/JP MORGAN USD E BOND EUR HED UCITS ETF DIST/HDGD/",
+    "valuation": 32774
+  },
+  {
+    "instrument_name": "UNITS XTRACKERS II SICAV/EUR HY CORP BOND UCITS ETF/-1D-/DISTR.",
+    "valuation": 23643
+  }
+]
+```
+
 ## Quickstart
 
 1. Install `pyenv` and then install Python into your environment
@@ -247,7 +276,7 @@ For visual reference, a screenshot of the FastAPI endpoint
 
 ### API call inference
 
-✅ `sparrow-parse` agent, this agent runs Visual LLM in the backend
+✅ `sparrow-parse` agent, this agent runs Visual LLM with GPU backend on Hugging Face
 
 ```
 curl -X 'POST' \
@@ -280,87 +309,6 @@ curl -X 'POST' \
   -F 'index_name=' \
   -F 'options=' \
   -F 'file=@invoice_1.pdf;type=application/pdf'
-```
-
-## Examples
-
-### Inference with local LLM RAG
-
-Document:
-
-![document RAG](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/invoice_1.jpg)
-
-Request:
-
-```
-./sparrow.sh "invoice_number, invoice_date, client_name, client_address, client_tax_id, seller_name, seller_address,
-seller_tax_id, iban, names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth" "int, str, str, str, str,
-str, str, str, str, List[str], List[float], str" --agent llamaindex --index-name Sparrow_llamaindex_doc1
-```
-
-Response:
-
-```json
-{
-    "invoice_number": 61356291,
-    "invoice_date": "09/06/2012",
-    "client_name": "Rodriguez-Stevens",
-    "client_address": "2280 Angela Plain, Hortonshire, MS 93248",
-    "client_tax_id": "939-98-8477",
-    "seller_name": "Chapman, Kim and Green",
-    "seller_address": "64731 James Branch, Smithmouth, NC 26872",
-    "seller_tax_id": "949-84-9105",
-    "iban": "GB50ACIE59715038217063",
-    "names_of_invoice_items": [
-        "Wine Glasses Goblets Pair Clear Glass",
-        "With Hooks Stemware Storage Multiple Uses Iron Wine Rack Hanging Glass",
-        "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
-        "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 4 20 FL OZ (591 ml) NEW"
-    ],
-    "gross_worth_of_invoice_items": [
-        66.0,
-        123.55,
-        8.25,
-        14.29
-    ],
-    "total_gross_worth": "$212,09"
-}
-```
-
-### Inference with OCR + local LLM RAG
-
-Document:
-
-![document OCR RAG](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/ross-20211211_010.jpg)
-
-Request:
-
-```
-./sparrow.sh "store_name, receipt_id, receipt_item_names, receipt_item_prices, receipt_date, receipt_store_id,
-receipt_sold, receipt_returned, receipt_total" "str, str, List[str], List[str], str, int, int,
-int, str" --agent vprocessor --file-path /data/ross-20211211_010.jpg
-```
-
-Response:
-
-```json
-{
-    "store_name": "Ross",
-    "receipt_id": "Receipt # 0421-01-1602-1330-0",
-    "receipt_item_names": [
-        "400226513665 x hanes b1ue 4pk",
-        "400239602790 fruit premium 4pk"
-    ],
-    "receipt_item_prices": [
-        "$9.99R",
-        "$12.99R"
-    ],
-    "receipt_date": "11/26/21 10:35:05 AM",
-    "receipt_store_id": 421,
-    "receipt_sold": 2,
-    "receipt_returned": 0,
-    "receipt_total": "$25.33"
-}
 ```
 
 ## Commercial usage
