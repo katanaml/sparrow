@@ -28,7 +28,7 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 
 ## Sparrow UI
 
-[Sparrow](https://katanaml-sparrow-ui.hf.space) UI shell app
+Try [Sparrow](https://katanaml-sparrow-ui.hf.space) UI shell app
 
 ![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui.png)
 
