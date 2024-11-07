@@ -283,32 +283,12 @@ curl -X 'POST' \
   'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
-  -F 'group_by_rows=' \
+  -F 'query=[{"instrument_name":"string","valuation":0}]' \
   -F 'agent=sparrow-parse' \
-  -F 'keywords=' \
+  -F 'options=huggingface,katanaml/sparrow-qwen2-vl-7b' \
+  -F 'debug=false' \
   -F 'sparrow_key=' \
-  -F 'update_targets=' \
-  -F 'debug=true' \
-  -F 'index_name=' \
-  -F 'types=' \
-  -F 'fields=[{"instrument_name":"string","valuation":0}]' \
-  -F 'file=@bonds_table.png;type=image/png' \
-  -F 'options=huggingface,katanaml/sparrow-qwen2-vl-7b'
-```
-
-✅ `instructor` agent, this agent supports also JPG and PNG files:
-
-```
-curl -X 'POST' \
-  'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: multipart/form-data' \
-  -F 'fields=names_of_invoice_items, gross_worth_of_invoice_items, total_gross_worth' \
-  -F 'types=List[str], List[str], str' \
-  -F 'agent=instructor' \
-  -F 'index_name=' \
-  -F 'options=' \
-  -F 'file=@invoice_1.pdf;type=application/pdf'
+  -F 'file=@bonds_table.png;type=image/png'
 ```
 
 ## Commercial usage
