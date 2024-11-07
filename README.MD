@@ -184,7 +184,7 @@ You can run Sparrow on CLI or through API. To run on CLI, use `sparrow.sh` scrip
 
 ## Inference
 
-✅ Sparrow Parse agent runnng GPU backend on Hugging Face
+✅ Sparrow Parse agent, with GPU backend on Hugging Face
 
 ```
 ./sparrow.sh "[{"instrument_name":"string", "valuation":0}]" --agent "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/data/bonds_table.png"
@@ -272,7 +272,7 @@ http://127.0.0.1:8000/api/v1/sparrow-llm/docs
 
 For visual reference, a screenshot of the FastAPI endpoint
 
-![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/lemming_2_.png)
+![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_api.png)
 
 ### API call inference
 
