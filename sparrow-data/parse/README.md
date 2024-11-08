@@ -2,7 +2,7 @@
 
 ## Description
 
-This module implements Sparrow Parse [library](https://pypi.org/project/sparrow-parse/) with helpful methods for data pre-processing, parsing and extracting information.
+This module implements Sparrow Parse [library](https://pypi.org/project/sparrow-parse/) library with helpful methods for data pre-processing, parsing and extracting information. This library relies on Visual LLM functionality, Table Transformers and is part of Sparrow. Check main [README](https://github.com/katanaml/sparrow)
 
 ## Install
 
@@ -10,101 +10,14 @@ This module implements Sparrow Parse [library](https://pypi.org/project/sparrow-
 pip install sparrow-parse
 ```
 
-## Pre-processing
-
-### Unstructured
-
-```
-from sparrow_parse.extractor.unstructured_processor import UnstructuredProcessor
-
-processor = UnstructuredProcessor()
-
-content, table_content = processor.extract_data(
-        file_path,  # file to process
-        strategy,  # data processing strategy supported by unstructured
-        model_name,  # model supported by unstructured
-        options,  # table extraction into HTML format
-        local,  # True if running from CLI, or False if running from FastAPI
-        debug)  # Debug
-```
-
-Example:
-
-*file_path* - `/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf`
-
-*strategy* - `hi_res`
-
-*model_name* - `yolox`
-
-*options* - `['tables', 'unstructured']`
-
-*local* - `True`
-
-*debug* - `True`
-
-### Markdown
-
-```
-from sparrow_parse.extractor.markdown_processor import MarkdownProcessor
-
-processor = MarkdownProcessor()
-
-content, table_content = processor.extract_data(
-        file_path,  # file to process
-        options,  # table extraction into HTML format
-        local,  # True if running from CLI, or False if running from FastAPI
-        debug)  # Debug
-```
-
-Example:
-
-*file_path* - `/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf`
-
-*options* - `['tables', 'markdown']`
-
-*local* - `True`
-
-*debug* - `True`
-
 ## Parsing and extraction
 
-### HTML extractor
+### Sparrow Parse VL (vision-language model) extractor with Hugging Face GPU infra
 
 ```
-from sparrow_parse.extractor.html_extractor import HTMLExtractor
+from sparrow_parse.vllm.inference_factory import InferenceFactory
+from sparrow_parse.extractors.vllm_extractor import VLLMExtractor
 
-extractor = HTMLExtractor()
-
-answer, targets_unprocessed = extractor.read_data(
-        target_columns,  # list of table columns data to fetch
-        data, # list of HTML tables
-        column_keywords,  # list of valid column names, can be empty. Useful to filter junk content
-        group_by_rows,  # JSON result grouping
-        update_targets,  # Set to true, if page contains multiple tables with the same columns
-        local,  # True if running from CLI, or False if running from FastAPI
-        debug)  # Debug
-
-```
-
-Example:
-
-*target_columns* - `['description', 'qty', 'net_price', 'net_worth', 'vat', 'gross_worth']`
-
-*data* - `list of HTML tables`
-
-*column_keywords* - `None`
-
-*group_by_rows* - `True`
-
-*update_targets* - `True`
-
-*local* - `True`
-
-*debug* - `True`
-
-### Sparrow Parse VL (vision-language model) extractor
-
-```
 extractor = VLLMExtractor()
 
 # export HF_TOKEN="hf_"
@@ -122,8 +35,8 @@ model_inference_instance = factory.get_inference_instance()
 
 input_data = [
     {
-        "image": "/Users/andrejb/Documents/work/epik/bankstatement/bonds_table.png",
-        "text_input": "retrieve financial instruments data. return response in JSON format"
+        "image": "/data/bonds_table.png",
+        "text_input": "retrieve all data. return response in JSON format"
     }
 ]
 
@@ -132,7 +45,7 @@ result = extractor.run_inference(model_inference_instance, input_data, generic_q
 print("Inference Result:", result)
 ```
 
-## PDF optimization
+## PDF pre-processing
 
 ```
 from sparrow_parse.extractor.pdf_optimizer import PDFOptimizer
@@ -147,7 +60,7 @@ num_pages, output_files, temp_dir = pdf_optimizer.split_pdf_to_pages(file_path,
 
 Example:
 
-*file_path* - `/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf`
+*file_path* - `/data/invoice_1.pdf`
 
 *output_directory* - set to not `None`, for debug purposes only
 
