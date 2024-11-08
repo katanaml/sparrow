@@ -1,5 +1,11 @@
 # ChangeLog
 
+## [v0.2.1] - 2024-11-08
+
+## Dependencies cleanup
+
+Removed dependencies to LlamaIndex, Haystack, Unstructured and other libraries, as main Sparrow focus is on Sparrow Parse
+
 ## [v0.2.0] - 2024-09-04
 
 ## Sparrow Parse with Vision LLM support
