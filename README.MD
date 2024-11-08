@@ -234,7 +234,6 @@ Answer:
   "company": "Oracle Corporation",
   "ticker": "ORCL"
 }
-The stock price of the Oracle Corporation is 186.3699951171875. USD
 ```
 
 ```
