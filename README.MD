@@ -22,8 +22,8 @@ Sparrow Agents - with Sparrow you can build independent LLM agents, and use API 
 ### Sparrow Components
 
 * **[Sparrow ML LLM](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** - Sparrow main engine that runs various agents
-* **[Sparrow Data Parse](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse)** - Sparrow library enabling Sparrow Parse agent functionality using VL LLM. Works great for structured JSON response generation
-* **[Sparrow Data OCR](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - OCR service, providing optical character recognition
+* **[Sparrow Parse](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse)** - Sparrow library enabling Sparrow Parse agent functionality using VL LLM. Works great for structured JSON response generation
+* **[Sparrow OCR](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - OCR service, providing optical character recognition
 * **[Sparrow UI](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/)** - Dashboard UI for Sparrow
 
 ## Sparrow UI
