@@ -12,12 +12,6 @@ fi
 
 PYTHON_SCRIPT_PATH="engine.py"
 
-# Check if the "ingest" flag is passed
-if [ "$1" == "ingest" ]; then
-    PYTHON_SCRIPT_PATH="ingest.py"
-    shift # Shift the arguments to exclude the first one
-fi
-
 if [ "$1" == "assistant" ]; then
     PYTHON_SCRIPT_PATH="assistant.py"
     shift # Shift the arguments to exclude the first one

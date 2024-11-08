@@ -15,21 +15,15 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
-class FCall(Pipeline):
+class Stocks(Pipeline):
     def run_pipeline(self,
-                     payload: str,
-                     query_inputs: [str],
-                     query_types: [str],
-                     keywords: [str],
+                     agent: str,
                      query: str,
                      file_path: str,
-                     index_name: str,
                      options: List[str] = None,
-                     group_by_rows: bool = True,
-                     update_targets: bool = True,
                      debug: bool = False,
                      local: bool = True) -> Any:
-        print(f"\nRunning pipeline with {payload}\n")
+        print(f"\nRunning pipeline with {agent}\n")
 
         # Import config vars
         with open('config.yml', 'r', encoding='utf8') as ymlfile:

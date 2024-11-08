@@ -1,7 +1,6 @@
 from fastapi import FastAPI, File, UploadFile, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from engine import run_from_api_engine
-from ingest import run_from_api_ingest
 import uvicorn
 import warnings
 from typing import Annotated
@@ -44,14 +43,9 @@ def root():
 
 @app.post("/api/v1/sparrow-llm/inference", tags=["LLM Inference"])
 async def inference(
-        fields: Annotated[str, Form()],
+        query: Annotated[str, Form()],
         agent: Annotated[str, Form()],
-        types: Annotated[str, Form()] = None,
-        keywords: Annotated[str, Form()] = None,
-        index_name: Annotated[str, Form()] = None,
         options: Annotated[str, Form()] = None,
-        group_by_rows: Annotated[bool, Form()] = True,
-        update_targets: Annotated[bool, Form()] = True,
         debug: Annotated[bool, Form()] = False,
         sparrow_key: Annotated[str, Form()] = None,
         file: UploadFile = File(None)
@@ -66,20 +60,10 @@ async def inference(
         if sparrow_key not in sparrow_keys.values():
             raise HTTPException(status_code=403, detail="Protected access. Agent not allowed.")
 
-    query = 'retrieve ' + fields
-    query_types = types
-
-    query_inputs_arr = [param.strip() for param in fields.split(',')] if query_types else []
-    query_types_arr = [param.strip() for param in query_types.split(',')] if query_types else []
-    keywords_arr = [param.strip() for param in keywords.split(',')] if keywords is not None else None
     options_arr = [param.strip() for param in options.split(',')] if options is not None else None
 
-    if not query_types:
-        query = fields
-
     try:
-        answer = await run_from_api_engine(agent, query_inputs_arr, query_types_arr, keywords_arr, query, index_name,
-                                           options_arr, file, group_by_rows, update_targets, debug)
+        answer = await run_from_api_engine(agent, query, options_arr, file, debug)
     except ValueError as e:
         raise HTTPException(status_code=418, detail=str(e))
 
@@ -92,33 +76,6 @@ async def inference(
     if debug:
         print(f"\nJSON response:\n")
         print(answer)
-
-    return {"message": answer}
-
-
-@app.post("/api/v1/sparrow-llm/ingest", tags=["LLM Ingest"])
-async def ingest(
-        agent: Annotated[str, Form()],
-        index_name: Annotated[str, Form()],
-        sparrow_key: Annotated[str, Form()] = None,
-        file: UploadFile = File()
-        ):
-    protected_access = cfg.PROTECTED_ACCESS
-    if protected_access:
-        # Retrieve all environment variables that start with 'SPARROW_KEY_'
-        sparrow_keys = {key: value for key, value in os.environ.items() if key.startswith('SPARROW_KEY_')}
-
-        # Check if the provided sparrow_key matches any of the environment variables
-        if sparrow_key not in sparrow_keys.values():
-            raise HTTPException(status_code=403, detail="Protected access. Agent not allowed.")
-
-    try:
-        answer = await run_from_api_ingest(agent, index_name, file, False)
-    except ValueError as e:
-        raise HTTPException(status_code=418, detail=str(e))
-
-    if isinstance(answer, (str, bytes, bytearray)):
-        answer = json.loads(answer)
 
     return {"message": answer}
 

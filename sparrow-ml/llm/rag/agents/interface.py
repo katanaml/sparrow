@@ -12,16 +12,10 @@ warnings.filterwarnings("ignore", category=UserWarning)
 class Pipeline(ABC):
     @abstractmethod
     def run_pipeline(self,
-                     payload: str,
-                     query_inputs: [str],
-                     query_types: [str],
-                     keywords: [str],
+                     agent: str,
                      query: str,
                      file_path: str,
-                     index_name: str,
                      options: List[str] = None,
-                     group_by_rows: bool = True,
-                     update_targets: bool = True,
                      debug: bool = False,
                      local: bool = True) -> Any:
         pass
@@ -29,33 +23,12 @@ class Pipeline(ABC):
 
 # Factory Method
 def get_pipeline(agent_name: str) -> Pipeline:
-    if agent_name == "llamaindex":
-        from rag.agents.llamaindex.llamaindex import LlamaIndexPipeline
-        return LlamaIndexPipeline()
-    elif agent_name == "haystack":
-        from rag.agents.haystack.haystack import HaystackPipeline
-        return HaystackPipeline()
-    elif agent_name == "vllamaindex":
-        from rag.agents.llamaindex.vllamaindex import VLlamaIndexPipeline
-        return VLlamaIndexPipeline()
-    elif agent_name == "vprocessor":
-        from rag.agents.llamaindex.vprocessor import VProcessorPipeline
-        return VProcessorPipeline()
-    elif agent_name == "fcall":
-        from rag.agents.instructor.fcall import FCall
-        return FCall()
-    elif agent_name == "instructor":
-        from rag.agents.instructor.instructor import InstructorPipeline
-        return InstructorPipeline()
-    elif agent_name == "unstructured-light":
-        from rag.agents.unstructured.unstructured_light import UnstructuredLightPipeline
-        return UnstructuredLightPipeline()
-    elif agent_name == "unstructured":
-        from rag.agents.unstructured.unstructured import UnstructuredPipeline
-        return UnstructuredPipeline()
-    elif agent_name == "sparrow-parse":
+    if agent_name == "sparrow-parse":
         from rag.agents.sparrow_parse.sparrow_parse import SparrowParsePipeline
         return SparrowParsePipeline()
+    elif agent_name == "stocks":
+        from rag.agents.instructor.stocks import Stocks
+        return Stocks()
     else:
         raise ValueError(f"Unknown agent: {agent_name}")
 

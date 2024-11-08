@@ -7,14 +7,14 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
-def run(agent: Annotated[str, typer.Option(help="Ingest agent")] = "fcall",
+def run(agent: Annotated[str, typer.Option(help="Ingest agent")] = "stocks",
         query: Annotated[str, typer.Option(help="The query to run")] = "retrieve",
         debug: Annotated[bool, typer.Option(help="Enable debug mode")] = False):
     user_selected_agent = agent  # Modify this as needed
 
     try:
         rag = get_pipeline(user_selected_agent)
-        rag.run_pipeline(user_selected_agent, None, None, query, None, None, debug)
+        rag.run_pipeline(user_selected_agent, query, None , None, debug, True)
     except ValueError as e:
         print(f"Caught an exception: {e}")
 
