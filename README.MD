@@ -180,7 +180,11 @@ For more details, check out the [extended section](environment_setup.md).
 
 2. Run Sparrow
 
-You can run Sparrow on CLI or through API. To run on CLI, use `sparrow.sh` script. Run it from corresponding virtual environment, depending which agent you want to execute. `sparrow-parse` agent is using VL LLM model. `sparrow-parse` agent runs VL LLM either locally with MLX, Ollama, or using cloud GPU.
+You can run Sparrow on CLI or through API. To run on CLI, use `sparrow.sh` script. Run it from corresponding virtual environment, depending which agent you want to execute. `sparrow-parse` agent is using VL LLM model. `sparrow-parse` agent runs VL LLM either locally with MLX, Ollama, or using cloud GPU. `instructor` agent is using Ollama backend. Make sure to pull LLM model for Ollama using name specified in config.yml to run `instructor` agent.
+
+3. Private deployment
+
+There is property `PROTECTED_ACCESS: False` in config.yml. When set to `False`, `sparrow_key` is not verified on API call. Otherwise correct `sparrow-key` needs to be provided for API call.
 
 ## Inference
 
