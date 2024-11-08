@@ -184,7 +184,7 @@ You can run Sparrow on CLI or through API. To run on CLI, use `sparrow.sh` scrip
 
 3. Private deployment
 
-There is property `PROTECTED_ACCESS: False` in config.yml. When set to `False`, `sparrow_key` is not verified on API call. Otherwise correct `sparrow-key` needs to be provided for API call.
+There is a property `PROTECTED_ACCESS: False` in config.yml. When set to `False`, `sparrow_key` is not verified on API call. Otherwise correct `sparrow-key` needs to be provided for API call.
 
 ## Inference
 
