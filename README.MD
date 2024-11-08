@@ -180,7 +180,7 @@ For more details, check out the [extended section](environment_setup.md).
 
 2. Run Sparrow
 
-You can run Sparrow on CLI or through API. To run on CLI, use `sparrow.sh` script. Run it from corresponding virtual environment, depending which agent you want to execute. `sparrow-parse` agent is using VL LLM model and it doesn't use Ollama. `sparrow-parse` agent runs VL LLM either locally or using cloud GPU.
+You can run Sparrow on CLI or through API. To run on CLI, use `sparrow.sh` script. Run it from corresponding virtual environment, depending which agent you want to execute. `sparrow-parse` agent is using VL LLM model. `sparrow-parse` agent runs VL LLM either locally with MLX, Ollama, or using cloud GPU.
 
 ## Inference
 
