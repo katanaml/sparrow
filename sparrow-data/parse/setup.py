@@ -8,10 +8,10 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 
 setup(
     name="sparrow-parse",
-    version="0.3.4",
+    version="0.3.5",
     author="Andrej Baranovskij",
     author_email="andrejus.baranovskis@gmail.com",
-    description="Sparrow Parse is a Python package for parsing and extracting information from documents.",
+    description="Sparrow Parse is a Python package (part of Sparrow) for parsing and extracting information from documents.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse",
@@ -30,7 +30,7 @@ setup(
             'sparrow-parse=sparrow_parse:main',
         ],
     },
-    keywords="llm, rag, vision",
+    keywords="llm, vllm, ocr, vision",
     packages=find_packages(),
     python_requires='>=3.10',
     install_requires=requirements,

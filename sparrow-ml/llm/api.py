@@ -16,7 +16,8 @@ from rich import print
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 
-# Load environment variables from .env file
+# Load environment variables from .env file. Create .env file in the root directory if it doesn't exist
+# If you are using Hugging Face GPU - set HF_TOKEN in .env file to the value of your Hugging Face API token
 load_dotenv()
 
 # Import config vars
