@@ -2,7 +2,7 @@
 
 ## Description
 
-This module implements OCR functionality for Sparrow.
+This module implements OCR functionality for Sparrow. Check main [README](https://github.com/katanaml/sparrow)
 
 ## Install
 
