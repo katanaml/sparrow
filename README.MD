@@ -224,20 +224,21 @@ Answer:
 ✅ LLM function call example:
 
 ```
-./sparrow.sh assistant --agent "fcall" --query "Exxon"
+./sparrow.sh assistant --agent "stocks" --query "Oracle"
 ```
 
 Answer:
 
 ```json
 {
-  "company": "Exxon",
-  "ticker": "XOM"
+  "company": "Oracle Corporation",
+  "ticker": "ORCL"
 }
+The stock price of the Oracle Corporation is 186.3699951171875. USD
 ```
 
 ```
-The stock price of the Exxon is 111.2699966430664. USD
+The stock price of the Oracle Corporation is 186.3699951171875. USD
 ```
 
 ## FastAPI Endpoint for Local LLM RAG
