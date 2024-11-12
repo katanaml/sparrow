@@ -15,6 +15,8 @@ pip install sparrow-parse
 ### Sparrow Parse VL (vision-language model) extractor with Hugging Face GPU infra
 
 ```
+# run locally: python -m sparrow_parse.extractors.vllm_extractor
+
 from sparrow_parse.vllm.inference_factory import InferenceFactory
 from sparrow_parse.extractors.vllm_extractor import VLLMExtractor
 
@@ -35,15 +37,23 @@ model_inference_instance = factory.get_inference_instance()
 
 input_data = [
     {
-        "image": "/data/bonds_table.png",
-        "text_input": "retrieve all data. return response in JSON format"
+        "file_path": "/data/oracle_10k_2014_q1_small.pdf",
+        "text_input": "retrieve {"table": [{"description": "str", "latest_amount": 0, "previous_amount": 0}]}. return response in JSON format"
     }
 ]
 
 # Now you can run inference without knowing which implementation is used
-result = extractor.run_inference(model_inference_instance, input_data, generic_query=False, debug=True)
-print("Inference Result:", result)
+results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, generic_query=False,
+                                 debug_dir="/data/",
+                                 debug=True,
+                                 mode="static")
+
+for i, result in enumerate(results_array):
+    print(f"Result for page {i + 1}:", result)
+print(f"Number of pages: {num_pages}")
 ```
+
+Use `mode="static"` if you want to simulate LLM call, without executing LLM backend.
 
 ## PDF pre-processing
 
