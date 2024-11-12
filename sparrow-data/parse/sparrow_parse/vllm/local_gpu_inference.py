@@ -8,7 +8,7 @@ class LocalGPUInference(ModelInference):
         self.device = device
         self.model.to(self.device)
 
-    def inference(self, input_data):
+    def inference(self, input_data, mode=None):
         self.model.eval()  # Set the model to evaluation mode
         with torch.no_grad():  # No need to calculate gradients
             input_tensor = torch.tensor(input_data).to(self.device)

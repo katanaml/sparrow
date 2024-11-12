@@ -92,7 +92,7 @@ class SparrowParsePipeline(Pipeline):
 
         input_data = [
             {
-                "image": file_path,
+                "file_path": file_path,
                 "text_input": query
             }
         ]

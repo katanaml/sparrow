@@ -24,11 +24,15 @@ class HuggingFaceInference(ModelInference):
             return output_text
 
 
-    def inference(self, input_data):
+    def inference(self, input_data, mode=None):
+        if mode == "static":
+            simple_json = self.get_simple_json()
+            return simple_json
+
         client = Client(self.hf_space, hf_token=self.hf_token)
 
         result = client.predict(
-            image=handle_file(input_data[0]["image"]),
+            image=handle_file(input_data[0]["file_path"]),
             text_input=input_data[0]["text_input"],
             api_name="/run_inference"
         )

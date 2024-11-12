@@ -40,17 +40,18 @@ class PDFOptimizer(object):
             return number_of_pages, output_files, temp_dir
         else:
             # Convert the PDF to images
-            images = convert_from_path(file_path, dpi=400)
+            images = convert_from_path(file_path, dpi=300)
+            base_name = os.path.splitext(os.path.basename(file_path))[0]
 
             # Save the images to the temporary directory
             for i, image in enumerate(images):
-                output_filename = os.path.join(temp_dir, f'page_{i + 1}.jpg')
+                output_filename = os.path.join(temp_dir, f'{base_name}_page_{i + 1}.jpg')
                 image.save(output_filename, 'JPEG')
                 output_files.append(output_filename)
 
                 if output_dir:
                     # Save each image to the debug folder
-                    debug_output_filename = os.path.join(output_dir, f'page_{i + 1}.jpg')
+                    debug_output_filename = os.path.join(output_dir, f'{base_name}_page_{i + 1}.jpg')
                     image.save(debug_output_filename, 'JPEG')
 
             # Return the number of pages, the list of file paths, and the temporary directory
@@ -60,13 +61,17 @@ class PDFOptimizer(object):
 if __name__ == "__main__":
     pdf_optimizer = PDFOptimizer()
 
-    # output_directory = "/Users/andrejb/Documents/work/bankstatement/output_pages"
+    # output_directory = "/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/"
     # # Ensure the output directory exists
     # os.makedirs(output_directory, exist_ok=True)
     #
     # # Split the optimized PDF into separate pages
-    # num_pages, output_files, temp_dir = pdf_optimizer.split_pdf_to_pages("/Users/andrejb/Documents/work/bankstatement/statement.pdf",
+    # num_pages, output_files, temp_dir = pdf_optimizer.split_pdf_to_pages("/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/oracle_10k_2014_q1_small.pdf",
     #                                                                      output_directory,
-    #                                                                      False)
+    #                                                                      True)
+    #
+    # print(f"Number of pages: {num_pages}")
+    # print(f"Output files: {output_files}")
+    # print(f"Temporary directory: {temp_dir}")
     #
     # shutil.rmtree(temp_dir, ignore_errors=True)
