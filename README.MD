@@ -188,7 +188,7 @@ There is a property `PROTECTED_ACCESS: False` in config.yml. When set to `False`
 
 ## Inference
 
-✅ Sparrow Parse agent, with GPU backend on Hugging Face
+✅ Sparrow Parse agent, with GPU backend on Hugging Face. GPU backend `katanaml/sparrow-qwen2-vl-7b` is private, to be able to run below command, you need to create your own backend on Hugging Face space using [code](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse/sparrow_parse/vllm/infra/qwen2_vl_7b) from Sparrow Parse.
 
 ```
 ./sparrow.sh "[{"instrument_name":"string", "valuation":0}]" --agent "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/data/bonds_table.png"
@@ -274,7 +274,7 @@ For visual reference, a screenshot of the FastAPI endpoint
 
 ### API call inference
 
-✅ `sparrow-parse` agent, this agent runs Visual LLM with GPU backend on Hugging Face
+✅ `sparrow-parse` agent, this agent runs Visual LLM with GPU backend on Hugging Face. GPU backend `katanaml/sparrow-qwen2-vl-7b` is private, to be able to run below command, you need to create your own backend on Hugging Face space using [code](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse/sparrow_parse/vllm/infra/qwen2_vl_7b) from Sparrow Parse.
 
 ```
 curl -X 'POST' \
