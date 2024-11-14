@@ -55,6 +55,8 @@ print(f"Number of pages: {num_pages}")
 
 Use `mode="static"` if you want to simulate LLM call, without executing LLM backend.
 
+Note: GPU backend `katanaml/sparrow-qwen2-vl-7b` is private, to be able to run below command, you need to create your own backend on Hugging Face space using [code](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse/sparrow_parse/vllm/infra/qwen2_vl_7b) from Sparrow Parse.
+
 ## PDF pre-processing
 
 ```
