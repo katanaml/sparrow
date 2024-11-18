@@ -21,6 +21,7 @@ class Stocks(Pipeline):
                      query: str,
                      file_path: str,
                      options: List[str] = None,
+                     debug_dir: str = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {agent}\n")

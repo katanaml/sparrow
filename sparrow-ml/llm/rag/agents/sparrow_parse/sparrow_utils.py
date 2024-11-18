@@ -52,3 +52,23 @@ def get_json_keys_as_string(json_string):
     except json.JSONDecodeError:
         print("Invalid JSON string.")
         return ''
+
+
+def add_validation_message(data, message):
+    # Add "valid" to the dictionary or wrap the list
+    if isinstance(data, dict):
+        data["valid"] = message
+    elif isinstance(data, list):
+        data = {"data": data, "valid": message}
+
+    return data
+
+
+def add_page_number(data, message):
+    # Add "valid" to the dictionary or wrap the list
+    if isinstance(data, dict):
+        data["page"] = message
+    elif isinstance(data, list):
+        data = {"data": data, "page": message}
+
+    return data

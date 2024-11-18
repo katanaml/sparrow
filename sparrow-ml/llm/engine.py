@@ -21,13 +21,14 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
         file_path: Annotated[str, typer.Option(help="The file to process")] = None,
         agent: Annotated[str, typer.Option(help="Selected agent")] = "sparrow-parse",
         options: Annotated[List[str], typer.Option(help="Options to pass to the agent")] = None,
+        debug_dir: Annotated[str, typer.Option(help="Debug folder for multipage")] = None,
         debug: Annotated[bool, typer.Option(help="Enable debug mode")] = False):
 
     user_selected_agent = agent  # Modify this as needed
 
     try:
         rag = get_pipeline(user_selected_agent)
-        answer = rag.run_pipeline(user_selected_agent, query, file_path, options, debug)
+        answer = rag.run_pipeline(user_selected_agent, query, file_path, options, debug_dir, debug)
 
         print(f"\nJSON response:\n")
         print(answer)
@@ -35,7 +36,7 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
         print(f"Caught an exception: {e}")
 
 
-async def run_from_api_engine(user_selected_agent, query, options_arr, file, debug):
+async def run_from_api_engine(user_selected_agent, query, options_arr, file, debug_dir, debug):
     try:
         rag = get_pipeline(user_selected_agent)
 
@@ -48,9 +49,9 @@ async def run_from_api_engine(user_selected_agent, query, options_arr, file, deb
                     content = await file.read()
                     temp_file.write(content)
 
-                answer = rag.run_pipeline(user_selected_agent, query, temp_file_path, options_arr, debug, False)
+                answer = rag.run_pipeline(user_selected_agent, query, temp_file_path, options_arr, debug_dir, debug, False)
         else:
-            answer = rag.run_pipeline(user_selected_agent, query, options_arr, debug, False)
+            answer = rag.run_pipeline(user_selected_agent, query, options_arr, debug_dir, debug, False)
     except ValueError as e:
         raise e
 

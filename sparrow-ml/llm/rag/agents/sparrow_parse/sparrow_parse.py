@@ -6,9 +6,10 @@ from rich import print
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from typing import Any, List
 from .sparrow_validator import Validator
-from .sparrow_utils import is_valid_json, get_json_keys_as_string
+from .sparrow_utils import is_valid_json, get_json_keys_as_string, add_validation_message, add_page_number
 import warnings
 import os
+import json
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -25,6 +26,7 @@ class SparrowParsePipeline(Pipeline):
                      query: str,
                      file_path: str,
                      options: List[str] = None,
+                     debug_dir: str = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {agent}\n")
@@ -32,6 +34,7 @@ class SparrowParsePipeline(Pipeline):
         start = timeit.default_timer()
 
         query_all_data = False
+        query_schema = None
         if query == "*":
             query_all_data = True
             query = None
@@ -42,19 +45,74 @@ class SparrowParsePipeline(Pipeline):
             except ValueError as e:
                 raise e
 
-        llm_output = self.invoke_pipeline_step(lambda: self.execute_query(options, query_all_data, query, file_path, debug),
-                                               "Executing query", local)
+        llm_output_list, num_pages = self.invoke_pipeline_step(lambda: self.execute_query(options, query_all_data,
+                                                                                          query,
+                                                                                          file_path,
+                                                                                          debug_dir,
+                                                                                          debug),
+                                                               "Executing query", local)
 
-        validation_result = None
-        if query_all_data is False:
-            validation_result = self.invoke_pipeline_step(lambda: self.validate_result(llm_output, query_all_data, query_schema, debug),
-                                                      "Validating result", local)
+        llm_output = self.process_llm_output(llm_output_list, num_pages, query_all_data, query_schema, debug, local)
+
+        # llm_output = None
+        # if num_pages == 1:
+        #     llm_output = llm_output_list[0]
+        #
+        #     if query_all_data is False:
+        #         validation_result = self.invoke_pipeline_step(lambda: self.validate_result(llm_output,
+        #                                                                                    query_all_data,
+        #                                                                                    query_schema,
+        #                                                                                    debug),
+        #                                                   "Validating result", local)
+        #         # Ensure llm_output_page is a dictionary, not a string
+        #         if isinstance(llm_output, str):
+        #             llm_output = json.loads(llm_output)
+        #
+        #         llm_output = add_validation_message(llm_output, "true" if validation_result is None else validation_result)
+        #         llm_output = json.dumps(llm_output, indent=4)
+        # elif num_pages > 1:
+        #     if query_all_data is False:
+        #         llm_output_list_combined = []  # Temporary list to collect processed pages
+        #         for i, llm_output_page in enumerate(llm_output_list):
+        #             validation_result = self.invoke_pipeline_step(
+        #                 lambda: self.validate_result(llm_output_page,
+        #                                              query_all_data,
+        #                                              query_schema,
+        #                                              debug),
+        #                 f"Validating result for page {i + 1}...", local)
+        #
+        #             # Ensure llm_output_page is a dictionary, not a string
+        #             if isinstance(llm_output_page, str):
+        #                 llm_output_page = json.loads(llm_output_page)
+        #
+        #             llm_output_page = add_validation_message(llm_output_page, "true" if validation_result is None else validation_result)
+        #             llm_output_page = add_page_number(llm_output_page, i + 1)
+        #
+        #             # Append the processed page to the combined list
+        #             llm_output_list_combined.append(llm_output_page)
+        #
+        #         # Combine the accumulated list into a single JSON object
+        #         llm_output = json.dumps(llm_output_list_combined, indent=4)
+        #     else:
+        #         llm_output_list_combined = []  # Temporary list to collect processed pages
+        #         for i, llm_output_page in enumerate(llm_output_list):
+        #             # Ensure llm_output_page is a dictionary, not a string
+        #             if isinstance(llm_output_page, str):
+        #                 llm_output_page = json.loads(llm_output_page)
+        #
+        #             llm_output_page = add_page_number(llm_output_page, i + 1)
+        #
+        #             # Append the processed page to the combined list
+        #             llm_output_list_combined.append(llm_output_page)
+        #
+        #         # Combine the accumulated list into a single JSON object
+        #         llm_output = json.dumps(llm_output_list_combined, indent=4)
 
         end = timeit.default_timer()
 
         print(f"Time to retrieve answer: {end - start}")
 
-        return validation_result if validation_result is not None else llm_output
+        return llm_output
 
 
     def prepare_query_and_schema(self, query, debug):
@@ -71,7 +129,7 @@ class SparrowParsePipeline(Pipeline):
         return query, query_schema
 
 
-    def execute_query(self, options, query_all_data, query, file_path, debug):
+    def execute_query(self, options, query_all_data, query, file_path, debug_dir, debug):
         extractor = VLLMExtractor()
 
         # export HF_TOKEN="hf_"
@@ -98,10 +156,72 @@ class SparrowParsePipeline(Pipeline):
         ]
 
         # Now you can run inference without knowing which implementation is used
-        llm_output = extractor.run_inference(model_inference_instance, input_data, generic_query=query_all_data,
-                                             debug=debug)
+        llm_output, num_pages = extractor.run_inference(model_inference_instance,
+                                                        input_data,
+                                                        generic_query=query_all_data,
+                                                        debug_dir=debug_dir,
+                                                        debug=debug,
+                                                        mode="static")
 
-        return llm_output
+        return llm_output, num_pages
+
+    def process_single_page(self, llm_output_list, query_all_data, query_schema, debug, local):
+        """
+        Processes a single page of LLM output, including validation and formatting if needed.
+        """
+        # Extract the single page output
+        llm_output = llm_output_list[0]
+
+        if query_all_data is False:
+            validation_result = self.invoke_pipeline_step(
+                lambda: self.validate_result(llm_output, query_all_data, query_schema, debug),
+                "Validating result", local
+            )
+            # Ensure llm_output is a dictionary, not a string
+            if isinstance(llm_output, str):
+                llm_output = json.loads(llm_output)
+            llm_output = add_validation_message(llm_output, "true" if validation_result is None else validation_result)
+            return json.dumps(llm_output, indent=4)
+        else:
+            # Return as is if query_all_data is True
+            return llm_output
+
+    def process_multiple_pages(self, llm_output_list, query_all_data, query_schema, debug, local):
+        """
+        Processes multiple pages of LLM output, including validation (if needed), formatting, and pagination.
+        """
+        llm_output_list_combined = []
+        for i, llm_output_page in enumerate(llm_output_list):
+            if query_all_data is False:
+                validation_result = self.invoke_pipeline_step(
+                    lambda: self.validate_result(llm_output_page, query_all_data, query_schema, debug),
+                    f"Validating result for page {i + 1}...", local
+                )
+                # Ensure llm_output_page is a dictionary, not a string
+                if isinstance(llm_output_page, str):
+                    llm_output_page = json.loads(llm_output_page)
+                llm_output_page = add_validation_message(llm_output_page,
+                                                         "true" if validation_result is None else validation_result)
+            else:
+                # Ensure llm_output_page is a dictionary if query_all_data is True
+                if isinstance(llm_output_page, str):
+                    llm_output_page = json.loads(llm_output_page)
+
+            llm_output_page = add_page_number(llm_output_page, i + 1)
+            llm_output_list_combined.append(llm_output_page)
+
+        return json.dumps(llm_output_list_combined, indent=4)
+
+    def process_llm_output(self, llm_output_list, num_pages, query_all_data, query_schema, debug, local):
+        """
+        Processes the LLM output based on the number of pages.
+        """
+        if num_pages == 1:
+            # Pass the entire list to process_single_page for encapsulation
+            return self.process_single_page(llm_output_list, query_all_data, query_schema, debug, local)
+        elif num_pages > 1:
+            return self.process_multiple_pages(llm_output_list, query_all_data, query_schema, debug, local)
+        return None
 
 
     def validate_result(self, llm_output, query_all_data, query_schema, debug):
@@ -113,6 +233,7 @@ class SparrowParsePipeline(Pipeline):
         else:
             if debug:
                 print("LLM output is valid according to the schema.")
+            return None
 
 
     def invoke_pipeline_step(self, task_call, task_description, local):

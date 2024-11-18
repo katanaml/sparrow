@@ -47,6 +47,7 @@ async def inference(
         query: Annotated[str, Form()],
         agent: Annotated[str, Form()],
         options: Annotated[str, Form()] = None,
+        debug_dir: Annotated[str, Form()] = None,
         debug: Annotated[bool, Form()] = False,
         sparrow_key: Annotated[str, Form()] = None,
         file: UploadFile = File(None)
@@ -64,7 +65,7 @@ async def inference(
     options_arr = [param.strip() for param in options.split(',')] if options is not None else None
 
     try:
-        answer = await run_from_api_engine(agent, query, options_arr, file, debug)
+        answer = await run_from_api_engine(agent, query, options_arr, file, debug_dir, debug)
     except ValueError as e:
         raise HTTPException(status_code=418, detail=str(e))
 

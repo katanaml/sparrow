@@ -8,8 +8,8 @@ from datetime import datetime
 
 # Example data with placeholder JSON for lab_results and bank_statement
 examples = [
-    ["bonds_table.png", "Bonds table", "[{\"instrument_name\":\"example\", \"valuation\":0}]"],
-    ["lab_results.png", "Lab results", "{\"patient_name\": \"example\", \"patient_age\": \"example\", \"patient_pid\": 0, \"lab_results\": [{\"investigation\": \"example\", \"result\": 0.00, \"reference_value\": \"example\", \"unit\": \"example\"}]}"],
+    ["bonds_table.png", "Bonds table", "[{\"instrument_name\":\"str\", \"valuation\":0}]"],
+    ["lab_results.png", "Lab results", "{\"patient_name\": \"str\", \"patient_age\": \"str\", \"patient_pid\": 0, \"lab_results\": [{\"investigation\": \"str\", \"result\": 0.00, \"reference_value\": \"str\", \"unit\": \"str\"}]}"],
     ["bank_statement.png", "Bank statement", "*"]
 ]
 
