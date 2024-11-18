@@ -54,60 +54,6 @@ class SparrowParsePipeline(Pipeline):
 
         llm_output = self.process_llm_output(llm_output_list, num_pages, query_all_data, query_schema, debug, local)
 
-        # llm_output = None
-        # if num_pages == 1:
-        #     llm_output = llm_output_list[0]
-        #
-        #     if query_all_data is False:
-        #         validation_result = self.invoke_pipeline_step(lambda: self.validate_result(llm_output,
-        #                                                                                    query_all_data,
-        #                                                                                    query_schema,
-        #                                                                                    debug),
-        #                                                   "Validating result", local)
-        #         # Ensure llm_output_page is a dictionary, not a string
-        #         if isinstance(llm_output, str):
-        #             llm_output = json.loads(llm_output)
-        #
-        #         llm_output = add_validation_message(llm_output, "true" if validation_result is None else validation_result)
-        #         llm_output = json.dumps(llm_output, indent=4)
-        # elif num_pages > 1:
-        #     if query_all_data is False:
-        #         llm_output_list_combined = []  # Temporary list to collect processed pages
-        #         for i, llm_output_page in enumerate(llm_output_list):
-        #             validation_result = self.invoke_pipeline_step(
-        #                 lambda: self.validate_result(llm_output_page,
-        #                                              query_all_data,
-        #                                              query_schema,
-        #                                              debug),
-        #                 f"Validating result for page {i + 1}...", local)
-        #
-        #             # Ensure llm_output_page is a dictionary, not a string
-        #             if isinstance(llm_output_page, str):
-        #                 llm_output_page = json.loads(llm_output_page)
-        #
-        #             llm_output_page = add_validation_message(llm_output_page, "true" if validation_result is None else validation_result)
-        #             llm_output_page = add_page_number(llm_output_page, i + 1)
-        #
-        #             # Append the processed page to the combined list
-        #             llm_output_list_combined.append(llm_output_page)
-        #
-        #         # Combine the accumulated list into a single JSON object
-        #         llm_output = json.dumps(llm_output_list_combined, indent=4)
-        #     else:
-        #         llm_output_list_combined = []  # Temporary list to collect processed pages
-        #         for i, llm_output_page in enumerate(llm_output_list):
-        #             # Ensure llm_output_page is a dictionary, not a string
-        #             if isinstance(llm_output_page, str):
-        #                 llm_output_page = json.loads(llm_output_page)
-        #
-        #             llm_output_page = add_page_number(llm_output_page, i + 1)
-        #
-        #             # Append the processed page to the combined list
-        #             llm_output_list_combined.append(llm_output_page)
-        #
-        #         # Combine the accumulated list into a single JSON object
-        #         llm_output = json.dumps(llm_output_list_combined, indent=4)
-
         end = timeit.default_timer()
 
         print(f"Time to retrieve answer: {end - start}")
@@ -161,7 +107,7 @@ class SparrowParsePipeline(Pipeline):
                                                         generic_query=query_all_data,
                                                         debug_dir=debug_dir,
                                                         debug=debug,
-                                                        mode="static")
+                                                        mode=None)
 
         return llm_output, num_pages
 
