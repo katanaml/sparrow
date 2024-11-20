@@ -59,66 +59,76 @@ def array_to_image_path(image_filepath, max_width=1250, max_height=1750):
     return full_path, new_width, new_height
 
 
+# Initialize the model and processor globally to optimize performance
+model = Qwen2VLForConditionalGeneration.from_pretrained(
+    "Qwen/Qwen2-VL-7B-Instruct",
+    torch_dtype="auto",
+    device_map="auto"
+)
+
+processor = AutoProcessor.from_pretrained("Qwen/Qwen2-VL-7B-Instruct")
+
+
 @spaces.GPU
-def run_inference(image, text_input=None, model_id="Qwen/Qwen2-VL-7B-Instruct"):
-    image_path, width, height = array_to_image_path(image)
+def run_inference(input_imgs, text_input):
+    results = []
 
-    try:
-        model = Qwen2VLForConditionalGeneration.from_pretrained(
-            "Qwen/Qwen2-VL-7B-Instruct",
-            torch_dtype="auto",
-            device_map="auto"
-        )
+    for image in input_imgs:
+        # Convert each image to the required format
+        image_path, width, height = array_to_image_path(image)
 
-        processor = AutoProcessor.from_pretrained(
-            "Qwen/Qwen2-VL-7B-Instruct"
-        )
+        try:
+            # Prepare messages for each image
+            messages = [
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "image",
+                            "image": image_path,
+                            "resized_height": height,
+                            "resized_width": width
+                        },
+                        {
+                            "type": "text",
+                            "text": text_input
+                        }
+                    ]
+                }
+            ]
 
-        messages = [
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "image",
-                        "image": image_path,
-                        "resized_height": height,
-                        "resized_width": width
-                    },
-                    {
-                        "type": "text",
-                        "text": text_input
-                    }
-                ]
-            }
-        ]
+            # Prepare inputs for the model
+            text = processor.apply_chat_template(
+                messages, tokenize=False, add_generation_prompt=True
+            )
 
-        # Preparation for inference
-        text = processor.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=True
-        )
+            image_inputs, video_inputs = process_vision_info(messages)
+            inputs = processor(
+                text=[text],
+                images=image_inputs,
+                videos=video_inputs,
+                padding=True,
+                return_tensors="pt",
+            )
+            inputs = inputs.to("cuda")
 
-        image_inputs, video_inputs = process_vision_info(messages)
-        inputs = processor(
-            text=[text],
-            images=image_inputs,
-            videos=video_inputs,
-            padding=True,
-            return_tensors="pt",
-        )
-        inputs = inputs.to("cuda")
+            # Generate inference output
+            generated_ids = model.generate(**inputs, max_new_tokens=4096)
+            generated_ids_trimmed = [
+                out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
+            ]
+            output_text = processor.batch_decode(
+                generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=True
+            )
 
-        # Inference: Generation of the output
-        generated_ids = model.generate(**inputs, max_new_tokens=4096)
-        generated_ids_trimmed = [
-            out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
-        ]
-        output_text = processor.batch_decode(
-            generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=True
-        )
+            # Append result to the list
+            results.append(output_text[0])
 
-        return output_text[0]
-    finally:
-        os.remove(image_path)
+        finally:
+            # Clean up the temporary image file
+            os.remove(image_path)
+
+    return results
 
 
 css = """
@@ -134,13 +144,13 @@ with gr.Blocks(css=css) as demo:
     with gr.Tab(label="Qwen2-VL-7B Input"):
         with gr.Row():
             with gr.Column():
-                input_img = gr.Image(label="Input Document Image", type="filepath")
+                input_imgs = gr.Files(file_types=["image"], label="Upload Document Images")
                 text_input = gr.Textbox(label="Query")
                 submit_btn = gr.Button(value="Submit", variant="primary")
             with gr.Column():
                 output_text = gr.Textbox(label="Response")
 
-        submit_btn.click(run_inference, [input_img, text_input], [output_text])
+        submit_btn.click(run_inference, [input_imgs, text_input], [output_text])
 
 demo.queue(api_open=True)
 demo.launch(debug=True)
