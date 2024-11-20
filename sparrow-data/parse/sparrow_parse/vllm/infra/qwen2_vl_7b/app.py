@@ -5,7 +5,6 @@ from qwen_vl_utils import process_vision_info
 from PIL import Image
 from datetime import datetime
 import os
-import json
 
 # subprocess.run('pip install flash-attn --no-build-isolation', env={'FLASH_ATTENTION_SKIP_CUDA_BUILD': "TRUE"}, shell=True)
 
@@ -122,11 +121,7 @@ def run_inference(input_imgs, text_input):
                 generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=True
             )
 
-            # Format the output using json.dumps
-            formatted_output = json.dumps(json.loads(raw_output[0]), indent=2, ensure_ascii=False)
-
-            # Append formatted result to the list
-            results.append(formatted_output)
+            results.append(raw_output[0])
 
         finally:
             # Clean up the temporary image file
