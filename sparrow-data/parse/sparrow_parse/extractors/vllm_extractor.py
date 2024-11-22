@@ -30,21 +30,16 @@ class VLLMExtractor(object):
                                                                                  debug_dir,
                                                                                  True)
 
-            # Run inference on each page
-            for page_num, output_file in enumerate(output_files):
-                input_data[0]["file_path"] = output_file
-                if debug:
-                    print(f"Running inference on page {page_num + 1}...")
+            input_data[0]["file_path"] = output_files
 
-                # Run inference on the page
-                result = model_inference_instance.inference(input_data, mode)
-                results_array.append(result)
+            # Run inference on the page
+            results_array = model_inference_instance.inference(input_data, mode)
 
             shutil.rmtree(temp_dir, ignore_errors=True)
             return results_array, num_pages
 
-        result = model_inference_instance.inference(input_data)
-        results_array.append(result)
+        input_data[0]["file_path"] = [input_data[0]["file_path"]]
+        results_array = model_inference_instance.inference(input_data)
 
         return results_array, 1
 
@@ -80,7 +75,7 @@ if __name__ == "__main__":
     # results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, generic_query=False,
     #                                  debug_dir="/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/",
     #                                  debug=True,
-    #                                  mode="static")
+    #                                  mode=None)
     #
     # for i, result in enumerate(results_array):
     #     print(f"Result for page {i + 1}:", result)
