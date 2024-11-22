@@ -122,7 +122,7 @@ def run_inference(input_imgs, text_input):
             )
 
             results.append(raw_output[0])
-
+            print("Processed: " + image)
         finally:
             # Clean up the temporary image file
             os.remove(image_path)
