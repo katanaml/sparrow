@@ -46,7 +46,7 @@ input_data = [
 results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, generic_query=False,
                                  debug_dir="/data/",
                                  debug=True,
-                                 mode="static")
+                                 mode=None)
 
 for i, result in enumerate(results_array):
     print(f"Result for page {i + 1}:", result)
@@ -54,6 +54,8 @@ print(f"Number of pages: {num_pages}")
 ```
 
 Use `mode="static"` if you want to simulate LLM call, without executing LLM backend.
+
+Method `run_inference` will return results and number of pages processed.
 
 Note: GPU backend `katanaml/sparrow-qwen2-vl-7b` is private, to be able to run below command, you need to create your own backend on Hugging Face space using [code](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse/sparrow_parse/vllm/infra/qwen2_vl_7b) from Sparrow Parse.
 
