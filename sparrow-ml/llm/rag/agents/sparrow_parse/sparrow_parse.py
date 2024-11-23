@@ -107,7 +107,7 @@ class SparrowParsePipeline(Pipeline):
                                                         generic_query=query_all_data,
                                                         debug_dir=debug_dir,
                                                         debug=debug,
-                                                        mode=None)
+                                                        mode='static')
 
         return llm_output, num_pages
 
