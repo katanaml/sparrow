@@ -129,7 +129,8 @@ Try [Sparrow](https://katanaml-sparrow-ui.hf.space) UI shell app
       "deposit": "25.00",
       "balance": "23,552.15"
     }
-  ]
+  ],
+  'valid': 'true'
 }
 ```
 
@@ -138,28 +139,31 @@ Try [Sparrow](https://katanaml-sparrow-ui.hf.space) UI shell app
 ![Bank statement](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/bonds_table.png)
 
 ```json
-[
-  {
-    "instrument_name": "UNITS BLACKROCK FIX INC DUB FDS PLC ISHS EUR INV GRD CP BD IDX/INST/E",
-    "valuation": 19049
-  },
-  {
-    "instrument_name": "UNITS ISHARES III PLC CORE EUR GOVT BOND UCITS ETF/EUR",
-    "valuation": 83488
-  },
-  {
-    "instrument_name": "UNITS ISHARES III PLC EUR CORP BOND 1-5YR UCITS ETF/EUR",
-    "valuation": 213030
-  },
-  {
-    "instrument_name": "UNIT ISHARES VI PLC/JP MORGAN USD E BOND EUR HED UCITS ETF DIST/HDGD/",
-    "valuation": 32774
-  },
-  {
-    "instrument_name": "UNITS XTRACKERS II SICAV/EUR HY CORP BOND UCITS ETF/-1D-/DISTR.",
-    "valuation": 23643
-  }
-]
+{
+  data: [
+    {
+      "instrument_name": "UNITS BLACKROCK FIX INC DUB FDS PLC ISHS EUR INV GRD CP BD IDX/INST/E",
+      "valuation": 19049
+    },
+    {
+      "instrument_name": "UNITS ISHARES III PLC CORE EUR GOVT BOND UCITS ETF/EUR",
+      "valuation": 83488
+    },
+    {
+      "instrument_name": "UNITS ISHARES III PLC EUR CORP BOND 1-5YR UCITS ETF/EUR",
+      "valuation": 213030
+    },
+    {
+      "instrument_name": "UNIT ISHARES VI PLC/JP MORGAN USD E BOND EUR HED UCITS ETF DIST/HDGD/",
+      "valuation": 32774
+    },
+    {
+      "instrument_name": "UNITS XTRACKERS II SICAV/EUR HY CORP BOND UCITS ETF/-1D-/DISTR.",
+      "valuation": 23643
+    }
+  ],
+  'valid': 'true'
+}
 ```
 
 ## Quickstart
