@@ -130,7 +130,7 @@ Try [Sparrow](https://katanaml-sparrow-ui.hf.space) UI shell app
       "balance": "23,552.15"
     }
   ],
-  valid: 'true'
+  "valid": "true"
 }
 ```
 
@@ -140,7 +140,7 @@ Try [Sparrow](https://katanaml-sparrow-ui.hf.space) UI shell app
 
 ```json
 {
-  data: [
+  "data": [
     {
       "instrument_name": "UNITS BLACKROCK FIX INC DUB FDS PLC ISHS EUR INV GRD CP BD IDX/INST/E",
       "valuation": 19049
@@ -162,7 +162,7 @@ Try [Sparrow](https://katanaml-sparrow-ui.hf.space) UI shell app
       "valuation": 23643
     }
   ],
-  valid: 'true'
+  "valid": "true"
 }
 ```
 
@@ -202,7 +202,7 @@ Answer:
 
 ```json
 {
-  data: [
+  "data": [
     {
       "instrument_name": "UNITS BLACKROCK FIX INC DUB FDS PLC ISHS EUR INV GRD CP BD IDX/INST/E",
       "valuation": 19049
@@ -224,7 +224,7 @@ Answer:
       "valuation": 23643
     }
   ],
-  valid: 'true'
+  "valid": "true"
 }
 ```
 
