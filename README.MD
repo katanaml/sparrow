@@ -271,8 +271,6 @@ Sample answer:
         "page": 2
     }
 ]
-
-
 ```
 
 ✅ LLM function call example:
@@ -341,6 +339,45 @@ curl -X 'POST' \
   -F 'debug=false' \
   -F 'sparrow_key=' \
   -F 'file=@bonds_table.png;type=image/png'
+```
+
+Sparrow Parse Agent supports multi-page PDF documents with private GPU backend `katanaml/sparrow-qwen2-vl-7b`. You can pass PDF document through the API endpoint, response will be structured per page with page number indicators:
+
+```json
+[
+    {
+        "table": [
+            {
+                "description": "Revenues",
+                "latest_amount": 12453,
+                "previous_amount": 11445
+            },
+            {
+                "description": "Operating expenses",
+                "latest_amount": 9157,
+                "previous_amount": 8822
+            }
+        ],
+        "valid": "true",
+        "page": 1
+    },
+    {
+        "table": [
+            {
+                "description": "Revenues",
+                "latest_amount": 12453,
+                "previous_amount": 11445
+            },
+            {
+                "description": "Operating expenses",
+                "latest_amount": 9157,
+                "previous_amount": 8822
+            }
+        ],
+        "valid": "true",
+        "page": 2
+    }
+]
 ```
 
 ## Commercial usage
