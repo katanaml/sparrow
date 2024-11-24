@@ -228,6 +228,53 @@ Answer:
 }
 ```
 
+✅ Sparrow Parse Agent supports multi-page PDF documents. Example running private GPU backend `katanaml/sparrow-qwen2-vl-7b`:
+
+```
+./sparrow.sh "{"table\": [{"description": "str", "latest_amount": 0, "previous_amount": 0}]}" --agent "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/data/oracle_10k_2014_q1_small.pdf" --debug-dir "/data/"
+```
+
+Sample answer:
+
+```json
+[
+    {
+        "table": [
+            {
+                "description": "Revenues",
+                "latest_amount": 12453,
+                "previous_amount": 11445
+            },
+            {
+                "description": "Operating expenses",
+                "latest_amount": 9157,
+                "previous_amount": 8822
+            }
+        ],
+        "valid": "true",
+        "page": 1
+    },
+    {
+        "table": [
+            {
+                "description": "Revenues",
+                "latest_amount": 12453,
+                "previous_amount": 11445
+            },
+            {
+                "description": "Operating expenses",
+                "latest_amount": 9157,
+                "previous_amount": 8822
+            }
+        ],
+        "valid": "true",
+        "page": 2
+    }
+]
+
+
+```
+
 ✅ LLM function call example:
 
 ```
