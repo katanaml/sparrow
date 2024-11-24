@@ -377,7 +377,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
         with gr.Row():
             with gr.Column():
                 input_img = gr.Image(label="Input Document Image", type="filepath")
-                query_input = gr.Textbox(label="Query", placeholder="Use * to query all data or JSON schema, e.g.: [{\"instrument_name\": \"example\"}]")
+                query_input = gr.Textbox(label="Query", placeholder="Use * to query all data or JSON schema, e.g.: [{\"instrument_name\": \"str\"}]")
                 key_input = gr.Textbox(label="Sparrow Key", type="password")
                 submit_btn = gr.Button(value="Submit", variant="primary")
 
