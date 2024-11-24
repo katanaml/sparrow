@@ -1,5 +1,11 @@
 # ChangeLog
 
+## [v0.2.2] - 2024-11-24
+
+## Multi-page PDF document support
+
+Added support for multi-page PDF document through CMD and API
+
 ## [v0.2.1] - 2024-11-08
 
 ## Dependencies cleanup
