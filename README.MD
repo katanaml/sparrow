@@ -192,10 +192,10 @@ There is a property `PROTECTED_ACCESS: False` in config.yml. When set to `False`
 
 ## Inference
 
-✅ Sparrow Parse agent, with GPU backend on Hugging Face. GPU backend `katanaml/sparrow-qwen2-vl-7b` is private, to be able to run below command, you need to create your own backend on Hugging Face space using [code](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse/sparrow_parse/vllm/infra/qwen2_vl_7b) from Sparrow Parse.
+✅ Sparrow Parse agent, running locally with Apple MLX backend.
 
 ```
-./sparrow.sh "[{"instrument_name":"str", "valuation":0}]" --agent "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/data/bonds_table.png"
+./sparrow.sh "[{"instrument_name":"str", "valuation":0}]" --agent "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit --file-path "/data/bonds_table.png"
 ```
 
 Answer:
@@ -228,7 +228,19 @@ Answer:
 }
 ```
 
-✅ Sparrow Parse Agent supports multi-page PDF documents. Example running private GPU backend `katanaml/sparrow-qwen2-vl-7b`. You can pass PDF document through the API endpoint, response will be structured per page with page number indicators:
+✅ Sparrow Parse agent, with GPU backend on Hugging Face. GPU backend `katanaml/sparrow-qwen2-vl-7b` is private, to be able to run below command, you need to create your own backend on Hugging Face space using [code](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse/sparrow_parse/vllm/infra/qwen2_vl_7b) from Sparrow Parse.
+
+```
+./sparrow.sh "[{"instrument_name":"str", "valuation":0}]" --agent "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/data/bonds_table.png"
+```
+
+✅ Sparrow Parse Agent supports multi-page PDF documents. Running locally with Apple MLX backend. Response will be structured per page with page number indicators.
+
+```
+./sparrow.sh "{"table\": [{"description": "str", "latest_amount": 0, "previous_amount": 0}]}" --agent "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit --file-path "/data/oracle_10k_2014_q1_small.pdf" --debug-dir "/data/"
+```
+
+Example running private GPU backend `katanaml/sparrow-qwen2-vl-7b`. You can pass PDF document through the API endpoint:
 
 ```
 ./sparrow.sh "{"table\": [{"description": "str", "latest_amount": 0, "previous_amount": 0}]}" --agent "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/data/oracle_10k_2014_q1_small.pdf" --debug-dir "/data/"
@@ -326,7 +338,22 @@ For visual reference, a screenshot of the FastAPI endpoint
 
 ### API call inference
 
-✅ `sparrow-parse` agent, this agent runs Visual LLM with GPU backend on Hugging Face. GPU backend `katanaml/sparrow-qwen2-vl-7b` is private, to be able to run below command, you need to create your own backend on Hugging Face space using [code](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse/sparrow_parse/vllm/infra/qwen2_vl_7b) from Sparrow Parse.
+✅ `sparrow-parse` agent. This agent runs locally with Apple MLX backend.
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'query=[{"instrument_name":"str","valuation":0}]' \
+  -F 'agent=sparrow-parse' \
+  -F 'options=mlx,mlx-community/Qwen2-VL-72B-Instruct-4bit' \
+  -F 'debug=false' \
+  -F 'sparrow_key=' \
+  -F 'file=@bonds_table.png;type=image/png'
+```
+
+Alternatively, agent can run Visual LLM with GPU backend on Hugging Face. GPU backend `katanaml/sparrow-qwen2-vl-7b` is private, to be able to run below command, you need to create your own backend on Hugging Face space using [code](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse/sparrow_parse/vllm/infra/qwen2_vl_7b) from Sparrow Parse.
 
 ```
 curl -X 'POST' \
@@ -341,7 +368,7 @@ curl -X 'POST' \
   -F 'file=@bonds_table.png;type=image/png'
 ```
 
-Sparrow Parse Agent supports multi-page PDF documents with private GPU backend `katanaml/sparrow-qwen2-vl-7b`. You can pass PDF document through the API endpoint, response will be structured per page with page number indicators:
+Sparrow Parse Agent supports multi-page PDF documents. You can pass PDF document through the API endpoint, response will be structured per page with page number indicators:
 
 ```json
 [
