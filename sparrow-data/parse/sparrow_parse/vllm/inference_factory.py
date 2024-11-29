@@ -1,5 +1,6 @@
 from sparrow_parse.vllm.huggingface_inference import HuggingFaceInference
 from sparrow_parse.vllm.local_gpu_inference import LocalGPUInference
+from sparrow_parse.vllm.mlx_inference import MLXInference
 
 
 class InferenceFactory:
@@ -12,6 +13,8 @@ class InferenceFactory:
         elif self.config["method"] == "local_gpu":
             model = self._load_local_model()  # Replace with actual model loading logic
             return LocalGPUInference(model=model, device=self.config.get("device", "cuda"))
+        elif self.config["method"] == "mlx":
+            return MLXInference(model_name=self.config["model_name"])
         else:
             raise ValueError(f"Unknown method: {self.config['method']}")
 

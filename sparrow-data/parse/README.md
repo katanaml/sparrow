@@ -12,7 +12,7 @@ pip install sparrow-parse
 
 ## Parsing and extraction
 
-### Sparrow Parse VL (vision-language model) extractor with Hugging Face GPU infra
+### Sparrow Parse VL (vision-language model) extractor with local MLX or Hugging Face Cloud GPU infra
 
 ```
 # run locally: python -m sparrow_parse.extractors.vllm_extractor
@@ -22,13 +22,9 @@ from sparrow_parse.extractors.vllm_extractor import VLLMExtractor
 
 extractor = VLLMExtractor()
 
-# export HF_TOKEN="hf_"
 config = {
-    "method": "huggingface",  # Could be 'huggingface' or 'local_gpu'
-    "hf_space": "katanaml/sparrow-qwen2-vl-7b",
-    "hf_token": os.getenv('HF_TOKEN'),
-    # Additional fields for local GPU inference
-    # "device": "cuda", "model_path": "model.pth"
+    "method": "mlx",  # Could be 'huggingface', 'mlx' or 'local_gpu'
+    "model_name": "mlx-community/Qwen2-VL-72B-Instruct-4bit",
 }
 
 # Use the factory to get the correct instance
@@ -37,14 +33,14 @@ model_inference_instance = factory.get_inference_instance()
 
 input_data = [
     {
-        "file_path": "/data/oracle_10k_2014_q1_small.pdf",
-        "text_input": "retrieve {"table": [{"description": "str", "latest_amount": 0, "previous_amount": 0}]}. return response in JSON format"
+        "file_path": "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.jpg",
+        "text_input": "retrieve all data. return response in JSON format"
     }
 ]
 
 # Now you can run inference without knowing which implementation is used
 results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, generic_query=False,
-                                 debug_dir="/data/",
+                                 debug_dir=None,
                                  debug=True,
                                  mode=None)
 
@@ -56,6 +52,16 @@ print(f"Number of pages: {num_pages}")
 Use `mode="static"` if you want to simulate LLM call, without executing LLM backend.
 
 Method `run_inference` will return results and number of pages processed.
+
+To run with Hugging Face backend use these config values:
+
+```
+config = {
+    "method": "huggingface",  # Could be 'huggingface' or 'local_gpu'
+    "hf_space": "katanaml/sparrow-qwen2-vl-7b",
+    "hf_token": os.getenv('HF_TOKEN'),
+}
+```
 
 Note: GPU backend `katanaml/sparrow-qwen2-vl-7b` is private, to be able to run below command, you need to create your own backend on Hugging Face space using [code](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse/sparrow_parse/vllm/infra/qwen2_vl_7b) from Sparrow Parse.
 
