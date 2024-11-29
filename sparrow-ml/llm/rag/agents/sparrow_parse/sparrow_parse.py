@@ -82,13 +82,18 @@ class SparrowParsePipeline(Pipeline):
         config = {}
         if options[0] == 'huggingface':
             config = {
-                "method": options[0],  # Could be 'huggingface' or 'local_gpu'
+                "method": options[0],  # Could be 'huggingface', 'mlx' or 'local_gpu'
                 "hf_space": options[1],
                 "hf_token": os.getenv('HF_TOKEN')
             }
+        elif options[0] == 'mlx':
+            config = {
+                "method": options[0],  # Could be 'huggingface', 'mlx' or 'local_gpu'
+                "model_name": options[1]
+            }
         else:
             # Handle other cases if needed
-            return "First element is not 'huggingface'"
+            return "Inference backend is not set up for this option", 1
 
         # Use the factory to get the correct instance
         factory = InferenceFactory(config)
