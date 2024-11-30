@@ -71,7 +71,7 @@ if __name__ == "__main__":
     #
     # input_data = [
     #     {
-    #         "file_path": "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.jpg",
+    #         "file_path": "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png",
     #         "text_input": "retrieve all data. return response in JSON format"
     #     }
     # ]
