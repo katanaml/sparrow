@@ -1,7 +1,17 @@
 import json
+from typing import Any, Dict, List, Union
 
 
-def is_valid_json(json_string):
+def is_valid_json(json_string: str) -> bool:
+    """
+    Check if a string is a valid JSON format.
+
+    Args:
+        json_string (str): The JSON string to validate.
+
+    Returns:
+        bool: True if the JSON string is valid, False otherwise.
+    """
     try:
         json.loads(json_string)
         return True
@@ -10,43 +20,52 @@ def is_valid_json(json_string):
         return False
 
 
-def get_json_keys_as_string(json_string):
+def extract_keys(data: Any, keys: List[str]) -> List[str]:
+    """
+    Recursively extract unique keys from a dictionary or a list of dictionaries.
+
+    Args:
+        data (Any): The JSON data (dict, list, or other types).
+        keys (List[str]): A list to store extracted keys.
+
+    Returns:
+        List[str]: The list of unique keys.
+    """
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if key not in keys:
+                keys.append(key)
+            extract_keys(value, keys)
+    elif isinstance(data, list):
+        for item in data:
+            if isinstance(item, dict):
+                extract_keys(item, keys)
+    return keys
+
+
+def get_json_keys_as_string(json_string: str) -> str:
+    """
+    Extract all unique keys from a JSON string and return them as a comma-separated string.
+
+    Args:
+        json_string (str): The input JSON string.
+
+    Returns:
+        str: Comma-separated string of unique keys, or an empty string for invalid JSON.
+    """
     try:
-        # Load the JSON string into a Python object
         json_data = json.loads(json_string)
 
-        # If the input is a list, treat it like a dictionary by merging all the keys
+        # If the input is a list, merge all dictionary keys
         if isinstance(json_data, list):
             merged_dict = {}
             for item in json_data:
                 if isinstance(item, dict):
                     merged_dict.update(item)
-            json_data = merged_dict  # Now json_data is a dictionary
+            json_data = merged_dict
 
-        # A helper function to recursively gather keys while preserving order
-        def extract_keys(data, keys):
-            if isinstance(data, dict):
-                for key, value in data.items():
-                    if isinstance(value, dict):
-                        # Recursively extract from nested dictionaries
-                        extract_keys(value, keys)
-                    elif isinstance(value, list):
-                        # Process each dictionary inside the list
-                        for item in value:
-                            if isinstance(item, dict):
-                                extract_keys(item, keys)
-                    else:
-                        if key not in keys:
-                            keys.append(key)
-            return keys
-
-        # List to hold the keys in order
-        keys = []
-
-        # Process the top-level dictionary first
-        extract_keys(json_data, keys)
-
-        # Join and return the keys as a comma-separated string
+        # Extract keys and return them as a string
+        keys = extract_keys(json_data, [])
         return ', '.join(keys)
 
     except json.JSONDecodeError:
@@ -54,21 +73,50 @@ def get_json_keys_as_string(json_string):
         return ''
 
 
-def add_validation_message(data, message):
-    # Add "valid" to the dictionary or wrap the list
-    if isinstance(data, dict):
-        data["valid"] = message
-    elif isinstance(data, list):
-        data = {"data": data, "valid": message}
+def add_message_to_data(data: Union[Dict, List], key: str, message: Any) -> Dict:
+    """
+    Add a key-value pair to a dictionary or wrap a list in a dictionary.
 
+    Args:
+        data (Union[Dict, List]): The input data (either a dictionary or list).
+        key (str): The key to add.
+        message (Any): The value to associate with the key.
+
+    Returns:
+        Dict: The modified data.
+    """
+    if isinstance(data, dict):
+        data[key] = message
+    elif isinstance(data, list):
+        data = {"data": data, key: message}
+    else:
+        raise TypeError("Data must be a dictionary or a list.")
     return data
 
 
-def add_page_number(data, message):
-    # Add "valid" to the dictionary or wrap the list
-    if isinstance(data, dict):
-        data["page"] = message
-    elif isinstance(data, list):
-        data = {"data": data, "page": message}
+def add_validation_message(data: Union[Dict, List], message: str) -> Dict:
+    """
+    Add a validation message to the data.
 
-    return data
+    Args:
+        data (Union[Dict, List]): The input data.
+        message (str): The validation message.
+
+    Returns:
+        Dict: The modified data.
+    """
+    return add_message_to_data(data, "valid", message)
+
+
+def add_page_number(data: Union[Dict, List], page: int) -> Dict:
+    """
+    Add a page number to the data.
+
+    Args:
+        data (Union[Dict, List]): The input data.
+        page (int): The page number.
+
+    Returns:
+        Dict: The modified data.
+    """
+    return add_message_to_data(data, "page", page)
