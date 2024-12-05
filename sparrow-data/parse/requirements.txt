@@ -1,7 +1,7 @@
 rich
-transformers==4.45.1
-sentence-transformers==3.0.1
-numpy==1.26.4
+transformers==4.46.3
+sentence-transformers==3.3.1
+numpy==2.1.3
 pypdf==4.3.0
 easyocr==1.7.1
 gradio_client
@@ -11,3 +11,6 @@ mlx-vlm==0.1.3; sys_platform == "darwin" and platform_machine == "arm64"
 
 # Force reinstall:
 # pip install --force-reinstall -r requirements.txt
+
+# For pdf2image, additional step is required:
+# brew install poppler

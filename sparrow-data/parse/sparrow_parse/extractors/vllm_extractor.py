@@ -71,8 +71,8 @@ if __name__ == "__main__":
     #
     # input_data = [
     #     {
-    #         "file_path": "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png",
-    #         "text_input": "retrieve all data. return response in JSON format"
+    #         "file_path": "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/oracle_10k_2014_q1_small.pdf",
+    #         "text_input": "retrieve table, description, latest_amount, previous_amount. return response in JSON format, by strictly following this JSON schema: {\"table\": [{\"description\": \"str\", \"latest_amount\": 0, \"previous_amount\": 0}]}"
     #     }
     # ]
     #

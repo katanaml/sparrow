@@ -52,7 +52,7 @@ class MLXInference(ModelInference):
             formatted_json = json.loads(cleaned_text)
             return json.dumps(formatted_json, indent=2)
         except json.JSONDecodeError as e:
-            print(f"Failed to parse JSON: {e}")
+            print(f"Failed to parse JSON in MLX inference backend: {e}")
             return output_text
 
 
