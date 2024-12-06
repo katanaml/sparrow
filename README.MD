@@ -194,6 +194,8 @@ There is a property `PROTECTED_ACCESS: False` in config.yml. When set to `False`
 
 ✅ Sparrow Parse agent, running locally with Apple MLX backend.
 
+Sparrow validates response against request schema. Result of validation is included into response, see property `valid`.
+
 ```
 ./sparrow.sh "[{"instrument_name":"str", "valuation":0}]" --agent "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit --file-path "/data/bonds_table.png"
 ```
@@ -240,7 +242,7 @@ Answer:
 ./sparrow.sh "{"table": [{"description": "str", "latest_amount": 0, "previous_amount": 0}]}" --agent "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit --file-path "/data/oracle_10k_2014_q1_small.pdf" --debug-dir "/data/"
 ```
 
-Example running private GPU backend `katanaml/sparrow-qwen2-vl-7b`. You can pass PDF document through the API endpoint:
+Example running private GPU backend `katanaml/sparrow-qwen2-vl-7b`:
 
 ```
 ./sparrow.sh "{"table": [{"description": "str", "latest_amount": 0, "previous_amount": 0}]}" --agent "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/data/oracle_10k_2014_q1_small.pdf" --debug-dir "/data/"
