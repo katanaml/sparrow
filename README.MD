@@ -194,7 +194,7 @@ There is a property `PROTECTED_ACCESS: False` in config.yml. When set to `False`
 
 ✅ Sparrow Parse agent, running locally with Apple MLX backend.
 
-Sparrow validates response against request schema. Result of validation is included into response, see property `valid`.
+Sparrow validates response against request schema. Result of validation is automatically included into response, see property `valid`.
 
 ```
 ./sparrow.sh "[{"instrument_name":"str", "valuation":0}]" --agent "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit --file-path "/data/bonds_table.png"
