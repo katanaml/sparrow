@@ -91,7 +91,7 @@ async def inference(file: UploadFile = File(None),
 
             if content_type in ["image/jpeg", "image/jpg", "image/png"]:
                 doc = Image.open(BytesIO(response.read()))
-            elif content_type == "application/octet-stream":
+            elif content_type in ["application/pdf", "application/octet-stream"]:
                 pdf_bytes = response.read()
                 pages = convert_from_bytes(pdf_bytes, 300)
                 doc = pages[0]
