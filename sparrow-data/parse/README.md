@@ -39,7 +39,8 @@ input_data = [
 ]
 
 # Now you can run inference without knowing which implementation is used
-results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, generic_query=False,
+results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, tables_only=False,
+                                 generic_query=False,
                                  debug_dir=None,
                                  debug=True,
                                  mode=None)
@@ -48,6 +49,8 @@ for i, result in enumerate(results_array):
     print(f"Result for page {i + 1}:", result)
 print(f"Number of pages: {num_pages}")
 ```
+
+Use `tables_only=True` if you want to extract only tables.
 
 Use `mode="static"` if you want to simulate LLM call, without executing LLM backend.
 

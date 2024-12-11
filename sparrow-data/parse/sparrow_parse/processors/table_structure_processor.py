@@ -1,19 +1,18 @@
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich import print
 from transformers import AutoModelForObjectDetection
-from transformers import TableTransformerForObjectDetection
 import torch
 from PIL import Image
 from torchvision import transforms
-from PIL import ImageDraw
 import os
-import numpy as np
-import easyocr
 
 
 class TableDetector(object):
+    _model = None  # Static variable to hold the table detection model
+    _device = None  # Static variable to hold the device information
+
     def __init__(self):
-        self.reader = easyocr.Reader(['en']) # this needs to run only once to load the model into memory
+        pass
 
     class MaxResize(object):
         def __init__(self, max_size=800):
@@ -27,12 +26,27 @@ class TableDetector(object):
 
             return resized_image
 
-    def detect_table(self, file_path, options, local=True, debug=False):
-        model, device = self.invoke_pipeline_step(
-            lambda: self.load_table_detection_model(),
-            "Loading table detection model...",
-            local
-        )
+    @classmethod
+    def _initialize_model(cls, invoke_pipeline_step, local):
+        """
+        Static method to initialize the table detection model if not already initialized.
+        """
+        if cls._model is None:
+            # Use invoke_pipeline_step to load the model
+            cls._model, cls._device = invoke_pipeline_step(
+                lambda: cls.load_table_detection_model(),
+                "Loading table detection model...",
+                local
+            )
+            print("Table detection model initialized.")
+
+
+    def detect_tables(self, file_path, local=True, debug_dir=None, debug=False):
+        # Ensure the model is initialized using invoke_pipeline_step
+        self._initialize_model(self.invoke_pipeline_step, local)
+
+        # Use the static model and device
+        model, device = self._model, self._device
 
         outputs, image = self.invoke_pipeline_step(
             lambda: self.prepare_image(file_path, model, device),
@@ -46,14 +60,17 @@ class TableDetector(object):
             local
         )
 
-        cropped_table = self.invoke_pipeline_step(
-            lambda: self.crop_table(file_path, image, objects),
+        cropped_tables = self.invoke_pipeline_step(
+            lambda: self.crop_tables(file_path, image, objects, debug, debug_dir),
             "Cropping tables from the image...",
             local
         )
 
+        return cropped_tables
 
-    def load_table_detection_model(self):
+
+    @staticmethod
+    def load_table_detection_model():
         model = AutoModelForObjectDetection.from_pretrained("microsoft/table-transformer-detection", revision="no_timm")
 
         device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -86,38 +103,52 @@ class TableDetector(object):
         objects = self.outputs_to_objects(outputs, image.size, id2label)
         return objects
 
-    def crop_table(self, file_path, image, objects):
+
+    def crop_tables(self, file_path, image, objects, debug, debug_dir):
         tokens = []
         detection_class_thresholds = {
             "table": 0.5,
             "table rotated": 0.5,
             "no object": 10
         }
-        crop_padding = 10
+        crop_padding = 30
 
         tables_crops = self.objects_to_crops(image, tokens, objects, detection_class_thresholds, padding=crop_padding)
 
-        cropped_table = None
+        cropped_tables = []
 
         if len(tables_crops) == 0:
-            print("No tables detected.")
-            return
+            if debug:
+                print("No tables detected in: ", file_path)
+
+            return None
         elif len(tables_crops) > 1:
             for i, table_crop in enumerate(tables_crops):
+                if debug:
+                    print("Table detected in:", file_path, "-", i + 1)
+
                 cropped_table = table_crop['image'].convert("RGB")
-                file_name_table = self.append_filename(file_path, f"table_{i}")
-                cropped_table.save(file_name_table)
-                break
+                cropped_tables.append(cropped_table)
+
+                if debug_dir:
+                    file_name_table = self.append_filename(file_path, debug_dir, f"cropped_{i + 1}")
+                    cropped_table.save(file_name_table)
         else:
+            if debug:
+                print("Table detected in: ", file_path)
+
             cropped_table = tables_crops[0]['image'].convert("RGB")
+            cropped_tables.append(cropped_table)
 
-            file_name_table = self.append_filename(file_path, "table")
-            cropped_table.save(file_name_table)
+            if debug_dir:
+                file_name_table = self.append_filename(file_path, debug_dir, "cropped")
+                cropped_table.save(file_name_table)
 
-        return cropped_table
+        return cropped_tables
 
     # for output bounding box post-processing
-    def box_cxcywh_to_xyxy(self, x):
+    @staticmethod
+    def box_cxcywh_to_xyxy(x):
         x_c, y_c, w, h = x.unbind(-1)
         b = [(x_c - 0.5 * w), (y_c - 0.5 * h), (x_c + 0.5 * w), (y_c + 0.5 * h)]
         return torch.stack(b, dim=1)
@@ -188,12 +219,14 @@ class TableDetector(object):
         return table_crops
 
 
-    def append_filename(self, file_path, word):
+    @staticmethod
+    def append_filename(file_path, debug_dir, word):
         directory, filename = os.path.split(file_path)
         name, ext = os.path.splitext(filename)
         new_filename = f"{name}_{word}{ext}"
-        return os.path.join(directory, new_filename)
+        return os.path.join(debug_dir, new_filename)
 
+    @staticmethod
     def iob(boxA, boxB):
         # Determine the coordinates of the intersection rectangle
         xA = max(boxA[0], boxB[0])
@@ -214,7 +247,8 @@ class TableDetector(object):
         return iob
 
 
-    def invoke_pipeline_step(self, task_call, task_description, local):
+    @staticmethod
+    def invoke_pipeline_step(task_call, task_description, local):
         if local:
             with Progress(
                     SpinnerColumn(),
@@ -233,4 +267,9 @@ class TableDetector(object):
 if __name__ == "__main__":
     table_detector = TableDetector()
 
-    table_detector.detect_table("/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png", None, local=True, debug=False)
+    # file_path = "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png"
+    # cropped_tables = table_detector.detect_tables(file_path, local=True, debug_dir="/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/", debug=True)
+
+    # for i, cropped_table in enumerate(cropped_tables):
+    #     file_name_table = table_detector.append_filename(file_path, "cropped_" + str(i))
+    #     cropped_table.save(file_name_table)
