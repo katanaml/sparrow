@@ -115,7 +115,6 @@ class VLLMExtractor(object):
 
             input_data[0]["file_path"] = [output_filename]
             result = self._run_model_inference(model_inference_instance, input_data)
-            result = self.add_table_info_to_data(result, "table_nr", i + 1)
             results_array.append(result)
 
         shutil.rmtree(temp_dir, ignore_errors=True)
@@ -138,35 +137,6 @@ class VLLMExtractor(object):
     def is_pdf(file_path):
         """Checks if a file is a PDF based on its extension."""
         return file_path.lower().endswith('.pdf')
-
-
-    @staticmethod
-    def add_table_info_to_data(data: Union[Dict, List], key: str, message: Any) -> Dict:
-        """
-        Add a key-value pair to a dictionary or wrap a list in a dictionary.
-        If a 'table' key exists, add or update the key-value pair inside it.
-
-        Args:
-            data (Union[Dict, List]): The input data (either a dictionary or list).
-            key (str): The key to add.
-            message (Any): The value to associate with the key.
-
-        Returns:
-            Dict: The modified data.
-        """
-        if isinstance(data, dict):
-            if "table" in data and isinstance(data["table"], list):
-                # Add or update the key-value pair in the existing structure
-                data[key] = message
-            else:
-                # Wrap the dictionary inside a `table` key and include the additional key-value pair
-                data = {"table": [data], key: message}
-        elif isinstance(data, list):
-            # Wrap the list in a dictionary with the additional key-value pair
-            data = {"table": data, key: message}
-        else:
-            raise TypeError("Data must be a dictionary or a list.")
-        return data
 
 
 if __name__ == "__main__":
