@@ -90,3 +90,20 @@ pip install -r requirements_sparrow_parse.txt
 ```
 
 Repeat the same for `instructor` environment.
+
+3. Poppler
+
+If you are on macOS or Linux, it might be required to install poppler:
+
+macOS:
+
+```
+brew install poppler
+```
+
+Linux:
+
+```
+!apt-get install poppler-utils libpoppler-cpp-dev
+!pip install -v -v python-poppler
+```
