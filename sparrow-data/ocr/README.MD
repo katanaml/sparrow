@@ -88,6 +88,14 @@ pip install -r requirements.txt
 
 If you are on macOS or Linux, it might be required to install poppler:
 
+macOS:
+
+```
+brew install poppler
+```
+
+Linux:
+
 ```
 !apt-get install poppler-utils libpoppler-cpp-dev
 !pip install -v -v python-poppler
