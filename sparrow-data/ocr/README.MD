@@ -86,7 +86,7 @@ source .env_ocr/bin/activate
 pip install -r requirements.txt
 ```
 
-If you are on Linux, it might be required to install poppler:
+If you are on macOS or Linux, it might be required to install poppler:
 
 ```
 !apt-get install poppler-utils libpoppler-cpp-dev
