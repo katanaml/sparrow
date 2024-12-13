@@ -54,7 +54,7 @@ class VLLMExtractor(object):
         """
         file_path = input_data[0]["file_path"]
         if tables_only:
-            return [self._extract_tables(model_inference_instance, file_path, input_data, debug, debug_dir)], 1
+            return self._extract_tables(model_inference_instance, file_path, input_data, debug, debug_dir), 1
         else:
             input_data[0]["file_path"] = [file_path]
             results = model_inference_instance.inference(input_data)
@@ -85,7 +85,8 @@ class VLLMExtractor(object):
                 tables_result = self._extract_tables(
                     model_inference_instance, file_path, input_data, debug, debug_dir, page_index=i
                 )
-                results_array.append(tables_result)
+                # Since _extract_tables returns a list with one JSON string, unpack it
+                results_array.extend(tables_result)  # Unpack the single JSON string
         else:
             if debug:
                 print(f"Processing {len(output_files)} pages for inference at once.")
@@ -118,7 +119,15 @@ class VLLMExtractor(object):
             results_array.append(result)
 
         shutil.rmtree(temp_dir, ignore_errors=True)
-        return json.dumps(results_array, indent=4)
+
+        # Merge results_array elements into a single JSON structure
+        merged_results = {"page_tables": results_array}
+
+        # Format the merged results as a JSON string with indentation
+        formatted_results = json.dumps(merged_results, indent=4)
+
+        # Return the formatted JSON string wrapped in a list
+        return [formatted_results]
 
 
     @staticmethod
@@ -166,7 +175,7 @@ if __name__ == "__main__":
     # ]
     #
     # # Now you can run inference without knowing which implementation is used
-    # results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, tables_only=False,
+    # results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, tables_only=True,
     #                                                    generic_query=False,
     #                                                    debug_dir="/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/",
     #                                                    debug=True,
