@@ -52,14 +52,16 @@ class SparrowParsePipeline(Pipeline):
         else:
             query, query_schema = self._prepare_query(query, local)
 
-        llm_output_list, num_pages = self.invoke_pipeline_step(lambda: self.execute_query(options, query_all_data,
-                                                                                          query,
-                                                                                          file_path,
-                                                                                          debug_dir,
-                                                                                          debug),
-                                                               "Executing query", local)
+        llm_output_list, num_pages, tables_only, validation_off = self.invoke_pipeline_step(lambda: self.execute_query(options,
+                                                                                                           query_all_data,
+                                                                                                           query,
+                                                                                                           file_path,
+                                                                                                           debug_dir,
+                                                                                                           debug),
+                                                                                "Executing query", local)
 
-        llm_output = self.process_llm_output(llm_output_list, num_pages, query_all_data, query_schema, debug, local)
+        llm_output = self.process_llm_output(llm_output_list, num_pages, query_all_data, query_schema, tables_only,
+                                             validation_off, debug, local)
 
         end = timeit.default_timer()
 
@@ -112,7 +114,7 @@ class SparrowParsePipeline(Pipeline):
         extractor = VLLMExtractor()
 
         # Validate and configure the inference backend
-        config = self._configure_inference_backend(options)
+        config, tables_only, validation_off = self._configure_inference_backend(options)
         if config is None:
             return "Inference backend is not set up for this option", 1
 
@@ -132,13 +134,14 @@ class SparrowParsePipeline(Pipeline):
         llm_output, num_pages = extractor.run_inference(
             model_inference_instance,
             input_data,
+            tables_only=tables_only,
             generic_query=query_all_data,
             debug_dir=debug_dir,
             debug=debug,
             mode=None
         )
 
-        return llm_output, num_pages
+        return llm_output, num_pages, tables_only, validation_off
 
     @staticmethod
     def _configure_inference_backend(options):
@@ -149,36 +152,42 @@ class SparrowParsePipeline(Pipeline):
             options (list): Inference backend options.
 
         Returns:
-            dict: Configuration dictionary for the selected backend, or None if invalid.
+            tuple:
+                - dict: Configuration dictionary for the selected backend, or None if invalid.
+                - bool: True if "tables_only" is specified in the options, False otherwise.
+                - bool: True if "validation_off" is specified in the options, False otherwise.
         """
         if not options or len(options) < 2:
             raise ValueError("Invalid options provided for inference backend configuration.")
 
         method = options[0].lower()
+        tables_only = "tables_only" in [opt.lower() for opt in options[2:]]
+        validation_off = "validation_off" in [opt.lower() for opt in options[2:]]
+
         if method == 'huggingface':
             return {
                 "method": method,
                 "hf_space": options[1],
                 "hf_token": os.getenv('HF_TOKEN')  # Ensure HF_TOKEN is set in the environment
-            }
+            }, tables_only, validation_off
         elif method == 'mlx':
             return {
                 "method": method,
                 "model_name": options[1]
-            }
+            }, tables_only, validation_off
         else:
             # Extendable for additional backends
             print(f"Unsupported inference method: {method}")
-            return None
+            return None, tables_only, validation_off
 
 
-    def process_single_page(self, llm_output_list, query_all_data, query_schema, debug, local):
+    def process_single_page(self, llm_output_list, query_all_data, query_schema, tables_only, validation_off, debug, local):
         """
         Processes a single page of LLM output, including validation and formatting if needed.
         """
         llm_output = llm_output_list[0]
 
-        if not query_all_data:
+        if not query_all_data and not tables_only and not validation_off:
             validation_result = self.invoke_pipeline_step(
                 lambda: self.validate_result(llm_output, query_all_data, query_schema, debug),
                 "Validating result", local
@@ -198,14 +207,14 @@ class SparrowParsePipeline(Pipeline):
         return llm_output
 
 
-    def process_multiple_pages(self, llm_output_list, query_all_data, query_schema, debug, local):
+    def process_multiple_pages(self, llm_output_list, query_all_data, query_schema, tables_only, validation_off, debug, local):
         """
         Processes multiple pages of LLM output, including validation (if needed), formatting, and pagination.
         """
         combined_output = []
 
         for i, llm_output in enumerate(llm_output_list):
-            if not query_all_data:
+            if not query_all_data and not tables_only and not validation_off:
                 validation_result = self.invoke_pipeline_step(
                     lambda: self.validate_result(llm_output, query_all_data, query_schema, debug),
                     f"Validating result for page {i + 1}...", local
@@ -235,14 +244,17 @@ class SparrowParsePipeline(Pipeline):
         return json.dumps(combined_output, indent=4)
 
 
-    def process_llm_output(self, llm_output_list, num_pages, query_all_data, query_schema, debug, local):
+    def process_llm_output(self, llm_output_list, num_pages, query_all_data, query_schema, tables_only, validation_off,
+                           debug, local):
         """
         Processes the LLM output based on the number of pages.
         """
         if num_pages == 1:
-            return self.process_single_page(llm_output_list, query_all_data, query_schema, debug, local)
+            return self.process_single_page(llm_output_list, query_all_data, query_schema, tables_only, validation_off,
+                                            debug, local)
         if num_pages > 1:
-            return self.process_multiple_pages(llm_output_list, query_all_data, query_schema, debug, local)
+            return self.process_multiple_pages(llm_output_list, query_all_data, query_schema, tables_only,
+                                               validation_off, debug, local)
         return None
 
 

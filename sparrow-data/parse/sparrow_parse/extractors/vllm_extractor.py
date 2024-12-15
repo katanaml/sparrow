@@ -7,7 +7,6 @@ from rich import print
 import os
 import tempfile
 import shutil
-from typing import Any, Dict, List, Union
 
 
 class VLLMExtractor(object):

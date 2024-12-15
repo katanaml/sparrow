@@ -14,14 +14,12 @@ class MLXInference(ModelInference):
 
     def __init__(self, model_name):
         """
-        Initialize the inference class with the given model name and load the model once.
+        Initialize the inference class with the given model name.
 
         :param model_name: Name of the model to load.
         """
-        self.model, self.processor = self._load_model_and_processor(model_name)
-        self.config = self.model.config
-
-        print(f"Loaded model: {model_name}")
+        self.model_name = model_name
+        print(f"MLXInference initialized with model: {model_name}")
 
 
     @staticmethod
@@ -89,6 +87,10 @@ class MLXInference(ModelInference):
         if mode == "static":
             return [self.get_simple_json()]
 
+        # Load the model and processor
+        model, processor = self._load_model_and_processor(self.model_name)
+        config = model.config
+
         # Prepare absolute file paths
         file_paths = self._extract_file_paths(input_data)
 
@@ -103,10 +105,10 @@ class MLXInference(ModelInference):
             ]
 
             # Generate and process response
-            prompt = apply_chat_template(self.processor, self.config, messages)  # Assuming defined
+            prompt = apply_chat_template(processor, config, messages)  # Assuming defined
             response = generate(
-                self.model,
-                self.processor,
+                model,
+                processor,
                 image,
                 prompt,
                 resize_shape=(width, height),
