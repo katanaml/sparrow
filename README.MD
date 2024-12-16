@@ -192,6 +192,15 @@ There is a property `PROTECTED_ACCESS: False` in config.yml. When set to `False`
 
 ## Inference
 
+You can use these options:
+
+`--options mlx` - this will set MLX as backend for local inference
+`--options mlx-community/Qwen2-VL-72B-Instruct-4bit` - name for Vision LLM model, supported by MLX
+`--options tables_only` - set this option, if you want to process tables only
+`--options validation_off` - set this option, if you want to disable response validation
+
+First two options are always set first.
+
 ✅ Sparrow Parse agent, running locally with Apple MLX backend.
 
 Sparrow validates response against request schema. Result of validation is automatically included into response, see property `valid`.
@@ -339,6 +348,15 @@ For visual reference, a screenshot of the FastAPI endpoint
 ![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_api.png)
 
 ### API call inference
+
+You can use these options:
+
+`mlx` - this will set MLX as backend for local inference
+`mlx-community/Qwen2-VL-72B-Instruct-4bit` - name for Vision LLM model, supported by MLX
+`tables_only` - set this option, if you want to process tables only
+`validation_off` - set this option, if you want to disable response validation
+
+First two options are always set first.
 
 ✅ `sparrow-parse` agent. This agent runs locally with Apple MLX backend.
 
