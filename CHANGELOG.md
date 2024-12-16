@@ -1,5 +1,12 @@
 # ChangeLog
 
+## [v0.2.3] - 2024-12-16
+
+## Table processing
+
+Added support auto detect tables and send cropped table images for inference
+
+
 ## [v0.2.2] - 2024-11-24
 
 ## Multi-page PDF document support
