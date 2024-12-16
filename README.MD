@@ -195,9 +195,13 @@ There is a property `PROTECTED_ACCESS: False` in config.yml. When set to `False`
 You can use these options:
 
 `--options mlx` - this will set MLX as backend for local inference
+
 `--options mlx-community/Qwen2-VL-72B-Instruct-4bit` - name for Vision LLM model, supported by MLX
+
 `--options tables_only` - set this option, if you want to process tables only
+
 `--options validation_off` - set this option, if you want to disable response validation
+
 
 First two options are always set first.
 
@@ -352,9 +356,13 @@ For visual reference, a screenshot of the FastAPI endpoint
 You can use these options:
 
 `mlx` - this will set MLX as backend for local inference
+
 `mlx-community/Qwen2-VL-72B-Instruct-4bit` - name for Vision LLM model, supported by MLX
+
 `tables_only` - set this option, if you want to process tables only
+
 `validation_off` - set this option, if you want to disable response validation
+
 
 First two options are always set first.
 
