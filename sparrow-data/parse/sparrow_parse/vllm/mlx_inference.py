@@ -19,18 +19,43 @@ class MLXInference(ModelInference):
         :param model_name: Name of the model to load.
         """
         self.model_name = model_name
+        self.model = None
+        self.processor = None
         print(f"MLXInference initialized with model: {model_name}")
 
 
-    @staticmethod
-    def _load_model_and_processor(model_name):
+    def __del__(self):
+        """
+        Destructor to clean up resources when the object is deleted.
+        """
+        self.unload_model()
+
+
+    def unload_model(self):
+        """
+        Unload the model and release resources.
+        """
+        if self.model:
+            del self.model
+            self.model = None
+        if self.processor:
+            del self.processor
+            self.processor = None
+        print(f"Model {self.model_name} and its resources have been unloaded.")
+
+
+    def _load_model_and_processor(self, model_name):
         """
         Load the model and processor for inference.
-
         :param model_name: Name of the model to load.
         :return: Tuple containing the loaded model and processor.
         """
-        return load(model_name)
+        print(f"Loading model and processor for: {model_name}...")
+        model, processor = load(model_name)
+        self.model = model  # Store model instance
+        self.processor = processor  # Store processor instance
+        print(f"Model and processor for '{model_name}' loaded successfully.")
+        return model, processor
 
 
     def process_response(self, output_text):
@@ -79,48 +104,54 @@ class MLXInference(ModelInference):
     def inference(self, input_data, mode=None):
         """
         Perform inference on input data using the specified model.
-
         :param input_data: A list of dictionaries containing image file paths and text inputs.
         :param mode: Optional mode for inference ("static" for simple JSON output).
         :return: List of processed model responses.
         """
-        if mode == "static":
-            return [self.get_simple_json()]
+        try:
+            if mode == "static":
+                return [self.get_simple_json()]
 
-        # Load the model and processor
-        model, processor = self._load_model_and_processor(self.model_name)
-        config = model.config
+            # Load the model and processor
+            model, processor = self._load_model_and_processor(self.model_name)
+            config = model.config
 
-        # Prepare absolute file paths
-        file_paths = self._extract_file_paths(input_data)
+            # Prepare absolute file paths
+            file_paths = self._extract_file_paths(input_data)
 
-        results = []
-        for file_path in file_paths:
-            image, width, height = self.load_image_data(file_path)
+            results = []
+            for file_path in file_paths:
+                image, width, height = self.load_image_data(file_path)
 
-            # Prepare messages for the chat model
-            messages = [
-                {"role": "system", "content": "You are an expert at extracting structured text from image documents."},
-                {"role": "user", "content": input_data[0]["text_input"]},
-            ]
+                # Prepare messages for the chat model
+                messages = [
+                    {"role": "system",
+                     "content": "You are an expert at extracting structured text from image documents."},
+                    {"role": "user", "content": input_data[0]["text_input"]},
+                ]
 
-            # Generate and process response
-            prompt = apply_chat_template(processor, config, messages)  # Assuming defined
-            response = generate(
-                model,
-                processor,
-                image,
-                prompt,
-                resize_shape=(width, height),
-                max_tokens=4000,
-                temperature=0.0,
-                verbose=False
-            )
-            results.append(self.process_response(response))
+                # Generate and process response
+                prompt = apply_chat_template(processor, config, messages)
+                response = generate(
+                    model,
+                    processor,
+                    image,
+                    prompt,
+                    resize_shape=(width, height),
+                    max_tokens=4000,
+                    temperature=0.0,
+                    verbose=False
+                )
+                results.append(self.process_response(response))
 
-            print("Inference completed successfully for: ", file_path)
+                print("Inference completed successfully for: ", file_path)
 
-        return results
+            return results
+
+        finally:
+            # Always unload the model after inference
+            self.unload_model()
+
 
     @staticmethod
     def _extract_file_paths(input_data):

@@ -155,7 +155,7 @@ if __name__ == "__main__":
     # # export HF_TOKEN="hf_"
     # config = {
     #     "method": "mlx",  # Could be 'huggingface', 'mlx' or 'local_gpu'
-    #     "model_name": "mlx-community/Qwen2-VL-72B-Instruct-4bit",
+    #     "model_name": "mlx-community/Qwen2-VL-7B-Instruct-8bit",
     #     # "hf_space": "katanaml/sparrow-qwen2-vl-7b",
     #     # "hf_token": os.getenv('HF_TOKEN'),
     #     # Additional fields for local GPU inference
