@@ -28,7 +28,7 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
 
     try:
         rag = get_pipeline(user_selected_agent)
-        answer = rag.run_pipeline(user_selected_agent, query, file_path, options, debug_dir, debug)
+        answer = rag.run_pipeline(user_selected_agent, query, file_path, options, debug_dir, debug, False)
 
         print(f"\nJSON response:\n")
         print(answer)

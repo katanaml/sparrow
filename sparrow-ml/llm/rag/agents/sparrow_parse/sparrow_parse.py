@@ -17,13 +17,39 @@ from .sparrow_utils import (
     add_validation_message,
     add_page_number
 )
-from sparrow_parse.extractors.vllm_extractor import VLLMExtractor
-from sparrow_parse.vllm.inference_factory import InferenceFactory
+import concurrent.futures
 from rag.agents.interface import Pipeline
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
+
+
+def subprocess_inference(config, input_data, tables_only, query_all_data, debug_dir, debug):
+    """
+    Subprocess function to execute the inference logic.
+    """
+    from sparrow_parse.extractors.vllm_extractor import VLLMExtractor
+    from sparrow_parse.vllm.inference_factory import InferenceFactory
+
+    # Initialize the extractor and inference instance
+    factory = InferenceFactory(config)
+    model_inference_instance = factory.get_inference_instance()
+    extractor = VLLMExtractor()
+
+    # Run inference
+    llm_output, num_pages = extractor.run_inference(
+        model_inference_instance,
+        input_data,
+        tables_only=tables_only,
+        generic_query=query_all_data,
+        debug_dir=debug_dir,
+        debug=debug,
+        mode=None
+    )
+
+    # Return results
+    return llm_output, num_pages
 
 
 class SparrowParsePipeline(Pipeline):
@@ -82,7 +108,8 @@ class SparrowParsePipeline(Pipeline):
             raise ValueError(f"Error preparing query: {e}")
 
 
-    def prepare_query_and_schema(self, query):
+    @staticmethod
+    def prepare_query_and_schema(query):
         is_query_valid = is_valid_json(query)
         if not is_query_valid:
             raise ValueError("Invalid query. Please provide a valid JSON query.")
@@ -95,9 +122,10 @@ class SparrowParsePipeline(Pipeline):
 
         return query, query_schema
 
+
     def execute_query(self, options, query_all_data, query, file_path, debug_dir, debug):
         """
-        Executes the query using the specified inference backend.
+        Executes the query using the specified inference backend in a subprocess.
 
         Args:
             options (list): Inference backend options (e.g., ['huggingface', 'some_space']).
@@ -108,19 +136,12 @@ class SparrowParsePipeline(Pipeline):
             debug (bool): Flag for enabling debug mode.
 
         Returns:
-            Tuple: (llm_output, num_pages) - The output from the inference and the number of pages processed.
+            Tuple: (llm_output, num_pages, tables_only, validation_off)
         """
-        # Initialize the extractor
-        extractor = VLLMExtractor()
-
         # Validate and configure the inference backend
         config, tables_only, validation_off = self._configure_inference_backend(options)
         if config is None:
-            return "Inference backend is not set up for this option", 1
-
-        # Create the inference instance
-        factory = InferenceFactory(config)
-        model_inference_instance = factory.get_inference_instance()
+            return "Inference backend is not set up for this option", 1, tables_only, validation_off
 
         # Prepare input data for inference
         input_data = [
@@ -130,18 +151,21 @@ class SparrowParsePipeline(Pipeline):
             }
         ]
 
-        # Run inference using the selected backend
-        llm_output, num_pages = extractor.run_inference(
-            model_inference_instance,
-            input_data,
-            tables_only=tables_only,
-            generic_query=query_all_data,
-            debug_dir=debug_dir,
-            debug=debug,
-            mode=None
-        )
+        # Offload inference to a subprocess
+        with concurrent.futures.ProcessPoolExecutor() as executor:
+            future = executor.submit(
+                subprocess_inference,  # Call the top-level function
+                config,
+                input_data,
+                tables_only,
+                query_all_data,
+                debug_dir,
+                debug
+            )
+            llm_output, num_pages = future.result()
 
         return llm_output, num_pages, tables_only, validation_off
+
 
     @staticmethod
     def _configure_inference_backend(options):
@@ -294,8 +318,9 @@ class SparrowParsePipeline(Pipeline):
                     TextColumn("[progress.description]{task.description}"),
                     transient=False,
             ) as progress:
-                progress.add_task(description=task_description, total=None)
+                progress_task = progress.add_task(description=task_description, total=None)
                 ret = task_call()
+                progress.update(progress_task, completed=1)
         else:
             print(task_description)
             ret = task_call()
