@@ -6,6 +6,9 @@ import json
 from datetime import datetime
 
 
+MAX_FILE_SIZE = 5 * 1024 * 1024  # 5 MB
+
+
 # Example data with placeholder JSON for lab_results and bank_statement
 examples = [
     ["bonds_table.png", "Bonds table", "[{\"instrument_name\":\"str\", \"valuation\":0}]"],
@@ -258,9 +261,17 @@ bank_statement_json = {
 }
 
 
-def run_inference(image_filepath, query, key):
-    if image_filepath is None:
-        return {"error": f"No image provided. Please upload an image before submitting."}
+def run_inference(file_filepath, query, key):
+    if file_filepath is None:
+        return {"error": f"No file provided. Please upload a file before submitting."}
+
+    # Get the file size using the file path
+    file_size = os.path.getsize(file_filepath)  # File size in bytes  # Get the file size in bytes
+    if file_size > MAX_FILE_SIZE:
+        # Clean up the temporary file
+        if os.path.exists(file_filepath):
+            os.remove(file_filepath)
+        return {"error": f"File size exceeds 5 MB. Please upload a smaller file."}
 
     if query is None or query.strip() == "":
         return {"error": f"No query provided. Please enter a query before submitting."}
@@ -270,38 +281,45 @@ def run_inference(image_filepath, query, key):
 
     file_path = None
     try:
-        # Open the uploaded image using its filepath
-        img = Image.open(image_filepath)
-
         # Extract the file extension from the uploaded file
-        input_image_extension = image_filepath.split('.')[-1].lower()  # Extract extension from filepath
-
-        # Set file extension based on the original file, otherwise default to PNG
-        if input_image_extension in ['jpg', 'jpeg', 'png']:
-            file_extension = input_image_extension
-        else:
-            file_extension = 'png'  # Default to PNG if extension is unavailable or invalid
+        input_file_extension = file_filepath.split('.')[-1].lower()
 
         # Generate a unique filename using timestamp
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"image_{timestamp}.{file_extension}"
+        filename = f"file_{timestamp}"
 
-        # Save the image
-        img.save(filename)
+        # If the uploaded file is an image (e.g., jpg, jpeg, png), process it
+        if input_file_extension in ['jpg', 'jpeg', 'png']:
+            # Open the image
+            img = Image.open(file_filepath)
 
-        # Get the full path of the saved image
-        file_path = os.path.abspath(filename)
+            # Save the image with the correct extension (use its original extension)
+            file_path = os.path.abspath(f"{filename}.{input_file_extension}")
+            img.save(file_path)
+
+            file_mime_type = f"image/{input_file_extension}"
+        # If it's a PDF, just rename and keep the PDF extension
+        elif input_file_extension == 'pdf':
+            # Move the PDF file to the correct location without modification
+            file_path = os.path.abspath(f"{filename}.pdf")
+            os.rename(file_filepath, file_path)
+
+            # Ensure the filename includes the .pdf extension
+            filename = f"{filename}.pdf"
+            file_mime_type = 'application/pdf'
+        else:
+            return {"error": f"Unsupported file type: {input_file_extension}. Please upload an image or PDF."}
 
         # Prepare the REST API call
-        url = 'https://katanaml-sparrow-ml.hf.space/api/v1/sparrow-llm/inference'
+        url = 'http://192.168.68.123:8000/api/v1/sparrow-llm/inference'
         headers = {
             'accept': 'application/json'
         }
 
         # Open the file in binary mode and send it
-        with open(filename, "rb") as f:
+        with open(file_path, "rb") as f:
             files = {
-                'file': (filename, f, f'image/{file_extension}')
+                'file': (filename, f, file_mime_type)
             }
 
             # Convert 'query' input to JSON string if needed
@@ -327,16 +345,12 @@ def run_inference(image_filepath, query, key):
                 return {"error": "Invalid JSON format in query input"}
 
             data = {
-                'group_by_rows': '',
+                'query': query_json if query_json == "*" else json.dumps(query_json),  # Use wildcard as-is, or JSON
                 'agent': 'sparrow-parse',
-                'keywords': '',
-                'sparrow_key': key,
-                'update_targets': '',
+                'options': 'mlx,mlx-community/Qwen2-VL-72B-Instruct-4bit,tables_only',
+                'debug_dir': '',
                 'debug': 'false',
-                'index_name': '',
-                'types': '',
-                'fields': query_json if query_json == "*" else json.dumps(query_json),  # Use wildcard as-is, or JSON
-                'options': 'huggingface,katanaml/sparrow-qwen2-vl-7b'
+                'sparrow_key': key,
             }
 
             # Perform the POST request
@@ -376,18 +390,17 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     with gr.Tab(label="Sparrow UI"):
         with gr.Row():
             with gr.Column():
-                input_img = gr.Image(label="Input Document Image", type="filepath")
+                input_file = gr.File(label="Input Document", type="filepath", file_types=[".jpg", ".jpeg", ".png", ".pdf"])
+                image_preview = gr.Image(label="Image Preview", type="filepath", visible=False)
                 query_input = gr.Textbox(label="Query", placeholder="Use * to query all data or JSON schema, e.g.: [{\"instrument_name\": \"str\"}]")
                 key_input = gr.Textbox(label="Sparrow Key", type="password")
                 submit_btn = gr.Button(value="Submit", variant="primary")
 
                 # Radio button for selecting examples
                 example_radio = gr.Radio(label="Select Example", choices=[ex[0] for ex in examples])
-
             with gr.Column():
                 # JSON output for structured JSON display
                 output_json = gr.JSON(label="Response (JSON)", height=900, min_height=900)
-
 
         # Function to handle example selection
         def on_example_select(selected_example):
@@ -395,13 +408,32 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
             return handle_example(selected_example)
 
 
+        def update_preview(file_path):
+            """
+            Update the preview component based on the file type.
+            Only display image previews for supported image formats.
+            Skip preview for PDFs.
+            """
+            if file_path and file_path.lower().endswith(('png', 'jpg', 'jpeg')):
+                return file_path, gr.update(visible=True)  # Display the image and make the preview visible
+            return None, gr.update(visible=False)  # Hide the preview for unsupported formats like PDFs
+
+
         # Update image, output JSON, and query when an example is selected
         example_radio.change(on_example_select,
                              inputs=example_radio,
-                             outputs=[input_img, output_json, query_input])
+                             outputs=[input_file, output_json, query_input])
+
+        # Connect the File component to the Image component for preview
+        input_file.change(
+            update_preview,
+            inputs=input_file,
+            outputs=[image_preview, image_preview]
+        )
+
 
         # When submit is clicked
-        submit_btn.click(run_inference, [input_img, query_input, key_input], [output_json])
+        submit_btn.click(run_inference, [input_file, query_input, key_input], [output_json])
 
         gr.Markdown(
             """
