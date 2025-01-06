@@ -435,6 +435,10 @@ Sparrow Parse agent supports multi-page PDF documents. You can pass PDF document
 ]
 ```
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=katanaml/sparrow&type=Date)](https://star-history.com/#katanaml/sparrow&Date)
+
 ## Commercial usage
 
 Sparrow is available under the GPL 3.0 license, promoting freedom to use, modify, and distribute the software while ensuring any modifications remain open source under the same license. This aligns with our commitment to supporting the open-source community and fostering collaboration.
