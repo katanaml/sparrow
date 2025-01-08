@@ -4,6 +4,18 @@ import os
 from PIL import Image
 import json
 from datetime import datetime
+import configparser
+
+
+# Create a ConfigParser object
+config = configparser.ConfigParser()
+
+# Read the properties file
+config.read("config.properties")
+
+# Fetch settings
+backend_url = config.get("settings", "backend_url")
+backend_options = config.get("settings", "backend_options")
 
 
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5 MB
@@ -11,9 +23,9 @@ MAX_FILE_SIZE = 5 * 1024 * 1024  # 5 MB
 
 # Example data with placeholder JSON for lab_results and bank_statement
 examples = [
-    ["bonds_table.png", "Bonds table", "[{\"instrument_name\":\"str\", \"valuation\":0}]"],
-    ["lab_results.png", "Lab results", "{\"patient_name\": \"str\", \"patient_age\": \"str\", \"patient_pid\": 0, \"lab_results\": [{\"investigation\": \"str\", \"result\": 0.00, \"reference_value\": \"str\", \"unit\": \"str\"}]}"],
-    ["bank_statement.png", "Bank statement", "*"]
+    ["bonds_table.png", "Bonds table", "[{\"instrument_name\":\"str\", \"valuation\":0}]", None],
+    ["lab_results.png", "Lab results", "{\"patient_name\": \"str\", \"patient_age\": \"str\", \"patient_pid\": 0, \"lab_results\": [{\"investigation\": \"str\", \"result\": 0.00, \"reference_value\": \"str\", \"unit\": \"str\"}]}", None],
+    ["bank_statement.png", "Bank statement", "*", "Tables Only"]
 ]
 
 # JSON data for Bonds table
@@ -167,17 +179,6 @@ lab_results_json = {
 }
 
 bank_statement_json = {
-    "bank": "First Platypus Bank",
-    "address": "1234 Kings St., New York, NY 12123",
-    "account_holder": "Mary G. Orta",
-    "account_number": "1234567890123",
-    "statement_date": "3/1/2022",
-    "period_covered": "2/1/2022 - 3/1/2022",
-    "account_summary": {
-    "balance_on_march_1": "$25,032.23",
-    "total_money_in": "$10,234.23",
-    "total_money_out": "$10,532.51"
-    },
     "transactions": [
         {
           "date": "02/01",
@@ -257,11 +258,10 @@ bank_statement_json = {
           "balance": "23,552.15"
         }
     ],
-    "valid": "true"
 }
 
 
-def run_inference(file_filepath, query, key):
+def run_inference(file_filepath, query, key, options):
     if file_filepath is None:
         return {"error": f"No file provided. Please upload a file before submitting."}
 
@@ -311,7 +311,7 @@ def run_inference(file_filepath, query, key):
             return {"error": f"Unsupported file type: {input_file_extension}. Please upload an image or PDF."}
 
         # Prepare the REST API call
-        url = 'http://192.168.68.123:8000/api/v1/sparrow-llm/inference'
+        url = backend_url
         headers = {
             'accept': 'application/json'
         }
@@ -344,10 +344,22 @@ def run_inference(file_filepath, query, key):
             except json.JSONDecodeError:
                 return {"error": "Invalid JSON format in query input"}
 
+            # Prepare the options string
+            selected_options = []
+            if "Tables Only" in options:
+                selected_options.append("tables_only")
+            if "Validation Off" in options:
+                selected_options.append("validation_off")
+
+            # Combine selected options with the default ones
+            final_options = backend_options
+            if selected_options:
+                final_options += "," + ",".join(selected_options)
+
             data = {
                 'query': query_json if query_json == "*" else json.dumps(query_json),  # Use wildcard as-is, or JSON
                 'agent': 'sparrow-parse',
-                'options': 'mlx,mlx-community/Qwen2-VL-72B-Instruct-4bit,tables_only',
+                'options': final_options,
                 'debug_dir': '',
                 'debug': 'false',
                 'sparrow_key': key,
@@ -373,16 +385,16 @@ def handle_example(example_image):
         if example[0] == example_image:
             # Return bonds_json if Bonds table is selected
             if example_image == "bonds_table.png":
-                return example_image, bonds_json, example[2]
+                return example_image, bonds_json, example[2], example[3]
             # Return lab_results_json if Lab results is selected
             elif example_image == "lab_results.png":
-                return example_image, lab_results_json, example[2]
+                return example_image, lab_results_json, example[2], example[3]
             # Return bank_statement_json if Bank statement is selected
             elif example_image == "bank_statement.png":
-                return example_image, bank_statement_json, example[2]
+                return example_image, bank_statement_json, example[2], example[3]
 
     # Default return if no match found
-    return None, "No example selected.", ""
+    return None, "No example selected.", "", None
 
 
 # Define the UI
@@ -393,6 +405,12 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                 input_file = gr.File(label="Input Document", type="filepath", file_types=[".jpg", ".jpeg", ".png", ".pdf"])
                 image_preview = gr.Image(label="Image Preview", type="filepath", visible=False)
                 query_input = gr.Textbox(label="Query", placeholder="Use * to query all data or JSON schema, e.g.: [{\"instrument_name\": \"str\"}]")
+                # Multi-select component for Tables Only and Validation Off
+                options_select = gr.CheckboxGroup(
+                    label="Additional Options",
+                    choices=["Tables Only", "Validation Off"],
+                    type="value"
+                )
                 key_input = gr.Textbox(label="Sparrow Key", type="password")
                 submit_btn = gr.Button(value="Submit", variant="primary")
 
@@ -422,7 +440,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
         # Update image, output JSON, and query when an example is selected
         example_radio.change(on_example_select,
                              inputs=example_radio,
-                             outputs=[input_file, output_json, query_input])
+                             outputs=[input_file, output_json, query_input, options_select])
 
         # Connect the File component to the Image component for preview
         input_file.change(
@@ -433,7 +451,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
 
 
         # When submit is clicked
-        submit_btn.click(run_inference, [input_file, query_input, key_input], [output_json])
+        submit_btn.click(run_inference, [input_file, query_input, key_input, options_select], [output_json])
 
         gr.Markdown(
             """
