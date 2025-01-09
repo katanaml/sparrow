@@ -1,4 +1,5 @@
 import gradio as gr
+from fastapi import FastAPI, Request
 import requests
 import os
 from PIL import Image
@@ -261,6 +262,27 @@ bank_statement_json = {
 }
 
 
+def log_request(client_ip):
+    """
+    Log the timestamp and the country for each request.
+    """
+    # Fetch country information using an IP geolocation service
+    try:
+        response = requests.get(f"https://ipapi.co/{client_ip}/json/")
+        if response.status_code == 200:
+            ip_info = response.json()
+            country = ip_info.get("country_name", "Unknown")
+        else:
+            country = "Unknown"
+    except Exception as e:
+        country = "Unknown"
+        print(f"Error fetching IP info: {e}")
+
+    # Log the timestamp, IP, and country
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"[{timestamp}] Request from IP: {client_ip}, Country: {country}")
+
+
 def run_inference(file_filepath, query, key, options):
     if file_filepath is None:
         return {"error": f"No file provided. Please upload a file before submitting."}
@@ -399,7 +421,8 @@ def handle_example(example_image):
 
 # Define the UI
 with gr.Blocks(theme=gr.themes.Ocean()) as demo:
-    with gr.Tab(label="Sparrow UI"):
+    demo.title = "Sparrow"
+    with gr.Tab(label="Sparrow"):
         with gr.Row():
             with gr.Column():
                 input_file = gr.File(label="Input Document", type="filepath", file_types=[".jpg", ".jpeg", ".png", ".pdf"])
@@ -462,6 +485,27 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
             """
         )
 
-# Launch the app
-demo.queue(api_open=False)
-demo.launch(debug=True)
+
+# Wrap the Gradio app with FastAPI
+app = FastAPI()
+
+@app.middleware("http")
+async def log_middleware(request: Request, call_next):
+    """
+    Middleware to log the IP and country for every request.
+    """
+    # Get client IP
+    client_ip = request.client.host
+    log_request(client_ip)
+
+    # Continue processing the request
+    response = await call_next(request)
+    return response
+
+# Mount the Gradio app into FastAPI
+app = gr.mount_gradio_app(app, demo, path="/")  # Mount at the root path
+
+# Run the app
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=7860, log_level="warning")
