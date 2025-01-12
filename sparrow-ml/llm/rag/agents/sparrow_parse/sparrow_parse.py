@@ -4,6 +4,7 @@ import os
 import timeit
 import warnings
 from typing import Any, List, Tuple, Optional, Dict
+from datetime import datetime
 
 # Third-party library imports
 from rich import print
@@ -84,7 +85,7 @@ class SparrowParsePipeline(Pipeline):
                                                                                                            file_path,
                                                                                                            debug_dir,
                                                                                                            debug),
-                                                                                "Executing query", local)
+                                                                                f"Executing query at [{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}]", local)
 
         llm_output = self.process_llm_output(llm_output_list, num_pages, query_all_data, query_schema, tables_only,
                                              validation_off, debug, local)

@@ -6,6 +6,8 @@ from PIL import Image
 import json
 from datetime import datetime
 import configparser
+from rich import print
+from functools import lru_cache
 
 
 # Create a ConfigParser object
@@ -17,6 +19,7 @@ config.read("config.properties")
 # Fetch settings
 backend_url = config.get("settings", "backend_url")
 backend_options = config.get("settings", "backend_options")
+version = config.get("settings", "version")
 
 
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5 MB
@@ -262,28 +265,28 @@ bank_statement_json = {
 }
 
 
-def log_request(client_ip):
-    """
-    Log the timestamp and the country for each request.
-    """
-    # Fetch country information using an IP geolocation service
+@lru_cache(maxsize=1000)  # Cache up to 1000 unique IP results
+def fetch_geolocation(client_ip):
     try:
         response = requests.get(f"https://ipapi.co/{client_ip}/json/")
         if response.status_code == 200:
             ip_info = response.json()
-            country = ip_info.get("country_name", "Unknown")
+            return ip_info.get("country_name", "Unknown")
         else:
-            country = "Unknown"
+            return "Unknown"
     except Exception as e:
-        country = "Unknown"
         print(f"Error fetching IP info: {e}")
+        return "Unknown"
 
-    # Log the timestamp, IP, and country
+
+def log_request(client_ip, source="General"):
+    country = fetch_geolocation(client_ip)
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"[{timestamp}] Request from IP: {client_ip}, Country: {country}")
+    log_message = f"[{timestamp}] Source: {source}, IP: {client_ip}, Country: {country}"
+    return log_message
 
 
-def run_inference(file_filepath, query, key, options):
+def run_inference(file_filepath, query, key, options, request: gr.Request):
     if file_filepath is None:
         return {"error": f"No file provided. Please upload a file before submitting."}
 
@@ -300,6 +303,10 @@ def run_inference(file_filepath, query, key, options):
 
     if key is None or key.strip() == "":
         return {"error": f"No Sparrow Key provided. Please enter a Sparrow Key before submitting."}
+
+    client_ip = request.client.host
+    # Log the request using log_request
+    print(log_request(client_ip, source="run_inference"))
 
     file_path = None
     try:
@@ -435,6 +442,12 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                     type="value"
                 )
                 key_input = gr.Textbox(label="Sparrow Key", type="password")
+                # Disabled input field for LLM model name
+                model_name = gr.Textbox(
+                    label="Vision LLM Model",
+                    value=backend_options.split(",")[1],
+                    interactive=False  # Makes the field read-only
+                )
                 submit_btn = gr.Button(value="Submit", variant="primary")
 
                 # Radio button for selecting examples
@@ -463,24 +476,33 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
         # Update image, output JSON, and query when an example is selected
         example_radio.change(on_example_select,
                              inputs=example_radio,
-                             outputs=[input_file, output_json, query_input, options_select])
+                             outputs=[input_file, output_json, query_input, options_select],
+                             api_name=False)
 
         # Connect the File component to the Image component for preview
         input_file.change(
             update_preview,
             inputs=input_file,
-            outputs=[image_preview, image_preview]
+            outputs=[image_preview, image_preview],
+            api_name=False
         )
 
 
         # When submit is clicked
-        submit_btn.click(run_inference, [input_file, query_input, key_input, options_select], [output_json])
+        submit_btn.click(run_inference,
+                         [input_file, query_input, key_input, options_select],
+                         [output_json],
+                         api_name=False)
 
+        # Add Markdown with version info
         gr.Markdown(
-            """
+            f"""
             ---
             <p style="text-align: center;">
             Visit <a href="https://katanaml.io/" target="_blank">Katana ML</a> for more details.
+            </p>
+            <p style="text-align: center;">
+            <strong>Version:</strong> {version}
             </p>
             """
         )
@@ -489,18 +511,20 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
 # Wrap the Gradio app with FastAPI
 app = FastAPI()
 
+
 @app.middleware("http")
 async def log_middleware(request: Request, call_next):
     """
-    Middleware to log the IP and country for every request.
+    Middleware to log the IP and initialize session data.
     """
-    # Get client IP
     client_ip = request.client.host
-    log_request(client_ip)
+
+    print(log_request(client_ip, source="middleware"))
 
     # Continue processing the request
     response = await call_next(request)
     return response
+
 
 # Mount the Gradio app into FastAPI
 app = gr.mount_gradio_app(app, demo, path="/")  # Mount at the root path
