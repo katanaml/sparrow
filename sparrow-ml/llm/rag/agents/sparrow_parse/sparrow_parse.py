@@ -85,7 +85,7 @@ class SparrowParsePipeline(Pipeline):
                                                                                                            file_path,
                                                                                                            debug_dir,
                                                                                                            debug),
-                                                                                f"Executing query at [{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}]", local)
+                                                                                f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Executing query", local)
 
         llm_output = self.process_llm_output(llm_output_list, num_pages, query_all_data, query_schema, tables_only,
                                              validation_off, debug, local)
