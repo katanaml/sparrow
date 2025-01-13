@@ -168,7 +168,7 @@ if __name__ == "__main__":
     #
     # input_data = [
     #     {
-    #         "file_path": "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg",
+    #         "file_path": "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png",
     #         "text_input": "retrieve document data. return response in JSON format"
     #     }
     # ]
@@ -176,7 +176,7 @@ if __name__ == "__main__":
     # # Now you can run inference without knowing which implementation is used
     # results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, tables_only=True,
     #                                                    generic_query=False,
-    #                                                    debug_dir="/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/",
+    #                                                    debug_dir=None,
     #                                                    debug=True,
     #                                                    mode=None)
     #
