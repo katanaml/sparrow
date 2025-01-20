@@ -44,6 +44,7 @@ def subprocess_inference(config, input_data, tables_only, query_all_data, debug_
         input_data,
         tables_only=tables_only,
         generic_query=query_all_data,
+        crop_size=None,
         debug_dir=debug_dir,
         debug=debug,
         mode=None
