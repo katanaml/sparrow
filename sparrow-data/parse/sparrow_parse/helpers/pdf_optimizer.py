@@ -9,7 +9,7 @@ class PDFOptimizer(object):
     def __init__(self):
         pass
 
-    def split_pdf_to_pages(self, file_path, output_dir=None, convert_to_images=False):
+    def split_pdf_to_pages(self, file_path, debug_dir=None, convert_to_images=False):
         # Create a temporary directory
         temp_dir = tempfile.mkdtemp()
         output_files = []
@@ -30,9 +30,9 @@ class PDFOptimizer(object):
                         writer.write(output_file)
                         output_files.append(output_filename)
 
-                    if output_dir:
+                    if debug_dir:
                         # Save each page to the debug folder
-                        debug_output_filename = os.path.join(output_dir, f'page_{page_num + 1}.pdf')
+                        debug_output_filename = os.path.join(debug_dir, f'page_{page_num + 1}.pdf')
                         with open(debug_output_filename, 'wb') as output_file:
                             writer.write(output_file)
 
@@ -49,10 +49,12 @@ class PDFOptimizer(object):
                 image.save(output_filename, 'JPEG')
                 output_files.append(output_filename)
 
-                if output_dir:
+                if debug_dir:
                     # Save each image to the debug folder
-                    debug_output_filename = os.path.join(output_dir, f'{base_name}_page_{i + 1}.jpg')
+                    os.makedirs(debug_dir, exist_ok=True)
+                    debug_output_filename = os.path.join(debug_dir, f'{base_name}_page_{i + 1}_debug.jpg')
                     image.save(debug_output_filename, 'JPEG')
+                    print(f"Debug image saved to: {debug_output_filename}")
 
             # Return the number of pages, the list of file paths, and the temporary directory
             return len(images), output_files, temp_dir
@@ -61,13 +63,13 @@ class PDFOptimizer(object):
 if __name__ == "__main__":
     pdf_optimizer = PDFOptimizer()
 
-    # output_directory = "/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/"
+    # debug_dir = "/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/"
     # # Ensure the output directory exists
     # os.makedirs(output_directory, exist_ok=True)
     #
     # # Split the optimized PDF into separate pages
     # num_pages, output_files, temp_dir = pdf_optimizer.split_pdf_to_pages("/Users/andrejb/infra/shared/katana-git/sparrow/sparrow-ml/llm/data/oracle_10k_2014_q1_small.pdf",
-    #                                                                      output_directory,
+    #                                                                      debug_dir,
     #                                                                      True)
     #
     # print(f"Number of pages: {num_pages}")

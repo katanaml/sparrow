@@ -131,7 +131,7 @@ class TableDetector(object):
                 cropped_tables.append(cropped_table)
 
                 if debug_dir:
-                    file_name_table = self.append_filename(file_path, debug_dir, f"cropped_{i + 1}")
+                    file_name_table = self.append_filename(file_path, debug_dir, f"table_cropped_{i + 1}")
                     cropped_table.save(file_name_table)
         else:
             if debug:
@@ -141,7 +141,7 @@ class TableDetector(object):
             cropped_tables.append(cropped_table)
 
             if debug_dir:
-                file_name_table = self.append_filename(file_path, debug_dir, "cropped")
+                file_name_table = self.append_filename(file_path, debug_dir, "table_cropped")
                 cropped_table.save(file_name_table)
 
         return cropped_tables

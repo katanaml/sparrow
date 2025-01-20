@@ -1,6 +1,8 @@
 from mlx_vlm import load, apply_chat_template, generate
 from mlx_vlm.utils import load_image
 
+# For test purposes, we will use a sample image
+
 # Load model and processor
 qwen_vl_model, qwen_vl_processor = load("mlx-community/Qwen2-VL-7B-Instruct-8bit")
 qwen_vl_config = qwen_vl_model.config

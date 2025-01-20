@@ -1,7 +1,7 @@
 import json
-
 from sparrow_parse.vllm.inference_factory import InferenceFactory
 from sparrow_parse.helpers.pdf_optimizer import PDFOptimizer
+from sparrow_parse.helpers.image_optimizer import ImageOptimizer
 from sparrow_parse.processors.table_structure_processor import TableDetector
 from rich import print
 import os
@@ -14,7 +14,7 @@ class VLLMExtractor(object):
         pass
 
     def run_inference(self, model_inference_instance, input_data, tables_only=False,
-                      generic_query=False, debug_dir=None, debug=False, mode=None):
+                      generic_query=False, crop_size=None, debug_dir=None, debug=False, mode=None):
         """
         Main entry point for processing input data using a model inference instance.
         Handles generic queries, PDFs, and table extraction.
@@ -27,12 +27,12 @@ class VLLMExtractor(object):
 
         file_path = input_data[0]["file_path"]
         if self.is_pdf(file_path):
-            return self._process_pdf(model_inference_instance, input_data, tables_only, debug, debug_dir, mode)
+            return self._process_pdf(model_inference_instance, input_data, tables_only, crop_size, debug, debug_dir, mode)
 
-        return self._process_non_pdf(model_inference_instance, input_data, tables_only, debug, debug_dir)
+        return self._process_non_pdf(model_inference_instance, input_data, tables_only, crop_size, debug, debug_dir)
 
 
-    def _process_pdf(self, model_inference_instance, input_data, tables_only, debug, debug_dir, mode):
+    def _process_pdf(self, model_inference_instance, input_data, tables_only, crop_size, debug, debug_dir, mode):
         """
         Handles processing and inference for PDF files, including page splitting and optional table extraction.
         """
@@ -40,26 +40,40 @@ class VLLMExtractor(object):
         num_pages, output_files, temp_dir = pdf_optimizer.split_pdf_to_pages(input_data[0]["file_path"],
                                                                              debug_dir, convert_to_images=True)
 
-        results = self._process_pages(model_inference_instance, output_files, input_data, tables_only, debug, debug_dir)
+        results = self._process_pages(model_inference_instance, output_files, input_data, tables_only, crop_size, debug, debug_dir)
 
         # Clean up temporary directory
         shutil.rmtree(temp_dir, ignore_errors=True)
         return results, num_pages
 
 
-    def _process_non_pdf(self, model_inference_instance, input_data, tables_only, debug, debug_dir):
+    def _process_non_pdf(self, model_inference_instance, input_data, tables_only, crop_size, debug, debug_dir):
         """
         Handles processing and inference for non-PDF files, with optional table extraction.
         """
         file_path = input_data[0]["file_path"]
+
         if tables_only:
             return self._extract_tables(model_inference_instance, file_path, input_data, debug, debug_dir), 1
         else:
+            temp_dir = tempfile.mkdtemp()
+
+            if crop_size:
+                if debug:
+                    print(f"Cropping image borders by {crop_size} pixels.")
+                image_optimizer = ImageOptimizer()
+                cropped_file_path = image_optimizer.crop_image_borders(file_path, temp_dir, debug_dir, crop_size)
+                input_data[0]["file_path"] = cropped_file_path
+
+            file_path = input_data[0]["file_path"]
             input_data[0]["file_path"] = [file_path]
             results = model_inference_instance.inference(input_data)
+
+            shutil.rmtree(temp_dir, ignore_errors=True)
+
             return results, 1
 
-    def _process_pages(self, model_inference_instance, output_files, input_data, tables_only, debug, debug_dir):
+    def _process_pages(self, model_inference_instance, output_files, input_data, tables_only, crop_size, debug, debug_dir):
         """
         Processes individual pages (PDF split) and handles table extraction or inference.
 
@@ -68,6 +82,7 @@ class VLLMExtractor(object):
             output_files: List of file paths for the split PDF pages.
             input_data: Input data for inference.
             tables_only: Whether to only process tables.
+            crop_size: Size for cropping image borders.
             debug: Debug flag for logging.
             debug_dir: Directory for saving debug information.
 
@@ -89,10 +104,38 @@ class VLLMExtractor(object):
         else:
             if debug:
                 print(f"Processing {len(output_files)} pages for inference at once.")
-            # Pass all output files to the inference method for processing at once
-            input_data[0]["file_path"] = output_files
+
+            temp_dir = tempfile.mkdtemp()
+            cropped_files = []
+
+            if crop_size:
+                if debug:
+                    print(f"Cropping image borders by {crop_size} pixels from {len(output_files)} images.")
+
+                image_optimizer = ImageOptimizer()
+
+                # Process each file in the output_files array
+                for file_path in output_files:
+                    cropped_file_path = image_optimizer.crop_image_borders(
+                        file_path,
+                        temp_dir,
+                        debug_dir,
+                        crop_size
+                    )
+                    cropped_files.append(cropped_file_path)
+
+                # Use the cropped files for inference
+                input_data[0]["file_path"] = cropped_files
+            else:
+                # If no cropping needed, use original files directly
+                input_data[0]["file_path"] = output_files
+
+            # Process all files at once
             results = model_inference_instance.inference(input_data)
             results_array.extend(results)
+
+            # Clean up temporary directory
+            shutil.rmtree(temp_dir, ignore_errors=True)
 
         return results_array
 
@@ -168,15 +211,16 @@ if __name__ == "__main__":
     #
     # input_data = [
     #     {
-    #         "file_path": "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png",
+    #         "file_path": "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg",
     #         "text_input": "retrieve document data. return response in JSON format"
     #     }
     # ]
     #
     # # Now you can run inference without knowing which implementation is used
-    # results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, tables_only=True,
+    # results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, tables_only=False,
     #                                                    generic_query=False,
-    #                                                    debug_dir=None,
+    #                                                    crop_size=80,
+    #                                                    debug_dir="/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/",
     #                                                    debug=True,
     #                                                    mode=None)
     #
