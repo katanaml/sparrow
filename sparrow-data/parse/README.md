@@ -53,7 +53,7 @@ print(f"Number of pages: {num_pages}")
 
 Use `tables_only=True` if you want to extract only tables.
 
-Use crop_size=N (where N is an integer) to crop N pixels from all borders of the input images. This can be helpful for removing unwanted borders or frame artifacts from scanned documents.
+Use `crop_size=N` (where `N` is an integer) to crop N pixels from all borders of the input images. This can be helpful for removing unwanted borders or frame artifacts from scanned documents.
 
 Use `mode="static"` if you want to simulate LLM call, without executing LLM backend.
 
