@@ -92,6 +92,26 @@ Example:
 
 *convert_to_images* - default `False`, to split into PDF files
 
+## Image cropping
+
+```
+from sparrow_parse.helpers.image_optimizer import ImageOptimizer
+
+image_optimizer = ImageOptimizer()
+
+cropped_file_path = image_optimizer.crop_image_borders(file_path, temp_dir, debug_dir, crop_size)
+```
+
+Example:
+
+*file_path* - `/data/invoice_1.jpg`
+
+*temp_dir* - directory to store cropped files
+
+*debug_dir* - set to not `None`, for debug purposes only
+
+*crop_size* - Number of pixels to crop from each border
+
 ## Library build
 
 Create Python virtual environment
