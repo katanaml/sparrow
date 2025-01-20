@@ -202,6 +202,8 @@ You can use these options:
 
 `--options validation_off` - set this option, if you want to disable response validation
 
+`crop_size=N` (where N is an integer) to crop N pixels from all borders of the input images. This can be helpful for removing unwanted borders or frame artifacts from scanned documents.
+
 
 First two options are always set first.
 
