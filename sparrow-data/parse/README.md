@@ -41,6 +41,7 @@ input_data = [
 # Now you can run inference without knowing which implementation is used
 results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, tables_only=False,
                                  generic_query=False,
+                                 crop_size=80,
                                  debug_dir=None,
                                  debug=True,
                                  mode=None)
@@ -51,6 +52,8 @@ print(f"Number of pages: {num_pages}")
 ```
 
 Use `tables_only=True` if you want to extract only tables.
+
+Use crop_size=N (where N is an integer) to crop N pixels from all borders of the input images. This can be helpful for removing unwanted borders or frame artifacts from scanned documents.
 
 Use `mode="static"` if you want to simulate LLM call, without executing LLM backend.
 
@@ -76,7 +79,7 @@ from sparrow_parse.extractor.pdf_optimizer import PDFOptimizer
 pdf_optimizer = PDFOptimizer()
 
 num_pages, output_files, temp_dir = pdf_optimizer.split_pdf_to_pages(file_path,
-                                                                     output_directory,
+                                                                     debug_dir,
                                                                      convert_to_images)
 
 ```
@@ -85,7 +88,7 @@ Example:
 
 *file_path* - `/data/invoice_1.pdf`
 
-*output_directory* - set to not `None`, for debug purposes only
+*debug_dir* - set to not `None`, for debug purposes only
 
 *convert_to_images* - default `False`, to split into PDF files
 
