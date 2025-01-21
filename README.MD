@@ -202,7 +202,19 @@ You can use these options:
 
 `--options validation_off` - set this option, if you want to disable response validation
 
-`crop_size=N` (where N is an integer) to crop N pixels from all borders of the input images. This can be helpful for removing unwanted borders or frame artifacts from scanned documents.
+ Arguments:
+
+`query` - JSON query string with field names and types to fetch
+
+`file-path` - input document. This can be image or multipage PDF
+
+`agent` - Sparrow agent used to process query request
+
+`crop_size=N` (where N is an integer) to crop N pixels from all borders of the input images. This can be helpful for removing unwanted borders or frame artifacts from scanned documents
+
+`debug-dir` - folder where processed images are stored
+
+`debug` - if True, additional messages will be printed
 
 
 First two options are always set first.
