@@ -402,7 +402,7 @@ Answer:
 The stock price of the Oracle Corporation is 186.3699951171875. USD
 ```
 
-## FastAPI Endpoint for Local LLM RAG
+## Sparrow FastAPI Endpoint
 
 Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the plugin to be used for the inference. By default, `sparrow-parse` agent is used.
 
