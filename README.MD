@@ -192,6 +192,20 @@ There is a property `PROTECTED_ACCESS: False` in config.yml. When set to `False`
 
 ## Inference
 
+Arguments:
+
+`query` - JSON query string argument with field names and types to fetch
+
+`file-path` - input document. This can be image or multipage PDF
+
+`agent` - Sparrow agent used to process query request
+
+`crop_size=N` (where N is an integer) to crop N pixels from all borders of the input images. This can be helpful for removing unwanted borders or frame artifacts from scanned documents
+
+`debug-dir` - folder where processed images are stored
+
+`debug` - if True, additional messages will be printed
+
 Options:
 
 `--options mlx` - this will set MLX as backend for local inference
@@ -203,20 +217,6 @@ Options:
 `--options validation_off` - set this option, if you want to disable response validation
 
 First two options are always set first.
-
- Arguments:
-
-`query` - JSON query string with field names and types to fetch
-
-`file-path` - input document. This can be image or multipage PDF
-
-`agent` - Sparrow agent used to process query request
-
-`crop_size=N` (where N is an integer) to crop N pixels from all borders of the input images. This can be helpful for removing unwanted borders or frame artifacts from scanned documents
-
-`debug-dir` - folder where processed images are stored
-
-`debug` - if True, additional messages will be printed
 
 
 ✅ Sparrow Parse agent, running locally with Apple MLX backend.
@@ -312,6 +312,75 @@ Sample answer:
         "page": 2
     }
 ]
+```
+
+✅ Sparrow Parse agent running with cropping functionality
+
+```
+./sparrow.sh "*" --agent "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit --crop-size 60 --file-path "/data/invoice_1.pdf"
+```
+
+Sample answer:
+
+```
+{
+  "invoice_number": "61356291",
+  "date_of_issue": "09/06/2012",
+  "seller": {
+    "name": "Chapman, Kim and Green",
+    "address": "64731 James Branch, Smithmouthouth, NC 26872",
+    "tax_id": "949-84-9105",
+    "iban": "GB50ACIE59715038217063"
+  },
+  "client": {
+    "name": "Rodriguez-Stevens",
+    "address": "2280 Angela Plain, Plain, MS 93248",
+    "tax_id": "939-98-8477"
+  },
+  "items": [
+    {
+      "description": "Wine Glasses Goblets Pair Clear",
+      "quantity": 5,
+      "unit": "each",
+      "net_price": 12.0,
+      "net_worth": 60.0,
+      "vat_percentage": 10,
+      "gross_worth": 66.0
+    },
+    {
+      "description": "With Hooks Stemware Storage Multiple Multiple Uses Iron Wine Rack Hanging",
+      "quantity": 4,
+      "unit": "each",
+      "net_price": 28.08,
+      "net_worth": 112.32,
+      "vat_percentage": 10,
+      "gross_worth": 123.55
+    },
+    {
+      "description": "Replacement Corkscrew Parts Spiral Worm Worm Wine Opener Bottle Houdini",
+      "quantity": 1,
+      "unit": "each",
+      "net_price": 7.5,
+      "net_worth": 7.5,
+      "vat_percentage": 10,
+      "gross_worth": 8.25
+    },
+    {
+      "description": "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 4 20 FL OZ (591 ml) NEW",
+      "quantity": 1,
+      "unit": "each",
+      "net_price": 12.99,
+      "net_worth": 12.99,
+      "vat_percentage": 10,
+      "gross_worth": 14.29
+    }
+  ],
+  "summary": {
+    "total_net_worth": 192.81,
+    "total_vat": 19.28,
+    "total_gross_worth": 212.09
+  }
+}
 ```
 
 ✅ LLM function call example:
