@@ -21,6 +21,7 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
         file_path: Annotated[str, typer.Option(help="The file to process")] = None,
         agent: Annotated[str, typer.Option(help="Selected agent")] = "sparrow-parse",
         options: Annotated[List[str], typer.Option(help="Options to pass to the agent")] = None,
+        crop_size: Annotated[int, typer.Option(help="Crop size for table extraction")] = None,
         debug_dir: Annotated[str, typer.Option(help="Debug folder for multipage")] = None,
         debug: Annotated[bool, typer.Option(help="Enable debug mode")] = False):
 
@@ -28,7 +29,8 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
 
     try:
         rag = get_pipeline(user_selected_agent)
-        answer = rag.run_pipeline(user_selected_agent, query, file_path, options, debug_dir, debug, False)
+        answer = rag.run_pipeline(user_selected_agent, query, file_path, options, crop_size, debug_dir,
+                                  debug, False)
 
         print(f"\nJSON response:\n")
         print(answer)

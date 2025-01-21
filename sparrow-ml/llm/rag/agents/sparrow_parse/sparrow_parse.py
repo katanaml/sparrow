@@ -26,7 +26,7 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
-def subprocess_inference(config, input_data, tables_only, query_all_data, debug_dir, debug):
+def subprocess_inference(config, input_data, tables_only, crop_size, query_all_data, debug_dir, debug):
     """
     Subprocess function to execute the inference logic.
     """
@@ -44,7 +44,7 @@ def subprocess_inference(config, input_data, tables_only, query_all_data, debug_
         input_data,
         tables_only=tables_only,
         generic_query=query_all_data,
-        crop_size=None,
+        crop_size=crop_size,
         debug_dir=debug_dir,
         debug=debug,
         mode=None
@@ -64,6 +64,7 @@ class SparrowParsePipeline(Pipeline):
                      query: str,
                      file_path: str,
                      options: List[str] = None,
+                     crop_size: int = None,
                      debug_dir: str = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
@@ -81,6 +82,7 @@ class SparrowParsePipeline(Pipeline):
             query, query_schema = self._prepare_query(query, local)
 
         llm_output_list, num_pages, tables_only, validation_off = self.invoke_pipeline_step(lambda: self.execute_query(options,
+                                                                                                           crop_size,
                                                                                                            query_all_data,
                                                                                                            query,
                                                                                                            file_path,
@@ -125,12 +127,13 @@ class SparrowParsePipeline(Pipeline):
         return query, query_schema
 
 
-    def execute_query(self, options, query_all_data, query, file_path, debug_dir, debug):
+    def execute_query(self, options, crop_size, query_all_data, query, file_path, debug_dir, debug):
         """
         Executes the query using the specified inference backend in a subprocess.
 
         Args:
             options (list): Inference backend options (e.g., ['huggingface', 'some_space']).
+            crop_size (int): Crop size for table extraction.
             query_all_data (bool): Indicates if all data should be queried.
             query (str): Query text.
             file_path (str): Path to the file for querying.
@@ -160,6 +163,7 @@ class SparrowParsePipeline(Pipeline):
                 config,
                 input_data,
                 tables_only,
+                crop_size,
                 query_all_data,
                 debug_dir,
                 debug
