@@ -436,16 +436,29 @@ For visual reference, a screenshot of the FastAPI endpoint
 
 ### API call inference
 
-You can use these options:
+Arguments:
 
-`mlx` - this will set MLX as backend for local inference
+`query` - JSON query string argument with field names and types to fetch
 
-`mlx-community/Qwen2-VL-72B-Instruct-4bit` - name for Vision LLM model, supported by MLX
+`file-path` - input document. This can be image or multipage PDF
 
-`tables_only` - set this option, if you want to process tables only
+`agent` - Sparrow agent used to process query request
 
-`validation_off` - set this option, if you want to disable response validation
+`crop_size=N` (where N is an integer) to crop N pixels from all borders of the input images. This can be helpful for removing unwanted borders or frame artifacts from scanned documents
 
+`debug-dir` - folder where processed images are stored
+
+`debug` - if True, additional messages will be printed
+
+Options:
+
+`--options mlx` - this will set MLX as backend for local inference
+
+`--options mlx-community/Qwen2-VL-72B-Instruct-4bit` - name for Vision LLM model, supported by MLX
+
+`--options tables_only` - set this option, if you want to process tables only
+
+`--options validation_off` - set this option, if you want to disable response validation
 
 First two options are always set first.
 
@@ -459,6 +472,8 @@ curl -X 'POST' \
   -F 'query=[{"instrument_name":"str","valuation":0}]' \
   -F 'agent=sparrow-parse' \
   -F 'options=mlx,mlx-community/Qwen2-VL-72B-Instruct-4bit' \
+  -F 'crop_size=' \
+  -F 'debug_dir=' \
   -F 'debug=false' \
   -F 'sparrow_key=' \
   -F 'file=@bonds_table.png;type=image/png'
@@ -474,6 +489,8 @@ curl -X 'POST' \
   -F 'query=[{"instrument_name":"str","valuation":0}]' \
   -F 'agent=sparrow-parse' \
   -F 'options=huggingface,katanaml/sparrow-qwen2-vl-7b' \
+  -F 'crop_size=' \
+  -F 'debug_dir=' \
   -F 'debug=false' \
   -F 'sparrow_key=' \
   -F 'file=@bonds_table.png;type=image/png'
