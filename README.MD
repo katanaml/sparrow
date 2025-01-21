@@ -192,7 +192,7 @@ There is a property `PROTECTED_ACCESS: False` in config.yml. When set to `False`
 
 ## Inference
 
-You can use these options:
+Options:
 
 `--options mlx` - this will set MLX as backend for local inference
 
@@ -201,6 +201,8 @@ You can use these options:
 `--options tables_only` - set this option, if you want to process tables only
 
 `--options validation_off` - set this option, if you want to disable response validation
+
+First two options are always set first.
 
  Arguments:
 
@@ -216,8 +218,6 @@ You can use these options:
 
 `debug` - if True, additional messages will be printed
 
-
-First two options are always set first.
 
 ✅ Sparrow Parse agent, running locally with Apple MLX backend.
 
