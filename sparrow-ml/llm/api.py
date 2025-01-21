@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from engine import run_from_api_engine
 import uvicorn
 import warnings
-from typing import Annotated
+from typing import Annotated, Optional
 import json
 import argparse
 from dotenv import load_dotenv
@@ -52,16 +52,31 @@ def root():
     return {"message": "Sparrow LLM API"}
 
 
+def parse_optional_int(value: Optional[str]) -> Optional[int]:
+    """Handle empty strings and None values for integer fields."""
+    if value is None or value.strip() == "":
+        return None
+    try:
+        return int(value)
+    except ValueError:
+        raise ValueError("Invalid integer value provided")
+
+
 @app.post("/api/v1/sparrow-llm/inference", tags=["LLM Inference"])
 async def inference(
         query: Annotated[str, Form()],
         agent: Annotated[str, Form()],
-        options: Annotated[str, Form()] = None,
-        debug_dir: Annotated[str, Form()] = None,
-        debug: Annotated[bool, Form()] = False,
-        sparrow_key: Annotated[str, Form()] = None,
+        options: Annotated[Optional[str], Form()] = None,
+        crop_size: Annotated[Optional[str], Form()] = None,
+        debug_dir: Annotated[Optional[str], Form()] = None,
+        debug: Annotated[Optional[bool], Form()] = False,
+        sparrow_key: Annotated[Optional[str], Form()] = None,
         file: UploadFile = File(None)
         ):
+    try:
+        processed_crop_size = parse_optional_int(crop_size)
+    except ValueError:
+        raise HTTPException(status_code=422, detail="crop_size must be a valid integer or empty")
 
     protected_access = cfg.PROTECTED_ACCESS
     if protected_access:
@@ -97,7 +112,7 @@ async def inference(
     options_arr = [param.strip() for param in options.split(',')] if options is not None else None
 
     try:
-        answer = await run_from_api_engine(agent, query, options_arr, file, debug_dir, debug)
+        answer = await run_from_api_engine(agent, query, options_arr, processed_crop_size, file, debug_dir, debug)
     except ValueError as e:
         raise HTTPException(status_code=418, detail=str(e))
 

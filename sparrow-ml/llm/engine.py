@@ -38,7 +38,7 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
         print(f"Caught an exception: {e}")
 
 
-async def run_from_api_engine(user_selected_agent, query, options_arr, file, debug_dir, debug):
+async def run_from_api_engine(user_selected_agent, query, options_arr, crop_size, file, debug_dir, debug):
     try:
         rag = get_pipeline(user_selected_agent)
 
@@ -51,9 +51,11 @@ async def run_from_api_engine(user_selected_agent, query, options_arr, file, deb
                     content = await file.read()
                     temp_file.write(content)
 
-                answer = rag.run_pipeline(user_selected_agent, query, temp_file_path, options_arr, debug_dir, debug, False)
+                answer = rag.run_pipeline(user_selected_agent, query, temp_file_path, options_arr, crop_size, debug_dir,
+                                          debug, False)
         else:
-            answer = rag.run_pipeline(user_selected_agent, query, options_arr, debug_dir, debug, False)
+            answer = rag.run_pipeline(user_selected_agent, query, None, options_arr, crop_size, debug_dir,
+                                      debug, False)
     except ValueError as e:
         raise e
 
