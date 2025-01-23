@@ -630,4 +630,4 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
 # Launch the app
 if __name__ == "__main__":
     demo.queue(api_open=False, max_size=10)
-    demo.launch(debug=False, pwa=True, show_api=False, max_threads=1)
+    demo.launch(debug=False, pwa=True, show_api=False)
