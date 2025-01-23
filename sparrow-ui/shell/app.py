@@ -619,7 +619,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
             f"""
             ---
             <p style="text-align: center;">
-            Visit <a href="https://katanaml.io/" target="_blank">Katana ML</a> for more details.
+            Visit <a href="https://katanaml.io/" target="_blank">Katana ML</a> and <a href="https://github.com/katanaml/sparrow" target="_blank">Sparrow</a> GitHub for more details.
             </p>
             <p style="text-align: center;">
             <strong>Version:</strong> {version}
@@ -629,5 +629,5 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
 
 # Launch the app
 if __name__ == "__main__":
-    demo.queue(api_open=False)
-    demo.launch(debug=False, pwa=True)
+    demo.queue(api_open=False, max_size=10)
+    demo.launch(debug=False, pwa=True, show_api=False, max_threads=1)
