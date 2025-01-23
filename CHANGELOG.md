@@ -1,5 +1,14 @@
 # ChangeLog
 
+## [v0.2.4] - 2025-01-23
+
+## Image Cropping and UI Shell updates
+
+Implemented image cropping, this is useful for form pages, to reduce overall image size. Add various UI improvements to Sparrow UI Shell, enabled better logging
+
+This release brings Sparrow deployment on local Mac Mini M4 Pro 64GB machine - https://sparrow.katanaml.io
+
+
 ## [v0.2.3] - 2024-12-16
 
 ## Table processing
