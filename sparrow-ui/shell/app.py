@@ -1,5 +1,4 @@
 import gradio as gr
-from fastapi import FastAPI, Request
 import requests
 import os
 from PIL import Image
@@ -7,7 +6,8 @@ import json
 from datetime import datetime
 import configparser
 from rich import print
-from functools import lru_cache
+import geoip2.database
+from pathlib import Path
 
 
 # Create a ConfigParser object
@@ -20,6 +20,12 @@ config.read("config.properties")
 backend_url = config.get("settings", "backend_url")
 backend_options = config.get("settings", "backend_options")
 version = config.get("settings", "version")
+
+
+# GeoIP configuration
+# Sign up for a free account at MaxMind: https://dev.maxmind.com/geoip/geolite2-free-geolocation-data
+# Download the GeoLite2-Country database and place it in the same directory as this script
+GEOIP_DB_PATH = "GeoLite2-Country.mmdb"
 
 
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5 MB
@@ -265,28 +271,28 @@ bank_statement_json = {
 }
 
 
-@lru_cache(maxsize=1000)  # Cache up to 1000 unique IP results
-def fetch_geolocation(client_ip):
+def fetch_geolocation(ip_address):
     try:
-        response = requests.get(f"https://ipapi.co/{client_ip}/json/")
-        if response.status_code == 200:
-            ip_info = response.json()
-            return ip_info.get("country_name", "Unknown")
-        else:
-            return "Unknown"
-    except Exception as e:
-        print(f"Error fetching IP info: {e}")
+        if not Path(GEOIP_DB_PATH).exists():
+            return "Database not found"
+
+        with geoip2.database.Reader(GEOIP_DB_PATH) as reader:
+            response = reader.country(ip_address)
+            return response.country.name
+    except geoip2.errors.AddressNotFoundError:
         return "Unknown"
+    except Exception as e:
+        return f"Error: {str(e)}"
 
 
 def log_request(client_ip, source="General"):
     country = fetch_geolocation(client_ip)
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     log_message = f"[{timestamp}] Source: {source}, IP: {client_ip}, Country: {country}"
-    return log_message
+    print(log_message)
 
 
-def run_inference(file_filepath, query, key, options, request: gr.Request):
+def run_inference(file_filepath, query, key, options, crop_size):
     if file_filepath is None:
         return {"error": f"No file provided. Please upload a file before submitting."}
 
@@ -304,10 +310,6 @@ def run_inference(file_filepath, query, key, options, request: gr.Request):
     if key is None or key.strip() == "":
         return {"error": f"No Sparrow Key provided. Please enter a Sparrow Key before submitting."}
 
-    client_ip = request.client.host
-    # Log the request using log_request
-    print(log_request(client_ip, source="run_inference"))
-
     file_path = None
     try:
         # Extract the file extension from the uploaded file
@@ -322,8 +324,9 @@ def run_inference(file_filepath, query, key, options, request: gr.Request):
             # Open the image
             img = Image.open(file_filepath)
 
+            filename = f"{filename}.{input_file_extension}"
             # Save the image with the correct extension (use its original extension)
-            file_path = os.path.abspath(f"{filename}.{input_file_extension}")
+            file_path = os.path.abspath(filename)
             img.save(file_path)
 
             file_mime_type = f"image/{input_file_extension}"
@@ -389,6 +392,7 @@ def run_inference(file_filepath, query, key, options, request: gr.Request):
                 'query': query_json if query_json == "*" else json.dumps(query_json),  # Use wildcard as-is, or JSON
                 'agent': 'sparrow-parse',
                 'options': final_options,
+                'crop_size': str(crop_size) if crop_size > 0 else '',
                 'debug_dir': '',
                 'debug': 'false',
                 'sparrow_key': key,
@@ -408,93 +412,209 @@ def run_inference(file_filepath, query, key, options, request: gr.Request):
             os.remove(file_path)
 
 
-def handle_example(example_image):
-    # Find the corresponding entry in the examples array
-    for example in examples:
-        if example[0] == example_image:
-            # Return bonds_json if Bonds table is selected
-            if example_image == "bonds_table.png":
-                return example_image, bonds_json, example[2], example[3]
-            # Return lab_results_json if Lab results is selected
-            elif example_image == "lab_results.png":
-                return example_image, lab_results_json, example[2], example[3]
-            # Return bank_statement_json if Bank statement is selected
-            elif example_image == "bank_statement.png":
-                return example_image, bank_statement_json, example[2], example[3]
-
-    # Default return if no match found
-    return None, "No example selected.", "", None
-
-
 # Define the UI
 with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     demo.title = "Sparrow"
+
+
+    # Log initial page load
+    @demo.load(api_name=False)
+    def on_page_load(request: gr.Request):
+        log_request(request.client.host, "Page Load")
+
+
     with gr.Tab(label="Sparrow"):
         with gr.Row():
             with gr.Column():
-                input_file = gr.File(label="Input Document", type="filepath", file_types=[".jpg", ".jpeg", ".png", ".pdf"])
-                image_preview = gr.Image(label="Image Preview", type="filepath", visible=False)
-                query_input = gr.Textbox(label="Query", placeholder="Use * to query all data or JSON schema, e.g.: [{\"instrument_name\": \"str\"}]")
-                # Multi-select component for Tables Only and Validation Off
-                options_select = gr.CheckboxGroup(
+                input_file_comp = gr.File(
+                    label="Input Document",
+                    type="filepath",
+                    file_types=[".jpg", ".jpeg", ".png", ".pdf"]
+                )
+                image_preview_comp = gr.Image(
+                    label="Image Preview",
+                    type="filepath",
+                    visible=False
+                )
+                query_input_comp = gr.Textbox(
+                    label="Query",
+                    placeholder="Use * to query all data or JSON schema, e.g.: [{\"instrument_name\": \"str\"}]"
+                )
+                options_select_comp = gr.CheckboxGroup(
                     label="Additional Options",
                     choices=["Tables Only", "Validation Off"],
                     type="value"
                 )
-                key_input = gr.Textbox(label="Sparrow Key", type="password")
-                # Disabled input field for LLM model name
-                model_name = gr.Textbox(
+                crop_size_comp = gr.Slider(
+                    label="Crop Size",
+                    value=0,
+                    minimum=0,
+                    maximum=600,
+                    step=1,
+                    info="Crop by specifying the size in pixels (0 for no cropping)"
+                )
+                key_input_comp = gr.Textbox(
+                    label="Sparrow Key",
+                    type="password"
+                )
+                model_name_comp = gr.Textbox(
                     label="Vision LLM Model",
                     value=backend_options.split(",")[1],
-                    interactive=False  # Makes the field read-only
+                    interactive=False
                 )
-                submit_btn = gr.Button(value="Submit", variant="primary")
+                submit_btn = gr.Button(
+                    value="Submit",
+                    variant="primary"
+                )
+                example_radio = gr.Radio(
+                    label="Select Example",
+                    choices=[ex[0] for ex in examples]
+                )
 
-                # Radio button for selecting examples
-                example_radio = gr.Radio(label="Select Example", choices=[ex[0] for ex in examples])
             with gr.Column():
-                # JSON output for structured JSON display
-                output_json = gr.JSON(label="Response (JSON)", height=900, min_height=900)
-
-        # Function to handle example selection
-        def on_example_select(selected_example):
-            # Handle example selection and return the image, output (text or JSON), and query
-            return handle_example(selected_example)
+                output_json = gr.JSON(
+                    label="Response (JSON)",
+                    height=900,
+                    min_height=900
+                )
 
 
-        def update_preview(file_path):
-            """
-            Update the preview component based on the file type.
-            Only display image previews for supported image formats.
-            Skip preview for PDFs.
-            """
-            if file_path and file_path.lower().endswith(('png', 'jpg', 'jpeg')):
-                return file_path, gr.update(visible=True)  # Display the image and make the preview visible
-            return None, gr.update(visible=False)  # Hide the preview for unsupported formats like PDFs
+        # Handler functions with logging
+        def on_example_select(selected_example, request: gr.Request):
+            log_request(request.client.host, f"Example Selection: {selected_example}")
+            # Find the corresponding example data
+            for example in examples:
+                if example[0] == selected_example:
+                    example_json = None
+                    # Return appropriate JSON based on example type
+                    if selected_example == "bonds_table.png":
+                        example_json = bonds_json
+                    elif selected_example == "lab_results.png":
+                        example_json = lab_results_json
+                    elif selected_example == "bank_statement.png":
+                        example_json = bank_statement_json
+
+                    # For image preview
+                    preview_visible = selected_example.lower().endswith(('png', 'jpg', 'jpeg'))
+
+                    return (
+                        selected_example,  # input_file
+                        example_json,  # output_json
+                        gr.update(value=example[2]),  # query_input
+                        gr.update(value=[example[3]] if example[3] else []),  # options_select
+                        gr.update(value=0),  # crop_size
+                    )
+
+            # Default return if no match found
+            return (
+                None,  # input_file
+                None,  # output_json
+                gr.update(value=""),  # query_input
+                gr.update(value=[]),  # options_select
+                gr.update(value=0),  # crop_size
+            )
 
 
-        # Update image, output JSON, and query when an example is selected
-        example_radio.change(on_example_select,
-                             inputs=example_radio,
-                             outputs=[input_file, output_json, query_input, options_select],
-                             api_name=False)
+        def update_preview(file_path, request: gr.Request):
+            preview_update = None
+            preview_visible = False
 
-        # Connect the File component to the Image component for preview
-        input_file.change(
-            update_preview,
-            inputs=input_file,
-            outputs=[image_preview, image_preview],
+            if file_path:
+                # Get just the file name from the path
+                if hasattr(file_path, 'name'):
+                    file_name = Path(file_path.name).name
+                else:
+                    file_name = Path(str(file_path)).name
+
+                log_request(request.client.host, f"Preview Update: {file_name}")
+
+                if str(file_path).lower().endswith(('png', 'jpg', 'jpeg')):
+                    preview_update = file_path
+                    preview_visible = True
+
+            return (
+                preview_update,  # image_preview value
+                gr.update(visible=preview_visible)  # image_preview visibility
+            )
+
+
+        def clear_on_file_upload(file_path, request: gr.Request):
+            """Separate function to handle clearing fields on file upload"""
+            if file_path is None:  # Only clear when file is removed
+                return (
+                    gr.update(value=""),  # query_input
+                    gr.update(value=[]),  # options_select
+                    gr.update(value=0),  # crop_size
+                    gr.update(value=None)  # example_radio
+                )
+            return [gr.update() for _ in range(4)]
+
+
+        def run_inference_wrapper(input_file, query_input, key_input, options_select, crop_size, request: gr.Request):
+            if input_file:
+                # Get just the file name from the path
+                if hasattr(input_file, 'name'):
+                    file_name = Path(input_file.name).name
+                else:
+                    file_name = Path(str(input_file)).name
+
+                log_request(request.client.host, f"Inference Request - File: {file_name}")
+            else:
+                log_request(request.client.host, "Inference Request - No file")
+
+            return run_inference(input_file, query_input, key_input, options_select, crop_size)
+
+
+        # Connect components with updated handlers
+        example_radio.change(
+            on_example_select,
+            inputs=[example_radio],
+            outputs=[
+                input_file_comp,
+                output_json,
+                query_input_comp,
+                options_select_comp,
+                crop_size_comp
+            ],
             api_name=False
         )
 
+        # Split the file upload handling into two events
+        input_file_comp.change(
+            update_preview,
+            inputs=[input_file_comp],
+            outputs=[
+                image_preview_comp,
+                image_preview_comp
+            ],
+            api_name=False
+        )
 
-        # When submit is clicked
-        submit_btn.click(run_inference,
-                         [input_file, query_input, key_input, options_select],
-                         [output_json],
-                         api_name=False)
+        input_file_comp.change(
+            clear_on_file_upload,
+            inputs=[input_file_comp],
+            outputs=[
+                query_input_comp,
+                options_select_comp,
+                crop_size_comp,
+                example_radio
+            ],
+            api_name=False
+        )
 
-        # Add Markdown with version info
+        submit_btn.click(
+            run_inference_wrapper,
+            inputs=[
+                input_file_comp,
+                query_input_comp,
+                key_input_comp,
+                options_select_comp,
+                crop_size_comp
+            ],
+            outputs=[output_json],
+            api_name=False
+        )
+
         gr.Markdown(
             f"""
             ---
@@ -507,29 +627,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
             """
         )
 
-
-# Wrap the Gradio app with FastAPI
-app = FastAPI()
-
-
-@app.middleware("http")
-async def log_middleware(request: Request, call_next):
-    """
-    Middleware to log the IP and initialize session data.
-    """
-    client_ip = request.client.host
-
-    print(log_request(client_ip, source="middleware"))
-
-    # Continue processing the request
-    response = await call_next(request)
-    return response
-
-
-# Mount the Gradio app into FastAPI
-app = gr.mount_gradio_app(app, demo, path="/")  # Mount at the root path
-
-# Run the app
+# Launch the app
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=7860, log_level="warning")
+    demo.queue(api_open=False)
+    demo.launch(debug=False, pwa=True)

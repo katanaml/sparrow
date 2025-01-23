@@ -1,1 +1,2 @@
-gradio==5.1.0
+gradio==5.12.0
+geoip2==4.8.1

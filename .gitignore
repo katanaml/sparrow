@@ -88,3 +88,4 @@ sparrow-ml/llm/.env
 sparrow-ui/shell/.env_shell
 sparrow-ui/shell/.env_sparrow_ui_shell
 /sparrow-ui/shell/.idea
+sparrow-ui/shell/GeoLite2-Country.mmdb
