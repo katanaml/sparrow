@@ -2,7 +2,7 @@
 
 ## Description
 
-This module implements Sparrow Parse [library](https://pypi.org/project/sparrow-parse/) library with helpful methods for data pre-processing, parsing and extracting information. This library relies on Visual LLM functionality, Table Transformers and is part of Sparrow. Check main [README](https://github.com/katanaml/sparrow)
+This module implements Sparrow Parse [library](https://pypi.org/project/sparrow-parse/) library with helpful methods for data pre-processing, parsing and extracting information. Library relies on Visual LLM functionality, Table Transformers and is part of Sparrow. Check main [README](https://github.com/katanaml/sparrow)
 
 ## Install
 
