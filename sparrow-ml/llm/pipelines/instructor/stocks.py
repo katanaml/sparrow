@@ -1,4 +1,4 @@
-from rag.agents.interface import Pipeline
+from pipelines.interface import Pipeline
 from openai import OpenAI
 from pydantic import BaseModel, Field
 import yfinance as yf
@@ -17,7 +17,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 class Stocks(Pipeline):
     def run_pipeline(self,
-                     agent: str,
+                     pipeline: str,
                      query: str,
                      file_path: str,
                      options: List[str] = None,
@@ -25,7 +25,7 @@ class Stocks(Pipeline):
                      debug_dir: str = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
-        print(f"\nRunning pipeline with {agent}\n")
+        print(f"\nRunning pipeline with {pipeline}\n")
 
         # Import config vars
         with open('config.yml', 'r', encoding='utf8') as ymlfile:

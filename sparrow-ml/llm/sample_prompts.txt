@@ -1,4 +1,4 @@
-./sparrow.sh assistant --agent "fcall" --query "Exxon"
+./sparrow.sh assistant --pipeline "fcall" --query "Exxon"
 
 {
   "company": "ExxonMobil",
@@ -12,14 +12,14 @@ Time to retrieve answer: 16.426633964991197
 \"seller_taxid\":\"example\", \"seller_iban\":\"example\", \"client_name\":\"example\", \"client_address\":\"example\",
 \"client_taxid\":\"example\", \"invoice_items\":[{\"description\":\"example\", \"quantity\":0.00, \"net_price\":0.00,
 \"net_worth\":0.00, \"vat\":\"example\", \"gross_worth\":0.00}], \"invoice_summary\":[{\"net_worth\":0.00, \"vat\":0.00, \"gross_worth\":0.00}]}"
---agent "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg"
+--pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg"
 
 
 ./sparrow.sh "{\"invoice_no\":\"example\", \"invoice_date\":\"example\", \"seller_name\":\"example\", \"seller_address\":\"example\",
 \"seller_taxid\":\"example\", \"seller_iban\":\"example\", \"client_name\":\"example\", \"client_address\":\"example\",
 \"client_taxid\":\"example\", \"invoice_items\":[{\"description\":\"example\", \"quantity\":0.00, \"net_price\":0.00,
 \"net_worth\":0.00, \"vat\":\"example\", \"gross_worth\":0.00}], \"invoice_summary\":[{\"net_worth\":0.00, \"vat\":0.00, \"gross_worth\":0.00}]}"
---agent "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg"
+--pipeline "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg"
 
 {
   "invoice_no": "61356291",
@@ -77,11 +77,11 @@ Time to retrieve answer: 16.426633964991197
 Time to retrieve answer: 47.84319644900097
 
 
-./sparrow.sh "[{\"instrument_name\":\"example\", \"valuation\":0}]" --agent "sparrow-parse" --debug --options mlx
+./sparrow.sh "[{\"instrument_name\":\"example\", \"valuation\":0}]" --pipeline "sparrow-parse" --debug --options mlx
 --options mlx-community/Qwen2-VL-72B-Instruct-4bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png"
 
 
-./sparrow.sh "[{\"instrument_name\":\"example\", \"valuation\":0}]" --agent "sparrow-parse" --debug --options huggingface
+./sparrow.sh "[{\"instrument_name\":\"example\", \"valuation\":0}]" --pipeline "sparrow-parse" --debug --options huggingface
 --options katanaml/sparrow-qwen2-vl-7b --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png"
 
 [
@@ -110,7 +110,7 @@ Time to retrieve answer: 47.84319644900097
 Time to retrieve answer: 22.78700271800335
 
 
-./sparrow.sh "*" --agent "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit
+./sparrow.sh "*" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit
 --crop-size 60 --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf"
 
 {

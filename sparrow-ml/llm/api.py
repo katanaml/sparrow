@@ -9,7 +9,6 @@ import argparse
 from dotenv import load_dotenv
 import box
 import yaml
-import os
 from rich import print
 
 
@@ -65,7 +64,7 @@ def parse_optional_int(value: Optional[str]) -> Optional[int]:
 @app.post("/api/v1/sparrow-llm/inference", tags=["LLM Inference"])
 async def inference(
         query: Annotated[str, Form()],
-        agent: Annotated[str, Form()],
+        pipeline: Annotated[str, Form()],
         options: Annotated[Optional[str], Form()] = None,
         crop_size: Annotated[Optional[str], Form()] = None,
         debug_dir: Annotated[Optional[str], Form()] = None,
@@ -104,7 +103,7 @@ async def inference(
                 break
 
         if not key_found:
-            raise HTTPException(status_code=403, detail="Protected access. Agent not allowed.")
+            raise HTTPException(status_code=403, detail="Protected access. Pipeline not allowed.")
 
         # Save updated configuration back to the file
         save_config(cfg, config_path)
@@ -112,7 +111,7 @@ async def inference(
     options_arr = [param.strip() for param in options.split(',')] if options is not None else None
 
     try:
-        answer = await run_from_api_engine(agent, query, options_arr, processed_crop_size, file, debug_dir, debug)
+        answer = await run_from_api_engine(pipeline, query, options_arr, processed_crop_size, file, debug_dir, debug)
     except ValueError as e:
         raise HTTPException(status_code=418, detail=str(e))
 

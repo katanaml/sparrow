@@ -19,7 +19,7 @@ from .sparrow_utils import (
     add_page_number
 )
 import concurrent.futures
-from rag.agents.interface import Pipeline
+from pipelines.interface import Pipeline
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -60,7 +60,7 @@ class SparrowParsePipeline(Pipeline):
         pass
 
     def run_pipeline(self,
-                     agent: str,
+                     pipeline: str,
                      query: str,
                      file_path: str,
                      options: List[str] = None,
@@ -68,7 +68,7 @@ class SparrowParsePipeline(Pipeline):
                      debug_dir: str = None,
                      debug: bool = False,
                      local: bool = True) -> Any:
-        print(f"\nRunning pipeline with {agent}\n")
+        print(f"\nRunning pipeline with {pipeline}\n")
 
         start = timeit.default_timer()
 
