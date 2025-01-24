@@ -2,7 +2,7 @@
 [![PyPI - Python](https://img.shields.io/badge/python-v3.10+-blue.svg)](https://github.com/katanaml/sparrow)
 [![GitHub Stars](https://img.shields.io/github/stars/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/issues)
-[![Current Version](https://img.shields.io/badge/version-0.2.3-green.svg)](https://github.com/katanaml/sparrow)
+[![Current Version](https://img.shields.io/badge/version-0.2.4-green.svg)](https://github.com/katanaml/sparrow)
 
 
 Data processing with ML, LLM and Vision LLM
@@ -555,4 +555,4 @@ If your organization is seeking to utilize Sparrow under a proprietary license, 
 
 ## License
 
-Licensed under the GPL 3.0. Copyright 2020-2024 Katana ML, Andrej Baranovskij. [Copy of the license](https://github.com/katanaml/sparrow/blob/main/LICENSE).
+Licensed under the GPL 3.0. Copyright 2020-2025 Katana ML, Andrej Baranovskij. [Copy of the license](https://github.com/katanaml/sparrow/blob/main/LICENSE).
