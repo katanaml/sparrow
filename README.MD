@@ -13,16 +13,16 @@ Data processing with ML, LLM and Vision LLM
 
 ## Overview
 
-Sparrow is an innovative open-source solution for efficient data extraction and processing from various documents and images. It seamlessly handles forms, bank statements, invoices, receipts, and other unstructured data sources. Sparrow stands out with its modular architecture, offering independent services and agents all optimized for robust performance. One of the critical functionalities of Sparrow - pluggable architecture. You can easily integrate and run data extraction pipelines using Sparrow Parse (with vision-language models support) or Instructor. Sparrow enables local LLM data extraction pipelines through various backends, such as vLLM, Ollama, PyTorch or Apple MLX. Sparrow Parse with VL model can run either on premise, or it can execute inference on cloud GPU. With Sparrow solution you get API, which helps to process and transform your data into structured output, ready to be integrated with custom workflows.
+Sparrow is an innovative open-source solution for efficient data extraction and processing from various documents and images. It seamlessly handles forms, bank statements, invoices, receipts, and other unstructured data sources. Sparrow stands out with its modular architecture, offering independent services and pipelines all optimized for robust performance. One of the critical functionalities of Sparrow - pluggable architecture. You can easily integrate and run data extraction pipelines using Sparrow Parse (with vision-language models support) or Instructor. Sparrow enables local LLM data extraction pipelines through various backends, such as vLLM, Ollama, PyTorch or Apple MLX. Sparrow Parse with VL model can run either on premise, or it can execute inference on cloud GPU. With Sparrow solution you get API, which helps to process and transform your data into structured output, ready to be integrated with custom workflows.
 
-Sparrow Agents - with Sparrow you can build independent LLM agents, and use API to invoke them from your system.
+Sparrow Pipelines - with Sparrow you can build independent LLM pipelines, and use API to invoke them from your system.
 
 ![Sparrow](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_architecture.jpeg)
 
 ### Sparrow Components
 
-* **[Sparrow ML LLM](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** - Sparrow main engine that runs various agents
-* **[Sparrow Parse](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse)** - Sparrow library enabling Sparrow Parse agent functionality using VL LLM. Works great for structured JSON response generation
+* **[Sparrow ML LLM](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** - Sparrow main engine that runs various pipelines
+* **[Sparrow Parse](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse)** - Sparrow library enabling Sparrow Parse pipeline functionality using VL LLM. Works great for structured JSON response generation
 * **[Sparrow OCR](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - OCR service, providing optical character recognition
 * **[Sparrow UI](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/)** - Dashboard UI for Sparrow
 
@@ -169,8 +169,8 @@ Try [Sparrow](https://sparrow.katanaml.io) UI, this runs on my local Mac Mini M4
 ## Quickstart
 
 1. Install `pyenv` and then install Python into your environment
-2. Create virtual environment for the Sparrow agent you want to run
-3. Install requirements for the Sparrow agent you want to use. Keep in mind, depending on OS, it could be required to do additional install steps for some of the libraries (for example PaddleOCR)
+2. Create virtual environment for the Sparrow pipeline you want to run
+3. Install requirements for the Sparrow pipeline you want to use. Keep in mind, depending on OS, it could be required to do additional install steps for some of the libraries (for example PaddleOCR)
 4. Run Sparrow either from CLI or from API. You need to start API endpoint
 5. Pass query in the form of JSON schema to extract data from the document
 
@@ -184,7 +184,7 @@ For more details, check out the [extended section](environment_setup.md).
 
 2. Run Sparrow
 
-You can run Sparrow on CLI or through API. To run on CLI, use `sparrow.sh` script. Run it from corresponding virtual environment, depending which agent you want to execute. `sparrow-parse` agent is using VL LLM model. `sparrow-parse` agent runs VL LLM either locally with MLX, Ollama, or using cloud GPU. `instructor` agent is using Ollama backend. Make sure to pull LLM model for Ollama using name specified in config.yml to run `instructor` agent.
+You can run Sparrow on CLI or through API. To run on CLI, use `sparrow.sh` script. Run it from corresponding virtual environment, depending which pipeline you want to execute. `sparrow-parse` pipeline is using VL LLM model. `sparrow-parse` pipeline runs VL LLM either locally with MLX, Ollama, or using cloud GPU. `instructor` pipeline is using Ollama backend. Make sure to pull LLM model for Ollama using name specified in config.yml to run `instructor` pipeline.
 
 3. Private deployment
 
@@ -198,7 +198,7 @@ Arguments:
 
 `file-path` - input document. This can be image or multipage PDF
 
-`agent` - Sparrow agent used to process query request
+`pipeline` - Sparrow pipeline used to process query request
 
 `crop_size=N` (where N is an integer) to crop N pixels from all borders of the input images. This can be helpful for removing unwanted borders or frame artifacts from scanned documents
 
@@ -219,12 +219,12 @@ Options:
 First two options are always set first.
 
 
-✅ Sparrow Parse agent, running locally with Apple MLX backend.
+✅ Sparrow Parse pipeline, running locally with Apple MLX backend.
 
 Sparrow validates response against request schema. Result of validation is automatically included into response, see property `valid`.
 
 ```
-./sparrow.sh "[{"instrument_name":"str", "valuation":0}]" --agent "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit --file-path "/data/bonds_table.png"
+./sparrow.sh "[{"instrument_name":"str", "valuation":0}]" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit --file-path "/data/bonds_table.png"
 ```
 
 Answer:
@@ -257,22 +257,22 @@ Answer:
 }
 ```
 
-✅ Sparrow Parse agent, with GPU backend on Hugging Face. GPU backend `katanaml/sparrow-qwen2-vl-7b` is private, to be able to run below command, you need to create your own backend on Hugging Face space using [code](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse/sparrow_parse/vllm/infra/qwen2_vl_7b) from Sparrow Parse.
+✅ Sparrow Parse pipeline, with GPU backend on Hugging Face. GPU backend `katanaml/sparrow-qwen2-vl-7b` is private, to be able to run below command, you need to create your own backend on Hugging Face space using [code](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse/sparrow_parse/vllm/infra/qwen2_vl_7b) from Sparrow Parse.
 
 ```
-./sparrow.sh "[{"instrument_name":"str", "valuation":0}]" --agent "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/data/bonds_table.png"
+./sparrow.sh "[{"instrument_name":"str", "valuation":0}]" --pipeline "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/data/bonds_table.png"
 ```
 
-✅ Sparrow Parse agent supports multi-page PDF documents. Running locally with Apple MLX backend. Response will be structured per page with page number indicators.
+✅ Sparrow Parse pipeline supports multi-page PDF documents. Running locally with Apple MLX backend. Response will be structured per page with page number indicators.
 
 ```
-./sparrow.sh "{"table": [{"description": "str", "latest_amount": 0, "previous_amount": 0}]}" --agent "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit --file-path "/data/oracle_10k_2014_q1_small.pdf" --debug-dir "/data/"
+./sparrow.sh "{"table": [{"description": "str", "latest_amount": 0, "previous_amount": 0}]}" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit --file-path "/data/oracle_10k_2014_q1_small.pdf" --debug-dir "/data/"
 ```
 
 Example running private GPU backend `katanaml/sparrow-qwen2-vl-7b`:
 
 ```
-./sparrow.sh "{"table": [{"description": "str", "latest_amount": 0, "previous_amount": 0}]}" --agent "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/data/oracle_10k_2014_q1_small.pdf" --debug-dir "/data/"
+./sparrow.sh "{"table": [{"description": "str", "latest_amount": 0, "previous_amount": 0}]}" --pipeline "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/data/oracle_10k_2014_q1_small.pdf" --debug-dir "/data/"
 ```
 
 Sample answer:
@@ -314,10 +314,10 @@ Sample answer:
 ]
 ```
 
-✅ Sparrow Parse agent running with cropping functionality
+✅ Sparrow Parse pipeline running with cropping functionality
 
 ```
-./sparrow.sh "*" --agent "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit --crop-size 60 --file-path "/data/invoice_1.pdf"
+./sparrow.sh "*" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit --crop-size 60 --file-path "/data/invoice_1.pdf"
 ```
 
 Sample answer:
@@ -386,7 +386,7 @@ Sample answer:
 ✅ LLM function call example:
 
 ```
-./sparrow.sh assistant --agent "stocks" --query "Oracle"
+./sparrow.sh assistant --pipeline "stocks" --query "Oracle"
 ```
 
 Answer:
@@ -404,7 +404,7 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
 
 ## Sparrow FastAPI Endpoint
 
-Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the plugin to be used for the inference. By default, `sparrow-parse` agent is used.
+Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the plugin to be used for the inference. By default, `sparrow-parse` pipeline is used.
 
 To set this up:
 
@@ -416,7 +416,7 @@ Launch the endpoint by executing the following command in your terminal:
 python api.py
 ```
 
-If you want to run agents from different Python virtual environments simultaneously, you can specify port, to avoid conflicts:
+If you want to run pipelines from different Python virtual environments simultaneously, you can specify port, to avoid conflicts:
 
 ```
 python api.py --port 8001
@@ -442,7 +442,7 @@ Arguments:
 
 `file-path` - input document. This can be image or multipage PDF
 
-`agent` - Sparrow agent used to process query request
+`pipeline` - Sparrow pipeline used to process query request
 
 `crop_size=N` (where N is an integer) to crop N pixels from all borders of the input images. This can be helpful for removing unwanted borders or frame artifacts from scanned documents
 
@@ -462,7 +462,7 @@ Options:
 
 First two options are always set first.
 
-✅ `sparrow-parse` agent. This agent runs locally with Apple MLX backend.
+✅ `sparrow-parse` pipeline. This pipeline runs locally with Apple MLX backend.
 
 ```
 curl -X 'POST' \
@@ -470,7 +470,7 @@ curl -X 'POST' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
   -F 'query=[{"instrument_name":"str","valuation":0}]' \
-  -F 'agent=sparrow-parse' \
+  -F 'pipeline=sparrow-parse' \
   -F 'options=mlx,mlx-community/Qwen2-VL-72B-Instruct-4bit' \
   -F 'crop_size=' \
   -F 'debug_dir=' \
@@ -479,7 +479,7 @@ curl -X 'POST' \
   -F 'file=@bonds_table.png;type=image/png'
 ```
 
-Alternatively, agent can run Visual LLM with GPU backend on Hugging Face. GPU backend `katanaml/sparrow-qwen2-vl-7b` is private, to be able to run below command, you need to create your own backend on Hugging Face space using [code](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse/sparrow_parse/vllm/infra/qwen2_vl_7b) from Sparrow Parse.
+Alternatively, pipeline can run Visual LLM with GPU backend on Hugging Face. GPU backend `katanaml/sparrow-qwen2-vl-7b` is private, to be able to run below command, you need to create your own backend on Hugging Face space using [code](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse/sparrow_parse/vllm/infra/qwen2_vl_7b) from Sparrow Parse.
 
 ```
 curl -X 'POST' \
@@ -487,7 +487,7 @@ curl -X 'POST' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
   -F 'query=[{"instrument_name":"str","valuation":0}]' \
-  -F 'agent=sparrow-parse' \
+  -F 'pipeline=sparrow-parse' \
   -F 'options=huggingface,katanaml/sparrow-qwen2-vl-7b' \
   -F 'crop_size=' \
   -F 'debug_dir=' \
@@ -496,7 +496,7 @@ curl -X 'POST' \
   -F 'file=@bonds_table.png;type=image/png'
 ```
 
-Sparrow Parse agent supports multi-page PDF documents. You can pass PDF document through the API endpoint, response will be structured per page with page number indicators:
+Sparrow Parse pipeline supports multi-page PDF documents. You can pass PDF document through the API endpoint, response will be structured per page with page number indicators:
 
 ```json
 [
