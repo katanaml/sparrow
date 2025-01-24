@@ -89,3 +89,8 @@ sparrow-ui/shell/.env_shell
 sparrow-ui/shell/.env_sparrow_ui_shell
 /sparrow-ui/shell/.idea
 sparrow-ui/shell/GeoLite2-Country.mmdb
+sparrow-ml/agents/.idea/agents.iml
+sparrow-ml/agents/.idea/inspectionProfiles/profiles_settings.xml
+sparrow-ml/agents/.idea/misc.xml
+sparrow-ml/agents/.idea/modules.xml
+sparrow-ml/agents/.idea/vcs.xml
