@@ -1,0 +1,12 @@
+python-multipart
+rich
+typer[all]
+fastapi==0.115.6
+uvicorn[standard]
+aiohttp==3.11.11
+prefect==3.1.14
+numpy==2.2.2
+
+
+# Force reinstall:
+# pip install --force-reinstall -r requirements_sparrow_agents.txt
