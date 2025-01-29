@@ -297,6 +297,8 @@ def run_inference(file_filepath, query, key, options, crop_size):
         return {"error": f"No file provided. Please upload a file before submitting."}
 
     # Get the file size using the file path
+    if not os.path.exists(file_filepath):
+        return {"error": f"Please upload a valid file."}
     file_size = os.path.getsize(file_filepath)  # File size in bytes  # Get the file size in bytes
     if file_size > MAX_FILE_SIZE:
         # Clean up the temporary file

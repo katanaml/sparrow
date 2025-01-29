@@ -169,3 +169,20 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(app, host="0.0.0.0", port=8001)
+
+    # Trading agent payload
+    # {
+    #   "agent_name": "trading",
+    #   "input_data": {
+    #     "account_balance": 100000,
+    #     "risk_tolerance": 0.5,
+    #     "symbols": [
+    #       "AAPL",
+    #       "GOOGL"
+    #     ]
+    #   }
+    # }
+
+    # Document processing agent payload
+    # document_processing
+    # {"extract_all": true}
