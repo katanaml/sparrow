@@ -3,12 +3,14 @@ rich
 typer[all]
 fastapi==0.115.6
 uvicorn[standard]
-sparrow-parse==0.5.2
+sparrow-parse==0.5.4
 genson==1.3.0
 jsonschema==4.23.0
 python-dotenv
 python-box
 torchvision
+# mlx-vlm==0.1.12 works with transformers from source only
+git+https://github.com/huggingface/transformers.git
 
 
 # Force reinstall:
