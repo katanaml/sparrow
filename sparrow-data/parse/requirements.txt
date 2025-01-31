@@ -1,4 +1,5 @@
 rich
+# mlx-vlm==0.1.12 works with transformers from source only
 # git+https://github.com/huggingface/transformers.git
 transformers==4.48.2
 torchvision==0.21.0
