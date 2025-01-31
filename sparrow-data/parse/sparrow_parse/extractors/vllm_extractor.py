@@ -198,7 +198,7 @@ if __name__ == "__main__":
     # # export HF_TOKEN="hf_"
     # config = {
     #     "method": "mlx",  # Could be 'huggingface', 'mlx' or 'local_gpu'
-    #     "model_name": "mlx-community/Qwen2-VL-7B-Instruct-8bit",
+    #     "model_name": "mlx-community/Qwen2.5-VL-7B-Instruct-8bit",
     #     # "hf_space": "katanaml/sparrow-qwen2-vl-7b",
     #     # "hf_token": os.getenv('HF_TOKEN'),
     #     # Additional fields for local GPU inference
@@ -211,7 +211,7 @@ if __name__ == "__main__":
     #
     # input_data = [
     #     {
-    #         "file_path": "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg",
+    #         "file_path": "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png",
     #         "text_input": "retrieve document data. return response in JSON format"
     #     }
     # ]
@@ -219,7 +219,7 @@ if __name__ == "__main__":
     # # Now you can run inference without knowing which implementation is used
     # results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, tables_only=False,
     #                                                    generic_query=False,
-    #                                                    crop_size=80,
+    #                                                    crop_size=0,
     #                                                    debug_dir="/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/",
     #                                                    debug=True,
     #                                                    mode=None)
