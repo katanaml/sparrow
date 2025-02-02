@@ -22,6 +22,7 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
         pipeline: Annotated[str, typer.Option(help="Selected pipeline")] = "sparrow-parse",
         options: Annotated[List[str], typer.Option(help="Options to pass to the pipeline")] = None,
         crop_size: Annotated[int, typer.Option(help="Crop size for table extraction")] = None,
+        page_type: Annotated[List[str], typer.Option(help="Page type query")] = None,
         debug_dir: Annotated[str, typer.Option(help="Debug folder for multipage")] = None,
         debug: Annotated[bool, typer.Option(help="Enable debug mode")] = False):
 
@@ -29,8 +30,8 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
 
     try:
         rag = get_pipeline(user_selected_pipeline)
-        answer = rag.run_pipeline(user_selected_pipeline, query, file_path, options, crop_size, debug_dir,
-                                  debug, False)
+        answer = rag.run_pipeline(user_selected_pipeline, query, file_path, options, crop_size, page_type,
+                                  debug_dir, debug, False)
 
         print(f"\nJSON response:\n")
         print(answer)
@@ -38,7 +39,7 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
         print(f"Caught an exception: {e}")
 
 
-async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_size, file, debug_dir, debug):
+async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_size, page_type, file, debug_dir, debug):
     try:
         rag = get_pipeline(user_selected_pipeline)
 
@@ -51,11 +52,11 @@ async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_s
                     content = await file.read()
                     temp_file.write(content)
 
-                answer = rag.run_pipeline(user_selected_pipeline, query, temp_file_path, options_arr, crop_size, debug_dir,
-                                          debug, False)
+                answer = rag.run_pipeline(user_selected_pipeline, query, temp_file_path, options_arr, crop_size, page_type,
+                                          debug_dir, debug, False)
         else:
-            answer = rag.run_pipeline(user_selected_pipeline, query, None, options_arr, crop_size, debug_dir,
-                                      debug, False)
+            answer = rag.run_pipeline(user_selected_pipeline, query, None, options_arr, crop_size, page_type,
+                                      debug_dir, debug, False)
     except ValueError as e:
         raise e
 

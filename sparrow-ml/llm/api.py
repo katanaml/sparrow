@@ -67,6 +67,7 @@ async def inference(
         pipeline: Annotated[str, Form()],
         options: Annotated[Optional[str], Form()] = None,
         crop_size: Annotated[Optional[str], Form()] = None,
+        page_type: Annotated[Optional[str], Form()] = None,
         debug_dir: Annotated[Optional[str], Form()] = None,
         debug: Annotated[Optional[bool], Form()] = False,
         sparrow_key: Annotated[Optional[str], Form()] = None,
@@ -109,9 +110,11 @@ async def inference(
         save_config(cfg, config_path)
 
     options_arr = [param.strip() for param in options.split(',')] if options is not None else None
+    page_type_arr = [param.strip() for param in page_type.split(',')] if options is not None else None
 
     try:
-        answer = await run_from_api_engine(pipeline, query, options_arr, processed_crop_size, file, debug_dir, debug)
+        answer = await run_from_api_engine(pipeline, query, options_arr, processed_crop_size, page_type_arr,
+                                           file, debug_dir, debug)
     except ValueError as e:
         raise HTTPException(status_code=418, detail=str(e))
 
