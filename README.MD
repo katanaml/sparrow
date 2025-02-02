@@ -216,6 +216,8 @@ Options:
 
 `--options validation_off` - set this option, if you want to disable response validation
 
+`--page-type invoice --page-type adjudication_table --page-type adjudication_details` - used when `query=*`, specify a list of page type labels to be used to classify document pages
+
 First two options are always set first.
 
 
