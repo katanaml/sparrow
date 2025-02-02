@@ -462,6 +462,8 @@ Options:
 
 `--options validation_off` - set this option, if you want to disable response validation
 
+`--page-type invoice --page-type adjudication_table --page-type adjudication_details` - used when `query=*`, specify a list of page type labels to be used to classify document pages
+
 First two options are always set first.
 
 ✅ `sparrow-parse` pipeline. This pipeline runs locally with Apple MLX backend.
@@ -472,6 +474,7 @@ curl -X 'POST' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
   -F 'query=[{"instrument_name":"str","valuation":0}]' \
+  -F 'page_type=' \
   -F 'pipeline=sparrow-parse' \
   -F 'options=mlx,mlx-community/Qwen2-VL-72B-Instruct-4bit' \
   -F 'crop_size=' \
@@ -489,6 +492,7 @@ curl -X 'POST' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
   -F 'query=[{"instrument_name":"str","valuation":0}]' \
+  -F 'page_type=' \
   -F 'pipeline=sparrow-parse' \
   -F 'options=huggingface,katanaml/sparrow-qwen2-vl-7b' \
   -F 'crop_size=' \
