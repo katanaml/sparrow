@@ -310,7 +310,7 @@ def run_inference(file_filepath, query, key, options, crop_size):
         return {"error": f"No query provided. Please enter a query before submitting."}
 
     if key is None or key.strip() == "":
-        return {"error": f"No Sparrow Key provided. Please enter a Sparrow Key before submitting."}
+        return {"error": f"Sparrow Key required. To obtain your key, please contact us through https://katanaml.io/page-contacts.html"}
 
     file_path = None
     try:
