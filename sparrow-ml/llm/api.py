@@ -133,7 +133,7 @@ async def inference(
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run FastAPI App")
-    parser.add_argument("-p", "--port", type=int, default=8000, help="Port to run the FastAPI app on")
+    parser.add_argument("-p", "--port", type=int, default=8002, help="Port to run the FastAPI app on")
     args = parser.parse_args()
 
     uvicorn.run("api:app", host="0.0.0.0", port=args.port, reload=True)

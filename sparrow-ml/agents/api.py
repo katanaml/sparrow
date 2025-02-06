@@ -9,7 +9,7 @@ import logging
 from datetime import datetime
 
 from base import AgentManager
-from document_processing.agent import DocumentProcessingAgent
+from medical_prescriptions.agent import MedicalPrescriptionsAgent
 from trading.agent import TradingAgent
 
 # Configure logging
@@ -37,7 +37,7 @@ app.add_middleware(
 
 # Initialize agent manager and register agents
 manager = AgentManager()
-manager.register_agent(DocumentProcessingAgent())
+manager.register_agent(MedicalPrescriptionsAgent())
 manager.register_agent(TradingAgent())
 
 
@@ -50,12 +50,10 @@ class FileRequest(BaseModel):
     """Request model for file-based processing"""
     agent_name: str = Field(..., description="Name of the agent to execute")
     extraction_params: Optional[Dict] = Field(
-        default={"extract_all": True},
+        default={"sparrow_key": 12345},
         description="Parameters for extraction",
         example={
-            "extract_all": True,
-            "extract_tables": True,
-            "extract_forms": True
+            "sparrow_key": 12345
         }
     )
 
@@ -104,7 +102,7 @@ async def execute_data_agent(request: DataRequest):
 @app.post("/execute/file", response_model=AgentResponse, tags=["Execution"])
 async def execute_file_agent(
         agent_name: str = Form(...),
-        extraction_params: str = Form(default='{"extract_all": true}'),
+        extraction_params: str = Form(default='{"sparrow_key": 12345}'),
         file: UploadFile = File(...)
 ):
     """
@@ -112,13 +110,12 @@ async def execute_file_agent(
     """
     try:
         file_content = await file.read()
-        file_base64 = base64.b64encode(file_content).decode()
 
         # Parse extraction_params from string to dict
         params = json.loads(extraction_params)
 
         input_data = {
-            "document": file_base64,
+            "content": file_content,
             "filename": file.filename,
             "content_type": file.content_type,
             "extraction_params": params
@@ -167,8 +164,16 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
+    import argparse
 
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    # Add argument parsing for port
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--port', type=int, default=8001)
+    args = parser.parse_args()
+
+    uvicorn.run("api:app", host="0.0.0.0", port=8001, reload=True)
+
+    # http://127.0.0.1:8001/docs
 
     # Trading agent payload
     # {
@@ -184,5 +189,5 @@ if __name__ == "__main__":
     # }
 
     # Document processing agent payload
-    # document_processing
+    # medical_prescriptions
     # {"extract_all": true}
