@@ -110,7 +110,7 @@ async def inference(
         save_config(cfg, config_path)
 
     options_arr = [param.strip() for param in options.split(',')] if options is not None else None
-    page_type_arr = [param.strip() for param in page_type.split(',')] if options is not None else None
+    page_type_arr = [param.strip() for param in page_type.split(',')] if options is not None and page_type else None
 
     try:
         answer = await run_from_api_engine(pipeline, query, options_arr, processed_crop_size, page_type_arr,
@@ -128,7 +128,7 @@ async def inference(
         print(f"\nJSON response:\n")
         print(answer)
 
-    return {"message": answer}
+    return answer
 
 
 if __name__ == "__main__":
