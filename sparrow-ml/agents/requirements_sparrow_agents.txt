@@ -6,6 +6,8 @@ uvicorn[standard]
 aiohttp==3.11.11
 prefect==3.1.15
 numpy==2.2.2
+pypdf==5.2.0
+pdf2image
 
 
 # Force reinstall:

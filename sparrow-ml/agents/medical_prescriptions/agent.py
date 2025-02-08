@@ -1,54 +1,212 @@
 from typing import Dict, List, Any
 from prefect import flow, task
-import base64
-import json
 from .sparrow_client import SparrowClient
-from rich import print
+import configparser
+import io
+from pypdf import PdfReader
+from pdf2image import convert_from_bytes
+import logging
+
+
+# Create a ConfigParser object
+config = configparser.ConfigParser()
+
+# Read the properties file
+config.read("config.properties")
+
+# Fetch settings
+page_type_list = config.get("settings-medical-prescriptions", "page_type_to_process").split(',')
+query_adjudication_table = config.get("settings-medical-prescriptions", "query_adjudication_table")
+options_adjudication_table = config.get("settings-medical-prescriptions", "options_adjudication_table")
+
+
+logger = logging.getLogger(__name__)
+
+
+class DocumentError(Exception):
+    """Custom exception for document processing errors"""
+    pass
 
 
 @task(name="detect_doc_structure")
-async def detect_doc_structure(input_data: Dict, sparrow_client: SparrowClient) -> Dict:
+async def detect_doc_structure(input_data: Dict[str, Any], sparrow_client: SparrowClient) -> Dict:
     """
-    Extracts each page type from a document using Sparrow API
+    Detects document structure and validates PDF requirements.
+    Only processes multi-page PDF documents.
+
+    Args:
+        input_data: Dictionary with file content and metadata
+        sparrow_client: Instance of SparrowClient for API calls
+
+    Returns:
+        Dictionary with document structure information
+
+    Raises:
+        DocumentError: If document is not a valid multi-page PDF
     """
+    content_type = input_data.get('content_type', '')
+    filename = input_data.get('filename', '')
 
-    if 'content' not in input_data:
-        raise ValueError("Document data is required")
+    is_pdf = content_type.lower() == 'application/pdf' or filename.lower().endswith('.pdf')
+    if not is_pdf:
+        raise DocumentError(f"Document must be PDF. Received: {content_type}")
 
-    results = await sparrow_client.extract_type_per_page_sparrow(input_data)
+    pdf_content = io.BytesIO(input_data['content'])
+    pdf_reader = PdfReader(pdf_content)
 
-    return results
+    if len(pdf_reader.pages) <= 1:
+        raise DocumentError("Document must contain multiple pages")
+
+    return await sparrow_client.extract_type_per_page_sparrow(input_data)
 
 
 @task(name="split_document")
-async def split_document(document_data: str) -> List[bytes]:
+async def split_document(input_data: Dict[str, Any], doc_structure: Dict) -> List[Dict]:
     """
-    Splits a base64 encoded document into pages
+    Splits document into pages and converts them to images.
+
+    Args:
+        input_data: Dictionary with file content
+        doc_structure: Document structure from Sparrow API
+
+    Returns:
+        List of dictionaries containing page images and their types
     """
-    # Decode base64 document
-    document_bytes = base64.b64decode(document_data)
+    page_types = {item['page']: item['page_type'] for item in doc_structure}
 
-    # Implementation depends on your document format
-    # For example, if it's PDF:
-    # from pdf2image import convert_from_bytes
-    # pages = convert_from_bytes(document_bytes)
+    images = convert_from_bytes(
+        input_data['content'],
+        dpi=300,
+        fmt='png'
+    )
 
-    # Placeholder implementation
-    return [document_bytes]  # Return as single page for now
+    pages = []
+    for page_num, image in enumerate(images, start=1):
+        current_page_type = page_types.get(page_num)
+
+        # Only process pages whose type is in the configured list
+        if current_page_type not in page_type_list:
+            logger.info(f"Skipping page {page_num} - type {current_page_type} not in configured types")
+            continue
+
+        img_byte_arr = io.BytesIO()
+        image.save(img_byte_arr, format='PNG')
+
+        pages.append({
+            'content': img_byte_arr.getvalue(),
+            'page_type': page_types[page_num]
+        })
+
+    return pages
+
+
+@task(name="process_adjudication_table")
+async def process_adjudication_table(page_data: Dict[str, Any], sparrow_client: SparrowClient) -> Dict:
+    """
+    Process pages of type 'adjudication_table' using Sparrow API.
+
+    Args:
+        page_data: Dictionary containing page content and metadata
+        sparrow_client: Instance of SparrowClient for API calls
+
+    Returns:
+        Dictionary containing extracted data
+    """
+    try:
+        # Specific parameters for adjudication table processing
+        params = {
+            "query": query_adjudication_table,
+            "options": options_adjudication_table
+        }
+
+        result = await sparrow_client.extract_data_sparrow(
+            content=page_data['content'],
+            params=params
+        )
+
+        return {
+            'page_type': 'adjudication_table',
+            'extracted_data': result,
+            'status': 'success'
+        }
+    except Exception as e:
+        logger.error(f"Error processing adjudication table: {str(e)}")
+        return {
+            'page_type': 'adjudication_table',
+            'error': str(e),
+            'status': 'failed'
+        }
+
+
+@task(name="process_adjudication_details")
+async def process_adjudication_details(page_data: Dict[str, Any], sparrow_client: SparrowClient) -> Dict:
+    """
+    Process pages of type 'adjudication_details' using Sparrow API.
+
+    Args:
+        page_data: Dictionary containing page content and metadata
+        sparrow_client: Instance of SparrowClient for API calls
+
+    Returns:
+        Dictionary containing extracted data
+    """
+    try:
+        # Specific parameters for adjudication details processing
+        params = {
+            "extract_fields": True,
+            "field_settings": {
+                "detect_headers": True,
+                "group_related_fields": True
+            }
+        }
+
+        result = await sparrow_client.extract_data(
+            content=page_data['content'],
+            page_type='adjudication_details',
+            params=params
+        )
+
+        return {
+            'page_type': 'adjudication_details',
+            'extracted_data': result,
+            'status': 'success'
+        }
+    except Exception as e:
+        logger.error(f"Error processing adjudication details: {str(e)}")
+        return {
+            'page_type': 'adjudication_details',
+            'error': str(e),
+            'status': 'failed'
+        }
 
 
 @task(name="extract_data")
-async def extract_data(page: bytes, params: Dict, sparrow_client: SparrowClient) -> Dict:
+async def extract_data(pages: List[Dict], sparrow_client: SparrowClient) -> List:
     """
-    Extracts data from a page using Sparrow API
-    """
-    results = {}
+        Extract data from document pages based on their type.
 
-    # if params.get('extract_tables', True):
-    #     results['table_data'] = await sparrow_client.extract_table(page)
-    #
-    # if params.get('extract_forms', True):
-    #     results['form_data'] = await sparrow_client.extract_form(page)
+        Args:
+            pages: List of dictionaries containing page content and type
+            sparrow_client: Instance of SparrowClient for API calls
+
+        Returns:
+            List of dictionaries containing extracted data for each page
+        """
+    results = []
+
+    for page in pages:
+        page_type = page.get('page_type')
+
+        if page_type == 'adjudication_table':
+            result = await process_adjudication_table(page, sparrow_client)
+        elif page_type == 'adjudication_details':
+            # result = await process_adjudication_details(page, sparrow_client)
+            pass
+        else:
+            logger.warning(f"Unsupported page type: {page_type}")
+            continue
+
+        results.append(result)
 
     return results
 
@@ -71,25 +229,14 @@ class MedicalPrescriptionsAgent:
         # Process and validate input
         doc_structure = await detect_doc_structure(input_data, self.sparrow_client)
 
-        # # Split document into pages
-        # pages = await split_document(processed_input['document'])
-        #
-        # # Process each page
-        # results = []
-        # for page_num, page in enumerate(pages, 1):
-        #     page_result = await extract_data(
-        #         page,
-        #         processed_input,
-        #         self.sparrow_client
-        #     )
-        #
-        #     results.append({
-        #         'page_number': page_num,
-        #         'extractions': page_result
-        #     })
+        # Split document into pages
+        pages = await split_document(input_data, doc_structure)
+
+        # Process each page
+        results = await extract_data(pages, self.sparrow_client)
 
         return {
             'filename': input_data['filename'],
-            'total_pages': 1,
-            'results': doc_structure
+            'total_pages_processed': len(pages),
+            'results': results
         }

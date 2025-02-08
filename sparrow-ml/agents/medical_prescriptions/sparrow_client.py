@@ -51,8 +51,6 @@ class SparrowClient:
 
         # Prepare the endpoint URL
         endpoint = urljoin(self.base_url, "/api/v1/sparrow-llm/inference")
-        print(page_type)
-        print(options_page_type)
 
         try:
             # Prepare form data
@@ -60,10 +58,10 @@ class SparrowClient:
             form_data.add_field('query', "*")
             form_data.add_field('page_type', page_type)
             form_data.add_field('pipeline', 'sparrow-parse')
-            form_data.add_field('options', 'mlx,mlx-community/Qwen2.5-VL-7B-Instruct-8bit')
+            form_data.add_field('options', options_page_type)
             form_data.add_field('crop_size', '')
             form_data.add_field('debug_dir', '')
-            form_data.add_field('debug', 'true')
+            form_data.add_field('debug', 'false')
             form_data.add_field('sparrow_key', '')
             form_data.add_field('file',
                                 doc['content'],
@@ -80,6 +78,59 @@ class SparrowClient:
                         logger.error(f"API call failed: {error_text}")
                         raise Exception(
                             f"Document extraction failed with status: {response.status}")
+        except Exception as e:
+            logger.error(f"Error during API call: {str(e)}")
+            raise
+
+
+    @task(name="extract_data_sparrow", retries=2)
+    async def extract_data_sparrow(self, content: bytes, params: Dict[str, Any]) -> Dict:
+        """
+        Sends request to extract data from a specific page using Sparrow API
+
+        Args:
+            content: Raw page content (bytes)
+            params: Dictionary of extraction parameters specific to the page type
+
+        Returns:
+            Dict containing the API response
+        """
+        if self.mock_mode:
+            logger.info("Running in mock mode - returning mock data")
+            return {}
+
+        # Prepare the endpoint URL
+        endpoint = urljoin(self.base_url, "/api/v1/sparrow-llm/inference")
+
+        try:
+            query = params['query']
+            options = params['options']
+
+            # Prepare form data
+            form_data = aiohttp.FormData()
+            form_data.add_field('query', query)
+            form_data.add_field('page_type', '')
+            form_data.add_field('pipeline', 'sparrow-parse')
+            form_data.add_field('options', options)
+            form_data.add_field('crop_size', '')
+            form_data.add_field('debug_dir', '')
+            form_data.add_field('debug', 'true')
+            form_data.add_field('sparrow_key', '')
+            form_data.add_field('file',
+                                content,
+                                filename=f'page_{page_type}.png',
+                                content_type='image/png')
+
+            # Make the API call
+            async with aiohttp.ClientSession() as session:
+                async with session.post(endpoint, data=form_data) as response:
+                    if response.status == 200:
+                        return await response.json()
+                    else:
+                        error_text = await response.text()
+                        logger.error(f"API call failed: {error_text}")
+                        raise Exception(
+                            f"Data extraction failed with status: {response.status}")
         except Exception as e:
             logger.error(f"Error during API call: {str(e)}")
             raise
