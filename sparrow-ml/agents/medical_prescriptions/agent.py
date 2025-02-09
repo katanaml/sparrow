@@ -18,6 +18,9 @@ config.read("config.properties")
 page_type_list = config.get("settings-medical-prescriptions", "page_type_to_process").split(',')
 query_adjudication_table = config.get("settings-medical-prescriptions", "query_adjudication_table")
 options_adjudication_table = config.get("settings-medical-prescriptions", "options_adjudication_table")
+query_adjudication_details = config.get("settings-medical-prescriptions", "query_adjudication_details")
+options_adjudication_details = config.get("settings-medical-prescriptions", "options_adjudication_details")
+crop_size_adjudication_details = config.get("settings-medical-prescriptions", "crop_size_adjudication_details")
 
 
 logger = logging.getLogger(__name__)
@@ -116,7 +119,8 @@ async def process_adjudication_table(page_data: Dict[str, Any], sparrow_client: 
         # Specific parameters for adjudication table processing
         params = {
             "query": query_adjudication_table,
-            "options": options_adjudication_table
+            "options": options_adjudication_table,
+            "crop_size": ""
         }
 
         result = await sparrow_client.extract_data_sparrow(
@@ -153,16 +157,13 @@ async def process_adjudication_details(page_data: Dict[str, Any], sparrow_client
     try:
         # Specific parameters for adjudication details processing
         params = {
-            "extract_fields": True,
-            "field_settings": {
-                "detect_headers": True,
-                "group_related_fields": True
-            }
+            "query": query_adjudication_details,
+            "options": options_adjudication_details,
+            "crop_size": crop_size_adjudication_details
         }
 
-        result = await sparrow_client.extract_data(
+        result = await sparrow_client.extract_data_sparrow(
             content=page_data['content'],
-            page_type='adjudication_details',
             params=params
         )
 
@@ -200,8 +201,7 @@ async def extract_data(pages: List[Dict], sparrow_client: SparrowClient) -> List
         if page_type == 'adjudication_table':
             result = await process_adjudication_table(page, sparrow_client)
         elif page_type == 'adjudication_details':
-            # result = await process_adjudication_details(page, sparrow_client)
-            pass
+            result = await process_adjudication_details(page, sparrow_client)
         else:
             logger.warning(f"Unsupported page type: {page_type}")
             continue

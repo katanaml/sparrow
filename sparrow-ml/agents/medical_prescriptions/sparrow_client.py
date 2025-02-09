@@ -105,6 +105,7 @@ class SparrowClient:
         try:
             query = params['query']
             options = params['options']
+            crop_size = params['crop_size']
 
             # Prepare form data
             form_data = aiohttp.FormData()
@@ -112,7 +113,7 @@ class SparrowClient:
             form_data.add_field('page_type', '')
             form_data.add_field('pipeline', 'sparrow-parse')
             form_data.add_field('options', options)
-            form_data.add_field('crop_size', '')
+            form_data.add_field('crop_size', crop_size)
             form_data.add_field('debug_dir', '')
             form_data.add_field('debug', 'true')
             form_data.add_field('sparrow_key', '')
