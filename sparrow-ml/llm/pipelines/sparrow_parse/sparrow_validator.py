@@ -5,8 +5,6 @@ from jsonschema import validate, ValidationError
 class JSONValidator:
     """
     A utility class to generate JSON schemas from examples and validate JSON strings against them.
-    Supports types: int, str, float, int or null, str or null, float or null
-    Also supports direct numeric values (int/float) in schema specification
     """
     TYPE_MAPPING = {
         'int': {'type': 'integer'},
@@ -22,25 +20,20 @@ class JSONValidator:
                 {'type': 'string', 'pattern': '^[0-9]+(\.[0-9]+)?$'},
                 {'type': 'null'}
             ]
+        },
+        '0.0 or null': {  # Added this type
+            'anyOf': [
+                {'type': 'number'},
+                {'type': 'string', 'pattern': '^[0-9]+(\.[0-9]+)?$'},
+                {'type': 'null'}
+            ]
         }
     }
-
-    def __init__(self, example_json: str):
-        """
-        Initializes the validator by generating a schema from the provided example JSON.
-        """
-        self.generated_schema = self._generate_schema_from_example(example_json)
 
     @staticmethod
     def _get_type_definition(field_value: str | int | float) -> dict:
         """
         Determines the JSON schema type definition based on the field value.
-
-        Args:
-            field_value: Type specification string or direct numeric value
-
-        Returns:
-            dict: The corresponding JSON schema type definition
         """
         if isinstance(field_value, int):
             return {'type': 'integer'}
@@ -48,6 +41,22 @@ class JSONValidator:
             return {'type': 'number'}
 
         field_value = str(field_value).lower().strip()
+
+        # Handle numeric variants
+        if field_value.endswith(' or null'):
+            numeric_part = field_value.replace(' or null', '')
+            try:
+                float(numeric_part)  # Check if it's a valid number
+                return {
+                    'anyOf': [
+                        {'type': 'number'},
+                        {'type': 'string', 'pattern': '^[0-9]+(\.[0-9]+)?$'},
+                        {'type': 'null'}
+                    ]
+                }
+            except ValueError:
+                pass  # Not a numeric variant, continue with normal processing
+
         if field_value not in JSONValidator.TYPE_MAPPING:
             raise ValueError(f"Unsupported type: {field_value}. Supported types are: "
                              f"{', '.join(JSONValidator.TYPE_MAPPING.keys())}")
