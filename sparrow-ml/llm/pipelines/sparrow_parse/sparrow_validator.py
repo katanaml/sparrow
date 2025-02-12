@@ -21,7 +21,7 @@ class JSONValidator:
                 {'type': 'null'}
             ]
         },
-        '0.0 or null': {  # Added this type
+        '0.0 or null': {
             'anyOf': [
                 {'type': 'number'},
                 {'type': 'string', 'pattern': '^[0-9]+(\.[0-9]+)?$'},
@@ -29,6 +29,12 @@ class JSONValidator:
             ]
         }
     }
+
+    def __init__(self, example_json: str):
+        """
+        Initializes the validator by generating a schema from the provided example JSON.
+        """
+        self.generated_schema = self._generate_schema_from_example(example_json)
 
     @staticmethod
     def _get_type_definition(field_value: str | int | float) -> dict:
