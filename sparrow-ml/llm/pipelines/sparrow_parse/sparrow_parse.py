@@ -144,7 +144,8 @@ class SparrowParsePipeline(Pipeline):
         query_schema = query
         query = "retrieve " + query_keys
 
-        query = query + ". return response in JSON format, by strictly following this JSON schema: " + query_schema
+        query = (query + ". return response in JSON format, by strictly following this JSON schema: " + query_schema +
+                 ". If a field is not visible or cannot be found in the document, return null. Do not guess, infer, or generate values for missing fields.")
 
         return query, query_schema
 
