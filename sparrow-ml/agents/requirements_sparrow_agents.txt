@@ -1,12 +1,12 @@
 python-multipart
 rich
 typer[all]
-fastapi==0.115.6
+fastapi==0.115.9
 uvicorn[standard]
-aiohttp==3.11.11
-prefect==3.1.15
-numpy==2.2.2
-pypdf==5.2.0
+aiohttp==3.11.13
+prefect==3.2.7
+numpy==2.2.3
+pypdf==5.3.0
 pdf2image
 
 
