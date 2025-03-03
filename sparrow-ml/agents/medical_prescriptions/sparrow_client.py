@@ -29,7 +29,7 @@ class SparrowClient:
         self.base_url = base_url
         self.mock_mode = False  # Set to True to return mock data
 
-    @task(name="extract_type_per_page_sparrow", retries=2)
+    @task(name="extract_type_per_page_sparrow", retries=2, timeout_seconds=1800)
     async def extract_type_per_page_sparrow(self, doc: dict) -> Dict:
         """
         Sends request to extract document pages using Sparrow API
@@ -70,7 +70,7 @@ class SparrowClient:
 
             # Make the API call
             async with aiohttp.ClientSession() as session:
-                async with session.post(endpoint, data=form_data) as response:
+                async with session.post(endpoint, data=form_data, timeout=1800) as response:
                     if response.status == 200:
                         return await response.json()
                     else:
@@ -83,7 +83,7 @@ class SparrowClient:
             raise
 
 
-    @task(name="extract_data_sparrow", retries=2)
+    @task(name="extract_data_sparrow", retries=2, timeout_seconds=1800)
     async def extract_data_sparrow(self, content: bytes, params: Dict[str, Any]) -> Dict:
         """
         Sends request to extract data from a specific page using Sparrow API
@@ -124,7 +124,7 @@ class SparrowClient:
 
             # Make the API call
             async with aiohttp.ClientSession() as session:
-                async with session.post(endpoint, data=form_data) as response:
+                async with session.post(endpoint, data=form_data, timeout=1800) as response:
                     if response.status == 200:
                         return await response.json()
                     else:
