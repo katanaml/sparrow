@@ -119,7 +119,7 @@ class SparrowClient:
             form_data.add_field('sparrow_key', '')
             form_data.add_field('file',
                                 content,
-                                filename=f'page_{page_type}.png',
+                                filename=f'temp_page.png',
                                 content_type='image/png')
 
             # Make the API call
