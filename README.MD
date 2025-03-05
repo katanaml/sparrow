@@ -210,7 +210,7 @@ Options:
 
 `--options mlx` - this will set MLX as backend for local inference
 
-`--options mlx-community/Qwen2-VL-72B-Instruct-4bit` - name for Vision LLM model, supported by MLX
+`--options mlx-community/Qwen2.5-VL-72B-Instruct-4bit` - name for Vision LLM model, supported by MLX
 
 `--options tables_only` - set this option, if you want to process tables only
 
@@ -226,7 +226,7 @@ First two options are always set first.
 Sparrow validates response against request schema. Result of validation is automatically included into response, see property `valid`.
 
 ```
-./sparrow.sh "[{"instrument_name":"str", "valuation":0}]" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit --file-path "/data/bonds_table.png"
+./sparrow.sh "[{"instrument_name":"str", "valuation":0}]" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit --file-path "/data/bonds_table.png"
 ```
 
 Answer:
@@ -268,7 +268,7 @@ Answer:
 ✅ Sparrow Parse pipeline supports multi-page PDF documents. Running locally with Apple MLX backend. Response will be structured per page with page number indicators.
 
 ```
-./sparrow.sh "{"table": [{"description": "str", "latest_amount": 0, "previous_amount": 0}]}" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit --file-path "/data/oracle_10k_2014_q1_small.pdf" --debug-dir "/data/"
+./sparrow.sh "{"table": [{"description": "str", "latest_amount": 0, "previous_amount": 0}]}" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit --file-path "/data/oracle_10k_2014_q1_small.pdf" --debug-dir "/data/"
 ```
 
 Example running private GPU backend `katanaml/sparrow-qwen2-vl-7b`:
@@ -319,7 +319,7 @@ Sample answer:
 ✅ Sparrow Parse pipeline running with cropping functionality
 
 ```
-./sparrow.sh "*" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2-VL-72B-Instruct-4bit --crop-size 60 --file-path "/data/invoice_1.pdf"
+./sparrow.sh "*" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit --crop-size 60 --file-path "/data/invoice_1.pdf"
 ```
 
 Sample answer:
@@ -456,7 +456,7 @@ Options:
 
 `--options mlx` - this will set MLX as backend for local inference
 
-`--options mlx-community/Qwen2-VL-72B-Instruct-4bit` - name for Vision LLM model, supported by MLX
+`--options mlx-community/Qwen2.5-VL-72B-Instruct-4bit` - name for Vision LLM model, supported by MLX
 
 `--options tables_only` - set this option, if you want to process tables only
 
@@ -476,7 +476,7 @@ curl -X 'POST' \
   -F 'query=[{"instrument_name":"str","valuation":0}]' \
   -F 'page_type=' \
   -F 'pipeline=sparrow-parse' \
-  -F 'options=mlx,mlx-community/Qwen2-VL-72B-Instruct-4bit' \
+  -F 'options=mlx,mlx-community/Qwen2.5-VL-72B-Instruct-4bit' \
   -F 'crop_size=' \
   -F 'debug_dir=' \
   -F 'debug=false' \
