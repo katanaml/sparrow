@@ -104,11 +104,12 @@ async def split_document(input_data: Dict[str, Any], doc_structure: Dict) -> Lis
 
 
 @task(name="process_adjudication_table")
-async def process_adjudication_table(page_data: Dict[str, Any], sparrow_client: SparrowClient) -> Dict:
+async def process_adjudication_table(input_data: Dict[str, Any], page_data: Dict[str, Any], sparrow_client: SparrowClient) -> Dict:
     """
     Process pages of type 'adjudication_table' using Sparrow API.
 
     Args:
+        input_data: Dictionary with file content
         page_data: Dictionary containing page content and metadata
         sparrow_client: Instance of SparrowClient for API calls
 
@@ -124,6 +125,7 @@ async def process_adjudication_table(page_data: Dict[str, Any], sparrow_client: 
         }
 
         result = await sparrow_client.extract_data_sparrow(
+            input_data=input_data,
             content=page_data['content'],
             params=params
         )
@@ -143,11 +145,12 @@ async def process_adjudication_table(page_data: Dict[str, Any], sparrow_client: 
 
 
 @task(name="process_adjudication_details")
-async def process_adjudication_details(page_data: Dict[str, Any], sparrow_client: SparrowClient) -> Dict:
+async def process_adjudication_details(input_data: Dict[str, Any], page_data: Dict[str, Any], sparrow_client: SparrowClient) -> Dict:
     """
     Process pages of type 'adjudication_details' using Sparrow API.
 
     Args:
+        input_data: Dictionary with file content
         page_data: Dictionary containing page content and metadata
         sparrow_client: Instance of SparrowClient for API calls
 
@@ -163,6 +166,7 @@ async def process_adjudication_details(page_data: Dict[str, Any], sparrow_client
         }
 
         result = await sparrow_client.extract_data_sparrow(
+            input_data=input_data,
             content=page_data['content'],
             params=params
         )
@@ -182,7 +186,7 @@ async def process_adjudication_details(page_data: Dict[str, Any], sparrow_client
 
 
 @task(name="extract_data")
-async def extract_data(pages: List[Dict], sparrow_client: SparrowClient) -> List:
+async def extract_data(input_data: Dict[str, Any], pages: List[Dict], sparrow_client: SparrowClient) -> List:
     """
         Extract data from document pages based on their type.
 
@@ -198,10 +202,10 @@ async def extract_data(pages: List[Dict], sparrow_client: SparrowClient) -> List
     for page in pages:
         page_type = page.get('page_type')
 
-        if page_type == 'adjudication_table':
-            result = await process_adjudication_table(page, sparrow_client)
-        elif page_type == 'adjudication_details':
-            result = await process_adjudication_details(page, sparrow_client)
+        if page_type == 'adjudication_table' or page_type == 'invoice_request_form':
+            result = await process_adjudication_table(input_data, page, sparrow_client)
+        elif page_type == 'adjudication_details' or page_type == 'application_for_coverage' or page_type == 'patient_info':
+            result = await process_adjudication_details(input_data, page, sparrow_client)
         else:
             logger.warning(f"Unsupported page type: {page_type}")
             continue
@@ -233,7 +237,7 @@ class MedicalPrescriptionsAgent:
         pages = await split_document(input_data, doc_structure)
 
         # Process each page
-        results = await extract_data(pages, self.sparrow_client)
+        results = await extract_data(input_data, pages, self.sparrow_client)
 
         return {
             'filename': input_data['filename'],

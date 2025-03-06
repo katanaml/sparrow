@@ -23,6 +23,8 @@ logger = logging.getLogger(__name__)
 app = FastAPI(
     title="Sparrow Agents API",
     description="Sparrow multi-agent AI system",
+    openapi_url="/api/v1/sparrow-agents/openapi.json",
+    docs_url="/api/v1/sparrow-agents/docs",
     version="1.0.0"
 )
 
@@ -50,10 +52,10 @@ class FileRequest(BaseModel):
     """Request model for file-based processing"""
     agent_name: str = Field(..., description="Name of the agent to execute")
     extraction_params: Optional[Dict] = Field(
-        default={"sparrow_key": 12345},
+        default={"sparrow_key": "12345"},
         description="Parameters for extraction",
         example={
-            "sparrow_key": 12345
+            "sparrow_key": "12345"
         }
     )
 
@@ -78,7 +80,7 @@ class AgentResponse(BaseModel):
     result: Optional[Dict] = Field(None, description="Execution results")
 
 
-@app.post("/execute/data", response_model=AgentResponse, tags=["Execution"])
+@app.post("/api/v1/sparrow-agents/execute/data", response_model=AgentResponse, tags=["Execution"])
 async def execute_data_agent(request: DataRequest):
     """
     Execute data-based agent processing
@@ -99,10 +101,10 @@ async def execute_data_agent(request: DataRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.post("/execute/file", response_model=AgentResponse, tags=["Execution"])
+@app.post("/api/v1/sparrow-agents/execute/file", response_model=AgentResponse, tags=["Execution"])
 async def execute_file_agent(
         agent_name: str = Form(...),
-        extraction_params: str = Form(default='{"sparrow_key": 12345}'),
+        extraction_params: str = Form(default='{"sparrow_key": "12345"}'),
         file: UploadFile = File(...)
 ):
     """
@@ -136,7 +138,7 @@ async def execute_file_agent(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.get("/agents", tags=["System"])
+@app.get("/api/v1/sparrow-agents/agents", tags=["System"])
 async def list_agents():
     """
     List all available agents and their capabilities
@@ -150,7 +152,7 @@ async def list_agents():
     }
 
 
-@app.get("/health", tags=["System"])
+@app.get("/api/v1/sparrow-agents/health", tags=["System"])
 async def health_check():
     """
     System health check
