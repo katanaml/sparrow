@@ -220,6 +220,12 @@ Options:
 
 First two options are always set first.
 
+It is possible to extract non-existing fields (fields missing from the document, NULL values will be assigned) with Sparrow. Use `or null` format for the query, example:
+
+```
+[{"instrument_name":"str", "valuation":0, "transaction_fees":"0.0 or null"}]
+```
+
 
 ✅ Sparrow Parse pipeline, running locally with Apple MLX backend.
 
@@ -465,6 +471,12 @@ Options:
 `--page-type invoice --page-type adjudication_table --page-type adjudication_details` - used when `query=*`, specify a list of page type labels to be used to classify document pages
 
 First two options are always set first.
+
+It is possible to extract non-existing fields (fields missing from the document, NULL values will be assigned) with Sparrow. Use `or null` format for the query, example:
+
+```
+[{"instrument_name":"str", "valuation":0, "transaction_fees":"0.0 or null"}]
+```
 
 ✅ `sparrow-parse` pipeline. This pipeline runs locally with Apple MLX backend.
 
