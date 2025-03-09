@@ -1,5 +1,12 @@
 # ChangeLog
 
+## [v0.3.0] - 2025-03-09
+
+## Sparrow Agent
+
+Added Sparrow Agent functionality to orchestrate complex document processing tasks. This new component allows you to combine multiple data extraction operations into a single workflow with visual monitoring and tracking through Prefect integration. Users can now process documents through an intuitive API that handles classification, extraction, and validation in one seamless pipeline.
+
+
 ## [v0.2.4] - 2025-01-23
 
 ## Image Cropping and UI Shell updates
