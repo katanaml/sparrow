@@ -556,7 +556,7 @@ Sparrow Parse pipeline supports multi-page PDF documents. You can pass PDF docum
 
 ## Sparrow Agents
 
-![Sparrow Agents](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_agents.png)
+![Sparrow Agents](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_agent.png)
 
 ## Star History
 
