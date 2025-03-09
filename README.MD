@@ -554,9 +554,23 @@ Sparrow Parse pipeline supports multi-page PDF documents. You can pass PDF docum
 ]
 ```
 
-## Sparrow Agents
+## 🤖 Sparrow Agent
 
 ![Sparrow Agents](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_agent.png)
+
+Sparrow Agent provides a unified workflow system for orchestrating complex document processing tasks. It allows you to combine multiple document data extraction operations into a single coherent flow, with visual monitoring and tracking powered by Prefect. The agent system intelligently routes documents through classification, extraction, and validation steps, handling the entire pipeline from document ingestion to structured data output. Extensible by design, it currently supports document processing workflows and can be expanded to accommodate additional use cases.
+
+Example:
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8001/api/v1/sparrow-agents/execute/file' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'agent_name=medical_prescriptions' \
+  -F 'extraction_params={"sparrow_key":"123456"}' \
+  -F 'file=@your_doc.pdf;type=application/pdf'
+```
 
 ## Star History
 
