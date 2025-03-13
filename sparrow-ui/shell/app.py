@@ -294,23 +294,27 @@ def log_request(client_ip, source="General"):
 
 def run_inference(file_filepath, query, key, options, crop_size):
     if file_filepath is None:
-        return {"error": f"No file provided. Please upload a file before submitting."}
+        gr.Warning("No file provided. Please upload a file before submitting.")
+        return None
 
     # Get the file size using the file path
     if not os.path.exists(file_filepath):
-        return {"error": f"Please upload a valid file."}
+        gr.Warning("Please upload a valid file.")
+        return None
     file_size = os.path.getsize(file_filepath)  # File size in bytes  # Get the file size in bytes
     if file_size > MAX_FILE_SIZE:
         # Clean up the temporary file
         if os.path.exists(file_filepath):
             os.remove(file_filepath)
-        return {"error": f"File size exceeds 5 MB. Please upload a smaller file."}
+        gr.Warning("File size exceeds 5 MB. Please upload a smaller file.")
+        return None
 
     if query is None or query.strip() == "":
-        return {"error": f"No query provided. Please enter a query before submitting."}
+        gr.Warning("No query provided. Please enter a query before submitting.")
+        return None
 
     if key is None or key.strip() == "":
-        return {"error": f"Sparrow Key required. To obtain your key, please contact us through https://katanaml.io/page-contacts.html"}
+        return {"Sparrow Key is required to perform data extraction inference. Please obtain a Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com and enter it before submitting."}
 
     file_path = None
     try:
@@ -342,7 +346,8 @@ def run_inference(file_filepath, query, key, options, crop_size):
             filename = f"{filename}.pdf"
             file_mime_type = 'application/pdf'
         else:
-            return {"error": f"Unsupported file type: {input_file_extension}. Please upload an image or PDF."}
+            gr.Warning(f"Unsupported file type: {input_file_extension}. Please upload an image or PDF.")
+            return None
 
         # Prepare the REST API call
         url = backend_url
@@ -367,16 +372,18 @@ def run_inference(file_filepath, query, key, options, crop_size):
 
                     # Ensure the parsed query is either a JSON object (dict) or a list of JSON objects
                     if not isinstance(query_json, (dict, list)):
-                        return {
-                            "error": "Invalid input. Only JSON objects, arrays of objects, or wildcard '*' are allowed."}
+                        gr.Warning("Invalid input. Only JSON objects, arrays of objects, or wildcard '*' are allowed.")
+                        return None
 
                     # If it's a list, make sure it's a list of JSON objects
                     if isinstance(query_json, list):
                         if not all(isinstance(item, dict) for item in query_json):
-                            return {"error": "Invalid input. Arrays must contain only JSON objects."}
+                            gr.Warning("Invalid input. Arrays must contain only JSON objects.")
+                            return None
 
             except json.JSONDecodeError:
-                return {"error": "Invalid JSON format in query input"}
+                gr.Warning("Invalid JSON format in query input")
+                return None
 
             # Prepare the options string
             selected_options = []
@@ -392,7 +399,7 @@ def run_inference(file_filepath, query, key, options, crop_size):
 
             data = {
                 'query': query_json if query_json == "*" else json.dumps(query_json),  # Use wildcard as-is, or JSON
-                'agent': 'sparrow-parse',
+                'pipeline': 'sparrow-parse',
                 'options': final_options,
                 'crop_size': str(crop_size) if crop_size > 0 else '',
                 'debug_dir': '',
