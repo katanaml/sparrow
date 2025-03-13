@@ -8,6 +8,7 @@ import configparser
 from rich import print
 import geoip2.database
 from pathlib import Path
+from temp_cleaner import GradioTempCleaner
 
 
 # Create a ConfigParser object
@@ -416,9 +417,17 @@ def run_inference(file_filepath, query, key, options, crop_size):
             else:
                 return {"error": f"Request failed with status code {response.status_code}", "details": response.text}
     finally:
-        # Clean up the temporary file
-        if os.path.exists(file_path):
-            os.remove(file_path)
+        # do nothing - file will be removed by cleaner
+        pass
+
+
+
+# Initialize the temp cleaner
+temp_cleaner = GradioTempCleaner(
+    max_age_hours=2,             # Remove files older than 2 hours
+    check_interval_minutes=30,   # Check every 30 minutes
+    remove_all=False             # Only remove files older than specified age
+)
 
 
 # Define the UI
@@ -638,5 +647,12 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
 
 # Launch the app
 if __name__ == "__main__":
-    demo.queue(api_open=False, max_size=10)
-    demo.launch(debug=False, pwa=True, show_api=False)
+    # Start the temp cleaner
+    temp_cleaner.start()
+
+    try:
+        demo.queue(api_open=False, max_size=10)
+        demo.launch(server_name="0.0.0.0", server_port=7861, debug=False, pwa=True, show_api=False)
+    finally:
+        # Make sure to stop the cleaner when the app exits
+        temp_cleaner.stop()
