@@ -31,7 +31,6 @@ GEOIP_DB_PATH = "GeoLite2-Country.mmdb"
 
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5 MB
 
-
 # Example data with placeholder JSON for lab_results and bank_statement
 examples = [
     ["bonds_table.png", "Bonds table", "[{\"instrument_name\":\"str\", \"valuation\":0}]", None],
@@ -434,7 +433,6 @@ temp_cleaner = GradioTempCleaner(
 with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     demo.title = "Sparrow"
 
-
     # Log initial page load
     @demo.load(api_name=False)
     def on_page_load(request: gr.Request):
@@ -444,11 +442,21 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     with gr.Tab(label="Sparrow"):
         with gr.Row():
             with gr.Column():
+                # Add a prominent file size warning
+                gr.Markdown(
+                    f"""
+                    <div style="background-color: #f8f9fa; padding: 10px; border-left: 4px solid #ff9800; margin-bottom: 15px;">
+                        <strong>⚠️ File Size Limit:</strong> Maximum file size is 5 MB. Larger files will be rejected.
+                    </div>
+                    """
+                )
+
                 input_file_comp = gr.File(
-                    label="Input Document",
+                    label="Input Document (Max 5 MB)",
                     type="filepath",
                     file_types=[".jpg", ".jpeg", ".png", ".pdf"]
                 )
+
                 image_preview_comp = gr.Image(
                     label="Image Preview",
                     type="filepath",
@@ -644,6 +652,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
             </p>
             """
         )
+
 
 # Launch the app
 if __name__ == "__main__":
