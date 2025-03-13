@@ -9,6 +9,7 @@ from rich import print
 import geoip2.database
 from pathlib import Path
 from temp_cleaner import GradioTempCleaner
+import mimetypes
 
 
 # Create a ConfigParser object
@@ -292,6 +293,21 @@ def log_request(client_ip, source="General"):
     print(log_message)
 
 
+def validate_file(file_path):
+    # Check file extension
+    _, ext = os.path.splitext(file_path)
+    allowed_extensions = ['.jpg', '.jpeg', '.png', '.pdf']
+
+    if ext.lower() not in allowed_extensions:
+        return False
+
+    # Double-check using mime type
+    mime_type, _ = mimetypes.guess_type(file_path)
+    allowed_mime_prefixes = ['image/jpeg', 'image/png', 'application/pdf']
+
+    return any(mime_type and mime_type.startswith(prefix) for prefix in allowed_mime_prefixes)
+
+
 def run_inference(file_filepath, query, key, options, crop_size):
     if file_filepath is None:
         gr.Warning("No file provided. Please upload a file before submitting.")
@@ -307,6 +323,10 @@ def run_inference(file_filepath, query, key, options, crop_size):
         if os.path.exists(file_filepath):
             os.remove(file_filepath)
         gr.Warning("File size exceeds 5 MB. Please upload a smaller file.")
+        return None
+
+    if not validate_file(file_filepath):
+        gr.Warning("Invalid file type. Only JPG, PNG and PDF files are allowed.")
         return None
 
     if query is None or query.strip() == "":
@@ -443,15 +463,6 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     with gr.Tab(label="Sparrow"):
         with gr.Row():
             with gr.Column():
-                # Add a prominent file size warning
-                gr.Markdown(
-                    f"""
-                    <div style="background-color: #f8f9fa; padding: 10px; border-left: 4px solid #ff9800; margin-bottom: 15px;">
-                        <strong>⚠️ File Size Limit:</strong> Maximum file size is 5 MB. Larger files will be rejected.
-                    </div>
-                    """
-                )
-
                 input_file_comp = gr.File(
                     label="Input Document (Max 5 MB)",
                     type="filepath",
