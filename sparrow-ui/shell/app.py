@@ -416,8 +416,9 @@ def run_inference(file_filepath, query, key, options, crop_size):
             else:
                 return {"error": f"Request failed with status code {response.status_code}", "details": response.text}
     finally:
-        # do nothing - file will be removed by cleaner
-        pass
+        # Clean up the temporary file
+        if os.path.exists(file_path):
+            os.remove(file_path)
 
 
 
