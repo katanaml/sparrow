@@ -299,7 +299,7 @@ def run_inference(file_filepath, query, key, options, crop_size):
 
     # Get the file size using the file path
     if not os.path.exists(file_filepath):
-        gr.Warning("There is issue with the uploaded file. Please try again.")
+        gr.Warning("There is issue with the uploaded file. Please upload again.")
         return None
     file_size = os.path.getsize(file_filepath)  # File size in bytes  # Get the file size in bytes
     if file_size > MAX_FILE_SIZE:
