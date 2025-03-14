@@ -346,6 +346,27 @@ def run_inference(file_filepath, query, key, options, crop_size, client_ip):
             }
 
         # If we got here, we successfully obtained a key from the database
+        # For auto-assigned keys (free tier), check PDF page limit
+        if file_filepath.lower().endswith('.pdf'):
+            try:
+                import pypdf
+                with open(file_filepath, 'rb') as pdf_file:
+                    pdf_reader = pypdf.PdfReader(pdf_file)
+                    num_pages = len(pdf_reader.pages)
+
+                    if num_pages > 2:
+                        gr.Warning(
+                            f"Free tier is limited to PDFs with maximum 2 pages. This document has {num_pages} pages.")
+                        # Clean up the temporary file
+                        if os.path.exists(file_filepath):
+                            os.remove(file_filepath)
+                        return {
+                            "message": f"Free tier can only process PDFs with maximum 2 pages. This document has {num_pages} pages. For larger documents, please obtain a Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com."
+                        }
+            except Exception as e:
+                print(f"Error checking PDF page count: {str(e)}")
+                # Continue if we can't check the page count, but log the error
+
         # Display warning about limitations of using auto-assigned key
         gr.Info("Free tier: Limited to 3 calls per 6 hours, max 2-page documents.")
 
