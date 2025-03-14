@@ -336,9 +336,23 @@ def run_inference(file_filepath, query, key, options, crop_size, client_ip):
         return None
 
     if key is None or key.strip() == "":
-        gr.Warning("Sparrow Key is required to perform data extraction inference.")
-        return {
-            "Please obtain a Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com"}
+        # Try to get a restricted key based on rate limiting
+        key = db_pool.get_restricted_key(client_ip)
+
+        if key is None:
+            gr.Warning("Rate limit exceeded or no available keys.")
+            return {
+                "message": "Please obtain a Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com. We are open for consulting or integration work. You can also sponsor the project on GitHub: https://github.com/katanaml/sparrow"
+            }
+
+        # If we got here, we successfully obtained a key from the database
+        # Display warning about limitations of using auto-assigned key
+        gr.Info("Free tier: Limited to 3 calls per 6 hours, max 2-page documents.")
+
+        # Log the auto-assignment
+        country = fetch_geolocation(client_ip)
+        log_message = f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Auto-assigned key to IP: {client_ip}, Country: {country}"
+        print(log_message)
 
     file_path = None
     try:
@@ -507,10 +521,22 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                     step=1,
                     info="Crop by specifying the size in pixels (0 for no cropping)"
                 )
+
                 key_input_comp = gr.Textbox(
                     label="Sparrow Key",
-                    type="password"
+                    type="password",
+                    placeholder="Enter your key or leave empty for limited usage"
                 )
+                key_info_message = gr.Markdown(
+                    """
+                    <div style="margin-top: -10px; padding: 10px; background-color: #f0f7ff; border-left: 4px solid #2196F3; border-radius: 4px;">
+                    <b>💡 Free Tier Available:</b> You can use Sparrow without entering a key for limited usage (3 calls per 6 hours, max 2-page documents). 
+                    For unlimited usage, <a href="mailto:abaranovskis@redsamuraiconsulting.com">contact us</a> to obtain a key or 
+                    <a href="https://github.com/katanaml/sparrow" target="_blank">sponsor the project on GitHub</a>.
+                    </div>
+                    """
+                )
+
                 model_name_comp = gr.Textbox(
                     label="Vision LLM Model",
                     value=backend_options.split(",")[1],

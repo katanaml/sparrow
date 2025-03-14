@@ -216,3 +216,48 @@ def update_inference_duration(log_id, duration):
     finally:
         if connection:
             release_connection(connection)
+
+
+def get_restricted_key(client_ip):
+    """
+    Call the obtain_sparrow_key PL/SQL function to get a restricted key
+    based on rate limiting rules.
+
+    Args:
+        client_ip (str): The client's IP address
+
+    Returns:
+        str or None: A sparrow key if available, None if rate limited or error
+    """
+    # If database is not enabled, return None
+    global database_enabled
+
+    if not database_enabled:
+        return None
+
+    connection = None
+    try:
+        connection = get_connection_from_pool()
+        cursor = connection.cursor()
+
+        # Declare a variable to hold the returned value from the function
+        out_var = cursor.var(str)
+
+        # Call the PL/SQL function
+        cursor.execute(
+            "BEGIN :result := obtain_sparrow_key(:ip); END;",
+            result=out_var,
+            ip=client_ip
+        )
+
+        # Get the result
+        key = out_var.getvalue()
+
+        cursor.close()
+        return key
+    except Exception as e:
+        print(f"Error calling obtain_sparrow_key: {str(e)}")
+        return None
+    finally:
+        if connection:
+            release_connection(connection)
