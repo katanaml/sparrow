@@ -1,5 +1,6 @@
 gradio==5.20.1
 geoip2==4.8.1
+oracledb==3.0.0
 
 
 # Force reinstall:

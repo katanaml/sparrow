@@ -10,6 +10,8 @@ import geoip2.database
 from pathlib import Path
 from temp_cleaner import GradioTempCleaner
 import mimetypes
+import db_pool
+import time
 
 
 # Create a ConfigParser object
@@ -308,7 +310,7 @@ def validate_file(file_path):
     return any(mime_type and mime_type.startswith(prefix) for prefix in allowed_mime_prefixes)
 
 
-def run_inference(file_filepath, query, key, options, crop_size):
+def run_inference(file_filepath, query, key, options, crop_size, client_ip):
     if file_filepath is None:
         gr.Warning("No file provided. Please upload a file before submitting.")
         return None
@@ -334,7 +336,9 @@ def run_inference(file_filepath, query, key, options, crop_size):
         return None
 
     if key is None or key.strip() == "":
-        return {"Sparrow Key is required to perform data extraction inference. Please obtain a Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com and enter it before submitting."}
+        gr.Warning("Sparrow Key is required to perform data extraction inference.")
+        return {
+            "Please obtain a Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com"}
 
     file_path = None
     try:
@@ -427,8 +431,21 @@ def run_inference(file_filepath, query, key, options, crop_size):
                 'sparrow_key': key,
             }
 
+            country = fetch_geolocation(client_ip)
+            # Log the start and get the ID (will be None if DB is disabled)
+            log_id = db_pool.log_inference_start(client_ip, country)
+
+            # Start timing
+            start_time = time.time()
+
             # Perform the POST request
             response = requests.post(url, headers=headers, files=files, data=data)
+
+            # Calculate duration
+            duration = time.time() - start_time
+
+            # Update the record with actual duration
+            db_pool.update_inference_duration(log_id, duration)
 
             # Process the response and return the JSON data
             if response.status_code == 200:
@@ -439,7 +456,6 @@ def run_inference(file_filepath, query, key, options, crop_size):
         # Clean up the temporary file
         if os.path.exists(file_path):
             os.remove(file_path)
-
 
 
 # Initialize the temp cleaner
@@ -600,7 +616,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
             else:
                 log_request(request.client.host, "Inference Request - No file")
 
-            return run_inference(input_file, query_input, key_input, options_select, crop_size)
+            return run_inference(input_file, query_input, key_input, options_select, crop_size, request.client.host)
 
 
         # Connect components with updated handlers
@@ -668,6 +684,9 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
 
 # Launch the app
 if __name__ == "__main__":
+    # Initialize the DB connection pool (no-op if DB is disabled)
+    db_pool.initialize_connection_pool()
+
     # Start the temp cleaner
     temp_cleaner.start()
 
@@ -677,3 +696,6 @@ if __name__ == "__main__":
     finally:
         # Make sure to stop the cleaner when the app exits
         temp_cleaner.stop()
+
+        # Close the DB connection pool (the atexit handler will be a no-op if already closed)
+        db_pool.close_connection_pool()
