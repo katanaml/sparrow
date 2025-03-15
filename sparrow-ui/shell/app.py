@@ -495,8 +495,8 @@ def run_inference(file_filepath, query, key, options, crop_size, client_ip):
 
 # Initialize the temp cleaner
 temp_cleaner = GradioTempCleaner(
-    max_age_hours=2,             # Remove files older than 2 hours
-    check_interval_minutes=30,   # Check every 30 minutes
+    max_age_hours=2,             # Remove files older than 2 hours, test with 1/60 for 1 minute
+    check_interval_minutes=30,   # Check every 30 minutes, test with 0.5 for 30 seconds
     remove_all=False             # Only remove files older than specified age
 )
 

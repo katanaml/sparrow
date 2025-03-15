@@ -47,11 +47,11 @@ class GradioTempCleaner:
 
     def clean_temp_files(self, remove_all=False):
         """
-        Clean temporary files
+        Clean temporary files and folders
 
         Args:
-            remove_all: If True, remove all files regardless of age.
-                       If False, only remove files older than max_age_seconds
+            remove_all: If True, remove all files and folders regardless of age.
+                       If False, only remove items older than max_age_seconds
         """
         if not self.temp_dir.exists():
             logger.warning(f"Temp directory does not exist: {self.temp_dir}")
@@ -62,32 +62,33 @@ class GradioTempCleaner:
         dirs_removed = 0
 
         try:
-            # First pass: remove files
-            for temp_file in self.temp_dir.glob("**/*"):
-                if temp_file.is_file():
-                    should_remove = True
-                    if not remove_all:
-                        # Check file age only if we're not removing everything
-                        file_age = now - os.path.getmtime(temp_file)
-                        should_remove = file_age > self.max_age_seconds
+            # Get a list of all immediate child directories in the temp folder
+            child_dirs = [d for d in self.temp_dir.iterdir() if d.is_dir()]
 
-                    if should_remove:
-                        try:
-                            os.remove(temp_file)
-                            files_removed += 1
-                        except (PermissionError, OSError) as e:
-                            logger.error(f"Error removing file {temp_file}: {e}")
+            # Check each directory's age
+            for dir_path in child_dirs:
+                try:
+                    dir_age = now - os.path.getmtime(dir_path)
 
-            # Second pass: remove empty directories
-            for temp_dir in sorted(self.temp_dir.glob("**/*"), key=lambda x: str(x), reverse=True):
-                if temp_dir.is_dir():
-                    try:
-                        # Try to remove directory (will only succeed if empty)
-                        temp_dir.rmdir()
+                    # If directory is old enough or we're removing everything
+                    if remove_all or dir_age > self.max_age_seconds:
+                        # Remove the entire directory tree
+                        shutil.rmtree(dir_path, ignore_errors=True)
                         dirs_removed += 1
-                    except (OSError, PermissionError):
-                        # Directory not empty or locked
-                        pass
+                        logger.debug(f"Removed directory: {dir_path}")
+                except (PermissionError, OSError) as e:
+                    logger.error(f"Error checking/removing directory {dir_path}: {e}")
+
+            # Handle individual files in the root of the temp directory
+            root_files = [f for f in self.temp_dir.iterdir() if f.is_file()]
+            for file_path in root_files:
+                try:
+                    file_age = now - os.path.getmtime(file_path)
+                    if remove_all or file_age > self.max_age_seconds:
+                        os.remove(file_path)
+                        files_removed += 1
+                except (PermissionError, OSError) as e:
+                    logger.error(f"Error removing file {file_path}: {e}")
 
             if files_removed > 0 or dirs_removed > 0:
                 logger.info(f"Cleaned up {files_removed} files and {dirs_removed} directories")
