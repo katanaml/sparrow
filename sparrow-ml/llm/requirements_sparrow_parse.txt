@@ -9,6 +9,7 @@ jsonschema==4.23.0
 python-dotenv
 python-box
 torchvision
+oracledb==3.0.0
 # git+https://github.com/huggingface/transformers.git
 
 
