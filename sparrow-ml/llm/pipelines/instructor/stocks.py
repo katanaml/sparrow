@@ -4,11 +4,10 @@ from pydantic import BaseModel, Field
 import yfinance as yf
 import instructor
 import timeit
-import box
-import yaml
 from rich import print
 from typing import Any, List
 import warnings
+from config_utils import get_config
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -28,9 +27,8 @@ class Stocks(Pipeline):
                      local: bool = True) -> Any:
         print(f"\nRunning pipeline with {pipeline}\n")
 
-        # Import config vars
-        with open('config.yml', 'r', encoding='utf8') as ymlfile:
-            cfg = box.Box(yaml.safe_load(ymlfile))
+        # Get config instance
+        config = get_config()
 
         start = timeit.default_timer()
 
@@ -43,14 +41,14 @@ class Stocks(Pipeline):
         # enables `response_model` in create call
         client = instructor.patch(
             OpenAI(
-                base_url=cfg.OLLAMA_BASE_URL_FUNCTION,
+                base_url=config.get_str('settings', 'ollama_base_url'),
                 api_key="ollama",
             ),
             mode=instructor.Mode.JSON,
         )
 
         resp = client.chat.completions.create(
-            model=cfg.LLM_FUNCTION,
+            model=config.get_str('settings', 'llm_function'),
             messages=[
                 {
                     "role": "user",

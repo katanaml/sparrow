@@ -139,3 +139,80 @@ def release_connection(connection):
             print(f"Error releasing connection: {e}")
 
 
+def log_inference_start(inference_host_ip, country_name):
+    """Insert new record and return the generated ID"""
+    global database_enabled
+
+    if not database_enabled:
+        return None
+
+    connection = None
+    try:
+        connection = get_connection_from_pool()
+        cursor = connection.cursor()
+
+        # Using NULL for inference_duration as recommended
+        insert_sql = """
+            INSERT INTO inference_logs 
+            (inference_host_ip, country_name, inference_duration) 
+            VALUES (:ip, :country, NULL)
+            RETURNING id INTO :id
+        """
+
+        id_var = cursor.var(int)
+
+        cursor.execute(
+            insert_sql,
+            ip=inference_host_ip,
+            country=country_name,
+            id=id_var
+        )
+
+        log_id = id_var.getvalue()[0]
+
+        connection.commit()
+        cursor.close()
+
+        return log_id
+    except Exception as e:
+        print(f"Error logging inference start: {str(e)}")
+        return None
+    finally:
+        if connection:
+            release_connection(connection)
+
+
+def update_inference_duration(log_id, duration):
+    """Update the record with the actual duration"""
+    global database_enabled
+
+    if not database_enabled or log_id is None:
+        return True
+
+    connection = None
+    try:
+        connection = get_connection_from_pool()
+        cursor = connection.cursor()
+
+        update_sql = """
+            UPDATE inference_logs
+            SET inference_duration = :duration
+            WHERE id = :id
+        """
+
+        cursor.execute(
+            update_sql,
+            duration=duration,
+            id=log_id
+        )
+
+        connection.commit()
+        cursor.close()
+
+        return True
+    except Exception as e:
+        print(f"Error updating inference duration: {str(e)}")
+        return False
+    finally:
+        if connection:
+            release_connection(connection)

@@ -7,9 +7,8 @@ from typing import Annotated, Optional
 import json
 import argparse
 from dotenv import load_dotenv
-import box
-import yaml
 from rich import print
+from config_utils import get_config
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -20,19 +19,8 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 load_dotenv()
 
 
-# Function to load configuration
-def load_config(file_path='config.yml'):
-    with open(file_path, 'r', encoding='utf8') as ymlfile:
-        return box.Box(yaml.safe_load(ymlfile))
-
-# Function to save configuration
-def save_config(cfg, file_path='config.yml'):
-    with open(file_path, 'w', encoding='utf8') as ymlfile:
-        yaml.safe_dump(cfg.to_dict(), ymlfile)
-
-# Load configuration
-config_path = 'config.yml'
-cfg = load_config(config_path)
+# Get config instance
+config = get_config()
 
 
 app = FastAPI(openapi_url="/api/v1/sparrow-llm/openapi.json", docs_url="/api/v1/sparrow-llm/docs")
@@ -78,14 +66,14 @@ async def inference(
     except ValueError:
         raise HTTPException(status_code=422, detail="crop_size must be a valid integer or empty")
 
-    protected_access = cfg.PROTECTED_ACCESS
+    protected_access = config.get_bool('settings', 'protected_access', False)
     if protected_access:
-        # Retrieve all sparrow keys from the config file
-        sparrow_keys = cfg.get('SPARROW_KEYS', {})
+        # Get all Sparrow keys
+        sparrow_keys = config.get_sparrow_keys()
 
         # Validate and log usage
         key_found = False
-        for key, data in sparrow_keys.items():
+        for key_name, data in sparrow_keys.items():
             if data['value'] == sparrow_key:
                 key_found = True
 
@@ -100,14 +88,11 @@ async def inference(
                     )
 
                 # Increment the usage count
-                data['usage_count'] = usage_count + 1
+                config.update_key_usage(key_name, usage_count + 1)
                 break
 
         if not key_found:
             raise HTTPException(status_code=403, detail="Protected access. Pipeline not allowed.")
-
-        # Save updated configuration back to the file
-        save_config(cfg, config_path)
 
     options_arr = [param.strip() for param in options.split(',')] if options is not None else None
     page_type_arr = [param.strip() for param in page_type.split(',')] if options is not None and page_type else None

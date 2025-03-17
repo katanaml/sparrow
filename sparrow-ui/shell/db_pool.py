@@ -139,85 +139,6 @@ def release_connection(connection):
             print(f"Error releasing connection: {e}")
 
 
-def log_inference_start(inference_host_ip, country_name):
-    """Insert new record and return the generated ID"""
-    global database_enabled
-
-    if not database_enabled:
-        return None
-
-    connection = None
-    try:
-        connection = get_connection_from_pool()
-        cursor = connection.cursor()
-
-        # Using NULL for inference_duration as recommended
-        insert_sql = """
-            INSERT INTO inference_logs 
-            (inference_host_ip, country_name, inference_duration) 
-            VALUES (:ip, :country, NULL)
-            RETURNING id INTO :id
-        """
-
-        id_var = cursor.var(int)
-
-        cursor.execute(
-            insert_sql,
-            ip=inference_host_ip,
-            country=country_name,
-            id=id_var
-        )
-
-        log_id = id_var.getvalue()[0]
-
-        connection.commit()
-        cursor.close()
-
-        return log_id
-    except Exception as e:
-        print(f"Error logging inference start: {str(e)}")
-        return None
-    finally:
-        if connection:
-            release_connection(connection)
-
-
-def update_inference_duration(log_id, duration):
-    """Update the record with the actual duration"""
-    global database_enabled
-
-    if not database_enabled or log_id is None:
-        return True
-
-    connection = None
-    try:
-        connection = get_connection_from_pool()
-        cursor = connection.cursor()
-
-        update_sql = """
-            UPDATE inference_logs
-            SET inference_duration = :duration
-            WHERE id = :id
-        """
-
-        cursor.execute(
-            update_sql,
-            duration=duration,
-            id=log_id
-        )
-
-        connection.commit()
-        cursor.close()
-
-        return True
-    except Exception as e:
-        print(f"Error updating inference duration: {str(e)}")
-        return False
-    finally:
-        if connection:
-            release_connection(connection)
-
-
 def get_restricted_key(client_ip):
     """
     Call the obtain_sparrow_key PL/SQL function to get a restricted key
@@ -258,6 +179,56 @@ def get_restricted_key(client_ip):
     except Exception as e:
         print(f"Error calling obtain_sparrow_key: {str(e)}")
         return None
+    finally:
+        if connection:
+            release_connection(connection)
+
+
+def validate_and_increment_key(sparrow_key):
+    """
+    Validates a sparrow key and increments its usage counter if valid.
+
+    This function calls the PL/SQL validate_and_increment_key function which:
+    1. Checks if the key exists in the SPARROW_KEYS table
+    2. Verifies the key is enabled
+    3. Checks if incrementing would exceed the usage limit
+    4. If all checks pass, increments the counter and updates last_used_date
+
+    Args:
+        sparrow_key (str): The sparrow key to validate and increment
+
+    Returns:
+        bool: True if key is valid and was incremented successfully, False otherwise
+    """
+    # If database is not enabled, return False
+    global database_enabled
+
+    if not database_enabled:
+        return False
+
+    connection = None
+    try:
+        connection = get_connection_from_pool()
+        cursor = connection.cursor()
+
+        # Declare a variable to hold the returned value from the function
+        out_var = cursor.var(int)
+
+        # Call the PL/SQL function
+        cursor.execute(
+            "BEGIN :result := validate_and_increment_key(:key); END;",
+            result=out_var,
+            key=sparrow_key
+        )
+
+        # Get the result (0 or 1)
+        result = out_var.getvalue()
+
+        cursor.close()
+        return result == 1  # Convert 1/0 to True/False
+    except Exception as e:
+        print(f"Error calling validate_and_increment_key: {str(e)}")
+        return False
     finally:
         if connection:
             release_connection(connection)
