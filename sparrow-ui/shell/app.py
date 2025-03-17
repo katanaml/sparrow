@@ -354,21 +354,21 @@ def run_inference(file_filepath, query, key, options, crop_size, client_ip):
                     pdf_reader = pypdf.PdfReader(pdf_file)
                     num_pages = len(pdf_reader.pages)
 
-                    if num_pages > 2:
+                    if num_pages > 3:
                         gr.Warning(
-                            f"Free tier is limited to PDFs with maximum 2 pages. This document has {num_pages} pages.")
+                            f"Free tier is limited to PDFs with maximum 3 pages. This document has {num_pages} pages.")
                         # Clean up the temporary file
                         if os.path.exists(file_filepath):
                             os.remove(file_filepath)
                         return {
-                            "message": f"Free tier can only process PDFs with maximum 2 pages. This document has {num_pages} pages. For larger documents, please obtain a Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com."
+                            "message": f"Free tier can only process PDFs with maximum 3 pages. This document has {num_pages} pages. For larger documents, please obtain a Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com."
                         }
             except Exception as e:
                 print(f"Error checking PDF page count: {str(e)}")
                 # Continue if we can't check the page count, but log the error
 
         # Display warning about limitations of using auto-assigned key
-        gr.Info("Free tier: Limited to 3 calls per 6 hours, max 2-page documents.")
+        gr.Info("Free tier: Limited to 3 calls per 6 hours, max 3-page documents.")
 
         # Log the auto-assignment
         country = fetch_geolocation(client_ip)
@@ -551,7 +551,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                 key_info_message = gr.Markdown(
                     """
                     <div style="margin-top: -10px; padding: 10px; background-color: #f0f7ff; border-left: 4px solid #2196F3; border-radius: 4px;">
-                    <b>💡 Free Tier Available:</b> You can use Sparrow without entering a key for limited usage (3 calls per 6 hours, max 2-page documents). 
+                    <b>💡 Free Tier Available:</b> You can use Sparrow without entering a key for limited usage (3 calls per 6 hours, max 3-page documents). 
                     For unlimited usage, <a href="mailto:abaranovskis@redsamuraiconsulting.com">contact us</a> to obtain a key or 
                     <a href="https://github.com/katanaml/sparrow" target="_blank">sponsor the project on GitHub</a>.
                     </div>
