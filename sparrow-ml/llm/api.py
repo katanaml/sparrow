@@ -9,6 +9,10 @@ import argparse
 from dotenv import load_dotenv
 from rich import print
 from config_utils import get_config
+import time
+import tempfile
+import os
+import db_pool
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -59,6 +63,8 @@ async def inference(
         debug_dir: Annotated[Optional[str], Form()] = None,
         debug: Annotated[Optional[bool], Form()] = False,
         sparrow_key: Annotated[Optional[str], Form()] = None,
+        client_ip: Annotated[Optional[str], Form()] = "127.0.0.1",  # Default to localhost
+        country: Annotated[Optional[str], Form()] = "Unknown",      # Default to Unknown
         file: UploadFile = File(None)
         ):
     try:
@@ -98,8 +104,57 @@ async def inference(
     page_type_arr = [param.strip() for param in page_type.split(',')] if options is not None and page_type else None
 
     try:
+        # Calculate page count if file is a PDF
+        page_count = 1  # Default to 1 if not a PDF or unable to determine
+
+        if file and file.filename and file.filename.lower().endswith('.pdf'):
+            # Create a temporary file to analyze
+            temp_file = tempfile.NamedTemporaryFile(delete=False)
+            try:
+                # Read the file content into memory
+                file_content = await file.read()
+                temp_file.write(file_content)
+                temp_file.flush()
+
+                # Rewind the file for the API
+                await file.seek(0)
+
+                # Use PyPDF2 to get the page count
+                import pypdf
+                with open(temp_file.name, 'rb') as pdf_file:
+                    pdf_reader = pypdf.PdfReader(pdf_file)
+                    page_count = len(pdf_reader.pages)
+            except Exception as e:
+                print(f"Error determining PDF page count: {str(e)}")
+                # Continue with default page_count=1
+            finally:
+                # Close and remove the temporary file
+                temp_file.close()
+                try:
+                    os.unlink(temp_file.name)
+                except:
+                    pass
+
+        # Log the start of inference processing and get the ID
+        log_id = db_pool.log_inference_start(
+            client_ip=client_ip,
+            country_name=country,
+            sparrow_key=sparrow_key,
+            page_count=page_count
+        )
+
+        # Start timing
+        start_time = time.time()
+
+        # Call the engine to process the request
         answer = await run_from_api_engine(pipeline, query, options_arr, processed_crop_size, page_type_arr,
                                            file, debug_dir, debug)
+
+        # Calculate duration
+        duration = time.time() - start_time
+
+        # Update the record with actual duration
+        db_pool.update_inference_duration(log_id, duration)
     except ValueError as e:
         raise HTTPException(status_code=418, detail=str(e))
 

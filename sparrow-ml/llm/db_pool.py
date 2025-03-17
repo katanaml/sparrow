@@ -139,8 +139,20 @@ def release_connection(connection):
             print(f"Error releasing connection: {e}")
 
 
-def log_inference_start(inference_host_ip, country_name):
-    """Insert new record and return the generated ID"""
+def log_inference_start(client_ip, country_name=None, sparrow_key=None, page_count=1):
+    """
+    Logs the start of an inference request to INFERENCE_LOGS table.
+
+    Args:
+        client_ip (str): The client's IP address
+        country_name (str, optional): The country determined from the IP address
+        sparrow_key (str, optional): The sparrow key used for this request
+        page_count (int, optional): Number of pages processed in this request, defaults to 1
+
+    Returns:
+        int or None: The log ID if successfully logged, None otherwise
+    """
+    # If database is not enabled, return None
     global database_enabled
 
     if not database_enabled:
@@ -151,28 +163,51 @@ def log_inference_start(inference_host_ip, country_name):
         connection = get_connection_from_pool()
         cursor = connection.cursor()
 
-        # Using NULL for inference_duration as recommended
-        insert_sql = """
-            INSERT INTO inference_logs 
-            (inference_host_ip, country_name, inference_duration) 
-            VALUES (:ip, :country, NULL)
-            RETURNING id INTO :id
-        """
+        # Find the key ID if a key was provided
+        key_id = None
+        if sparrow_key:
+            try:
+                cursor.execute(
+                    "SELECT id FROM sparrow_keys WHERE sparrow_key = :key",
+                    key=sparrow_key
+                )
+                result = cursor.fetchone()
+                if result:
+                    key_id = result[0]
+            except Exception as e:
+                print(f"Error finding key ID: {str(e)}")
+                # Continue with key_id = None
 
+        # Ensure page_count is at least 1
+        if not page_count or page_count < 1:
+            page_count = 1
+
+        # Create a variable to hold the returned ID
         id_var = cursor.var(int)
 
+        # Insert record and return the ID
         cursor.execute(
-            insert_sql,
-            ip=inference_host_ip,
+            """
+            INSERT INTO inference_logs 
+                (inference_host_ip, country_name, sparrow_key_id, page_count)
+            VALUES 
+                (:ip, :country, :key_id, :page_count)
+            RETURNING id INTO :id
+            """,
+            ip=client_ip,
             country=country_name,
+            key_id=key_id,
+            page_count=page_count,
             id=id_var
         )
 
-        log_id = id_var.getvalue()[0]
+        # Get the ID
+        log_id = id_var.getvalue()
 
+        # Commit the transaction
         connection.commit()
-        cursor.close()
 
+        cursor.close()
         return log_id
     except Exception as e:
         print(f"Error logging inference start: {str(e)}")
@@ -212,6 +247,56 @@ def update_inference_duration(log_id, duration):
         return True
     except Exception as e:
         print(f"Error updating inference duration: {str(e)}")
+        return False
+    finally:
+        if connection:
+            release_connection(connection)
+
+
+def validate_and_increment_key(sparrow_key):
+    """
+    Validates a sparrow key and increments its usage counter if valid.
+
+    This function calls the PL/SQL validate_and_increment_key function which:
+    1. Checks if the key exists in the SPARROW_KEYS table
+    2. Verifies the key is enabled
+    3. Checks if incrementing would exceed the usage limit
+    4. If all checks pass, increments the counter and updates last_used_date
+
+    Args:
+        sparrow_key (str): The sparrow key to validate and increment
+
+    Returns:
+        bool: True if key is valid and was incremented successfully, False otherwise
+    """
+    # If database is not enabled, return False
+    global database_enabled
+
+    if not database_enabled:
+        return False
+
+    connection = None
+    try:
+        connection = get_connection_from_pool()
+        cursor = connection.cursor()
+
+        # Declare a variable to hold the returned value from the function
+        out_var = cursor.var(int)
+
+        # Call the PL/SQL function
+        cursor.execute(
+            "BEGIN :result := validate_and_increment_key(:key); END;",
+            result=out_var,
+            key=sparrow_key
+        )
+
+        # Get the result (0 or 1)
+        result = out_var.getvalue()
+
+        cursor.close()
+        return result == 1  # Convert 1/0 to True/False
+    except Exception as e:
+        print(f"Error calling validate_and_increment_key: {str(e)}")
         return False
     finally:
         if connection:

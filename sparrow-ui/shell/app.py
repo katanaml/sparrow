@@ -464,23 +464,12 @@ def run_inference(file_filepath, query, key, options, crop_size, client_ip):
                 'debug_dir': '',
                 'debug': 'false',
                 'sparrow_key': key,
+                'client_ip': client_ip,
+                'country': fetch_geolocation(client_ip)
             }
-
-            country = fetch_geolocation(client_ip)
-            # Log the start and get the ID (will be None if DB is disabled)
-            log_id = db_pool.log_inference_start(client_ip, country)
-
-            # Start timing
-            start_time = time.time()
 
             # Perform the POST request
             response = requests.post(url, headers=headers, files=files, data=data)
-
-            # Calculate duration
-            duration = time.time() - start_time
-
-            # Update the record with actual duration
-            db_pool.update_inference_duration(log_id, duration)
 
             # Process the response and return the JSON data
             if response.status_code == 200:
