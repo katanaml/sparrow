@@ -66,6 +66,49 @@ def root():
     return {"message": "Sparrow LLM API"}
 
 
+def validate_key_from_config(config, sparrow_key):
+    """
+    Validates and increments usage count for a sparrow key using config.
+
+    Args:
+        config: Configuration object containing sparrow keys
+        sparrow_key (str): The key to validate (must not be None or empty)
+
+    Returns:
+        bool: True if key is valid and was successfully incremented
+
+    Raises:
+        HTTPException: If key is invalid, disabled, or exceeded usage limit
+    """
+    # Get all Sparrow keys
+    sparrow_keys = config.get_sparrow_keys()
+
+    # Validate and log usage
+    key_found = False
+    for key_name, data in sparrow_keys.items():
+        if data['value'] == sparrow_key:
+            key_found = True
+
+            # Check if usage is within the allowed limit
+            usage_count = data.get('usage_count', 0)
+            usage_limit = data.get('usage_limit', float('inf'))  # Default to no limit if not set
+
+            if usage_count >= usage_limit:
+                raise HTTPException(
+                    status_code=403,
+                    detail=f"Usage limit exceeded for key '{sparrow_key}'. Allowed limit: {usage_limit}."
+                )
+
+            # Increment the usage count
+            config.update_key_usage(key_name, usage_count + 1)
+            return True
+
+    if not key_found:
+        raise HTTPException(status_code=403, detail="Protected access. Pipeline not allowed.")
+
+    return False
+
+
 def parse_optional_int(value: Optional[str]) -> Optional[int]:
     """Handle empty strings and None values for integer fields."""
     if value is None or value.strip() == "":
@@ -97,31 +140,28 @@ async def inference(
 
     protected_access = config.get_bool('settings', 'protected_access', False)
     if protected_access:
-        # Get all Sparrow keys
-        sparrow_keys = config.get_sparrow_keys()
+        # Check if key is provided - common for both database and config validation
+        if not sparrow_key:
+            raise HTTPException(
+                status_code=403,
+                detail="Sparrow key is required for protected access."
+            )
 
-        # Validate and log usage
-        key_found = False
-        for key_name, data in sparrow_keys.items():
-            if data['value'] == sparrow_key:
-                key_found = True
+        # Check if database is enabled
+        use_database = config.get_bool('settings', 'use_database', False)
 
-                # Check if usage is within the allowed limit
-                usage_count = data.get('usage_count', 0)
-                usage_limit = data.get('usage_limit', float('inf'))  # Default to no limit if not set
+        if use_database:
+            # Use the database function to validate and increment the key
+            is_valid = db_pool.validate_and_increment_key(sparrow_key)
 
-                if usage_count >= usage_limit:
-                    raise HTTPException(
-                        status_code=403,
-                        detail=f"Usage limit exceeded for key '{sparrow_key}'. Allowed limit: {usage_limit}."
-                    )
-
-                # Increment the usage count
-                config.update_key_usage(key_name, usage_count + 1)
-                break
-
-        if not key_found:
-            raise HTTPException(status_code=403, detail="Protected access. Pipeline not allowed.")
+            if not is_valid:
+                raise HTTPException(
+                    status_code=403,
+                    detail="Invalid, disabled, or usage limit exceeded for key."
+                )
+        else:
+            # Use the config-based validation
+            validate_key_from_config(config, sparrow_key)
 
     options_arr = [param.strip() for param in options.split(',')] if options is not None else None
     page_type_arr = [param.strip() for param in page_type.split(',')] if options is not None and page_type else None

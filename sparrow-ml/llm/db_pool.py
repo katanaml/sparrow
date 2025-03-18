@@ -186,8 +186,7 @@ def log_inference_start(client_ip, country_name=None, sparrow_key=None, page_cou
         connection.commit()
 
         cursor.close()
-        if log_id:
-            print(f"Created inference log with ID: {log_id}")
+
         return log_id
     except Exception as e:
         print(f"Error logging inference start: {str(e)}")
@@ -273,6 +272,7 @@ def validate_and_increment_key(sparrow_key):
         # Get the result (0 or 1)
         result = out_var.getvalue()
 
+        connection.commit()
         cursor.close()
         return result == 1  # Convert 1/0 to True/False
     except Exception as e:
