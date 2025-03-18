@@ -317,7 +317,7 @@ def run_inference(file_filepath, query, key, options, crop_size, client_ip):
 
     # Get the file size using the file path
     if not os.path.exists(file_filepath):
-        gr.Warning("There is issue with the uploaded file. Please upload again.")
+        gr.Warning("Please upload a file again and repeat inference. The file was removed after processing.")
         return None
     file_size = os.path.getsize(file_filepath)  # File size in bytes  # Get the file size in bytes
     if file_size > MAX_FILE_SIZE:
@@ -335,7 +335,15 @@ def run_inference(file_filepath, query, key, options, crop_size, client_ip):
         gr.Warning("No query provided. Please enter a query before submitting.")
         return None
 
-    if key is None or key.strip() == "":
+    # Check if user provided a key and validate it
+    if key is not None and key.strip() != "":
+        # Verify the provided key
+        if not db_pool.verify_key(key):
+            gr.Warning("Invalid Sparrow Key. Please check your key or leave empty for limited usage.")
+            return {
+                "message": "Invalid Sparrow Key. Please obtain a valid Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com."
+            }
+    else:
         # Try to get a restricted key based on rate limiting
         key = db_pool.get_restricted_key(client_ip)
 

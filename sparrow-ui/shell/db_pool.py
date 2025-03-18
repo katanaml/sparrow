@@ -182,3 +182,51 @@ def get_restricted_key(client_ip):
     finally:
         if connection:
             release_connection(connection)
+
+
+def verify_key(key):
+    """
+    Verify if a provided Sparrow key exists in the database and is enabled.
+
+    Args:
+        key (str): The Sparrow key to verify
+
+    Returns:
+        bool: True if key exists and is enabled, False otherwise
+    """
+    # If database is not enabled, return True (skip check)
+    global database_enabled
+
+    if not database_enabled:
+        return True
+
+    if not key or key.strip() == "":
+        return False
+
+    connection = None
+    try:
+        connection = get_connection_from_pool()
+        cursor = connection.cursor()
+
+        # Execute SQL query to check if the key exists and is enabled
+        query = """
+            SELECT COUNT(*) 
+            FROM SPARROW.SPARROW_KEYS 
+            WHERE SPARROW_KEY = :key 
+            AND ENABLED = 1
+        """
+
+        cursor.execute(query, key=key)
+        count = cursor.fetchone()[0]
+
+        # If count > 0, key exists and is enabled
+        exists = count > 0
+
+        cursor.close()
+        return exists
+    except Exception as e:
+        print(f"Error verifying key: {str(e)}")
+        return False  # On error, assume key doesn't exist
+    finally:
+        if connection:
+            release_connection(connection)
