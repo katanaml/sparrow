@@ -11,7 +11,6 @@ from pathlib import Path
 from temp_cleaner import GradioTempCleaner
 import mimetypes
 import db_pool
-import time
 
 
 # Create a ConfigParser object
@@ -22,8 +21,37 @@ config.read("config.properties")
 
 # Fetch settings
 backend_url = config.get("settings", "backend_url")
-backend_options = config.get("settings", "backend_options")
 version = config.get("settings", "version")
+
+
+# Get model options from config with friendly names
+model_options = {}  # Maps friendly name to backend options string
+model_display = {}  # Maps technical name to friendly name
+
+for key, value in config.items("settings"):
+    if key.startswith("backend_options_"):
+        parts = value.split(",")
+        if len(parts) >= 3:
+            backend_info = f"{parts[0]},{parts[1]}"
+            tech_name = parts[1]
+            friendly_name = parts[2]
+            model_options[friendly_name] = backend_info
+            model_display[tech_name] = friendly_name
+        else:
+            # Fallback if no friendly name is provided
+            backend_info = value
+            tech_name = parts[1]
+            friendly_name = tech_name
+            model_options[friendly_name] = backend_info
+            model_display[tech_name] = friendly_name
+
+# Set a default option if none found
+if not model_options:
+    default_backend = config.get("settings", "backend_options", fallback="mlx,mlx-community/Qwen2.5-VL-7B-Instruct-8bit")
+    tech_name = default_backend.split(",")[1]
+    friendly_name = tech_name
+    model_options[friendly_name] = default_backend
+    model_display[tech_name] = friendly_name
 
 
 # GeoIP configuration
@@ -310,7 +338,7 @@ def validate_file(file_path):
     return any(mime_type and mime_type.startswith(prefix) for prefix in allowed_mime_prefixes)
 
 
-def run_inference(file_filepath, query, key, options, crop_size, client_ip):
+def run_inference(file_filepath, query, key, options, crop_size, friendly_model_name, client_ip):
     if file_filepath is None:
         gr.Warning("No file provided. Please upload a file before submitting.")
         return None
@@ -459,8 +487,8 @@ def run_inference(file_filepath, query, key, options, crop_size, client_ip):
             if "Validation Off" in options:
                 selected_options.append("validation_off")
 
-            # Combine selected options with the default ones
-            final_options = backend_options
+            # Use the selected model's backend options via the friendly name
+            final_options = model_options.get(friendly_model_name, model_options[friendly_names[0]])
             if selected_options:
                 final_options += "," + ",".join(selected_options)
 
@@ -546,10 +574,12 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                     placeholder="Enter your key or leave empty for limited usage"
                 )
 
-                model_name_comp = gr.Textbox(
+                friendly_names = list(model_options.keys())
+                model_dropdown_comp = gr.Dropdown(
                     label="Vision LLM Model",
-                    value=backend_options.split(",")[1],
-                    interactive=False
+                    choices=friendly_names,
+                    value=friendly_names[0] if friendly_names else "",
+                    info="Select model based on your document complexity"
                 )
 
                 key_info_message = gr.Markdown(
@@ -597,12 +627,16 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                     # For image preview
                     preview_visible = selected_example.lower().endswith(('png', 'jpg', 'jpeg'))
 
+                    # Find default model (first in the list)
+                    default_model = friendly_names[0] if friendly_names else ""
+
                     return (
                         selected_example,  # input_file
                         example_json,  # output_json
                         gr.update(value=example[2]),  # query_input
                         gr.update(value=[example[3]] if example[3] else []),  # options_select
                         gr.update(value=0),  # crop_size
+                        gr.update(value=default_model)  # model_dropdown
                     )
 
             # Default return if no match found
@@ -650,7 +684,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
             return [gr.update() for _ in range(4)]
 
 
-        def run_inference_wrapper(input_file, query_input, key_input, options_select, crop_size, request: gr.Request):
+        def run_inference_wrapper(input_file, query_input, key_input, options_select, crop_size, model_name, request: gr.Request):
             if input_file:
                 # Get just the file name from the path
                 if hasattr(input_file, 'name'):
@@ -662,7 +696,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
             else:
                 log_request(request.client.host, "Inference Request - No file")
 
-            return run_inference(input_file, query_input, key_input, options_select, crop_size, request.client.host)
+            return run_inference(input_file, query_input, key_input, options_select, crop_size, model_name, request.client.host)
 
 
         # Connect components with updated handlers
@@ -674,7 +708,8 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                 output_json,
                 query_input_comp,
                 options_select_comp,
-                crop_size_comp
+                crop_size_comp,
+                model_dropdown_comp
             ],
             api_name=False
         )
@@ -709,7 +744,8 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                 query_input_comp,
                 key_input_comp,
                 options_select_comp,
-                crop_size_comp
+                crop_size_comp,
+                model_dropdown_comp
             ],
             outputs=[output_json],
             api_name=False
