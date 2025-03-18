@@ -141,7 +141,7 @@ def release_connection(connection):
 
 def log_inference_start(client_ip, country_name=None, sparrow_key=None, page_count=1):
     """
-    Logs the start of an inference request to INFERENCE_LOGS table.
+    Logs the start of an inference request to INFERENCE_LOGS table using a PL/SQL function.
 
     Args:
         client_ip (str): The client's IP address
@@ -163,51 +163,31 @@ def log_inference_start(client_ip, country_name=None, sparrow_key=None, page_cou
         connection = get_connection_from_pool()
         cursor = connection.cursor()
 
-        # Find the key ID if a key was provided
-        key_id = None
-        if sparrow_key:
-            try:
-                cursor.execute(
-                    "SELECT id FROM sparrow_keys WHERE sparrow_key = :key",
-                    key=sparrow_key
-                )
-                result = cursor.fetchone()
-                if result:
-                    key_id = result[0]
-            except Exception as e:
-                print(f"Error finding key ID: {str(e)}")
-                # Continue with key_id = None
+        # Call the PL/SQL function to handle everything in one call
+        out_var = cursor.var(int)
 
-        # Ensure page_count is at least 1
-        if not page_count or page_count < 1:
-            page_count = 1
-
-        # Create a variable to hold the returned ID
-        id_var = cursor.var(int)
-
-        # Insert record and return the ID
         cursor.execute(
-            """
-            INSERT INTO inference_logs 
-                (inference_host_ip, country_name, sparrow_key_id, page_count)
-            VALUES 
-                (:ip, :country, :key_id, :page_count)
-            RETURNING id INTO :id
-            """,
+            "BEGIN :result := log_inference_request(:ip, :country, :key, :page_count); END;",
+            result=out_var,
             ip=client_ip,
             country=country_name,
-            key_id=key_id,
-            page_count=page_count,
-            id=id_var
+            key=sparrow_key,
+            page_count=page_count
         )
 
-        # Get the ID
-        log_id = id_var.getvalue()
+        # Get the result - handle if it returns a list
+        log_id_value = out_var.getvalue()
+        if isinstance(log_id_value, list) and len(log_id_value) > 0:
+            log_id = log_id_value[0]
+        else:
+            log_id = log_id_value
 
         # Commit the transaction
         connection.commit()
 
         cursor.close()
+        if log_id:
+            print(f"Created inference log with ID: {log_id}")
         return log_id
     except Exception as e:
         print(f"Error logging inference start: {str(e)}")

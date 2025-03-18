@@ -13,6 +13,7 @@ import time
 import tempfile
 import os
 import db_pool
+from contextlib import asynccontextmanager
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -27,7 +28,29 @@ load_dotenv()
 config = get_config()
 
 
-app = FastAPI(openapi_url="/api/v1/sparrow-llm/openapi.json", docs_url="/api/v1/sparrow-llm/docs")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Lifespan context manager for database connection pool management.
+    This replaces the deprecated on_event handlers.
+    """
+    # Initialize resources on startup
+    db_pool.initialize_connection_pool()
+    print("Database connection pool initialized")
+
+    yield  # Application runs here
+
+    # Clean up resources on shutdown
+    db_pool.close_connection_pool()
+    print("Database connection pool closed")
+
+
+app = FastAPI(lifespan=lifespan,
+              title="Sparrow LLM API",
+              description="Data processing with ML, LLM and Vision LLM",
+              openapi_url="/api/v1/sparrow-llm/openapi.json",
+              docs_url="/api/v1/sparrow-llm/docs")
+
 
 app.add_middleware(
     CORSMiddleware,

@@ -537,6 +537,13 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                     type="password",
                     placeholder="Enter your key or leave empty for limited usage"
                 )
+
+                model_name_comp = gr.Textbox(
+                    label="Vision LLM Model",
+                    value=backend_options.split(",")[1],
+                    interactive=False
+                )
+
                 key_info_message = gr.Markdown(
                     """
                     <div style="margin-top: -10px; padding: 10px; background-color: #f0f7ff; border-left: 4px solid #2196F3; border-radius: 4px;">
@@ -547,11 +554,6 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                     """
                 )
 
-                model_name_comp = gr.Textbox(
-                    label="Vision LLM Model",
-                    value=backend_options.split(",")[1],
-                    interactive=False
-                )
                 submit_btn = gr.Button(
                     value="Submit",
                     variant="primary"
