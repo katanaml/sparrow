@@ -47,7 +47,7 @@ for key, value in config.items("settings"):
 
 # Set a default option if none found
 if not model_options:
-    default_backend = config.get("settings", "backend_options", fallback="mlx,mlx-community/Qwen2.5-VL-7B-Instruct-8bit")
+    default_backend = config.get("settings", "backend_options", fallback="mlx,mlx-community/Qwen2.5-VL-72B-Instruct-4bit")
     tech_name = default_backend.split(",")[1]
     friendly_name = tech_name
     model_options[friendly_name] = default_backend

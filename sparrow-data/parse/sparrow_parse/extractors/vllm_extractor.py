@@ -227,3 +227,4 @@ if __name__ == "__main__":
     # for i, result in enumerate(results_array):
     #     print(f"Result for page {i + 1}:", result)
     # print(f"Number of pages: {num_pages}")
+
