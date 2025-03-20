@@ -139,7 +139,7 @@ def release_connection(connection):
             print(f"Error releasing connection: {e}")
 
 
-def log_inference_start(client_ip, country_name=None, sparrow_key=None, page_count=1):
+def log_inference_start(client_ip, country_name=None, sparrow_key=None, page_count=1, model_name=None):
     """
     Logs the start of an inference request to INFERENCE_LOGS table using a PL/SQL function.
 
@@ -148,6 +148,7 @@ def log_inference_start(client_ip, country_name=None, sparrow_key=None, page_cou
         country_name (str, optional): The country determined from the IP address
         sparrow_key (str, optional): The sparrow key used for this request
         page_count (int, optional): Number of pages processed in this request, defaults to 1
+        model_name (str, optional): Name of the model used for inference
 
     Returns:
         int or None: The log ID if successfully logged, None otherwise
@@ -167,12 +168,13 @@ def log_inference_start(client_ip, country_name=None, sparrow_key=None, page_cou
         out_var = cursor.var(int)
 
         cursor.execute(
-            "BEGIN :result := log_inference_request(:ip, :country, :key, :page_count); END;",
+            "BEGIN :result := log_inference_request(:ip, :country, :key, :page_count, :model_name); END;",
             result=out_var,
             ip=client_ip,
             country=country_name,
             key=sparrow_key,
-            page_count=page_count
+            page_count=page_count,
+            model_name=model_name
         )
 
         # Get the result - handle if it returns a list

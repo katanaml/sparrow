@@ -198,12 +198,18 @@ async def inference(
                 except:
                     pass
 
+        # Extract the model name from options_arr (it's the second element)
+        model_name = None
+        if options_arr and len(options_arr) > 1:
+            model_name = options_arr[1]
+
         # Log the start of inference processing and get the ID
         log_id = db_pool.log_inference_start(
             client_ip=client_ip,
             country_name=country,
             sparrow_key=sparrow_key,
-            page_count=page_count
+            page_count=page_count,
+            model_name=model_name
         )
 
         # Start timing
