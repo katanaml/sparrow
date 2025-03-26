@@ -23,7 +23,6 @@ config.read("config.properties")
 backend_url = config.get("settings", "backend_url")
 version = config.get("settings", "version")
 
-
 # Get model options from config with friendly names
 model_options = {}  # Maps friendly name to backend options string
 model_display = {}  # Maps technical name to friendly name
@@ -35,23 +34,33 @@ for key, value in config.items("settings"):
             backend_info = f"{parts[0]},{parts[1]}"
             tech_name = parts[1]
             friendly_name = parts[2]
-            model_options[friendly_name] = backend_info
-            model_display[tech_name] = friendly_name
+
+            # Add emoji based on model characteristics
+            if "72B" in friendly_name or "High-quality" in friendly_name:
+                display_name = "🔍 " + friendly_name
+            else:
+                display_name = "🚀 " + friendly_name
+
+            model_options[display_name] = backend_info
+            model_display[tech_name] = display_name
         else:
             # Fallback if no friendly name is provided
             backend_info = value
             tech_name = parts[1]
             friendly_name = tech_name
-            model_options[friendly_name] = backend_info
-            model_display[tech_name] = friendly_name
+            display_name = "🔍 " + friendly_name  # Default emoji
+            model_options[display_name] = backend_info
+            model_display[tech_name] = display_name
 
 # Set a default option if none found
 if not model_options:
-    default_backend = config.get("settings", "backend_options", fallback="mlx,mlx-community/Qwen2.5-VL-72B-Instruct-4bit")
+    default_backend = config.get("settings", "backend_options",
+                                 fallback="mlx,mlx-community/Qwen2.5-VL-72B-Instruct-4bit")
     tech_name = default_backend.split(",")[1]
     friendly_name = tech_name
-    model_options[friendly_name] = default_backend
-    model_display[tech_name] = friendly_name
+    display_name = "🔍 " + friendly_name  # Add emoji to default
+    model_options[display_name] = default_backend
+    model_display[tech_name] = display_name
 
 
 # GeoIP configuration
@@ -582,23 +591,24 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                     info="Select model based on your document complexity"
                 )
 
+                submit_btn = gr.Button(
+                    value="Submit",
+                    variant="primary"
+                )
+
+                example_radio = gr.Radio(
+                    label="Select Example",
+                    choices=[ex[0] for ex in examples]
+                )
+
                 key_info_message = gr.Markdown(
                     """
-                    <div style="margin-top: -10px; padding: 10px; background-color: #f0f7ff; border-left: 4px solid #2196F3; border-radius: 4px;">
+                    <div style="margin-top: -10px; padding: 10px; border-left: 4px solid var(--primary-500); border-radius: 4px; background-color: var(--background-fill-secondary);">
                     <b>💡 Free Tier Available:</b> You can use Sparrow without entering a key for limited usage (3 calls per 6 hours, max 3-page documents). 
                     For unlimited usage, <a href="mailto:abaranovskis@redsamuraiconsulting.com">contact us</a> to obtain a key or 
                     <a href="https://github.com/katanaml/sparrow" target="_blank">sponsor the project on GitHub</a>.
                     </div>
                     """
-                )
-
-                submit_btn = gr.Button(
-                    value="Submit",
-                    variant="primary"
-                )
-                example_radio = gr.Radio(
-                    label="Select Example",
-                    choices=[ex[0] for ex in examples]
                 )
 
             with gr.Column():
@@ -627,16 +637,12 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                     # For image preview
                     preview_visible = selected_example.lower().endswith(('png', 'jpg', 'jpeg'))
 
-                    # Find default model (first in the list)
-                    default_model = friendly_names[0] if friendly_names else ""
-
                     return (
                         selected_example,  # input_file
                         example_json,  # output_json
                         gr.update(value=example[2]),  # query_input
                         gr.update(value=[example[3]] if example[3] else []),  # options_select
                         gr.update(value=0),  # crop_size
-                        gr.update(value=default_model)  # model_dropdown
                     )
 
             # Default return if no match found
@@ -708,8 +714,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                 output_json,
                 query_input_comp,
                 options_select_comp,
-                crop_size_comp,
-                model_dropdown_comp
+                crop_size_comp
             ],
             api_name=False
         )

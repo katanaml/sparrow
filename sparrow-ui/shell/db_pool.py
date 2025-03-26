@@ -1,4 +1,3 @@
-import oracledb
 import atexit
 import configparser
 
