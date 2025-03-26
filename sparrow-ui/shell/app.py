@@ -380,6 +380,27 @@ def run_inference(file_filepath, query, key, options, crop_size, friendly_model_
             return {
                 "message": "Invalid Sparrow Key. Please obtain a valid Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com."
             }
+
+        # Key is valid, now check PDF page limit (10 pages)
+        if file_filepath.lower().endswith('.pdf'):
+            try:
+                import pypdf
+                with open(file_filepath, 'rb') as pdf_file:
+                    pdf_reader = pypdf.PdfReader(pdf_file)
+                    num_pages = len(pdf_reader.pages)
+
+                    if num_pages > 10:
+                        gr.Warning(
+                            f"With a Sparrow Key, PDFs are limited to maximum 10 pages. This document has {num_pages} pages.")
+                        # Clean up the temporary file
+                        if os.path.exists(file_filepath):
+                            os.remove(file_filepath)
+                        return {
+                            "message": f"PDFs are limited to maximum 10 pages even with a valid Sparrow Key. This document has {num_pages} pages. For larger documents, please contact us at abaranovskis@redsamuraiconsulting.com."
+                        }
+            except Exception as e:
+                print(f"Error checking PDF page count: {str(e)}")
+                # Continue if we can't check the page count, but log the error
     else:
         # Try to get a restricted key based on rate limiting
         key = db_pool.get_restricted_key(client_ip)
