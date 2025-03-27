@@ -45,9 +45,6 @@ database_enabled = db_config["enabled"]
 if database_enabled:
     import oracledb
 
-    # Switch to thin mode
-    oracledb.defaults.config_dir = None
-
 # Connection pool variables
 connection_pool = None
 pool_closed = False
