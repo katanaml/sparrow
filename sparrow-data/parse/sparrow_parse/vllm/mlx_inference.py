@@ -39,21 +39,40 @@ class MLXInference(ModelInference):
     def process_response(self, output_text):
         """
         Process and clean the model's raw output to format as JSON.
-
-        :param output_text: Raw output text from the model.
-        :return: A formatted JSON string or the original text in case of errors.
         """
         try:
-            cleaned_text = (
-                output_text.strip("[]'")
-                .replace("```json\n", "")
-                .replace("\n```", "")
-                .replace("'", "")
-            )
-            formatted_json = json.loads(cleaned_text)
+            # Check if we have markdown code block markers
+            if "```" in output_text:
+                # Handle markdown-formatted output
+                json_start = output_text.find("```json")
+                if json_start != -1:
+                    # Extract content between ```json and ```
+                    content = output_text[json_start + 7:]
+                    json_end = content.rfind("```")
+                    if json_end != -1:
+                        content = content[:json_end].strip()
+                        formatted_json = json.loads(content)
+                        return json.dumps(formatted_json, indent=2)
+
+            # Handle raw JSON (no markdown formatting)
+            # First try to find JSON array or object patterns
+            for pattern in [r'\[\s*\{.*\}\s*\]', r'\{.*\}']:
+                import re
+                matches = re.search(pattern, output_text, re.DOTALL)
+                if matches:
+                    potential_json = matches.group(0)
+                    try:
+                        formatted_json = json.loads(potential_json)
+                        return json.dumps(formatted_json, indent=2)
+                    except:
+                        pass
+
+            # Last resort: try to parse the whole text as JSON
+            formatted_json = json.loads(output_text.strip())
             return json.dumps(formatted_json, indent=2)
-        except json.JSONDecodeError as e:
-            print(f"Failed to parse JSON in MLX inference backend: {e}")
+
+        except Exception as e:
+            print(f"Failed to parse JSON: {e}")
             return output_text
 
 
@@ -102,10 +121,13 @@ class MLXInference(ModelInference):
             image, width, height = self.load_image_data(file_path)
 
             # Prepare messages for the chat model
-            messages = [
-                {"role": "system", "content": "You are an expert at extracting structured text from image documents."},
-                {"role": "user", "content": input_data[0]["text_input"]},
-            ]
+            if "mistral" in self.model_name.lower():
+                messages = input_data[0]["text_input"]
+            else:
+                messages = [
+                    {"role": "system", "content": "You are an expert at extracting structured text from image documents."},
+                    {"role": "user", "content": input_data[0]["text_input"]},
+                ]
 
             # Generate and process response
             prompt = apply_chat_template(processor, config, messages)  # Assuming defined

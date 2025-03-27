@@ -198,7 +198,7 @@ if __name__ == "__main__":
     # # export HF_TOKEN="hf_"
     # config = {
     #     "method": "mlx",  # Could be 'huggingface', 'mlx' or 'local_gpu'
-    #     "model_name": "mlx-community/Qwen2.5-VL-7B-Instruct-8bit",
+    #     "model_name": "mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit",
     #     # "hf_space": "katanaml/sparrow-qwen2-vl-7b",
     #     # "hf_token": os.getenv('HF_TOKEN'),
     #     # Additional fields for local GPU inference
@@ -211,8 +211,8 @@ if __name__ == "__main__":
     #
     # input_data = [
     #     {
-    #         "file_path": "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png",
-    #         "text_input": "retrieve document data. return response in JSON format"
+    #         "file_path": "sparrow_parse/images/bonds_table.png",
+    #         "text_input": "retrieve all data. return response in JSON format"
     #     }
     # ]
     #
