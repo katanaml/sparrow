@@ -36,12 +36,10 @@ for key, value in config.items("settings"):
             friendly_name = parts[2]
 
             # Add emoji based on model characteristics
-            if "72B" in friendly_name or "High-quality" in friendly_name:
-                display_name = "🔍 " + friendly_name  # Magnifying glass for high-quality models
-            elif "32B" in friendly_name or "Balanced" in friendly_name:
-                display_name = "⭐ " + friendly_name  # Star for balanced/all-purpose models
+            if "Advanced" in friendly_name:
+                display_name = "🦉 " + friendly_name  # Magnifying glass for high-quality models
             else:
-                display_name = "🚀 " + friendly_name  # Rocket for faster models
+                display_name = "🚀 " + friendly_name  # Rocket for balanced/all-purpose models
 
             model_options[display_name] = backend_info
             model_display[tech_name] = display_name
@@ -50,14 +48,14 @@ for key, value in config.items("settings"):
             backend_info = value
             tech_name = parts[1]
             friendly_name = tech_name
-            display_name = "⭐ " + friendly_name  # Default emoji
+            display_name = "🚀 " + friendly_name  # Default emoji
             model_options[display_name] = backend_info
             model_display[tech_name] = display_name
 
 # Set a default option if none found
 if not model_options:
     default_backend = config.get("settings", "backend_options",
-                                 fallback="mlx,mlx-community/Qwen2.5-VL-32B-Instruct-8bit")
+                                 fallback="mlx,mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit")
     tech_name = default_backend.split(",")[1]
     friendly_name = tech_name
     display_name = "🔍 " + friendly_name  # Add emoji to default
