@@ -408,7 +408,7 @@ def run_inference(file_filepath, query, key, options, crop_size, friendly_model_
         if key is None:
             gr.Warning("Rate limit exceeded or no available keys.")
             return {
-                "message": "Please obtain a Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com. We are open for consulting or integration work. You can also sponsor the project on GitHub: https://github.com/katanaml/sparrow"
+                "message": "Please obtain a Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com. We offer professional consulting and implementation services for local document processing with Sparrow, tailored to your organization's needs."
             }
 
         # If we got here, we successfully obtained a key from the database
@@ -624,10 +624,15 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
 
                 key_info_message = gr.Markdown(
                     """
-                    <div style="margin-top: -10px; padding: 10px; border-left: 4px solid var(--primary-500); border-radius: 4px; background-color: var(--background-fill-secondary);">
-                    <b>💡 Free Tier Available:</b> You can use Sparrow without entering a key for limited usage (3 calls per 6 hours, max 3-page documents). 
-                    For unlimited usage, <a href="mailto:abaranovskis@redsamuraiconsulting.com">contact us</a> to obtain a key or 
-                    <a href="https://github.com/katanaml/sparrow" target="_blank">sponsor the project on GitHub</a>.
+                    <div style="margin-top: -10px; padding: 15px; border-left: 4px solid var(--primary-500); border-radius: 6px; background-color: var(--background-fill-secondary);">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div style="font-size: 24px; margin-right: 10px; color: var(--primary-500);">💡</div>
+                            <div>
+                                <p style="margin: 0; font-weight: 600; font-size: 16px; color: var(--primary-500);">Free Tier Available</p>
+                                <p style="margin: 5px 0 0 0;">You can use Sparrow without entering a key for limited usage (3 calls per 6 hours, max 3-page documents).</p>
+                                <p style="margin: 5px 0 0 0;">For unlimited usage, <a href="mailto:abaranovskis@redsamuraiconsulting.com" style="color: var(--primary-500); text-decoration: underline; font-weight: 500;">contact us</a> about our professional consulting and implementation services for local document processing solutions.</p>
+                            </div>
+                        </div>
                     </div>
                     """
                 )
@@ -635,8 +640,8 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
             with gr.Column():
                 output_json = gr.JSON(
                     label="Response (JSON)",
-                    height=900,
-                    min_height=900
+                    height=1022,
+                    min_height=1022
                 )
 
 
