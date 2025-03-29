@@ -570,7 +570,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
         with gr.Row():
             with gr.Column():
                 input_file_comp = gr.File(
-                    label="Input Document (Max 5 MB)",
+                    label="Input Document (Max 5 MB, removed after inference)",
                     type="filepath",
                     file_types=[".jpg", ".jpeg", ".png", ".pdf"]
                 )
