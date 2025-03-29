@@ -29,7 +29,7 @@ Sparrow Pipelines - with Sparrow you can build independent LLM pipelines, and us
 
 ## Sparrow UI
 
-Try [Sparrow](https://sparrow.katanaml.io) UI, this runs on my local Mac Mini M4 Pro machine with MLX
+Try [Sparrow](https://sparrow.katanaml.io) online, this runs on Mac Mini M4 Pro 64GB server with MLX
 
 ![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui.png)
 
