@@ -147,6 +147,14 @@ class VLLMExtractor(object):
         table_detector = TableDetector()
         cropped_tables = table_detector.detect_tables(file_path, local=False, debug_dir=debug_dir, debug=debug)
         results_array = []
+
+        # Check if no tables were found
+        if cropped_tables is None:
+            if debug:
+                print(f"No tables detected in {file_path}")
+            # Return a structured no-tables-found response instead of failing
+            return [json.dumps({"message": "No tables detected in the document", "status": "empty"})]
+
         temp_dir = tempfile.mkdtemp()
 
         for i, table in enumerate(cropped_tables):
