@@ -11,6 +11,7 @@ from pathlib import Path
 from temp_cleaner import GradioTempCleaner
 import mimetypes
 import db_pool
+import dashboard
 
 
 # Create a ConfigParser object
@@ -556,7 +557,7 @@ temp_cleaner = GradioTempCleaner(
 )
 
 
-# Define the UI
+# Define the Home page
 with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     demo.title = "Sparrow"
 
@@ -565,234 +566,245 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     def on_page_load(request: gr.Request):
         log_request(request.client.host, "Page Load")
 
+    gr.Markdown(
+        """
+        <div style="margin-top: 5px; margin-bottom: 15px; padding-left: 15px;">
+            <p style="margin: 0; font-weight: 600; font-size: 20px; color: var(--primary-500);">Sparrow</p>
+            <p style="margin: 0; font-size: 14px; color: var(--body-text-color); opacity: 0.8;">Data processing with AI</p>
+        </div>
+        """
+    )
 
-    with gr.Tab(label="Sparrow"):
-        with gr.Row():
-            with gr.Column():
-                input_file_comp = gr.File(
-                    label="Input Document (Max 5 MB, removed after inference)",
-                    type="filepath",
-                    file_types=[".jpg", ".jpeg", ".png", ".pdf"]
-                )
+    with gr.Row():
+        with gr.Column():
+            input_file_comp = gr.File(
+                label="Input Document (Max 5 MB, removed after inference)",
+                type="filepath",
+                file_types=[".jpg", ".jpeg", ".png", ".pdf"]
+            )
 
-                image_preview_comp = gr.Image(
-                    label="Image Preview",
-                    type="filepath",
-                    visible=False
-                )
-                query_input_comp = gr.Textbox(
-                    label="Query",
-                    placeholder="Use * to query all data or JSON schema, e.g.: [{\"instrument_name\": \"str\"}]"
-                )
-                options_select_comp = gr.CheckboxGroup(
-                    label="Additional Options",
-                    choices=["Tables Only", "Validation Off"],
-                    type="value"
-                )
-                crop_size_comp = gr.Slider(
-                    label="Crop Size",
-                    value=0,
-                    minimum=0,
-                    maximum=600,
-                    step=1,
-                    info="Crop by specifying the size in pixels (0 for no cropping)"
-                )
+            image_preview_comp = gr.Image(
+                label="Image Preview",
+                type="filepath",
+                visible=False
+            )
+            query_input_comp = gr.Textbox(
+                label="Query",
+                placeholder="Use * to query all data or JSON schema, e.g.: [{\"instrument_name\": \"str\"}]"
+            )
+            options_select_comp = gr.CheckboxGroup(
+                label="Additional Options",
+                choices=["Tables Only", "Validation Off"],
+                type="value"
+            )
+            crop_size_comp = gr.Slider(
+                label="Crop Size",
+                value=0,
+                minimum=0,
+                maximum=600,
+                step=1,
+                info="Crop by specifying the size in pixels (0 for no cropping)"
+            )
 
-                key_input_comp = gr.Textbox(
-                    label="Sparrow Key",
-                    type="password",
-                    placeholder="Enter your key or leave empty for limited usage"
-                )
+            key_input_comp = gr.Textbox(
+                label="Sparrow Key",
+                type="password",
+                placeholder="Enter your key or leave empty for limited usage"
+            )
 
-                friendly_names = list(model_options.keys())
-                model_dropdown_comp = gr.Dropdown(
-                    label="Vision LLM Model",
-                    choices=friendly_names,
-                    value=friendly_names[0] if friendly_names else "",
-                    info="Select model based on your document complexity"
-                )
+            friendly_names = list(model_options.keys())
+            model_dropdown_comp = gr.Dropdown(
+                label="Vision LLM Model",
+                choices=friendly_names,
+                value=friendly_names[0] if friendly_names else "",
+                info="Select model based on your document complexity"
+            )
 
-                submit_btn = gr.Button(
-                    value="Submit",
-                    variant="primary"
-                )
+            submit_btn = gr.Button(
+                value="Submit",
+                variant="primary"
+            )
 
-                example_radio = gr.Radio(
-                    label="Select Example",
-                    choices=[ex[0] for ex in examples]
-                )
+            example_radio = gr.Radio(
+                label="Select Example",
+                choices=[ex[0] for ex in examples]
+            )
 
-                key_info_message = gr.Markdown(
-                    """
-                    <div style="margin-top: -10px; padding: 15px; border-left: 4px solid var(--primary-500); border-radius: 6px; background-color: var(--background-fill-secondary);">
-                        <div style="display: flex; align-items: flex-start;">
-                            <div style="font-size: 24px; margin-right: 10px; color: var(--primary-500);">💡</div>
-                            <div>
-                                <p style="margin: 0; font-weight: 600; font-size: 16px; color: var(--primary-500);">Free Tier Available</p>
-                                <p style="margin: 5px 0 0 0;">You can use Sparrow without entering a key for limited usage (3 calls per 6 hours, max 3-page documents).</p>
-                                <p style="margin: 5px 0 0 0;">For unlimited usage, <a href="mailto:abaranovskis@redsamuraiconsulting.com" style="color: var(--primary-500); text-decoration: underline; font-weight: 500;">contact us</a> about our professional consulting and implementation services for local document processing solutions.</p>
-                            </div>
+            key_info_message = gr.Markdown(
+                """
+                <div style="margin-top: -10px; padding: 15px; border-left: 4px solid var(--primary-500); border-radius: 6px; background-color: var(--background-fill-secondary);">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div style="font-size: 24px; margin-right: 10px; color: var(--primary-500);">💡</div>
+                        <div>
+                            <p style="margin: 0; font-weight: 600; font-size: 16px; color: var(--primary-500);">Free Tier Available</p>
+                            <p style="margin: 5px 0 0 0;">You can use Sparrow without entering a key for limited usage (3 calls per 6 hours, max 3-page documents).</p>
+                            <p style="margin: 5px 0 0 0;">For unlimited usage, <a href="mailto:abaranovskis@redsamuraiconsulting.com" style="color: var(--primary-500); text-decoration: underline; font-weight: 500;">contact us</a> about our professional consulting and implementation services for local document processing solutions.</p>
                         </div>
                     </div>
-                    """
+                </div>
+                """
+            )
+
+        with gr.Column():
+            output_json = gr.JSON(
+                label="Response (JSON)",
+                height=1022,
+                min_height=1022
+            )
+
+
+    # Handler functions with logging
+    def on_example_select(selected_example, request: gr.Request):
+        log_request(request.client.host, f"Example Selection: {selected_example}")
+        # Find the corresponding example data
+        for example in examples:
+            if example[0] == selected_example:
+                example_json = None
+                # Return appropriate JSON based on example type
+                if selected_example == "bonds_table.png":
+                    example_json = bonds_json
+                elif selected_example == "lab_results.png":
+                    example_json = lab_results_json
+                elif selected_example == "bank_statement.png":
+                    example_json = bank_statement_json
+
+                # For image preview
+                preview_visible = selected_example.lower().endswith(('png', 'jpg', 'jpeg'))
+
+                return (
+                    selected_example,  # input_file
+                    example_json,  # output_json
+                    gr.update(value=example[2]),  # query_input
+                    gr.update(value=[example[3]] if example[3] else []),  # options_select
+                    gr.update(value=0),  # crop_size
                 )
 
-            with gr.Column():
-                output_json = gr.JSON(
-                    label="Response (JSON)",
-                    height=1022,
-                    min_height=1022
-                )
+        # Default return if no match found
+        return (
+            None,  # input_file
+            None,  # output_json
+            gr.update(value=""),  # query_input
+            gr.update(value=[]),  # options_select
+            gr.update(value=0),  # crop_size
+        )
 
 
-        # Handler functions with logging
-        def on_example_select(selected_example, request: gr.Request):
-            log_request(request.client.host, f"Example Selection: {selected_example}")
-            # Find the corresponding example data
-            for example in examples:
-                if example[0] == selected_example:
-                    example_json = None
-                    # Return appropriate JSON based on example type
-                    if selected_example == "bonds_table.png":
-                        example_json = bonds_json
-                    elif selected_example == "lab_results.png":
-                        example_json = lab_results_json
-                    elif selected_example == "bank_statement.png":
-                        example_json = bank_statement_json
+    def update_preview(file_path, request: gr.Request):
+        preview_update = None
+        preview_visible = False
 
-                    # For image preview
-                    preview_visible = selected_example.lower().endswith(('png', 'jpg', 'jpeg'))
+        if file_path:
+            # Get just the file name from the path
+            if hasattr(file_path, 'name'):
+                file_name = Path(file_path.name).name
+            else:
+                file_name = Path(str(file_path)).name
 
-                    return (
-                        selected_example,  # input_file
-                        example_json,  # output_json
-                        gr.update(value=example[2]),  # query_input
-                        gr.update(value=[example[3]] if example[3] else []),  # options_select
-                        gr.update(value=0),  # crop_size
-                    )
+            log_request(request.client.host, f"Preview Update: {file_name}")
 
-            # Default return if no match found
+            if str(file_path).lower().endswith(('png', 'jpg', 'jpeg')):
+                preview_update = file_path
+                preview_visible = True
+
+        return (
+            preview_update,  # image_preview value
+            gr.update(visible=preview_visible)  # image_preview visibility
+        )
+
+
+    def clear_on_file_upload(file_path, request: gr.Request):
+        """Separate function to handle clearing fields on file upload"""
+        if file_path is None:  # Only clear when file is removed
             return (
-                None,  # input_file
-                None,  # output_json
                 gr.update(value=""),  # query_input
                 gr.update(value=[]),  # options_select
                 gr.update(value=0),  # crop_size
+                gr.update(value=None)  # example_radio
             )
+        return [gr.update() for _ in range(4)]
 
 
-        def update_preview(file_path, request: gr.Request):
-            preview_update = None
-            preview_visible = False
-
-            if file_path:
-                # Get just the file name from the path
-                if hasattr(file_path, 'name'):
-                    file_name = Path(file_path.name).name
-                else:
-                    file_name = Path(str(file_path)).name
-
-                log_request(request.client.host, f"Preview Update: {file_name}")
-
-                if str(file_path).lower().endswith(('png', 'jpg', 'jpeg')):
-                    preview_update = file_path
-                    preview_visible = True
-
-            return (
-                preview_update,  # image_preview value
-                gr.update(visible=preview_visible)  # image_preview visibility
-            )
-
-
-        def clear_on_file_upload(file_path, request: gr.Request):
-            """Separate function to handle clearing fields on file upload"""
-            if file_path is None:  # Only clear when file is removed
-                return (
-                    gr.update(value=""),  # query_input
-                    gr.update(value=[]),  # options_select
-                    gr.update(value=0),  # crop_size
-                    gr.update(value=None)  # example_radio
-                )
-            return [gr.update() for _ in range(4)]
-
-
-        def run_inference_wrapper(input_file, query_input, key_input, options_select, crop_size, model_name, request: gr.Request):
-            if input_file:
-                # Get just the file name from the path
-                if hasattr(input_file, 'name'):
-                    file_name = Path(input_file.name).name
-                else:
-                    file_name = Path(str(input_file)).name
-
-                log_request(request.client.host, f"Inference Request - File: {file_name}")
+    def run_inference_wrapper(input_file, query_input, key_input, options_select, crop_size, model_name, request: gr.Request):
+        if input_file:
+            # Get just the file name from the path
+            if hasattr(input_file, 'name'):
+                file_name = Path(input_file.name).name
             else:
-                log_request(request.client.host, "Inference Request - No file")
+                file_name = Path(str(input_file)).name
 
-            return run_inference(input_file, query_input, key_input, options_select, crop_size, model_name, request.client.host)
+            log_request(request.client.host, f"Inference Request - File: {file_name}")
+        else:
+            log_request(request.client.host, "Inference Request - No file")
+
+        return run_inference(input_file, query_input, key_input, options_select, crop_size, model_name, request.client.host)
 
 
-        # Connect components with updated handlers
-        example_radio.change(
-            on_example_select,
-            inputs=[example_radio],
-            outputs=[
-                input_file_comp,
-                output_json,
-                query_input_comp,
-                options_select_comp,
-                crop_size_comp
-            ],
-            api_name=False
-        )
+    # Connect components with updated handlers
+    example_radio.change(
+        on_example_select,
+        inputs=[example_radio],
+        outputs=[
+            input_file_comp,
+            output_json,
+            query_input_comp,
+            options_select_comp,
+            crop_size_comp
+        ],
+        api_name=False
+    )
 
-        # Split the file upload handling into two events
-        input_file_comp.change(
-            update_preview,
-            inputs=[input_file_comp],
-            outputs=[
-                image_preview_comp,
-                image_preview_comp
-            ],
-            api_name=False
-        )
+    # Split the file upload handling into two events
+    input_file_comp.change(
+        update_preview,
+        inputs=[input_file_comp],
+        outputs=[
+            image_preview_comp,
+            image_preview_comp
+        ],
+        api_name=False
+    )
 
-        input_file_comp.change(
-            clear_on_file_upload,
-            inputs=[input_file_comp],
-            outputs=[
-                query_input_comp,
-                options_select_comp,
-                crop_size_comp,
-                example_radio
-            ],
-            api_name=False
-        )
+    input_file_comp.change(
+        clear_on_file_upload,
+        inputs=[input_file_comp],
+        outputs=[
+            query_input_comp,
+            options_select_comp,
+            crop_size_comp,
+            example_radio
+        ],
+        api_name=False
+    )
 
-        submit_btn.click(
-            run_inference_wrapper,
-            inputs=[
-                input_file_comp,
-                query_input_comp,
-                key_input_comp,
-                options_select_comp,
-                crop_size_comp,
-                model_dropdown_comp
-            ],
-            outputs=[output_json],
-            api_name=False
-        )
+    submit_btn.click(
+        run_inference_wrapper,
+        inputs=[
+            input_file_comp,
+            query_input_comp,
+            key_input_comp,
+            options_select_comp,
+            crop_size_comp,
+            model_dropdown_comp
+        ],
+        outputs=[output_json],
+        api_name=False
+    )
 
-        gr.Markdown(
-            f"""
-            ---
-            <p style="text-align: center;">
-            Visit <a href="https://katanaml.io/" target="_blank">Katana ML</a> and <a href="https://github.com/katanaml/sparrow" target="_blank">Sparrow</a> GitHub for more details.
-            </p>
-            <p style="text-align: center;">
-            <strong>Version:</strong> {version}
-            </p>
-            """
-        )
+    gr.Markdown(
+        f"""
+        ---
+        <p style="text-align: center;">
+        Visit <a href="https://katanaml.io/" target="_blank">Katana ML</a> and <a href="https://github.com/katanaml/sparrow" target="_blank">Sparrow</a> GitHub for more details.
+        </p>
+        <p style="text-align: center;">
+        <strong>Version:</strong> {version}
+        </p>
+        """
+    )
+
+# Dashboard page
+with demo.route("Dashboard"):
+    dashboard.demo.render()
 
 
 # Launch the app
