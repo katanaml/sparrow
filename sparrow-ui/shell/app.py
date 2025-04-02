@@ -803,7 +803,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     )
 
 # Dashboard page
-with demo.route("Dashboard"):
+with demo.route("📊 Dashboard", "/dashboard"):
     dashboard.demo.render()
 
 
@@ -817,7 +817,7 @@ if __name__ == "__main__":
 
     try:
         demo.queue(api_open=False, max_size=10)
-        demo.launch(server_name="0.0.0.0", server_port=7861, debug=False, pwa=True, show_api=False)
+        demo.launch(server_name="0.0.0.0", server_port=7861, debug=False, pwa=True, show_api=False, favicon_path="favicon.ico")
     finally:
         # Make sure to stop the cleaner when the app exits
         temp_cleaner.stop()
