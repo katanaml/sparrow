@@ -2,7 +2,7 @@
 [![PyPI - Python](https://img.shields.io/badge/python-v3.10+-blue.svg)](https://github.com/katanaml/sparrow)
 [![GitHub Stars](https://img.shields.io/github/stars/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/issues)
-[![Current Version](https://img.shields.io/badge/version-0.3.0-green.svg)](https://github.com/katanaml/sparrow)
+[![Current Version](https://img.shields.io/badge/version-0.4.0-green.svg)](https://github.com/katanaml/sparrow)
 
 
 Data processing with ML, LLM and Vision LLM
@@ -29,7 +29,7 @@ Sparrow Pipelines - with Sparrow you can build independent LLM pipelines, and us
 
 ## Sparrow UI
 
-Try [Sparrow](https://sparrow.katanaml.io) UI, this runs on my local Mac Mini M4 Pro machine with MLX
+Try [Sparrow](https://sparrow.katanaml.io) online, this runs on Mac Mini M4 Pro 64GB server with MLX
 
 ![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui.png)
 

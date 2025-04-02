@@ -1,5 +1,12 @@
 # ChangeLog
 
+## [v.0.4.0] - 2025-03-29
+
+## Free tier and new vision backend models
+
+Sparrow is updated with new free tier functionality for https://sparrow.katanaml.io/. New vision backend models are integrated, such as Mistral Small 3.1 and Qwen 2.5 72B
+
+
 ## [v0.3.0] - 2025-03-09
 
 ## Sparrow Agent
