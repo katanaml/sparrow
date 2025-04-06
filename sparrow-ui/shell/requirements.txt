@@ -2,6 +2,7 @@ gradio==5.23.1
 geoip2==4.8.1
 oracledb==3.0.0
 pypdf==5.3.1
+plotly==6.0.1
 
 
 # Force reinstall:

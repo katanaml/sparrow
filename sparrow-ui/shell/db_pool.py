@@ -226,3 +226,83 @@ def verify_key(key):
     finally:
         if connection:
             release_connection(connection)
+
+
+def get_inference_logs(period="1week"):
+    """
+    Fetch inference logs from the database for a specified time period,
+    excluding records with SPARROW_KEY_ID = 1 and COUNTRY_NAME that is 'Unknown' or NULL.
+
+    Args:
+        period (str): Time period to fetch data for.
+                      Valid values: "1week", "2weeks", "1month", "6months", "all"
+                      Default is "1week".
+
+    Returns:
+        list: A list of dictionaries containing log data if database is enabled,
+              an empty list otherwise.
+    """
+    # If database is not enabled, return empty list
+    global database_enabled
+
+    if not database_enabled:
+        return []
+
+    connection = None
+    try:
+        connection = get_connection_from_pool()
+        cursor = connection.cursor()
+
+        # Base query
+        query = """
+            SELECT 
+                TIMESTAMP as log_date,
+                COUNTRY_NAME,
+                INFERENCE_DURATION,
+                PAGE_COUNT,
+                MODEL_NAME
+            FROM 
+                SPARROW.INFERENCE_LOGS
+            WHERE 
+                SPARROW_KEY_ID != 1
+                AND COUNTRY_NAME IS NOT NULL 
+                AND COUNTRY_NAME != 'Unknown' 
+                AND COUNTRY_NAME != 'Lithuania'
+        """
+
+        # Add time period filter if not 'all'
+        if period != "all":
+            time_filter = None
+            if period == "1week":
+                time_filter = "TIMESTAMP >= SYSTIMESTAMP - INTERVAL '7' DAY"
+            elif period == "2weeks":
+                time_filter = "TIMESTAMP >= SYSTIMESTAMP - INTERVAL '14' DAY"
+            elif period == "1month":
+                time_filter = "TIMESTAMP >= SYSTIMESTAMP - INTERVAL '1' MONTH"
+            elif period == "6months":
+                time_filter = "TIMESTAMP >= SYSTIMESTAMP - INTERVAL '6' MONTH"
+
+            if time_filter:
+                query += f" AND {time_filter}"
+
+        # Add order by clause
+        query += " ORDER BY TIMESTAMP DESC"
+
+        cursor.execute(query)
+
+        # Fetch all rows and convert to list of dictionaries
+        columns = [col[0].lower() for col in cursor.description]
+        results = []
+
+        for row in cursor:
+            results.append(dict(zip(columns, row)))
+
+        cursor.close()
+        return results
+
+    except Exception as e:
+        print(f"Error fetching inference logs: {str(e)}")
+        return []
+    finally:
+        if connection:
+            release_connection(connection)

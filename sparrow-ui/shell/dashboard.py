@@ -1,8 +1,488 @@
 import gradio as gr
+import pandas as pd
+import plotly.graph_objects as go
+import db_pool
+import configparser
 
-with gr.Blocks() as demo:
-    t = gr.Textbox()
-    demo.load(lambda : "Loaded", None, t)
+# Create a ConfigParser object and read settings
+config = configparser.ConfigParser()
+config.read("config.properties")
 
+# Fetch settings
+version = config.get("settings", "version")
+
+# Define the dashboard interface
+with gr.Blocks(theme=gr.themes.Ocean()) as demo:
+    demo.title = "Sparrow Analytics Dashboard"
+
+    # Set show_api=False to prevent API endpoint exposure
+    # This is used instead of api_name for older Gradio versions
+
+    # No dashboard title anymore
+
+    # Time period selector
+    with gr.Row():
+        period_selector = gr.Radio(
+            label="Time Period",
+            choices=["1week", "2weeks", "1month", "6months", "all"],
+            value="1week",
+            interactive=True
+        )
+
+    # Key metrics at the top (HTML-based for better styling)
+    with gr.Row():
+        metrics_html = gr.HTML()
+
+    # First row - HTML visualizations for document size and model usage
+    with gr.Row():
+        inference_pages_html = gr.HTML(label="Document Size Performance")
+        model_usage_html = gr.HTML(label="Model Usage")
+
+    # Second row - Inference events timeline using Plotly
+    with gr.Row():
+        daily_events_plot = gr.Plot(label="Inference Events Timeline")
+
+    # Third row - Country distribution
+    with gr.Row():
+        country_html = gr.HTML(label="Countries")
+
+
+    # Function to process data and generate visualizations
+    def update_dashboard(period):
+        # Fetch data from database
+        logs = db_pool.get_inference_logs(period)
+
+        # If no data is available, return empty charts
+        if not logs:
+            empty_text = "No data available"
+            empty_html = "<div style='text-align:center; padding: 20px;'>No data available</div>"
+            empty_plot = None
+            empty_metrics = """
+            <div style="display: flex; justify-content: center; align-items: center; height: 100px; border-radius: 12px; background-color: #f8f9fa; border: 1px dashed #dee2e6;">
+                <p style="color: #6c757d; font-size: 16px;">No data available for the selected time period</p>
+            </div>
+            """
+            return [empty_metrics, empty_html, empty_html, empty_plot, empty_html]
+
+        # Convert to DataFrame for easier manipulation
+        df = pd.DataFrame(logs)
+
+        # Calculate summary metrics
+        total_count = len(df)
+        success_count = df['inference_duration'].notna().sum()
+        failure_count = total_count - success_count
+        success_percentage = (success_count / total_count * 100) if total_count > 0 else 0
+
+        # Calculate average duration
+        avg_duration = df['inference_duration'].mean() if 'inference_duration' in df.columns else 0
+
+        # Get top model info
+        friendly_name = "No data"
+        top_model_count = 0
+        if 'model_name' in df.columns and not df['model_name'].empty:
+            model_counts = df['model_name'].value_counts()
+            if not model_counts.empty:
+                top_model_name = model_counts.index[0]
+                top_model_count = model_counts.iloc[0]
+
+                # Replace model names with user-friendly names
+                friendly_name = "Standard model" if "Mistral" in top_model_name else "Advanced model" if "Qwen" in top_model_name else top_model_name
+
+        # Format key metrics as HTML
+        metrics_html_content = f"""
+        <div style="display: flex; justify-content: space-between; gap: 16px; width: 100%; padding: 8px 0;">
+            <div style="flex: 1; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); padding: 16px; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0,0,0,0.04);">
+                <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                    <div style="width: 28px; height: 28px; border-radius: 50%; background-color: #4ecdc4; display: flex; justify-content: center; align-items: center; margin-right: 12px;">
+                        <span style="color: white; font-size: 14px;">📊</span>
+                    </div>
+                    <h3 style="margin: 0; color: #343a40; font-size: 14px; font-weight: 500;">Total Inferences</h3>
+                </div>
+                <p style="margin: 0; font-size: 24px; font-weight: 600; color: #212529;">{total_count:,}</p>
+            </div>
+
+            <div style="flex: 1; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); padding: 16px; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0,0,0,0.04);">
+                <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                    <div style="width: 28px; height: 28px; border-radius: 50%; background-color: #56b4e9; display: flex; justify-content: center; align-items: center; margin-right: 12px;">
+                        <span style="color: white; font-size: 14px;">✓</span>
+                    </div>
+                    <h3 style="margin: 0; color: #343a40; font-size: 14px; font-weight: 500;">Success Rate</h3>
+                </div>
+                <p style="margin: 0; font-size: 24px; font-weight: 600; color: #212529;">{success_percentage:.1f}%</p>
+                <p style="margin: 2px 0 0 0; font-size: 12px; color: #6c757d;">({success_count:,} successful, {failure_count:,} failed)</p>
+            </div>
+
+            <div style="flex: 1; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); padding: 16px; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0,0,0,0.04);">
+                <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                    <div style="width: 28px; height: 28px; border-radius: 50%; background-color: #8da0cb; display: flex; justify-content: center; align-items: center; margin-right: 12px;">
+                        <span style="color: white; font-size: 14px;">⏱️</span>
+                    </div>
+                    <h3 style="margin: 0; color: #343a40; font-size: 14px; font-weight: 500;">Avg. Duration</h3>
+                </div>
+                <p style="margin: 0; font-size: 24px; font-weight: 600; color: #212529;">{avg_duration:.2f}s</p>
+                <p style="margin: 2px 0 0 0; font-size: 12px; color: #6c757d;">per inference</p>
+            </div>
+
+            <div style="flex: 1; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); padding: 16px; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0,0,0,0.04);">
+                <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                    <div style="width: 28px; height: 28px; border-radius: 50%; background-color: #66c2a5; display: flex; justify-content: center; align-items: center; margin-right: 12px;">
+                        <span style="color: white; font-size: 14px;">🔍</span>
+                    </div>
+                    <h3 style="margin: 0; color: #343a40; font-size: 14px; font-weight: 500;">Most Used Model</h3>
+                </div>
+                <p style="margin: 0; font-size: 24px; font-weight: 600; color: #212529;">{friendly_name}</p>
+                <p style="margin: 2px 0 0 0; font-size: 12px; color: #6c757d;">({top_model_count:,} uses)</p>
+            </div>
+        </div>
+        """
+
+        # Generate Plotly chart for Inference Events
+        events_plot = None
+        if all(col in df.columns for col in ['log_date', 'inference_duration', 'page_count']):
+            # Filter out rows with null duration
+            events_df = df.dropna(subset=['inference_duration', 'page_count'])
+
+            # Convert timestamp to datetime if it's not already
+            if not pd.api.types.is_datetime64_any_dtype(events_df['log_date']):
+                events_df['log_date'] = pd.to_datetime(events_df['log_date'])
+
+            # Sort by date
+            events_df = events_df.sort_values('log_date')
+
+            # No need to group by day - we want individual inference events
+            # Use the raw data points directly for visualization
+
+            # Create a more readable page count description
+            events_df['page_description'] = events_df['page_count'].astype(str) + " page" + \
+                                            (events_df['page_count'] > 1).astype(str).str.replace('True',
+                                                                                                  's').str.replace(
+                                                'False', '')
+
+            # Create a custom hover template
+            hover_template = (
+                    "<b>%{customdata[0]}</b><br>" +
+                    "Date: %{x|%Y-%m-%d %H:%M:%S}<br>" +
+                    "Duration: %{y:.2f} seconds<br>" +
+                    "Pages: %{customdata[1]}<br>" +
+                    "<extra></extra>"  # Hide secondary box
+            )
+
+            # Create Plotly scatter plot directly using the individual inference events
+            fig = go.Figure()
+
+            # Get unique page counts for color mapping
+            unique_page_counts = sorted(events_df['page_count'].unique())
+
+            # Create a custom color palette with soft, modern, harmonious colors
+            # These colors are chosen to be visually pleasing and work well together
+            soft_palette = [
+                '#4ecdc4',  # Soft teal
+                '#56b4e9',  # Soft blue
+                '#8da0cb',  # Periwinkle
+                '#5e6ebe',  # Muted blue-purple
+                '#a6cee3',  # Light blue
+                '#66c2a5',  # Mint
+                '#3288bd',  # Medium blue
+                '#7fcdbb',  # Seafoam
+                '#67a9cf',  # Sky blue
+                '#6baed6',  # Steel blue
+            ]
+
+            # If we have more unique page counts than colors, repeat colors
+            if len(unique_page_counts) > len(soft_palette):
+                # Create additional colors by repeating the palette
+                soft_palette = soft_palette * (len(unique_page_counts) // len(soft_palette) + 1)
+
+            colors = soft_palette[:len(unique_page_counts)]
+
+            # Add trace for each page count to control the legend
+            for i, page_count in enumerate(unique_page_counts):
+                color_idx = i % len(colors)
+                page_data = events_df[events_df['page_count'] == page_count]
+
+                fig.add_trace(go.Scatter(
+                    x=page_data['log_date'],
+                    y=page_data['inference_duration'],
+                    mode='markers',
+                    name=f"{page_count} page{'s' if page_count > 1 else ''}",
+                    marker=dict(
+                        size=page_data['page_count'] * 2,  # Reduced size multiplier from 4 to 2
+                        sizemin=4,  # Reduced minimum size from 6 to 4
+                        sizemode='area',
+                        sizeref=2. * max(events_df['page_count']) / (20. ** 2),
+                        # Adjusted scale factor for smaller points
+                        color=colors[color_idx],
+                        opacity=0.7,  # Added some transparency to reduce visual clutter
+                        line=dict(width=0.5, color='DarkSlateGrey')  # Thinner border line
+                    ),
+                    customdata=list(zip(
+                        ["Inference #" + str(i + 1) for i in range(len(page_data))],  # Custom label
+                        page_data['page_description']
+                    )),
+                    hovertemplate=hover_template
+                ))
+
+            # Customize the layout
+            fig.update_layout(
+                title='Inference Events by Duration and Page Count',
+                xaxis_title='Date & Time',
+                yaxis_title='Inference Duration (seconds)',
+                legend_title='Document Size',
+                hovermode='closest',
+                height=450,
+                margin=dict(l=50, r=20, t=50, b=50),
+                legend=dict(
+                    orientation="h",
+                    yanchor="bottom",
+                    y=1.02,
+                    xanchor="center",
+                    x=0.5,
+                    itemsizing='constant',  # Make all legend items a constant size
+                    itemwidth=30,  # Set the width of legend items
+                    itemclick=False,  # Disable item clicking to prevent toggling
+                    itemdoubleclick=False  # Disable double-clicking to prevent toggling
+                )
+            )
+
+            # Improve axis formatting
+            fig.update_xaxes(
+                tickformat="%m/%d\n%H:%M",  # Show month/day and hour/minute
+                tickangle=-45,
+                gridcolor='lightgray'
+            )
+
+            # Add range slider for time navigation
+            fig.update_xaxes(
+                rangeslider_visible=True,
+                rangeslider_thickness=0.05
+            )
+
+            events_plot = fig
+        else:
+            # Return an empty plot
+            events_plot = None
+
+        # 2. Average Inference Duration by Page Count (HTML/CSS visualization)
+        duration_html = ""
+        if all(col in df.columns for col in ['inference_duration', 'page_count']):
+            # Filter out rows with null duration
+            duration_df = df.dropna(subset=['inference_duration'])
+
+            # Group by page count and calculate average duration
+            avg_by_page = duration_df.groupby('page_count')['inference_duration'].mean().reset_index()
+
+            # Sort by page count
+            avg_by_page = avg_by_page.sort_values('page_count')
+
+            # Add page label with correct plurality
+            avg_by_page['page_label'] = avg_by_page['page_count'].astype(str) + " page" + (
+                    avg_by_page['page_count'] > 1).astype(str).str.replace('True', 's').str.replace('False', '')
+
+            # Get the maximum duration for scaling the bars
+            max_duration = avg_by_page['inference_duration'].max()
+
+            # Create HTML for the visualization
+            html = """
+            <div style="padding: 20px; font-family: system-ui, -apple-system, sans-serif;">
+              <h3 style="margin-top: 0; margin-bottom: 15px; color: #333;">Average Inference Duration by Document Size</h3>
+              <div style="display: flex; flex-direction: column; gap: 12px; max-width: 100%;">
+            """
+
+            # Create entry for each page count
+            for _, row in avg_by_page.iterrows():
+                duration = row['inference_duration']
+                percent_width = min(95, (duration / max_duration) * 95) if max_duration > 0 else 0
+
+                html += f"""
+                <div style="display: flex; align-items: center; width: 100%;">
+                  <div style="min-width: 80px; width: 80px; font-weight: 500; color: #444;">{row['page_label']}</div>
+                  <div style="flex-grow: 1; display: flex; align-items: center; width: calc(100% - 80px);">
+                    <div style="height: 18px; width: {percent_width}%; background-color: #1abc9c; border-radius: 4px;"></div>
+                    <span style="margin-left: 10px; white-space: nowrap; color: #555; font-size: 14px;">{duration:.2f} seconds</span>
+                  </div>
+                </div>
+                """
+
+            html += """
+              </div>
+              <div style="margin-top: 15px; font-size: 13px; color: #777;">
+                Based on {count} successful inferences
+              </div>
+            </div>
+            """.format(count=len(duration_df))
+
+            duration_html = html
+        else:
+            duration_html = "<div style='text-align:center; padding: 20px;'>No duration data available</div>"
+
+        # 3. Country Distribution as HTML/CSS visualization with improved scrolling
+        country_html_content = ""
+        if 'country_name' in df.columns:
+            # Get counts of unique countries
+            country_counts = df['country_name'].value_counts().reset_index()
+            country_counts.columns = ['country', 'count']
+
+            # Calculate total for percentages
+            total = country_counts['count'].sum()
+            country_counts['percentage'] = (country_counts['count'] / total * 100).round(1)
+
+            # Get the maximum count for scaling the bars
+            max_count = country_counts['count'].max()
+
+            # The number of visible countries without scrolling (approximately)
+            visible_without_scroll = 10
+            total_countries = len(country_counts)
+
+            # Create HTML for the visualization
+            html = """
+            <div style="padding: 20px; font-family: system-ui, -apple-system, sans-serif;">
+              <h3 style="margin-top: 0; margin-bottom: 15px; color: #333;">Inference Requests by Country</h3>
+
+              <!-- If there are more countries than can be displayed, show scroll indicator -->
+              {scroll_indicator}
+
+              <div style="max-height: 350px; overflow-y: auto; padding-right: 10px; margin-bottom: 10px; border: 1px solid rgba(0,0,0,0.05); border-radius: 6px; padding: 10px;">
+                <div style="display: flex; flex-direction: column; gap: 8px; max-width: 100%;">
+            """.format(
+                scroll_indicator=f"""
+                <div style="margin-bottom: 8px; font-size: 13px; color: #555; display: flex; align-items: center;">
+                    <span style="margin-right: 5px;">Showing all {total_countries} countries</span>
+                    <span style="color: #1abc9c; font-size: 18px;">↓</span>
+                    <span style="color: #777; font-style: italic; margin-left: 5px;">Scroll to see more</span>
+                </div>
+                """ if total_countries > visible_without_scroll else ""
+            )
+
+            # Create entry for each country
+            for _, row in country_counts.iterrows():
+                percent_width = min(95, (row['count'] / max_count) * 95) if max_count > 0 else 0
+
+                # Calculate a color based on the percentage (higher = more saturated)
+                hue = 200  # Blue hue
+                saturation = min(80, 30 + (row['percentage'] * 2))  # Increase saturation with percentage
+                lightness = max(40, 70 - (row['percentage'] * 1.5))  # Decrease lightness with percentage
+
+                html += f"""
+                <div style="display: flex; align-items: center; width: 100%;">
+                  <div style="min-width: 150px; width: 150px; font-weight: 500; color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{row['country']}">{row['country']}</div>
+                  <div style="flex-grow: 1; display: flex; align-items: center; width: calc(100% - 150px);">
+                    <div style="height: 16px; width: {percent_width}%; background-color: hsl({hue}, {saturation}%, {lightness}%); border-radius: 4px;"></div>
+                    <span style="margin-left: 10px; white-space: nowrap; color: #555; font-size: 14px;">{row['count']:,} ({row['percentage']}%)</span>
+                  </div>
+                </div>
+                """
+
+            html += """
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 13px; color: #777;">
+                <div>Based on {count} total inferences</div>
+                <div>{num_countries} countries total</div>
+              </div>
+            </div>
+            """.format(count=total, num_countries=len(country_counts))
+
+            country_html_content = html
+        else:
+            country_html_content = "<div style='text-align:center; padding: 20px;'>No country data available</div>"
+
+        # 4. Model Usage as HTML visualization matching page count style
+        model_html = ""
+        if 'model_name' in df.columns:
+            model_counts = df['model_name'].value_counts().reset_index()
+            model_counts.columns = ['model', 'count']
+
+            # Calculate percentages
+            total = model_counts['count'].sum()
+            model_counts['percentage'] = (model_counts['count'] / total * 100).round(1)
+
+            # Get the maximum count for scaling the bars
+            max_count = model_counts['count'].max()
+
+            # Create friendly model names
+            model_counts['friendly_name'] = model_counts['model'].apply(
+                lambda x: "Standard model" if "Mistral" in x else
+                "Advanced model" if "Qwen" in x else x
+            )
+
+            # Create HTML for the visualization
+            html = """
+            <div style="padding: 20px; font-family: system-ui, -apple-system, sans-serif;">
+              <h3 style="margin-top: 0; margin-bottom: 15px; color: #333;">Model Usage Distribution</h3>
+              <div style="display: flex; flex-direction: column; gap: 12px; max-width: 100%;">
+            """
+
+            # Create entry for each model
+            for _, row in model_counts.iterrows():
+                percent_width = min(95, (row['count'] / max_count) * 95) if max_count > 0 else 0
+
+                html += f"""
+                <div style="display: flex; align-items: center; width: 100%;">
+                  <div style="min-width: 120px; width: 120px; font-weight: 500; color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{row['model']}">{row['friendly_name']}</div>
+                  <div style="flex-grow: 1; display: flex; align-items: center; width: calc(100% - 120px);">
+                    <div style="height: 18px; width: {percent_width}%; background-color: #9b59b6; border-radius: 4px;"></div>
+                    <span style="margin-left: 10px; white-space: nowrap; color: #555; font-size: 14px;">{row['count']:,} uses ({row['percentage']}%)</span>
+                  </div>
+                </div>
+                """
+
+            html += """
+              </div>
+              <div style="margin-top: 15px; font-size: 13px; color: #777;">
+                Based on {count} total inferences
+              </div>
+            </div>
+            """.format(count=total)
+
+            model_html = html
+        else:
+            model_html = "<div style='text-align:center; padding: 20px;'>No model usage data available</div>"
+
+        return [
+            metrics_html_content,
+            duration_html,
+            model_html,
+            events_plot,
+            country_html_content
+        ]
+
+
+    # Update dashboard when period changes
+    period_selector.change(
+        update_dashboard,
+        inputs=[period_selector],
+        outputs=[
+            metrics_html, inference_pages_html, model_usage_html,
+            daily_events_plot, country_html
+        ],
+        api_name=None  # Explicitly set to None to hide from API
+    )
+
+    # Initialize dashboard on load
+    demo.load(
+        update_dashboard,
+        inputs=[period_selector],
+        outputs=[
+            metrics_html, inference_pages_html, model_usage_html,
+            daily_events_plot, country_html
+        ],
+        api_name=None  # Explicitly set to None to hide from API
+    )
+
+    # Footer with links and version
+    gr.Markdown(
+        f"""
+        ---
+        <p style="text-align: center;">
+        Visit <a href="https://katanaml.io/" target="_blank">Katana ML</a> and <a href="https://github.com/katanaml/sparrow" target="_blank">Sparrow</a> GitHub for more details.
+        </p>
+        <p style="text-align: center;">
+        <strong>Version:</strong> {version}
+        </p>
+        """
+    )
+
+# To run this file directly for testing
 if __name__ == "__main__":
-    demo.launch()
+    # Launch with explicitly disabled API and no documentation
+    demo.launch(show_api=False, share=False)

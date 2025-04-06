@@ -557,23 +557,51 @@ temp_cleaner = GradioTempCleaner(
 )
 
 
+custom_css = """
+/* Style the nav holder container */
+.nav-holder.svelte-a3xscf {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+}
+
+/* Add Sparrow text with proper spacing from the left edge */
+.nav-holder.svelte-a3xscf::before {
+    content: "Sparrow";
+    display: flex;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-left: 1.5rem;
+    height: 100%;
+    color: var(--primary-500);
+}
+
+/* Push navigation menu to the right side */
+nav.fillable.svelte-a3xscf {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 1.5rem;
+}
+
+/* Keep the links vertically aligned */
+nav.fillable.svelte-a3xscf a.svelte-a3xscf {
+    display: flex;
+    align-items: center;
+}
+"""
+
+
 # Define the Home page
-with gr.Blocks(theme=gr.themes.Ocean()) as demo:
+with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
     demo.title = "Sparrow"
 
     # Log initial page load
     @demo.load(api_name=False)
     def on_page_load(request: gr.Request):
         log_request(request.client.host, "Page Load")
-
-    gr.Markdown(
-        """
-        <div style="margin-top: 5px; margin-bottom: 15px; padding-left: 15px;">
-            <p style="margin: 0; font-weight: 600; font-size: 20px; color: var(--primary-500);">Sparrow</p>
-            <p style="margin: 0; font-size: 14px; color: var(--body-text-color); opacity: 0.8;">Data processing with AI</p>
-        </div>
-        """
-    )
 
     with gr.Row():
         with gr.Column():
@@ -803,7 +831,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     )
 
 # Dashboard page
-with demo.route("📊 Dashboard", "/dashboard"):
+with demo.route("Dashboard", "/dashboard"):
     dashboard.demo.render()
 
 
@@ -817,7 +845,7 @@ if __name__ == "__main__":
 
     try:
         demo.queue(api_open=False, max_size=10)
-        demo.launch(server_name="0.0.0.0", server_port=7861, debug=False, pwa=True, show_api=False, favicon_path="favicon.ico")
+        demo.launch(server_name="0.0.0.0", server_port=7861, debug=False, pwa=True, show_api=False, share=False, favicon_path="favicon.ico")
     finally:
         # Make sure to stop the cleaner when the app exits
         temp_cleaner.stop()
