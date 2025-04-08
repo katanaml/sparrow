@@ -1,7 +1,10 @@
 import gradio as gr
 import pandas as pd
+import plotly.express as px
 import plotly.graph_objects as go
+from datetime import datetime, timedelta
 import db_pool
+from collections import Counter
 import configparser
 
 # Create a ConfigParser object and read settings
@@ -9,6 +12,7 @@ config = configparser.ConfigParser()
 config.read("config.properties")
 
 # Fetch settings
+backend_url = config.get("settings", "backend_url")
 version = config.get("settings", "version")
 
 # Define the dashboard interface
@@ -325,6 +329,13 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
             # Calculate total for percentages
             total = country_counts['count'].sum()
             country_counts['percentage'] = (country_counts['count'] / total * 100).round(1)
+
+            # First sort by country name alphabetically (secondary sort)
+            country_counts = country_counts.sort_values('country')
+
+            # Then sort by count in descending order (primary sort)
+            # This ensures countries with the same count will be ordered alphabetically
+            country_counts = country_counts.sort_values(['count', 'country'], ascending=[False, True])
 
             # Get the maximum count for scaling the bars
             max_count = country_counts['count'].max()
