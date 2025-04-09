@@ -19,11 +19,6 @@ version = config.get("settings", "version")
 with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     demo.title = "Sparrow Analytics Dashboard"
 
-    # Set show_api=False to prevent API endpoint exposure
-    # This is used instead of api_name for older Gradio versions
-
-    # No dashboard title anymore
-
     # Time period selector
     with gr.Row():
         period_selector = gr.Radio(
@@ -466,7 +461,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
             metrics_html, inference_pages_html, model_usage_html,
             daily_events_plot, country_html
         ],
-        api_name=None  # Explicitly set to None to hide from API
+        api_name=False  # Explicitly set to None to hide from API
     )
 
     # Initialize dashboard on load
@@ -477,7 +472,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
             metrics_html, inference_pages_html, model_usage_html,
             daily_events_plot, country_html
         ],
-        api_name=None  # Explicitly set to None to hide from API
+        api_name=False  # Explicitly set to None to hide from API
     )
 
     # Footer with links and version
