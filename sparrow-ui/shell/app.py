@@ -601,8 +601,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
     gr.HTML(
         """
         <div id="desktop-message" style="margin:10px 0; padding:8px; background-color:#f8f9fa; border-left:4px solid #4CAF50; border-radius:4px;">
-            <p style="margin:0; font-weight:bold;">Dashboard Information</p>
-            <p style="margin:3px 0 0 0;">This dashboard provides analytics on Sparrow usage patterns. View document processing metrics, model usage trends, and geographical distribution of users.</p>
+            <p style="margin:0; font-weight:bold;">Data processing with ML, LLM and Vision LLM</p>
+            <p style="margin:3px 0 0 0;">Sparrow extracts structured data from documents, forms, and images with high accuracy. Process invoices, receipts, statements, and tables using on-device Vision LLM models or cloud GPU backends. Custom JSON schema extraction with validation.</p>
         </div>
         """
     )
