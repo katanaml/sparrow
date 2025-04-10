@@ -598,6 +598,15 @@ nav.fillable.svelte-a3xscf a.svelte-a3xscf {
 with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
     demo.title = "Sparrow"
 
+    gr.HTML(
+        """
+        <div id="desktop-message" style="margin:10px 0; padding:8px; background-color:#f8f9fa; border-left:4px solid #4CAF50; border-radius:4px;">
+            <p style="margin:0; font-weight:bold;">Dashboard Information</p>
+            <p style="margin:3px 0 0 0;">This dashboard provides analytics on Sparrow usage patterns. View document processing metrics, model usage trends, and geographical distribution of users.</p>
+        </div>
+        """
+    )
+
     # Log initial page load
     @demo.load(api_name=False)
     def on_page_load(request: gr.Request):
