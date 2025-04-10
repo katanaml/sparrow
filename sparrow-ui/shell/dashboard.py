@@ -19,8 +19,8 @@ version = config.get("settings", "version")
 with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     demo.title = "Sparrow Analytics Dashboard"
 
-    # Add CSS for mobile responsiveness
-    gr.HTML("""
+    # Combine CSS and responsive messaging for both desktop and mobile
+    responsive_layout = gr.HTML("""
     <style>
         /* Mobile-specific styles */
         @media (max-width: 767px) {
@@ -37,6 +37,10 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                 display: block !important;
                 margin-top: 10px !important;
                 margin-bottom: 10px !important;
+            }
+
+            #desktop-message {
+                display: none !important;
             }
 
             /* Force metrics container to vertical layout on mobile */
@@ -68,10 +72,14 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
             margin: 20px 0 10px 0;
         }
     </style>
-    """)
 
-    # Mobile message that appears only on small screens
-    gr.HTML("""
+    <!-- Desktop message - visible by default -->
+    <div id="desktop-message" style="margin:10px 0; padding:8px; background-color:#f8f9fa; border-left:4px solid #4CAF50; border-radius:4px;">
+        <p style="margin:0; font-weight:bold;">Dashboard Information</p>
+        <p style="margin:3px 0 0 0;">This dashboard provides analytics on Sparrow usage patterns. View document processing metrics, model usage trends, and geographical distribution of users.</p>
+    </div>
+
+    <!-- Mobile message - hidden by default -->
     <div id="mobile-message" style="display:none; margin:10px 0; padding:8px; background-color:#f8f9fa; border-left:4px solid #3498db; border-radius:4px;">
         <p style="margin:0; font-weight:bold;">Mobile View</p>
         <p style="margin:3px 0 0 0;">You're viewing a simplified dashboard. For the complete experience with all charts and metrics, please visit on a larger screen.</p>
