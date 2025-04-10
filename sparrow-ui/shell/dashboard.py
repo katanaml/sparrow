@@ -108,15 +108,25 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     </style>
 
     <!-- Desktop message - visible by default -->
-    <div id="desktop-message" style="margin:10px 0; padding:8px; background-color:#f8f9fa; border-left:4px solid #4CAF50; border-radius:4px;">
-        <p style="margin:0; font-weight:bold;">Dashboard Information</p>
-        <p style="margin:3px 0 0 0;">This dashboard provides analytics on Sparrow usage patterns. View document processing metrics, model usage trends, and geographical distribution of users.</p>
+    <div id="desktop-message" style="margin-top: -10px; padding: 15px; border-left: 4px solid var(--primary-500); border-radius: 6px; background-color: var(--background-fill-secondary);">
+        <div style="display: flex; align-items: flex-start;">
+            <div style="font-size: 24px; margin-right: 10px; color: var(--primary-500);">📈</div>
+            <div>
+                <p style="margin: 0; font-weight: 600; font-size: 16px; color: var(--primary-500);">Dashboard Information</p>
+                <p style="margin: 5px 0 0 0;">This dashboard provides analytics on Sparrow usage patterns. View document processing metrics, model usage trends, and geographical distribution of users.</p>
+            </div>
+        </div>
     </div>
-
+    
     <!-- Mobile message - hidden by default -->
-    <div id="mobile-message" style="display:none; margin:10px 0; padding:8px; background-color:#f8f9fa; border-left:4px solid #3498db; border-radius:4px;">
-        <p style="margin:0; font-weight:bold;">Mobile View</p>
-        <p style="margin:3px 0 0 0;">You're viewing a simplified dashboard. For the complete experience with all charts and metrics, please visit on a larger screen.</p>
+    <div id="mobile-message" style="display:none; margin-top: -10px; padding: 15px; border-left: 4px solid var(--primary-500); border-radius: 6px; background-color: var(--background-fill-secondary);">
+        <div style="display: flex; align-items: flex-start;">
+            <div style="font-size: 24px; margin-right: 10px; color: var(--primary-500);">📱</div>
+            <div>
+                <p style="margin: 0; font-weight: 600; font-size: 16px; color: var(--primary-500);">Mobile View</p>
+                <p style="margin: 5px 0 0 0;">You're viewing a simplified dashboard. For the complete experience with all charts and metrics, please visit on a larger screen.</p>
+            </div>
+        </div>
     </div>
     """)
 
