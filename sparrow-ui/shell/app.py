@@ -624,7 +624,7 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 label="Additional Options",
                 choices=["Tables Only", "Validation Off"],
                 type="value",
-                info="'Tables Only' improves structured tables processing, but try without if results are incomplete."
+                info="'Tables Only' improves structured tables processing, but try without if results are incomplete"
             )
             crop_size_comp = gr.Slider(
                 label="Crop Size",

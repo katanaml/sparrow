@@ -19,8 +19,67 @@ version = config.get("settings", "version")
 with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     demo.title = "Sparrow Analytics Dashboard"
 
+    # Add CSS for mobile responsiveness
+    gr.HTML("""
+    <style>
+        /* Mobile-specific styles */
+        @media (max-width: 767px) {
+            #period-selector, 
+            #document-size-container,
+            #model-usage-container,
+            #timeline-container,
+            #countries-container,
+            .plotly-chart {
+                display: none !important;
+            }
+
+            #mobile-message {
+                display: block !important;
+                margin-top: 10px !important;
+                margin-bottom: 10px !important;
+            }
+
+            /* Force metrics container to vertical layout on mobile */
+            #metrics-container {
+                flex-direction: column !important;
+                gap: 8px !important;
+                margin-top: 5px !important;
+            }
+
+            /* Stack metrics vertically on mobile */
+            #metrics-container > div {
+                flex: none !important;
+                width: 100% !important;
+                margin-bottom: 8px !important;
+            }
+
+            /* Reduce footer spacing on mobile */
+            .footer-container {
+                margin-top: 15px !important;
+            }
+        }
+
+        /* Make sure the footer is always visible regardless of screen size */
+        .footer-markdown p {
+            text-align: center;
+        }
+
+        .footer-markdown hr {
+            margin: 20px 0 10px 0;
+        }
+    </style>
+    """)
+
+    # Mobile message that appears only on small screens
+    gr.HTML("""
+    <div id="mobile-message" style="display:none; margin:10px 0; padding:8px; background-color:#f8f9fa; border-left:4px solid #3498db; border-radius:4px;">
+        <p style="margin:0; font-weight:bold;">Mobile View</p>
+        <p style="margin:3px 0 0 0;">You're viewing a simplified dashboard. For the complete experience with all charts and metrics, please visit on a larger screen.</p>
+    </div>
+    """)
+
     # Time period selector
-    with gr.Row():
+    with gr.Row(elem_id="period-selector"):
         period_selector = gr.Radio(
             label="Time Period",
             choices=["1week", "2weeks", "1month", "6months", "all"],
@@ -29,20 +88,22 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
         )
 
     # Key metrics at the top (HTML-based for better styling)
-    with gr.Row():
+    with gr.Row(elem_id="metrics-container"):
         metrics_html = gr.HTML()
 
     # First row - HTML visualizations for document size and model usage
     with gr.Row():
-        inference_pages_html = gr.HTML(label="Document Size Performance")
-        model_usage_html = gr.HTML(label="Model Usage")
+        with gr.Column(elem_id="document-size-container"):
+            inference_pages_html = gr.HTML(label="Document Size Performance")
+        with gr.Column(elem_id="model-usage-container"):
+            model_usage_html = gr.HTML(label="Model Usage")
 
     # Second row - Inference events timeline using Plotly
-    with gr.Row():
-        daily_events_plot = gr.Plot(label="Inference Events Timeline")
+    with gr.Row(elem_id="timeline-container", visible=True):
+        daily_events_plot = gr.Plot(label="Inference Events Timeline", elem_classes="plotly-chart")
 
     # Third row - Country distribution
-    with gr.Row():
+    with gr.Row(elem_id="countries-container"):
         country_html = gr.HTML(label="Countries")
 
 
@@ -87,9 +148,9 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                 # Replace model names with user-friendly names
                 friendly_name = "Standard model" if "Mistral" in top_model_name else "Advanced model" if "Qwen" in top_model_name else top_model_name
 
-        # Format key metrics as HTML
+        # Format key metrics as HTML with id attributes for JavaScript targeting
         metrics_html_content = f"""
-        <div style="display: flex; justify-content: space-between; gap: 16px; width: 100%; padding: 8px 0;">
+        <div id="metrics-container" style="display: flex; justify-content: space-between; gap: 16px; width: 100%; padding: 8px 0;">
             <div style="flex: 1; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); padding: 16px; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0,0,0,0.04);">
                 <div style="display: flex; align-items: center; margin-bottom: 8px;">
                     <div style="width: 28px; height: 28px; border-radius: 50%; background-color: #4ecdc4; display: flex; justify-content: center; align-items: center; margin-right: 12px;">
@@ -476,17 +537,18 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     )
 
     # Footer with links and version
-    gr.Markdown(
-        f"""
-        ---
-        <p style="text-align: center;">
-        Visit <a href="https://katanaml.io/" target="_blank">Katana ML</a> and <a href="https://github.com/katanaml/sparrow" target="_blank">Sparrow</a> GitHub for more details.
-        </p>
-        <p style="text-align: center;">
-        <strong>Version:</strong> {version}
-        </p>
-        """
-    )
+    with gr.Row(elem_id="footer-container", elem_classes="footer-container"):
+        gr.Markdown(
+            f"""
+            ---
+            <p style="text-align: center; margin-top: 8px;">
+            Visit <a href="https://katanaml.io/" target="_blank">Katana ML</a> and <a href="https://github.com/katanaml/sparrow" target="_blank">Sparrow</a> GitHub for more details.
+            </p>
+            <p style="text-align: center; margin-top: 5px;">
+            <strong>Version:</strong> {version}
+            </p>
+            """
+        )
 
 # To run this file directly for testing
 if __name__ == "__main__":
