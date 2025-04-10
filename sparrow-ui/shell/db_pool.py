@@ -255,12 +255,13 @@ def get_inference_logs(period="1week"):
 
         # Base query
         query = """
-            SELECT 
+            SELECT
                 TIMESTAMP as log_date,
                 COUNTRY_NAME,
                 INFERENCE_DURATION,
                 PAGE_COUNT,
-                MODEL_NAME
+                MODEL_NAME,
+                INFERENCE_HOST_IP
             FROM 
                 SPARROW.INFERENCE_LOGS
             WHERE 
