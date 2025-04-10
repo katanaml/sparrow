@@ -3,6 +3,10 @@ import pandas as pd
 import plotly.graph_objects as go
 import db_pool
 import configparser
+from datetime import datetime
+from rich import print
+import geoip2.database
+from pathlib import Path
 
 # Create a ConfigParser object and read settings
 config = configparser.ConfigParser()
@@ -12,9 +16,41 @@ config.read("config.properties")
 backend_url = config.get("settings", "backend_url")
 version = config.get("settings", "version")
 
+
+# GeoIP configuration
+# Sign up for a free account at MaxMind: https://dev.maxmind.com/geoip/geolite2-free-geolocation-data
+# Download the GeoLite2-Country database and place it in the same directory as this script
+GEOIP_DB_PATH = "GeoLite2-Country.mmdb"
+
+
+def fetch_geolocation(ip_address):
+    try:
+        if not Path(GEOIP_DB_PATH).exists():
+            return "Database not found"
+
+        with geoip2.database.Reader(GEOIP_DB_PATH) as reader:
+            response = reader.country(ip_address)
+            return response.country.name
+    except geoip2.errors.AddressNotFoundError:
+        return "Unknown"
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+
+def log_request(client_ip, source="General"):
+    country = fetch_geolocation(client_ip)
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_message = f"[{timestamp}] Source: {source}, IP: {client_ip}, Country: {country}"
+    print(log_message)
+
 # Define the dashboard interface
 with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     demo.title = "Sparrow Analytics Dashboard"
+
+    # Log initial page load
+    @demo.load(api_name=False)
+    def on_page_load(request: gr.Request):
+        log_request(request.client.host, "Dashboard Page Load")
 
     # Combine CSS and responsive messaging for both desktop and mobile
     responsive_layout = gr.HTML("""
