@@ -600,9 +600,14 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
 
     gr.HTML(
         """
-        <div id="desktop-message" style="margin:10px 0; padding:8px; background-color:#f8f9fa; border-left:4px solid #4CAF50; border-radius:4px;">
-            <p style="margin:0; font-weight:bold;">Data processing with ML, LLM and Vision LLM</p>
-            <p style="margin:3px 0 0 0;">Sparrow extracts structured data from documents, forms, and images with high accuracy. Process invoices, receipts, statements, and tables using on-device Vision LLM models or cloud GPU backends. Custom JSON schema extraction with validation.</p>
+        <div style="margin-top: -10px; padding: 15px; border-left: 4px solid var(--primary-500); border-radius: 6px; background-color: var(--background-fill-secondary);">
+            <div style="display: flex; align-items: flex-start;">
+                <div style="font-size: 24px; margin-right: 10px; color: var(--primary-500);">🚀</div>
+                <div>
+                    <p style="margin: 0; font-weight: 600; font-size: 16px; color: var(--primary-500);">Data processing with ML, LLM and Vision LLM</p>
+                    <p style="margin: 5px 0 0 0;">Sparrow extracts structured data from documents, forms, and images with high accuracy. Process invoices, receipts, statements, and tables using on-device Vision LLM models.</p>
+                </div>
+            </div>
         </div>
         """
     )
