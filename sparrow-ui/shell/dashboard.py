@@ -29,6 +29,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
             #model-usage-container,
             #timeline-container,
             #countries-container,
+            #unique-users-container,
             .plotly-chart {
                 display: none !important;
             }
@@ -110,15 +111,19 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     with gr.Row(elem_id="timeline-container", visible=True):
         daily_events_plot = gr.Plot(label="Inference Events Timeline", elem_classes="plotly-chart")
 
-    # Third row - Country distribution
+    # Third row - Country distribution (split into two columns)
     with gr.Row(elem_id="countries-container"):
-        country_html = gr.HTML(label="Countries")
+        with gr.Column():
+            country_html = gr.HTML(label="Inference Requests by Country")
+        with gr.Column(elem_id="unique-users-container"):
+            unique_users_html = gr.HTML(label="Unique Users by Country")
 
 
     # Function to process data and generate visualizations
     def update_dashboard(period):
         # Fetch data from database
         logs = db_pool.get_inference_logs(period)
+        unique_users_data = db_pool.get_unique_users_by_country(period)
 
         # If no data is available, return empty charts
         if not logs:
@@ -130,7 +135,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                 <p style="color: #6c757d; font-size: 16px;">No data available for the selected time period</p>
             </div>
             """
-            return [empty_metrics, empty_html, empty_html, empty_plot, empty_html]
+            return [empty_metrics, empty_html, empty_html, empty_plot, empty_html, empty_html]
 
         # Convert to DataFrame for easier manipulation
         df = pd.DataFrame(logs)
@@ -432,16 +437,15 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
             for _, row in country_counts.iterrows():
                 percent_width = min(95, (row['count'] / max_count) * 95) if max_count > 0 else 0
 
-                # Calculate a color based on the percentage (higher = more saturated)
-                hue = 200  # Blue hue
-                saturation = min(80, 30 + (row['percentage'] * 2))  # Increase saturation with percentage
-                lightness = max(40, 70 - (row['percentage'] * 1.5))  # Decrease lightness with percentage
+                # Use the same green color as in the Average Inference Duration chart (#1abc9c)
+                # Apply opacity variations based on the percentage for visual interest
+                opacity = min(1.0, 0.6 + (row['percentage'] / 100 * 0.4))  # ranges from 0.6 to 1.0 based on percentage
 
                 html += f"""
                 <div style="display: flex; align-items: center; width: 100%;">
                   <div style="min-width: 150px; width: 150px; font-weight: 500; color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{row['country']}">{row['country']}</div>
                   <div style="flex-grow: 1; display: flex; align-items: center; width: calc(100% - 150px);">
-                    <div style="height: 16px; width: {percent_width}%; background-color: hsl({hue}, {saturation}%, {lightness}%); border-radius: 4px;"></div>
+                    <div style="height: 16px; width: {percent_width}%; background-color: rgba(26, 188, 156, {opacity}); border-radius: 4px;"></div>
                     <span style="margin-left: 10px; white-space: nowrap; color: #555; font-size: 14px;">{row['count']:,} ({row['percentage']}%)</span>
                   </div>
                 </div>
@@ -460,6 +464,92 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
             country_html_content = html
         else:
             country_html_content = "<div style='text-align:center; padding: 20px;'>No country data available</div>"
+
+        # NEW: 4a. Unique Users by Country chart
+        unique_users_html_content = ""
+        if unique_users_data:
+            # Convert to DataFrame
+            unique_users_df = pd.DataFrame(unique_users_data)
+
+            # Calculate total unique users for percentages
+            total_unique = unique_users_df['unique_users'].sum() if 'unique_users' in unique_users_df.columns else 0
+
+            if total_unique > 0:
+                # Add percentage column
+                unique_users_df['percentage'] = (unique_users_df['unique_users'] / total_unique * 100).round(1)
+
+                # First sort by country name alphabetically (secondary sort)
+                unique_users_df = unique_users_df.sort_values('country_name')
+
+                # Then sort by unique_users count in descending order (primary sort)
+                # This ensures countries with the same count will be ordered alphabetically
+                unique_users_df = unique_users_df.sort_values(['unique_users', 'country_name'], ascending=[False, True])
+
+                # Get max count for scaling
+                max_unique = unique_users_df['unique_users'].max()
+
+                # The number of visible countries without scrolling (approximately)
+                visible_without_scroll = 10
+                total_countries = len(unique_users_df)
+
+                # Create HTML for the visualization with the same style as country_html
+                html = """
+                <div style="padding: 20px; font-family: system-ui, -apple-system, sans-serif;">
+                  <h3 style="margin-top: 0; margin-bottom: 15px; color: #333;">Unique Users by Country</h3>
+
+                  <!-- If there are more countries than can be displayed, show scroll indicator -->
+                  {scroll_indicator}
+
+                  <div style="max-height: 350px; overflow-y: auto; padding-right: 10px; margin-bottom: 10px; border: 1px solid rgba(0,0,0,0.05); border-radius: 6px; padding: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 8px; max-width: 100%;">
+                """.format(
+                    scroll_indicator=f"""
+                    <div style="margin-bottom: 8px; font-size: 13px; color: #555; display: flex; align-items: center;">
+                        <span style="margin-right: 5px;">Showing all {total_countries} countries</span>
+                        <span style="color: #9b59b6; font-size: 18px;">↓</span>
+                        <span style="color: #777; font-style: italic; margin-left: 5px;">Scroll to see more</span>
+                    </div>
+                    """ if total_countries > visible_without_scroll else ""
+                )
+
+                # Create entry for each country
+                for _, row in unique_users_df.iterrows():
+                    country_name = row['country_name']
+                    unique_count = row['unique_users']
+                    percentage = row['percentage']
+                    percent_width = min(95, (unique_count / max_unique) * 95) if max_unique > 0 else 0
+
+                    # Calculate a color based on the percentage (higher = more saturated)
+                    # Use a different hue (purple) to distinguish from the Inference Requests chart
+                    hue = 270  # Purple hue
+                    saturation = min(80, 30 + (percentage * 2))  # Increase saturation with percentage
+                    lightness = max(40, 70 - (percentage * 1.5))  # Decrease lightness with percentage
+
+                    html += f"""
+                    <div style="display: flex; align-items: center; width: 100%;">
+                      <div style="min-width: 150px; width: 150px; font-weight: 500; color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{country_name}">{country_name}</div>
+                      <div style="flex-grow: 1; display: flex; align-items: center; width: calc(100% - 150px);">
+                        <div style="height: 16px; width: {percent_width}%; background-color: hsl({hue}, {saturation}%, {lightness}%); border-radius: 4px;"></div>
+                        <span style="margin-left: 10px; white-space: nowrap; color: #555; font-size: 14px;">{unique_count:,} ({percentage}%)</span>
+                      </div>
+                    </div>
+                    """
+
+                html += """
+                    </div>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; color: #777;">
+                    <div>Based on {count} distinct IP addresses</div>
+                    <div>{num_countries} countries total</div>
+                  </div>
+                </div>
+                """.format(count=total_unique, num_countries=len(unique_users_df))
+
+                unique_users_html_content = html
+            else:
+                unique_users_html_content = "<div style='text-align:center; padding: 20px;'>No unique users data available</div>"
+        else:
+            unique_users_html_content = "<div style='text-align:center; padding: 20px;'>No unique users data available</div>"
 
         # 4. Model Usage as HTML visualization matching page count style
         model_html = ""
@@ -518,7 +608,8 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
             duration_html,
             model_html,
             events_plot,
-            country_html_content
+            country_html_content,
+            unique_users_html_content
         ]
 
 
@@ -528,7 +619,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
         inputs=[period_selector],
         outputs=[
             metrics_html, inference_pages_html, model_usage_html,
-            daily_events_plot, country_html
+            daily_events_plot, country_html, unique_users_html
         ],
         api_name=False  # Explicitly set to None to hide from API
     )
@@ -539,7 +630,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
         inputs=[period_selector],
         outputs=[
             metrics_html, inference_pages_html, model_usage_html,
-            daily_events_plot, country_html
+            daily_events_plot, country_html, unique_users_html
         ],
         api_name=False  # Explicitly set to None to hide from API
     )
