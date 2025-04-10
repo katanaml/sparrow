@@ -118,6 +118,8 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
 
     # Function to process data and generate visualizations
     def update_dashboard(period):
+        # Default to "1week" if period is None or invalid
+        period = period or "1week"
         # Fetch data from database
         logs = db_pool.get_inference_logs(period)
         unique_users_data = db_pool.get_unique_users_by_country(period)
@@ -624,7 +626,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     # Initialize dashboard on load
     demo.load(
         update_dashboard,
-        inputs=[period_selector],
+        inputs=[gr.State(value="1week")],
         outputs=[
             metrics_html, inference_pages_html, model_usage_html,
             daily_events_plot, country_html, unique_users_html
