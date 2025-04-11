@@ -1,5 +1,12 @@
 # ChangeLog
 
+## [v.0.4.1] - 2025-04-11
+
+## Sparrow UI Dashboard
+
+Added dashboard to Sparrow UI to visualize system performance
+
+
 ## [v.0.4.0] - 2025-03-29
 
 ## Free tier and new vision backend models
