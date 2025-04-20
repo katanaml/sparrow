@@ -3,13 +3,13 @@ rich
 typer[all]
 fastapi==0.115.12
 uvicorn[standard]
-sparrow-parse==1.0.2
+sparrow-parse==1.0.3
 genson==1.3.0
 jsonschema==4.23.0
 python-dotenv
 python-box
 torchvision
-oracledb==3.0.0
+oracledb==3.1.0
 # git+https://github.com/huggingface/transformers.git
 
 
