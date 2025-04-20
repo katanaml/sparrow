@@ -106,31 +106,70 @@ class MLXInference(ModelInference):
         :param mode: Optional mode for inference ("static" for simple JSON output).
         :return: List of processed model responses.
         """
+        # Handle static mode
         if mode == "static":
             return [self.get_simple_json()]
 
         # Load the model and processor
         model, processor = self._load_model_and_processor(self.model_name)
         config = model.config
+        
+        # Determine if we're doing text-only or image-based inference
+        is_text_only = input_data[0].get("file_path") is None
+        
+        if is_text_only:
+            # Text-only inference
+            messages = input_data[0]["text_input"]
+            response = self._generate_text_response(model, processor, config, messages)
+            results = [self.process_response(response)]
+            print("Agent inference completed successfully")
+        else:
+            # Image-based inference
+            file_paths = self._extract_file_paths(input_data)
+            results = self._process_images(model, processor, config, file_paths, input_data)
+        
+        return results
 
-        # Prepare absolute file paths
-        file_paths = self._extract_file_paths(input_data)
+    def _generate_text_response(self, model, processor, config, messages):
+        """
+        Generate a text response for text-only inputs.
+        
+        :param model: The loaded model
+        :param processor: The loaded processor
+        :param config: Model configuration
+        :param messages: Input messages
+        :return: Generated response
+        """
+        prompt = apply_chat_template(processor, config, messages)
+        return generate(
+            model,
+            processor,
+            prompt,
+            max_tokens=4000,
+            temperature=0.0,
+            verbose=False
+        )
 
+    def _process_images(self, model, processor, config, file_paths, input_data):
+        """
+        Process images and generate responses for each.
+        
+        :param model: The loaded model
+        :param processor: The loaded processor
+        :param config: Model configuration
+        :param file_paths: List of image file paths
+        :param input_data: Original input data
+        :return: List of processed responses
+        """
         results = []
         for file_path in file_paths:
             image, width, height = self.load_image_data(file_path)
-
-            # Prepare messages for the chat model
-            if "mistral" in self.model_name.lower():
-                messages = input_data[0]["text_input"]
-            else:
-                messages = [
-                    {"role": "system", "content": "You are an expert at extracting structured text from image documents."},
-                    {"role": "user", "content": input_data[0]["text_input"]},
-                ]
-
+            
+            # Prepare messages based on model type
+            messages = self._prepare_messages(input_data, file_path)
+            
             # Generate and process response
-            prompt = apply_chat_template(processor, config, messages)  # Assuming defined
+            prompt = apply_chat_template(processor, config, messages)
             response = generate(
                 model,
                 processor,
@@ -142,10 +181,25 @@ class MLXInference(ModelInference):
                 verbose=False
             )
             results.append(self.process_response(response))
-
-            print("Inference completed successfully for: ", file_path)
-
+            print(f"Inference completed successfully for: {file_path}")
+        
         return results
+
+    def _prepare_messages(self, input_data, file_path):
+        """
+        Prepare the appropriate messages based on the model type.
+        
+        :param input_data: Original input data
+        :param file_path: Current file path being processed
+        :return: Properly formatted messages
+        """
+        if "mistral" in self.model_name.lower():
+            return input_data[0]["text_input"]
+        else:
+            return [
+                {"role": "system", "content": "You are an expert at extracting structured text from image documents."},
+                {"role": "user", "content": input_data[0]["text_input"]},
+            ]
 
     @staticmethod
     def _extract_file_paths(input_data):

@@ -25,11 +25,21 @@ class VLLMExtractor(object):
         if debug:
             print("Input data:", input_data)
 
+        # Handle both missing file_path and file_path=None as text-only inference
+        is_text_only = "file_path" not in input_data[0] or input_data[0]["file_path"] is None
+
+        if is_text_only:
+            # Ensure file_path exists and is None for consistency
+            input_data[0]["file_path"] = None
+            results = model_inference_instance.inference(input_data)
+            return results, 0
+
+        # Document data extraction inference (file_path exists and is not None)
         file_path = input_data[0]["file_path"]
         if self.is_pdf(file_path):
             return self._process_pdf(model_inference_instance, input_data, tables_only, crop_size, debug, debug_dir, mode)
-
-        return self._process_non_pdf(model_inference_instance, input_data, tables_only, crop_size, debug, debug_dir)
+        else:
+            return self._process_non_pdf(model_inference_instance, input_data, tables_only, crop_size, debug, debug_dir)
 
 
     def _process_pdf(self, model_inference_instance, input_data, tables_only, crop_size, debug, debug_dir, mode):
@@ -223,6 +233,13 @@ if __name__ == "__main__":
     #         "text_input": "retrieve all data. return response in JSON format"
     #     }
     # ]
+    #
+    # # input_data = [
+    # #     {
+    # #         "file_path": None,
+    # #         "text_input": "why earth is spinning around the sun?"
+    # #     }
+    # # ]
     #
     # # Now you can run inference without knowing which implementation is used
     # results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, tables_only=False,
