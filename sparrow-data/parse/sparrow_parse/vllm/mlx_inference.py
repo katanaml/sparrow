@@ -121,8 +121,7 @@ class MLXInference(ModelInference):
             # Text-only inference
             messages = input_data[0]["text_input"]
             response = self._generate_text_response(model, processor, config, messages)
-            results = [self.process_response(response)]
-            print("Agent inference completed successfully")
+            results = [response]
         else:
             # Image-based inference
             file_paths = self._extract_file_paths(input_data)
@@ -141,7 +140,7 @@ class MLXInference(ModelInference):
         :return: Generated response
         """
         prompt = apply_chat_template(processor, config, messages)
-        return generate(
+        response =  generate(
             model,
             processor,
             prompt,
@@ -149,6 +148,8 @@ class MLXInference(ModelInference):
             temperature=0.0,
             verbose=False
         )
+        print("Inference completed successfully")
+        return response
 
     def _process_images(self, model, processor, config, file_paths, input_data):
         """
