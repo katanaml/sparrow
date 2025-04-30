@@ -29,6 +29,9 @@ def get_pipeline(pipeline_name: str) -> Pipeline:
     if pipeline_name == "sparrow-parse":
         from pipelines.sparrow_parse.sparrow_parse import SparrowParsePipeline
         return SparrowParsePipeline()
+    elif pipeline_name == "sparrow-processor":
+        from pipelines.sparrow_processor.sparrow_processor import SparrowProcessorPipeline
+        return SparrowProcessorPipeline()
     elif pipeline_name == "stocks":
         from pipelines.instructor.stocks import Stocks
         return Stocks()

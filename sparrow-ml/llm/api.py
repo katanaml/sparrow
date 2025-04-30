@@ -1,6 +1,6 @@
 from fastapi import FastAPI, File, UploadFile, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from engine import run_from_api_engine
+from engine import run_from_api_engine, run_from_api_engine_text
 import uvicorn
 import warnings
 from typing import Annotated, Optional
@@ -235,6 +235,93 @@ async def inference(
 
     if debug:
         print(f"\nJSON response:\n")
+        print(answer)
+
+    return answer
+
+
+@app.post("/api/v1/sparrow-llm/text-inference", tags=["LLM Inference"])
+async def text_inference(
+        query: Annotated[str, Form()],
+        pipeline: Annotated[str, Form()],
+        options: Annotated[Optional[str], Form()] = None,
+        debug_dir: Annotated[Optional[str], Form()] = None,
+        debug: Annotated[Optional[bool], Form()] = False,
+        sparrow_key: Annotated[Optional[str], Form()] = None,
+        client_ip: Annotated[Optional[str], Form()] = "127.0.0.1",  # Default to localhost
+        country: Annotated[Optional[str], Form()] = "Unknown"      # Default to Unknown
+        ):
+    """
+    Process text-only LLM inference without document upload.
+    """
+    try:
+        # Handle protected access checking
+        protected_access = config.get_bool('settings', 'protected_access', False)
+        if protected_access:
+            # Check if key is provided - common for both database and config validation
+            if not sparrow_key:
+                raise HTTPException(
+                    status_code=403,
+                    detail="Sparrow key is required for protected access."
+                )
+
+            # Check if database is enabled
+            use_database = config.get_bool('settings', 'use_database', False)
+
+            if use_database:
+                # Use the database function to validate and increment the key
+                is_valid = db_pool.validate_and_increment_key(sparrow_key)
+
+                if not is_valid:
+                    raise HTTPException(
+                        status_code=403,
+                        detail="Invalid, disabled, or usage limit exceeded for key."
+                    )
+            else:
+                # Use the config-based validation
+                validate_key_from_config(config, sparrow_key)
+
+        options_arr = [param.strip() for param in options.split(',')] if options is not None else None
+
+        # Extract the model name from options_arr (it's the second element)
+        model_name = None
+        if options_arr and len(options_arr) > 1:
+            model_name = options_arr[1]
+
+        # Log the start of inference processing and get the ID
+        log_id = db_pool.log_inference_start(
+            client_ip=client_ip,
+            country_name=country,
+            sparrow_key=sparrow_key,
+            page_count=1,  # Text inference is counted as one page
+            model_name=model_name
+        )
+
+        # Start timing
+        start_time = time.time()
+
+        # Call the engine to process the text-only request
+        answer = await run_from_api_engine_text(
+            pipeline, query, options_arr, debug_dir, debug
+        )
+
+        # Calculate duration
+        duration = time.time() - start_time
+
+        # Update the record with actual duration
+        db_pool.update_inference_duration(log_id, duration)
+    except ValueError as e:
+        raise HTTPException(status_code=418, detail=str(e))
+
+    try:
+        if isinstance(answer, (str, bytes, bytearray)):
+            answer = json.loads(answer)
+    except json.JSONDecodeError as e:
+        # Keep the text answer as is if it's not valid JSON
+        pass
+
+    if debug:
+        print(f"\nSparrow Response:\n")
         print(answer)
 
     return answer

@@ -33,7 +33,7 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
         answer = rag.run_pipeline(user_selected_pipeline, query, file_path, options, crop_size, page_type,
                                   debug_dir, debug, False)
 
-        print(f"\nJSON response:\n")
+        print(f"\nSparrow response:\n")
         print(answer)
     except ValueError as e:
         print(f"Caught an exception: {e}")
@@ -57,6 +57,32 @@ async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_s
         else:
             answer = rag.run_pipeline(user_selected_pipeline, query, None, options_arr, crop_size, page_type,
                                       debug_dir, debug, False)
+    except ValueError as e:
+        raise e
+
+    return answer
+
+
+# Add a new function for text-only processing
+async def run_from_api_engine_text(user_selected_pipeline, query, options_arr, debug_dir, debug):
+    """
+    Text-only version of run_from_api_engine that doesn't require a file.
+    """
+    try:
+        rag = get_pipeline(user_selected_pipeline)
+
+        # Call run_pipeline with file_path=None for text-only processing
+        answer = rag.run_pipeline(
+            user_selected_pipeline,
+            query,
+            None,  # No file path for text-only queries
+            options_arr,
+            None,  # No crop_size needed
+            None,  # No page_type needed
+            debug_dir,
+            debug,
+            False
+        )
     except ValueError as e:
         raise e
 
