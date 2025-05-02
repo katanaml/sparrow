@@ -135,19 +135,22 @@ def release_connection(connection):
             print(f"Error releasing connection: {e}")
 
 
-def log_inference_start(client_ip, country_name=None, sparrow_key=None, page_count=1, model_name=None):
+def log_inference_start(client_ip, country_name, sparrow_key, page_count, model_name,
+                        inference_type='DATA_EXTRACTION', source='UI'):
     """
-    Logs the start of an inference request to INFERENCE_LOGS table using a PL/SQL function.
+    Logs the start of an inference request to the database.
 
     Args:
-        client_ip (str): The client's IP address
-        country_name (str, optional): The country determined from the IP address
-        sparrow_key (str, optional): The sparrow key used for this request
-        page_count (int, optional): Number of pages processed in this request, defaults to 1
-        model_name (str, optional): Name of the model used for inference
+        client_ip (str): Client IP address
+        country_name (str): Country name derived from IP
+        sparrow_key (str): Sparrow key used for the request
+        page_count (int): Number of pages in the document
+        model_name (str): Name of the model used for inference
+        inference_type (str): Type of inference - 'DATA_EXTRACTION' or 'INSTRUCTION_PROCESSING'
+        source (str): Source of the request - 'UI' or 'API'
 
     Returns:
-        int or None: The log ID if successfully logged, None otherwise
+        int: Log ID if successful, None otherwise
     """
     # If database is not enabled, return None
     global database_enabled
@@ -160,32 +163,24 @@ def log_inference_start(client_ip, country_name=None, sparrow_key=None, page_cou
         connection = get_connection_from_pool()
         cursor = connection.cursor()
 
-        # Call the PL/SQL function to handle everything in one call
+        # Call the PL/SQL function to log the request
         out_var = cursor.var(int)
-
         cursor.execute(
-            "BEGIN :result := log_inference_request(:ip, :country, :key, :page_count, :model_name); END;",
+            "BEGIN :result := log_inference_request(:ip, :country, :key, :pages, :model, :type, :source); END;",
             result=out_var,
             ip=client_ip,
             country=country_name,
             key=sparrow_key,
-            page_count=page_count,
-            model_name=model_name
+            pages=page_count,
+            model=model_name,
+            type=inference_type,
+            source=source
         )
 
-        # Get the result - handle if it returns a list
-        log_id_value = out_var.getvalue()
-        if isinstance(log_id_value, list) and len(log_id_value) > 0:
-            log_id = log_id_value[0]
-        else:
-            log_id = log_id_value
-
-        # Commit the transaction
-        connection.commit()
-
+        log_id = out_var.getvalue()
         cursor.close()
-
         return log_id
+
     except Exception as e:
         print(f"Error logging inference start: {str(e)}")
         return None

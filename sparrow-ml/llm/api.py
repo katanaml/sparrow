@@ -209,7 +209,9 @@ async def inference(
             country_name=country,
             sparrow_key=sparrow_key,
             page_count=page_count,
-            model_name=model_name
+            model_name=model_name,
+            inference_type='DATA_EXTRACTION',
+            source='UI'
         )
 
         # Start timing
@@ -293,8 +295,10 @@ async def instruction_inference(
             client_ip=client_ip,
             country_name=country,
             sparrow_key=sparrow_key,
-            page_count=1,  # Instruction inference is counted as one page
-            model_name=model_name
+            page_count=1,  # Text inference is counted as one page
+            model_name=model_name,
+            inference_type='INSTRUCTION_PROCESSING',
+            source='UI'
         )
 
         # Start timing
