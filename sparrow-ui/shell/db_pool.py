@@ -232,6 +232,7 @@ def get_inference_logs(period="1week"):
     """
     Fetch inference logs from the database for a specified time period,
     excluding records with SPARROW_KEY_ID = 1 and COUNTRY_NAME that is 'Unknown' or NULL.
+    Only includes records with INFERENCE_TYPE = 'DATA_EXTRACTION'.
 
     Args:
         period (str): Time period to fetch data for.
@@ -269,6 +270,7 @@ def get_inference_logs(period="1week"):
                 AND COUNTRY_NAME IS NOT NULL 
                 AND COUNTRY_NAME != 'Unknown' 
                 AND COUNTRY_NAME != 'Lithuania'
+                AND INFERENCE_TYPE = 'DATA_EXTRACTION'
         """
 
         # Add time period filter if not 'all'
@@ -314,6 +316,7 @@ def get_unique_users_by_country(period="1week"):
     Fetch count of unique users (by IP address) per country from the database
     for a specified time period, excluding records with SPARROW_KEY_ID = 1
     and COUNTRY_NAME that is 'Unknown' or NULL.
+    Only includes records with INFERENCE_TYPE = 'DATA_EXTRACTION'.
 
     Args:
         period (str): Time period to fetch data for.
@@ -347,6 +350,7 @@ def get_unique_users_by_country(period="1week"):
                 AND COUNTRY_NAME IS NOT NULL 
                 AND COUNTRY_NAME != 'Unknown' 
                 AND COUNTRY_NAME != 'Lithuania'
+                AND INFERENCE_TYPE = 'DATA_EXTRACTION'
         """
 
         # Add time period filter if not 'all'
