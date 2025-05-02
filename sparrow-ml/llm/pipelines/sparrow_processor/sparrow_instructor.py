@@ -46,7 +46,7 @@ def subprocess_inference(config, input_data, debug_dir, debug):
     return llm_output, num_pages
 
 
-class SparrowProcessorPipeline(Pipeline):
+class SparrowInstructorPipeline(Pipeline):
 
     def __init__(self):
         pass

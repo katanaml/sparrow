@@ -1,6 +1,6 @@
 from fastapi import FastAPI, File, UploadFile, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from engine import run_from_api_engine, run_from_api_engine_text
+from engine import run_from_api_engine, run_from_api_engine_instruction
 import uvicorn
 import warnings
 from typing import Annotated, Optional
@@ -240,8 +240,8 @@ async def inference(
     return answer
 
 
-@app.post("/api/v1/sparrow-llm/text-inference", tags=["LLM Inference"])
-async def text_inference(
+@app.post("/api/v1/sparrow-llm/instruction-inference", tags=["LLM Inference"])
+async def instruction_inference(
         query: Annotated[str, Form()],
         pipeline: Annotated[str, Form()],
         options: Annotated[Optional[str], Form()] = None,
@@ -252,7 +252,7 @@ async def text_inference(
         country: Annotated[Optional[str], Form()] = "Unknown"      # Default to Unknown
         ):
     """
-    Process text-only LLM inference without document upload.
+    Process instruction-only LLM inference without document upload.
     """
     try:
         # Handle protected access checking
@@ -293,15 +293,15 @@ async def text_inference(
             client_ip=client_ip,
             country_name=country,
             sparrow_key=sparrow_key,
-            page_count=1,  # Text inference is counted as one page
+            page_count=1,  # Instruction inference is counted as one page
             model_name=model_name
         )
 
         # Start timing
         start_time = time.time()
 
-        # Call the engine to process the text-only request
-        answer = await run_from_api_engine_text(
+        # Call the engine to process the instruction-only request
+        answer = await run_from_api_engine_instruction(
             pipeline, query, options_arr, debug_dir, debug
         )
 

@@ -63,19 +63,19 @@ async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_s
     return answer
 
 
-# Add a new function for text-only processing
-async def run_from_api_engine_text(user_selected_pipeline, query, options_arr, debug_dir, debug):
+# Add a new function for instruction-only processing
+async def run_from_api_engine_instruction(user_selected_pipeline, query, options_arr, debug_dir, debug):
     """
-    Text-only version of run_from_api_engine that doesn't require a file.
+    Instruction-only version of run_from_api_engine that doesn't require a file.
     """
     try:
         rag = get_pipeline(user_selected_pipeline)
 
-        # Call run_pipeline with file_path=None for text-only processing
+        # Call run_pipeline with file_path=None for instruction-only processing
         answer = rag.run_pipeline(
             user_selected_pipeline,
             query,
-            None,  # No file path for text-only queries
+            None,  # No file path for instruction-only queries
             options_arr,
             None,  # No crop_size needed
             None,  # No page_type needed
