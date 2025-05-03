@@ -549,6 +549,67 @@ def run_inference(file_filepath, query, key, options, crop_size, friendly_model_
             os.remove(file_path)
 
 
+def explain_result(json_data, key, client_ip, model_name):
+    """
+    Makes a REST call to the instruction-inference endpoint to explain JSON data.
+
+    Args:
+        json_data: The JSON data to explain
+        key: Sparrow key for API authentication
+        client_ip: Client IP address
+        model_name: Model name selected for inference
+
+    Returns:
+        str: Markdown-formatted explanation from the LLM
+    """
+    try:
+        # Format the instruction and payload for the LLM
+        json_str = json.dumps(json_data, indent=2) if not isinstance(json_data, str) else json_data
+        query = f"instruction: summarize this json data, payload: {json_str}"
+
+        # Get model options from the same source as run_inference
+        # Use the selected model's backend options via the friendly name
+        final_options = model_options.get(model_name, model_options[friendly_names[0]])
+
+        # Prepare the form data for the POST request exactly like in run_inference
+        data = {
+            'query': query,
+            'pipeline': 'sparrow-instructor',
+            'options': final_options,
+            'debug_dir': '',
+            'debug': 'false',
+            'sparrow_key': key,
+            'client_ip': client_ip,
+            'country': fetch_geolocation(client_ip)
+        }
+
+        # Make the API call
+        instruction_url = config.get("settings", "backend_url").replace("/inference", "/instruction-inference")
+
+        # Perform the POST request
+        response = requests.post(
+            instruction_url,
+            headers={'accept': 'application/json'},
+            data=data
+        )
+
+        # Process the response
+        if response.status_code == 200:
+            result = response.json() if response.content else "No explanation generated."
+
+            # If the result is a string, return it directly
+            if isinstance(result, str):
+                return result
+
+            # Otherwise, return the result (which might be JSON or text)
+            return result
+        else:
+            return f"Error: Failed to generate explanation. Status code: {response.status_code}\n\nDetails: {response.text}"
+
+    except Exception as e:
+        return f"Error generating explanation: {str(e)}"
+
+
 # Initialize the temp cleaner
 temp_cleaner = GradioTempCleaner(
     max_age_hours=2,             # Remove files older than 2 hours, test with 1/60 for 1 minute
@@ -695,6 +756,16 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 min_height=1022
             )
 
+            explain_btn = gr.Button(
+                value="Summarize this result",
+                variant="secondary",
+                visible=False
+            )
+
+            explanation_text = gr.Markdown(
+                visible=False
+            )
+
 
     # Handler functions with logging
     def on_example_select(selected_example, request: gr.Request):
@@ -720,6 +791,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                     gr.update(value=example[2]),  # query_input
                     gr.update(value=[example[3]] if example[3] else []),  # options_select
                     gr.update(value=0),  # crop_size
+                    gr.update(visible=False),  # explain_btn
+                    gr.update(visible=False)  # explanation_text
                 )
 
         # Default return if no match found
@@ -729,6 +802,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             gr.update(value=""),  # query_input
             gr.update(value=[]),  # options_select
             gr.update(value=0),  # crop_size
+            gr.update(visible=False),  # explain_btn
+            gr.update(visible=False)  # explanation_text
         )
 
 
@@ -762,9 +837,20 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 gr.update(value=""),  # query_input
                 gr.update(value=[]),  # options_select
                 gr.update(value=0),  # crop_size
-                gr.update(value=None)  # example_radio
+                gr.update(value=None),  # example_radio
+                gr.update(visible=False),  # explain_btn
+                gr.update(visible=False)  # explanation_text
             )
-        return [gr.update() for _ in range(4)]
+        else:
+            # When a new file is uploaded, also hide explain components
+            return (
+                gr.update(),  # query_input
+                gr.update(),  # options_select
+                gr.update(),  # crop_size
+                gr.update(),  # example_radio
+                gr.update(visible=False),  # explain_btn
+                gr.update(visible=False)  # explanation_text
+            )
 
 
     def run_inference_wrapper(input_file, query_input, key_input, options_select, crop_size, model_name, request: gr.Request):
@@ -779,7 +865,50 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
         else:
             log_request(request.client.host, "Inference Request - No file")
 
-        return run_inference(input_file, query_input, key_input, options_select, crop_size, model_name, request.client.host)
+        # Get inference result
+        result = run_inference(input_file, query_input, key_input, options_select, crop_size, model_name, request.client.host)
+
+        # If result is valid, show the explain button
+        explain_visible = False
+        if result is not None and not (isinstance(result, dict) and result.get("error")):
+            explain_visible = True
+
+        return result, gr.update(visible=explain_visible, interactive=True)
+
+
+    def explain_result_wrapper(json_output, key_input, model_dropdown_comp, request: gr.Request):
+        """Wrapper function that calls the standalone explain_result function"""
+        log_request(request.client.host, "Explanation request")
+
+        # Create a nicer HTML-based loading indicator
+        loading_html = """
+        <div style="text-align: center; padding: 2rem 1rem;">
+          <div style="display: inline-block; width: 40px; height: 40px; border: 3px solid #f3f3f3; 
+               border-radius: 50%; border-top-color: var(--primary-600); 
+               animation: spin 1s ease-in-out infinite;"></div>
+          <h3 style="margin-top: 1rem; color: var(--primary-600);">Analyzing Data</h3>
+          <p style="color: var(--neutral-700);">The LLM is generating an explanation of your data. This typically takes few minutes.</p>
+        </div>
+        <style>
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+        </style>
+        """
+
+        # First, update with loading message
+        yield gr.update(visible=True, value=loading_html), gr.update(interactive=False)
+
+        # Call explain_result
+        explanation = explain_result(
+            json_output,
+            key_input,
+            request.client.host,
+            model_dropdown_comp
+        )
+
+        # Update with the final explanation
+        yield gr.update(visible=True, value=explanation), gr.update(interactive=False)
 
 
     # Connect components with updated handlers
@@ -791,7 +920,9 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             output_json,
             query_input_comp,
             options_select_comp,
-            crop_size_comp
+            crop_size_comp,
+            explain_btn,
+            explanation_text
         ],
         api_name=False
     )
@@ -814,7 +945,9 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             query_input_comp,
             options_select_comp,
             crop_size_comp,
-            example_radio
+            example_radio,
+            explain_btn,
+            explanation_text
         ],
         api_name=False
     )
@@ -829,7 +962,18 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             crop_size_comp,
             model_dropdown_comp
         ],
-        outputs=[output_json],
+        outputs=[output_json, explain_btn],
+        api_name=False
+    )
+
+    explain_btn.click(
+        explain_result_wrapper,
+        inputs=[
+            output_json,
+            key_input_comp,
+            model_dropdown_comp,
+        ],
+        outputs=[explanation_text, explain_btn],
         api_name=False
     )
 

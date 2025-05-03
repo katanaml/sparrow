@@ -177,6 +177,8 @@ def log_inference_start(client_ip, country_name, sparrow_key, page_count, model_
             source=source
         )
 
+        connection.commit()
+
         log_id = out_var.getvalue()
         cursor.close()
         return log_id
