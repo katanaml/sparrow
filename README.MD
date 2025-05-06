@@ -429,6 +429,12 @@ The result of 2 + 2 is:
 
 Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the plugin to be used for the inference. By default, `sparrow-parse` pipeline is used.
 
+Sparrow provides two endpoints - `inference` and `instruction-inference`.
+
+Endpoint `inference` is used to run document data extraction, it accepts document and JSON query.
+
+Endpoint `instruction-inference` accepts text instruction and payload. This endpoint can be used to summarise, validate and run other tasks with text payload.
+
 To set this up:
 
 1. Start the Endpoint
@@ -566,6 +572,23 @@ Sparrow Parse pipeline supports multi-page PDF documents. You can pass PDF docum
         "page": 2
     }
 ]
+```
+
+✅ `sparrow-instructor` pipeline. This pipeline runs locally with Apple MLX backend.
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8002/api/v1/sparrow-llm/instruction-inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -d 'query=instruction: do arithmetic operation, payload: 2+2=
+      &pipeline=sparrow-instructor
+      &options=mlx,mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit
+      &debug_dir=
+      &debug=false
+      &sparrow_key=
+      &client_ip=
+      &country='
 ```
 
 ## 🤖 Sparrow Agent
