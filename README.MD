@@ -15,6 +15,8 @@ Data processing with ML, LLM and Vision LLM
 
 Sparrow is an innovative open-source solution for efficient data extraction and processing from various documents and images. It seamlessly handles forms, bank statements, invoices, receipts, and other unstructured data sources (any type of document layout and complexity). Sparrow stands out with its modular architecture, offering independent services and pipelines all optimized for robust performance. One of the critical functionalities of Sparrow - pluggable architecture. You can easily integrate and run data extraction pipelines using Sparrow Parse (with vision-language models support) or Instructor. Sparrow enables local LLM data extraction pipelines through various backends, such as vLLM, Ollama, PyTorch or Apple MLX. Sparrow Parse with VL model can run either on premise, or it can execute inference on cloud GPU. With Sparrow solution you get API, which helps to process and transform your data into structured output, ready to be integrated with custom workflows.
 
+Sparrows supports instruction calling with text based payload. This allows to go beyond text data extraction use cases and apply Sparrow in various scenarios related to data processing, validation and workflow decision making.
+
 Sparrow Pipelines - with Sparrow you can build independent LLM pipelines, and use API to invoke them from your system.
 
 ![Sparrow](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_architecture.jpeg)
