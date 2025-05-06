@@ -411,7 +411,7 @@ Answer:
 The stock price of the Oracle Corporation is 186.3699951171875. USD
 ```
 
-✅ LLM instruction calling:
+✅ LLM instruction calling with Sparrow Instructor pipeline:
 
 ```
 ./sparrow.sh "instruction: do arithmetic operation, payload: 2+2=" --pipeline "sparrow-instructor" --options mlx --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit
@@ -419,7 +419,7 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
 
 Answer:
 
-```json
+```
 The result of 2 + 2 is:
 
 4
