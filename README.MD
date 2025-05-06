@@ -411,6 +411,20 @@ Answer:
 The stock price of the Oracle Corporation is 186.3699951171875. USD
 ```
 
+✅ LLM instruction calling:
+
+```
+./sparrow.sh "instruction: do arithmetic operation, payload: 2+2=" --pipeline "sparrow-instructor" --options mlx --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit
+```
+
+Answer:
+
+```json
+The result of 2 + 2 is:
+
+4
+```
+
 ## Sparrow FastAPI Endpoint
 
 Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the plugin to be used for the inference. By default, `sparrow-parse` pipeline is used.
