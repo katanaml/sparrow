@@ -540,7 +540,7 @@ def run_inference(file_filepath, query, key, options, crop_size, friendly_model_
 
             # Process the response and return the JSON data
             if response.status_code == 200:
-                gr.Info("Inference completed successfully. Please share your feedback through the feedback form.")
+                gr.Info("Inference completed successfully! We'd greatly appreciate your feedback.")
                 return response.json(), key
             else:
                 return {"error": f"Request failed with status code {response.status_code}", "details": response.text}, None
