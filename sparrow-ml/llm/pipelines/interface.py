@@ -30,7 +30,7 @@ def get_pipeline(pipeline_name: str) -> Pipeline:
         from pipelines.sparrow_parse.sparrow_parse import SparrowParsePipeline
         return SparrowParsePipeline()
     elif pipeline_name == "sparrow-instructor":
-        from pipelines.sparrow_processor.sparrow_instructor import SparrowInstructorPipeline
+        from pipelines.sparrow_instructor.sparrow_instructor import SparrowInstructorPipeline
         return SparrowInstructorPipeline()
     elif pipeline_name == "stocks":
         from pipelines.instructor.stocks import Stocks
