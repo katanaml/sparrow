@@ -351,27 +351,27 @@ def validate_file(file_path):
 def run_inference(file_filepath, query, key, options, crop_size, friendly_model_name, client_ip):
     if file_filepath is None:
         gr.Warning("No file provided. Please upload a file before submitting.")
-        return None
+        return None, None
 
     # Get the file size using the file path
     if not os.path.exists(file_filepath):
         gr.Warning("Please upload a file again and repeat inference. The file was removed after processing.")
-        return None
+        return None, None
     file_size = os.path.getsize(file_filepath)  # File size in bytes  # Get the file size in bytes
     if file_size > MAX_FILE_SIZE:
         # Clean up the temporary file
         if os.path.exists(file_filepath):
             os.remove(file_filepath)
         gr.Warning("File size exceeds 5 MB. Please upload a smaller file.")
-        return None
+        return None, None
 
     if not validate_file(file_filepath):
         gr.Warning("Invalid file type. Only JPG, PNG and PDF files are allowed.")
-        return None
+        return None, None
 
     if query is None or query.strip() == "":
         gr.Warning("No query provided. Please enter a query before submitting.")
-        return None
+        return None, None
 
     # Check if user provided a key and validate it
     if key is not None and key.strip() != "":
@@ -380,7 +380,7 @@ def run_inference(file_filepath, query, key, options, crop_size, friendly_model_
             gr.Warning("Invalid Sparrow Key. Please check your key or leave empty for limited usage.")
             return {
                 "message": "Invalid Sparrow Key. Please obtain a valid Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com."
-            }
+            }, None
 
         # Key is valid, now check PDF page limit (10 pages)
         if file_filepath.lower().endswith('.pdf'):
@@ -398,7 +398,7 @@ def run_inference(file_filepath, query, key, options, crop_size, friendly_model_
                             os.remove(file_filepath)
                         return {
                             "message": f"PDFs are limited to maximum 10 pages even with a valid Sparrow Key. This document has {num_pages} pages. For larger documents, please contact us at abaranovskis@redsamuraiconsulting.com."
-                        }
+                        }, None
             except Exception as e:
                 print(f"Error checking PDF page count: {str(e)}")
                 # Continue if we can't check the page count, but log the error
@@ -410,7 +410,7 @@ def run_inference(file_filepath, query, key, options, crop_size, friendly_model_
             gr.Warning("Rate limit exceeded or no available keys.")
             return {
                 "message": "Please obtain a Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com. We offer professional consulting and implementation services for local document processing with Sparrow, tailored to your organization's needs."
-            }
+            }, None
 
         # If we got here, we successfully obtained a key from the database
         # For auto-assigned keys (free tier), check PDF page limit
@@ -429,7 +429,7 @@ def run_inference(file_filepath, query, key, options, crop_size, friendly_model_
                             os.remove(file_filepath)
                         return {
                             "message": f"Free tier can only process PDFs with maximum 3 pages. This document has {num_pages} pages. For larger documents, please obtain a Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com."
-                        }
+                        }, None
             except Exception as e:
                 print(f"Error checking PDF page count: {str(e)}")
                 # Continue if we can't check the page count, but log the error
@@ -473,7 +473,7 @@ def run_inference(file_filepath, query, key, options, crop_size, friendly_model_
             file_mime_type = 'application/pdf'
         else:
             gr.Warning(f"Unsupported file type: {input_file_extension}. Please upload an image or PDF.")
-            return None
+            return None, None
 
         # Prepare the REST API call
         url = backend_url
@@ -499,17 +499,17 @@ def run_inference(file_filepath, query, key, options, crop_size, friendly_model_
                     # Ensure the parsed query is either a JSON object (dict) or a list of JSON objects
                     if not isinstance(query_json, (dict, list)):
                         gr.Warning("Invalid input. Only JSON objects, arrays of objects, or wildcard '*' are allowed.")
-                        return None
+                        return None, None
 
                     # If it's a list, make sure it's a list of JSON objects
                     if isinstance(query_json, list):
                         if not all(isinstance(item, dict) for item in query_json):
                             gr.Warning("Invalid input. Arrays must contain only JSON objects.")
-                            return None
+                            return None, None
 
             except json.JSONDecodeError:
                 gr.Warning("Invalid JSON format in query input")
-                return None
+                return None, None
 
             # Prepare the options string
             selected_options = []
@@ -541,27 +541,27 @@ def run_inference(file_filepath, query, key, options, crop_size, friendly_model_
             # Process the response and return the JSON data
             if response.status_code == 200:
                 gr.Info("Inference completed successfully. Please share your feedback through the feedback form.")
-                return response.json()
+                return response.json(), key
             else:
-                return {"error": f"Request failed with status code {response.status_code}", "details": response.text}
+                return {"error": f"Request failed with status code {response.status_code}", "details": response.text}, None
     finally:
         # Clean up the temporary file
         if os.path.exists(file_path):
             os.remove(file_path)
 
 
-def explain_result(json_data, key, client_ip, model_name):
+def summarize_result(json_data, key, client_ip, model_name):
     """
-    Makes a REST call to the instruction-inference endpoint to explain JSON data.
+    Makes a REST call to the instruction-inference endpoint to summarize JSON data.
 
     Args:
-        json_data: The JSON data to explain
+        json_data: The JSON data to summarize
         key: Sparrow key for API authentication
         client_ip: Client IP address
         model_name: Model name selected for inference
 
     Returns:
-        str: Markdown-formatted explanation from the LLM
+        str: Markdown-formatted summarize from the LLM
     """
     try:
         # Format the instruction and payload for the LLM
@@ -596,7 +596,7 @@ def explain_result(json_data, key, client_ip, model_name):
 
         # Process the response
         if response.status_code == 200:
-            result = response.json() if response.content else "No explanation generated."
+            result = response.json() if response.content else "No summary generated."
 
             # If the result is a string, return it directly
             if isinstance(result, str):
@@ -605,10 +605,10 @@ def explain_result(json_data, key, client_ip, model_name):
             # Otherwise, return the result (which might be JSON or text)
             return result
         else:
-            return f"Error: Failed to generate explanation. Status code: {response.status_code}\n\nDetails: {response.text}"
+            return f"Error: Failed to generate summary. Status code: {response.status_code}\n\nDetails: {response.text}"
 
     except Exception as e:
-        return f"Error generating explanation: {str(e)}"
+        return f"Error generating summary: {str(e)}"
 
 
 # Initialize the temp cleaner
@@ -653,6 +653,21 @@ nav.fillable.svelte-a3xscf a.svelte-a3xscf {
     display: flex;
     align-items: center;
 }
+"""
+
+
+result_summary_placeholder = """
+<div style="margin-top: -10px; padding: 15px; border-left: 4px solid var(--primary-500); border-radius: 6px; background-color: var(--background-fill-secondary);">
+    <div style="display: flex; align-items: flex-start;">
+        <div style="font-size: 24px; margin-right: 10px; color: var(--primary-500);">🔍</div>
+        <div>
+            <p style="margin: 0; font-weight: 600; font-size: 16px; color: var(--primary-500);">Summarize Your Results</p>
+            <p style="margin: 5px 0 0 0;">• After extracting data from your document, you'll be able to summarize the JSON results in plain language.</p>
+            <p style="margin: 5px 0 0 0;">• The 'Summarize this result' button will appear only after inference completes successfully.</p>
+            <p style="margin: 5px 0 0 0;">• This feature helps transform technical JSON structures into meaningful insights about your document content.</p>
+        </div>
+    </div>
+</div>
 """
 
 
@@ -742,8 +757,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                         <div style="font-size: 24px; margin-right: 10px; color: var(--primary-500);">💡</div>
                         <div>
                             <p style="margin: 0; font-weight: 600; font-size: 16px; color: var(--primary-500);">Free Tier Available</p>
-                            <p style="margin: 5px 0 0 0;">You can use Sparrow without entering a key for limited usage (3 calls per 6 hours, max 3-page documents).</p>
-                            <p style="margin: 5px 0 0 0;">For unlimited usage, <a href="mailto:abaranovskis@redsamuraiconsulting.com" style="color: var(--primary-500); text-decoration: underline; font-weight: 500;">contact us</a> about our professional consulting and implementation services for local document processing solutions.</p>
+                            <p style="margin: 5px 0 0 0;">• You can use Sparrow without entering a key for limited usage (3 calls per 6 hours, max 3-page documents).</p>
+                            <p style="margin: 5px 0 0 0;">• For unlimited usage, <a href="mailto:abaranovskis@redsamuraiconsulting.com" style="color: var(--primary-500); text-decoration: underline; font-weight: 500;">contact us</a> about our professional consulting and implementation services for local document processing solutions.</p>
                         </div>
                     </div>
                 </div>
@@ -757,14 +772,17 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 min_height=1022
             )
 
-            explain_btn = gr.Button(
+            summarize_btn = gr.Button(
                 value="Summarize this result",
                 variant="secondary",
                 visible=False
             )
 
-            explanation_text = gr.Markdown(
-                visible=False
+            # Add hidden state to store the actual key used
+            active_key_state = gr.State(value=None)
+
+            summarize_text = gr.Markdown(
+                value=result_summary_placeholder
             )
 
 
@@ -792,8 +810,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                     gr.update(value=example[2]),  # query_input
                     gr.update(value=[example[3]] if example[3] else []),  # options_select
                     gr.update(value=0),  # crop_size
-                    gr.update(visible=False),  # explain_btn
-                    gr.update(visible=False)  # explanation_text
+                    gr.update(visible=False),  # summarize_btn
+                    gr.update(value=result_summary_placeholder)  # summarize_text
                 )
 
         # Default return if no match found
@@ -803,8 +821,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             gr.update(value=""),  # query_input
             gr.update(value=[]),  # options_select
             gr.update(value=0),  # crop_size
-            gr.update(visible=False),  # explain_btn
-            gr.update(visible=False)  # explanation_text
+            gr.update(visible=False),  # summarize_btn
+            gr.update(value=result_summary_placeholder)  # summarize_text
         )
 
 
@@ -839,18 +857,18 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 gr.update(value=[]),  # options_select
                 gr.update(value=0),  # crop_size
                 gr.update(value=None),  # example_radio
-                gr.update(visible=False),  # explain_btn
-                gr.update(visible=False)  # explanation_text
+                gr.update(visible=False),  # summarize_btn
+                gr.update(value=result_summary_placeholder)  # summarize_text
             )
         else:
-            # When a new file is uploaded, also hide explain components
+            # When a new file is uploaded, also hide summarize components
             return (
                 gr.update(),  # query_input
                 gr.update(),  # options_select
                 gr.update(),  # crop_size
                 gr.update(),  # example_radio
-                gr.update(visible=False),  # explain_btn
-                gr.update(visible=False)  # explanation_text
+                gr.update(visible=False),  # summarize_btn
+                gr.update(value=result_summary_placeholder)  # summarize_text
             )
 
 
@@ -867,49 +885,33 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             log_request(request.client.host, "Inference Request - No file")
 
         # Get inference result
-        result = run_inference(input_file, query_input, key_input, options_select, crop_size, model_name, request.client.host)
+        result, actual_key = run_inference(input_file, query_input, key_input, options_select, crop_size, model_name, request.client.host)
 
-        # If result is valid, show the explain button
-        explain_visible = False
-        if result is not None and not (isinstance(result, dict) and result.get("error")):
-            explain_visible = True
+        # If result is valid, show the summary button
+        summarize_visible = False
+        if actual_key is not None:
+            summarize_visible = True
 
-        return result, gr.update(visible=explain_visible, interactive=True)
+        return (
+            result,
+            gr.update(visible=summarize_visible, interactive=True),
+            actual_key
+        )
 
 
-    def explain_result_wrapper(json_output, key_input, model_dropdown_comp, request: gr.Request):
-        """Wrapper function that calls the standalone explain_result function"""
-        log_request(request.client.host, "Explanation request")
+    def summarize_result_wrapper(json_output, key_input, model_dropdown_comp, request: gr.Request):
+        """Wrapper function that calls the standalone summarize_result function"""
+        log_request(request.client.host, "LLM instruction request")
 
-        # Create a nicer HTML-based loading indicator
-        loading_html = """
-        <div style="text-align: center; padding: 2rem 1rem;">
-          <div style="display: inline-block; width: 40px; height: 40px; border: 3px solid #f3f3f3; 
-               border-radius: 50%; border-top-color: var(--primary-600); 
-               animation: spin 1s ease-in-out infinite;"></div>
-          <h3 style="margin-top: 1rem; color: var(--primary-600);">Analyzing Data</h3>
-          <p style="color: var(--neutral-700);">The LLM is generating an explanation of your data. This typically takes few minutes.</p>
-        </div>
-        <style>
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-        </style>
-        """
-
-        # First, update with loading message
-        yield gr.update(visible=True, value=loading_html), gr.update(interactive=False)
-
-        # Call explain_result
-        explanation = explain_result(
+        # Call summarize_result
+        summarize = summarize_result(
             json_output,
             key_input,
             request.client.host,
             model_dropdown_comp
         )
 
-        # Update with the final explanation
-        yield gr.update(visible=True, value=explanation), gr.update(interactive=False)
+        return gr.update(interactive=False), summarize
 
 
     # Connect components with updated handlers
@@ -922,8 +924,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             query_input_comp,
             options_select_comp,
             crop_size_comp,
-            explain_btn,
-            explanation_text
+            summarize_btn,
+            summarize_text
         ],
         api_name=False
     )
@@ -947,8 +949,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             options_select_comp,
             crop_size_comp,
             example_radio,
-            explain_btn,
-            explanation_text
+            summarize_btn,
+            summarize_text
         ],
         api_name=False
     )
@@ -963,18 +965,18 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             crop_size_comp,
             model_dropdown_comp
         ],
-        outputs=[output_json, explain_btn],
+        outputs=[output_json, summarize_btn, active_key_state],
         api_name=False
     )
 
-    explain_btn.click(
-        explain_result_wrapper,
+    summarize_btn.click(
+        summarize_result_wrapper,
         inputs=[
             output_json,
-            key_input_comp,
-            model_dropdown_comp,
+            active_key_state,
+            model_dropdown_comp
         ],
-        outputs=[explanation_text, explain_btn],
+        outputs=[summarize_btn, summarize_text],
         api_name=False
     )
 
