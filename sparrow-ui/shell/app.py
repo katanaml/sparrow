@@ -11,6 +11,8 @@ from pathlib import Path
 from temp_cleaner import GradioTempCleaner
 import mimetypes
 import db_pool
+import dashboard
+import feedback
 
 
 # Create a ConfigParser object
@@ -620,7 +622,7 @@ temp_cleaner = GradioTempCleaner(
 
 custom_css = """
 /* Style the nav holder container */
-.nav-holder.svelte-a3xscf {
+.nav-holder.svelte-1y320eu {
     display: flex;
     align-items: center;
     padding: 0;
@@ -628,7 +630,7 @@ custom_css = """
 }
 
 /* Add Sparrow text with proper spacing from the left edge */
-.nav-holder.svelte-a3xscf::before {
+.nav-holder.svelte-1y320eu::before {
     content: "Sparrow";
     display: flex;
     align-items: center;
@@ -640,7 +642,7 @@ custom_css = """
 }
 
 /* Push navigation menu to the right side */
-nav.fillable.svelte-a3xscf {
+nav.fillable.svelte-1y320eu {
     display: flex;
     align-items: center;
     margin-left: auto;
@@ -648,7 +650,7 @@ nav.fillable.svelte-a3xscf {
 }
 
 /* Keep the links vertically aligned */
-nav.fillable.svelte-a3xscf a.svelte-a3xscf {
+nav.fillable.svelte-1y320eu a.svelte-1y320eu {
     display: flex;
     align-items: center;
 }
@@ -993,13 +995,11 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
 
 # Dashboard page
 with demo.route("Dashboard", "/dashboard"):
-    import dashboard
     dashboard.demo.render()
 
 
 # Feedback page
 with demo.route("Feedback", "/feedback"):
-    import feedback
     feedback.demo.render()
 
 
