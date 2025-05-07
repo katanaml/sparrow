@@ -15,15 +15,17 @@ Data processing with ML, LLM and Vision LLM
 
 Sparrow is an innovative open-source solution for efficient data extraction and processing from various documents and images. It seamlessly handles forms, bank statements, invoices, receipts, and other unstructured data sources (any type of document layout and complexity). Sparrow stands out with its modular architecture, offering independent services and pipelines all optimized for robust performance. One of the critical functionalities of Sparrow - pluggable architecture. You can easily integrate and run data extraction pipelines using Sparrow Parse (with vision-language models support) or Instructor. Sparrow enables local LLM data extraction pipelines through various backends, such as vLLM, Ollama, PyTorch or Apple MLX. Sparrow Parse with VL model can run either on premise, or it can execute inference on cloud GPU. With Sparrow solution you get API, which helps to process and transform your data into structured output, ready to be integrated with custom workflows.
 
+Sparrows supports instruction calling with text based payload. This allows to go beyond text data extraction use cases and apply Sparrow in various scenarios related to data processing, validation and workflow decision making.
+
 Sparrow Pipelines - with Sparrow you can build independent LLM pipelines, and use API to invoke them from your system.
 
 ![Sparrow](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_architecture.jpeg)
 
 ### Sparrow Components
 
-* **[Sparrow ML LLM](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** - Sparrow main engine that runs various pipelines
+* **[Sparrow ML LLM](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** - Sparrow API main engine that runs various pipelines
 * **[Sparrow Agents](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/agents)** - Sparrow Agent framework
-* **[Sparrow Parse](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse)** - Sparrow library enabling Sparrow Parse pipeline functionality using VL LLM. Works great for structured JSON response generation
+* **[Sparrow Parse](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse)** - Sparrow library enabling `sparrow-parse` and `sparrow-instructor` pipelines functionality using VL LLM. Works great for structured JSON response generation and for LLM microservices with instruction calling
 * **[Sparrow OCR](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - OCR service, providing optical character recognition
 * **[Sparrow UI](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/)** - Dashboard UI for Sparrow
 
@@ -411,9 +413,29 @@ Answer:
 The stock price of the Oracle Corporation is 186.3699951171875. USD
 ```
 
+✅ LLM instruction calling with Sparrow Instructor pipeline:
+
+```
+./sparrow.sh "instruction: do arithmetic operation, payload: 2+2=" --pipeline "sparrow-instructor" --options mlx --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit
+```
+
+Answer:
+
+```
+The result of 2 + 2 is:
+
+4
+```
+
 ## Sparrow FastAPI Endpoint
 
 Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the plugin to be used for the inference. By default, `sparrow-parse` pipeline is used.
+
+Sparrow provides two endpoints - `inference` and `instruction-inference`.
+
+Endpoint `inference` is used to run document data extraction, it accepts document and JSON query.
+
+Endpoint `instruction-inference` accepts text instruction and payload. This endpoint can be used to summarise, validate and run other tasks with text payload.
 
 To set this up:
 
@@ -552,6 +574,23 @@ Sparrow Parse pipeline supports multi-page PDF documents. You can pass PDF docum
         "page": 2
     }
 ]
+```
+
+✅ `sparrow-instructor` pipeline. This pipeline runs locally with Apple MLX backend.
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8002/api/v1/sparrow-llm/instruction-inference' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -d 'query=instruction: do arithmetic operation, payload: 2+2=
+      &pipeline=sparrow-instructor
+      &options=mlx,mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit
+      &debug_dir=
+      &debug=false
+      &sparrow_key=
+      &client_ip=
+      &country='
 ```
 
 ## 🤖 Sparrow Agent
