@@ -389,3 +389,63 @@ def get_unique_users_by_country(period="1week"):
     finally:
         if connection:
             release_connection(connection)
+
+
+def save_user_feedback(email, feedback_text):
+    """
+    Saves user feedback to the FEEDBACK table.
+
+    Args:
+        email (str): User's email address
+        feedback_text (str): The feedback content submitted by the user
+
+    Returns:
+        bool: True if the feedback was successfully saved, False otherwise
+    """
+    # If database is not enabled, return False
+    global database_enabled
+
+    if not database_enabled:
+        print("Database is not enabled. Cannot save feedback.")
+        return False
+
+    connection = None
+    try:
+        connection = get_connection_from_pool()
+        cursor = connection.cursor()
+
+        # Execute SQL to insert the feedback
+        # No need to include ID or SUBMISSION_DATE as they're handled automatically
+        sql = """
+            INSERT INTO SPARROW.FEEDBACK 
+            (EMAIL, FEEDBACK) 
+            VALUES 
+            (:email, :feedback)
+        """
+
+        cursor.execute(
+            sql,
+            email=email,
+            feedback=feedback_text
+        )
+
+        # Commit the transaction
+        connection.commit()
+        cursor.close()
+
+        print(f"Feedback saved successfully from {email}")
+        return True
+
+    except Exception as e:
+        print(f"Error saving feedback: {str(e)}")
+        # If there's an error, attempt to rollback the transaction
+        if connection:
+            try:
+                connection.rollback()
+            except Exception as rollback_error:
+                print(f"Error during rollback: {str(rollback_error)}")
+        return False
+
+    finally:
+        if connection:
+            release_connection(connection)

@@ -12,6 +12,7 @@ from temp_cleaner import GradioTempCleaner
 import mimetypes
 import db_pool
 import dashboard
+import feedback
 
 
 # Create a ConfigParser object
@@ -995,6 +996,12 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
 # Dashboard page
 with demo.route("Dashboard", "/dashboard"):
     dashboard.demo.render()
+
+
+# Feedback page
+with demo.route("Feedback", "/feedback"):
+    import feedback
+    feedback.demo.render()
 
 
 # Launch the app
