@@ -23,9 +23,9 @@ Sparrow Pipelines - with Sparrow you can build independent LLM pipelines, and us
 
 ### Sparrow Components
 
-* **[Sparrow ML LLM](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** - Sparrow main engine that runs various pipelines
+* **[Sparrow ML LLM](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** - Sparrow API main engine that runs various pipelines
 * **[Sparrow Agents](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/agents)** - Sparrow Agent framework
-* **[Sparrow Parse](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse)** - Sparrow library enabling Sparrow Parse pipeline functionality using VL LLM. Works great for structured JSON response generation
+* **[Sparrow Parse](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse)** - Sparrow library enabling `sparrow-parse` and `sparrow-instructor` pipelines functionality using VL LLM. Works great for structured JSON response generation and for LLM microservices with instruction calling
 * **[Sparrow OCR](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - OCR service, providing optical character recognition
 * **[Sparrow UI](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/)** - Dashboard UI for Sparrow
 
