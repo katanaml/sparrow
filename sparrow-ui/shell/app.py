@@ -994,12 +994,12 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
     )
 
 # Dashboard page
-with demo.route("Dashboard", "/dashboard"):
+with demo.route("Hub", "/dashboard"):
     dashboard.demo.render()
 
 
 # Feedback page
-with demo.route("Feedback", "/feedback"):
+with demo.route("Talk", "/feedback"):
     feedback.demo.render()
 
 
