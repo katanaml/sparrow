@@ -1,5 +1,13 @@
 # ChangeLog
 
+## [v0.4.2] - 2025-05-08
+
+## LLM instruction calling
+
+Microservice approach for LLM request processing with instruction calling
+
+
+
 ## [v.0.4.1] - 2025-04-11
 
 ## Sparrow UI Dashboard
