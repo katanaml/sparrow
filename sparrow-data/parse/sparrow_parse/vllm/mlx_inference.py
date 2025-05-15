@@ -3,7 +3,7 @@ from mlx_vlm.prompt_utils import apply_chat_template
 from mlx_vlm.utils import load_image
 from sparrow_parse.vllm.inference_base import ModelInference
 import os
-import json
+import json, re
 from rich import print
 
 
@@ -98,11 +98,12 @@ class MLXInference(ModelInference):
         return image, width, height
 
 
-    def inference(self, input_data, mode=None):
+    def inference(self, input_data, apply_annotation=False, mode=None):
         """
         Perform inference on input data using the specified model.
 
         :param input_data: A list of dictionaries containing image file paths and text inputs.
+        :param apply_annotation: Optional flag to apply annotations to the output.
         :param mode: Optional mode for inference ("static" for simple JSON output).
         :return: List of processed model responses.
         """
@@ -125,7 +126,7 @@ class MLXInference(ModelInference):
         else:
             # Image-based inference
             file_paths = self._extract_file_paths(input_data)
-            results = self._process_images(model, processor, config, file_paths, input_data)
+            results = self._process_images(model, processor, config, file_paths, input_data, apply_annotation)
         
         return results
 
@@ -151,7 +152,7 @@ class MLXInference(ModelInference):
         print("Inference completed successfully")
         return response
 
-    def _process_images(self, model, processor, config, file_paths, input_data):
+    def _process_images(self, model, processor, config, file_paths, input_data, apply_annotation):
         """
         Process images and generate responses for each.
         
@@ -160,6 +161,7 @@ class MLXInference(ModelInference):
         :param config: Model configuration
         :param file_paths: List of image file paths
         :param input_data: Original input data
+        :param apply_annotation: Flag to apply annotations
         :return: List of processed responses
         """
         results = []
@@ -167,7 +169,7 @@ class MLXInference(ModelInference):
             image, width, height = self.load_image_data(file_path)
             
             # Prepare messages based on model type
-            messages = self._prepare_messages(input_data, file_path)
+            messages = self._prepare_messages(input_data, apply_annotation)
             
             # Generate and process response
             prompt = apply_chat_template(processor, config, messages)
@@ -186,21 +188,104 @@ class MLXInference(ModelInference):
         
         return results
 
-    def _prepare_messages(self, input_data, file_path):
+
+    def transform_query_with_bbox(self, text_input):
+        """
+        Transform JSON schema in text_input to include value, bbox, and confidence.
+        Works with both array and object JSON structures.
+
+        Args:
+            text_input (str): The input text containing a JSON schema
+
+        Returns:
+            str: Text with transformed JSON including value, bbox, and confidence
+        """
+        # Split text into parts - find the JSON portion between "retrieve" and "return response"
+        retrieve_pattern = r'retrieve\s+'
+        return_pattern = r'\.\s+return\s+response'
+
+        retrieve_match = re.search(retrieve_pattern, text_input)
+        return_match = re.search(return_pattern, text_input)
+
+        if not retrieve_match or not return_match:
+            return text_input  # Return original if pattern not found
+
+        json_start = retrieve_match.end()
+        json_end = return_match.start()
+
+        prefix = text_input[:json_start]
+        json_str = text_input[json_start:json_end].strip()
+        suffix = text_input[json_end:]
+
+        # Parse and transform the JSON
+        try:
+            # Handle single quotes if needed
+            json_str = json_str.replace("'", '"')
+
+            json_obj = json.loads(json_str)
+            transformed_json = self.transform_query_structure(json_obj)
+            transformed_json_str = json.dumps(transformed_json)
+
+            # Rebuild the text
+            result = prefix + transformed_json_str + suffix
+
+            return result
+        except json.JSONDecodeError as e:
+            print(f"Error parsing JSON: {e}")
+            return text_input  # Return original if parsing fails
+
+
+    def transform_query_structure(self, json_obj):
+        """
+        Transform each field in the JSON structure to include value, bbox, and confidence.
+        Handles both array and object formats recursively.
+        """
+        if isinstance(json_obj, list):
+            # Handle array format
+            return [self.transform_query_structure(item) for item in json_obj]
+        elif isinstance(json_obj, dict):
+            # Handle object format
+            result = {}
+            for key, value in json_obj.items():
+                if isinstance(value, (dict, list)):
+                    # Recursively transform nested objects or arrays
+                    result[key] = self.transform_query_structure(value)
+                else:
+                    # Transform simple value to object with value, bbox, and confidence
+                    result[key] = {
+                        "value": value,
+                        "bbox": ["float", "float", "float", "float"],
+                        "confidence": "float"
+                    }
+            return result
+        else:
+            # For primitive values, no transformation needed
+            return json_obj
+
+
+    def _prepare_messages(self, input_data, apply_annotation):
         """
         Prepare the appropriate messages based on the model type.
         
         :param input_data: Original input data
-        :param file_path: Current file path being processed
+        :param apply_annotation: Flag to apply annotations
         :return: Properly formatted messages
         """
         if "mistral" in self.model_name.lower():
             return input_data[0]["text_input"]
-        else:
+        elif "qwen" in self.model_name.lower():
+            if apply_annotation:
+                system_prompt = {"role": "system", "content": "You are an expert at extracting text from images. "
+                                                              "For each item in the table, provide separate bounding boxes for each field. "
+                                                              "All coordinates should be in pixels relative to the original image. Format your response in JSON."}
+                user_prompt = {"role": "user", "content": self.transform_query_with_bbox(input_data[0]["text_input"])}
+                return [system_prompt, user_prompt]
             return [
                 {"role": "system", "content": "You are an expert at extracting structured text from image documents."},
                 {"role": "user", "content": input_data[0]["text_input"]},
             ]
+        else:
+            raise ValueError("Unsupported model type. Please use either Mistral or Qwen.")
 
     @staticmethod
     def _extract_file_paths(input_data):

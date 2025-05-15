@@ -14,13 +14,14 @@ class VLLMExtractor(object):
         pass
 
     def run_inference(self, model_inference_instance, input_data, tables_only=False,
-                      generic_query=False, crop_size=None, debug_dir=None, debug=False, mode=None):
+                      generic_query=False, crop_size=None, apply_annotation=False, debug_dir=None, debug=False, mode=None):
         """
         Main entry point for processing input data using a model inference instance.
         Handles generic queries, PDFs, and table extraction.
         """
         if generic_query:
             input_data[0]["text_input"] = "retrieve document data. return response in JSON format"
+            apply_annotation=False
 
         if debug:
             print("Input data:", input_data)
@@ -37,12 +38,12 @@ class VLLMExtractor(object):
         # Document data extraction inference (file_path exists and is not None)
         file_path = input_data[0]["file_path"]
         if self.is_pdf(file_path):
-            return self._process_pdf(model_inference_instance, input_data, tables_only, crop_size, debug, debug_dir, mode)
+            return self._process_pdf(model_inference_instance, input_data, tables_only, crop_size, apply_annotation, debug, debug_dir, mode)
         else:
-            return self._process_non_pdf(model_inference_instance, input_data, tables_only, crop_size, debug, debug_dir)
+            return self._process_non_pdf(model_inference_instance, input_data, tables_only, crop_size, apply_annotation, debug, debug_dir)
 
 
-    def _process_pdf(self, model_inference_instance, input_data, tables_only, crop_size, debug, debug_dir, mode):
+    def _process_pdf(self, model_inference_instance, input_data, tables_only, crop_size, apply_annotation, debug, debug_dir, mode):
         """
         Handles processing and inference for PDF files, including page splitting and optional table extraction.
         """
@@ -50,21 +51,21 @@ class VLLMExtractor(object):
         num_pages, output_files, temp_dir = pdf_optimizer.split_pdf_to_pages(input_data[0]["file_path"],
                                                                              debug_dir, convert_to_images=True)
 
-        results = self._process_pages(model_inference_instance, output_files, input_data, tables_only, crop_size, debug, debug_dir)
+        results = self._process_pages(model_inference_instance, output_files, input_data, tables_only, crop_size, apply_annotation, debug, debug_dir)
 
         # Clean up temporary directory
         shutil.rmtree(temp_dir, ignore_errors=True)
         return results, num_pages
 
 
-    def _process_non_pdf(self, model_inference_instance, input_data, tables_only, crop_size, debug, debug_dir):
+    def _process_non_pdf(self, model_inference_instance, input_data, tables_only, crop_size, apply_annotation, debug, debug_dir):
         """
         Handles processing and inference for non-PDF files, with optional table extraction.
         """
         file_path = input_data[0]["file_path"]
 
         if tables_only:
-            return self._extract_tables(model_inference_instance, file_path, input_data, debug, debug_dir), 1
+            return self._extract_tables(model_inference_instance, file_path, input_data, apply_annotation, debug, debug_dir), 1
         else:
             temp_dir = tempfile.mkdtemp()
 
@@ -77,13 +78,13 @@ class VLLMExtractor(object):
 
             file_path = input_data[0]["file_path"]
             input_data[0]["file_path"] = [file_path]
-            results = model_inference_instance.inference(input_data)
+            results = model_inference_instance.inference(input_data, apply_annotation)
 
             shutil.rmtree(temp_dir, ignore_errors=True)
 
             return results, 1
 
-    def _process_pages(self, model_inference_instance, output_files, input_data, tables_only, crop_size, debug, debug_dir):
+    def _process_pages(self, model_inference_instance, output_files, input_data, tables_only, crop_size, apply_annotation, debug, debug_dir):
         """
         Processes individual pages (PDF split) and handles table extraction or inference.
 
@@ -93,6 +94,7 @@ class VLLMExtractor(object):
             input_data: Input data for inference.
             tables_only: Whether to only process tables.
             crop_size: Size for cropping image borders.
+            apply_annotation: Flag to apply annotations to the output.
             debug: Debug flag for logging.
             debug_dir: Directory for saving debug information.
 
@@ -106,9 +108,7 @@ class VLLMExtractor(object):
                 print(f"Processing {len(output_files)} pages for table extraction.")
             # Process each page individually for table extraction
             for i, file_path in enumerate(output_files):
-                tables_result = self._extract_tables(
-                    model_inference_instance, file_path, input_data, debug, debug_dir, page_index=i
-                )
+                tables_result = self._extract_tables( model_inference_instance, file_path, input_data, apply_annotation, debug, debug_dir, page_index=i)
                 # Since _extract_tables returns a list with one JSON string, unpack it
                 results_array.extend(tables_result)  # Unpack the single JSON string
         else:
@@ -141,7 +141,7 @@ class VLLMExtractor(object):
                 input_data[0]["file_path"] = output_files
 
             # Process all files at once
-            results = model_inference_instance.inference(input_data)
+            results = model_inference_instance.inference(input_data, apply_annotation)
             results_array.extend(results)
 
             # Clean up temporary directory
@@ -150,7 +150,7 @@ class VLLMExtractor(object):
         return results_array
 
 
-    def _extract_tables(self, model_inference_instance, file_path, input_data, debug, debug_dir, page_index=None):
+    def _extract_tables(self, model_inference_instance, file_path, input_data, apply_annotation, debug, debug_dir, page_index=None):
         """
         Detects and processes tables from an input file.
         """
@@ -175,7 +175,7 @@ class VLLMExtractor(object):
             table.save(output_filename, "JPEG")
 
             input_data[0]["file_path"] = [output_filename]
-            result = self._run_model_inference(model_inference_instance, input_data)
+            result = self._run_model_inference(model_inference_instance, input_data, apply_annotation)
             results_array.append(result)
 
         shutil.rmtree(temp_dir, ignore_errors=True)
@@ -191,11 +191,11 @@ class VLLMExtractor(object):
 
 
     @staticmethod
-    def _run_model_inference(model_inference_instance, input_data):
+    def _run_model_inference(model_inference_instance, input_data, apply_annotation):
         """
         Runs model inference and handles JSON decoding.
         """
-        result = model_inference_instance.inference(input_data)[0]
+        result = model_inference_instance.inference(input_data, apply_annotation)[0]
         try:
             return json.loads(result) if isinstance(result, str) else result
         except json.JSONDecodeError:
@@ -216,7 +216,7 @@ if __name__ == "__main__":
     # # export HF_TOKEN="hf_"
     # config = {
     #     "method": "mlx",  # Could be 'huggingface', 'mlx' or 'local_gpu'
-    #     "model_name": "mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit",
+    #     "model_name": "mlx-community/Qwen2.5-VL-72B-Instruct-4bit",
     #     # "hf_space": "katanaml/sparrow-qwen2-vl-7b",
     #     # "hf_token": os.getenv('HF_TOKEN'),
     #     # Additional fields for local GPU inference
@@ -230,7 +230,7 @@ if __name__ == "__main__":
     # input_data = [
     #     {
     #         "file_path": "sparrow_parse/images/bonds_table.png",
-    #         "text_input": "retrieve all data. return response in JSON format"
+    #         "text_input": "retrieve [{\"instrument_name\":\"str\", \"valuation\":\"int\"}]. return response in JSON format"
     #     }
     # ]
     #
@@ -245,6 +245,7 @@ if __name__ == "__main__":
     # results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, tables_only=False,
     #                                                    generic_query=False,
     #                                                    crop_size=0,
+    #                                                    apply_annotation=False,
     #                                                    debug_dir="/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/",
     #                                                    debug=True,
     #                                                    mode=None)

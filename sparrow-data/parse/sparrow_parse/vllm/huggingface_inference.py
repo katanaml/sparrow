@@ -26,7 +26,7 @@ class HuggingFaceInference(ModelInference):
             return output_text
 
 
-    def inference(self, input_data, mode=None):
+    def inference(self, input_data, apply_annotation=False, mode=None):
         if mode == "static":
             simple_json = self.get_simple_json()
             return [simple_json]
