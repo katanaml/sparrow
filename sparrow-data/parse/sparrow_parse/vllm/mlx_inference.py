@@ -173,7 +173,7 @@ class MLXInference(ModelInference):
             
             # Generate and process response
             prompt = apply_chat_template(processor, config, messages)
-            response = generate(
+            response, _ = generate(
                 model,
                 processor,
                 prompt,
