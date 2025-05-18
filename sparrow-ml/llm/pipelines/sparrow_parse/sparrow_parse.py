@@ -26,7 +26,7 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
-def subprocess_inference(config, input_data, tables_only, crop_size, query_all_data, debug_dir, debug):
+def subprocess_inference(config, input_data, tables_only, crop_size, query_all_data, apply_annotation, debug_dir, debug):
     """
     Subprocess function to execute the inference logic.
     """
@@ -46,6 +46,7 @@ def subprocess_inference(config, input_data, tables_only, crop_size, query_all_d
         generic_query=query_all_data,
         crop_size=crop_size,
         debug_dir=debug_dir,
+        apply_annotation=apply_annotation,
         debug=debug,
         mode=None
     )
@@ -87,17 +88,19 @@ class SparrowParsePipeline(Pipeline):
         else:
             query, query_schema = self._prepare_query(query, local)
 
-        llm_output_list, num_pages, tables_only, validation_off = self.invoke_pipeline_step(lambda: self.execute_query(options,
-                                                                                                           crop_size,
-                                                                                                           query_all_data,
-                                                                                                           query,
-                                                                                                           file_path,
-                                                                                                           debug_dir,
-                                                                                                           debug),
+        llm_output_list, num_pages, tables_only, validation_off, apply_annotation = self.invoke_pipeline_step(lambda: self.execute_query(options,
+                                                                                                        crop_size,
+                                                                                                        query_all_data,
+                                                                                                        query,
+                                                                                                        file_path,
+                                                                                                        debug_dir,
+                                                                                                        debug),
                                                                                 f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Executing query", local)
 
         if page_type is not None:
             # if page_type is not None, we only want to get info about page type, without validating data
+            validation_off = True
+        if apply_annotation:
             validation_off = True
 
         llm_output = self.process_llm_output(llm_output_list, num_pages, query_all_data, query_schema, tables_only,
@@ -177,10 +180,10 @@ class SparrowParsePipeline(Pipeline):
             debug (bool): Flag for enabling debug mode.
 
         Returns:
-            Tuple: (llm_output, num_pages, tables_only, validation_off)
+            Tuple: (llm_output, num_pages, tables_only, validation_off, apply_annotation)
         """
         # Validate and configure the inference backend
-        config, tables_only, validation_off = self._configure_inference_backend(options)
+        config, tables_only, validation_off, apply_annotation = self._configure_inference_backend(options)
         if config is None:
             return "Inference backend is not set up for this option", 1, tables_only, validation_off
 
@@ -201,12 +204,13 @@ class SparrowParsePipeline(Pipeline):
                 tables_only,
                 crop_size,
                 query_all_data,
+                apply_annotation,
                 debug_dir,
                 debug
             )
             llm_output, num_pages = future.result()
 
-        return llm_output, num_pages, tables_only, validation_off
+        return llm_output, num_pages, tables_only, validation_off, apply_annotation
 
 
     @staticmethod
@@ -222,6 +226,7 @@ class SparrowParsePipeline(Pipeline):
                 - dict: Configuration dictionary for the selected backend, or None if invalid.
                 - bool: True if "tables_only" is specified in the options, False otherwise.
                 - bool: True if "validation_off" is specified in the options, False otherwise.
+                - bool: True if "apply_annotation" is specified in the options, False otherwise.
         """
         if not options or len(options) < 2:
             raise ValueError("Invalid options provided for inference backend configuration.")
@@ -229,22 +234,23 @@ class SparrowParsePipeline(Pipeline):
         method = options[0].lower()
         tables_only = "tables_only" in [opt.lower() for opt in options[2:]]
         validation_off = "validation_off" in [opt.lower() for opt in options[2:]]
+        apply_annotation = "apply_annotation" in [opt.lower() for opt in options[2:]]
 
         if method == 'huggingface':
             return {
                 "method": method,
                 "hf_space": options[1],
                 "hf_token": os.getenv('HF_TOKEN')  # Ensure HF_TOKEN is set in the environment
-            }, tables_only, validation_off
+            }, tables_only, validation_off, apply_annotation
         elif method == 'mlx':
             return {
                 "method": method,
                 "model_name": options[1]
-            }, tables_only, validation_off
+            }, tables_only, validation_off, apply_annotation
         else:
             # Extendable for additional backends
             print(f"Unsupported inference method: {method}")
-            return None, tables_only, validation_off
+            return None, tables_only, validation_off, apply_annotation
 
 
     def process_single_page(self, llm_output_list, query_all_data, query_schema, tables_only, validation_off, debug, local):
