@@ -188,11 +188,11 @@ class MLXInference(ModelInference):
         
         return results
 
-
     def transform_query_with_bbox(self, text_input):
         """
         Transform JSON schema in text_input to include value, bbox, and confidence.
-        Works with both array and object JSON structures.
+        Works with formats like: "retrieve field1, field2. return response in JSON format,
+        by strictly following this JSON schema: [{...}]."
 
         Args:
             text_input (str): The input text containing a JSON schema
@@ -200,38 +200,33 @@ class MLXInference(ModelInference):
         Returns:
             str: Text with transformed JSON including value, bbox, and confidence
         """
-        # Split text into parts - find the JSON portion between "retrieve" and "return response"
-        retrieve_pattern = r'retrieve\s+'
-        return_pattern = r'\.\s+return\s+response'
 
-        retrieve_match = re.search(retrieve_pattern, text_input)
-        return_match = re.search(return_pattern, text_input)
+        schema_pattern = r'JSON schema:\s*(\[.*?\]|\{.*?\})'
+        schema_match = re.search(schema_pattern, text_input, re.DOTALL)
 
-        if not retrieve_match or not return_match:
+        if not schema_match:
             return text_input  # Return original if pattern not found
 
-        json_start = retrieve_match.end()
-        json_end = return_match.start()
-
-        prefix = text_input[:json_start]
-        json_str = text_input[json_start:json_end].strip()
-        suffix = text_input[json_end:]
+        # Extract the schema part and its position
+        schema_str = schema_match.group(1).strip()
+        schema_start = schema_match.start(1)
+        schema_end = schema_match.end(1)
 
         # Parse and transform the JSON
         try:
             # Handle single quotes if needed
-            json_str = json_str.replace("'", '"')
+            schema_str = schema_str.replace("'", '"')
 
-            json_obj = json.loads(json_str)
+            json_obj = json.loads(schema_str)
             transformed_json = self.transform_query_structure(json_obj)
             transformed_json_str = json.dumps(transformed_json)
 
-            # Rebuild the text
-            result = prefix + transformed_json_str + suffix
+            # Rebuild the text by replacing just the schema portion
+            result = text_input[:schema_start] + transformed_json_str + text_input[schema_end:]
 
             return result
         except json.JSONDecodeError as e:
-            print(f"Error parsing JSON: {e}")
+            print(f"Error parsing JSON schema: {e}")
             return text_input  # Return original if parsing fails
 
 
