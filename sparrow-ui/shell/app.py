@@ -518,6 +518,8 @@ def run_inference(file_filepath, query, key, options, crop_size, friendly_model_
                 selected_options.append("tables_only")
             if "Validation Off" in options:
                 selected_options.append("validation_off")
+            if "Enable Annotation" in options:
+                selected_options.append("apply_annotation")
 
             # Use the selected model's backend options via the friendly name
             final_options = model_options.get(friendly_model_name, model_options[friendly_names[0]])
@@ -708,16 +710,19 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 type="filepath",
                 visible=False
             )
+
             query_input_comp = gr.Textbox(
                 label="Query",
                 placeholder="Use * to query all data or JSON schema, e.g.: [{\"instrument_name\": \"str\"}]"
             )
+
             options_select_comp = gr.CheckboxGroup(
                 label="Additional Options",
-                choices=["Tables Only", "Validation Off"],
+                choices=["Tables Only", "Validation Off", "Enable Annotation"],
                 type="value",
-                info="'Tables Only' improves structured tables processing, but try without if results are incomplete"
+                info="'Tables Only' improves structured tables processing, but try without if results are incomplete. 'Enable Annotation' shows bounding boxes (available only for images with detailed queries using the advanced model)"
             )
+
             crop_size_comp = gr.Slider(
                 label="Crop Size",
                 value=0,
