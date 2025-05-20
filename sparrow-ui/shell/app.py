@@ -967,8 +967,7 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             log_request(request.client.host, "Inference Request - No file")
 
         # Get inference result
-        # result, actual_key = run_inference(input_file, query_input, key_input, options_select, crop_size, model_name, request.client.host)
-        result, actual_key = "{}", ""
+        result, actual_key = run_inference(input_file, query_input, key_input, options_select, crop_size, model_name, request.client.host)
 
         # If result is valid, show the summary button
         summarize_visible = False
