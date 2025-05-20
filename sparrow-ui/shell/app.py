@@ -349,6 +349,24 @@ def validate_file(file_path):
     return any(mime_type and mime_type.startswith(prefix) for prefix in allowed_mime_prefixes)
 
 
+def check_annotation_availability(file_path, query, options, model_name):
+    """Check if annotation should be available based on the conditions"""
+    # Check if file is an image (not PDF)
+    is_image = file_path and str(file_path).lower().endswith(('png', 'jpg', 'jpeg'))
+
+    # Check if "Enable Annotation" is selected
+    annotation_enabled = "Enable Annotation" in options
+
+    # Check if query is not just "*"
+    detailed_query = query and query.strip() != "*"
+
+    # Check if the advanced model is selected (contains "Advanced")
+    is_advanced_model = "Advanced" in model_name
+
+    # All conditions must be met
+    return is_image and annotation_enabled and detailed_query and is_advanced_model
+
+
 def run_inference(file_filepath, query, key, options, crop_size, friendly_model_name, client_ip):
     if file_filepath is None:
         gr.Warning("No file provided. Please upload a file before submitting.")
@@ -772,11 +790,39 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             )
 
         with gr.Column():
+            # Regular JSON output (initially visible)
             output_json = gr.JSON(
                 label="Response (JSON)",
                 height=1022,
-                min_height=1022
+                min_height=1022,
+                visible=True
             )
+
+            with gr.Group(visible=False) as annotation_group:
+                # View selector using Radio as a toggle (better styling control)
+                view_selector = gr.Radio(
+                    choices=["JSON", "Annotation"],
+                    value="JSON",  # Default to JSON view
+                    label="Results",
+                    scale=0,
+                    interactive=True,
+                    elem_classes=["view-toggle"]
+                )
+
+                # JSON view container
+                with gr.Column(visible=True) as json_view:
+                    tabbed_output_json = gr.JSON(
+                        label="Response (JSON)",
+                        height=1022,
+                        min_height=1022
+                    )
+
+                # Image view container
+                with gr.Column(visible=False) as image_view:
+                    output_image = gr.Image(
+                        label="Image with Annotations",
+                        type="filepath"
+                    )
 
             summarize_btn = gr.Button(
                 value="Summarize this result",
@@ -786,13 +832,13 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
 
             # Add hidden state to store the actual key used
             active_key_state = gr.State(value=None)
+            annotation_mode_state = gr.State(value=False)
 
             summarize_text = gr.Markdown(
                 value=result_summary_placeholder
             )
 
 
-    # Handler functions with logging
     def on_example_select(selected_example, request: gr.Request):
         log_request(request.client.host, f"Example Selection: {selected_example}")
         # Find the corresponding example data
@@ -811,24 +857,38 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 preview_visible = selected_example.lower().endswith(('png', 'jpg', 'jpeg'))
 
                 return (
-                    selected_example,  # input_file
-                    example_json,  # output_json
-                    gr.update(value=example[2]),  # query_input
-                    gr.update(value=[example[3]] if example[3] else []),  # options_select
-                    gr.update(value=0),  # crop_size
+                    selected_example,  # input_file_comp
+                    gr.update(value=example[2]),  # query_input_comp
+                    gr.update(value=[example[3]] if example[3] else []),  # options_select_comp
+                    gr.update(value=0),  # crop_size_comp
+                    gr.update(visible=True, value=example_json),  # output_json (regular)
+                    gr.update(visible=False),  # annotation_group
+                    gr.update(value="JSON"),  # view_selector (Radio)
+                    gr.update(value=None),  # tabbed_output_json
+                    gr.update(value=None),  # output_image
+                    gr.update(visible=True),  # json_view
+                    gr.update(visible=False),  # image_view
                     gr.update(visible=False),  # summarize_btn
-                    gr.update(value=result_summary_placeholder)  # summarize_text
+                    gr.update(value=result_summary_placeholder),  # summarize_text
+                    False  # annotation_mode_state - set to False for examples
                 )
 
         # Default return if no match found
         return (
-            None,  # input_file
-            None,  # output_json
-            gr.update(value=""),  # query_input
-            gr.update(value=[]),  # options_select
-            gr.update(value=0),  # crop_size
+            None,  # input_file_comp
+            gr.update(value=""),  # query_input_comp
+            gr.update(value=[]),  # options_select_comp
+            gr.update(value=0),  # crop_size_comp
+            gr.update(visible=True, value=None),  # output_json (regular)
+            gr.update(visible=False),  # annotation_group
+            gr.update(value="JSON"),  # view_selector (Radio)
+            gr.update(value=None),  # tabbed_output_json
+            gr.update(value=None),  # output_image
+            gr.update(visible=True),  # json_view
+            gr.update(visible=False),  # image_view
             gr.update(visible=False),  # summarize_btn
-            gr.update(value=result_summary_placeholder)  # summarize_text
+            gr.update(value=result_summary_placeholder),  # summarize_text
+            False  # annotation_mode_state - set to False for default
         )
 
 
@@ -863,18 +923,34 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 gr.update(value=[]),  # options_select
                 gr.update(value=0),  # crop_size
                 gr.update(value=None),  # example_radio
-                gr.update(visible=False),  # summarize_btn
-                gr.update(value=result_summary_placeholder)  # summarize_text
+                gr.update(visible=True, value=None),  # Show empty regular JSON
+                gr.update(visible=False),  # Hide annotation group
+                gr.update(value="JSON"),  # Reset view selector to JSON
+                gr.update(value=None),  # Clear annotation JSON
+                gr.update(value=None),  # Clear image
+                gr.update(visible=True),  # Keep JSON view visible
+                gr.update(visible=False),  # Hide image view
+                gr.update(visible=False),  # Hide summarize button
+                gr.update(value=result_summary_placeholder),  # Reset summary text
+                False  # annotation_mode_state - set to False when clearing
             )
         else:
-            # When a new file is uploaded, also hide summarize components
+            # When a new file is uploaded, hide annotation group and just show regular JSON
             return (
-                gr.update(),  # query_input
-                gr.update(),  # options_select
-                gr.update(),  # crop_size
-                gr.update(),  # example_radio
-                gr.update(visible=False),  # summarize_btn
-                gr.update(value=result_summary_placeholder)  # summarize_text
+                gr.update(),  # query_input (unchanged)
+                gr.update(),  # options_select (unchanged)
+                gr.update(),  # crop_size (unchanged)
+                gr.update(),  # example_radio (unchanged)
+                gr.update(visible=True),  # Show regular JSON output
+                gr.update(visible=False),  # Hide annotation group
+                gr.update(value="JSON"),  # Reset view selector to JSON
+                gr.update(value=None),  # Clear annotation JSON
+                gr.update(value=None),  # Clear image
+                gr.update(visible=True),  # Keep JSON view visible
+                gr.update(visible=False),  # Hide image view
+                gr.update(visible=False),  # Hide summarize button
+                gr.update(value=result_summary_placeholder),  # Reset summary text
+                False  # annotation_mode_state - set to False for new uploads initially
             )
 
 
@@ -891,27 +967,62 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             log_request(request.client.host, "Inference Request - No file")
 
         # Get inference result
-        result, actual_key = run_inference(input_file, query_input, key_input, options_select, crop_size, model_name, request.client.host)
+        # result, actual_key = run_inference(input_file, query_input, key_input, options_select, crop_size, model_name, request.client.host)
+        result, actual_key = "{}", ""
 
         # If result is valid, show the summary button
         summarize_visible = False
         if actual_key is not None:
             summarize_visible = True
 
-        return (
-            result,
-            gr.update(visible=summarize_visible, interactive=True),
-            actual_key
-        )
+        # Check if annotation should be available
+        annotation_available = check_annotation_availability(input_file, query_input, options_select, model_name)
+
+        if annotation_available:
+            # Show the annotation group with the radio toggle
+            return (
+                gr.update(visible=False),  # Hide regular JSON output
+                gr.update(visible=True),  # Show annotation group
+                gr.update(value="JSON"),  # Set view selector to JSON Result initially
+                result,  # Update JSON content in annotation view
+                input_file,  # Show image in the image preview
+                gr.update(visible=True),  # Ensure JSON view is visible first
+                gr.update(visible=False),  # Hide image view initially
+                gr.update(visible=summarize_visible, interactive=True),  # Update summarize button
+                actual_key,  # Store the key
+                True  # Set annotation_mode_state to True
+            )
+        else:
+            # Just show the regular JSON output
+            return (
+                gr.update(visible=True, value=result),  # Show and update regular JSON output
+                gr.update(visible=False),  # Hide annotation group
+                gr.update(value="JSON"),  # Reset view selector to default
+                None,  # No need to update annotation JSON
+                None,  # No need to update image
+                gr.update(visible=True),  # No change to JSON view visibility
+                gr.update(visible=False),  # No change to image view visibility
+                gr.update(visible=summarize_visible, interactive=True),  # Update summarize button
+                actual_key,  # Store the key
+                False  # Set annotation_mode_state to False
+            )
 
 
-    def summarize_result_wrapper(json_output, key_input, model_dropdown_comp, request: gr.Request):
+    def summarize_result_wrapper(regular_json, is_annotation_mode, key_input, model_dropdown_comp,
+                                 request: gr.Request):
         """Wrapper function that calls the standalone summarize_result function"""
         log_request(request.client.host, "LLM instruction request")
 
-        # Call summarize_result
+        if is_annotation_mode:
+            # Show a warning and don't run summarization
+            gr.Warning(
+                "Summarization is not available when using annotation mode. Please use regular extraction without annotation.")
+            # Return the button as interactive and keep the original placeholder
+            return gr.update(interactive=True), result_summary_placeholder
+
+        # Process regular JSON only
         summarize = summarize_result(
-            json_output,
+            regular_json,
             key_input,
             request.client.host,
             model_dropdown_comp
@@ -920,18 +1031,44 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
         return gr.update(interactive=False), summarize
 
 
+    # Function to toggle between views
+    def toggle_view(selected_option):
+        show_json = selected_option == "JSON"
+        show_image = selected_option == "Annotation"
+
+        return (
+            gr.update(visible=show_json),  # Show/hide JSON view
+            gr.update(visible=show_image)  # Show/hide image view
+        )
+
+
+    view_selector.change(
+        toggle_view,
+        inputs=view_selector,
+        outputs=[json_view, image_view],
+        api_name=False
+    )
+
+
     # Connect components with updated handlers
     example_radio.change(
         on_example_select,
         inputs=[example_radio],
         outputs=[
             input_file_comp,
-            output_json,
             query_input_comp,
             options_select_comp,
             crop_size_comp,
+            output_json,  # Regular JSON output
+            annotation_group,  # Annotation group
+            view_selector,  # View selector checkbox group
+            tabbed_output_json,  # JSON in annotation view
+            output_image,  # Image preview
+            json_view,  # JSON view container
+            image_view,  # Image view container
             summarize_btn,
-            summarize_text
+            summarize_text,
+            annotation_mode_state  # Add the state component
         ],
         api_name=False
     )
@@ -955,8 +1092,16 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             options_select_comp,
             crop_size_comp,
             example_radio,
+            output_json,  # Regular JSON output
+            annotation_group,  # Annotation group
+            view_selector,  # View selector checkbox group
+            tabbed_output_json,  # JSON in annotation view
+            output_image,  # Image preview
+            json_view,  # JSON view container
+            image_view,  # Image view container
             summarize_btn,
-            summarize_text
+            summarize_text,
+            annotation_mode_state  # Add the state component
         ],
         api_name=False
     )
@@ -971,16 +1116,28 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             crop_size_comp,
             model_dropdown_comp
         ],
-        outputs=[output_json, summarize_btn, active_key_state],
+        outputs=[
+            output_json,  # Regular JSON output
+            annotation_group,  # Annotation group
+            view_selector,  # View selector checkbox group
+            tabbed_output_json,  # JSON in annotation view
+            output_image,  # Image preview
+            json_view,  # JSON view container
+            image_view,  # Image view container
+            summarize_btn,
+            active_key_state,
+            annotation_mode_state  # Add the state component
+        ],
         api_name=False
     )
 
     summarize_btn.click(
         summarize_result_wrapper,
         inputs=[
-            output_json,
-            active_key_state,
-            model_dropdown_comp
+            output_json,  # Regular JSON output
+            annotation_mode_state,  # Whether annotation mode is active
+            active_key_state,  # Key used
+            model_dropdown_comp  # Model selected
         ],
         outputs=[summarize_btn, summarize_text],
         api_name=False
