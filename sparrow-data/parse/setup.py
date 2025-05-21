@@ -8,7 +8,7 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 
 setup(
     name="sparrow-parse",
-    version="1.0.7",
+    version="1.0.8",
     author="Andrej Baranovskij",
     author_email="andrejus.baranovskis@gmail.com",
     description="Sparrow Parse is a Python package (part of Sparrow) for parsing and extracting information from documents.",
