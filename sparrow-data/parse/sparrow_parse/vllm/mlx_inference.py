@@ -75,7 +75,6 @@ class MLXInference(ModelInference):
             print(f"Failed to parse JSON: {e}")
             return output_text
 
-
     def load_image_data(self, image_filepath, max_width=1250, max_height=1750):
         """
         Load and resize image while maintaining its aspect ratio.
@@ -155,7 +154,8 @@ class MLXInference(ModelInference):
     def _process_images(self, model, processor, config, file_paths, input_data, apply_annotation):
         """
         Process images and generate responses for each.
-        
+        If apply_annotation=True, don't resize to maintain accurate coordinates.
+
         :param model: The loaded model
         :param processor: The loaded processor
         :param config: Model configuration
@@ -166,27 +166,53 @@ class MLXInference(ModelInference):
         """
         results = []
         for file_path in file_paths:
-            image, width, height = self.load_image_data(file_path)
-            
+            # Load image differently based on annotation requirement
+            if apply_annotation:
+                # For annotation, just load the image without resizing
+                image = load_image(file_path)
+                # We'll skip the resize_shape parameter when generating
+            else:
+                # For non-annotation cases, load with potential resizing
+                image, width, height = self.load_image_data(file_path)
+                # We'll use resize_shape when generating
+
             # Prepare messages based on model type
             messages = self._prepare_messages(input_data, apply_annotation)
-            
+
             # Generate and process response
             prompt = apply_chat_template(processor, config, messages)
-            response, _ = generate(
-                model,
-                processor,
-                prompt,
-                image,
-                resize_shape=(width, height),
-                max_tokens=4000,
-                temperature=0.0,
-                verbose=False
-            )
-            results.append(self.process_response(response))
+
+            if apply_annotation:
+                # When annotation is required, don't use resize_shape
+                # This preserves original coordinate system
+                response, _ = generate(
+                    model,
+                    processor,
+                    prompt,
+                    image,
+                    max_tokens=4000,
+                    temperature=0.0,
+                    verbose=False
+                )
+            else:
+                # For non-annotation cases, use resize_shape for memory efficiency
+                response, _ = generate(
+                    model,
+                    processor,
+                    prompt,
+                    image,
+                    resize_shape=(width, height),
+                    max_tokens=4000,
+                    temperature=0.0,
+                    verbose=False
+                )
+
+            processed_response = self.process_response(response)
+            results.append(processed_response)
             print(f"Inference completed successfully for: {file_path}")
-        
+
         return results
+
 
     def transform_query_with_bbox(self, text_input):
         """
