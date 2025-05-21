@@ -75,26 +75,60 @@ class MLXInference(ModelInference):
             print(f"Failed to parse JSON: {e}")
             return output_text
 
+
     def load_image_data(self, image_filepath, max_width=1250, max_height=1750):
         """
         Load and resize image while maintaining its aspect ratio.
-
-        :param image_filepath: Path to the image file.
-        :param max_width: Maximum allowed width of the image.
-        :param max_height: Maximum allowed height of the image.
-        :return: Tuple containing the image object and its new dimensions.
+        Returns both original and resized dimensions for coordinate mapping.
         """
-        image = load_image(image_filepath)  # Assuming load_image is defined elsewhere
-        width, height = image.size
+        image = load_image(image_filepath)
+        orig_width, orig_height = image.size
 
         # Calculate new dimensions while maintaining the aspect ratio
-        if width > max_width or height > max_height:
-            aspect_ratio = width / height
+        if orig_width > max_width or orig_height > max_height:
+            aspect_ratio = orig_width / orig_height
             new_width = min(max_width, int(max_height * aspect_ratio))
             new_height = min(max_height, int(max_width / aspect_ratio))
-            return image, new_width, new_height
+            return image, new_width, new_height, orig_width, orig_height
 
-        return image, width, height
+        # No resize needed, original dimensions are used
+        return image, orig_width, orig_height, orig_width, orig_height
+
+
+    def scale_bbox_coordinates(self, json_response, orig_width, orig_height, resized_width, resized_height):
+        """
+        Scale bbox coordinates from resized image dimensions back to original image dimensions.
+        Only used when apply_annotation=True.
+        """
+        # Calculate scale factors
+        scale_x = orig_width / resized_width
+        scale_y = orig_height / resized_height
+
+        # No scaling needed if dimensions are the same
+        if scale_x == 1 and scale_y == 1:
+            return json_response
+
+        # Helper function to recursively process JSON objects
+        def process_object(obj):
+            if isinstance(obj, dict):
+                for key, value in obj.items():
+                    if key == "bbox" and isinstance(value, list) and len(value) == 4:
+                        # Scale the bbox coordinates
+                        obj[key] = [
+                            value[0] * scale_x,  # x_min
+                            value[1] * scale_y,  # y_min
+                            value[2] * scale_x,  # x_max
+                            value[3] * scale_y  # y_max
+                        ]
+                    elif isinstance(value, (dict, list)):
+                        process_object(value)
+            elif isinstance(obj, list):
+                for i, item in enumerate(obj):
+                    if isinstance(item, (dict, list)):
+                        process_object(item)
+            return obj
+
+        return process_object(json_response)
 
 
     def inference(self, input_data, apply_annotation=False, mode=None):
@@ -151,63 +185,59 @@ class MLXInference(ModelInference):
         print("Inference completed successfully")
         return response
 
+
     def _process_images(self, model, processor, config, file_paths, input_data, apply_annotation):
         """
         Process images and generate responses for each.
-        If apply_annotation=True, don't resize to maintain accurate coordinates.
-
-        :param model: The loaded model
-        :param processor: The loaded processor
-        :param config: Model configuration
-        :param file_paths: List of image file paths
-        :param input_data: Original input data
-        :param apply_annotation: Flag to apply annotations
-        :return: List of processed responses
+        Always resize images for memory efficiency, but scale coordinates back for annotation cases.
         """
         results = []
         for file_path in file_paths:
-            # Load image differently based on annotation requirement
-            if apply_annotation:
-                # For annotation, just load the image without resizing
-                image = load_image(file_path)
-                # We'll skip the resize_shape parameter when generating
-            else:
-                # For non-annotation cases, load with potential resizing
-                image, width, height = self.load_image_data(file_path)
-                # We'll use resize_shape when generating
+            # Always get both original and resized dimensions
+            image, resized_width, resized_height, orig_width, orig_height = self.load_image_data(file_path)
 
             # Prepare messages based on model type
             messages = self._prepare_messages(input_data, apply_annotation)
 
-            # Generate and process response
+            # Always use resize_shape for memory efficiency
             prompt = apply_chat_template(processor, config, messages)
+            response, _ = generate(
+                model,
+                processor,
+                prompt,
+                image,
+                resize_shape=(resized_width, resized_height),
+                max_tokens=4000,
+                temperature=0.0,
+                verbose=False
+            )
 
-            if apply_annotation:
-                # When annotation is required, don't use resize_shape
-                # This preserves original coordinate system
-                response, _ = generate(
-                    model,
-                    processor,
-                    prompt,
-                    image,
-                    max_tokens=4000,
-                    temperature=0.0,
-                    verbose=False
-                )
-            else:
-                # For non-annotation cases, use resize_shape for memory efficiency
-                response, _ = generate(
-                    model,
-                    processor,
-                    prompt,
-                    image,
-                    resize_shape=(width, height),
-                    max_tokens=4000,
-                    temperature=0.0,
-                    verbose=False
-                )
-
+            # Process the raw response
             processed_response = self.process_response(response)
+
+            # Scale coordinates if apply_annotation is True and resizing was applied
+            if apply_annotation:
+                try:
+                    # Parse the JSON response
+                    json_response = json.loads(processed_response) if isinstance(processed_response,
+                                                                                 str) else processed_response
+
+                    # Apply scaling only if dimensions differ
+                    if orig_width != resized_width or orig_height != resized_height:
+                        json_response = self.scale_bbox_coordinates(
+                            json_response,
+                            orig_width,
+                            orig_height,
+                            resized_width,
+                            resized_height
+                        )
+
+                    # Convert back to JSON string
+                    processed_response = json.dumps(json_response, indent=2)
+                except (json.JSONDecodeError, TypeError) as e:
+                    print(f"Warning: Could not scale coordinates - {e}")
+                    # Keep the original response if JSON parsing fails
+
             results.append(processed_response)
             print(f"Inference completed successfully for: {file_path}")
 
