@@ -249,6 +249,7 @@ class MLXInference(ModelInference):
         Transform JSON schema in text_input to include value, bbox, and confidence.
         Works with formats like: "retrieve field1, field2. return response in JSON format,
         by strictly following this JSON schema: [{...}]."
+        Handles complex nested structures including arrays.
 
         Args:
             text_input (str): The input text containing a JSON schema
@@ -256,29 +257,57 @@ class MLXInference(ModelInference):
         Returns:
             str: Text with transformed JSON including value, bbox, and confidence
         """
+        # Find where the schema starts
+        schema_start_marker = "JSON schema:"
+        schema_start_pos = text_input.find(schema_start_marker)
 
-        schema_pattern = r'JSON schema:\s*(\[.*?\]|\{.*?\})'
-        schema_match = re.search(schema_pattern, text_input, re.DOTALL)
+        if schema_start_pos == -1:
+            return text_input  # Return original if marker not found
 
-        if not schema_match:
-            return text_input  # Return original if pattern not found
+        # Find the actual schema by tracking opening and closing braces
+        start_pos = schema_start_pos + len(schema_start_marker)
 
-        # Extract the schema part and its position
-        schema_str = schema_match.group(1).strip()
-        schema_start = schema_match.start(1)
-        schema_end = schema_match.end(1)
+        # Skip whitespace to find first opening brace or bracket
+        while start_pos < len(text_input) and text_input[start_pos] not in ['{', '[']:
+            start_pos += 1
 
-        # Parse and transform the JSON
+        if start_pos >= len(text_input):
+            return text_input  # No opening brace found
+
+        # Determine if we're dealing with an object or array
+        is_object = text_input[start_pos] == '{'
+
+        # Now extract the full JSON schema by counting braces
+        open_char = '{' if is_object else '['
+        close_char = '}' if is_object else ']'
+        count = 1  # Already found one opening brace/bracket
+        end_pos = start_pos + 1
+
+        while end_pos < len(text_input) and count > 0:
+            if text_input[end_pos] == open_char:
+                count += 1
+            elif text_input[end_pos] == close_char:
+                count -= 1
+            end_pos += 1
+
+        if count != 0:
+            print("Warning: Unbalanced braces in JSON schema")
+            return text_input  # Unbalanced braces, return original
+
+        # Extract the schema
+        schema_str = text_input[start_pos:end_pos]
+
         try:
             # Handle single quotes if needed
             schema_str = schema_str.replace("'", '"')
 
+            # Parse and transform the JSON
             json_obj = json.loads(schema_str)
             transformed_json = self.transform_query_structure(json_obj)
             transformed_json_str = json.dumps(transformed_json)
 
             # Rebuild the text by replacing just the schema portion
-            result = text_input[:schema_start] + transformed_json_str + text_input[schema_end:]
+            result = text_input[:start_pos] + transformed_json_str + text_input[end_pos:]
 
             return result
         except json.JSONDecodeError as e:
