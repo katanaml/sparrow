@@ -70,7 +70,7 @@ Use `crop_size=N` (where `N` is an integer) to crop N pixels from all borders of
 
 Use `mode="static"` if you want to simulate LLM call, without executing LLM backend.
 
-Use 'apply_annotation=True' to apply box annotations for structured data extraction
+Use `apply_annotation=True` to apply box annotations for structured data extraction
 
 Method `run_inference` will return results and number of pages processed.
 
