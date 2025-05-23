@@ -3,60 +3,188 @@
 [![GitHub Stars](https://img.shields.io/github/stars/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/issues)
 [![Current Version](https://img.shields.io/badge/version-0.4.2-green.svg)](https://github.com/katanaml/sparrow)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-
-Data processing with ML, LLM and Vision LLM
+**Data processing with ML, LLM and Vision LLM**
 
 <p align="center">
   <img width="300" height="300" src="https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_logo_5.png">
 </p>
 
-## Overview
+<p align="center">
+  <strong>🚀 <a href="https://sparrow.katanaml.io">Try Sparrow Online</a> | 📖 <a href="#quickstart">Quick Start</a> | 🛠️ <a href="#installation">Installation</a> | 📚 <a href="#examples">Examples</a> | 🤖 <a href="#sparrow-agent">Agents</a></strong>
+</p>
 
-Sparrow is an innovative open-source solution for efficient data extraction and processing from various documents and images. It seamlessly handles forms, bank statements, invoices, receipts, and other unstructured data sources (any type of document layout and complexity). Sparrow stands out with its modular architecture, offering independent services and pipelines all optimized for robust performance. One of the critical functionalities of Sparrow - pluggable architecture. You can easily integrate and run data extraction pipelines using Sparrow Parse (with vision-language models support) or Instructor. Sparrow enables local LLM data extraction pipelines through various backends, such as vLLM, Ollama, PyTorch or Apple MLX. Sparrow Parse with VL model can run either on premise, or it can execute inference on cloud GPU. With Sparrow solution you get API, which helps to process and transform your data into structured output, ready to be integrated with custom workflows.
+---
 
-Sparrows supports instruction calling with text based payload. This allows to go beyond text data extraction use cases and apply Sparrow in various scenarios related to data processing, validation and workflow decision making.
+## 📑 Table of Contents
 
-Sparrow Pipelines - with Sparrow you can build independent LLM pipelines, and use API to invoke them from your system.
+- [✨ Key Features](#-key-features)
+- [🏗️ Architecture](#️-architecture)
+- [🚀 Quickstart](#-quickstart)
+- [🛠️ Installation](#️-installation)
+- [📚 Examples](#-examples)
+- [💻 CLI Usage](#-cli-usage)
+- [🌐 API Usage](#-api-usage)
+- [🤖 Sparrow Agent](#-sparrow-agent)
+- [📊 Dashboard](#-dashboard)
+- [🔧 Pipeline Comparison](#-pipeline-comparison)
+- [⚡ Performance Tips](#-performance-tips)
+- [🔍 Troubleshooting](#-troubleshooting)
+- [📜 License](#-license)
 
-![Sparrow](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_architecture.jpeg)
+## ✨ Key Features
 
-### Sparrow Components
+🎯 **Universal Document Processing**: Handle invoices, receipts, forms, bank statements, tables, and any document layout  
+🔧 **Pluggable Architecture**: Mix and match different pipelines (Sparrow Parse, Instructor, Agents)  
+🖥️ **Multiple Backends**: MLX (Apple Silicon), Ollama, vLLM, PyTorch, Hugging Face Cloud GPU  
+📱 **Multi-format Support**: Images (PNG, JPG) and multi-page PDFs  
+🎨 **Schema Validation**: JSON schema-based extraction with automatic validation  
+🌐 **API-First Design**: RESTful APIs for easy integration  
+💬 **Instruction Calling**: Beyond document extraction - text processing, validation, decision making  
+📊 **Visual Monitoring**: Built-in dashboard and agent workflow tracking  
+🔒 **Enterprise Ready**: Rate limiting, usage analytics, commercial licensing available  
 
-* **[Sparrow ML LLM](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** - Sparrow API main engine that runs various pipelines
-* **[Sparrow Agents](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/agents)** - Sparrow Agent framework
-* **[Sparrow Parse](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse)** - Sparrow library enabling `sparrow-parse` and `sparrow-instructor` pipelines functionality using VL LLM. Works great for structured JSON response generation and for LLM microservices with instruction calling
-* **[Sparrow OCR](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** - OCR service, providing optical character recognition
-* **[Sparrow UI](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/)** - Dashboard UI for Sparrow
+## 🏗️ Architecture
 
-## Sparrow UI
+![Sparrow Architecture](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_architecture.jpeg)
 
-Try [Sparrow](https://sparrow.katanaml.io) online, this runs on Mac Mini M4 Pro 64GB server with MLX
+### Core Components
 
-![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui.png)
+| Component | Purpose | Use Case |
+|-----------|---------|----------|
+| **[Sparrow ML LLM](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/llm)** | Main API engine | Document processing pipelines |
+| **[Sparrow Parse](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse)** | Vision LLM library | Structured JSON extraction |
+| **[Sparrow Agents](https://github.com/katanaml/sparrow/tree/main/sparrow-ml/agents)** | Workflow orchestration | Complex multi-step processing |
+| **[Sparrow OCR](https://github.com/katanaml/sparrow/tree/main/sparrow-data/ocr)** | Text recognition | OCR preprocessing |
+| **[Sparrow UI](https://github.com/katanaml/sparrow/tree/main/sparrow-ui/)** | Web interface | Interactive document processing |
 
-Structured data summary with LLM instruction calling
+## 🚀 Quickstart
 
-![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui_1.png)
+### Prerequisites
+- **Python 3.10.4+** (use `pyenv` for version management)
+- **macOS** (for MLX backend) or **Linux/Windows** (for other backends)
+- **GPU** (optional, for better performance)
 
-Structured data annotation feature
+### 30-Second Setup
 
-![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui_2.png)
+```bash
+# 1. Install pyenv and Python 3.10.4
+pyenv install 3.10.4
+pyenv global 3.10.4
 
-## Examples - data extraction with Sparrow
+# 2. Create virtual environment
+python -m venv .env_sparrow_parse
+source .env_sparrow_parse/bin/activate  # Linux/Mac
+# or .env_sparrow_parse\Scripts\activate  # Windows
 
-### Bank statement
+# 3. Install Sparrow Parse pipeline
+git clone https://github.com/katanaml/sparrow.git
+cd sparrow/sparrow-ml/llm
+pip install -r requirements_sparrow_parse.txt
 
-![Bank statement](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/bank_statement.png)
+# 4. For macOS: Install poppler for PDF processing
+brew install poppler
 
+# 5. Start the API server
+python api.py
+```
+
+### First Document Extraction
+
+```bash
+# Extract data from a bonds table
+./sparrow.sh '[{"instrument_name":"str", "valuation":0}]' \
+  --pipeline "sparrow-parse" \
+  --options mlx \
+  --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit \
+  --file-path "data/bonds_table.png"
+```
+
+**Result:**
+```json
+{
+  "data": [
+    {"instrument_name": "UNITS BLACKROCK...", "valuation": 19049},
+    {"instrument_name": "UNITS ISHARES...", "valuation": 83488}
+  ],
+  "valid": "true"
+}
+```
+
+## 🛠️ Installation
+
+### Quick Setup
+
+```bash
+# 1. Clone repository
+git clone https://github.com/katanaml/sparrow.git
+cd sparrow
+
+# 2. Follow detailed setup instructions
+```
+
+📖 **For complete installation instructions**, see our [detailed environment setup guide](environment_setup.md).
+
+### Essential Steps Summary
+
+1. **Python Environment**: Install Python 3.10.4 using pyenv
+2. **Virtual Environments**: Create separate environments for different pipelines:
+   - `.env_sparrow_parse` - for Sparrow Parse (Vision LLM)
+   - `.env_instructor` - for Instructor (Text LLM) 
+   - `.env_ocr` - for OCR service (optional)
+3. **System Dependencies**: Install poppler for PDF processing
+4. **Requirements**: Install pipeline-specific dependencies
+
+### Platform-Specific Notes
+
+**macOS:**
+```bash
+brew install poppler  # Required for PDF processing
+```
+
+**Ubuntu/Debian:**
+```bash
+sudo apt-get install poppler-utils libpoppler-cpp-dev
+```
+
+**Apple Silicon**: MLX backend available for optimal performance  
+**NVIDIA GPU**: Use local_gpu backend for best performance  
+**CPU Only**: Use smaller models or Hugging Face cloud backend
+
+### Verification
+
+```bash
+# Test installation
+python api.py --port 8002
+# Visit http://localhost:8002/api/v1/sparrow-llm/docs
+```
+
+## 📚 Examples
+
+### 🏦 Bank Statement Processing
+
+<details>
+<summary>Bank statement example with full JSON output</summary>
+
+![Bank Statement](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/bank_statement.png)
+
+```bash
+# Extract all data from bank statement
+./sparrow.sh "*" \
+  --pipeline "sparrow-parse" \
+  --options mlx \
+  --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit \
+  --file-path "data/bank_statement.pdf"
+```
+
+**Output:**
 ```json
 {
   "bank": "First Platypus Bank",
-  "address": "1234 Kings St., New York, NY 12123",
   "account_holder": "Mary G. Orta",
   "account_number": "1234567890123",
   "statement_date": "3/1/2022",
-  "period_covered": "2/1/2022 - 3/1/2022",
   "account_summary": {
     "balance_on_march_1": "$25,032.23",
     "total_money_in": "$10,234.23",
@@ -67,586 +195,412 @@ Structured data annotation feature
       "date": "02/01",
       "description": "PGD EasyPay Debit",
       "withdrawal": "203.24",
-      "deposit": "",
       "balance": "22,098.23"
-    },
-    {
-      "date": "02/02",
-      "description": "AB&B Online Payment*****",
-      "withdrawal": "71.23",
-      "deposit": "",
-      "balance": "22,027.00"
-    },
-    {
-      "date": "02/04",
-      "description": "Check No. 2345",
-      "withdrawal": "",
-      "deposit": "450.00",
-      "balance": "22,477.00"
-    },
-    {
-      "date": "02/05",
-      "description": "Payroll Direct Dep 23422342 Giants",
-      "withdrawal": "",
-      "deposit": "2,534.65",
-      "balance": "25,011.65"
-    },
-    {
-      "date": "02/06",
-      "description": "Signature POS Debit - TJP",
-      "withdrawal": "84.50",
-      "deposit": "",
-      "balance": "24,927.15"
-    },
-    {
-      "date": "02/07",
-      "description": "Check No. 234",
-      "withdrawal": "1,400.00",
-      "deposit": "",
-      "balance": "23,527.15"
-    },
-    {
-      "date": "02/08",
-      "description": "Check No. 342",
-      "withdrawal": "",
-      "deposit": "25.00",
-      "balance": "23,552.15"
-    },
-    {
-      "date": "02/09",
-      "description": "FPB AutoPay***** Credit Card",
-      "withdrawal": "456.02",
-      "deposit": "",
-      "balance": "23,096.13"
-    },
-    {
-      "date": "02/08",
-      "description": "Check No. 123",
-      "withdrawal": "",
-      "deposit": "25.00",
-      "balance": "23,552.15"
-    },
-    {
-      "date": "02/09",
-      "description": "FPB AutoPay***** Credit Card",
-      "withdrawal": "156.02",
-      "deposit": "",
-      "balance": "23,096.13"
-    },
-    {
-      "date": "02/08",
-      "description": "Cash Deposit",
-      "withdrawal": "",
-      "deposit": "25.00",
-      "balance": "23,552.15"
     }
+    // ... more transactions
   ],
   "valid": "true"
 }
 ```
 
-### Bonds table
+</details>
 
-![Bank statement](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/bonds_table.png)
+### 📊 Financial Tables
 
-```json
-{
-  "data": [
-    {
-      "instrument_name": "UNITS BLACKROCK FIX INC DUB FDS PLC ISHS EUR INV GRD CP BD IDX/INST/E",
-      "valuation": 19049
-    },
-    {
-      "instrument_name": "UNITS ISHARES III PLC CORE EUR GOVT BOND UCITS ETF/EUR",
-      "valuation": 83488
-    },
-    {
-      "instrument_name": "UNITS ISHARES III PLC EUR CORP BOND 1-5YR UCITS ETF/EUR",
-      "valuation": 213030
-    },
-    {
-      "instrument_name": "UNIT ISHARES VI PLC/JP MORGAN USD E BOND EUR HED UCITS ETF DIST/HDGD/",
-      "valuation": 32774
-    },
-    {
-      "instrument_name": "UNITS XTRACKERS II SICAV/EUR HY CORP BOND UCITS ETF/-1D-/DISTR.",
-      "valuation": 23643
-    }
-  ],
-  "valid": "true"
-}
+<details>
+<summary>Bonds table extraction</summary>
+
+![Bonds Table](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/bonds_table.png)
+
+```bash
+# Extract structured data from financial table
+./sparrow.sh '[{"instrument_name":"str", "valuation":0}]' \
+  --pipeline "sparrow-parse" \
+  --options mlx \
+  --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit \
+  --file-path "data/bonds_table.png"
 ```
 
-## Quickstart
+</details>
 
-1. Install `pyenv` and then install Python into your environment
-2. Create virtual environment for the Sparrow pipeline you want to run
-3. Install requirements for the Sparrow pipeline you want to use. Keep in mind, depending on OS, it could be required to do additional install steps for some of the libraries (for example PaddleOCR)
-4. Run Sparrow either from CLI or from API. You need to start API endpoint
-5. Pass query in the form of JSON schema to extract data from the document
+### 🧾 Invoice Processing
 
-See detailed instructions below.
-
-## Installation
-
-1. Python environment
-
-For more details, check out the [extended section](environment_setup.md).
-
-2. Run Sparrow
-
-You can run Sparrow on CLI or through API. To run on CLI, use `sparrow.sh` script. Run it from corresponding virtual environment, depending which pipeline you want to execute. `sparrow-parse` pipeline is using VL LLM model. `sparrow-parse` pipeline runs VL LLM either locally with MLX, Ollama, or using cloud GPU. `instructor` pipeline is using Ollama backend. Make sure to pull LLM model for Ollama using name specified in config.yml to run `instructor` pipeline.
-
-3. Private deployment
-
-There is a property `PROTECTED_ACCESS: False` in config.yml. When set to `False`, `sparrow_key` is not verified on API call. Otherwise correct `sparrow-key` needs to be provided for API call.
-
-## Inference
-
-Arguments:
-
-`query` - JSON query string argument with field names and types to fetch
-
-`file-path` - input document. This can be image or multipage PDF
-
-`pipeline` - Sparrow pipeline used to process query request
-
-`crop_size=N` (where N is an integer) to crop N pixels from all borders of the input images. This can be helpful for removing unwanted borders or frame artifacts from scanned documents
-
-`debug-dir` - folder where processed images are stored
-
-`debug` - if True, additional messages will be printed
-
-Options:
-
-`--options mlx` - this will set MLX as backend for local inference
-
-`--options mlx-community/Qwen2.5-VL-72B-Instruct-4bit` - name for Vision LLM model, supported by MLX
-
-`--options tables_only` - set this option, if you want to process tables only
-
-`--options validation_off` - set this option, if you want to disable response validation
-
-`--page-type invoice --page-type adjudication_table --page-type adjudication_details` - used when `query=*`, specify a list of page type labels to be used to classify document pages
-
-First two options are always set first.
-
-It is possible to extract non-existing fields (fields missing from the document, NULL values will be assigned) with Sparrow. Use `or null` format for the query, example:
-
-```
-[{"instrument_name":"str", "valuation":0, "transaction_fees":"0.0 or null"}]
+```bash
+# Extract invoice with custom schema
+./sparrow.sh '{
+  "invoice_number": "str",
+  "date": "str", 
+  "vendor": "str",
+  "total": 0,
+  "items": [{"description": "str", "amount": 0}]
+}' --pipeline "sparrow-parse" \
+  --options mlx \
+  --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit \
+  --crop-size 60 \
+  --file-path "data/invoice.pdf"
 ```
 
+### 💬 Text Instructions
 
-✅ Sparrow Parse pipeline, running locally with Apple MLX backend.
-
-Sparrow validates response against request schema. Result of validation is automatically included into response, see property `valid`.
-
-```
-./sparrow.sh "[{"instrument_name":"str", "valuation":0}]" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit --file-path "/data/bonds_table.png"
-```
-
-Answer:
-
-```json
-{
-  "data": [
-    {
-      "instrument_name": "UNITS BLACKROCK FIX INC DUB FDS PLC ISHS EUR INV GRD CP BD IDX/INST/E",
-      "valuation": 19049
-    },
-    {
-      "instrument_name": "UNITS ISHARES III PLC CORE EUR GOVT BOND UCITS ETF/EUR",
-      "valuation": 83488
-    },
-    {
-      "instrument_name": "UNITS ISHARES III PLC EUR CORP BOND 1-5YR UCITS ETF/EUR",
-      "valuation": 213030
-    },
-    {
-      "instrument_name": "UNIT ISHARES VI PLC/JP MORGAN USD E BOND EUR HED UCITS ETF DIST/HDGD/",
-      "valuation": 32774
-    },
-    {
-      "instrument_name": "UNITS XTRACKERS II SICAV/EUR HY CORP BOND UCITS ETF/-1D-/DISTR.",
-      "valuation": 23643
-    }
-  ],
-  "valid": "true"
-}
+```bash
+# Instruction-based processing
+./sparrow.sh "instruction: summarize key financial metrics, payload: [JSON data]" \
+  --pipeline "sparrow-instructor" \
+  --options mlx \
+  --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit
 ```
 
-✅ Sparrow Parse pipeline, with GPU backend on Hugging Face. GPU backend `katanaml/sparrow-qwen2-vl-7b` is private, to be able to run below command, you need to create your own backend on Hugging Face space using [code](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse/sparrow_parse/vllm/infra/qwen2_vl_7b) from Sparrow Parse.
+### 📈 Stock Data
 
-```
-./sparrow.sh "[{"instrument_name":"str", "valuation":0}]" --pipeline "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/data/bonds_table.png"
-```
-
-✅ Sparrow Parse pipeline supports multi-page PDF documents. Running locally with Apple MLX backend. Response will be structured per page with page number indicators.
-
-```
-./sparrow.sh "{"table": [{"description": "str", "latest_amount": 0, "previous_amount": 0}]}" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit --file-path "/data/oracle_10k_2014_q1_small.pdf" --debug-dir "/data/"
-```
-
-Example running private GPU backend `katanaml/sparrow-qwen2-vl-7b`:
-
-```
-./sparrow.sh "{"table": [{"description": "str", "latest_amount": 0, "previous_amount": 0}]}" --pipeline "sparrow-parse" --debug --options huggingface --options katanaml/sparrow-qwen2-vl-7b --file-path "/data/oracle_10k_2014_q1_small.pdf" --debug-dir "/data/"
-```
-
-Sample answer:
-
-```json
-[
-    {
-        "table": [
-            {
-                "description": "Revenues",
-                "latest_amount": 12453,
-                "previous_amount": 11445
-            },
-            {
-                "description": "Operating expenses",
-                "latest_amount": 9157,
-                "previous_amount": 8822
-            }
-        ],
-        "valid": "true",
-        "page": 1
-    },
-    {
-        "table": [
-            {
-                "description": "Revenues",
-                "latest_amount": 12453,
-                "previous_amount": 11445
-            },
-            {
-                "description": "Operating expenses",
-                "latest_amount": 9157,
-                "previous_amount": 8822
-            }
-        ],
-        "valid": "true",
-        "page": 2
-    }
-]
-```
-
-✅ Sparrow Parse pipeline running with cropping functionality
-
-```
-./sparrow.sh "*" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit --crop-size 60 --file-path "/data/invoice_1.pdf"
-```
-
-Sample answer:
-
-```
-{
-  "invoice_number": "61356291",
-  "date_of_issue": "09/06/2012",
-  "seller": {
-    "name": "Chapman, Kim and Green",
-    "address": "64731 James Branch, Smithmouthouth, NC 26872",
-    "tax_id": "949-84-9105",
-    "iban": "GB50ACIE59715038217063"
-  },
-  "client": {
-    "name": "Rodriguez-Stevens",
-    "address": "2280 Angela Plain, Plain, MS 93248",
-    "tax_id": "939-98-8477"
-  },
-  "items": [
-    {
-      "description": "Wine Glasses Goblets Pair Clear",
-      "quantity": 5,
-      "unit": "each",
-      "net_price": 12.0,
-      "net_worth": 60.0,
-      "vat_percentage": 10,
-      "gross_worth": 66.0
-    },
-    {
-      "description": "With Hooks Stemware Storage Multiple Multiple Uses Iron Wine Rack Hanging",
-      "quantity": 4,
-      "unit": "each",
-      "net_price": 28.08,
-      "net_worth": 112.32,
-      "vat_percentage": 10,
-      "gross_worth": 123.55
-    },
-    {
-      "description": "Replacement Corkscrew Parts Spiral Worm Worm Wine Opener Bottle Houdini",
-      "quantity": 1,
-      "unit": "each",
-      "net_price": 7.5,
-      "net_worth": 7.5,
-      "vat_percentage": 10,
-      "gross_worth": 8.25
-    },
-    {
-      "description": "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 4 20 FL OZ (591 ml) NEW",
-      "quantity": 1,
-      "unit": "each",
-      "net_price": 12.99,
-      "net_worth": 12.99,
-      "vat_percentage": 10,
-      "gross_worth": 14.29
-    }
-  ],
-  "summary": {
-    "total_net_worth": 192.81,
-    "total_vat": 19.28,
-    "total_gross_worth": 212.09
-  }
-}
-```
-
-✅ LLM function call example:
-
-```
+```bash
+# Function calling example
 ./sparrow.sh assistant --pipeline "stocks" --query "Oracle"
 ```
 
-Answer:
+## 💻 CLI Usage
 
-```json
-{
-  "company": "Oracle Corporation",
-  "ticker": "ORCL"
-}
+### Basic Syntax
+
+```bash
+./sparrow.sh "<JSON_SCHEMA>" --pipeline "<PIPELINE>" [OPTIONS] --file-path "<FILE>"
 ```
 
+### Command Line Arguments
+
+| Argument | Type | Description | Example |
+|----------|------|-------------|---------|
+| `query` | JSON/String | Schema or instruction | `'[{"field":"str"}]'` |
+| `--pipeline` | String | Pipeline to use | `sparrow-parse` |
+| `--file-path` | Path | Input document | `data/invoice.pdf` |
+| `--options` | String | Backend configuration | `mlx,model-name` |
+| `--crop-size` | Integer | Border cropping pixels | `60` |
+| `--debug` | Boolean | Enable debug mode | `--debug` |
+| `--debug-dir` | Path | Debug output folder | `./debug/` |
+
+### Pipeline Options
+
+#### Sparrow Parse (Vision LLM)
+```bash
+# MLX Backend (Apple Silicon)
+--options mlx --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit
+
+# Hugging Face Cloud GPU
+--options huggingface --options your-space/model-name
+
+# Additional flags
+--options tables_only        # Extract only tables
+--options validation_off     # Disable schema validation
+--options apply_annotation   # Include bounding boxes
 ```
-The stock price of the Oracle Corporation is 186.3699951171875. USD
+
+#### Sparrow Instructor (Text LLM)
+```bash
+--options mlx --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit
 ```
 
-✅ LLM instruction calling with Sparrow Instructor pipeline:
+### Advanced Examples
 
+```bash
+# Multi-page PDF with page classification
+./sparrow.sh "*" \
+  --page-type invoice \
+  --page-type table \
+  --pipeline "sparrow-parse" \
+  --file-path "multi_page.pdf"
+
+# Handle missing fields with null values
+./sparrow.sh '[{"required_field":"str", "optional_field":"str or null"}]' \
+  --pipeline "sparrow-parse" \
+  --file-path "document.png"
+
+# Table extraction with cropping
+./sparrow.sh '*' \
+  --options mlx \
+  --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit \
+  --options tables_only \
+  --crop-size 100 \
+  --file-path "scan.pdf"
 ```
-./sparrow.sh "instruction: do arithmetic operation, payload: 2+2=" --pipeline "sparrow-instructor" --options mlx --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit
-```
 
-Answer:
+## 🌐 API Usage
 
-```
-The result of 2 + 2 is:
+### Starting the Server
 
-4
-```
-
-## Sparrow FastAPI Endpoint
-
-Sparrow enables you to run a local LLM RAG as an API using FastAPI, providing a convenient and efficient way to interact with our services. You can pass the name of the plugin to be used for the inference. By default, `sparrow-parse` pipeline is used.
-
-Sparrow provides two endpoints - `inference` and `instruction-inference`.
-
-Endpoint `inference` is used to run document data extraction, it accepts document and JSON query.
-
-Endpoint `instruction-inference` accepts text instruction and payload. This endpoint can be used to summarise, validate and run other tasks with text payload.
-
-To set this up:
-
-1. Start the Endpoint
-
-Launch the endpoint by executing the following command in your terminal:
-
-```
+```bash
+# Default port (8002)
 python api.py
-```
 
-If you want to run pipelines from different Python virtual environments simultaneously, you can specify port, to avoid conflicts:
-
-```
+# Custom port
 python api.py --port 8001
+
+# Multiple instances
+python api.py --port 8002 &  # Sparrow Parse
+python api.py --port 8003 &  # Instructor
 ```
 
-2. Access the Endpoint Documentation
+### API Endpoints
 
-You can view detailed documentation for the API by navigating to:
+#### Document Extraction (`/inference`)
 
-```
-http://127.0.0.1:8000/api/v1/sparrow-llm/docs
-```
-
-For visual reference, a screenshot of the FastAPI endpoint
-
-![FastAPI endpoint](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_api.png)
-
-### API call inference
-
-Arguments:
-
-`query` - JSON query string argument with field names and types to fetch
-
-`file-path` - input document. This can be image or multipage PDF
-
-`pipeline` - Sparrow pipeline used to process query request
-
-`crop_size=N` (where N is an integer) to crop N pixels from all borders of the input images. This can be helpful for removing unwanted borders or frame artifacts from scanned documents
-
-`debug-dir` - folder where processed images are stored
-
-`debug` - if True, additional messages will be printed
-
-Options:
-
-`--options mlx` - this will set MLX as backend for local inference
-
-`--options mlx-community/Qwen2.5-VL-72B-Instruct-4bit` - name for Vision LLM model, supported by MLX
-
-`--options tables_only` - set this option, if you want to process tables only
-
-`--options validation_off` - set this option, if you want to disable response validation
-
-`--page-type invoice --page-type adjudication_table --page-type adjudication_details` - used when `query=*`, specify a list of page type labels to be used to classify document pages
-
-First two options are always set first.
-
-It is possible to extract non-existing fields (fields missing from the document, NULL values will be assigned) with Sparrow. Use `or null` format for the query, example:
-
-```
-[{"instrument_name":"str", "valuation":0, "transaction_fees":"0.0 or null"}]
-```
-
-✅ `sparrow-parse` pipeline. This pipeline runs locally with Apple MLX backend.
-
-```
-curl -X 'POST' \
-  'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
-  -H 'accept: application/json' \
+```bash
+curl -X POST 'http://localhost:8002/api/v1/sparrow-llm/inference' \
   -H 'Content-Type: multipart/form-data' \
-  -F 'query=[{"instrument_name":"str","valuation":0}]' \
-  -F 'page_type=' \
+  -F 'query=[{"field_name":"str", "amount":0}]' \
   -F 'pipeline=sparrow-parse' \
   -F 'options=mlx,mlx-community/Qwen2.5-VL-72B-Instruct-4bit' \
-  -F 'crop_size=' \
-  -F 'debug_dir=' \
-  -F 'debug=false' \
-  -F 'sparrow_key=' \
-  -F 'file=@bonds_table.png;type=image/png'
+  -F 'file=@document.pdf'
 ```
 
-Alternatively, pipeline can run Visual LLM with GPU backend on Hugging Face. GPU backend `katanaml/sparrow-qwen2-vl-7b` is private, to be able to run below command, you need to create your own backend on Hugging Face space using [code](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse/sparrow_parse/vllm/infra/qwen2_vl_7b) from Sparrow Parse.
+#### Text Instructions (`/instruction-inference`)
 
-```
-curl -X 'POST' \
-  'http://127.0.0.1:8000/api/v1/sparrow-llm/inference' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: multipart/form-data' \
-  -F 'query=[{"instrument_name":"str","valuation":0}]' \
-  -F 'page_type=' \
-  -F 'pipeline=sparrow-parse' \
-  -F 'options=huggingface,katanaml/sparrow-qwen2-vl-7b' \
-  -F 'crop_size=' \
-  -F 'debug_dir=' \
-  -F 'debug=false' \
-  -F 'sparrow_key=' \
-  -F 'file=@bonds_table.png;type=image/png'
-```
-
-Sparrow Parse pipeline supports multi-page PDF documents. You can pass PDF document through the API endpoint, response will be structured per page with page number indicators:
-
-```json
-[
-    {
-        "table": [
-            {
-                "description": "Revenues",
-                "latest_amount": 12453,
-                "previous_amount": 11445
-            },
-            {
-                "description": "Operating expenses",
-                "latest_amount": 9157,
-                "previous_amount": 8822
-            }
-        ],
-        "valid": "true",
-        "page": 1
-    },
-    {
-        "table": [
-            {
-                "description": "Revenues",
-                "latest_amount": 12453,
-                "previous_amount": 11445
-            },
-            {
-                "description": "Operating expenses",
-                "latest_amount": 9157,
-                "previous_amount": 8822
-            }
-        ],
-        "valid": "true",
-        "page": 2
-    }
-]
-```
-
-✅ `sparrow-instructor` pipeline. This pipeline runs locally with Apple MLX backend.
-
-```
-curl -X 'POST' \
-  'http://127.0.0.1:8002/api/v1/sparrow-llm/instruction-inference' \
-  -H 'accept: application/json' \
+```bash
+curl -X POST 'http://localhost:8002/api/v1/sparrow-llm/instruction-inference' \
   -H 'Content-Type: application/x-www-form-urlencoded' \
-  -d 'query=instruction: do arithmetic operation, payload: 2+2=
-      &pipeline=sparrow-instructor
-      &options=mlx,mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit
-      &debug_dir=
-      &debug=false
-      &sparrow_key=
-      &client_ip=
-      &country='
+  -d 'query=instruction: analyze data, payload: {...}' \
+  -d 'pipeline=sparrow-instructor' \
+  -d 'options=mlx,model-name'
 ```
+
+### API Documentation
+
+Visit `http://localhost:8002/api/v1/sparrow-llm/docs` for interactive Swagger documentation.
+
+![API Documentation](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_api.png)
 
 ## 🤖 Sparrow Agent
 
 ![Sparrow Agents](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_agent.png)
 
-Sparrow Agent provides a unified workflow system for orchestrating complex document processing tasks. It allows you to combine multiple document data extraction operations into a single coherent flow, with visual monitoring and tracking powered by Prefect. The agent system intelligently routes documents through classification, extraction, and validation steps, handling the entire pipeline from document ingestion to structured data output. Extensible by design, it currently supports document processing workflows and can be expanded to accommodate additional use cases.
+Orchestrate complex document processing workflows with visual monitoring powered by Prefect.
 
-Example:
+### Features
+- **Multi-step Workflows**: Chain classification, extraction, and validation
+- **Visual Monitoring**: Real-time pipeline tracking
+- **Error Handling**: Robust failure recovery
+- **Extensible**: Custom agents for specific use cases
 
-```
-curl -X 'POST' \
-  'http://127.0.0.1:8001/api/v1/sparrow-agents/execute/file' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: multipart/form-data' \
+### Usage
+
+```bash
+# Start agent server
+cd sparrow-ml/agents
+python api.py --port 8001
+
+# Process medical prescriptions
+curl -X POST 'http://localhost:8001/api/v1/sparrow-agents/execute/file' \
   -F 'agent_name=medical_prescriptions' \
   -F 'extraction_params={"sparrow_key":"123456"}' \
-  -F 'file=@your_doc.pdf;type=application/pdf'
+  -F 'file=@prescription.pdf'
 ```
 
-## 🚀 Dashboard
+## 📊 Dashboard
 
-[Sparrow](https://sparrow.katanaml.io) comes with usage dashboard
+Built-in analytics and monitoring dashboard at [sparrow.katanaml.io](https://sparrow.katanaml.io)
 
-![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui_3.png)
+![Dashboard](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui_3.png)
 
-Usage history
+### Features
+- **Usage Analytics**: Track API calls, success rates, performance
+- **Geographic Distribution**: See usage by country
+- **Model Performance**: Compare different model performance
+- **Real-time Monitoring**: Live processing statistics
 
-![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui_4.png)
+## 🔧 Pipeline Comparison
 
-## Star History
+| Feature | Sparrow Parse | Sparrow Instructor | Sparrow Agents |
+|---------|---------------|-------------------|----------------|
+| **Input** | Documents + JSON schema | Text instructions | Complex workflows |
+| **Output** | Structured JSON | Free-form text | Multi-step results |
+| **Use Cases** | Data extraction, forms | Summarization, analysis | Enterprise workflows |
+| **Validation** | Schema-based | Manual | Custom rules |
+| **Complexity** | Simple | Medium | High |
+| **Best For** | Invoices, tables, forms | Text processing | Multi-document flows |
+
+### When to Use What
+
+**Sparrow Parse**: Use for structured data extraction from documents  
+**Sparrow Instructor**: Use for text analysis, summarization, Q&A  
+**Sparrow Agents**: Use for complex multi-step document processing workflows  
+
+## ⚡ Performance Tips
+
+### Hardware Optimization
+
+**Apple Silicon (MLX)**
+- ✅ Best performance with unified memory
+- ✅ Models: Qwen2.5-VL-72B, Mistral-Small-3.1-24B
+- ⚠️ Requires macOS with Apple Silicon
+
+**NVIDIA GPU**
+- ✅ Use local_gpu backend for best performance
+- ✅ Recommended: RTX 3080+ with 12GB+ VRAM
+- ⚠️ Requires CUDA setup
+
+**CPU Only**
+- ⚠️ Significantly slower
+- ✅ Use smaller models (7B parameters max)
+- ✅ Consider Hugging Face cloud backend
+
+### Memory Management
+
+```bash
+# Reduce memory usage
+--crop-size 100        # Crop large images
+--options tables_only  # Process only tables
+
+# For large PDFs
+--debug-dir ./temp     # Monitor processing
+# Split large PDFs manually if needed
+```
+
+### Model Selection
+
+| Use Case | Recommended Model | Memory | Speed |
+|----------|------------------|---------|--------|
+| **Forms/Invoices** | Mistral-Small-3.1-24B | 16GB | Fast |
+| **Complex Tables** | Qwen2.5-VL-72B | 32GB+ | Slower |
+| **Quick Testing** | Qwen2.5-VL-7B | 8GB | Fastest |
+
+## 🔍 Troubleshooting
+
+### Common Issues
+
+<details>
+<summary>🚫 Installation Problems</summary>
+
+**Python Version Issues:**
+```bash
+# Verify Python version
+python --version  # Should be 3.10.4+
+
+# Fix with pyenv
+pyenv install 3.10.4
+pyenv global 3.10.4
+```
+
+**MLX Installation (Apple Silicon):**
+```bash
+# If MLX fails to install
+pip install --upgrade pip
+pip install mlx-vlm --no-cache-dir
+```
+
+**Poppler Missing:**
+```bash
+# macOS
+brew install poppler
+
+# Ubuntu/Debian  
+sudo apt-get install poppler-utils
+
+# Verify installation
+pdftoppm -h
+```
+
+</details>
+
+<details>
+<summary>🔧 Runtime Issues</summary>
+
+**Memory Errors:**
+- Use smaller models (7B instead of 72B)
+- Enable image cropping: `--crop-size 100`
+- Process single pages instead of entire PDFs
+
+**Model Loading Fails:**
+```bash
+# Clear model cache
+rm -rf ~/.cache/huggingface/
+rm -rf ~/.mlx/
+
+# Redownload models
+python -c "from mlx_vlm import load; load('model-name')"
+```
+
+**API Connection Issues:**
+```bash
+# Check if server is running
+curl http://localhost:8002/health
+
+# Check logs
+python api.py --debug
+```
+
+</details>
+
+<details>
+<summary>📄 Document Processing Issues</summary>
+
+**Poor Extraction Quality:**
+- Try image cropping: `--crop-size 60`
+- Use `--options tables_only` for table documents
+- Ensure image resolution is adequate (300+ DPI)
+- Use schema validation: avoid `--options validation_off`
+
+**PDF Processing Fails:**
+```bash
+# Test PDF manually
+pdftoppm -png input.pdf output
+
+# Check page count
+python -c "
+import pypdf
+with open('file.pdf', 'rb') as f:
+    reader = pypdf.PdfReader(f)
+    print(f'Pages: {len(reader.pages)}')
+"
+```
+
+**JSON Schema Errors:**
+- Validate JSON syntax: Use [jsonlint.com](https://jsonlint.com)
+- Use proper field types: `"str"`, `0`, `0.0`, `"str or null"`
+- Test with simple schema first
+
+</details>
+
+### Getting Help
+
+1. **📖 Check Documentation**: Review this README and component docs
+2. **🐛 Search Issues**: [GitHub Issues](https://github.com/katanaml/sparrow/issues)  
+3. **💬 Create Issue**: Provide logs, system info, minimal example
+4. **📧 Commercial Support**: [abaranovskis@redsamuraiconsulting.com](mailto:abaranovskis@redsamuraiconsulting.com)
+
+## 🌟 Sparrow UI
+
+Interactive web interface for document processing:
+
+![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui.png)
+
+### Features
+- **Drag & Drop**: Upload documents directly
+- **Real-time Processing**: See results instantly  
+- **Schema Builder**: Visual JSON schema creation
+- **Result Annotation**: View bounding boxes
+- **Batch Processing**: Handle multiple documents
+
+### Try Online
+Visit [sparrow.katanaml.io](https://sparrow.katanaml.io) for a live demo running on Mac Mini M4 Pro.
+
+## ⭐ Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=katanaml/sparrow&type=Date)](https://star-history.com/#katanaml/sparrow&Date)
 
-## Commercial usage
+## 📜 License
 
-Sparrow is available under the GPL 3.0 license, promoting freedom to use, modify, and distribute the software while ensuring any modifications remain open source under the same license. This aligns with our commitment to supporting the open-source community and fostering collaboration.
+**Open Source**: Licensed under GPL 3.0. Free for open source projects and organizations under $5M revenue.
 
-Additionally, we recognize the diverse needs of organizations, including small to medium-sized enterprises (SMEs). Therefore, Sparrow is also offered for free commercial use to organizations with gross revenue below $5 million USD in the past 12 months, enabling them to leverage Sparrow without the financial burden often associated with high-quality software solutions.
+**Commercial**: Dual licensing available for proprietary use, enterprise features, and dedicated support.
 
-For businesses that exceed this revenue threshold or require usage terms not accommodated by the GPL 3.0 license—such as integrating Sparrow into proprietary software without the obligation to disclose source code modifications—we offer dual licensing options. Dual licensing allows Sparrow to be used under a separate proprietary license, offering greater flexibility for commercial applications and proprietary integrations. This model supports both the project's sustainability and the business's needs for confidentiality and customization.
+**Contact**: [abaranovskis@redsamuraiconsulting.com](mailto:abaranovskis@redsamuraiconsulting.com) for commercial licensing and consulting.
 
-If your organization is seeking to utilize Sparrow under a proprietary license, or if you are interested in custom workflows, consulting services, or dedicated support and maintenance options, please contact us at abaranovskis@redsamuraiconsulting.com. We're here to provide tailored solutions that meet your unique requirements, ensuring you can maximize the benefits of Sparrow for your projects and workflows.
+## 👥 Authors
 
-## Author
+- **[Katana ML](https://katanaml.io)** - AI/ML consulting and solutions
+- **[Andrej Baranovskij](https://github.com/abaranovskis-redsamurai)** - Lead developer
 
-[Katana ML](https://katanaml.io), [Andrej Baranovskij](https://github.com/abaranovskis-redsamurai)
+---
 
-## License
-
-Licensed under the GPL 3.0. Copyright 2020-2025 Katana ML, Andrej Baranovskij. [Copy of the license](https://github.com/katanaml/sparrow/blob/main/LICENSE).
+<p align="center">
+  <strong>⭐ Star us on GitHub if Sparrow is useful for your projects!</strong><br>
+  <a href="https://github.com/katanaml/sparrow">github.com/katanaml/sparrow</a>
+</p>
