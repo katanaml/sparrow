@@ -35,7 +35,7 @@
 
 ## ✨ Key Features
 
-🎯 **Universal Document Processing**: Handle invoices, receipts, forms, bank statements, tables 
+🎯 **Universal Document Processing**: Handle invoices, receipts, forms, bank statements, tables
 🔧 **Pluggable Architecture**: Mix and match different pipelines (Sparrow Parse, Instructor, Agents)  
 🖥️ **Multiple Backends**: MLX (Apple Silicon), Ollama, vLLM, PyTorch, Hugging Face Cloud GPU  
 📱 **Multi-format Support**: Images (PNG, JPG) and multi-page PDFs  
