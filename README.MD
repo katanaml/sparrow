@@ -5,7 +5,7 @@
 [![Current Version](https://img.shields.io/badge/version-0.4.2-green.svg)](https://github.com/katanaml/sparrow)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-**Data processing with ML, LLM and Vision LLM**
+**Data processing and instruction calling with ML, LLM and Vision LLM**
 
 <p align="center">
   <img width="300" height="300" src="https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_logo_5.png">
