@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <strong>🚀 <a href="https://sparrow.katanaml.io" target="_blank">Try Sparrow Online</a> | 📖 <a href="#-quickstart">Quick Start</a> | 🛠️ <a href="#️-installation">Installation</a> | 📚 <a href="#-examples">Examples</a> | 🤖 <a href="#-sparrow-agent">Agents</a></strong>
+  <strong>🚀 <a href="https://sparrow.katanaml.io">Try Sparrow Online (Ctrl+Click to open in a new tab)</a> | 📖 <a href="#-quickstart">Quick Start</a> | 🛠️ <a href="#️-installation">Installation</a> | 📚 <a href="#-examples">Examples</a> | 🤖 <a href="#-sparrow-agent">Agents</a></strong>
 </p>
 
 ---
