@@ -14,6 +14,7 @@ import mimetypes
 import db_pool
 import dashboard
 import feedback
+import shutil
 
 
 # Create a ConfigParser object
@@ -484,9 +485,9 @@ def run_inference(file_filepath, query, key, options, crop_size, friendly_model_
             file_mime_type = f"image/{input_file_extension}"
         # If it's a PDF, just rename and keep the PDF extension
         elif input_file_extension == 'pdf':
-            # Move the PDF file to the correct location without modification
+            # Copy the PDF file to the correct location without modification
             file_path = os.path.abspath(f"{filename}.pdf")
-            os.rename(file_filepath, file_path)
+            shutil.copy2(file_filepath, file_path)  # Use copy2 to preserve metadata
 
             # Ensure the filename includes the .pdf extension
             filename = f"{filename}.pdf"
