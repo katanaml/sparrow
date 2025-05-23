@@ -1,174 +1,377 @@
 # Sparrow Parse
 
-## Description
+[![PyPI version](https://badge.fury.io/py/sparrow-parse.svg)](https://badge.fury.io/py/sparrow-parse)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-This module implements Sparrow Parse [library](https://pypi.org/project/sparrow-parse/) library with helpful methods for data pre-processing, parsing and extracting information. Library relies on Visual LLM functionality, Table Transformers and is part of Sparrow. Check main [README](https://github.com/katanaml/sparrow)
+A powerful Python library for parsing and extracting structured information from documents using Vision Language Models (VLMs). Part of the [Sparrow](https://github.com/katanaml/sparrow) ecosystem for intelligent document processing.
 
-## Install
+## ✨ Features
 
-```
+- 🔍 **Document Data Extraction**: Extract structured data from invoices, forms, tables, and complex documents
+- 🤖 **Multiple Backend Support**: MLX (Apple Silicon), Hugging Face Cloud GPU, and local GPU inference
+- 📄 **Multi-format Support**: Images (PNG, JPG, JPEG) and multi-page PDFs
+- 🎯 **Schema Validation**: JSON schema-based extraction with automatic validation
+- 📊 **Table Processing**: Specialized table detection and extraction capabilities
+- 🖼️ **Image Annotation**: Bounding box annotations for extracted data
+- 💬 **Text Instructions**: Support for instruction-based text processing
+- ⚡ **Optimized Processing**: Image cropping, resizing, and preprocessing capabilities
+
+## 🚀 Quick Start
+
+### Installation
+
+```bash
 pip install sparrow-parse
 ```
 
-## Parsing and extraction
+**Additional Requirements:**
+- For PDF processing: `brew install poppler` (macOS) or `apt-get install poppler-utils` (Linux)
+- For MLX backend: Apple Silicon Mac required
+- For Hugging Face: Valid HF token with GPU access
 
-### Sparrow Parse VL LLM extractor with local MLX or Hugging Face Cloud GPU infra
+### Basic Usage
 
-Supports text based instruction calling
-
-```
-# run locally: python -m sparrow_parse.extractors.vllm_extractor
-
+```python
 from sparrow_parse.vllm.inference_factory import InferenceFactory
 from sparrow_parse.extractors.vllm_extractor import VLLMExtractor
 
-# export HF_TOKEN="hf_"
+# Initialize extractor
+extractor = VLLMExtractor()
+
+# Configure backend (MLX example)
 config = {
-    "method": "mlx",  # Could be 'huggingface', 'mlx' or 'local_gpu'
-    "model_name": "mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit",
-    # "hf_space": "katanaml/sparrow-qwen2-vl-7b",
-    # "hf_token": os.getenv('HF_TOKEN'),
-    # Additional fields for local GPU inference
-    # "device": "cuda", "model_path": "model.pth"
+    "method": "mlx",
+    "model_name": "mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit"
 }
-    
-# Use the factory to get the correct instance
+
+# Create inference instance
 factory = InferenceFactory(config)
 model_inference_instance = factory.get_inference_instance()
 
-input_data = [
-    {
-        "file_path": "sparrow_parse/images/bonds_table.png",
-        "text_input": "retrieve [{\"instrument_name\":\"str\", \"valuation\":\"int\"}]. return response in JSON format"
-    }
-]
+# Prepare input data
+input_data = [{
+    "file_path": "path/to/your/document.png",
+    "text_input": "retrieve [{\"field_name\": \"str\", \"amount\": 0}]. return response in JSON format"
+}]
 
-# input_data = [
-#     {
-#         "file_path": None,
-#         "text_input": "why earth is spinning around the sun?"
-#     }
-# ]
+# Run inference
+results, num_pages = extractor.run_inference(
+    model_inference_instance, 
+    input_data,
+    debug=True
+)
 
-# Now you can run inference without knowing which implementation is used
-results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, tables_only=False,
-                                                   generic_query=False,
-                                                   crop_size=0,
-                                                   apply_annotation=False,
-                                                   debug_dir="/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/",
-                                                   debug=True,
-                                                   mode=None)
-
-for i, result in enumerate(results_array):
-    print(f"Result for page {i + 1}:", result)
-print(f"Number of pages: {num_pages}")
+print(f"Extracted data: {results[0]}")
 ```
 
-Use `tables_only=True` if you want to extract only tables.
+## 📖 Detailed Usage
 
-Use `crop_size=N` (where `N` is an integer) to crop N pixels from all borders of the input images. This can be helpful for removing unwanted borders or frame artifacts from scanned documents.
+### Backend Configuration
 
-Use `mode="static"` if you want to simulate LLM call, without executing LLM backend.
-
-Use `apply_annotation=True` to apply box annotations for structured data extraction
-
-Method `run_inference` will return results and number of pages processed.
-
-To run with Hugging Face backend use these config values:
-
-```
+#### MLX Backend (Apple Silicon)
+```python
 config = {
-    "method": "huggingface",
-    "hf_space": "katanaml/sparrow-qwen2-vl-7b",
-    "hf_token": os.getenv('HF_TOKEN'),
+    "method": "mlx",
+    "model_name": "mlx-community/Qwen2.5-VL-72B-Instruct-4bit"
 }
 ```
 
-Note: GPU backend `katanaml/sparrow-qwen2-vl-7b` is private, to be able to run below command, you need to create your own backend on Hugging Face space using [code](https://github.com/katanaml/sparrow/tree/main/sparrow-data/parse/sparrow_parse/vllm/infra/qwen2_vl_7b) from Sparrow Parse.
-
-## PDF pre-processing
-
+#### Hugging Face Backend
+```python
+import os
+config = {
+    "method": "huggingface",
+    "hf_space": "your-username/your-space",
+    "hf_token": os.getenv('HF_TOKEN')
+}
 ```
-from sparrow_parse.extractor.pdf_optimizer import PDFOptimizer
+
+#### Local GPU Backend
+```python
+config = {
+    "method": "local_gpu",
+    "device": "cuda",
+    "model_path": "path/to/model.pth"
+}
+```
+
+### Input Data Formats
+
+#### Document Processing
+```python
+input_data = [{
+    "file_path": "invoice.pdf",
+    "text_input": "extract invoice data: {\"invoice_number\": \"str\", \"total\": 0, \"date\": \"str\"}"
+}]
+```
+
+#### Text-Only Processing
+```python
+input_data = [{
+    "file_path": None,
+    "text_input": "Summarize the key points about renewable energy."
+}]
+```
+
+### Advanced Options
+
+#### Table Extraction Only
+```python
+results, num_pages = extractor.run_inference(
+    model_inference_instance,
+    input_data,
+    tables_only=True  # Extract only tables from document
+)
+```
+
+#### Image Cropping
+```python
+results, num_pages = extractor.run_inference(
+    model_inference_instance,
+    input_data,
+    crop_size=60  # Crop 60 pixels from all borders
+)
+```
+
+#### Bounding Box Annotations
+```python
+results, num_pages = extractor.run_inference(
+    model_inference_instance,
+    input_data,
+    apply_annotation=True  # Include bounding box coordinates
+)
+```
+
+#### Generic Data Extraction
+```python
+results, num_pages = extractor.run_inference(
+    model_inference_instance,
+    input_data,
+    generic_query=True  # Extract all available data
+)
+```
+
+## 🛠️ Utility Functions
+
+### PDF Processing
+```python
+from sparrow_parse.helpers.pdf_optimizer import PDFOptimizer
 
 pdf_optimizer = PDFOptimizer()
-
-num_pages, output_files, temp_dir = pdf_optimizer.split_pdf_to_pages(file_path,
-                                                                     debug_dir,
-                                                                     convert_to_images)
-
+num_pages, output_files, temp_dir = pdf_optimizer.split_pdf_to_pages(
+    file_path="document.pdf",
+    debug_dir="./debug",
+    convert_to_images=True
+)
 ```
 
-Example:
-
-*file_path* - `/data/invoice_1.pdf`
-
-*debug_dir* - set to not `None`, for debug purposes only
-
-*convert_to_images* - default `False`, to split into PDF files
-
-## Image cropping
-
-```
+### Image Optimization
+```python
 from sparrow_parse.helpers.image_optimizer import ImageOptimizer
 
 image_optimizer = ImageOptimizer()
-
-cropped_file_path = image_optimizer.crop_image_borders(file_path, temp_dir, debug_dir, crop_size)
+cropped_path = image_optimizer.crop_image_borders(
+    file_path="image.jpg",
+    temp_dir="./temp",
+    debug_dir="./debug",
+    crop_size=50
+)
 ```
 
-Example:
+### Table Detection
+```python
+from sparrow_parse.processors.table_structure_processor import TableDetector
 
-*file_path* - `/data/invoice_1.jpg`
-
-*temp_dir* - directory to store cropped files
-
-*debug_dir* - set to not `None`, for debug purposes only
-
-*crop_size* - Number of pixels to crop from each border
-
-## Library build
-
-Create Python virtual environment
-
+detector = TableDetector()
+cropped_tables = detector.detect_tables(
+    file_path="document.png",
+    local=True,
+    debug=True
+)
 ```
+
+## 🎯 Use Cases & Examples
+
+### Invoice Processing
+```python
+invoice_schema = {
+    "invoice_number": "str",
+    "date": "str", 
+    "vendor_name": "str",
+    "total_amount": 0,
+    "line_items": [{
+        "description": "str",
+        "quantity": 0,
+        "price": 0.0
+    }]
+}
+
+input_data = [{
+    "file_path": "invoice.pdf",
+    "text_input": f"extract invoice data: {json.dumps(invoice_schema)}"
+}]
+```
+
+### Financial Tables
+```python
+table_schema = [{
+    "instrument_name": "str",
+    "valuation": 0,
+    "currency": "str or null"
+}]
+
+input_data = [{
+    "file_path": "financial_report.png", 
+    "text_input": f"retrieve {json.dumps(table_schema)}. return response in JSON format"
+}]
+```
+
+### Form Processing
+```python
+form_schema = {
+    "applicant_name": "str",
+    "application_date": "str",
+    "fields": [{
+        "field_name": "str",
+        "field_value": "str or null"
+    }]
+}
+```
+
+## ⚙️ Configuration Options
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `tables_only` | bool | False | Extract only tables from documents |
+| `generic_query` | bool | False | Extract all available data without schema |
+| `crop_size` | int | None | Pixels to crop from image borders |
+| `apply_annotation` | bool | False | Include bounding box coordinates |
+| `debug_dir` | str | None | Directory to save debug images |
+| `debug` | bool | False | Enable debug logging |
+| `mode` | str | None | Set to "static" for mock responses |
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+**Import Errors:**
+```bash
+# For MLX backend on non-Apple Silicon
+pip install sparrow-parse --no-deps
+pip install -r requirements.txt --exclude mlx-vlm
+
+# For missing poppler
+brew install poppler  # macOS
+sudo apt-get install poppler-utils  # Ubuntu/Debian
+```
+
+**Memory Issues:**
+- Use smaller models or reduce image resolution
+- Enable image cropping to reduce processing load
+- Process single pages instead of entire PDFs
+
+**Model Loading Errors:**
+- Verify model name and availability
+- Check HF token permissions for private models
+- Ensure sufficient disk space for model downloads
+
+### Performance Tips
+
+- **Image Size**: Resize large images before processing
+- **Batch Processing**: Process multiple pages together when possible
+- **Model Selection**: Choose appropriate model size for your hardware
+- **Caching**: Models are cached after first load
+
+## 📚 API Reference
+
+### VLLMExtractor Class
+
+```python
+class VLLMExtractor:
+    def run_inference(
+        self,
+        model_inference_instance,
+        input_data: List[Dict],
+        tables_only: bool = False,
+        generic_query: bool = False, 
+        crop_size: Optional[int] = None,
+        apply_annotation: bool = False,
+        debug_dir: Optional[str] = None,
+        debug: bool = False,
+        mode: Optional[str] = None
+    ) -> Tuple[List[str], int]
+```
+
+### InferenceFactory Class
+
+```python
+class InferenceFactory:
+    def __init__(self, config: Dict)
+    def get_inference_instance(self) -> ModelInference
+```
+
+## 🏗️ Development
+
+### Building from Source
+
+```bash
+# Clone repository
+git clone https://github.com/katanaml/sparrow.git
+cd sparrow/sparrow-data/parse
+
+# Create virtual environment
 python -m venv .env_sparrow_parse
-```
+source .env_sparrow_parse/bin/activate  # Linux/Mac
+# or
+.env_sparrow_parse\Scripts\activate  # Windows
 
-Install Python libraries
-
-```
+# Install dependencies
 pip install -r requirements.txt
-```
 
-Build package
-
-```
+# Build package
 pip install setuptools wheel
 python setup.py sdist bdist_wheel
+
+# Install locally
+pip install -e .
 ```
 
-Upload to PyPI
+### Running Tests
 
+```bash
+python -m pytest tests/
 ```
-pip install twine
-twine upload dist/*
-```
 
-## Commercial usage
+## 📄 Supported File Formats
 
-Sparrow is available under the GPL 3.0 license, promoting freedom to use, modify, and distribute the software while ensuring any modifications remain open source under the same license. This aligns with our commitment to supporting the open-source community and fostering collaboration.
+| Format | Extension | Multi-page | Notes |
+|--------|-----------|------------|-------|
+| PNG | .png | ❌ | Recommended for tables/forms |
+| JPEG | .jpg, .jpeg | ❌ | Good for photos/scanned docs |
+| PDF | .pdf | ✅ | Automatically split into pages |
 
-Additionally, we recognize the diverse needs of organizations, including small to medium-sized enterprises (SMEs). Therefore, Sparrow is also offered for free commercial use to organizations with gross revenue below $5 million USD in the past 12 months, enabling them to leverage Sparrow without the financial burden often associated with high-quality software solutions.
+## 🤝 Contributing
 
-For businesses that exceed this revenue threshold or require usage terms not accommodated by the GPL 3.0 license—such as integrating Sparrow into proprietary software without the obligation to disclose source code modifications—we offer dual licensing options. Dual licensing allows Sparrow to be used under a separate proprietary license, offering greater flexibility for commercial applications and proprietary integrations. This model supports both the project's sustainability and the business's needs for confidentiality and customization.
+We welcome contributions! Please see our [Contributing Guidelines](https://github.com/katanaml/sparrow/blob/main/CONTRIBUTING.md) for details.
 
-If your organization is seeking to utilize Sparrow under a proprietary license, or if you are interested in custom workflows, consulting services, or dedicated support and maintenance options, please contact us at abaranovskis@redsamuraiconsulting.com. We're here to provide tailored solutions that meet your unique requirements, ensuring you can maximize the benefits of Sparrow for your projects and workflows.
+## 📞 Support
 
-## Author
+- 📖 [Documentation](https://github.com/katanaml/sparrow)
+- 🐛 [Issue Tracker](https://github.com/katanaml/sparrow/issues)
+- 💼 [Professional Services](mailto:abaranovskis@redsamuraiconsulting.com)
 
-[Katana ML](https://katanaml.io), [Andrej Baranovskij](https://github.com/abaranovskis-redsamurai)
+## 📜 License
 
-## License
+Licensed under the GPL 3.0. Copyright 2020-2025 Katana ML, Andrej Baranovskij.
 
-Licensed under the GPL 3.0. Copyright 2020-2025 Katana ML, Andrej Baranovskij. [Copy of the license](https://github.com/katanaml/sparrow/blob/main/LICENSE).
+**Commercial Licensing:** Free for organizations with revenue under $5M USD annually. [Contact us](mailto:abaranovskis@redsamuraiconsulting.com) for commercial licensing options.
+
+## 👥 Authors
+
+- **[Katana ML](https://katanaml.io)**
+- **[Andrej Baranovskij](https://github.com/abaranovskis-redsamurai)**
+
+---
+
+⭐ **Star us on [GitHub](https://github.com/katanaml/sparrow)** if you find Sparrow Parse useful!
