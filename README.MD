@@ -31,6 +31,7 @@
 - [🔧 Pipeline Comparison](#-pipeline-comparison)
 - [⚡ Performance Tips](#-performance-tips)
 - [🔍 Troubleshooting](#-troubleshooting)
+- [🌟 Sparrow UI](#-sparrow-ui)
 - [📜 License](#-license)
 
 ## ✨ Key Features
