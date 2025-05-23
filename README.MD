@@ -5,7 +5,7 @@
 [![Current Version](https://img.shields.io/badge/version-0.4.2-green.svg)](https://github.com/katanaml/sparrow)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-**Data processing and instruction calling with ML, LLM and Vision LLM**
+**Data processing with ML, LLM and Vision LLM**
 
 <p align="center">
   <img width="300" height="300" src="https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_logo_5.png">
@@ -35,7 +35,7 @@
 
 ## ✨ Key Features
 
-🎯 **Universal Document Processing**: Handle invoices, receipts, forms, bank statements, tables  
+🎯 **Universal Document Processing**: Handle invoices, receipts, forms, bank statements, tables    
 🔧 **Pluggable Architecture**: Mix and match different pipelines (Sparrow Parse, Instructor, Agents)  
 🖥️ **Multiple Backends**: MLX (Apple Silicon), Ollama, vLLM, PyTorch, Hugging Face Cloud GPU  
 📱 **Multi-format Support**: Images (PNG, JPG) and multi-page PDFs  
@@ -164,9 +164,6 @@ python api.py --port 8002
 
 ### 🏦 Bank Statement Processing
 
-<details>
-<summary>Bank statement example with full JSON output</summary>
-
 ![Bank Statement](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/bank_statement.png)
 
 ```bash
@@ -178,13 +175,15 @@ python api.py --port 8002
   --file-path "data/bank_statement.pdf"
 ```
 
-**Output:**
+**Complete JSON Output:**
 ```json
 {
   "bank": "First Platypus Bank",
+  "address": "1234 Kings St., New York, NY 12123",
   "account_holder": "Mary G. Orta",
   "account_number": "1234567890123",
   "statement_date": "3/1/2022",
+  "period_covered": "2/1/2022 - 3/1/2022",
   "account_summary": {
     "balance_on_march_1": "$25,032.23",
     "total_money_in": "$10,234.23",
@@ -195,20 +194,85 @@ python api.py --port 8002
       "date": "02/01",
       "description": "PGD EasyPay Debit",
       "withdrawal": "203.24",
+      "deposit": "",
       "balance": "22,098.23"
+    },
+    {
+      "date": "02/02",
+      "description": "AB&B Online Payment*****",
+      "withdrawal": "71.23",
+      "deposit": "",
+      "balance": "22,027.00"
+    },
+    {
+      "date": "02/04",
+      "description": "Check No. 2345",
+      "withdrawal": "",
+      "deposit": "450.00",
+      "balance": "22,477.00"
+    },
+    {
+      "date": "02/05",
+      "description": "Payroll Direct Dep 23422342 Giants",
+      "withdrawal": "",
+      "deposit": "2,534.65",
+      "balance": "25,011.65"
+    },
+    {
+      "date": "02/06",
+      "description": "Signature POS Debit - TJP",
+      "withdrawal": "84.50",
+      "deposit": "",
+      "balance": "24,927.15"
+    },
+    {
+      "date": "02/07",
+      "description": "Check No. 234",
+      "withdrawal": "1,400.00",
+      "deposit": "",
+      "balance": "23,527.15"
+    },
+    {
+      "date": "02/08",
+      "description": "Check No. 342",
+      "withdrawal": "",
+      "deposit": "25.00",
+      "balance": "23,552.15"
+    },
+    {
+      "date": "02/09",
+      "description": "FPB AutoPay***** Credit Card",
+      "withdrawal": "456.02",
+      "deposit": "",
+      "balance": "23,096.13"
+    },
+    {
+      "date": "02/08",
+      "description": "Check No. 123",
+      "withdrawal": "",
+      "deposit": "25.00",
+      "balance": "23,552.15"
+    },
+    {
+      "date": "02/09",
+      "description": "FPB AutoPay***** Credit Card",
+      "withdrawal": "156.02",
+      "deposit": "",
+      "balance": "23,096.13"
+    },
+    {
+      "date": "02/08",
+      "description": "Cash Deposit",
+      "withdrawal": "",
+      "deposit": "25.00",
+      "balance": "23,552.15"
     }
-    // ... more transactions
   ],
   "valid": "true"
 }
 ```
 
-</details>
-
 ### 📊 Financial Tables
-
-<details>
-<summary>Bonds table extraction</summary>
 
 ![Bonds Table](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/bonds_table.png)
 
@@ -221,33 +285,172 @@ python api.py --port 8002
   --file-path "data/bonds_table.png"
 ```
 
-</details>
+**JSON Output:**
+```json
+{
+  "data": [
+    {
+      "instrument_name": "UNITS BLACKROCK FIX INC DUB FDS PLC ISHS EUR INV GRD CP BD IDX/INST/E",
+      "valuation": 19049
+    },
+    {
+      "instrument_name": "UNITS ISHARES III PLC CORE EUR GOVT BOND UCITS ETF/EUR",
+      "valuation": 83488
+    },
+    {
+      "instrument_name": "UNITS ISHARES III PLC EUR CORP BOND 1-5YR UCITS ETF/EUR",
+      "valuation": 213030
+    },
+    {
+      "instrument_name": "UNIT ISHARES VI PLC/JP MORGAN USD E BOND EUR HED UCITS ETF DIST/HDGD/",
+      "valuation": 32774
+    },
+    {
+      "instrument_name": "UNITS XTRACKERS II SICAV/EUR HY CORP BOND UCITS ETF/-1D-/DISTR.",
+      "valuation": 23643
+    }
+  ],
+  "valid": "true"
+}
+```
 
 ### 🧾 Invoice Processing
 
 ```bash
-# Extract invoice with custom schema
-./sparrow.sh '{
-  "invoice_number": "str",
-  "date": "str", 
-  "vendor": "str",
-  "total": 0,
-  "items": [{"description": "str", "amount": 0}]
-}' --pipeline "sparrow-parse" \
+# Extract invoice with cropping for better accuracy
+./sparrow.sh "*" \
+  --pipeline "sparrow-parse" \
   --options mlx \
   --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit \
   --crop-size 60 \
   --file-path "data/invoice.pdf"
 ```
 
-### 💬 Text Instructions
+**JSON Output:**
+```json
+{
+  "invoice_number": "61356291",
+  "date_of_issue": "09/06/2012",
+  "seller": {
+    "name": "Chapman, Kim and Green",
+    "address": "64731 James Branch, Smithmouth, NC 26872",
+    "tax_id": "949-84-9105",
+    "iban": "GB50ACIE59715038217063"
+  },
+  "client": {
+    "name": "Rodriguez-Stevens",
+    "address": "2280 Angela Plain, Hortonshire, MS 93248",
+    "tax_id": "939-98-8477"
+  },
+  "items": [
+    {
+      "description": "Wine Glasses Goblets Pair Clear",
+      "quantity": 5,
+      "unit": "each",
+      "net_price": 12.0,
+      "net_worth": 60.0,
+      "vat_percentage": 10,
+      "gross_worth": 66.0
+    },
+    {
+      "description": "With Hooks Stemware Storage Multiple Uses Iron Wine Rack Hanging",
+      "quantity": 4,
+      "unit": "each", 
+      "net_price": 28.08,
+      "net_worth": 112.32,
+      "vat_percentage": 10,
+      "gross_worth": 123.55
+    },
+    {
+      "description": "Replacement Corkscrew Parts Spiral Worm Wine Opener Bottle Houdini",
+      "quantity": 1,
+      "unit": "each",
+      "net_price": 7.5,
+      "net_worth": 7.5,
+      "vat_percentage": 10,
+      "gross_worth": 8.25
+    },
+    {
+      "description": "HOME ESSENTIALS GRADIENT STEMLESS WINE GLASSES SET OF 4 20 FL OZ (591 ml) NEW",
+      "quantity": 1,
+      "unit": "each",
+      "net_price": 12.99,
+      "net_worth": 12.99,
+      "vat_percentage": 10,
+      "gross_worth": 14.29
+    }
+  ],
+  "summary": {
+    "total_net_worth": 192.81,
+    "total_vat": 19.28,
+    "total_gross_worth": 212.09
+  }
+}
+```
+
+### 📄 Multi-page PDF Processing
+
+```bash
+# Process multi-page PDF with structured output per page
+./sparrow.sh '{"table": [{"description": "str", "latest_amount": 0, "previous_amount": 0}]}' \
+  --pipeline "sparrow-parse" \
+  --options mlx \
+  --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit \
+  --file-path "data/financial_report.pdf" \
+  --debug-dir "debug/"
+```
+
+**JSON Output:**
+```json
+[
+    {
+        "table": [
+            {
+                "description": "Revenues",
+                "latest_amount": 12453,
+                "previous_amount": 11445
+            },
+            {
+                "description": "Operating expenses",
+                "latest_amount": 9157,
+                "previous_amount": 8822
+            }
+        ],
+        "valid": "true",
+        "page": 1
+    },
+    {
+        "table": [
+            {
+                "description": "Revenues", 
+                "latest_amount": 12453,
+                "previous_amount": 11445
+            },
+            {
+                "description": "Operating expenses",
+                "latest_amount": 9157,
+                "previous_amount": 8822
+            }
+        ],
+        "valid": "true",
+        "page": 2
+    }
+]
+```
 
 ```bash
 # Instruction-based processing
-./sparrow.sh "instruction: summarize key financial metrics, payload: [JSON data]" \
+./sparrow.sh "instruction: do arithmetic operation, payload: 2+2=" \
   --pipeline "sparrow-instructor" \
   --options mlx \
   --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit
+```
+
+**Output:**
+```
+The result of 2 + 2 is:
+
+4
 ```
 
 ### 📈 Stock Data
@@ -255,6 +458,19 @@ python api.py --port 8002
 ```bash
 # Function calling example
 ./sparrow.sh assistant --pipeline "stocks" --query "Oracle"
+```
+
+**JSON Output:**
+```json
+{
+  "company": "Oracle Corporation",
+  "ticker": "ORCL"
+}
+```
+
+**Additional Output:**
+```
+The stock price of the Oracle Corporation is 186.3699951171875. USD
 ```
 
 ## 💻 CLI Usage
