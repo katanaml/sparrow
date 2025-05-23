@@ -35,7 +35,11 @@ Try [Sparrow](https://sparrow.katanaml.io) online, this runs on Mac Mini M4 Pro 
 
 ![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui.png)
 
-With data annotation feature:
+Structured data summary with LLM instruction calling
+
+![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui_1.png)
+
+Structured data annotation feature
 
 ![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui_2.png)
 
