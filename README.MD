@@ -619,13 +619,13 @@ curl -X 'POST' \
   -F 'file=@your_doc.pdf;type=application/pdf'
 ```
 
-## Dashboard
+## 🚀 Dashboard
 
-[Sparrow](https://sparrow.katanaml.io) online comes with dashboard
+[Sparrow](https://sparrow.katanaml.io) comes with usage dashboard
 
 ![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui_3.png)
 
-Usage statistics
+Usage history
 
 ![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui_4.png)
 
