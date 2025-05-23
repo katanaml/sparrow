@@ -175,7 +175,9 @@ python api.py --port 8002
   --file-path "data/bank_statement.pdf"
 ```
 
-**Complete JSON Output:**
+<details>
+<summary><strong>📄 View Complete JSON Output</strong></summary>
+
 ```json
 {
   "bank": "First Platypus Bank",
@@ -272,6 +274,8 @@ python api.py --port 8002
 }
 ```
 
+</details>
+
 ### 📊 Financial Tables
 
 ![Bonds Table](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/bonds_table.png)
@@ -285,7 +289,9 @@ python api.py --port 8002
   --file-path "data/bonds_table.png"
 ```
 
-**JSON Output:**
+<details>
+<summary><strong>📄 View JSON Output</strong></summary>
+
 ```json
 {
   "data": [
@@ -314,6 +320,8 @@ python api.py --port 8002
 }
 ```
 
+</details>
+
 ### 🧾 Invoice Processing
 
 ```bash
@@ -326,7 +334,9 @@ python api.py --port 8002
   --file-path "data/invoice.pdf"
 ```
 
-**JSON Output:**
+<details>
+<summary><strong>📄 View Complete JSON Output</strong></summary>
+
 ```json
 {
   "invoice_number": "61356291",
@@ -388,6 +398,8 @@ python api.py --port 8002
 }
 ```
 
+</details>
+
 ### 📄 Multi-page PDF Processing
 
 ```bash
@@ -400,7 +412,9 @@ python api.py --port 8002
   --debug-dir "debug/"
 ```
 
-**JSON Output:**
+<details>
+<summary><strong>📄 View JSON Output</strong></summary>
+
 ```json
 [
     {
@@ -438,6 +452,10 @@ python api.py --port 8002
 ]
 ```
 
+</details>
+
+### 💬 Text Instruction Processing
+
 ```bash
 # Instruction-based processing
 ./sparrow.sh "instruction: do arithmetic operation, payload: 2+2=" \
@@ -446,14 +464,18 @@ python api.py --port 8002
   --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit
 ```
 
-**Output:**
+<details>
+<summary><strong>📄 View Output</strong></summary>
+
 ```
 The result of 2 + 2 is:
 
 4
 ```
 
-### 📈 Stock Data
+</details>
+
+### 📈 Stock Data Function Calling
 
 ```bash
 # Function calling example
