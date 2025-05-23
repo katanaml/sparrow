@@ -32,6 +32,7 @@
 - [⚡ Performance Tips](#-performance-tips)
 - [🔍 Troubleshooting](#-troubleshooting)
 - [🌟 Sparrow UI](#-sparrow-ui)
+- [⭐ Star History](#-star-history)
 - [📜 License](#-license)
 
 ## ✨ Key Features
