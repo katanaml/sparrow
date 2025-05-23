@@ -12,7 +12,9 @@ pip install sparrow-parse
 
 ## Parsing and extraction
 
-### Sparrow Parse VL (vision-language model) extractor with local MLX or Hugging Face Cloud GPU infra
+### Sparrow Parse VL LLM extractor with local MLX or Hugging Face Cloud GPU infra
+
+Supports text based instruction calling
 
 ```
 # run locally: python -m sparrow_parse.extractors.vllm_extractor
@@ -20,31 +22,42 @@ pip install sparrow-parse
 from sparrow_parse.vllm.inference_factory import InferenceFactory
 from sparrow_parse.extractors.vllm_extractor import VLLMExtractor
 
-extractor = VLLMExtractor()
-
+# export HF_TOKEN="hf_"
 config = {
     "method": "mlx",  # Could be 'huggingface', 'mlx' or 'local_gpu'
-    "model_name": "mlx-community/Qwen2-VL-72B-Instruct-4bit",
+    "model_name": "mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit",
+    # "hf_space": "katanaml/sparrow-qwen2-vl-7b",
+    # "hf_token": os.getenv('HF_TOKEN'),
+    # Additional fields for local GPU inference
+    # "device": "cuda", "model_path": "model.pth"
 }
-
+    
 # Use the factory to get the correct instance
 factory = InferenceFactory(config)
 model_inference_instance = factory.get_inference_instance()
 
 input_data = [
     {
-        "file_path": "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.jpg",
-        "text_input": "retrieve all data. return response in JSON format"
+        "file_path": "sparrow_parse/images/bonds_table.png",
+        "text_input": "retrieve [{\"instrument_name\":\"str\", \"valuation\":\"int\"}]. return response in JSON format"
     }
 ]
 
+# input_data = [
+#     {
+#         "file_path": None,
+#         "text_input": "why earth is spinning around the sun?"
+#     }
+# ]
+
 # Now you can run inference without knowing which implementation is used
 results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, tables_only=False,
-                                 generic_query=False,
-                                 crop_size=80,
-                                 debug_dir=None,
-                                 debug=True,
-                                 mode=None)
+                                                   generic_query=False,
+                                                   crop_size=0,
+                                                   apply_annotation=False,
+                                                   debug_dir="/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/",
+                                                   debug=True,
+                                                   mode=None)
 
 for i, result in enumerate(results_array):
     print(f"Result for page {i + 1}:", result)
@@ -57,13 +70,15 @@ Use `crop_size=N` (where `N` is an integer) to crop N pixels from all borders of
 
 Use `mode="static"` if you want to simulate LLM call, without executing LLM backend.
 
+Use 'apply_annotation=True' to apply box annotations for structured data extraction
+
 Method `run_inference` will return results and number of pages processed.
 
 To run with Hugging Face backend use these config values:
 
 ```
 config = {
-    "method": "huggingface",  # Could be 'huggingface' or 'local_gpu'
+    "method": "huggingface",
     "hf_space": "katanaml/sparrow-qwen2-vl-7b",
     "hf_token": os.getenv('HF_TOKEN'),
 }
