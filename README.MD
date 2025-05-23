@@ -619,6 +619,16 @@ curl -X 'POST' \
   -F 'file=@your_doc.pdf;type=application/pdf'
 ```
 
+## Dashboard
+
+[Sparrow](https://sparrow.katanaml.io) online comes with dashboard
+
+![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui_3.png)
+
+Usage statistics
+
+![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui_4.png)
+
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=katanaml/sparrow&type=Date)](https://star-history.com/#katanaml/sparrow&Date)
