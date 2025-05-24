@@ -1,5 +1,13 @@
 # ChangeLog
 
+## [v0.4.3] - 2025-05-24
+
+## Data Annotation Support
+
+Enhanced document processing with bounding box annotations and visual coordinate extraction for precise field location tracking.
+
+
+
 ## [v0.4.2] - 2025-05-08
 
 ## LLM instruction calling
