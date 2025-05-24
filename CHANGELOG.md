@@ -4,7 +4,7 @@
 
 ## Data Annotation Support
 
-Enhanced document processing with bounding box annotations and visual coordinate extraction for precise field location tracking.
+Enhanced document processing with bounding box annotations and visual coordinate extraction for precise field location tracking
 
 
 
