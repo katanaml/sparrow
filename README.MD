@@ -2,7 +2,7 @@
 [![PyPI - Python](https://img.shields.io/badge/python-v3.10+-blue.svg)](https://github.com/katanaml/sparrow)
 [![GitHub Stars](https://img.shields.io/github/stars/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/issues)
-[![Current Version](https://img.shields.io/badge/version-0.4.2-green.svg)](https://github.com/katanaml/sparrow)
+[![Current Version](https://img.shields.io/badge/version-0.4.3-green.svg)](https://github.com/katanaml/sparrow)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 **Data processing and instruction calling with ML, LLM and Vision LLM**
