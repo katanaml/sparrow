@@ -1,14 +1,13 @@
 pdf2image==1.17.0
-torch==2.2.2
+torch==2.7.0
 torchvision
 torchaudio
-datasets==2.20.0
-paddleocr==2.8.0
-paddlepaddle==2.6.1
-python-poppler==0.4.1
-pillow==10.4.0
+datasets==3.6.0
+paddleocr==3.0.0
+paddlepaddle==3.0.0
+pillow==11.2.1
 python-multipart
-fastapi==0.111.0
+fastapi==0.115.12
 uvicorn[standard]
 
 
