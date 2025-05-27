@@ -1,4 +1,7 @@
 # Sparrow
+
+<a href="https://trendshift.io/repositories/8890" target="_blank"><img src="https://trendshift.io/api/badge/repositories/8890" alt="katanaml%2Fsparrow | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+
 [![PyPI - Python](https://img.shields.io/badge/python-v3.10+-blue.svg)](https://github.com/katanaml/sparrow)
 [![GitHub Stars](https://img.shields.io/github/stars/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/issues)
