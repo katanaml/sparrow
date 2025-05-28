@@ -26,6 +26,7 @@ config.read("config.properties")
 # Fetch settings
 backend_url = config.get("settings", "backend_url")
 version = config.get("settings", "version")
+protected_access = config.getboolean("settings", "protected_access", fallback=True)
 
 # Get model options from config with friendly names
 model_options = {}  # Maps friendly name to backend options string
@@ -395,73 +396,84 @@ def run_inference(file_filepath, query, key, options, crop_size, friendly_model_
         return None, None
 
     # Check if user provided a key and validate it
-    if key is not None and key.strip() != "":
-        # Verify the provided key
-        if not db_pool.verify_key(key):
-            gr.Warning("Invalid Sparrow Key. Please check your key or leave empty for limited usage.")
-            return {
-                "message": "Invalid Sparrow Key. Please obtain a valid Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com."
-            }, None
+    if protected_access:
+        if key is not None and key.strip() != "":
+            # Verify the provided key
+            if not db_pool.verify_key(key):
+                gr.Warning("Invalid Sparrow Key. Please check your key or leave empty for limited usage.")
+                return {
+                    "message": "Invalid Sparrow Key. Please obtain a valid Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com."
+                }, None
 
-        # Key is valid, now check PDF page limit (10 pages)
-        if file_filepath.lower().endswith('.pdf'):
-            try:
-                import pypdf
-                with open(file_filepath, 'rb') as pdf_file:
-                    pdf_reader = pypdf.PdfReader(pdf_file)
-                    num_pages = len(pdf_reader.pages)
+            # Key is valid, now check PDF page limit (10 pages)
+            if file_filepath.lower().endswith('.pdf'):
+                try:
+                    import pypdf
+                    with open(file_filepath, 'rb') as pdf_file:
+                        pdf_reader = pypdf.PdfReader(pdf_file)
+                        num_pages = len(pdf_reader.pages)
 
-                    if num_pages > 10:
-                        gr.Warning(
-                            f"With a Sparrow Key, PDFs are limited to maximum 10 pages. This document has {num_pages} pages.")
-                        # Clean up the temporary file
-                        if os.path.exists(file_filepath):
-                            os.remove(file_filepath)
-                        return {
-                            "message": f"PDFs are limited to maximum 10 pages even with a valid Sparrow Key. This document has {num_pages} pages. For larger documents, please contact us at abaranovskis@redsamuraiconsulting.com."
-                        }, None
-            except Exception as e:
-                print(f"Error checking PDF page count: {str(e)}")
-                # Continue if we can't check the page count, but log the error
+                        if num_pages > 10:
+                            gr.Warning(
+                                f"With a Sparrow Key, PDFs are limited to maximum 10 pages. This document has {num_pages} pages.")
+                            # Clean up the temporary file
+                            if os.path.exists(file_filepath):
+                                os.remove(file_filepath)
+                            return {
+                                "message": f"PDFs are limited to maximum 10 pages even with a valid Sparrow Key. This document has {num_pages} pages. For larger documents, please contact us at abaranovskis@redsamuraiconsulting.com."
+                            }, None
+                except Exception as e:
+                    print(f"Error checking PDF page count: {str(e)}")
+                    # Continue if we can't check the page count, but log the error
+        else:
+            # Try to get a restricted key based on rate limiting
+            key = db_pool.get_restricted_key(client_ip)
+
+            if key is None:
+                gr.Warning("Rate limit exceeded or no available keys.")
+                return {
+                    "message": "Please obtain a Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com. We offer professional consulting and implementation services for local document processing with Sparrow, tailored to your organization's needs."
+                }, None
+
+            # If we got here, we successfully obtained a key from the database
+            # For auto-assigned keys (free tier), check PDF page limit
+            if file_filepath.lower().endswith('.pdf'):
+                try:
+                    import pypdf
+                    with open(file_filepath, 'rb') as pdf_file:
+                        pdf_reader = pypdf.PdfReader(pdf_file)
+                        num_pages = len(pdf_reader.pages)
+
+                        if num_pages > 3:
+                            gr.Warning(
+                                f"Free tier is limited to PDFs with maximum 3 pages. This document has {num_pages} pages.")
+                            # Clean up the temporary file
+                            if os.path.exists(file_filepath):
+                                os.remove(file_filepath)
+                            return {
+                                "message": f"Free tier can only process PDFs with maximum 3 pages. This document has {num_pages} pages. For larger documents, please obtain a Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com."
+                            }, None
+                except Exception as e:
+                    print(f"Error checking PDF page count: {str(e)}")
+                    # Continue if we can't check the page count, but log the error
+
+            # Display warning about limitations of using auto-assigned key
+            gr.Info("Free tier: Limited to 3 calls per 6 hours, max 3-page documents.")
+
+            # Log the auto-assignment
+            country = fetch_geolocation(client_ip)
+            log_message = f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Auto-assigned key to IP: {client_ip}, Country: {country}"
+            print(log_message)
     else:
-        # Try to get a restricted key based on rate limiting
-        key = db_pool.get_restricted_key(client_ip)
+        # Protected access is disabled - skip all key validation
+        print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Protected access disabled - skipping key validation for IP: {client_ip}")
 
-        if key is None:
-            gr.Warning("Rate limit exceeded or no available keys.")
-            return {
-                "message": "Please obtain a Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com. We offer professional consulting and implementation services for local document processing with Sparrow, tailored to your organization's needs."
-            }, None
+        # Use a default key or the provided key without validation
+        if key is None or key.strip() == "":
+            key = "unrestricted_access"  # Default key when protected access is disabled
 
-        # If we got here, we successfully obtained a key from the database
-        # For auto-assigned keys (free tier), check PDF page limit
-        if file_filepath.lower().endswith('.pdf'):
-            try:
-                import pypdf
-                with open(file_filepath, 'rb') as pdf_file:
-                    pdf_reader = pypdf.PdfReader(pdf_file)
-                    num_pages = len(pdf_reader.pages)
-
-                    if num_pages > 3:
-                        gr.Warning(
-                            f"Free tier is limited to PDFs with maximum 3 pages. This document has {num_pages} pages.")
-                        # Clean up the temporary file
-                        if os.path.exists(file_filepath):
-                            os.remove(file_filepath)
-                        return {
-                            "message": f"Free tier can only process PDFs with maximum 3 pages. This document has {num_pages} pages. For larger documents, please obtain a Sparrow Key by emailing abaranovskis@redsamuraiconsulting.com."
-                        }, None
-            except Exception as e:
-                print(f"Error checking PDF page count: {str(e)}")
-                # Continue if we can't check the page count, but log the error
-
-        # Display warning about limitations of using auto-assigned key
-        gr.Info("Free tier: Limited to 3 calls per 6 hours, max 3-page documents.")
-
-        # Log the auto-assignment
-        country = fetch_geolocation(client_ip)
-        log_message = f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Auto-assigned key to IP: {client_ip}, Country: {country}"
-        print(log_message)
+        # Optionally show an info message to user
+        gr.Info("Protected access disabled - unlimited usage available.")
 
     file_path = None
     try:
@@ -981,7 +993,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             key_input_comp = gr.Textbox(
                 label="Sparrow Key",
                 type="password",
-                placeholder="Enter your key or leave empty for limited usage"
+                placeholder="Enter your key or leave empty for limited usage",
+                visible=protected_access
             )
 
             friendly_names = list(model_options.keys())
@@ -1002,20 +1015,36 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 choices=[ex[0] for ex in examples]
             )
 
-            key_info_message = gr.Markdown(
-                """
-                <div style="margin-top: -10px; padding: 15px; border-left: 4px solid var(--primary-500); border-radius: 6px; background-color: var(--background-fill-secondary);">
-                    <div style="display: flex; align-items: flex-start;">
-                        <div style="font-size: 24px; margin-right: 10px; color: var(--primary-500);">💡</div>
-                        <div>
-                            <p style="margin: 0; font-weight: 600; font-size: 16px; color: var(--primary-500);">Free Tier Available</p>
-                            <p style="margin: 5px 0 0 0;">• You can use Sparrow without entering a key for limited usage (3 calls per 6 hours, max 3-page documents).</p>
-                            <p style="margin: 5px 0 0 0;">• For unlimited usage, <a href="mailto:abaranovskis@redsamuraiconsulting.com" style="color: var(--primary-500); text-decoration: underline; font-weight: 500;">contact us</a> about our professional consulting and implementation services for local document processing solutions.</p>
+            if protected_access:
+                key_info_message = gr.Markdown(
+                    """
+                    <div style="margin-top: -10px; padding: 15px; border-left: 4px solid var(--primary-500); border-radius: 6px; background-color: var(--background-fill-secondary);">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div style="font-size: 24px; margin-right: 10px; color: var(--primary-500);">💡</div>
+                            <div>
+                                <p style="margin: 0; font-weight: 600; font-size: 16px; color: var(--primary-500);">Free Tier Available</p>
+                                <p style="margin: 5px 0 0 0;">• You can use Sparrow without entering a key for limited usage (3 calls per 6 hours, max 3-page documents).</p>
+                                <p style="margin: 5px 0 0 0;">• For unlimited usage, <a href="mailto:abaranovskis@redsamuraiconsulting.com" style="color: var(--primary-500); text-decoration: underline; font-weight: 500;">contact us</a> about our professional consulting and implementation services for local document processing solutions.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                """
-            )
+                    """
+                )
+            else:
+                key_info_message = gr.Markdown(
+                    """
+                    <div style="margin-top: -10px; padding: 15px; border-left: 4px solid var(--success-500); border-radius: 6px; background-color: var(--success-50);">
+                        <div style="display: flex; align-items: flex-start;">
+                            <div style="font-size: 24px; margin-right: 10px; color: var(--success-500);">🔓</div>
+                            <div>
+                                <p style="margin: 0; font-weight: 600; font-size: 16px; color: var(--success-500);">Unrestricted Access</p>
+                                <p style="margin: 5px 0 0 0;">• Protected access is disabled - unlimited document processing available.</p>
+                                <p style="margin: 5px 0 0 0;">• No Sparrow Key required for this deployment.</p>
+                            </div>
+                        </div>
+                    </div>
+                    """
+                )
 
         with gr.Column():
             # Regular JSON output (initially visible)
