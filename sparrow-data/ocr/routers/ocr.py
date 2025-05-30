@@ -87,7 +87,7 @@ def extract_text_from_json(result_json: Dict, include_bbox: bool = False) -> Dic
     return simple_output
 
 
-def invoke_ocr(doc, content_type, include_bbox: bool = False):
+def invoke_ocr(doc, content_type, include_bbox: bool = False, debug: bool =False):
     worker_pid = os.getpid()
     print(f"Handling OCR request with worker PID: {worker_pid}")
     start_time = time.time()
@@ -117,8 +117,8 @@ def invoke_ocr(doc, content_type, include_bbox: bool = False):
             # Get JSON directly from result object
             result_json = res.json
 
-            # for debug purpose
-            res.save_to_img("output")
+            if debug:
+                res.save_to_img("output")
 
             # Extract simple text
             simple_text = extract_text_from_json(result_json, include_bbox)
@@ -143,7 +143,8 @@ def invoke_ocr(doc, content_type, include_bbox: bool = False):
 @router.post("/inference")
 async def inference(file: UploadFile = File(None),
                     image_url: Optional[str] = Form(None),
-                    include_bbox: Optional[bool] = Form(False)):
+                    include_bbox: Optional[bool] = Form(False),
+                    debug: Optional[bool] = Form(False)):
     """
     OCR inference endpoint
 
@@ -151,6 +152,7 @@ async def inference(file: UploadFile = File(None),
         file: Upload file (image or PDF)
         image_url: URL to image or PDF
         include_bbox: Whether to include bounding box coordinates for each text region
+        debug: Whether to save output images with bounding boxes
     """
     result = None
     if file:
@@ -163,7 +165,7 @@ async def inference(file: UploadFile = File(None),
         else:
             return {"error": "Invalid file type. Only JPG/PNG images and PDF are allowed."}
 
-        result, processing_time = invoke_ocr(doc, file.content_type, include_bbox)
+        result, processing_time = invoke_ocr(doc, file.content_type, include_bbox, debug)
 
         print(f"Processing time OCR: {processing_time:.2f} seconds")
     elif image_url:
@@ -183,7 +185,7 @@ async def inference(file: UploadFile = File(None),
             else:
                 return {"error": "Invalid file type. Only JPG/PNG images and PDF are allowed."}
 
-        result, processing_time = invoke_ocr(doc, content_type, include_bbox)
+        result, processing_time = invoke_ocr(doc, content_type, include_bbox, debug)
 
         print(f"Processing time OCR: {processing_time:.2f} seconds")
     else:
