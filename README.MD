@@ -47,7 +47,6 @@ Visit [sparrow.katanaml.io](https://sparrow.katanaml.io) for a live demo running
 - [🔧 Pipeline Comparison](#-pipeline-comparison)
 - [⚡ Performance Tips](#-performance-tips)
 - [🔍 Troubleshooting](#-troubleshooting)
-- [🌟 Sparrow UI](#-sparrow-ui)
 - [⭐ Star History](#-star-history)
 - [📜 License](#-license)
 
