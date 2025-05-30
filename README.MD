@@ -20,7 +20,10 @@
 
 ## 🌟 Sparrow UI
 
-Interactive web interface for document processing:
+Interactive web interface for document processing.
+
+### Try Online
+Visit [sparrow.katanaml.io](https://sparrow.katanaml.io) for a live demo running on Mac Mini M4 Pro.
 
 ![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui.png)
 
@@ -29,9 +32,6 @@ Interactive web interface for document processing:
 - **Real-time Processing**: See results instantly  
 - **Schema Builder**: Visual JSON schema creation
 - **Result Annotation**: View bounding boxes
-
-### Try Online
-Visit [sparrow.katanaml.io](https://sparrow.katanaml.io) for a live demo running on Mac Mini M4 Pro.
 
 ## 📑 Table of Contents
 
