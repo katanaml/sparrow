@@ -30,7 +30,8 @@ Visit [sparrow.katanaml.io](https://sparrow.katanaml.io) for a live demo running
 ### Features
 - **Drag & Drop**: Upload documents directly
 - **Real-time Processing**: See results instantly  
-- **Schema Builder**: Visual JSON schema creation
+- **Data Query**: JSON based schema for data query
+- **Structured Output**: JSON structured output
 - **Result Annotation**: View bounding boxes
 
 ## 📑 Table of Contents
