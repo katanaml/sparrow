@@ -10,7 +10,7 @@ from pdf2image import convert_from_bytes
 import os
 import time
 import tempfile
-from typing import Dict, List, Tuple
+from typing import Dict
 
 
 router = APIRouter()
