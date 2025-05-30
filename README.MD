@@ -1,7 +1,5 @@
 # Sparrow
 
-<a href="https://trendshift.io/repositories/8890" target="_blank"><img src="https://trendshift.io/api/badge/repositories/8890" alt="katanaml%2Fsparrow | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-
 [![PyPI - Python](https://img.shields.io/badge/python-v3.10+-blue.svg)](https://github.com/katanaml/sparrow)
 [![GitHub Stars](https://img.shields.io/github/stars/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/issues)
@@ -20,6 +18,22 @@
 
 ---
 
+## 🌟 Sparrow UI
+
+Interactive web interface for document processing.
+
+### Try Online
+Visit [sparrow.katanaml.io](https://sparrow.katanaml.io) for a live demo running on Mac Mini M4 Pro.
+
+![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui.png)
+
+### Features
+- **Drag & Drop**: Upload documents directly
+- **Real-time Processing**: See results instantly  
+- **Data Query**: JSON based schema for data query
+- **Structured Output**: JSON structured output
+- **Result Annotation**: View bounding boxes
+
 ## 📑 Table of Contents
 
 - [✨ Key Features](#-key-features)
@@ -34,7 +48,6 @@
 - [🔧 Pipeline Comparison](#-pipeline-comparison)
 - [⚡ Performance Tips](#-performance-tips)
 - [🔍 Troubleshooting](#-troubleshooting)
-- [🌟 Sparrow UI](#-sparrow-ui)
 - [⭐ Star History](#-star-history)
 - [📜 License](#-license)
 
@@ -807,22 +820,6 @@ with open('file.pdf', 'rb') as f:
 2. **🐛 Search Issues**: [GitHub Issues](https://github.com/katanaml/sparrow/issues)  
 3. **💬 Create Issue**: Provide logs, system info, minimal example
 4. **📧 Commercial Support**: [abaranovskis@redsamuraiconsulting.com](mailto:abaranovskis@redsamuraiconsulting.com)
-
-## 🌟 Sparrow UI
-
-Interactive web interface for document processing:
-
-![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui.png)
-
-### Features
-- **Drag & Drop**: Upload documents directly
-- **Real-time Processing**: See results instantly  
-- **Schema Builder**: Visual JSON schema creation
-- **Result Annotation**: View bounding boxes
-- **Batch Processing**: Handle multiple documents
-
-### Try Online
-Visit [sparrow.katanaml.io](https://sparrow.katanaml.io) for a live demo running on Mac Mini M4 Pro.
 
 ## ⭐ Star History
 
