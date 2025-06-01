@@ -82,7 +82,7 @@ Visit [sparrow.katanaml.io](https://sparrow.katanaml.io) for a live demo running
 ### Prerequisites
 - **Python 3.10.4+** (use `pyenv` for version management)
 - **macOS** (for MLX backend) or **Linux/Windows** (for other backends)
-- **GPU** (optional, for better performance)
+- **GPU** (make sure GPU have enough memory to run selected Vision LLM)
 
 ### 30-Second Setup
 
@@ -138,8 +138,6 @@ python api.py
 # 1. Clone repository
 git clone https://github.com/katanaml/sparrow.git
 cd sparrow
-
-# 2. Follow detailed setup instructions
 ```
 
 📖 **For complete installation instructions**, see our [detailed environment setup guide](environment_setup.md).
@@ -167,7 +165,7 @@ sudo apt-get install poppler-utils libpoppler-cpp-dev
 ```
 
 **Apple Silicon**: MLX backend available for optimal performance  
-**NVIDIA GPU**: Use local_gpu backend for best performance  
+**NVIDIA GPU**: Use local_gpu or Ollama backends (work in progress)  
 **CPU Only**: Use smaller models or Hugging Face cloud backend
 
 ### Verification
@@ -688,8 +686,8 @@ Built-in analytics and monitoring dashboard at [sparrow.katanaml.io](https://spa
 - ⚠️ Requires macOS with Apple Silicon
 
 **NVIDIA GPU**
-- ✅ Use local_gpu backend for best performance
-- ✅ Recommended: RTX 3080+ with 12GB+ VRAM
+- ✅ Use local_gpu or Ollama backends (work in progress)
+- ✅ Recommended: Nvidia DGX Spark with 12GB+ VRAM
 - ⚠️ Requires CUDA setup
 
 **CPU Only**
@@ -713,9 +711,9 @@ Built-in analytics and monitoring dashboard at [sparrow.katanaml.io](https://spa
 
 | Use Case | Recommended Model | Memory | Speed |
 |----------|------------------|---------|--------|
-| **Forms/Invoices** | Mistral-Small-3.1-24B | 16GB | Fast |
-| **Complex Tables** | Qwen2.5-VL-72B | 32GB+ | Slower |
-| **Quick Testing** | Qwen2.5-VL-7B | 8GB | Fastest |
+| **Forms/Invoices** | Mistral-Small-3.1-24B | 35GB | Fast |
+| **Complex Tables** | Qwen2.5-VL-72B | 50GB | Slower |
+| **Quick Testing** | Qwen2.5-VL-7B | 20GB | Fastest |
 
 ## 🔍 Troubleshooting
 
