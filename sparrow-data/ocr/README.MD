@@ -1,141 +1,418 @@
-# Sparrow Data OCR
+# Sparrow OCR
 
-## Description
+[![PyPI version](https://badge.fury.io/py/sparrow-ocr.svg)](https://badge.fury.io/py/sparrow-ocr)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-This module implements OCR functionality for Sparrow. Check main [README](https://github.com/katanaml/sparrow)
+Optical Character Recognition (OCR) and text extraction from documents and images. Part of the [Sparrow](https://github.com/katanaml/sparrow) ecosystem for intelligent document processing.
 
-## Install
+## ✨ Features
 
-*Setup Python Environment (Sparrow is tested with Python 3.10.4) with `pyenv`:*
+- 🔍 **Text Recognition**: Extract text from images and documents with high accuracy
+- 📄 **Multi-format Support**: Images (PNG, JPG, JPEG) and PDFs
+- 📍 **Bounding Box Detection**: Optional coordinate extraction for text regions
+- 🌐 **Flexible Input**: Support for file upload and image URLs
+- 🎯 **Debug Mode**: Visual output with bounding boxes for development
+- ⚡ **Fast Processing**: Optimized OCR pipeline for production use
+- 🔗 **API Integration**: RESTful API for easy integration
 
-1. Install `pyenv`:
+## 🚀 Quick Start
 
-If you haven't already installed `pyenv`, you can do so using Homebrew with the following command:
+### Installation
 
-```
-brew update
-brew install pyenv
+**Additional Requirements:**
+- For PDF processing: `brew install poppler` (macOS) or `apt-get install poppler-utils` (Linux)
 
-```
+### Basic Usage
 
-2. Install the desired Python version:
+```python
+import requests
 
-With `pyenv` installed, you can now install a specific version of Python. For example, to install Python 3.10.4, you would use:
+# OCR from uploaded file
+with open("document.png", "rb") as f:
+    response = requests.post(
+        "http://localhost:8003/api/v1/sparrow-ocr/inference",
+        files={"file": f}
+    )
 
-```
-pyenv install 3.10.4
-```
-
-You can check available Python versions by running `pyenv install --list`.
-
-3. Set the global Python version:
-
-Once the installation is complete, you can set the desired Python version as the default (global) version on your system:
-
-```
-pyenv global 3.10.4
-```
-
-This command sets Python 3.10.4 as the default version for all shells.
-
-4. Verify the change:
-
-To ensure the change was successful, you can verify the current Python version by running:
-
-```
-python --version
+print(response.json())
 ```
 
-If the output doesn’t reflect the change, you may need to restart your terminal or add `pyenv` to your shell's initialization script as follows:
+## 📖 API Reference
 
-5. Configure your shell's initialization script:
+### OCR Inference Endpoint
 
-Add `pyenv` to your shell by adding the following lines to your `~/.bash_profile`, `~/.zprofile`, `~/.bashrc`, or `~/.zshrc` file:
+**POST** `/api/v1/sparrow-ocr/inference`
 
+#### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `file` | File | No* | Upload file (image or PDF) |
+| `image_url` | String | No* | URL to image or PDF |
+| `include_bbox` | Boolean | No | Include bounding box coordinates for each text region |
+| `debug` | Boolean | No | Save output images with bounding boxes |
+
+*Either `file` or `image_url` must be provided.
+
+#### Request Examples
+
+##### File Upload
+```bash
+curl -X POST "http://localhost:8003/api/v1/sparrow-ocr/inference" \
+  -F "file=@document.pdf" \
+  -F "include_bbox=true" \
+  -F "debug=false"
 ```
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
+
+##### Image URL
+```bash
+curl -X POST "http://localhost:8003/api/v1/sparrow-ocr/inference" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "image_url=https://example.com/image.jpg" \
+  -d "include_bbox=true" \
+  -d "debug=false"
 ```
 
-After adding these lines, restart your terminal or source your profile script with `source ~/.bash_profile` (or the appropriate file for your shell).
+##### Python Requests
+```python
+import requests
 
-*Create Virtual Environment*
+# File upload with bounding boxes
+with open("invoice.pdf", "rb") as f:
+    response = requests.post(
+        "http://localhost:8003/api/v1/sparrow-ocr/inference",
+        files={"file": f},
+        data={
+            "include_bbox": True,
+            "debug": False
+        }
+    )
 
-Create virtual environment in `sparrow-data/ocr` folder:
-
+# Image URL processing
+response = requests.post(
+    "http://localhost:8003/api/v1/sparrow-ocr/inference",
+    data={
+        "image_url": "https://example.com/document.png",
+        "include_bbox": False,
+        "debug": True
+    }
+)
 ```
+
+#### Response Format
+
+##### Basic Text Extraction
+```json
+{
+  "text": "Extracted text content from the document...",
+  "pages": 1,
+  "processing_time": 2.45,
+  "status": "success"
+}
+```
+
+##### With Bounding Boxes
+```json
+{
+  "text": "Full extracted text...",
+  "text_regions": [
+    {
+      "text": "Invoice Number: 12345",
+      "bbox": [100, 50, 300, 80],
+      "confidence": 0.95,
+      "page": 1
+    },
+    {
+      "text": "Date: 2024-01-15",
+      "bbox": [100, 90, 250, 120],
+      "confidence": 0.92,
+      "page": 1
+    }
+  ],
+  "pages": 1,
+  "processing_time": 3.12,
+  "status": "success"
+}
+```
+
+## 🛠️ Development Setup
+
+### Environment Setup
+
+```bash
+# Clone repository
+git clone https://github.com/katanaml/sparrow.git
+cd sparrow/sparrow-data/ocr
+
+# Create virtual environment
 python -m venv .env_ocr
+source .env_ocr/bin/activate  # Linux/Mac
+# or
+.env_ocr\Scripts\activate  # Windows
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Install system dependencies
+brew install poppler  # macOS
+# or
+sudo apt-get install poppler-utils  # Ubuntu/Debian
 ```
 
-*Activate Virtual Environment and Install Dependencies*
+### Running the Service
 
-Activate each environment and install its dependencies using the corresponding `requirements.txt` file.
+```bash
+# Start OCR API server
+python api.py --port 8003
 
-For `ocr` environment:
-
-1. Activate the environment:
-
-```
-source .env_ocr/bin/activate
+# Visit API documentation
+open http://localhost:8003/docs
 ```
 
-2. Install dependencies:
+## 📚 Usage Examples
 
+### Basic Text Extraction
+
+```python
+import requests
+
+def extract_text(file_path):
+    with open(file_path, "rb") as f:
+        response = requests.post(
+            "http://localhost:8003/api/v1/sparrow-ocr/inference",
+            files={"file": f}
+        )
+    
+    if response.status_code == 200:
+        return response.json()["text"]
+    else:
+        raise Exception(f"OCR failed: {response.text}")
+
+# Extract text from image
+text = extract_text("invoice.png")
+print(text)
 ```
+
+### Extract Text with Bounding Boxes
+
+```python
+def extract_with_bbox(file_path):
+    with open(file_path, "rb") as f:
+        response = requests.post(
+            "http://localhost:8003/api/v1/sparrow-ocr/inference",
+            files={"file": f},
+            data={"include_bbox": True}
+        )
+    
+    result = response.json()
+    
+    # Process text regions
+    for region in result["text_regions"]:
+        print(f"Text: {region['text']}")
+        print(f"Bbox: {region['bbox']}")
+        print(f"Confidence: {region['confidence']}")
+        print("---")
+    
+    return result
+
+# Extract with coordinates
+result = extract_with_bbox("form.pdf")
+```
+
+### Process Image from URL
+
+```python
+def process_url(image_url):
+    response = requests.post(
+        "http://localhost:8003/api/v1/sparrow-ocr/inference",
+        data={
+            "image_url": image_url,
+            "include_bbox": True,
+            "debug": False
+        }
+    )
+    
+    return response.json()
+
+# Process remote image
+result = process_url("https://example.com/receipt.jpg")
+```
+
+### Debug Mode for Development
+
+```python
+def debug_ocr(file_path):
+    with open(file_path, "rb") as f:
+        response = requests.post(
+            "http://localhost:8003/api/v1/sparrow-ocr/inference",
+            files={"file": f},
+            data={
+                "include_bbox": True,
+                "debug": True  # Saves images with bounding boxes
+            }
+        )
+    
+    result = response.json()
+    print(f"Debug images saved to: {result.get('debug_path', 'N/A')}")
+    return result
+
+# Debug OCR processing
+debug_ocr("complex_document.pdf")
+```
+
+## 🎯 Use Cases
+
+### Invoice Processing
+```python
+# Extract invoice data with bounding boxes for validation
+invoice_result = extract_with_bbox("invoice.pdf")
+
+# Find specific fields
+for region in invoice_result["text_regions"]:
+    text = region["text"].lower()
+    if "invoice" in text and any(char.isdigit() for char in text):
+        print(f"Found invoice number: {region['text']}")
+        print(f"Location: {region['bbox']}")
+```
+
+### Form Processing
+```python
+# Process form fields with coordinates
+form_result = process_with_bbox("application_form.png")
+
+# Map text regions to form fields based on position
+fields = {}
+for region in form_result["text_regions"]:
+    x, y = region["bbox"][:2]  # Top-left coordinates
+    
+    # Map based on position (example logic)
+    if y < 100:
+        fields["header"] = region["text"]
+    elif 100 <= y < 200:
+        fields["name_section"] = region["text"]
+    # ... additional field mapping
+```
+
+### Receipt Scanning
+```python
+# Extract receipt data
+receipt_text = extract_text("receipt.jpg")
+
+# Parse common receipt patterns
+import re
+
+# Find total amount
+total_pattern = r'total[:\s]*\$?(\d+\.?\d*)'
+total_match = re.search(total_pattern, receipt_text, re.IGNORECASE)
+if total_match:
+    total = total_match.group(1)
+    print(f"Total: ${total}")
+```
+
+## ⚙️ Configuration Options
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `include_bbox` | bool | False | Include bounding box coordinates |
+| `debug` | bool | False | Save debug images with bounding boxes |
+| `confidence_threshold` | float | 0.5 | Minimum confidence for text detection |
+| `page_processing` | string | "all" | Process "all", "first", or specific page numbers |
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+**Import Errors:**
+```bash
+# Missing system dependencies
+brew install poppler  # macOS
+sudo apt-get install poppler-utils  # Ubuntu/Debian
+
+# Python dependencies
 pip install -r requirements.txt
 ```
 
-If you are on macOS or Linux, it might be required to install poppler:
+**Low OCR Accuracy:**
+- Ensure image resolution is at least 300 DPI
+- Check image quality and contrast
+- Try different OCR engines via configuration
+- Use `debug=True` to visualize detection regions
 
-macOS:
+**Memory Issues:**
+- Reduce image size before processing
+- Process large PDFs page by page
+- Adjust confidence threshold to filter low-quality detections
 
-```
-brew install poppler
-```
-
-Linux:
-
-```
-!apt-get install poppler-utils libpoppler-cpp-dev
-!pip install -v -v python-poppler
-```
-
-## Run Sparrow OCR app
-
-You may need to change port in api.py
-
-```
-python api.py
+**File Format Issues:**
+```python
+# Verify supported formats
+import mimetypes
+mime_type, _ = mimetypes.guess_type("document.pdf")
+print(f"MIME type: {mime_type}")  # Should be image/* or application/pdf
 ```
 
-## Sparrow OCR
+### Performance Tips
 
-If you want to test how OCR works, you can run this API request through CURL
+- **Image Preprocessing**: Clean and enhance images before OCR
+- **Batch Processing**: Process multiple files in parallel
+- **Caching**: Cache results for repeated processing
+- **Configuration**: Tune confidence thresholds for your use case
 
+## 🤝 Integration with Sparrow Components
+
+### With Sparrow Parse (Vision LLM)
+```python
+# First extract text with OCR, then process with Vision LLM
+ocr_result = extract_with_bbox("invoice.pdf")
+extracted_text = ocr_result["text"]
+
+# Use OCR output for Vision LLM preprocessing
+# This can improve accuracy for complex documents
 ```
-curl -X 'POST' \
-  'http://127.0.0.1:8001/api/v1/sparrow-ocr/inference' \
-  -H 'accept: application/json' \
-  -H 'Content-Type: multipart/form-data' \
-  -F 'file=' \
-  -F 'image_url=https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-ml/llm/data/inout-20211211_001.jpg'
+
+### With Sparrow Agents
+```python
+# OCR as preprocessing step in agent workflows
+@task
+def ocr_preprocessing(file_path):
+    return extract_with_bbox(file_path)
+
+@task  
+def structure_extraction(ocr_result):
+    # Use OCR output for structured data extraction
+    pass
 ```
 
-## Commercial usage
+## 📄 Supported File Formats
 
-Sparrow is available under the GPL 3.0 license, promoting freedom to use, modify, and distribute the software while ensuring any modifications remain open source under the same license. This aligns with our commitment to supporting the open-source community and fostering collaboration.
+| Format | Extension | Multi-page | Notes |
+|--------|-----------|------------|-------|
+| PNG | .png | ❌ | Best for high-contrast text |
+| JPEG | .jpg, .jpeg | ❌ | Good for photos and scanned docs |
+| PDF | .pdf | ✅ | Automatically handled |
 
-Additionally, we recognize the diverse needs of organizations, including small to medium-sized enterprises (SMEs). Therefore, Sparrow is also offered for free commercial use to organizations with gross revenue below $5 million USD in the past 12 months, enabling them to leverage Sparrow without the financial burden often associated with high-quality software solutions.
+## 🤝 Contributing
 
-For businesses that exceed this revenue threshold or require usage terms not accommodated by the GPL 3.0 license—such as integrating Sparrow into proprietary software without the obligation to disclose source code modifications—we offer dual licensing options. Dual licensing allows Sparrow to be used under a separate proprietary license, offering greater flexibility for commercial applications and proprietary integrations. This model supports both the project's sustainability and the business's needs for confidentiality and customization.
+We welcome contributions! Please see our [Contributing Guidelines](https://github.com/katanaml/sparrow/blob/main/CONTRIBUTING.md) for details.
 
-If your organization is seeking to utilize Sparrow under a proprietary license, or if you are interested in custom workflows, consulting services, or dedicated support and maintenance options, please contact us at abaranovskis@redsamuraiconsulting.com. We're here to provide tailored solutions that meet your unique requirements, ensuring you can maximize the benefits of Sparrow for your projects and workflows.
+## 📞 Support
 
-## Author
+- 📖 [Documentation](https://github.com/katanaml/sparrow)
+- 🐛 [Issue Tracker](https://github.com/katanaml/sparrow/issues)
+- 💼 [Professional Services](mailto:abaranovskis@redsamuraiconsulting.com)
 
-[Katana ML](https://katanaml.io), [Andrej Baranovskij](https://github.com/abaranovskis-redsamurai)
+## 📜 License
 
-## License
+Licensed under the GPL 3.0. Copyright 2020-2025 Katana ML, Andrej Baranovskij.
 
-Licensed under the GPL 3.0. Copyright 2020-2025 Katana ML, Andrej Baranovskij. [Copy of the license](https://github.com/katanaml/sparrow/blob/main/LICENSE).
+**Commercial Licensing:** Free for organizations with revenue under $5M USD annually. [Contact us](mailto:abaranovskis@redsamuraiconsulting.com) for commercial licensing options.
+
+## 👥 Authors
+
+- **[Katana ML](https://katanaml.io)**
+- **[Andrej Baranovskij](https://github.com/abaranovskis-redsamurai)**
+
+---
+
+⭐ **Star us on [GitHub](https://github.com/katanaml/sparrow)** if you find Sparrow OCR useful!
