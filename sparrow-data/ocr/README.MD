@@ -324,7 +324,6 @@ pip install -r requirements.txt
 **Low OCR Accuracy:**
 - Ensure image resolution is at least 300 DPI
 - Check image quality and contrast
-- Try different OCR engines via configuration
 - Use `debug=True` to visualize detection regions
 
 **Memory Issues:**
