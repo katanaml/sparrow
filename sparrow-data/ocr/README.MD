@@ -165,9 +165,6 @@ sudo apt-get install poppler-utils  # Ubuntu/Debian
 ```bash
 # Start OCR API server
 python api.py --port 8003
-
-# Visit API documentation
-open http://localhost:8003/docs
 ```
 
 ## 📚 Usage Examples
@@ -310,15 +307,6 @@ if total_match:
     print(f"Total: ${total}")
 ```
 
-## ⚙️ Configuration Options
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `include_bbox` | bool | False | Include bounding box coordinates |
-| `debug` | bool | False | Save debug images with bounding boxes |
-| `confidence_threshold` | float | 0.5 | Minimum confidence for text detection |
-| `page_processing` | string | "all" | Process "all", "first", or specific page numbers |
-
 ## 🔧 Troubleshooting
 
 ### Common Issues
@@ -390,7 +378,7 @@ def structure_extraction(ocr_result):
 |--------|-----------|------------|-------|
 | PNG | .png | ❌ | Best for high-contrast text |
 | JPEG | .jpg, .jpeg | ❌ | Good for photos and scanned docs |
-| PDF | .pdf | ✅ | Automatically handled |
+| PDF | .pdf | ❌ | Handles single page PDF at the moment |
 
 ## 🤝 Contributing
 
