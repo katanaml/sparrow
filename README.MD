@@ -99,7 +99,7 @@ source .env_sparrow_parse/bin/activate  # Linux/Mac
 # 3. Install Sparrow Parse pipeline
 git clone https://github.com/katanaml/sparrow.git
 cd sparrow/sparrow-ml/llm
-pip install -r requirements_sparrow_parse.txt
+pip install -r requirements_sparrow_parse.txt --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
 
 # 4. For macOS: Install poppler for PDF processing
 brew install poppler
