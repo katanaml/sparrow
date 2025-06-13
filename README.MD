@@ -99,7 +99,7 @@ source .env_sparrow_parse/bin/activate  # Linux/Mac
 # 3. Install Sparrow Parse pipeline
 git clone https://github.com/katanaml/sparrow.git
 cd sparrow/sparrow-ml/llm
-pip install -r requirements_sparrow_parse.txt --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
+pip install -r requirements_sparrow_parse.txt
 
 # 4. For macOS: Install poppler for PDF processing
 brew install poppler
@@ -737,6 +737,12 @@ pyenv global 3.10.4
 # If MLX fails to install
 pip install --upgrade pip
 pip install mlx-vlm --no-cache-dir
+```
+
+```bash
+# If pip install command throws AttributeError: 'NoneType' object has no attribute 'get'
+# POTENTIAL SECURITY RISK - SSL verification is bypassed. Apply if you know what you are doing
+pip install mlx-vlm --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
 ```
 
 **Poppler Missing:**
