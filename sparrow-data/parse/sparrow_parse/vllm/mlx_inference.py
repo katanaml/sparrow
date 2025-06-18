@@ -207,7 +207,7 @@ class MLXInference(ModelInference):
                 prompt,
                 image,
                 resize_shape=(resized_width, resized_height),
-                max_tokens=4000,
+                max_tokens=6000,
                 temperature=0.0,
                 verbose=False
             )
