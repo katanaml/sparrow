@@ -739,6 +739,12 @@ pip install --upgrade pip
 pip install mlx-vlm --no-cache-dir
 ```
 
+```bash
+# If pip install command throws AttributeError: 'NoneType' object has no attribute 'get'
+# POTENTIAL SECURITY RISK - SSL verification is bypassed. Apply if you know what you are doing
+pip install mlx-vlm --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
+```
+
 **Poppler Missing:**
 ```bash
 # macOS
