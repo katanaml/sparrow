@@ -170,10 +170,10 @@ if __name__ == "__main__":
 
     # Add argument parsing for port
     parser = argparse.ArgumentParser()
-    parser.add_argument('--port', type=int, default=8001)
+    parser.add_argument('--port', type=int, default=8003)
     args = parser.parse_args()
 
-    uvicorn.run("api:app", host="0.0.0.0", port=8001, reload=True)
+    uvicorn.run("api:app", host="0.0.0.0", port=args.port, reload=True)
 
     # http://127.0.0.1:8001/docs
 
