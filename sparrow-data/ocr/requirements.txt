@@ -9,6 +9,7 @@ pillow==11.2.1
 python-multipart
 fastapi==0.115.12
 uvicorn[standard]
+rich
 
 
 # Force reinstall:

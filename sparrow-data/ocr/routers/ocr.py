@@ -1,6 +1,6 @@
 from fastapi import APIRouter, File, UploadFile, Form, HTTPException, status
 from fastapi.responses import JSONResponse
-from typing import Optional
+from typing import Optional, Dict, Tuple, List
 from functools import lru_cache
 from paddleocr import PaddleOCR
 from PIL import Image
@@ -10,7 +10,18 @@ from pdf2image import convert_from_bytes
 import os
 import time
 import tempfile
-from typing import Dict
+from rich import print
+
+
+# Import experimental table processing (with fallback)
+EXPERIMENTAL_AVAILABLE = False
+try:
+    from routers.experimental import enhance_tables, get_available_features
+    EXPERIMENTAL_AVAILABLE = True
+    print("[SUCCESS] Experimental table processing features loaded successfully")
+except ImportError as e:
+    print(f"[ERROR] WARNING: Experimental features not available: {e}")
+    print("Table enhancement will be disabled. Install experimental package to enable.")
 
 
 router = APIRouter()
@@ -87,9 +98,77 @@ def extract_text_from_json(result_json: Dict, include_bbox: bool = False) -> Dic
     return simple_output
 
 
-def invoke_ocr(doc, content_type, include_bbox: bool = False, debug: bool =False):
+def apply_table_enhancement(image: Image.Image, text_regions: List[Dict], format_img: str = "PNG", debug: bool = False) -> Tuple[Optional[str], Optional[List[Dict]]]:
+    """
+    Apply experimental table enhancement if available.
+
+    Args:
+        image: PIL Image to enhance
+        text_regions: OCR text regions with bounding boxes
+        format_img: Image format for base64 encoding
+        debug: Whether to save debug output to output folder
+
+    Returns:
+        Tuple of (enhanced_image_base64, tables_info) or (None, None) if not available
+    """
+    if not EXPERIMENTAL_AVAILABLE:
+        print("[WARNING] Table enhancement requested but experimental features not available")
+        return None, None
+
+    try:
+        # Apply table enhancement using experimental module
+        enhanced_image, tables_info = enhance_tables(image, text_regions)
+
+        # Convert enhanced image to base64
+        from routers.experimental.table_processor import TableProcessor
+        enhanced_image_base64 = TableProcessor.image_to_base64(enhanced_image, format_img)
+
+        # Save enhanced image to output folder if debug is enabled
+        if debug:
+            try:
+                # Create output directory if it doesn't exist
+                output_dir = "output"
+                os.makedirs(output_dir, exist_ok=True)
+
+                # Generate timestamp-based filename
+                from datetime import datetime
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]  # Include milliseconds
+
+                # Determine file extension based on format
+                ext = "png" if format_img.upper() == "PNG" else "jpg"
+                filename = f"enhanced_table_{timestamp}.{ext}"
+                filepath = os.path.join(output_dir, filename)
+
+                # Save the enhanced image
+                enhanced_image.save(filepath, format=format_img)
+                print(f"[DEBUG]   Enhanced image saved to: {filepath}")
+
+            except Exception as save_error:
+                print(f"[WARNING] Failed to save enhanced image: {str(save_error)}")
+
+        print(f"[SUCCESS] Table enhancement applied: {len(tables_info)} tables detected")
+        return enhanced_image_base64, tables_info
+    except Exception as e:
+        print(f"[ERROR] Error during table enhancement: {str(e)}")
+        return None, None
+
+
+def invoke_ocr(doc: Image.Image, content_type: str, include_bbox: bool = False, enhance_tables: bool = False, debug: bool = False):
+    """
+    Enhanced OCR with optional table detection and grid drawing
+
+    Args:
+        doc: PIL Image to process
+        content_type: MIME type of the image
+        include_bbox: Whether to include bounding box coordinates
+        enhance_tables: Whether to apply experimental table enhancement
+        debug: Whether to save debug output
+
+    Returns:
+        Tuple of (ocr_results, processing_time, enhanced_image_base64, tables_info)
+    """
     worker_pid = os.getpid()
-    print(f"Handling OCR request with worker PID: {worker_pid}")
+    print(f"[INFO] Handling OCR request with worker PID: {worker_pid}")
     start_time = time.time()
 
     ocr = load_ocr_model()
@@ -107,6 +186,9 @@ def invoke_ocr(doc, content_type, include_bbox: bool = False, debug: bool =False
         temp_path = temp_file.name
         doc.save(temp_path, format=format_img)
 
+    enhanced_image_base64 = None
+    tables_info = None
+
     try:
         # Pass the file path to OCR model
         result = ocr.predict(temp_path)
@@ -122,76 +204,199 @@ def invoke_ocr(doc, content_type, include_bbox: bool = False, debug: bool =False
 
             # Extract simple text
             simple_text = extract_text_from_json(result_json, include_bbox)
+
+            # Apply table enhancement if requested and available
+            if enhance_tables and simple_text.get('text_regions'):
+                enhanced_image_base64, tables_info = apply_table_enhancement(
+                    doc, simple_text['text_regions'], format_img, debug
+                )
+
+                # Add table enhancement info to the result
+                if tables_info is not None:
+                    simple_text['table_enhancement'] = {
+                        'enabled': True,
+                        'tables_detected': len(tables_info),
+                        'tables_info': tables_info
+                    }
+                else:
+                    simple_text['table_enhancement'] = {
+                        'enabled': False,
+                        'error': 'Table enhancement failed or not available'
+                    }
+            elif enhance_tables and not simple_text.get('text_regions'):
+                simple_text['table_enhancement'] = {
+                    'enabled': False,
+                    'error': 'No text regions found for table enhancement'
+                }
+
             ocr_results.append(simple_text)
 
 
         end_time = time.time()
         processing_time = end_time - start_time
-        print(f"OCR done, worker PID: {worker_pid}")
+        print(f"[SUCCESS] OCR processing completed in {processing_time:.2f}s, worker PID: {worker_pid}")
 
-        return ocr_results, processing_time
+        return ocr_results, processing_time, enhanced_image_base64, tables_info
 
     finally:
         # Clean up the temporary file
         try:
             os.unlink(temp_path)
-            print(f"Temporary file {temp_path} cleaned up successfully")
+            print(f"[INFO] Temporary file {temp_path} cleaned up successfully")
         except OSError as e:
-            print(f"Error cleaning up temporary file {temp_path}: {e}")
+            print(f"[WARNING] Error cleaning up temporary file {temp_path}: {e}")
 
 
 @router.post("/inference")
 async def inference(file: UploadFile = File(None),
                     image_url: Optional[str] = Form(None),
                     include_bbox: Optional[bool] = Form(False),
+                    enhance_tables: Optional[bool] = Form(False),
                     debug: Optional[bool] = Form(False)):
     """
-    OCR inference endpoint
+    OCR inference endpoint with optional experimental table enhancement
 
     Args:
         file: Upload file (image or PDF)
         image_url: URL to image or PDF
         include_bbox: Whether to include bounding box coordinates for each text region
+        enhance_tables: Whether to detect tables and draw grid lines (experimental feature)
         debug: Whether to save output images with bounding boxes
+
+    Returns:
+        JSON response with OCR results and optional table enhancement data
     """
+
+    # Check if table enhancement is requested but not available
+    if enhance_tables and not EXPERIMENTAL_AVAILABLE:
+        print("[WARNING] Table enhancement requested but experimental features not available")
+        # Continue processing without enhancement rather than failing
+        enhance_tables = False
+
     result = None
-    if file:
-        if file.content_type in ["image/jpeg", "image/jpg", "image/png"]:
-            doc = Image.open(BytesIO(await file.read()))
-        elif file.content_type == "application/pdf":
-            pdf_bytes = await file.read()
-            pages = convert_from_bytes(pdf_bytes, 300)
-            doc = pages[0]
-        else:
-            return {"error": "Invalid file type. Only JPG/PNG images and PDF are allowed."}
+    enhanced_image_base64 = None
+    tables_info = None
 
-        result, processing_time = invoke_ocr(doc, file.content_type, include_bbox, debug)
-
-        print(f"Processing time OCR: {processing_time:.2f} seconds")
-    elif image_url:
-        # test image url: https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-ml/llm/data/inout-20211211_001.jpg
-        # test PDF: https://raw.githubusercontent.com/katanaml/sparrow/main/sparrow-ml/llm/data/invoice_1.pdf
-        headers = {"User-Agent": "Mozilla/5.0"} # to avoid 403 error
-        req = Request(image_url, headers=headers)
-        with urlopen(req) as response:
-            content_type = response.info().get_content_type()
-
-            if content_type in ["image/jpeg", "image/jpg", "image/png"]:
-                doc = Image.open(BytesIO(response.read()))
-            elif content_type in ["application/pdf", "application/octet-stream"]:
-                pdf_bytes = response.read()
+    try:
+        if file:
+            # Process uploaded file
+            if file.content_type in ["image/jpeg", "image/jpg", "image/png"]:
+                doc = Image.open(BytesIO(await file.read()))
+            elif file.content_type == "application/pdf":
+                pdf_bytes = await file.read()
                 pages = convert_from_bytes(pdf_bytes, 300)
-                doc = pages[0]
+                doc = pages[0]  # Process first page only
             else:
-                return {"error": "Invalid file type. Only JPG/PNG images and PDF are allowed."}
+                print(f"[ERROR] Invalid file type: {file.content_type}")
+                raise HTTPException(
+                    status_code=400,
+                    detail="Invalid file type. Only JPG/PNG images and PDF are allowed."
+                )
 
-        result, processing_time = invoke_ocr(doc, content_type, include_bbox, debug)
+            result, processing_time, enhanced_image_base64, tables_info = invoke_ocr(
+                doc, file.content_type, include_bbox, enhance_tables, debug
+            )
+        elif image_url:
+            # Process image from URL
+            headers = {"User-Agent": "Mozilla/5.0"}  # to avoid 403 error
+            req = Request(image_url, headers=headers)
 
-        print(f"Processing time OCR: {processing_time:.2f} seconds")
-    else:
-        result = {"info": "No input provided"}
+            try:
+                with urlopen(req) as response:
+                    content_type = response.info().get_content_type()
 
-    if result is None:
-        raise HTTPException(status_code=400, detail=f"Failed to process the input.")
+                    if content_type in ["image/jpeg", "image/jpg", "image/png"]:
+                        doc = Image.open(BytesIO(response.read()))
+                    elif content_type in ["application/pdf", "application/octet-stream"]:
+                        pdf_bytes = response.read()
+                        pages = convert_from_bytes(pdf_bytes, 300)
+                        doc = pages[0]  # Process first page only
+                    else:
+                        print(f"[ERROR] Invalid URL content type: {content_type}")
+                        raise HTTPException(
+                            status_code=400,
+                            detail="Invalid file type. Only JPG/PNG images and PDF are allowed."
+                        )
 
-    return JSONResponse(status_code=status.HTTP_200_OK, content=result)
+                result, processing_time, enhanced_image_base64, tables_info = invoke_ocr(
+                    doc, content_type, include_bbox, enhance_tables, debug
+                )
+            except Exception as url_error:
+                print(f"[ERROR] Failed to process URL {image_url}: {str(url_error)}")
+                raise HTTPException(
+                    status_code=400,
+                    detail=f"Failed to process URL: {str(url_error)}"
+                )
+        else:
+            # No input provided
+            available_features = {}
+            if EXPERIMENTAL_AVAILABLE:
+                try:
+                    available_features = get_available_features()
+                except Exception as feature_error:
+                    print(f"[WARNING] Error getting available features: {str(feature_error)}")
+
+            return JSONResponse(
+                status_code=status.HTTP_200_OK,
+                content={
+                    "info": "No input provided. Please upload a file or provide an image URL.",
+                    "experimental_features_available": EXPERIMENTAL_AVAILABLE,
+                    "available_features": available_features
+                }
+            )
+
+        if result is None:
+            print("[ERROR] OCR processing returned no results")
+            raise HTTPException(status_code=400, detail="Failed to process the input.")
+
+        # Prepare response data
+        response_data = result
+
+        # Add enhanced image if table enhancement was applied
+        if enhanced_image_base64:
+            if isinstance(response_data, list) and len(response_data) > 0:
+                response_data[0]['enhanced_image'] = enhanced_image_base64
+            elif isinstance(response_data, dict):
+                response_data['enhanced_image'] = enhanced_image_base64
+
+        # Add processing metadata
+        if isinstance(response_data, list) and len(response_data) > 0:
+            response_data[0]['processing_info'] = {
+                'processing_time_seconds': processing_time,
+                'experimental_features_used': enhance_tables and EXPERIMENTAL_AVAILABLE,
+                'worker_pid': os.getpid()
+            }
+
+        return JSONResponse(status_code=status.HTTP_200_OK, content=response_data)
+
+    except HTTPException:
+        raise  # Re-raise HTTP exceptions as-is
+    except Exception as e:
+        print(f"[ERROR] Unexpected error during OCR processing: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Internal server error during OCR processing: {str(e)}"
+        )
+
+
+@router.get("/features")
+async def get_experimental_features():
+    """
+    Get information about available experimental features
+
+    Returns:
+        JSON response with feature availability and descriptions
+    """
+    response = {
+        "experimental_features_available": EXPERIMENTAL_AVAILABLE,
+        "features": {}
+    }
+
+    if EXPERIMENTAL_AVAILABLE:
+        try:
+            response["features"] = get_available_features()
+        except Exception as e:
+            print(f"[ERROR] Error getting experimental features: {e}")
+            response["error"] = "Error accessing experimental features"
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content=response)
