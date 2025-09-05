@@ -528,6 +528,7 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
 | `--file-path` | Path | Input document | `data/invoice.pdf` |
 | `--options` | String | Backend configuration | `mlx,model-name` |
 | `--crop-size` | Integer | Border cropping pixels | `60` |
+| `--page-type` | String | Page classification | `financial_table` |
 | `--debug` | Boolean | Enable debug mode | `--debug` |
 | `--debug-dir` | Path | Debug output folder | `./debug/` |
 
@@ -536,7 +537,11 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
 #### Sparrow Parse (Vision LLM)
 ```bash
 # MLX Backend (Apple Silicon)
---options mlx --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit
+./sparrow.sh '[{"instrument_name":"str", "valuation":0}]' \
+  --pipeline "sparrow-parse" \
+  --options mlx \
+  --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit \
+  --file-path "data/bonds_table.png"
 
 # Hugging Face Cloud GPU
 --options huggingface --options your-space/model-name
@@ -545,11 +550,16 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
 --options tables_only        # Extract only tables
 --options validation_off     # Disable schema validation
 --options apply_annotation   # Include bounding boxes
+--page-type financial_table  # Classify page type
 ```
 
 #### Sparrow Instructor (Text LLM)
 ```bash
---options mlx --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit
+# Instruction-based processing
+./sparrow.sh "instruction: do arithmetic operation, payload: 2+2=" \
+  --pipeline "sparrow-instructor" \
+  --options mlx \
+  --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit
 ```
 
 ### Advanced Examples
@@ -560,11 +570,15 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
   --page-type invoice \
   --page-type table \
   --pipeline "sparrow-parse" \
+  --options mlx \
+  --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit \
   --file-path "multi_page.pdf"
 
 # Handle missing fields with null values
 ./sparrow.sh '[{"required_field":"str", "optional_field":"str or null"}]' \
   --pipeline "sparrow-parse" \
+  --options mlx \
+  --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit \
   --file-path "document.png"
 
 # Table extraction with cropping
@@ -612,7 +626,7 @@ curl -X POST 'http://localhost:8002/api/v1/sparrow-llm/instruction-inference' \
   -H 'Content-Type: application/x-www-form-urlencoded' \
   -d 'query=instruction: analyze data, payload: {...}' \
   -d 'pipeline=sparrow-instructor' \
-  -d 'options=mlx,model-name'
+  -d 'options=mlx,mlx-community/Qwen2.5-VL-72B-Instruct-4bit'
 ```
 
 ### API Documentation
