@@ -478,18 +478,23 @@ python api.py --port 8002
   --pipeline "sparrow-instructor" \
   --options mlx \
   --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit
+
+# Instruction processing with document input
+./sparrow.sh "check if business entity Chapman, Kim and Green is invoice issuing party" 
+  --pipeline "sparrow-parse" 
+  --instruction 
+  --options mlx --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit 
+  --file-path "invoice_1.jpg"
 ```
 
-<details>
-<summary><strong>📄 View Output</strong></summary>
 
+**JSON Output:**
 ```
 The result of 2 + 2 is:
 
 4
 ```
 
-</details>
 
 ### 📈 Stock Data Function Calling
 
