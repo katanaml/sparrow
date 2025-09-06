@@ -527,6 +527,7 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
 | `--pipeline` | String | Pipeline to use | `sparrow-parse` |
 | `--file-path` | Path | Input document | `data/invoice.pdf` |
 | `--options` | String | Backend configuration | `mlx,model-name` |
+| `--instruction` | Boolean | Sparrow query will be used as instruction | `--instruction` |
 | `--crop-size` | Integer | Border cropping pixels | `60` |
 | `--page-type` | String | Page classification | `financial_table` |
 | `--debug` | Boolean | Enable debug mode | `--debug` |
@@ -583,11 +584,19 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
 
 # Table extraction with cropping
 ./sparrow.sh '*' \
+  --pipeline "sparrow-parse" \
   --options mlx \
   --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit \
   --options tables_only \
   --crop-size 100 \
   --file-path "scan.pdf"
+
+# Instruction execution
+./sparrow.sh "check if business entity Chapman, Kim and Green is invoice issuing party" 
+  --pipeline "sparrow-parse" 
+  --instruction 
+  --options mlx --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit 
+  --file-path "invoice_1.jpg"
 ```
 
 ## 🌐 API Usage
