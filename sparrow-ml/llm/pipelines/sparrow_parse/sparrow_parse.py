@@ -66,6 +66,7 @@ class SparrowParsePipeline(Pipeline):
                      file_path: str,
                      options: List[str] = None,
                      crop_size: int = None,
+                     instruction: bool = False,
                      page_type: List[str] = None,
                      debug_dir: str = None,
                      debug: bool = False,
@@ -74,33 +75,21 @@ class SparrowParsePipeline(Pipeline):
 
         start = timeit.default_timer()
 
-        # Handle special case where query indicates fetching all data
-        query_all_data = query == "*"
-        query_schema = None
+        # Determine query processing strategy and prepare query
+        query, query_schema, query_all_data = self._process_query(query, instruction, page_type, local)
 
-        if query_all_data:
-            query = None
-
-            # when query = * and page_type is not None, this means we want to get info about page type only, without extracting data
-            if page_type is not None:
-                query = self._prepare_page_type_query(page_type, local)
-                query_all_data = False
-        else:
-            query, query_schema = self._prepare_query(query, local)
-
-        llm_output_list, num_pages, tables_only, validation_off, apply_annotation = self.invoke_pipeline_step(lambda: self.execute_query(options,
-                                                                                                        crop_size,
-                                                                                                        query_all_data,
-                                                                                                        query,
-                                                                                                        file_path,
-                                                                                                        debug_dir,
-                                                                                                        debug),
-                                                                                f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Executing query", local)
+        llm_output_list, num_pages, tables_only, validation_off, apply_annotation = self.invoke_pipeline_step(
+            lambda: self.execute_query(options, crop_size, query_all_data, query, file_path, debug_dir, debug),
+            f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Executing query", 
+            local
+        )
 
         if page_type is not None:
             # if page_type is not None, we only want to get info about page type, without validating data
             validation_off = True
         if apply_annotation:
+            validation_off = True
+        if instruction:
             validation_off = True
 
         llm_output = self.process_llm_output(llm_output_list, num_pages, query_all_data, query_schema, tables_only,
@@ -111,6 +100,33 @@ class SparrowParsePipeline(Pipeline):
         print(f"Time to retrieve answer: {end - start}")
 
         return llm_output
+
+
+    def _process_query(self, query: str, instruction: bool, page_type: List[str], local: bool) -> Tuple[
+        str, Optional[Dict], bool]:
+        """
+        Process and prepare the query based on the input parameters.
+
+        Returns:
+            Tuple[str, Optional[Dict], bool]: (processed_query, query_schema, query_all_data)
+        """
+        query_all_data = query == "*"
+        query_schema = None
+
+        if query_all_data:
+            if page_type is not None:
+                # Special case: query="*" with page_type means page type detection only
+                return self._prepare_page_type_query(page_type, local), None, False
+            else:
+                # True "all data" query
+                return None, None, True
+
+        # Non-wildcard queries
+        if instruction:
+            return self._prepare_instruction_query(query, local), None, False
+        else:
+            processed_query, schema = self._prepare_query(query, local)
+            return processed_query, schema, False
 
 
     def _prepare_query(self, query: str, local: bool) -> Tuple[str, Optional[Dict]]:
@@ -135,6 +151,18 @@ class SparrowParsePipeline(Pipeline):
             )
         except ValueError as e:
             raise ValueError(f"Error preparing page type query: {e}")
+        
+        
+    def _prepare_instruction_query(self, query: str, local: bool) -> str:
+        """Prepare the query and schema, raising errors as necessary."""
+        try:
+            return self.invoke_pipeline_step(
+                lambda: self.prepare_instruction_query(query),
+                "Preparing instruction query",
+                local
+            )
+        except ValueError as e:
+            raise ValueError(f"Error preparing instruction query: {e}")
 
 
     @staticmethod
@@ -162,6 +190,13 @@ class SparrowParsePipeline(Pipeline):
         page_types =  ", ".join(str(item) for item in page_type)
 
         query  = f"detect page type based on this list of types - {page_types}. return response in JSON format"
+
+        return query
+
+
+    @staticmethod
+    def prepare_instruction_query(query):
+        query = f"{query}. response must be short, with values to answer the question, no need to provide other values. return response in JSON format"
 
         return query
 
