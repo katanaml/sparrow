@@ -67,6 +67,7 @@ class SparrowParsePipeline(Pipeline):
                      options: List[str] = None,
                      crop_size: int = None,
                      instruction: bool = False,
+                     validation: bool = False,
                      page_type: List[str] = None,
                      debug_dir: str = None,
                      debug: bool = False,
@@ -76,7 +77,7 @@ class SparrowParsePipeline(Pipeline):
         start = timeit.default_timer()
 
         # Determine query processing strategy and prepare query
-        query, query_schema, query_all_data = self._process_query(query, instruction, page_type, local)
+        query, query_schema, query_all_data = self._process_query(query, instruction, validation, page_type, local)
 
         llm_output_list, num_pages, tables_only, validation_off, apply_annotation = self.invoke_pipeline_step(
             lambda: self.execute_query(options, crop_size, query_all_data, query, file_path, debug_dir, debug),
@@ -91,6 +92,8 @@ class SparrowParsePipeline(Pipeline):
             validation_off = True
         if instruction:
             validation_off = True
+        if validation:
+            validation_off = True
 
         llm_output = self.process_llm_output(llm_output_list, num_pages, query_all_data, query_schema, tables_only,
                                              validation_off, debug, local)
@@ -102,7 +105,7 @@ class SparrowParsePipeline(Pipeline):
         return llm_output
 
 
-    def _process_query(self, query: str, instruction: bool, page_type: List[str], local: bool) -> Tuple[
+    def _process_query(self, query: str, instruction: bool, validation: bool, page_type: List[str], local: bool) -> Tuple[
         str, Optional[Dict], bool]:
         """
         Process and prepare the query based on the input parameters.
@@ -124,6 +127,8 @@ class SparrowParsePipeline(Pipeline):
         # Non-wildcard queries
         if instruction:
             return self._prepare_instruction_query(query, local), None, False
+        elif validation:
+            return self._prepare_validation_query(query, local), None, False
         else:
             processed_query, schema = self._prepare_query(query, local)
             return processed_query, schema, False
@@ -165,6 +170,18 @@ class SparrowParsePipeline(Pipeline):
             raise ValueError(f"Error preparing instruction query: {e}")
 
 
+    def _prepare_validation_query(self, query: str, local: bool) -> str:
+        """Prepare the query and schema, raising errors as necessary."""
+        try:
+            return self.invoke_pipeline_step(
+                lambda: self.prepare_validation_query(query),
+                "Preparing validation query",
+                local
+            )
+        except ValueError as e:
+            raise ValueError(f"Error preparing instruction query: {e}")
+
+
     @staticmethod
     def prepare_query_and_schema(query):
         is_query_valid = is_valid_json(query)
@@ -197,6 +214,13 @@ class SparrowParsePipeline(Pipeline):
     @staticmethod
     def prepare_instruction_query(query):
         query = f"{query}. response must be short, with values to answer the question, no need to provide other values. return response in JSON format"
+
+        return query
+
+
+    @staticmethod
+    def prepare_validation_query(query):
+        query = f"validate if listed fields - {query} are present in the document. format response with field name and boolean value. return response in JSON format"
 
         return query
 
