@@ -533,6 +533,7 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
 | `--file-path` | Path | Input document | `data/invoice.pdf` |
 | `--options` | String | Backend configuration | `mlx,model-name` |
 | `--instruction` | Boolean | Sparrow query will be used as instruction | `--instruction` |
+| `--validation` | Boolean | Sparrow query will be used for field validation | `--validation` |
 | `--crop-size` | Integer | Border cropping pixels | `60` |
 | `--page-type` | String | Page classification | `financial_table` |
 | `--debug` | Boolean | Enable debug mode | `--debug` |
@@ -602,6 +603,19 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
   --instruction 
   --options mlx --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit 
   --file-path "invoice_1.jpg"
+
+# Field validation
+./sparrow.sh "tax_id,shipment_code,total_gross_worth" 
+  --pipeline "sparrow-parse" 
+  --validation 
+  --options mlx --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit 
+  --file-path "invoice_1.jpg"
+
+{
+  "tax_id": true,
+  "shipment_code": false,
+  "total_gross_worth": true
+}
 ```
 
 ## 🌐 API Usage
