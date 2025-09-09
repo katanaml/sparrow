@@ -44,7 +44,7 @@ vl_output, _ = generate(
     image,
     max_tokens=4000,
     temperature=0,
-    verbose=False
+    verbose=True
 )
 
 print(vl_output)
