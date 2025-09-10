@@ -114,7 +114,6 @@ class SparrowParsePipeline(Pipeline):
             Tuple[str, Optional[Dict], bool]: (processed_query, query_schema, query_all_data)
         """
         query_all_data = query == "*"
-        query_schema = None
 
         if query_all_data:
             if page_type is not None:
