@@ -215,8 +215,9 @@ if __name__ == "__main__":
 
     # # export HF_TOKEN="hf_"
     # config = {
-    #     "method": "mlx",  # Could be 'huggingface', 'mlx' or 'local_gpu'
-    #     "model_name": "mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit",
+    #     "method": "ollama",  # Could be 'huggingface', 'mlx', 'ollama' or 'local_gpu'
+    #     # "model_name": "mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit",
+    #     "model_name": "mistral-small3.1:24b-instruct-2503-q8_0",
     #     # "hf_space": "katanaml/sparrow-qwen2-vl-7b",
     #     # "hf_token": os.getenv('HF_TOKEN'),
     #     # Additional fields for local GPU inference
@@ -246,7 +247,7 @@ if __name__ == "__main__":
     #                                                    generic_query=False,
     #                                                    crop_size=0,
     #                                                    apply_annotation=False,
-    #                                                    debug_dir="/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/",
+    #                                                    debug_dir=None,
     #                                                    debug=True,
     #                                                    mode=None)
     #
