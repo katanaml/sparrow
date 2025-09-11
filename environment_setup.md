@@ -1,6 +1,6 @@
 **Python environment setup** 
 
-*Setup Python Environment (Sparrow is tested with Python 3.10.4) with `pyenv`:*
+*Setup Python Environment (Sparrow is tested with Python 3.12.10) with `pyenv`:*
 
 1. Install `pyenv`:
 
@@ -14,10 +14,10 @@ brew install pyenv
 
 2. Install the desired Python version:
 
-With `pyenv` installed, you can now install a specific version of Python. For example, to install Python 3.10.4, you would use:
+With `pyenv` installed, you can now install a specific version of Python. For example, to install Python 3.12.10, you would use:
 
 ```
-pyenv install 3.10.4
+pyenv install 3.12.10
 ```
 
 You can check available Python versions by running `pyenv install --list`.
@@ -27,10 +27,10 @@ You can check available Python versions by running `pyenv install --list`.
 Once the installation is complete, you can set the desired Python version as the default (global) version on your system:
 
 ```
-pyenv global 3.10.4
+pyenv global 3.12.10
 ```
 
-This command sets Python 3.10.4 as the default version for all shells.
+This command sets Python 3.12.10 as the default version for all shells.
 
 4. Verify the change:
 
