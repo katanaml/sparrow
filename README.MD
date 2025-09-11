@@ -1,6 +1,6 @@
 # Sparrow
 
-[![PyPI - Python](https://img.shields.io/badge/python-v3.10+-blue.svg)](https://github.com/katanaml/sparrow)
+[![PyPI - Python](https://img.shields.io/badge/python-v3.12+-blue.svg)](https://github.com/katanaml/sparrow)
 [![GitHub Stars](https://img.shields.io/github/stars/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/issues)
 [![Current Version](https://img.shields.io/badge/version-0.4.3-green.svg)](https://github.com/katanaml/sparrow)
@@ -80,16 +80,16 @@ Visit [sparrow.katanaml.io](https://sparrow.katanaml.io) for a live demo running
 ## 🚀 Quickstart
 
 ### Prerequisites
-- **Python 3.10.4+** (use `pyenv` for version management)
+- **Python 3.12.4+** (use `pyenv` for version management)
 - **macOS** (for MLX backend) or **Linux/Windows** (for other backends)
 - **GPU** (make sure GPU have enough memory to run selected Vision LLM)
 
 ### 30-Second Setup
 
 ```bash
-# 1. Install pyenv and Python 3.10.4
-pyenv install 3.10.4
-pyenv global 3.10.4
+# 1. Install pyenv and Python 3.12.10
+pyenv install 3.12.10
+pyenv global 3.12.10
 
 # 2. Create virtual environment
 python -m venv .env_sparrow_parse
@@ -144,7 +144,7 @@ cd sparrow
 
 ### Essential Steps Summary
 
-1. **Python Environment**: Install Python 3.10.4 using pyenv
+1. **Python Environment**: Install Python 3.12.10 using pyenv
 2. **Virtual Environments**: Create separate environments for different pipelines:
    - `.env_sparrow_parse` - for Sparrow Parse (Vision LLM)
    - `.env_instructor` - for Instructor (Text LLM) 
@@ -767,11 +767,11 @@ Built-in analytics and monitoring dashboard at [sparrow.katanaml.io](https://spa
 **Python Version Issues:**
 ```bash
 # Verify Python version
-python --version  # Should be 3.10.4+
+python --version  # Should be 3.12.10+
 
 # Fix with pyenv
-pyenv install 3.10.4
-pyenv global 3.10.4
+pyenv install 3.12.10
+pyenv global 3.12.10
 ```
 
 **MLX Installation (Apple Silicon):**
