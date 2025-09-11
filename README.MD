@@ -80,7 +80,7 @@ Visit [sparrow.katanaml.io](https://sparrow.katanaml.io) for a live demo running
 ## 🚀 Quickstart
 
 ### Prerequisites
-- **Python 3.12.4+** (use `pyenv` for version management)
+- **Python 3.12.10+** (use `pyenv` for version management)
 - **macOS** (for MLX backend) or **Linux/Windows** (for other backends)
 - **GPU** (make sure GPU have enough memory to run selected Vision LLM)
 
