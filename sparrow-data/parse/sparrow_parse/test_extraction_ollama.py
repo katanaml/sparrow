@@ -1,6 +1,7 @@
 import ollama
 import json
 import os
+import time
 from typing import Dict, Any, List
 
 def test_ollama_multimodal_extraction():
@@ -82,6 +83,7 @@ def main():
     """
     Main function to run the Ollama multimodal test.
     """
+
     print("Ollama Multimodal Extraction Test")
     print("=" * 50)
 
@@ -90,6 +92,8 @@ def main():
         return
 
     print("\n" + "=" * 50)
+
+    start_time = time.time()
 
     # Run the multimodal extraction test
     result = test_ollama_multimodal_extraction()
@@ -100,6 +104,11 @@ def main():
     else:
         print("\n" + "=" * 50)
         print("Test failed or returned no results.")
+
+    # Record end time and calculate execution time
+    end_time = time.time()
+    execution_time = end_time - start_time
+    print(f"\nExecution time: {execution_time:.2f} seconds")
 
 if __name__ == "__main__":
     main()

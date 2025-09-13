@@ -1,15 +1,15 @@
 rich
 # git+https://github.com/huggingface/transformers.git
-transformers==4.51.3
-torchvision==0.22.0
-torch==2.7.0
-sentence-transformers==4.1.0
-numpy==2.2.5
-pypdf==5.5.0
-gradio_client==1.7.2
+transformers==4.56.1
+torchvision==0.23.0
+torch==2.8.0
+sentence-transformers==5.1.0
+numpy==2.2.6
+pypdf==6.0.0
+gradio_client==1.13.0
 pdf2image==1.17.0
-mlx==0.25.2; sys_platform == "darwin" and platform_machine == "arm64"
-mlx-vlm==0.1.26; sys_platform == "darwin" and platform_machine == "arm64"
+mlx==0.29.0; sys_platform == "darwin" and platform_machine == "arm64"
+mlx-vlm==0.3.3; sys_platform == "darwin" and platform_machine == "arm64"
 ollama==0.5.3
 
 

@@ -1,18 +1,23 @@
-from mlx_vlm import load, apply_chat_template, generate
-from mlx_vlm.utils import load_image
-from PIL import ImageDraw, ImageFont
-import json
+from mlx_vlm import load, generate
+from mlx_vlm.prompt_utils import apply_chat_template
+from mlx_vlm.utils import load_config
+import time
 
 
 # Load model and processor
-vl_model, vl_processor = load("mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit")
-# vl_model, vl_processor = load("mlx-community/Qwen2.5-VL-72B-Instruct-4bit")
-vl_config = vl_model.config
+# model_path = "lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit"
+model_path = "mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit"
+# model_path = "mlx-community/Qwen2.5-VL-72B-Instruct-3bit"
+# model_path = "mlx-community/olmOCR-7B-0725-8bit" # fast and good
+# model_path = "mlx-community/gemma-3-27b-it-qat-8bit"
+vl_model, vl_processor = load(model_path)
+vl_config = load_config(model_path)
+print(f"Model loaded: {model_path}")
 
-image = load_image("images/bonds_table.png")
+image = ["images/bonds_table.png"]
 
 # Qwen
-# messages = [
+# prompt = [
 #     {"role": "system", "content": "You are an expert at extracting text from images. Format your response in JSON."},
 #     {"role": "user", "content": "retrieve [{\"instrument_name\":\"str\", \"valuation\":\"int\"}]. return response in JSON format"}
 # ]
@@ -27,27 +32,29 @@ image = load_image("images/bonds_table.png")
 #     {"role": "user", "content": "retrieve all data. return response in JSON format. For each identified field or data element, include: 1) a descriptive field name as the object key, 2) a nested object with 'value' containing the extracted content, 'bbox' array with [x_min, y_min, x_max, y_max] coordinates in pixels, and 'confidence' score between 0-1. Example structure: [{\"field_name\":{\"value\":\"extracted value\", \"bbox\":[100, 200, 300, 250], \"confidence\":0.95}}]"}
 # ]
 
-# Mistral
 # message = "retrieve all data. return response in JSON format"
-message = "retrieve [{\"instrument_name\":\"str\", \"valuation\":\"int\"}]. return response in JSON format"
+prompt = "retrieve [{\"instrument_name\":\"str\", \"valuation\":\"int\"}]. return response in JSON format"
 
-# Qwen
-# prompt = apply_chat_template(vl_processor, vl_config, messages)
-# Mistral
-prompt = apply_chat_template(vl_processor, vl_config, message)
+formatted_prompt = apply_chat_template(vl_processor, vl_config, prompt, num_images=len(image))
 
-# Generate text
-vl_output, _ = generate(
+script_start_time = time.time()
+
+vl_output = generate(
     vl_model,
     vl_processor,
-    prompt,
+    formatted_prompt,
     image,
     max_tokens=4000,
     temperature=0,
-    verbose=True
+    verbose=False
 )
 
-print(vl_output)
+print(vl_output.text)
+
+script_end_time = time.time()
+total_execution_time = script_end_time - script_start_time
+
+print(f"\nExecution time: {total_execution_time:.2f} seconds")
 
 
 # Comment out below code if non Qwen model is used
