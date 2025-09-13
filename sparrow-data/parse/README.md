@@ -21,7 +21,15 @@ A powerful Python library for parsing and extracting structured information from
 
 ### Installation
 
+To run with MLX on macOS Silicon:
+
 ```bash
+pip install sparrow-parse[mlx]
+```
+
+To run with Ollama on Linux/Windows:
+
+```
 pip install sparrow-parse
 ```
 
