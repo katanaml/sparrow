@@ -1,6 +1,6 @@
 from mlx_vlm import load, generate
 from mlx_vlm.prompt_utils import apply_chat_template
-from mlx_vlm.utils import load_image
+from mlx_vlm.utils import load_image, load_config
 from sparrow_parse.vllm.inference_base import ModelInference
 import os
 import json, re
@@ -24,7 +24,7 @@ class MLXInference(ModelInference):
 
 
     @staticmethod
-    def _load_model_and_processor(model_name):
+    def _load_model(model_name):
         """
         Load the model and processor for inference.
 
@@ -32,8 +32,9 @@ class MLXInference(ModelInference):
         :return: Tuple containing the loaded model and processor.
         """
         model, processor = load(model_name)
+        config = load_config(model_name)
         print(f"Loaded model: {model_name}")
-        return model, processor
+        return model, processor, config
 
 
     def process_response(self, output_text):
@@ -145,8 +146,7 @@ class MLXInference(ModelInference):
             return [self.get_simple_json()]
 
         # Load the model and processor
-        model, processor = self._load_model_and_processor(self.model_name)
-        config = model.config
+        model, processor, config = self._load_model(self.model_name)
         
         # Determine if we're doing text-only or image-based inference
         is_text_only = input_data[0].get("file_path") is None
@@ -173,8 +173,8 @@ class MLXInference(ModelInference):
         :param messages: Input messages
         :return: Generated response
         """
-        prompt = apply_chat_template(processor, config, messages)
-        response, _ = generate(
+        prompt = apply_chat_template(processor, config, messages, num_images=0)
+        response = generate(
             model,
             processor,
             prompt,
@@ -183,7 +183,7 @@ class MLXInference(ModelInference):
             verbose=False
         )
         print("Inference completed successfully")
-        return response
+        return response.text
 
 
     def _process_images(self, model, processor, config, file_paths, input_data, apply_annotation):
@@ -200,8 +200,8 @@ class MLXInference(ModelInference):
             messages = self._prepare_messages(input_data, apply_annotation)
 
             # Always use resize_shape for memory efficiency
-            prompt = apply_chat_template(processor, config, messages)
-            response, _ = generate(
+            prompt = apply_chat_template(processor, config, messages, num_images=1)
+            response = generate(
                 model,
                 processor,
                 prompt,
@@ -213,7 +213,7 @@ class MLXInference(ModelInference):
             )
 
             # Process the raw response
-            processed_response = self.process_response(response)
+            processed_response = self.process_response(response.text)
 
             # Scale coordinates if apply_annotation is True and resizing was applied
             if apply_annotation:
@@ -351,7 +351,7 @@ class MLXInference(ModelInference):
         :param apply_annotation: Flag to apply annotations
         :return: Properly formatted messages
         """
-        if "mistral" in self.model_name.lower():
+        if "mistral" or "olmocr" or "gemma" in self.model_name.lower():
             return input_data[0]["text_input"]
         elif "qwen" in self.model_name.lower():
             if apply_annotation:
@@ -360,10 +360,7 @@ class MLXInference(ModelInference):
                                                               "All coordinates should be in pixels relative to the original image. Format your response in JSON."}
                 user_prompt = {"role": "user", "content": self.transform_query_with_bbox(input_data[0]["text_input"])}
                 return [system_prompt, user_prompt]
-            return [
-                {"role": "system", "content": "You are an expert at extracting structured text from image documents."},
-                {"role": "user", "content": input_data[0]["text_input"]},
-            ]
+            return input_data[0]["text_input"]
         else:
             raise ValueError("Unsupported model type. Please use either Mistral or Qwen.")
 

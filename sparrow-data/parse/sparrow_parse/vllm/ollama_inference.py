@@ -183,13 +183,10 @@ class OllamaInference(ModelInference):
         :param apply_annotation: Flag to apply annotations
         :return: Properly formatted messages
         """
-        if "mistral" in self.model_name.lower():
+        if "mistral" or "olmocr" or "gemma"in self.model_name.lower():
             return input_data[0]["text_input"]
         elif "qwen" in self.model_name.lower():
-            return [
-                {"role": "system", "content": "You are an expert at extracting structured text from image documents."},
-                {"role": "user", "content": input_data[0]["text_input"]},
-            ]
+            return input_data[0]["text_input"]
         else:
             raise ValueError("Unsupported model type. Please use either Mistral or Qwen.")
 
