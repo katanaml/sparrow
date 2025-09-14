@@ -205,7 +205,7 @@ class MLXInference(ModelInference):
                 model,
                 processor,
                 prompt,
-                image,
+                [file_path],
                 resize_shape=(resized_width, resized_height),
                 max_tokens=6000,
                 temperature=0.0,
