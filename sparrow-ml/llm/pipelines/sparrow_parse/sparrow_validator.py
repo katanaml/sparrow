@@ -19,14 +19,14 @@ class JSONValidator:
             'anyOf': [
                 {'type': 'integer'},
                 {'type': 'number'},
-                {'type': 'string', 'pattern': '^[0-9]+(\.[0-9]+)?$'},
+                {'type': 'string', 'pattern': r'^[0-9]+(\.[0-9]+)?$'},
                 {'type': 'null'}
             ]
         },
         '0.0 or null': {
             'anyOf': [
                 {'type': 'number'},
-                {'type': 'string', 'pattern': '^[0-9]+(\.[0-9]+)?$'},
+                {'type': 'string', 'pattern': r'^[0-9]+(\.[0-9]+)?$'},
                 {'type': 'null'}
             ]
         }
@@ -58,7 +58,7 @@ class JSONValidator:
                 return {
                     'anyOf': [
                         {'type': 'number'},
-                        {'type': 'string', 'pattern': '^[0-9]+(\.[0-9]+)?$'},
+                        {'type': 'string', 'pattern': r'^[0-9]+(\.[0-9]+)?$'},
                         {'type': 'null'}
                     ]
                 }
