@@ -5,8 +5,8 @@ command -v python >/dev/null 2>&1 || { echo >&2 "Python is required but it's not
 # Check Python version
 PYTHON_VERSION=$(python --version 2>&1) # Capture both stdout and stderr
 echo "Detected Python version: $PYTHON_VERSION"
-if [[ ! "$PYTHON_VERSION" == *"3.10.4"* ]]; then
-  echo "Python version 3.10.4 is required. Current version is $PYTHON_VERSION. Aborting."
+if [[ ! "$PYTHON_VERSION" == *"3.12.10"* ]]; then
+  echo "Python version 3.12.10 is required. Current version is $PYTHON_VERSION. Aborting."
   exit 1
 fi
 
