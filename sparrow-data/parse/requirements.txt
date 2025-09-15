@@ -8,8 +8,8 @@ numpy==2.2.6
 pypdf==6.0.0
 gradio_client==1.13.0
 pdf2image==1.17.0
-#mlx==0.29.0; sys_platform == 'darwin' and platform_machine == 'arm64'
-#mlx-vlm==0.3.3; sys_platform == 'darwin' and platform_machine == 'arm64'
+# mlx==0.29.0; sys_platform == 'darwin' and platform_machine == 'arm64'
+# mlx-vlm==0.3.3; sys_platform == 'darwin' and platform_machine == 'arm64'
 ollama==0.5.3
 
 # MLX dependencies moved to setup.py extras_require
