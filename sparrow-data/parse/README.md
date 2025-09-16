@@ -9,7 +9,7 @@ A powerful Python library for parsing and extracting structured information from
 ## ✨ Features
 
 - 🔍 **Document Data Extraction**: Extract structured data from invoices, forms, tables, and complex documents
-- 🤖 **Multiple Backend Support**: MLX (Apple Silicon), Hugging Face Cloud GPU, and local GPU inference
+- 🤖 **Multiple Backend Support**: MLX (Apple Silicon), Ollama, Docker, Hugging Face Cloud GPU, and local GPU inference
 - 📄 **Multi-format Support**: Images (PNG, JPG, JPEG) and multi-page PDFs
 - 🎯 **Schema Validation**: JSON schema-based extraction with automatic validation
 - 📊 **Table Processing**: Specialized table detection and extraction capabilities
@@ -82,6 +82,14 @@ print(f"Extracted data: {results[0]}")
 config = {
     "method": "mlx",
     "model_name": "mlx-community/Qwen2.5-VL-72B-Instruct-4bit"
+}
+```
+
+#### Ollama Backend
+```python
+config = {
+    "method": "ollama",
+    "model_name": "mistral-small3.2:24b-instruct-2506-q8_0"
 }
 ```
 
