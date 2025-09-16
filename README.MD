@@ -155,7 +155,9 @@ cd sparrow
    - `.env_instructor` - for Instructor (Text LLM) 
    - `.env_ocr` - for OCR service (optional)
 3. **System Dependencies**: Install poppler for PDF processing
-4. **Requirements**: Install pipeline-specific dependencies, for example `pip install -r requirements_sparrow_parse.txt`
+4. **Requirements**: Install pipeline-specific dependencies, for example:
+
+`pip install -r requirements_sparrow_parse.txt`
 
 ### Platform-Specific Notes
 
