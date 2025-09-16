@@ -109,6 +109,8 @@ brew install poppler
 python api.py
 ```
 
+Before running `pip install -r requirements_sparrow_parse.txt`, check your platform. If you are on macOS and want to run MLX backend, go to `requirements_sparrow_parse.txt` and make sure `sparrow-parse[mlx]` libary reference is defined. If you are running Sparrow on Linux/Windows, make sure to use `sparrow-parse` library reference, this will skip MLX related libraries.
+
 ### First Document Extraction
 
 ```bash
