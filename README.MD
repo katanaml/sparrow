@@ -61,8 +61,8 @@ Visit [sparrow.katanaml.io](https://sparrow.katanaml.io) for a live demo running
 🌐 **API-First Design**: RESTful APIs for easy integration  
 💬 **Instruction Calling**: Beyond document extraction - text processing, validation, decision making  
 📊 **Visual Monitoring**: Built-in dashboard and agent workflow tracking  
-🔒 **Enterprise Ready**: Rate limiting, usage analytics, commercial licensing available
-🚀 **Local Vision LLMs**: Mistral Small, QwenVL, olmOCR, Gemma3
+🔒 **Enterprise Ready**: Rate limiting, usage analytics, commercial licensing available  
+🚀 **Local Vision LLMs**: Mistral Small, QwenVL, olmOCR, Gemma3  
 
 ## 🏗️ Architecture
 
