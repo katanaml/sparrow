@@ -155,7 +155,7 @@ cd sparrow
    - `.env_instructor` - for Instructor (Text LLM) 
    - `.env_ocr` - for OCR service (optional)
 3. **System Dependencies**: Install poppler for PDF processing
-4. **Requirements**: Install pipeline-specific dependencies
+4. **Requirements**: Install pipeline-specific dependencies, for example `pip install -r requirements_sparrow_parse.txt`
 
 ### Platform-Specific Notes
 
@@ -170,8 +170,8 @@ sudo apt-get install poppler-utils libpoppler-cpp-dev
 ```
 
 **Apple Silicon**: MLX backend available for optimal performance  
-**NVIDIA GPU**: Use Ollama backend
-**CPU Only**: Use smaller models or Hugging Face cloud backend
+**NVIDIA/AMD GPU**: Use Ollama backend  
+**CPU Only**: Use smaller models or Hugging Face cloud backend  
 
 ### Verification
 
@@ -536,7 +536,7 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
 | `query` | JSON/String | Schema or instruction | `'[{"field":"str"}]'` |
 | `--pipeline` | String | Pipeline to use | `sparrow-parse` |
 | `--file-path` | Path | Input document | `data/invoice.pdf` |
-| `--options` | String | Backend configuration | `mlx,model-name` |
+| `--options` | String | Backend configuration | `mlx,model-name`, `ollama,model-name` |
 | `--instruction` | Boolean | Sparrow query will be used as instruction | `--instruction` |
 | `--validation` | Boolean | Sparrow query will be used for field validation | `--validation` |
 | `--crop-size` | Integer | Border cropping pixels | `60` |
@@ -696,7 +696,7 @@ curl -X POST 'http://localhost:8001/api/v1/sparrow-agents/execute/file' \
 
 ## 📊 Dashboard
 
-Built-in analytics and monitoring dashboard at [sparrow.katanaml.io](https://sparrow.katanaml.io)
+Built-in analytics and monitoring dashboard at [sparrow.katanaml.io](https://sparrow.katanaml.io). This is part of Sparrow UI, requires local Oracle Database 23ai Free. 
 
 ![Dashboard](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui_3.png)
 
@@ -729,12 +729,12 @@ Built-in analytics and monitoring dashboard at [sparrow.katanaml.io](https://spa
 
 **Apple Silicon (MLX)**
 - ✅ Best performance with unified memory
-- ✅ Models: Qwen2.5-VL-72B, Mistral-Small-3.1-24B
+- ✅ Models: Qwen2.5-VL-72B, Mistral-Small-3.2-24B
 - ⚠️ Requires macOS with Apple Silicon
 
 **NVIDIA GPU**
-- ✅ Use local_gpu or Ollama backends (work in progress)
-- ✅ Recommended: Nvidia DGX Spark with 12GB+ VRAM
+- ✅ Use Ollama backends
+- ✅ Recommended: Nvidia DGX Spark with 12GB+ VRAM or AMD GPU
 - ⚠️ Requires CUDA setup
 
 **CPU Only**
