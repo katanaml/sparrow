@@ -130,6 +130,8 @@ python api.py
 }
 ```
 
+Use `--options mlx` for MLX backend, `--options ollama` for Ollama backend. Make sure to provide correct Vision LLM model name, download model first separately with MLX or Ollama.
+
 ## 🛠️ Installation
 
 ### Quick Setup
