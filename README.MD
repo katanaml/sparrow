@@ -167,7 +167,7 @@ sudo apt-get install poppler-utils libpoppler-cpp-dev
 ```
 
 **Apple Silicon**: MLX backend available for optimal performance  
-**NVIDIA GPU**: Use local_gpu or Ollama backends (work in progress)  
+**NVIDIA GPU**: Use Ollama backend
 **CPU Only**: Use smaller models or Hugging Face cloud backend
 
 ### Verification
