@@ -7,9 +7,7 @@ import time
 # Load model and processor
 # model_path = "lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit"
 model_path = "mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit"
-# model_path = "mlx-community/Qwen2.5-VL-72B-Instruct-3bit"
-# model_path = "mlx-community/olmOCR-7B-0725-8bit" # fast and good
-# model_path = "mlx-community/gemma-3-27b-it-qat-8bit"
+# model_path = "mlx-community/Qwen2.5-VL-72B-Instruct-4bit"
 vl_model, vl_processor = load(model_path)
 vl_config = load_config(model_path)
 print(f"Model loaded: {model_path}")
