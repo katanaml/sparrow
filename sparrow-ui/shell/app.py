@@ -882,6 +882,56 @@ temp_cleaner = GradioTempCleaner(
 
 # CSS to hide default Gradio navigation and style our custom navigation
 custom_css = """
+/* Subtle warm cream background */
+.gradio-container {
+    background: linear-gradient(135deg, #faf9f7 0%, #f5f3f0 100%) !important;
+    min-height: 100vh;
+}
+
+/* Alternative subtle backgrounds - uncomment one of these for different warm tones */
+/* Slightly more cream */
+/* 
+.gradio-container {
+    background: linear-gradient(135deg, #fefcf9 0%, #f7f5f2 100%) !important;
+    min-height: 100vh;
+}
+*/
+
+/* Very light beige */
+/* 
+.gradio-container {
+    background: linear-gradient(135deg, #fbfaf8 0%, #f2f0ed 100%) !important;
+    min-height: 100vh;
+}
+*/
+
+/* Warm white with hint of peach */
+/* 
+.gradio-container {
+    background: linear-gradient(135deg, #fefdfb 0%, #f9f7f4 100%) !important;
+    min-height: 100vh;
+}
+*/
+
+/* Main content area styling - more subtle */
+.main > .wrap {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(5px) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
+    margin: 15px !important;
+    padding: 20px !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Component styling improvements - more subtle */
+.gr-form, .gr-box {
+    background: rgba(255, 255, 255, 0.6) !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    backdrop-filter: blur(3px) !important;
+}
+
 /* Hide the default Gradio navigation bar */
 .gradio-container > .main > .wrap > .contain > div:first-child {
     display: none !important;

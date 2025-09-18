@@ -177,7 +177,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
         # Format key metrics as HTML with id attributes for JavaScript targeting
         metrics_html_content = f"""
         <div id="metrics-container" style="display: flex; justify-content: space-between; gap: 16px; width: 100%; padding: 8px 0;">
-            <div style="flex: 1; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); padding: 16px; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0,0,0,0.04);">
+            <div style="flex: 1; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); padding: 16px; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0, 0, 0, 0.08);">
                 <div style="display: flex; align-items: center; margin-bottom: 8px;">
                     <div style="width: 28px; height: 28px; border-radius: 50%; background-color: #4ecdc4; display: flex; justify-content: center; align-items: center; margin-right: 12px;">
                         <span style="color: white; font-size: 14px;">📊</span>
@@ -187,7 +187,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                 <p style="margin: 0; font-size: 24px; font-weight: 600; color: #212529;">{total_count:,}</p>
             </div>
 
-            <div style="flex: 1; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); padding: 16px; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0,0,0,0.04);">
+            <div style="flex: 1; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); padding: 16px; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0, 0, 0, 0.08);">
                 <div style="display: flex; align-items: center; margin-bottom: 8px;">
                     <div style="width: 28px; height: 28px; border-radius: 50%; background-color: #56b4e9; display: flex; justify-content: center; align-items: center; margin-right: 12px;">
                         <span style="color: white; font-size: 14px;">✓</span>
@@ -198,7 +198,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                 <p style="margin: 2px 0 0 0; font-size: 12px; color: #6c757d;">({success_count:,} successful, {failure_count:,} failed)</p>
             </div>
 
-            <div style="flex: 1; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); padding: 16px; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0,0,0,0.04);">
+            <div style="flex: 1; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); padding: 16px; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0, 0, 0, 0.08);">
                 <div style="display: flex; align-items: center; margin-bottom: 8px;">
                     <div style="width: 28px; height: 28px; border-radius: 50%; background-color: #8da0cb; display: flex; justify-content: center; align-items: center; margin-right: 12px;">
                         <span style="color: white; font-size: 14px;">⏱️</span>
@@ -209,7 +209,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                 <p style="margin: 2px 0 0 0; font-size: 12px; color: #6c757d;">per inference</p>
             </div>
 
-            <div style="flex: 1; background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); padding: 16px; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0,0,0,0.04);">
+            <div style="flex: 1; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); padding: 16px; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0, 0, 0, 0.08);">
                 <div style="display: flex; align-items: center; margin-bottom: 8px;">
                     <div style="width: 28px; height: 28px; border-radius: 50%; background-color: #66c2a5; display: flex; justify-content: center; align-items: center; margin-right: 12px;">
                         <span style="color: white; font-size: 14px;">🔍</span>
