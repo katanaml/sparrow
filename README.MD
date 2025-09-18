@@ -81,16 +81,16 @@ Visit [sparrow.katanaml.io](https://sparrow.katanaml.io) for a live demo running
 ## 🚀 Quickstart
 
 ### Prerequisites
-- **Python 3.12.10+** (use `pyenv` for version management)
+- **Python 2.10+** (use `pyenv` for version management)
 - **macOS** (for MLX backend) or **Linux/Windows** (for other backends)
 - **GPU** (make sure GPU have enough memory to run selected Vision LLM)
 
 ### 30-Second Setup
 
 ```bash
-# 1. Install pyenv and Python 3.12.10
-pyenv install 3.12.10
-pyenv global 3.12.10
+# 1. Install pyenv and Python 2.10
+pyenv install 2.10
+pyenv global 2.10
 
 # 2. Create virtual environment
 python -m venv .env_sparrow_parse
@@ -149,7 +149,7 @@ cd sparrow
 
 ### Essential Steps Summary
 
-1. **Python Environment**: Install Python 3.12.10 using pyenv
+1. **Python Environment**: Install Python 2.10 using pyenv
 2. **Virtual Environments**: Create separate environments for different pipelines:
    - `.env_sparrow_parse` - for Sparrow Parse (Vision LLM)
    - `.env_instructor` - for Instructor (Text LLM) 
@@ -484,13 +484,13 @@ python api.py --port 8002
 ./sparrow.sh "instruction: do arithmetic operation, payload: 2+2=" \
   --pipeline "sparrow-instructor" \
   --options mlx \
-  --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit
+  --options lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-8bit
 
 # Instruction processing with document input
 ./sparrow.sh "check if business entity Chapman, Kim and Green is invoice issuing party" 
   --pipeline "sparrow-parse" 
   --instruction 
-  --options mlx --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit 
+  --options mlx --options lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-8bit 
   --file-path "invoice_1.jpg"
 ```
 
@@ -573,7 +573,7 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
 ./sparrow.sh "instruction: do arithmetic operation, payload: 2+2=" \
   --pipeline "sparrow-instructor" \
   --options mlx \
-  --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit
+  --options lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-8bit
 ```
 
 ### Advanced Examples
@@ -608,14 +608,14 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
 ./sparrow.sh "check if business entity Chapman, Kim and Green is invoice issuing party" 
   --pipeline "sparrow-parse" 
   --instruction 
-  --options mlx --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit 
+  --options mlx --options lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-8bit 
   --file-path "invoice_1.jpg"
 
 # Field validation
 ./sparrow.sh "tax_id,shipment_code,total_gross_worth" 
   --pipeline "sparrow-parse" 
   --validation 
-  --options mlx --options mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit 
+  --options mlx --options lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-8bit 
   --file-path "invoice_1.jpg"
 
 {
@@ -731,7 +731,7 @@ Built-in analytics and monitoring dashboard at [sparrow.katanaml.io](https://spa
 
 **Apple Silicon (MLX)**
 - ✅ Best performance with unified memory
-- ✅ Models: Qwen2.5-VL-72B, Mistral-Small-3.2-24B
+- ✅ Models: Mistral-Small-3.2-24B, Qwen2.5-VL-72B, 
 - ⚠️ Requires macOS with Apple Silicon
 
 **NVIDIA GPU**
@@ -760,7 +760,7 @@ Built-in analytics and monitoring dashboard at [sparrow.katanaml.io](https://spa
 
 | Use Case | Recommended Model | Memory | Speed |
 |----------|------------------|---------|--------|
-| **Forms/Invoices** | Mistral-Small-3.1-24B | 35GB | Fast |
+| **Forms/Invoices** | Mistral-Small-3.2-24B | 35GB | Fast |
 | **Complex Tables** | Qwen2.5-VL-72B | 50GB | Slower |
 | **Quick Testing** | Qwen2.5-VL-7B | 20GB | Fastest |
 
