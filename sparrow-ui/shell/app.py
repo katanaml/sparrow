@@ -880,39 +880,46 @@ temp_cleaner = GradioTempCleaner(
 )
 
 
+# CSS to hide default Gradio navigation and style our custom navigation
 custom_css = """
-/* Style the nav holder container */
-.nav-holder.svelte-5xmb2h {
-    display: flex;
-    align-items: center;
-    padding: 0;
-    width: 100%;
+/* Hide the default Gradio navigation bar */
+.gradio-container > .main > .wrap > .contain > div:first-child {
+    display: none !important;
 }
 
-/* Add Sparrow text with proper spacing from the left edge */
-.nav-holder.svelte-5xmb2h::before {
-    content: "Sparrow";
-    display: flex;
-    align-items: center;
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-left: 1.5rem;
-    height: 100%;
-    color: var(--primary-500);
+/* Alternative selectors for hiding Gradio's auto-generated navigation */
+.nav-holder,
+nav.fillable,
+.nav-container,
+[data-testid="nav-container"] {
+    display: none !important;
 }
 
-/* Push navigation menu to the right side */
-nav.fillable.svelte-5xmb2h {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    margin-right: 1.5rem;
+/* Remove all margins and padding from navigation elements */
+.navigation-header {
+    margin: 0 !important;
+    padding: 0 !important;
+    margin-bottom: 0 !important;
 }
 
-/* Keep the links vertically aligned */
-nav.fillable.svelte-5xmb2h a.svelte-5xmb2h {
-    display: flex;
-    align-items: center;
+.navigation-header .gr-prose {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.custom-navigation {
+    margin: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Remove extra spacing between consecutive HTML blocks */
+.gr-html + .gr-html {
+    margin-top: -10px !important;
+}
+
+/* Alternative approach - target the HTML component wrapper */
+div[data-testid="HTML"] + div[data-testid="HTML"] {
+    margin-top: -15px !important;
 }
 """
 
@@ -936,19 +943,38 @@ result_summary_placeholder = """
 with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
     demo.title = "Sparrow"
 
-    gr.HTML(
-        """
-        <div style="margin-top: -10px; padding: 15px; border-left: 4px solid var(--primary-500); border-radius: 6px; background-color: var(--background-fill-secondary);">
-            <div style="display: flex; align-items: flex-start;">
-                <div style="font-size: 24px; margin-right: 10px; color: var(--primary-500);">🚀</div>
-                <div>
-                    <p style="margin: 0; font-weight: 600; font-size: 16px; color: var(--primary-500);">Data processing with ML, LLM and Vision LLM</p>
-                    <p style="margin: 5px 0 0 0;">Sparrow extracts structured data from documents, forms, and images with high accuracy. Process invoices, receipts, statements, and tables using on-device Vision LLM models.</p>
+    # Add navigation using Markdown with HTML content for better integration
+    with gr.Row():
+        gr.Markdown(
+            """
+            <div class="custom-navigation" style="background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%); border-radius: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 15px 20px;">
+                    <div style="display: flex; align-items: center;">
+                        <span style="font-size: 24px; margin-right: 10px;">🚀</span>
+                        <h1 style="margin: 0; color: white; font-size: 24px; font-weight: 600;">Sparrow</h1>
+                    </div>
+                    <nav style="display: flex; gap: 20px;">
+                        <a href="/" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.2); font-weight: 500; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3);" 
+                           onmouseover="this.style.background='rgba(255,255,255,0.3)'" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.2)'">🚀 Process</a>
+                        <a href="/dashboard" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
+                           onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">📊 Dashboard</a>
+                        <a href="/feedback" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
+                           onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">💬 Feedback</a>
+                    </nav>
+                </div>
+                <div style="padding: 0 20px 15px; border-top: 1px solid rgba(255,255,255,0.2);">
+                    <div style="padding-top: 12px;">
+                        <p style="margin: 0; font-weight: 600; font-size: 16px; color: white; opacity: 0.95;">Data processing with ML, LLM and Vision LLM</p>
+                        <p style="margin: 5px 0 0 0; color: white; opacity: 0.8; font-size: 14px; line-height: 1.4;">Sparrow extracts structured data from documents, forms, and images with high accuracy. Process invoices, receipts, statements, and tables using on-device Vision LLM models.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        """
-    )
+            """,
+            elem_classes=["navigation-header"]
+        )
 
     # Log initial page load
     @demo.load(api_name=False)
@@ -1422,12 +1448,76 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
     )
 
 # Dashboard page
-with demo.route("Hub", "/dashboard"):
+with demo.route("Dashboard", "/dashboard"):
+    # Add navigation using Markdown with HTML content for better integration
+    with gr.Row():
+        gr.Markdown(
+            """
+            <div class="custom-navigation" style="background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%); border-radius: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 15px 20px;">
+                    <div style="display: flex; align-items: center;">
+                        <span style="font-size: 24px; margin-right: 10px;">🚀</span>
+                        <h1 style="margin: 0; color: white; font-size: 24px; font-weight: 600;">Sparrow</h1>
+                    </div>
+                    <nav style="display: flex; gap: 20px;">
+                        <a href="/" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
+                           onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">🚀 Process</a>
+                        <a href="/dashboard" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.2); font-weight: 500; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3);" 
+                           onmouseover="this.style.background='rgba(255,255,255,0.3)'" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.2)'">📊 Dashboard</a>
+                        <a href="/feedback" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
+                           onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">💬 Feedback</a>
+                    </nav>
+                </div>
+                <div style="padding: 0 20px 15px; border-top: 1px solid rgba(255,255,255,0.2);">
+                    <div style="padding-top: 12px;">
+                        <p style="margin: 0; font-weight: 600; font-size: 16px; color: white; opacity: 0.95;">Dashboard Information</p>
+                        <p style="margin: 5px 0 0 0; color: white; opacity: 0.8; font-size: 14px; line-height: 1.4;">This dashboard provides analytics on Sparrow usage patterns. View document processing metrics, model usage trends, and geographical distribution of users.</p>
+                    </div>
+                </div>
+            </div>
+            """,
+            elem_classes=["navigation-header"]
+        )
     dashboard.demo.render()
 
 
 # Feedback page
-with demo.route("Talk", "/feedback"):
+with demo.route("Feedback", "/feedback"):
+    # Add navigation using Markdown with HTML content for better integration
+    with gr.Row():
+        gr.Markdown(
+            """
+            <div class="custom-navigation" style="background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%); border-radius: 10px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; padding: 15px 20px;">
+                    <div style="display: flex; align-items: center;">
+                        <span style="font-size: 24px; margin-right: 10px;">🚀</span>
+                        <h1 style="margin: 0; color: white; font-size: 24px; font-weight: 600;">Sparrow</h1>
+                    </div>
+                    <nav style="display: flex; gap: 20px;">
+                        <a href="/" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
+                           onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">🚀 Process</a>
+                        <a href="/dashboard" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
+                           onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">📊 Dashboard</a>
+                        <a href="/feedback" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.2); font-weight: 500; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3);" 
+                           onmouseover="this.style.background='rgba(255,255,255,0.3)'" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.2)'">💬 Feedback</a>
+                    </nav>
+                </div>
+                <div style="padding: 0 20px 15px; border-top: 1px solid rgba(255,255,255,0.2);">
+                    <div style="padding-top: 12px;">
+                        <p style="margin: 0; font-weight: 600; font-size: 16px; color: white; opacity: 0.95;">Share Your Feedback</p>
+                        <p style="margin: 5px 0 0 0; color: white; opacity: 0.8; font-size: 14px; line-height: 1.4;">We value your input on Sparrow. Help us improve by sharing your experiences, suggestions, or reporting issues.</p>
+                    </div>
+                </div>
+            </div>
+            """,
+            elem_classes=["navigation-header"]
+        )
     feedback.demo.render()
 
 

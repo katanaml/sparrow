@@ -53,82 +53,50 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
         log_request(request.client.host, "Dashboard Page Load")
 
     # Combine CSS and responsive messaging for both desktop and mobile
-    responsive_layout = gr.HTML("""
-    <style>
-        /* Mobile-specific styles */
-        @media (max-width: 767px) {
-            #period-selector, 
-            #document-size-container,
-            #model-usage-container,
-            #timeline-container,
-            #countries-container,
-            #unique-users-container,
-            .plotly-chart {
-                display: none !important;
-            }
-
-            #mobile-message {
-                display: block !important;
-                margin-top: 10px !important;
-                margin-bottom: 10px !important;
-            }
-
-            #desktop-message {
-                display: none !important;
-            }
-
-            /* Force metrics container to vertical layout on mobile */
-            #metrics-container {
-                flex-direction: column !important;
-                gap: 8px !important;
-                margin-top: 5px !important;
-            }
-
-            /* Stack metrics vertically on mobile */
-            #metrics-container > div {
-                flex: none !important;
-                width: 100% !important;
-                margin-bottom: 8px !important;
-            }
-
-            /* Reduce footer spacing on mobile */
-            .footer-container {
-                margin-top: 15px !important;
-            }
-        }
-
-        /* Make sure the footer is always visible regardless of screen size */
-        .footer-markdown p {
-            text-align: center;
-        }
-
-        .footer-markdown hr {
-            margin: 20px 0 10px 0;
-        }
-    </style>
-
-    <!-- Desktop message - visible by default -->
-    <div id="desktop-message" style="margin-top: -10px; padding: 15px; border-left: 4px solid var(--primary-500); border-radius: 6px; background-color: var(--background-fill-secondary);">
-        <div style="display: flex; align-items: flex-start;">
-            <div style="font-size: 24px; margin-right: 10px; color: var(--primary-500);">📈</div>
-            <div>
-                <p style="margin: 0; font-weight: 600; font-size: 16px; color: var(--primary-500);">Dashboard Information</p>
-                <p style="margin: 5px 0 0 0;">This dashboard provides analytics on Sparrow usage patterns. View document processing metrics, model usage trends, and geographical distribution of users.</p>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Mobile message - hidden by default -->
-    <div id="mobile-message" style="display:none; margin-top: -10px; padding: 15px; border-left: 4px solid var(--primary-500); border-radius: 6px; background-color: var(--background-fill-secondary);">
-        <div style="display: flex; align-items: flex-start;">
-            <div style="font-size: 24px; margin-right: 10px; color: var(--primary-500);">📱</div>
-            <div>
-                <p style="margin: 0; font-weight: 600; font-size: 16px; color: var(--primary-500);">Mobile View</p>
-                <p style="margin: 5px 0 0 0;">You're viewing a simplified dashboard. For the complete experience with all charts and metrics, please visit on a larger screen.</p>
-            </div>
-        </div>
-    </div>
-    """)
+    # responsive_layout = gr.HTML("""
+    # <style>
+    #     /* Mobile-specific styles */
+    #     @media (max-width: 767px) {
+    #         #period-selector,
+    #         #document-size-container,
+    #         #model-usage-container,
+    #         #timeline-container,
+    #         #countries-container,
+    #         #unique-users-container,
+    #         .plotly-chart {
+    #             display: none !important;
+    #         }
+    #
+    #         /* Force metrics container to vertical layout on mobile */
+    #         #metrics-container {
+    #             flex-direction: column !important;
+    #             gap: 8px !important;
+    #             margin-top: 5px !important;
+    #         }
+    #
+    #         /* Stack metrics vertically on mobile */
+    #         #metrics-container > div {
+    #             flex: none !important;
+    #             width: 100% !important;
+    #             margin-bottom: 8px !important;
+    #         }
+    #
+    #         /* Reduce footer spacing on mobile */
+    #         .footer-container {
+    #             margin-top: 15px !important;
+    #         }
+    #     }
+    #
+    #     /* Make sure the footer is always visible regardless of screen size */
+    #     .footer-markdown p {
+    #         text-align: center;
+    #     }
+    #
+    #     .footer-markdown hr {
+    #         margin: 20px 0 10px 0;
+    #     }
+    # </style>
+    # """)
 
     # Time period selector
     with gr.Row(elem_id="period-selector"):

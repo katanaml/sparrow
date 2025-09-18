@@ -48,22 +48,6 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     def on_page_load(request: gr.Request):
         log_request(request.client.host, "Feedback Page Load")
 
-
-    # Header description
-    gr.HTML(
-        """
-        <div style="margin-top: -10px; padding: 15px; border-left: 4px solid var(--primary-500); border-radius: 6px; background-color: var(--background-fill-secondary);">
-            <div style="display: flex; align-items: flex-start;">
-                <div style="font-size: 24px; margin-right: 10px; color: var(--primary-500);">💬</div>
-                <div>
-                    <p style="margin: 0; font-weight: 600; font-size: 16px; color: var(--primary-500);">Share Your Feedback</p>
-                    <p style="margin: 5px 0 0 0;">We value your input on Sparrow. Help us improve by sharing your experiences, suggestions, or reporting issues.</p>
-                </div>
-            </div>
-        </div>
-        """
-    )
-
     # Form components
     with gr.Group():
         email_input = gr.Textbox(
