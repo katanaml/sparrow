@@ -882,7 +882,7 @@ temp_cleaner = GradioTempCleaner(
 
 custom_css = """
 /* Style the nav holder container */
-.nav-holder.svelte-1y320eu {
+.nav-holder.svelte-5xmb2h {
     display: flex;
     align-items: center;
     padding: 0;
@@ -890,7 +890,7 @@ custom_css = """
 }
 
 /* Add Sparrow text with proper spacing from the left edge */
-.nav-holder.svelte-1y320eu::before {
+.nav-holder.svelte-5xmb2h::before {
     content: "Sparrow";
     display: flex;
     align-items: center;
@@ -902,7 +902,7 @@ custom_css = """
 }
 
 /* Push navigation menu to the right side */
-nav.fillable.svelte-1y320eu {
+nav.fillable.svelte-5xmb2h {
     display: flex;
     align-items: center;
     margin-left: auto;
@@ -910,7 +910,7 @@ nav.fillable.svelte-1y320eu {
 }
 
 /* Keep the links vertically aligned */
-nav.fillable.svelte-1y320eu a.svelte-1y320eu {
+nav.fillable.svelte-5xmb2h a.svelte-5xmb2h {
     display: flex;
     align-items: center;
 }
