@@ -1,8 +1,8 @@
-gradio==5.29.0
+gradio==5.46.0
 geoip2==4.8.1
-oracledb==3.1.0
-pypdf==5.4.0
-plotly==6.0.1
+oracledb==3.3.0
+pypdf==6.0.0
+plotly==6.3.0
 
 
 # Force reinstall:
