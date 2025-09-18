@@ -1088,7 +1088,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
 
             example_radio = gr.Radio(
                 label="Select Example",
-                choices=[ex[0] for ex in examples]
+                choices=[ex[0] for ex in examples],
+                value="bonds_table.png"  # Set bonds_table.png as default
             )
 
             if protected_access:
@@ -1396,6 +1397,60 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
     example_radio.change(
         on_example_select,
         inputs=[example_radio],
+        outputs=[
+            input_file_comp,
+            query_input_comp,
+            options_select_comp,
+            crop_size_comp,
+            output_json,  # Regular JSON output
+            annotation_group,  # Annotation group
+            view_selector,  # View selector checkbox group
+            tabbed_output_json,  # JSON in annotation view
+            output_image,  # Image preview
+            json_view,  # JSON view container
+            image_view,  # Image view container
+            summarize_btn,
+            summarize_text,
+            annotation_mode_state  # Add the state component
+        ],
+        api_name=False
+    )
+
+    # Initialize with default example data on page load
+    def initialize_default_example():
+        """Initialize the page with bonds_table.png example data"""
+        selected_example = "bonds_table.png"
+
+        # Find the corresponding example data
+        for example in examples:
+            if example[0] == selected_example:
+                example_json = bonds_json  # Use bonds_json for bonds_table.png
+
+                return (
+                    selected_example,  # input_file_comp
+                    gr.update(value=example[2]),  # query_input_comp
+                    gr.update(value=[example[3]] if example[3] else []),  # options_select_comp
+                    gr.update(value=0),  # crop_size_comp
+                    gr.update(visible=True, value=example_json),  # output_json (regular)
+                    gr.update(visible=False),  # annotation_group
+                    gr.update(value="JSON"),  # view_selector (Radio)
+                    gr.update(value=None),  # tabbed_output_json
+                    gr.update(value=None),  # output_image
+                    gr.update(visible=True),  # json_view
+                    gr.update(visible=False),  # image_view
+                    gr.update(visible=False),  # summarize_btn
+                    gr.update(value=result_summary_placeholder),  # summarize_text
+                    False  # annotation_mode_state - set to False for examples
+                )
+
+        # Default return if no match found (shouldn't happen)
+        return (None, "", [], 0, None, gr.update(visible=False), "JSON", None, None, 
+                gr.update(visible=True), gr.update(visible=False), gr.update(visible=False), 
+                result_summary_placeholder, False)
+
+    # Trigger default example selection on page load
+    demo.load(
+        fn=initialize_default_example,
         outputs=[
             input_file_comp,
             query_input_comp,
