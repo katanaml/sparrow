@@ -60,7 +60,7 @@ for key, value in config.items("settings"):
 # Set a default option if none found
 if not model_options:
     default_backend = config.get("settings", "backend_options",
-                                 fallback="mlx,mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit")
+                                 fallback="mlx,lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit")
     tech_name = default_backend.split(",")[1]
     friendly_name = tech_name
     display_name = "🔍 " + friendly_name  # Add emoji to default
@@ -1531,7 +1531,11 @@ with demo.route("Dashboard", "/dashboard"):
             """,
             elem_classes=["navigation-header"]
         )
-    dashboard.demo.render()
+    try:
+        dashboard.demo.render()
+    except gr.exceptions.DuplicateBlockError:
+        # Block already rendered, skip during hot reload
+        pass
 
 
 # Feedback page
@@ -1568,7 +1572,11 @@ with demo.route("Feedback", "/feedback"):
             """,
             elem_classes=["navigation-header"]
         )
-    feedback.demo.render()
+    try:
+        feedback.demo.render()
+    except gr.exceptions.DuplicateBlockError:
+        # Block already rendered, skip during hot reload
+        pass
 
 
 # Launch the app
