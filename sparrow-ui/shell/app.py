@@ -971,6 +971,83 @@ nav.fillable,
 div[data-testid="HTML"] + div[data-testid="HTML"] {
     margin-top: -15px !important;
 }
+
+/* Enhanced styling for selected navigation items */
+.nav-selected {
+    background: rgba(255,255,255,0.4) !important;
+    border: 2px solid rgba(255,255,255,0.6) !important;
+    font-weight: 600 !important;
+}
+
+.nav-selected:hover {
+    background: rgba(255,255,255,0.5) !important;
+}
+
+/* Responsive navigation - hide text labels on narrow screens */
+@media screen and (max-width: 768px) {
+    .nav-text {
+        display: none !important;
+    }
+
+    .custom-navigation nav {
+        gap: 10px !important;
+    }
+
+    .custom-navigation nav a {
+        padding: 8px 12px !important;
+        min-width: 44px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    /* Enhanced selected item visibility on mobile */
+    .nav-selected {
+        background: rgba(255,255,255,0.5) !important;
+        border: 2px solid rgba(255,255,255,0.7) !important;
+    }
+}
+
+/* Mobile responsive navigation - hide text on narrow screens */
+@media (max-width: 768px) {
+    /* Hide navigation text spans on mobile */
+    .nav-text {
+        display: none !important;
+    }
+
+    /* Adjust navigation gap for mobile */
+    .mobile-nav {
+        gap: 10px !important;
+    }
+
+    /* Adjust navigation link padding for mobile */
+    .nav-link {
+        padding: 8px 12px !important;
+        min-width: 44px !important;
+        text-align: center !important;
+    }
+
+    /* Make title more compact on mobile */
+    .nav-title {
+        font-size: 20px !important;
+    }
+}
+
+/* For very narrow screens (phones in portrait) */
+@media (max-width: 480px) {
+    .mobile-nav {
+        gap: 8px !important;
+    }
+
+    .nav-link {
+        padding: 6px 10px !important;
+        min-width: 40px !important;
+    }
+
+    .nav-title {
+        font-size: 18px !important;
+    }
+}
 """
 
 
@@ -1001,18 +1078,18 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 <div style="display: flex; align-items: center; justify-content: space-between; padding: 15px 20px;">
                     <div style="display: flex; align-items: center;">
                         <span style="font-size: 24px; margin-right: 10px;">🚀</span>
-                        <h1 style="margin: 0; color: white; font-size: 24px; font-weight: 600;">Sparrow</h1>
+                        <h1 class="nav-title" style="margin: 0; color: white; font-size: 24px; font-weight: 600;">Sparrow</h1>
                     </div>
-                    <nav style="display: flex; gap: 20px;">
-                        <a href="/" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.2); font-weight: 500; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3);" 
-                           onmouseover="this.style.background='rgba(255,255,255,0.3)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.2)'">🚀 Process</a>
-                        <a href="/dashboard" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
+                    <nav class="mobile-nav" style="display: flex; gap: 20px;">
+                        <a href="/" class="nav-link nav-selected" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.4); font-weight: 600; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.6);" 
+                           onmouseover="this.style.background='rgba(255,255,255,0.5)'" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.4)'">🚀<span class="nav-text"> Process</span></a>
+                        <a href="/dashboard" class="nav-link" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
                            onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">📊 Dashboard</a>
-                        <a href="/feedback" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">📊<span class="nav-text"> Dashboard</span></a>
+                        <a href="/feedback" class="nav-link" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
                            onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">💬 Feedback</a>
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">💬<span class="nav-text"> Feedback</span></a>
                     </nav>
                 </div>
                 <div style="padding: 0 20px 15px; border-top: 1px solid rgba(255,255,255,0.2);">
@@ -1572,13 +1649,13 @@ with demo.route("Dashboard", "/dashboard"):
                     <nav style="display: flex; gap: 20px;">
                         <a href="/" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
                            onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">🚀 Process</a>
-                        <a href="/dashboard" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.2); font-weight: 500; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3);" 
-                           onmouseover="this.style.background='rgba(255,255,255,0.3)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.2)'">📊 Dashboard</a>
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">🚀<span class="nav-text"> Process</span></a>
+                        <a href="/dashboard" class="nav-selected" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.4); font-weight: 600; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.6);" 
+                           onmouseover="this.style.background='rgba(255,255,255,0.5)'" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.4)'">📊<span class="nav-text"> Dashboard</span></a>
                         <a href="/feedback" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
                            onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">💬 Feedback</a>
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">💬<span class="nav-text"> Feedback</span></a>
                     </nav>
                 </div>
                 <div style="padding: 0 20px 15px; border-top: 1px solid rgba(255,255,255,0.2);">
@@ -1612,13 +1689,13 @@ with demo.route("Feedback", "/feedback"):
                     <nav style="display: flex; gap: 20px;">
                         <a href="/" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
                            onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">🚀 Process</a>
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">🚀<span class="nav-text"> Process</span></a>
                         <a href="/dashboard" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
                            onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">📊 Dashboard</a>
-                        <a href="/feedback" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.2); font-weight: 500; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3);" 
-                           onmouseover="this.style.background='rgba(255,255,255,0.3)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.2)'">💬 Feedback</a>
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">📊<span class="nav-text"> Dashboard</span></a>
+                        <a href="/feedback" class="nav-selected" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.4); font-weight: 600; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.6);" 
+                           onmouseover="this.style.background='rgba(255,255,255,0.5)'" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.4)'">💬<span class="nav-text"> Feedback</span></a>
                     </nav>
                 </div>
                 <div style="padding: 0 20px 15px; border-top: 1px solid rgba(255,255,255,0.2);">
