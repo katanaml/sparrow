@@ -1619,17 +1619,15 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
     gr.Markdown(
         f"""
         ---
-        <div style="text-align: center; margin: 20px 0;">
-            <div style="margin-bottom: 15px;">
-                <p style="margin: 0; font-weight: 600; font-size: 18px; color: var(--primary-500);">Data processing with ML, LLM and Vision LLM</p>
-                <p style="margin: 8px 0; color: var(--text-color-secondary); font-size: 14px; line-height: 1.5; max-width: 600px; margin-left: auto; margin-right: auto;">Sparrow extracts structured data from documents, forms, and images with high accuracy. Process invoices, receipts, bank statements, and tables using on-device Vision LLM models.</p>
+        <div style="text-align: center; margin: 25px 0 15px 0; padding: 22px 18px; background: linear-gradient(135deg, rgba(44, 82, 130, 0.08) 0%, rgba(44, 82, 130, 0.12) 100%); border-radius: 10px; border-top: 3px solid var(--primary-500); box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04); border: 1px solid rgba(44, 82, 130, 0.15);">
+            <h3 style="margin: 0 0 10px 0; font-weight: 700; font-size: 20px; color: #2c5282; letter-spacing: -0.3px;">Data processing with ML, LLM and Vision LLM</h3>
+            <p style="margin: 8px 0 16px 0; color: #4a5568; font-size: 14px; line-height: 1.5; max-width: 600px; margin-left: auto; margin-right: auto;">Sparrow extracts structured data from documents, forms, and images with high accuracy. Process invoices, receipts, bank statements, and tables using on-device Vision LLM models.</p>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; margin-top: 12px;">
+                <span style="font-size: 14px; color: #374151;">
+                    Visit <a href="https://katanaml.io/" target="_blank" style="color: #2c5282; text-decoration: none; font-weight: 600; border-bottom: 1px solid transparent; transition: all 0.2s ease;" onmouseover="this.style.borderBottom='1px solid #2c5282'; this.style.color='#1a365d'" onmouseout="this.style.borderBottom='1px solid transparent'; this.style.color='#2c5282'">Katana ML</a> • <a href="https://github.com/katanaml/sparrow" target="_blank" style="color: #2c5282; text-decoration: none; font-weight: 600; border-bottom: 1px solid transparent; transition: all 0.2s ease;" onmouseover="this.style.borderBottom='1px solid #2c5282'; this.style.color='#1a365d'" onmouseout="this.style.borderBottom='1px solid transparent'; this.style.color='#2c5282'">Sparrow</a> GitHub
+                </span>
+                <span style="font-size: 13px; color: #6b7280; font-weight: 500;">Version {version}</span>
             </div>
-            <p style="margin: 10px 0;">
-                Visit <a href="https://katanaml.io/" target="_blank">Katana ML</a> and <a href="https://github.com/katanaml/sparrow" target="_blank">Sparrow</a> GitHub for more details.
-            </p>
-            <p style="margin: 5px 0;">
-                <strong>Version:</strong> {version}
-            </p>
         </div>
         """
     )
