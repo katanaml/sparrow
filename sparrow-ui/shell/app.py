@@ -1017,8 +1017,7 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 </div>
                 <div style="padding: 0 20px 15px; border-top: 1px solid rgba(255,255,255,0.2);">
                     <div style="padding-top: 12px;">
-                        <p style="margin: 0; font-weight: 600; font-size: 16px; color: white; opacity: 0.95;">Data processing with ML, LLM and Vision LLM</p>
-                        <p style="margin: 5px 0 0 0; color: white; opacity: 0.8; font-size: 14px; line-height: 1.4;">Sparrow extracts structured data from documents, forms, and images with high accuracy. Process invoices, receipts, statements, and tables using on-device Vision LLM models.</p>
+                        <p style="margin: 0; font-weight: 600; font-size: 16px; color: white; opacity: 0.95;">Document Processing Platform</p>
                     </div>
                 </div>
             </div>
@@ -1543,12 +1542,18 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
     gr.Markdown(
         f"""
         ---
-        <p style="text-align: center;">
-        Visit <a href="https://katanaml.io/" target="_blank">Katana ML</a> and <a href="https://github.com/katanaml/sparrow" target="_blank">Sparrow</a> GitHub for more details.
-        </p>
-        <p style="text-align: center;">
-        <strong>Version:</strong> {version}
-        </p>
+        <div style="text-align: center; margin: 20px 0;">
+            <div style="margin-bottom: 15px;">
+                <p style="margin: 0; font-weight: 600; font-size: 18px; color: var(--primary-500);">Data processing with ML, LLM and Vision LLM</p>
+                <p style="margin: 8px 0; color: var(--text-color-secondary); font-size: 14px; line-height: 1.5; max-width: 600px; margin-left: auto; margin-right: auto;">Sparrow extracts structured data from documents, forms, and images with high accuracy. Process invoices, receipts, bank statements, and tables using on-device Vision LLM models.</p>
+            </div>
+            <p style="margin: 10px 0;">
+                Visit <a href="https://katanaml.io/" target="_blank">Katana ML</a> and <a href="https://github.com/katanaml/sparrow" target="_blank">Sparrow</a> GitHub for more details.
+            </p>
+            <p style="margin: 5px 0;">
+                <strong>Version:</strong> {version}
+            </p>
+        </div>
         """
     )
 
@@ -1578,8 +1583,7 @@ with demo.route("Dashboard", "/dashboard"):
                 </div>
                 <div style="padding: 0 20px 15px; border-top: 1px solid rgba(255,255,255,0.2);">
                     <div style="padding-top: 12px;">
-                        <p style="margin: 0; font-weight: 600; font-size: 16px; color: white; opacity: 0.95;">Dashboard Information</p>
-                        <p style="margin: 5px 0 0 0; color: white; opacity: 0.8; font-size: 14px; line-height: 1.4;">This dashboard provides analytics on Sparrow usage patterns. View document processing metrics, model usage trends, and geographical distribution of users.</p>
+                        <p style="margin: 0; font-weight: 600; font-size: 16px; color: white; opacity: 0.95;">Analytics & Metrics</p>
                     </div>
                 </div>
             </div>
@@ -1619,8 +1623,7 @@ with demo.route("Feedback", "/feedback"):
                 </div>
                 <div style="padding: 0 20px 15px; border-top: 1px solid rgba(255,255,255,0.2);">
                     <div style="padding-top: 12px;">
-                        <p style="margin: 0; font-weight: 600; font-size: 16px; color: white; opacity: 0.95;">Share Your Feedback</p>
-                        <p style="margin: 5px 0 0 0; color: white; opacity: 0.8; font-size: 14px; line-height: 1.4;">We value your input on Sparrow. Help us improve by sharing your experiences, suggestions, or reporting issues.</p>
+                        <p style="margin: 0; font-weight: 600; font-size: 16px; color: white; opacity: 0.95;">User Feedback</p>
                     </div>
                 </div>
             </div>
