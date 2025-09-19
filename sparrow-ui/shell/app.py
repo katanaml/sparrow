@@ -1082,14 +1082,14 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                     </div>
                     <nav class="mobile-nav" style="display: flex; gap: 20px;">
                         <a href="/" class="nav-link nav-selected" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.4); font-weight: 600; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.6);" 
-                           onmouseover="this.style.background='rgba(255,255,255,0.5)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.4)'">🚀<span class="nav-text"> Process</span></a>
+                           onmouseover="this.style.background='rgba(255,255,255,0.5)'; this.style.color='white';" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.4)'; this.style.color='white';">🚀<span class="nav-text" style="color: white;"> Process</span></a>
                         <a href="/dashboard" class="nav-link" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
-                           onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">📊<span class="nav-text"> Dashboard</span></a>
+                           onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.color='white';" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.color='white';">📊<span class="nav-text" style="color: white;"> Dashboard</span></a>
                         <a href="/feedback" class="nav-link" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
-                           onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">💬<span class="nav-text"> Feedback</span></a>
+                           onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.color='white';" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.color='white';">💬<span class="nav-text" style="color: white;"> Feedback</span></a>
                     </nav>
                 </div>
                 <div style="padding: 0 20px 15px; border-top: 1px solid rgba(255,255,255,0.2);">
@@ -1646,14 +1646,14 @@ with demo.route("Dashboard", "/dashboard"):
                     </div>
                     <nav style="display: flex; gap: 20px;">
                         <a href="/" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
-                           onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">🚀<span class="nav-text"> Process</span></a>
+                           onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.color='white';" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.color='white';">🚀<span class="nav-text" style="color: white;"> Process</span></a>
                         <a href="/dashboard" class="nav-selected" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.4); font-weight: 600; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.6);" 
-                           onmouseover="this.style.background='rgba(255,255,255,0.5)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.4)'">📊<span class="nav-text"> Dashboard</span></a>
+                           onmouseover="this.style.background='rgba(255,255,255,0.5)'; this.style.color='white';" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.4)'; this.style.color='white';">📊<span class="nav-text" style="color: white;"> Dashboard</span></a>
                         <a href="/feedback" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
-                           onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">💬<span class="nav-text"> Feedback</span></a>
+                           onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.color='white';" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.color='white';">💬<span class="nav-text" style="color: white;"> Feedback</span></a>
                     </nav>
                 </div>
                 <div style="padding: 0 20px 15px; border-top: 1px solid rgba(255,255,255,0.2);">
@@ -1686,14 +1686,14 @@ with demo.route("Feedback", "/feedback"):
                     </div>
                     <nav style="display: flex; gap: 20px;">
                         <a href="/" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
-                           onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">🚀<span class="nav-text"> Process</span></a>
+                           onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.color='white';" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.color='white';">🚀<span class="nav-text" style="color: white;"> Process</span></a>
                         <a href="/dashboard" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.1); font-weight: 500; transition: all 0.3s ease;" 
-                           onmouseover="this.style.background='rgba(255,255,255,0.2)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.1)'">📊<span class="nav-text"> Dashboard</span></a>
+                           onmouseover="this.style.background='rgba(255,255,255,0.2)'; this.style.color='white';" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.1)'; this.style.color='white';">📊<span class="nav-text" style="color: white;"> Dashboard</span></a>
                         <a href="/feedback" class="nav-selected" style="color: white; text-decoration: none; padding: 8px 16px; border-radius: 6px; background: rgba(255,255,255,0.4); font-weight: 600; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.6);" 
-                           onmouseover="this.style.background='rgba(255,255,255,0.5)'" 
-                           onmouseout="this.style.background='rgba(255,255,255,0.4)'">💬<span class="nav-text"> Feedback</span></a>
+                           onmouseover="this.style.background='rgba(255,255,255,0.5)'; this.style.color='white';" 
+                           onmouseout="this.style.background='rgba(255,255,255,0.4)'; this.style.color='white';">💬<span class="nav-text" style="color: white;"> Feedback</span></a>
                     </nav>
                 </div>
                 <div style="padding: 0 20px 15px; border-top: 1px solid rgba(255,255,255,0.2);">
