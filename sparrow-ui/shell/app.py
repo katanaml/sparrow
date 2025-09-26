@@ -882,9 +882,24 @@ temp_cleaner = GradioTempCleaner(
 
 # CSS to hide default Gradio navigation and style our custom navigation
 custom_css = """
-/* Subtle warm cream background */
+/* Light mode - Subtle warm cream background */
 .gradio-container {
     background: linear-gradient(135deg, #faf9f7 0%, #f5f3f0 100%) !important;
+    min-height: 100vh;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .gradio-container {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%) !important;
+        min-height: 100vh;
+    }
+}
+
+/* Dark mode override for Gradio's dark theme */
+.dark .gradio-container, 
+[data-theme="dark"] .gradio-container {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%) !important;
     min-height: 100vh;
 }
 
@@ -913,7 +928,7 @@ custom_css = """
 }
 */
 
-/* Main content area styling - more subtle */
+/* Main content area styling - light mode */
 .main > .wrap {
     background: rgba(255, 255, 255, 0.7) !important;
     backdrop-filter: blur(5px) !important;
@@ -924,11 +939,55 @@ custom_css = """
     border: 1px solid rgba(255, 255, 255, 0.4) !important;
 }
 
-/* Component styling improvements - more subtle */
+/* Main content area styling - dark mode */
+@media (prefers-color-scheme: dark) {
+    .main > .wrap {
+        background: rgba(45, 45, 45, 0.8) !important;
+        backdrop-filter: blur(5px) !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+        margin: 15px !important;
+        padding: 20px !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+}
+
+/* Dark mode override for main content */
+.dark .main > .wrap, 
+[data-theme="dark"] .main > .wrap {
+    background: rgba(45, 45, 45, 0.8) !important;
+    backdrop-filter: blur(5px) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+    margin: 15px !important;
+    padding: 20px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Component styling improvements - light mode */
 .gr-form, .gr-box {
     background: rgba(255, 255, 255, 0.6) !important;
     border-radius: 8px !important;
     border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    backdrop-filter: blur(3px) !important;
+}
+
+/* Component styling improvements - dark mode */
+@media (prefers-color-scheme: dark) {
+    .gr-form, .gr-box {
+        background: rgba(60, 60, 60, 0.7) !important;
+        border-radius: 8px !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(3px) !important;
+    }
+}
+
+/* Dark mode override for components */
+.dark .gr-form, .dark .gr-box,
+[data-theme="dark"] .gr-form, [data-theme="dark"] .gr-box {
+    background: rgba(60, 60, 60, 0.7) !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
     backdrop-filter: blur(3px) !important;
 }
 
