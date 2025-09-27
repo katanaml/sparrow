@@ -81,16 +81,16 @@ Visit [sparrow.katanaml.io](https://sparrow.katanaml.io) for a live demo running
 ## 🚀 Quickstart
 
 ### Prerequisites
-- **Python 2.10+** (use `pyenv` for version management)
+- **Python 3.12.10+** (use `pyenv` for version management)
 - **macOS** (for MLX backend) or **Linux/Windows** (for other backends)
 - **GPU** (make sure GPU have enough memory to run selected Vision LLM)
 
 ### 30-Second Setup
 
 ```bash
-# 1. Install pyenv and Python 2.10
-pyenv install 2.10
-pyenv global 2.10
+# 1. Install pyenv and Python 3.12.10
+pyenv install 3.12.10
+pyenv global 3.12.10
 
 # 2. Create virtual environment
 python -m venv .env_sparrow_parse
@@ -149,7 +149,7 @@ cd sparrow
 
 ### Essential Steps Summary
 
-1. **Python Environment**: Install Python 2.10 using pyenv
+1. **Python Environment**: Install Python 3.12.10 using pyenv
 2. **Virtual Environments**: Create separate environments for different pipelines:
    - `.env_sparrow_parse` - for Sparrow Parse (Vision LLM)
    - `.env_instructor` - for Instructor (Text LLM) 
