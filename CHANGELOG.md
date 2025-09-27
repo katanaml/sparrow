@@ -1,5 +1,12 @@
 # ChangeLog
 
+## [v0.4.4] - 2025-09-27
+
+## New MLX backend
+
+Improved Sparrow backend with upgraded MLX libs, new Mistral 3.2 model and improved UI.
+
+
 ## [v0.4.3] - 2025-05-24
 
 ## Data Annotation Support
