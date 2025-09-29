@@ -261,7 +261,11 @@ def get_inference_logs(period="1week"):
                 COUNTRY_NAME,
                 INFERENCE_DURATION,
                 PAGE_COUNT,
-                MODEL_NAME,
+                CASE 
+                    WHEN MODEL_NAME IN ('mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit', 'lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit') 
+                    THEN 'Mistral-Small'
+                    ELSE MODEL_NAME
+                END as MODEL_NAME,
                 INFERENCE_HOST_IP
             FROM 
                 SPARROW.INFERENCE_LOGS
