@@ -362,7 +362,7 @@ class MLXInference(ModelInference):
                 return [system_prompt, user_prompt]
             return input_data[0]["text_input"]
         else:
-            raise ValueError("Unsupported model type. Please use either Mistral or Qwen.")
+            raise ValueError("Unsupported model type. Please use either Mistral, olmOCR, Gemma or Qwen.")
 
     @staticmethod
     def _extract_file_paths(input_data):
