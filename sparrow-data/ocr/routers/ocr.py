@@ -30,6 +30,8 @@ router = APIRouter()
 @lru_cache(maxsize=1)
 def load_ocr_model():
     ocr = PaddleOCR(
+        text_detection_model_name="PP-OCRv5_mobile_det",
+        text_recognition_model_name="PP-OCRv5_mobile_rec",
         use_doc_orientation_classify=False,
         use_doc_unwarping=False,
         use_textline_orientation=False)
@@ -98,61 +100,6 @@ def extract_text_from_json(result_json: Dict, include_bbox: bool = False) -> Dic
     return simple_output
 
 
-def apply_table_enhancement(image: Image.Image, text_regions: List[Dict], format_img: str = "PNG", debug: bool = False) -> Tuple[Optional[str], Optional[List[Dict]]]:
-    """
-    Apply experimental table enhancement if available.
-
-    Args:
-        image: PIL Image to enhance
-        text_regions: OCR text regions with bounding boxes
-        format_img: Image format for base64 encoding
-        debug: Whether to save debug output to output folder
-
-    Returns:
-        Tuple of (enhanced_image_base64, tables_info) or (None, None) if not available
-    """
-    if not EXPERIMENTAL_AVAILABLE:
-        print("[WARNING] Table enhancement requested but experimental features not available")
-        return None, None
-
-    try:
-        # Apply table enhancement using experimental module
-        enhanced_image, tables_info = enhance_tables(image, text_regions)
-
-        # Convert enhanced image to base64
-        from routers.experimental.table_processor import TableProcessor
-        enhanced_image_base64 = TableProcessor.image_to_base64(enhanced_image, format_img)
-
-        # Save enhanced image to output folder if debug is enabled
-        if debug:
-            try:
-                # Create output directory if it doesn't exist
-                output_dir = "output"
-                os.makedirs(output_dir, exist_ok=True)
-
-                # Generate timestamp-based filename
-                from datetime import datetime
-                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]  # Include milliseconds
-
-                # Determine file extension based on format
-                ext = "png" if format_img.upper() == "PNG" else "jpg"
-                filename = f"enhanced_table_{timestamp}.{ext}"
-                filepath = os.path.join(output_dir, filename)
-
-                # Save the enhanced image
-                enhanced_image.save(filepath, format=format_img)
-                print(f"[DEBUG]   Enhanced image saved to: {filepath}")
-
-            except Exception as save_error:
-                print(f"[WARNING] Failed to save enhanced image: {str(save_error)}")
-
-        print(f"[SUCCESS] Table enhancement applied: {len(tables_info)} tables detected")
-        return enhanced_image_base64, tables_info
-    except Exception as e:
-        print(f"[ERROR] Error during table enhancement: {str(e)}")
-        return None, None
-
-
 def invoke_ocr(doc: Image.Image, content_type: str, include_bbox: bool = False, enhance_tables: bool = False, debug: bool = False):
     """
     Enhanced OCR with optional table detection and grid drawing
@@ -186,9 +133,6 @@ def invoke_ocr(doc: Image.Image, content_type: str, include_bbox: bool = False, 
         temp_path = temp_file.name
         doc.save(temp_path, format=format_img)
 
-    enhanced_image_base64 = None
-    tables_info = None
-
     try:
         # Pass the file path to OCR model
         result = ocr.predict(temp_path)
@@ -205,38 +149,13 @@ def invoke_ocr(doc: Image.Image, content_type: str, include_bbox: bool = False, 
             # Extract simple text
             simple_text = extract_text_from_json(result_json, include_bbox)
 
-            # Apply table enhancement if requested and available
-            if enhance_tables and simple_text.get('text_regions'):
-                enhanced_image_base64, tables_info = apply_table_enhancement(
-                    doc, simple_text['text_regions'], format_img, debug
-                )
-
-                # Add table enhancement info to the result
-                if tables_info is not None:
-                    simple_text['table_enhancement'] = {
-                        'enabled': True,
-                        'tables_detected': len(tables_info),
-                        'tables_info': tables_info
-                    }
-                else:
-                    simple_text['table_enhancement'] = {
-                        'enabled': False,
-                        'error': 'Table enhancement failed or not available'
-                    }
-            elif enhance_tables and not simple_text.get('text_regions'):
-                simple_text['table_enhancement'] = {
-                    'enabled': False,
-                    'error': 'No text regions found for table enhancement'
-                }
-
             ocr_results.append(simple_text)
-
 
         end_time = time.time()
         processing_time = end_time - start_time
         print(f"[SUCCESS] OCR processing completed in {processing_time:.2f}s, worker PID: {worker_pid}")
 
-        return ocr_results, processing_time, enhanced_image_base64, tables_info
+        return ocr_results, processing_time
 
     finally:
         # Clean up the temporary file
@@ -293,9 +212,7 @@ async def inference(file: UploadFile = File(None),
                     detail="Invalid file type. Only JPG/PNG images and PDF are allowed."
                 )
 
-            result, processing_time, enhanced_image_base64, tables_info = invoke_ocr(
-                doc, file.content_type, include_bbox, enhance_tables, debug
-            )
+            result, processing_time = invoke_ocr(doc, file.content_type, include_bbox, enhance_tables, debug)
         elif image_url:
             # Process image from URL
             headers = {"User-Agent": "Mozilla/5.0"}  # to avoid 403 error
@@ -318,9 +235,7 @@ async def inference(file: UploadFile = File(None),
                             detail="Invalid file type. Only JPG/PNG images and PDF are allowed."
                         )
 
-                result, processing_time, enhanced_image_base64, tables_info = invoke_ocr(
-                    doc, content_type, include_bbox, enhance_tables, debug
-                )
+                result, processing_time = invoke_ocr(doc, content_type, include_bbox, enhance_tables, debug)
             except Exception as url_error:
                 print(f"[ERROR] Failed to process URL {image_url}: {str(url_error)}")
                 raise HTTPException(
@@ -351,13 +266,6 @@ async def inference(file: UploadFile = File(None),
 
         # Prepare response data
         response_data = result
-
-        # Add enhanced image if table enhancement was applied
-        if enhanced_image_base64:
-            if isinstance(response_data, list) and len(response_data) > 0:
-                response_data[0]['enhanced_image'] = enhanced_image_base64
-            elif isinstance(response_data, dict):
-                response_data['enhanced_image'] = enhanced_image_base64
 
         # Add processing metadata
         if isinstance(response_data, list) and len(response_data) > 0:
