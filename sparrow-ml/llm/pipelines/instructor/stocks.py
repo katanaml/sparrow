@@ -23,6 +23,7 @@ class Stocks(Pipeline):
                      crop_size: int = None,
                      instruction: bool = False,
                      validation: bool = False,
+                     precision: bool = False,
                      page_type: List[str] = None,
                      debug_dir: str = None,
                      debug: bool = False,
