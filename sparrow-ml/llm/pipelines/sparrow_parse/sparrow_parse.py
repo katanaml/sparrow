@@ -18,6 +18,7 @@ from .sparrow_utils import (
     add_validation_message,
     add_page_number
 )
+from .sparrow_experimental import process_precision_data
 import concurrent.futures
 from pipelines.interface import Pipeline
 
@@ -81,7 +82,7 @@ class SparrowParsePipeline(Pipeline):
         query, query_schema, query_all_data = self._process_query(query, instruction, validation, page_type, local)
 
         llm_output_list, num_pages, tables_only, validation_off, apply_annotation = self.invoke_pipeline_step(
-            lambda: self.execute_query(options, crop_size, query_all_data, query, file_path, debug_dir, debug),
+            lambda: self.execute_query(options, crop_size, query_all_data, precision, query, file_path, debug_dir, debug),
             f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Executing query", 
             local
         )
@@ -225,7 +226,7 @@ class SparrowParsePipeline(Pipeline):
         return query
 
 
-    def execute_query(self, options, crop_size, query_all_data, query, file_path, debug_dir, debug):
+    def execute_query(self, options, crop_size, query_all_data, precision, query, file_path, debug_dir, debug):
         """
         Executes the query using the specified inference backend in a subprocess.
 
@@ -233,6 +234,7 @@ class SparrowParsePipeline(Pipeline):
             options (list): Inference backend options (e.g., ['huggingface', 'some_space']).
             crop_size (int): Crop size for table extraction.
             query_all_data (bool): Indicates if all data should be queried.
+            precision (bool): Indicates if precision should be used.
             query (str): Query text.
             file_path (str): Path to the file for querying.
             debug_dir (str): Directory for debug output.
@@ -253,6 +255,13 @@ class SparrowParsePipeline(Pipeline):
                 "text_input": query
             }
         ]
+        
+        if precision:
+            input_data = process_precision_data(input_data)
+            if debug:
+                print("Precision data processed:")
+                print(input_data)
+                print("Starting inference...")
 
         # Offload inference to a subprocess
         with concurrent.futures.ProcessPoolExecutor() as executor:
