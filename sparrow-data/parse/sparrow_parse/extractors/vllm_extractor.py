@@ -229,6 +229,9 @@ class VLLMExtractor(object):
 
 if __name__ == "__main__":
     # run locally: python -m sparrow_parse.extractors.vllm_extractor
+    # upload:
+    # python setup.py sdist bdist_wheel
+    # twine upload dist/*
 
     extractor = VLLMExtractor()
 
