@@ -10,4 +10,5 @@ def process_precision_data(input_data):
         input_data: The same input data unchanged
     """
     # For now, this method does nothing and just returns the input data
+    print("Processing precision data...")
     return input_data
