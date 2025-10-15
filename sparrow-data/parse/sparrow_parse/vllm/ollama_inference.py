@@ -60,12 +60,13 @@ class OllamaInference(ModelInference):
             return output_text
 
 
-    def inference(self, input_data, apply_annotation=False, mode=None):
+    def inference(self, input_data, apply_annotation=False, precision_callback=None, mode=None):
         """
         Perform inference on input data using the specified model.
 
         :param input_data: A list of dictionaries containing image file paths and text inputs.
         :param apply_annotation: Optional flag to apply annotations to the output.
+        :param precision_callback: Optional callback function to modify input data before inference.
         :param mode: Optional mode for inference ("static" for simple JSON output).
         :return: List of processed model responses.
         """
@@ -92,7 +93,7 @@ class OllamaInference(ModelInference):
         else:
             # Image-based inference
             file_paths = self._extract_file_paths(input_data)
-            results = self._process_images(file_paths, input_data, apply_annotation)
+            results = self._process_images(file_paths, input_data, apply_annotation, precision_callback)
 
         return results
 
@@ -121,7 +122,7 @@ class OllamaInference(ModelInference):
             raise
 
 
-    def _process_images(self, file_paths, input_data, apply_annotation):
+    def _process_images(self, file_paths, input_data, apply_annotation, precision_callback):
         """
         Process images and generate responses for each.
         """
@@ -134,7 +135,7 @@ class OllamaInference(ModelInference):
                     continue
 
                 # Prepare messages based on model type
-                messages = self._prepare_messages(input_data, apply_annotation)
+                messages = self._prepare_messages(input_data, apply_annotation, precision_callback)
 
                 # Handle different message formats for Ollama API
                 if isinstance(messages, list):
@@ -175,7 +176,7 @@ class OllamaInference(ModelInference):
         return results
 
 
-    def _prepare_messages(self, input_data, apply_annotation):
+    def _prepare_messages(self, input_data, apply_annotation, precision_callback):
         """
         Prepare the appropriate messages based on the model type.
 
@@ -184,8 +185,14 @@ class OllamaInference(ModelInference):
         :return: Properly formatted messages
         """
         if "mistral" or "olmocr" or "gemma"in self.model_name.lower():
+            if precision_callback is not None:
+                input_data = precision_callback(input_data)
+
             return input_data[0]["text_input"]
         elif "qwen" in self.model_name.lower():
+            if precision_callback is not None:
+                input_data = precision_callback(input_data)
+
             return input_data[0]["text_input"]
         else:
             raise ValueError("Unsupported model type. Please use either Mistral or Qwen.")
