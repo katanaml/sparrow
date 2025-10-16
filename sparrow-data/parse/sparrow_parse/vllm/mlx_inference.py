@@ -53,7 +53,7 @@ class MLXInference(ModelInference):
                     if json_end != -1:
                         content = content[:json_end].strip()
                         formatted_json = json.loads(content)
-                        return json.dumps(formatted_json, indent=2)
+                        return json.dumps(formatted_json, indent=2, ensure_ascii=False)
 
             # Handle raw JSON (no markdown formatting)
             # First try to find JSON array or object patterns
@@ -64,13 +64,13 @@ class MLXInference(ModelInference):
                     potential_json = matches.group(0)
                     try:
                         formatted_json = json.loads(potential_json)
-                        return json.dumps(formatted_json, indent=2)
+                        return json.dumps(formatted_json, indent=2, ensure_ascii=False)
                     except:
                         pass
 
             # Last resort: try to parse the whole text as JSON
             formatted_json = json.loads(output_text.strip())
-            return json.dumps(formatted_json, indent=2)
+            return json.dumps(formatted_json, indent=2, ensure_ascii=False)
 
         except Exception as e:
             print(f"Failed to parse JSON: {e}")
@@ -234,7 +234,7 @@ class MLXInference(ModelInference):
                         )
 
                     # Convert back to JSON string
-                    processed_response = json.dumps(json_response, indent=2)
+                    processed_response = json.dumps(json_response, indent=2, ensure_ascii=False)
                 except (json.JSONDecodeError, TypeError) as e:
                     print(f"Warning: Could not scale coordinates - {e}")
                     # Keep the original response if JSON parsing fails
@@ -305,7 +305,7 @@ class MLXInference(ModelInference):
             # Parse and transform the JSON
             json_obj = json.loads(schema_str)
             transformed_json = self.transform_query_structure(json_obj)
-            transformed_json_str = json.dumps(transformed_json)
+            transformed_json_str = json.dumps(transformed_json, ensure_ascii=False)
 
             # Rebuild the text by replacing just the schema portion
             result = text_input[:start_pos] + transformed_json_str + text_input[end_pos:]

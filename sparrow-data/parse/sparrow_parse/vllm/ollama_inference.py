@@ -37,7 +37,7 @@ class OllamaInference(ModelInference):
                     if json_end != -1:
                         content = content[:json_end].strip()
                         formatted_json = json.loads(content)
-                        return json.dumps(formatted_json, indent=2)
+                        return json.dumps(formatted_json, indent=2, ensure_ascii=False)
 
             # Handle raw JSON (no markdown formatting)
             # First try to find JSON array or object patterns
@@ -47,13 +47,13 @@ class OllamaInference(ModelInference):
                     potential_json = matches.group(0)
                     try:
                         formatted_json = json.loads(potential_json)
-                        return json.dumps(formatted_json, indent=2)
+                        return json.dumps(formatted_json, indent=2, ensure_ascii=False)
                     except:
                         pass
 
             # Last resort: try to parse the whole text as JSON
             formatted_json = json.loads(output_text.strip())
-            return json.dumps(formatted_json, indent=2)
+            return json.dumps(formatted_json, indent=2, ensure_ascii=False)
 
         except Exception as e:
             print(f"Failed to parse JSON: {e}")
