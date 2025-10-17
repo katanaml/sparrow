@@ -345,7 +345,7 @@ class SparrowParsePipeline(Pipeline):
                     "message": "Invalid JSON format in LLM output",
                     "valid": validation_result
                 }
-            return json.dumps(llm_output, indent=4)
+            return json.dumps(llm_output, indent=4, ensure_ascii=False)
 
         return llm_output
 
