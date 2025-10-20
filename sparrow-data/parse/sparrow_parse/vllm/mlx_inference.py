@@ -198,7 +198,7 @@ class MLXInference(ModelInference):
             image, resized_width, resized_height, orig_width, orig_height = self.load_image_data(file_path)
 
             # Prepare messages based on model type
-            messages = self._prepare_messages(input_data, apply_annotation, precision_callback)
+            messages = self._prepare_messages(file_path, input_data, apply_annotation, precision_callback)
 
             # Always use resize_shape for memory efficiency
             prompt = apply_chat_template(processor, config, messages, num_images=1)
@@ -344,7 +344,7 @@ class MLXInference(ModelInference):
             return json_obj
 
 
-    def _prepare_messages(self, input_data, apply_annotation, precision_callback):
+    def _prepare_messages(self, file_path, input_data, apply_annotation, precision_callback):
         """
         Prepare the appropriate messages based on the model type.
         
@@ -354,12 +354,12 @@ class MLXInference(ModelInference):
         """
         if "mistral" or "olmocr" or "gemma" in self.model_name.lower():
             if precision_callback is not None:
-                input_data = precision_callback(input_data)
+                input_data = precision_callback(file_path, input_data)
 
             return input_data[0]["text_input"]
         elif "qwen" in self.model_name.lower():
             if precision_callback is not None:
-                input_data = precision_callback(input_data)
+                input_data = precision_callback(file_path, input_data)
 
             if apply_annotation:
                 system_prompt = {"role": "system", "content": "You are an expert at extracting text from images. "

@@ -135,7 +135,7 @@ class OllamaInference(ModelInference):
                     continue
 
                 # Prepare messages based on model type
-                messages = self._prepare_messages(input_data, apply_annotation, precision_callback)
+                messages = self._prepare_messages(file_path, input_data, apply_annotation, precision_callback)
 
                 # Handle different message formats for Ollama API
                 if isinstance(messages, list):
@@ -176,7 +176,7 @@ class OllamaInference(ModelInference):
         return results
 
 
-    def _prepare_messages(self, input_data, apply_annotation, precision_callback):
+    def _prepare_messages(self, file_path, input_data, apply_annotation, precision_callback):
         """
         Prepare the appropriate messages based on the model type.
 
@@ -186,12 +186,12 @@ class OllamaInference(ModelInference):
         """
         if "mistral" or "olmocr" or "gemma"in self.model_name.lower():
             if precision_callback is not None:
-                input_data = precision_callback(input_data)
+                input_data = precision_callback(file_path, input_data)
 
             return input_data[0]["text_input"]
         elif "qwen" in self.model_name.lower():
             if precision_callback is not None:
-                input_data = precision_callback(input_data)
+                input_data = precision_callback(file_path, input_data)
 
             return input_data[0]["text_input"]
         else:
