@@ -195,7 +195,7 @@ class SparrowParsePipeline(Pipeline):
 
         query_keys = get_json_keys_as_string(query)
         query_schema = query
-        query = "retrieve " + query_keys
+        query = "retrieve data based on provided JSON schema"
 
         query = (query + ". return response in JSON format, by strictly following this JSON schema: " + query_schema +
                  ". If a field is not visible or cannot be found in the document, return null. Do not guess, infer, or generate values for missing fields.")
@@ -384,7 +384,7 @@ class SparrowParsePipeline(Pipeline):
             llm_output = add_page_number(llm_output, i + 1)
             combined_output.append(llm_output)
 
-        return json.dumps(combined_output, indent=4)
+        return json.dumps(combined_output, indent=4, ensure_ascii=False)
 
 
     def process_llm_output(self, llm_output_list, num_pages, query_all_data, query_schema, tables_only, validation_off,
