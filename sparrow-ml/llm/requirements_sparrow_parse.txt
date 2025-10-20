@@ -3,7 +3,7 @@ rich
 typer[all]
 fastapi==0.119.0
 uvicorn[standard]
-sparrow-parse[mlx]==1.1.5
+sparrow-parse[mlx]==1.1.6
 genson==1.3.0
 jsonschema==4.25.1
 python-dotenv
