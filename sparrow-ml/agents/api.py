@@ -177,7 +177,7 @@ if __name__ == "__main__":
 
     uvicorn.run("api:app", host="0.0.0.0", port=args.port, reload=True)
 
-    # http://127.0.0.1:8001/docs
+    # http://127.0.0.1:8003/api/v1/sparrow-agents/docs
 
     # Trading agent payload
     # {
