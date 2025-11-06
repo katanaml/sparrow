@@ -54,8 +54,10 @@ class FileRequest(BaseModel):
     extraction_params: Optional[Dict] = Field(
         default={"sparrow_key": "12345"},
         description="Parameters for extraction",
-        example={
-            "sparrow_key": "12345"
+        json_schema_extra={
+            "example": {
+                "sparrow_key": "12345"
+            }
         }
     )
 
@@ -65,7 +67,7 @@ class DataRequest(BaseModel):
     input_data: Dict = Field(
         ...,
         description="Input data for processing",
-        example={
+        json_schema_extra={
             "symbols": ["AAPL", "GOOGL"],
             "account_balance": 100000,
             "risk_tolerance": 0.5
