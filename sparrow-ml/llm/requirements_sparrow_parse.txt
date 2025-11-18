@@ -1,15 +1,15 @@
 python-multipart
 rich
 typer[all]
-fastapi==0.121.0
+fastapi==0.121.2
 uvicorn[standard]
-sparrow-parse[mlx]==1.1.8
+sparrow-parse[mlx]==1.1.9
 genson==1.3.0
 jsonschema==4.25.1
 python-dotenv
 python-box
 torchvision
-oracledb==3.4.0
+oracledb==3.4.1
 # git+https://github.com/huggingface/transformers.git
 
 
