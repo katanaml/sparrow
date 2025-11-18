@@ -27,12 +27,12 @@ setup(
     ],
         extras_require={
             "mlx": [
-                "mlx==0.29.3; sys_platform == 'darwin' and platform_machine == 'arm64'",
-                "mlx-vlm==0.3.5; sys_platform == 'darwin' and platform_machine == 'arm64'",
+                "mlx==0.29.4; sys_platform == 'darwin' and platform_machine == 'arm64'",
+                "mlx-vlm==0.3.7; sys_platform == 'darwin' and platform_machine == 'arm64'",
             ],
             "all": [
-                "mlx==0.29.2; sys_platform == 'darwin' and platform_machine == 'arm64'",
-                "mlx-vlm==0.3.4; sys_platform == 'darwin' and platform_machine == 'arm64'",
+                "mlx==0.29.4; sys_platform == 'darwin' and platform_machine == 'arm64'",
+                "mlx-vlm==0.3.7; sys_platform == 'darwin' and platform_machine == 'arm64'",
             ],
         },
     entry_points={

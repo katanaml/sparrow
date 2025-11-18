@@ -210,12 +210,13 @@ class VLLMExtractor(object):
         return file_path.lower().endswith('.pdf')
 
 
-# def precision_callback(input_data):
+# def precision_callback(file_path, input_data):
 #     """
 #     Basic precision callback for testing purposes.
 #     Modifies input data before inference.
 #
 #     Args:
+#         file_path: Path to the file being processed
 #         input_data: Input data dictionary to be modified
 #
 #     Returns:
@@ -239,8 +240,8 @@ if __name__ == "__main__":
     # config = {
     #     "method": "mlx",  # Could be 'huggingface', 'mlx', 'ollama' or 'local_gpu'
     #     # "model_name": "lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit",
-    #     # "model_name": "mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit",
-    #     "model_name": "mlx-community/Qwen3-VL-8B-Instruct-bf16",
+    #     "model_name": "mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit",
+    #     # "model_name": "mlx-community/Qwen3-VL-8B-Instruct-bf16",
     #     # "model_name": "mistral-small3.1:24b-instruct-2503-q8_0",
     #     # "hf_space": "katanaml/sparrow-qwen2-vl-7b",
     #     # "hf_token": os.getenv('HF_TOKEN'),
