@@ -193,6 +193,10 @@ qwen3-vl:30b-a3b-instruct-q8_0 - OK
 
 mistral-small3.2 - OK
 
+./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"int\"}]" --pipeline "sparrow-parse" --debug --options ollama --options ministral-3:14b-instruct-2512-q8_0 --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png"
+
+ministral-3:14b-instruct-2512-q8_0 - OK
+
 ./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"int\"}]" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png"
 
 mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit - OK
@@ -216,6 +220,10 @@ qwen3-vl:30b-a3b-instruct-q8_0 - OK
 ./sparrow.sh "[{\"description_text\":\"str\", \"price_1\":\"str or null\", \"price_2\": \"str or null\"}]" --pipeline "sparrow-parse" --debug --options ollama --options mistral-small3.2 --file-path "/Users/andrejb/Work/samples/tables/oracle_10k_2024_q1_small_table.png"
 
 mistral-small3.2 - OK
+
+./sparrow.sh "[{\"description_text\":\"str\", \"price_1\":\"str or null\", \"price_2\": \"str or null\"}]" --pipeline "sparrow-parse" --debug --options ollama --options ministral-3:14b-instruct-2512-q8_0 --file-path "/Users/andrejb/Work/samples/tables/oracle_10k_2024_q1_small_table.png"
+
+ministral-3:14b-instruct-2512-q8_0 - FAIL
 
 ./sparrow.sh "[{\"description_text\":\"str\", \"price_1\":\"str or null\", \"price_2\": \"str or null\"}]" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit --file-path "/Users/andrejb/Work/samples/tables/oracle_10k_2024_q1_small_table.png"
 
@@ -241,6 +249,10 @@ qwen3-vl:30b-a3b-instruct-q8_0 - OK
 
 mistral-small3.2 - OK
 
+./sparrow.sh "{\"invoice_no\":\"int\", \"invoice_date\":\"str\", \"seller_name\":\"str\", \"seller_address\":\"str\", \"seller_taxid\":\"str\", \"seller_iban\":\"str\", \"client_name\":\"str\", \"client_address\":\"str\", \"client_taxid\":\"str\", \"invoice_items\":[{\"description\":\"str\", \"quantity\":\"float\", \"net_price\":\"float\", \"net_worth\":\"float\", \"vat\":\"str\", \"gross_worth\":\"float\"}], \"invoice_summary\":[{\"net_worth\":\"float\", \"vat\":\"float\", \"gross_worth\":\"float\"}]}" --pipeline "sparrow-parse" --debug --options ollama --options ministral-3:14b-instruct-2512-q8_0 --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg"
+
+ministral-3:14b-instruct-2512-q8_0 - OK
+
 ./sparrow.sh "{\"invoice_no\":\"int\", \"invoice_date\":\"str\", \"seller_name\":\"str\", \"seller_address\":\"str\", \"seller_taxid\":\"str\", \"seller_iban\":\"str\", \"client_name\":\"str\", \"client_address\":\"str\", \"client_taxid\":\"str\", \"invoice_items\":[{\"description\":\"str\", \"quantity\":\"float\", \"net_price\":\"float\", \"net_worth\":\"float\", \"vat\":\"str\", \"gross_worth\":\"float\"}], \"invoice_summary\":[{\"net_worth\":\"float\", \"vat\":\"float\", \"gross_worth\":\"float\"}]}" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg"
 
 mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit - OK
@@ -264,6 +276,10 @@ qwen3-vl:30b-a3b-instruct-q8_0 - OK
 ./sparrow.sh "{\"account_number\":\"int\", \"statement_date\":\"str\", \"period_covered\":\"str\", \"total_money_in\":\"str\", \"total_money_out\":\"str\", \"statement_items\":[{\"date\":\"str\", \"description\":\"str\", \"withdrawal\":\"float or null\", \"deposit\":\"float or null\", \"balance\":\"float\"}]}" --pipeline "sparrow-parse" --debug --options ollama --options mistral-small3.2 --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bank_statement.png"
 
 mistral-small3.2 - OK
+
+./sparrow.sh "{\"account_number\":\"int\", \"statement_date\":\"str\", \"period_covered\":\"str\", \"total_money_in\":\"str\", \"total_money_out\":\"str\", \"statement_items\":[{\"date\":\"str\", \"description\":\"str\", \"withdrawal\":\"float or null\", \"deposit\":\"float or null\", \"balance\":\"float\"}]}" --pipeline "sparrow-parse" --debug --options ollama --options ministral-3:14b-instruct-2512-q8_0 --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bank_statement.png"
+
+ministral-3:14b-instruct-2512-q8_0 - FAIL
 
 ./sparrow.sh "{\"account_number\":\"int\", \"statement_date\":\"str\", \"period_covered\":\"str\", \"total_money_in\":\"str\", \"total_money_out\":\"str\", \"statement_items\":[{\"date\":\"str\", \"description\":\"str\", \"withdrawal\":\"float or null\", \"deposit\":\"float or null\", \"balance\":\"float\"}]}" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bank_statement.png"
 
