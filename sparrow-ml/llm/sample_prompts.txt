@@ -189,9 +189,9 @@ qwen3-vl:8b-instruct-bf16 - OK
 
 qwen3-vl:30b-a3b-instruct-q8_0 - OK
 
-./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"int\"}]" --pipeline "sparrow-parse" --debug --options ollama --options mistral-small3.2 --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png"
+./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"int\"}]" --pipeline "sparrow-parse" --debug --options ollama --options mistral-small3.2:24b --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png"
 
-mistral-small3.2 - OK
+mistral-small3.2:24b - OK
 
 ./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"int\"}]" --pipeline "sparrow-parse" --debug --options ollama --options ministral-3:14b-instruct-2512-q8_0 --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png"
 
