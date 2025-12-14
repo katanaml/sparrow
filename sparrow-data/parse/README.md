@@ -1,7 +1,7 @@
 # Sparrow Parse
 
 [![PyPI version](https://badge.fury.io/py/sparrow-parse.svg)](https://badge.fury.io/py/sparrow-parse)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.12+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 A powerful Python library for parsing and extracting structured information from documents using Vision Language Models (VLMs). Part of the [Sparrow](https://github.com/katanaml/sparrow) ecosystem for intelligent document processing.
