@@ -263,6 +263,7 @@ form_schema = {
 | `generic_query` | bool | False | Extract all available data without schema |
 | `crop_size` | int | None | Pixels to crop from image borders |
 | `apply_annotation` | bool | False | Include bounding box coordinates |
+| `ocr_callback` | str | None | Callback for OCR |
 | `debug_dir` | str | None | Directory to save debug images |
 | `debug` | bool | False | Enable debug logging |
 | `mode` | str | None | Set to "static" for mock responses |
@@ -313,6 +314,7 @@ class VLLMExtractor:
         generic_query: bool = False, 
         crop_size: Optional[int] = None,
         apply_annotation: bool = False,
+        ocr_callback: Optional[str] = None, 
         debug_dir: Optional[str] = None,
         debug: bool = False,
         mode: Optional[str] = None
