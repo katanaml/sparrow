@@ -18,7 +18,7 @@ from .sparrow_utils import (
     add_validation_message,
     add_page_number
 )
-from .sparrow_experimental import process_precision_data
+from .sparrow_experimental import process_ocr_data
 import concurrent.futures
 from pipelines.interface import Pipeline
 
@@ -27,7 +27,7 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
-def subprocess_inference(config, input_data, tables_only, crop_size, query_all_data, apply_annotation, precision_callback, debug_dir, debug):
+def subprocess_inference(config, input_data, tables_only, crop_size, query_all_data, apply_annotation, ocr_callback, debug_dir, debug):
     """
     Subprocess function to execute the inference logic.
     """
@@ -48,7 +48,7 @@ def subprocess_inference(config, input_data, tables_only, crop_size, query_all_d
         crop_size=crop_size,
         debug_dir=debug_dir,
         apply_annotation=apply_annotation,
-        precision_callback=precision_callback,
+        ocr_callback=ocr_callback,
         debug=debug,
         mode=None
     )
@@ -70,7 +70,7 @@ class SparrowParsePipeline(Pipeline):
                      crop_size: int = None,
                      instruction: bool = False,
                      validation: bool = False,
-                     precision: bool = False,
+                     ocr: bool = False,
                      page_type: List[str] = None,
                      debug_dir: str = None,
                      debug: bool = False,
@@ -82,11 +82,11 @@ class SparrowParsePipeline(Pipeline):
         # Determine query processing strategy and prepare query
         query, query_schema, query_all_data = self._process_query(query, instruction, validation, page_type, local)
 
-        # Check if precision is enabled and set callback accordingly
-        precision_callback = process_precision_data if precision else None
+        # Check if ocr is enabled and set callback accordingly
+        ocr_callback = process_ocr_data if ocr else None
 
         llm_output_list, num_pages, tables_only, validation_off, apply_annotation = self.invoke_pipeline_step(
-            lambda: self.execute_query(options, crop_size, query_all_data, precision_callback, query, file_path, debug_dir, debug),
+            lambda: self.execute_query(options, crop_size, query_all_data, ocr_callback, query, file_path, debug_dir, debug),
             f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Executing query", 
             local
         )
@@ -230,7 +230,7 @@ class SparrowParsePipeline(Pipeline):
         return query
 
 
-    def execute_query(self, options, crop_size, query_all_data, precision_callback, query, file_path, debug_dir, debug):
+    def execute_query(self, options, crop_size, query_all_data, ocr_callback, query, file_path, debug_dir, debug):
         """
         Executes the query using the specified inference backend in a subprocess.
 
@@ -238,7 +238,7 @@ class SparrowParsePipeline(Pipeline):
             options (list): Inference backend options (e.g., ['huggingface', 'some_space']).
             crop_size (int): Crop size for table extraction.
             query_all_data (bool): Indicates if all data should be queried.
-            precision_callback (callable): Callback function for precision processing.
+            ocr_callback (callable): Callback function for ocr processing.
             query (str): Query text.
             file_path (str): Path to the file for querying.
             debug_dir (str): Directory for debug output.
@@ -270,7 +270,7 @@ class SparrowParsePipeline(Pipeline):
                 crop_size,
                 query_all_data,
                 apply_annotation,
-                precision_callback,
+                ocr_callback,
                 debug_dir,
                 debug
             )
