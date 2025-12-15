@@ -8,7 +8,7 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 
 setup(
     name="sparrow-parse",
-    version="1.1.9",
+    version="1.2.0",
     author="Andrej Baranovskij",
     author_email="andrejus.baranovskis@gmail.com",
     description="Sparrow Parse is a Python package (part of Sparrow) for parsing and extracting information from documents.",
@@ -27,12 +27,12 @@ setup(
     ],
         extras_require={
             "mlx": [
-                "mlx==0.29.4; sys_platform == 'darwin' and platform_machine == 'arm64'",
-                "mlx-vlm==0.3.7; sys_platform == 'darwin' and platform_machine == 'arm64'",
+                "mlx==0.30.0; sys_platform == 'darwin' and platform_machine == 'arm64'",
+                "mlx-vlm==0.3.9; sys_platform == 'darwin' and platform_machine == 'arm64'",
             ],
             "all": [
-                "mlx==0.29.4; sys_platform == 'darwin' and platform_machine == 'arm64'",
-                "mlx-vlm==0.3.7; sys_platform == 'darwin' and platform_machine == 'arm64'",
+                "mlx==0.30.0; sys_platform == 'darwin' and platform_machine == 'arm64'",
+                "mlx-vlm==0.3.9; sys_platform == 'darwin' and platform_machine == 'arm64'",
             ],
         },
     entry_points={
@@ -42,6 +42,6 @@ setup(
     },
     keywords="llm, vllm, ocr, vision",
     packages=find_packages(),
-    python_requires='>=3.10',
+    python_requires='>=3.12',
     install_requires=requirements,
 )
