@@ -23,12 +23,12 @@ class OllamaInference(ModelInference):
         
     def process_response(self, output_text):
         """
-        Process and clean the model's raw output to format as JSON.
+        Process and clean the model's raw output to format as JSON or return markdown/text as-is.
         """
         try:
             # Check if we have markdown code block markers
             if "```" in output_text:
-                # Handle markdown-formatted output
+                # Handle markdown-formatted output with JSON
                 json_start = output_text.find("```json")
                 if json_start != -1:
                     # Extract content between ```json and ```
@@ -38,6 +38,9 @@ class OllamaInference(ModelInference):
                         content = content[:json_end].strip()
                         formatted_json = json.loads(content)
                         return json.dumps(formatted_json, indent=2, ensure_ascii=False)
+                else:
+                    # It's markdown but not JSON - return as-is
+                    return output_text
 
             # Handle raw JSON (no markdown formatting)
             # First try to find JSON array or object patterns
@@ -55,8 +58,11 @@ class OllamaInference(ModelInference):
             formatted_json = json.loads(output_text.strip())
             return json.dumps(formatted_json, indent=2, ensure_ascii=False)
 
-        except Exception as e:
-            print(f"Failed to parse JSON: {e}")
+        except (json.JSONDecodeError, ValueError):
+            # Not JSON - return original text (could be markdown or plain text)
+            return output_text
+        except Exception:
+            # Any other unexpected error - still return original text
             return output_text
 
 

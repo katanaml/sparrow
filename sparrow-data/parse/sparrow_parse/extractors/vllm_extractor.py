@@ -238,11 +238,12 @@ if __name__ == "__main__":
 
     # # export HF_TOKEN="hf_"
     # config = {
-    #     "method": "mlx",  # Could be 'huggingface', 'mlx', 'ollama' or 'local_gpu'
+    #     "method": "ollama",  # Could be 'huggingface', 'mlx', 'ollama' or 'local_gpu'
     #     # "model_name": "lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit",
-    #     "model_name": "mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit",
+    #     # "model_name": "mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit",
     #     # "model_name": "mlx-community/Qwen3-VL-8B-Instruct-bf16",
-    #     # "model_name": "mistral-small3.1:24b-instruct-2503-q8_0",
+    #     "model_name": "mistral-small3.2:latest",
+    #     # "model_name": "deepseek-ocr:latest",
     #     # "hf_space": "katanaml/sparrow-qwen2-vl-7b",
     #     # "hf_token": os.getenv('HF_TOKEN'),
     #     # Additional fields for local GPU inference
@@ -259,6 +260,13 @@ if __name__ == "__main__":
     #         "text_input": "retrieve [{\"instrument_name\":\"str\", \"valuation\":\"int\"}]. return response in JSON format"
     #     }
     # ]
+    #
+    # # input_data = [
+    # #     {
+    # #         "file_path": "sparrow_parse/images/bonds_table.png",
+    # #         "text_input": "\n<|grounding|>Convert the document to markdown."
+    # #     }
+    # # ]
     #
     # # input_data = [
     # #     {
