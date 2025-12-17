@@ -40,7 +40,7 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
             if debug:
                 print("\nProcessing markdown with DeepSeek OCR...")
 
-            markdown_options = ['ollama', 'deepseek-ocr:latest']
+            markdown_options = [options[0], 'deepseek-ocr:latest']
             markdown_answer = rag.run_pipeline(user_selected_pipeline, query, file_path, markdown_options, crop_size,
                                                instruction, validation, ocr, markdown, page_type, debug_dir, debug, False)
 
