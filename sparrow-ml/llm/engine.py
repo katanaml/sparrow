@@ -1,5 +1,6 @@
 import warnings
 import typer
+import json
 from typing_extensions import Annotated, List
 from pipelines.interface import get_pipeline
 import tempfile
@@ -25,6 +26,7 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
         instruction: Annotated[bool, typer.Option(help="Enable instruction query")] = False,
         validation: Annotated[bool, typer.Option(help="Enable validation query")] = False,
         ocr: Annotated[bool, typer.Option(help="Enable data ocr enhancement")] = False,
+        markdown: Annotated[bool, typer.Option(help="Enable markdown output")] = False,
         page_type: Annotated[List[str], typer.Option(help="Page type query")] = None,
         debug_dir: Annotated[str, typer.Option(help="Debug folder for multipage")] = None,
         debug: Annotated[bool, typer.Option(help="Enable debug mode")] = False):
@@ -33,8 +35,27 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
 
     try:
         rag = get_pipeline(user_selected_pipeline)
-        answer = rag.run_pipeline(user_selected_pipeline, query, file_path, options, crop_size, instruction, validation,
-                                  ocr, page_type, debug_dir, debug, False)
+
+        if markdown:
+            if debug:
+                print("\nProcessing markdown with DeepSeek OCR...")
+
+            markdown_options = ['ollama', 'deepseek-ocr:latest']
+            markdown_answer = rag.run_pipeline(user_selected_pipeline, query, file_path, markdown_options, crop_size,
+                                               instruction, validation, ocr, markdown, page_type, debug_dir, debug, False)
+
+            instruction_query = create_extraction_prompt(markdown_content=markdown_answer, schema_query=query)
+
+            if debug:
+                print("\nInstruction query:\n")
+                print(instruction_query)
+
+            rag = get_pipeline("sparrow-instructor")
+            answer = rag.run_pipeline("sparrow-instructor", instruction_query, None, options, crop_size,
+                                    instruction, validation, ocr, markdown, page_type, debug_dir, debug,False)
+        else:
+            answer = rag.run_pipeline(user_selected_pipeline, query, file_path, options, crop_size, instruction, validation,
+                                      ocr, markdown, page_type, debug_dir, debug, False)
 
         print(f"\nSparrow response:\n")
         print(answer)
@@ -42,7 +63,52 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
         print(f"Caught an exception: {e}")
 
 
-async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_size, instruction, validation, ocr, page_type, file, debug_dir, debug):
+def create_extraction_prompt(markdown_content: str, schema_query: str) -> str:
+    """
+    Generate a prompt for LLM to extract structured data from markdown.
+
+    Args:
+        markdown_content: The markdown text to extract data from
+        schema_query: JSON schema string defining the structure of data to extract
+
+    Returns:
+        A formatted prompt string with instruction and payload sections
+
+    Example:
+        >>> markdown = "<table><tr><td>Name</td><td>Age</td></tr>...</table>"
+        >>> schema = '[{"name": "str", "age": "int"}]'
+        >>> prompt = create_extraction_prompt(markdown, schema)
+    """
+    # Build the instruction section
+    instruction = f"""instruction:
+You are a data extraction specialist. Your task is to analyze the provided markdown content and extract structured data according to the specified JSON schema.
+
+Guidelines:
+- Carefully parse all content in the markdown, including tables, lists, and formatted text
+- Extract data that matches the structure defined in the schema query
+- Ensure data types match the schema specifications (str, int, float, bool, etc.)
+- If a field is not present or cannot be determined, use null
+- Return ONLY valid JSON that conforms to the schema
+- Preserve numerical accuracy and formatting where relevant
+- Handle special characters and unicode properly
+
+Schema Query:
+{schema_query}
+
+Output Format:
+Return a JSON object or array matching the schema structure. Do not include any explanatory text, markdown formatting, or code blocks - only the raw JSON data."""
+
+    # Build the payload section
+    payload = f"""payload:
+{markdown_content}"""
+
+    # Combine into final prompt
+    prompt = f"{instruction}\n\n{payload}"
+
+    return prompt
+
+
+async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_size, instruction, validation, ocr, markdown, page_type, file, debug_dir, debug):
     try:
         rag = get_pipeline(user_selected_pipeline)
 
@@ -55,11 +121,31 @@ async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_s
                     content = await file.read()
                     temp_file.write(content)
 
-                answer = rag.run_pipeline(user_selected_pipeline, query, temp_file_path, options_arr, crop_size, instruction,
-                                          validation, ocr, page_type, debug_dir, debug, False)
+                if markdown:
+                    if debug:
+                        print("\nProcessing markdown with DeepSeek OCR...")
+
+                    markdown_options = ['ollama', 'deepseek-ocr:latest']
+                    markdown_answer = rag.run_pipeline(user_selected_pipeline, query, temp_file_path, markdown_options,
+                                                       crop_size, instruction, validation, ocr, markdown, page_type, debug_dir,
+                                                       debug, False)
+
+                    instruction_query = create_extraction_prompt(markdown_content=markdown_answer, schema_query=query)
+
+                    if debug:
+                        print("\nInstruction query:\n")
+                        print(instruction_query)
+
+                    rag = get_pipeline("sparrow-instructor")
+                    answer = rag.run_pipeline("sparrow-instructor", instruction_query, None, options_arr,
+                                              crop_size, instruction, validation, ocr, markdown, page_type, debug_dir, debug,
+                                              False)
+                else:
+                    answer = rag.run_pipeline(user_selected_pipeline, query, temp_file_path, options_arr, crop_size, instruction,
+                                              validation, ocr, markdown, page_type, debug_dir, debug, False)
         else:
             answer = rag.run_pipeline(user_selected_pipeline, query, None, options_arr, crop_size, instruction,
-                                      validation, ocr, page_type, debug_dir, debug, False)
+                                      validation, ocr, markdown, page_type, debug_dir, debug, False)
     except ValueError as e:
         raise e
 
@@ -84,6 +170,7 @@ async def run_from_api_engine_instruction(user_selected_pipeline, query, options
             False,  # No instruction needed
             False, # No validation needed
             False, # No ocr needed
+            False, # No markdown needed
             None, # No page_type needed
             debug_dir,
             debug,

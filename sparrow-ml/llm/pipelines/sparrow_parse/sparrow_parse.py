@@ -71,6 +71,7 @@ class SparrowParsePipeline(Pipeline):
                      instruction: bool = False,
                      validation: bool = False,
                      ocr: bool = False,
+                     markdown: bool = False,
                      page_type: List[str] = None,
                      debug_dir: str = None,
                      debug: bool = False,
@@ -80,7 +81,7 @@ class SparrowParsePipeline(Pipeline):
         start = timeit.default_timer()
 
         # Determine query processing strategy and prepare query
-        query, query_schema, query_all_data = self._process_query(query, instruction, validation, page_type, local)
+        query, query_schema, query_all_data = self._process_query(query, instruction, validation, markdown, page_type, local)
 
         # Check if ocr is enabled and set callback accordingly
         ocr_callback = process_ocr_data if ocr else None
@@ -100,6 +101,8 @@ class SparrowParsePipeline(Pipeline):
             validation_off = True
         if validation:
             validation_off = True
+        if markdown:
+            validation_off = True
 
         llm_output = self.process_llm_output(llm_output_list, num_pages, query_all_data, query_schema, tables_only,
                                              validation_off, debug, local)
@@ -111,7 +114,7 @@ class SparrowParsePipeline(Pipeline):
         return llm_output
 
 
-    def _process_query(self, query: str, instruction: bool, validation: bool, page_type: List[str], local: bool) -> Tuple[
+    def _process_query(self, query: str, instruction: bool, validation: bool, markdown: bool, page_type: List[str], local: bool) -> Tuple[
         str, Optional[Dict], bool]:
         """
         Process and prepare the query based on the input parameters.
@@ -134,6 +137,8 @@ class SparrowParsePipeline(Pipeline):
             return self._prepare_instruction_query(query, local), None, False
         elif validation:
             return self._prepare_validation_query(query, local), None, False
+        elif markdown:
+            return self._prepare_markdown_query(query, local), None, False
         else:
             processed_query, schema = self._prepare_query(query, local)
             return processed_query, schema, False
@@ -184,7 +189,19 @@ class SparrowParsePipeline(Pipeline):
                 local
             )
         except ValueError as e:
-            raise ValueError(f"Error preparing instruction query: {e}")
+            raise ValueError(f"Error preparing validation query: {e}")
+
+
+    def _prepare_markdown_query(self, query: str, local: bool) -> str:
+        """Prepare the query and schema, raising errors as necessary."""
+        try:
+            return self.invoke_pipeline_step(
+                lambda: self.prepare_markdown_query(query),
+                "Preparing markdown query",
+                local
+            )
+        except ValueError as e:
+            raise ValueError(f"Error preparing markdown query: {e}")
 
 
     @staticmethod
@@ -226,6 +243,12 @@ class SparrowParsePipeline(Pipeline):
     @staticmethod
     def prepare_validation_query(query):
         query = f"validate if listed fields - {query} are present in the document. format response with field name and boolean value. return response in JSON format"
+
+        return query
+
+    @staticmethod
+    def prepare_markdown_query(query):
+        query = f"\n<|grounding|>Convert the document to markdown."
 
         return query
 

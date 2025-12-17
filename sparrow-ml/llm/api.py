@@ -128,6 +128,7 @@ async def inference(
         instruction: Annotated[Optional[bool], Form()] = False,
         validation: Annotated[Optional[bool], Form()] = False,
         ocr: Annotated[Optional[bool], Form()] = False,
+        markdown: Annotated[Optional[bool], Form()] = False,
         page_type: Annotated[Optional[str], Form()] = None,
         debug_dir: Annotated[Optional[str], Form()] = None,
         debug: Annotated[Optional[bool], Form()] = False,
@@ -222,7 +223,7 @@ async def inference(
 
         # Call the engine to process the request
         answer = await run_from_api_engine(pipeline, query, options_arr, processed_crop_size, instruction, validation,
-                                           ocr, page_type_arr, file, debug_dir, debug)
+                                           ocr, markdown, page_type_arr, file, debug_dir, debug)
 
         # Calculate duration
         duration = time.time() - start_time

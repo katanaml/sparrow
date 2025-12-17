@@ -24,6 +24,7 @@ class Stocks(Pipeline):
                      instruction: bool = False,
                      validation: bool = False,
                      ocr: bool = False,
+                     markdown: bool = False,
                      page_type: List[str] = None,
                      debug_dir: str = None,
                      debug: bool = False,
