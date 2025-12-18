@@ -125,7 +125,7 @@ async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_s
                     if debug:
                         print("\nProcessing markdown with DeepSeek OCR...")
 
-                    markdown_options = ['ollama', 'deepseek-ocr:latest']
+                    markdown_options = [options_arr[0], 'deepseek-ocr:latest']
                     markdown_answer = rag.run_pipeline(user_selected_pipeline, query, temp_file_path, markdown_options,
                                                        crop_size, instruction, validation, ocr, markdown, page_type, debug_dir,
                                                        debug, False)
