@@ -105,13 +105,13 @@ class SparrowParsePipeline(Pipeline):
             validation_off = True
 
         llm_output = self.process_llm_output(llm_output_list, num_pages, query_all_data, query_schema, tables_only,
-                                             validation_off, debug, local)
+                                             validation_off, markdown, debug, local)
 
         end = timeit.default_timer()
 
         print(f"Time to retrieve answer: {end - start}")
 
-        return llm_output
+        return llm_output, num_pages
 
 
     def _process_query(self, query: str, instruction: bool, validation: bool, markdown: bool, page_type: List[str], local: bool) -> Tuple[
@@ -373,7 +373,7 @@ class SparrowParsePipeline(Pipeline):
         return llm_output
 
 
-    def process_multiple_pages(self, llm_output_list, query_all_data, query_schema, tables_only, validation_off, debug, local):
+    def process_multiple_pages(self, llm_output_list, query_all_data, query_schema, tables_only, validation_off, markdown, debug, local):
         """
         Processes multiple pages of LLM output, including validation (if needed), formatting, and pagination.
         """
@@ -396,22 +396,25 @@ class SparrowParsePipeline(Pipeline):
                         "valid": validation_result
                     }
             else:
-                try:
-                    llm_output = json.loads(llm_output) if isinstance(llm_output, str) else llm_output
-                except json.JSONDecodeError:
-                    llm_output = {
-                        "message": "Invalid JSON format in LLM output",
-                        "valid": "false"
-                    }
+                if not markdown:
+                    try:
+                        llm_output = json.loads(llm_output) if isinstance(llm_output, str) else llm_output
+                    except json.JSONDecodeError:
+                        llm_output = {
+                            "message": "Invalid JSON format in LLM output",
+                            "valid": "false"
+                        }
 
-            llm_output = add_page_number(llm_output, i + 1)
+            if not markdown:
+                llm_output = add_page_number(llm_output, i + 1)
+
             combined_output.append(llm_output)
 
         return json.dumps(combined_output, indent=4, ensure_ascii=False)
 
 
     def process_llm_output(self, llm_output_list, num_pages, query_all_data, query_schema, tables_only, validation_off,
-                           debug, local):
+                           markdown, debug, local):
         """
         Processes the LLM output based on the number of pages.
         """
@@ -420,7 +423,7 @@ class SparrowParsePipeline(Pipeline):
                                             debug, local)
         if num_pages > 1:
             return self.process_multiple_pages(llm_output_list, query_all_data, query_schema, tables_only,
-                                               validation_off, debug, local)
+                                               validation_off, markdown, debug, local)
         return None
 
 

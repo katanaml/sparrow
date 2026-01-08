@@ -6,6 +6,9 @@ from pipelines.interface import get_pipeline
 import tempfile
 import os
 from rich import print
+from pipelines.sparrow_parse.sparrow_utils import (
+    add_page_number
+)
 
 
 # Disable parallelism in the Huggingface tokenizers library to prevent potential deadlocks and ensure consistent behavior.
@@ -37,22 +40,8 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
         rag = get_pipeline(user_selected_pipeline)
 
         if markdown:
-            if debug:
-                print("\nProcessing markdown with DeepSeek OCR...")
-
-            markdown_options = [options[0], 'deepseek-ocr:latest']
-            markdown_answer = rag.run_pipeline(user_selected_pipeline, query, file_path, markdown_options, crop_size,
-                                               instruction, validation, ocr, markdown, page_type, debug_dir, debug, False)
-
-            instruction_query = create_extraction_prompt(markdown_content=markdown_answer, schema_query=query)
-
-            if debug:
-                print("\nInstruction query:\n")
-                print(instruction_query)
-
-            rag = get_pipeline("sparrow-instructor")
-            answer = rag.run_pipeline("sparrow-instructor", instruction_query, None, options, crop_size,
-                                    instruction, validation, ocr, markdown, page_type, debug_dir, debug,False)
+            answer = process_markdown_extraction(rag, user_selected_pipeline, query, file_path, options, crop_size,
+                                                instruction, validation, ocr, markdown, page_type, debug_dir, debug)
         else:
             answer = rag.run_pipeline(user_selected_pipeline, query, file_path, options, crop_size, instruction, validation,
                                       ocr, markdown, page_type, debug_dir, debug, False)
@@ -61,6 +50,68 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
         print(answer)
     except ValueError as e:
         print(f"Caught an exception: {e}")
+
+
+def process_markdown_extraction(rag, user_selected_pipeline, query, file_path, options, crop_size,
+                               instruction, validation, ocr, markdown, page_type, debug_dir, debug):
+    """
+    Process document with markdown extraction and structured data extraction.
+
+    Args:
+        rag: Pipeline instance
+        user_selected_pipeline: Name of the pipeline to use
+        query: Schema query for data extraction
+        file_path: Path to the document file
+        options: Pipeline options
+        crop_size: Crop size for table extraction
+        instruction: Enable instruction query
+        validation: Enable validation query
+        ocr: Enable data ocr enhancement
+        markdown: Enable markdown output
+        page_type: Page type query
+        debug_dir: Debug folder for multipage
+        debug: Enable debug mode
+
+    Returns:
+        Extracted data as JSON string or dict
+    """
+    if debug:
+        print("\nProcessing markdown with DeepSeek OCR...")
+
+    markdown_options = [options[0], 'deepseek-ocr:latest']
+    markdown_output_list, num_pages = rag.run_pipeline(user_selected_pipeline, query, file_path, markdown_options, crop_size,
+                                       instruction, validation, ocr, markdown, page_type, debug_dir, debug, False)
+
+    combined_output = []
+    markdown_output_list = [markdown_output_list] if num_pages == 1 else markdown_output_list
+    markdown_output_list = json.loads(markdown_output_list) if isinstance(markdown_output_list, str) else markdown_output_list
+
+    for i, markdown_output in enumerate(markdown_output_list):
+        instruction_query = create_extraction_prompt(markdown_content=markdown_output, schema_query=query)
+
+        if debug:
+            print("\nInstruction query:\n")
+            print(instruction_query)
+
+        rag = get_pipeline("sparrow-instructor")
+        answer = rag.run_pipeline("sparrow-instructor", instruction_query, None, options, crop_size,
+                                  instruction, validation, ocr, markdown, page_type, debug_dir, debug, False)
+
+        if num_pages > 1:
+            try:
+                answer = json.loads(answer) if isinstance(answer, str) else answer
+            except json.JSONDecodeError:
+                answer = {
+                    "message": "Invalid JSON format in LLM output",
+                    "valid": "false"
+                }
+            answer = add_page_number(answer, i + 1)
+            combined_output.append(answer)
+
+    if num_pages > 1:
+        answer = json.dumps(combined_output, indent=4, ensure_ascii=False)
+
+    return answer
 
 
 def create_extraction_prompt(markdown_content: str, schema_query: str) -> str:
@@ -122,24 +173,10 @@ async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_s
                     temp_file.write(content)
 
                 if markdown:
-                    if debug:
-                        print("\nProcessing markdown with DeepSeek OCR...")
-
                     markdown_options = [options_arr[0], 'deepseek-ocr:latest']
-                    markdown_answer = rag.run_pipeline(user_selected_pipeline, query, temp_file_path, markdown_options,
-                                                       crop_size, instruction, validation, ocr, markdown, page_type, debug_dir,
-                                                       debug, False)
-
-                    instruction_query = create_extraction_prompt(markdown_content=markdown_answer, schema_query=query)
-
-                    if debug:
-                        print("\nInstruction query:\n")
-                        print(instruction_query)
-
-                    rag = get_pipeline("sparrow-instructor")
-                    answer = rag.run_pipeline("sparrow-instructor", instruction_query, None, options_arr,
-                                              crop_size, instruction, validation, ocr, markdown, page_type, debug_dir, debug,
-                                              False)
+                    answer = process_markdown_extraction(rag, user_selected_pipeline, query, temp_file_path, markdown_options,
+                                                         crop_size, instruction, validation, ocr, markdown, page_type, debug_dir,
+                                                         debug)
                 else:
                     answer = rag.run_pipeline(user_selected_pipeline, query, temp_file_path, options_arr, crop_size, instruction,
                                               validation, ocr, markdown, page_type, debug_dir, debug, False)
