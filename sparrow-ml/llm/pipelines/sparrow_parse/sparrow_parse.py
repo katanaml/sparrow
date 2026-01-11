@@ -111,7 +111,7 @@ class SparrowParsePipeline(Pipeline):
 
         print(f"Time to retrieve answer: {end - start}")
 
-        return llm_output, num_pages
+        return llm_output
 
 
     def _process_query(self, query: str, instruction: bool, validation: bool, markdown: bool, page_type: List[str], local: bool) -> Tuple[

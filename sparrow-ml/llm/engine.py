@@ -79,12 +79,16 @@ def process_markdown_extraction(rag, user_selected_pipeline, query, file_path, o
         print("\nProcessing markdown with DeepSeek OCR...")
 
     markdown_options = [options[0], 'deepseek-ocr:latest']
-    markdown_output_list, num_pages = rag.run_pipeline(user_selected_pipeline, query, file_path, markdown_options, crop_size,
+    markdown_output_list = rag.run_pipeline(user_selected_pipeline, query, file_path, markdown_options, crop_size,
                                        instruction, validation, ocr, markdown, page_type, debug_dir, debug, False)
 
     combined_output = []
-    markdown_output_list = [markdown_output_list] if num_pages == 1 else markdown_output_list
-    markdown_output_list = json.loads(markdown_output_list) if isinstance(markdown_output_list, str) else markdown_output_list
+    try:
+        markdown_output_list = json.loads(markdown_output_list) if isinstance(markdown_output_list, str) else markdown_output_list
+    except (json.JSONDecodeError, ValueError):
+        pass
+    markdown_output_list = [markdown_output_list] if not isinstance(markdown_output_list, list) else markdown_output_list
+    num_pages = len(markdown_output_list)
 
     for i, markdown_output in enumerate(markdown_output_list):
         instruction_query = create_extraction_prompt(markdown_content=markdown_output, schema_query=query)
