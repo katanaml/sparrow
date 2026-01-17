@@ -191,7 +191,7 @@ qwen3-vl:30b-a3b-instruct-q8_0 - OK
 
 ./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"int\"}]" --pipeline "sparrow-parse" --debug --options ollama --options mistral-small3.2:24b --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png"
 
-mistral-small3.2:24b - OK
+mistral-small3.2:latest - OK
 
 ./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"int\"}]" --pipeline "sparrow-parse" --debug --options ollama --options ministral-3:14b-instruct-2512-q8_0 --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png"
 
@@ -219,7 +219,7 @@ qwen3-vl:30b-a3b-instruct-q8_0 - OK
 
 ./sparrow.sh "[{\"description_text\":\"str\", \"price_1\":\"str or null\", \"price_2\": \"str or null\"}]" --pipeline "sparrow-parse" --debug --options ollama --options mistral-small3.2 --file-path "/Users/andrejb/Work/samples/tables/oracle_10k_2024_q1_small_table.png"
 
-mistral-small3.2 - OK
+mistral-small3.2:latest - OK
 
 ./sparrow.sh "[{\"description_text\":\"str\", \"price_1\":\"str or null\", \"price_2\": \"str or null\"}]" --pipeline "sparrow-parse" --debug --options ollama --options ministral-3:14b-instruct-2512-q8_0 --file-path "/Users/andrejb/Work/samples/tables/oracle_10k_2024_q1_small_table.png"
 
