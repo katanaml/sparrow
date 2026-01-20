@@ -4,7 +4,7 @@ import json
 
 class ModelInference(ABC):
     @abstractmethod
-    def inference(self, input_data, apply_annotation=False, precision_callback=None, mode=None):
+    def inference(self, input_data, apply_annotation=False, ocr_callback=None, mode=None):
         """This method should be implemented by subclasses."""
         pass
 

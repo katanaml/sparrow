@@ -66,13 +66,13 @@ class OllamaInference(ModelInference):
             return output_text
 
 
-    def inference(self, input_data, apply_annotation=False, precision_callback=None, mode=None):
+    def inference(self, input_data, apply_annotation=False, ocr_callback=None, mode=None):
         """
         Perform inference on input data using the specified model.
 
         :param input_data: A list of dictionaries containing image file paths and text inputs.
         :param apply_annotation: Optional flag to apply annotations to the output.
-        :param precision_callback: Optional callback function to modify input data before inference.
+        :param ocr_callback: Optional callback function to modify input data before inference.
         :param mode: Optional mode for inference ("static" for simple JSON output).
         :return: List of processed model responses.
         """
@@ -99,7 +99,7 @@ class OllamaInference(ModelInference):
         else:
             # Image-based inference
             file_paths = self._extract_file_paths(input_data)
-            results = self._process_images(file_paths, input_data, apply_annotation, precision_callback)
+            results = self._process_images(file_paths, input_data, apply_annotation, ocr_callback)
 
         return results
 
@@ -128,7 +128,7 @@ class OllamaInference(ModelInference):
             raise
 
 
-    def _process_images(self, file_paths, input_data, apply_annotation, precision_callback):
+    def _process_images(self, file_paths, input_data, apply_annotation, ocr_callback):
         """
         Process images and generate responses for each.
         """
@@ -141,10 +141,10 @@ class OllamaInference(ModelInference):
                     continue
 
                 # Prepare messages based on model type
-                messages = self._prepare_messages(file_path, input_data, apply_annotation, precision_callback)
+                messages = self._prepare_messages(file_path, input_data, apply_annotation, ocr_callback)
 
                 # Handle different message formats for Ollama API
-                if isinstance(messages, list):
+                if "qwen" in self.model_name.lower():
                     # For Qwen: messages is a list of message dicts, add images to the last user message
                     ollama_messages = messages.copy()
                     # Find the last user message and add images
@@ -153,7 +153,7 @@ class OllamaInference(ModelInference):
                             msg['images'] = [file_path]
                             break
                 else:
-                    # For Mistral: messages is a string, wrap in standard message format
+                    # For other models: messages is a string, wrap in standard message format
                     ollama_messages = [
                         {
                             'role': 'user',
@@ -182,7 +182,7 @@ class OllamaInference(ModelInference):
         return results
 
 
-    def _prepare_messages(self, file_path, input_data, apply_annotation, precision_callback):
+    def _prepare_messages(self, file_path, input_data, apply_annotation, ocr_callback):
         """
         Prepare the appropriate messages based on the model type.
 
@@ -190,18 +190,12 @@ class OllamaInference(ModelInference):
         :param apply_annotation: Flag to apply annotations
         :return: Properly formatted messages
         """
-        if "mistral" or "olmocr" or "gemma"in self.model_name.lower():
-            if precision_callback is not None:
-                input_data = precision_callback(file_path, input_data)
-
-            return input_data[0]["text_input"]
-        elif "qwen" in self.model_name.lower():
-            if precision_callback is not None:
-                input_data = precision_callback(file_path, input_data)
-
+        if any(keyword in self.model_name.lower() for keyword in ["mistral", "ministral", "qwen", "deepseek", "glm"]):
+            if ocr_callback is not None:
+                input_data = ocr_callback(file_path, input_data)
             return input_data[0]["text_input"]
         else:
-            raise ValueError("Unsupported model type. Please use either Mistral or Qwen.")
+            raise ValueError("Unsupported model type. Please use either Mistral, Ministral, Qwen, Deepseek, or GLM.")
 
 
     @staticmethod

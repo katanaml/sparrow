@@ -242,7 +242,7 @@ if __name__ == "__main__":
     #     # "model_name": "lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit",
     #     # "model_name": "mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit",
     #     # "model_name": "mlx-community/Qwen3-VL-8B-Instruct-bf16",
-    #     "model_name": "mistral-small3.2:latest",
+    #     "model_name": "ministral-3:14b-instruct-2512-q8_0",
     #     # "model_name": "deepseek-ocr:latest",
     #     # "hf_space": "katanaml/sparrow-qwen2-vl-7b",
     #     # "hf_token": os.getenv('HF_TOKEN'),

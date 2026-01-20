@@ -132,13 +132,13 @@ class MLXInference(ModelInference):
         return process_object(json_response)
 
 
-    def inference(self, input_data, apply_annotation=False, precision_callback=None, mode=None):
+    def inference(self, input_data, apply_annotation=False, ocr_callback=None, mode=None):
         """
         Perform inference on input data using the specified model.
 
         :param input_data: A list of dictionaries containing image file paths and text inputs.
         :param apply_annotation: Optional flag to apply annotations to the output.
-        :param precision_callback: Optional callback function to modify input data before inference.
+        :param ocr_callback: Optional callback function to modify input data before inference.
         :param mode: Optional mode for inference ("static" for simple JSON output).
         :return: List of processed model responses.
         """
@@ -160,7 +160,7 @@ class MLXInference(ModelInference):
         else:
             # Image-based inference
             file_paths = self._extract_file_paths(input_data)
-            results = self._process_images(model, processor, config, file_paths, input_data, apply_annotation, precision_callback)
+            results = self._process_images(model, processor, config, file_paths, input_data, apply_annotation, ocr_callback)
         
         return results
 
@@ -187,7 +187,7 @@ class MLXInference(ModelInference):
         return response.text
 
 
-    def _process_images(self, model, processor, config, file_paths, input_data, apply_annotation, precision_callback):
+    def _process_images(self, model, processor, config, file_paths, input_data, apply_annotation, ocr_callback):
         """
         Process images and generate responses for each.
         Always resize images for memory efficiency, but scale coordinates back for annotation cases.
@@ -198,7 +198,7 @@ class MLXInference(ModelInference):
             image, resized_width, resized_height, orig_width, orig_height = self.load_image_data(file_path)
 
             # Prepare messages based on model type
-            messages = self._prepare_messages(file_path, input_data, apply_annotation, precision_callback)
+            messages = self._prepare_messages(file_path, input_data, apply_annotation, ocr_callback)
 
             # Always use resize_shape for memory efficiency
             prompt = apply_chat_template(processor, config, messages, num_images=1)
@@ -344,7 +344,7 @@ class MLXInference(ModelInference):
             return json_obj
 
 
-    def _prepare_messages(self, file_path, input_data, apply_annotation, precision_callback):
+    def _prepare_messages(self, file_path, input_data, apply_annotation, ocr_callback):
         """
         Prepare the appropriate messages based on the model type.
         
@@ -352,14 +352,14 @@ class MLXInference(ModelInference):
         :param apply_annotation: Flag to apply annotations
         :return: Properly formatted messages
         """
-        if "mistral" or "olmocr" or "gemma" in self.model_name.lower():
-            if precision_callback is not None:
-                input_data = precision_callback(file_path, input_data)
+        if "mistral" in self.model_name.lower():
+            if ocr_callback is not None:
+                input_data = ocr_callback(file_path, input_data)
 
             return input_data[0]["text_input"]
         elif "qwen" in self.model_name.lower():
-            if precision_callback is not None:
-                input_data = precision_callback(file_path, input_data)
+            if ocr_callback is not None:
+                input_data = ocr_callback(file_path, input_data)
 
             if apply_annotation:
                 system_prompt = {"role": "system", "content": "You are an expert at extracting text from images. "
@@ -369,7 +369,7 @@ class MLXInference(ModelInference):
                 return [system_prompt, user_prompt]
             return input_data[0]["text_input"]
         else:
-            raise ValueError("Unsupported model type. Please use either Mistral, olmOCR, Gemma or Qwen.")
+            raise ValueError("Unsupported model type. Please use either Mistral or Qwen.")
 
     @staticmethod
     def _extract_file_paths(input_data):
