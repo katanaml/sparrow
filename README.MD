@@ -59,7 +59,7 @@ Visit [sparrow.katanaml.io](https://sparrow.katanaml.io) for a live demo running
 📱 **Multi-format Support**: Images (PNG, JPG) and multi-page PDFs  
 🎨 **Schema Validation**: JSON schema-based extraction with automatic validation  
 🌐 **API-First Design**: RESTful APIs for easy integration  
-💬 **Instruction Calling**: Beyond document extraction - text processing, validation, decision making. Using text based LLMs, such as GPT-OSS, GLM Flash, etc.  
+💬 **Instruction Calling**: Beyond document extraction - text processing, validation, decision making. Using LLMs, such as GPT-OSS, GLM Flash, etc.  
 📊 **Visual Monitoring**: Built-in dashboard and agent workflow tracking  
 🔒 **Enterprise Ready**: Rate limiting, usage analytics, commercial licensing available  
 🚀 **Local Vision LLMs**: Mistral, QwenVL, DeepSeek OCR, etc.  
