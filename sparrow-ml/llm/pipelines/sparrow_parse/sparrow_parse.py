@@ -66,6 +66,7 @@ class SparrowParsePipeline(Pipeline):
                      pipeline: str,
                      query: str,
                      file_path: str,
+                     hints_file_path: str = None,
                      options: List[str] = None,
                      crop_size: int = None,
                      instruction: bool = False,
@@ -81,7 +82,8 @@ class SparrowParsePipeline(Pipeline):
         start = timeit.default_timer()
 
         # Determine query processing strategy and prepare query
-        query, query_schema, query_all_data = self._process_query(query, instruction, validation, markdown, page_type, local)
+        query, query_schema, query_all_data = self._process_query(query, instruction, validation, markdown, page_type,
+                                                                  hints_file_path, local)
 
         # Check if ocr is enabled and set callback accordingly
         ocr_callback = process_ocr_data if ocr else None
@@ -114,8 +116,8 @@ class SparrowParsePipeline(Pipeline):
         return llm_output
 
 
-    def _process_query(self, query: str, instruction: bool, validation: bool, markdown: bool, page_type: List[str], local: bool) -> Tuple[
-        str, Optional[Dict], bool]:
+    def _process_query(self, query: str, instruction: bool, validation: bool, markdown: bool, page_type: List[str],
+                       hints_file_path: str, local: bool) -> Tuple[str, Optional[Dict], bool]:
         """
         Process and prepare the query based on the input parameters.
 
@@ -140,15 +142,15 @@ class SparrowParsePipeline(Pipeline):
         elif markdown:
             return self._prepare_markdown_query(query, local), None, False
         else:
-            processed_query, schema = self._prepare_query(query, local)
+            processed_query, schema = self._prepare_query(query, hints_file_path, local)
             return processed_query, schema, False
 
 
-    def _prepare_query(self, query: str, local: bool) -> Tuple[str, Optional[Dict]]:
+    def _prepare_query(self, query: str, hints_file_path: str, local: bool) -> Tuple[str, Optional[Dict]]:
         """Prepare the query and schema, raising errors as necessary."""
         try:
             return self.invoke_pipeline_step(
-                lambda: self.prepare_query_and_schema(query),
+                lambda: self.prepare_query_and_schema(query, hints_file_path),
                 "Preparing query and schema",
                 local
             )
@@ -204,20 +206,45 @@ class SparrowParsePipeline(Pipeline):
             raise ValueError(f"Error preparing markdown query: {e}")
 
 
-    @staticmethod
-    def prepare_query_and_schema(query):
+    def prepare_query_and_schema(self, query, hints_file_path):
         is_query_valid = is_valid_json(query)
         if not is_query_valid:
             raise ValueError("Invalid query. Please provide a valid JSON query.")
 
-        query_keys = get_json_keys_as_string(query)
+        # removed for better performance
+        # query_keys = get_json_keys_as_string(query)
         query_schema = query
         query = "retrieve data based on provided JSON schema"
 
+        # Read hints from JSON file if provided
+        hints_content = self.read_hints_from_json(hints_file_path)
+        hints_section = f"\n\nAdditional Hints:\n{hints_content}" if hints_content else ""
+
         query = (query + ". return response in JSON format, by strictly following this JSON schema: " + query_schema +
-                 ". If a field is not visible or cannot be found in the document, return null. Do not guess, infer, or generate values for missing fields.")
+                 ". If a field is not visible or cannot be found in the document, return null. Do not guess, infer, or generate values for missing fields." + hints_section)
 
         return query, query_schema
+
+
+    @staticmethod
+    def read_hints_from_json(hints_file_path: str) -> str:
+        """
+        Check if hints_file_path points to a JSON file and read its content.
+
+        Args:
+            hints_file_path: Path to the hints file
+
+        Returns:
+            Content of the JSON file as a string, or empty string if not a JSON file or file doesn't exist
+        """
+        if hints_file_path and hints_file_path.endswith('.json'):
+            try:
+                with open(hints_file_path, 'r', encoding='utf-8') as f:
+                    content = json.load(f)
+                    return json.dumps(content, ensure_ascii=False)
+            except (FileNotFoundError, json.JSONDecodeError, IOError):
+                return ""
+        return ""
 
 
     @staticmethod

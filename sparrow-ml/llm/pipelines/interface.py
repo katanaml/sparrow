@@ -15,6 +15,7 @@ class Pipeline(ABC):
                      pipeline: str,
                      query: str,
                      file_path: str,
+                     hints_file_path: str = None,
                      options: List[str] = None,
                      crop_size: int = None,
                      instruction: bool = False,

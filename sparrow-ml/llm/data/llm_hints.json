@@ -1,0 +1,4 @@
+{
+  "instrument_name": "Extract the complete instrument/security name as written. Include all text: issuer, fund structure (PLC/SICAV), product name, share class, and trailing identifiers (EUR/DIST/INST/HDGD). Do not abbreviate or reformat.",
+  "valuation": "Extract the numeric value only (no currency symbols). This represents the position value, market value, or holding amount in the document's base currency."
+}

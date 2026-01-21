@@ -23,6 +23,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")],
         file_path: Annotated[str, typer.Option(help="The file to process")] = None,
+        hints_file_path: Annotated[str, typer.Option(help="JSON file containing query hints")] = None,
         pipeline: Annotated[str, typer.Option(help="Selected pipeline")] = "sparrow-parse",
         options: Annotated[List[str], typer.Option(help="Options to pass to the pipeline")] = None,
         crop_size: Annotated[int, typer.Option(help="Crop size for table extraction")] = None,
@@ -40,11 +41,12 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
         rag = get_pipeline(user_selected_pipeline)
 
         if markdown:
-            answer = process_markdown_extraction(rag, user_selected_pipeline, query, file_path, options, crop_size,
-                                                instruction, validation, ocr, markdown, page_type, debug_dir, debug)
+            answer = process_markdown_extraction(rag, user_selected_pipeline, query, file_path, hints_file_path, options,
+                                                 crop_size, instruction, validation, ocr, markdown, page_type, debug_dir,
+                                                 debug)
         else:
-            answer = rag.run_pipeline(user_selected_pipeline, query, file_path, options, crop_size, instruction, validation,
-                                      ocr, markdown, page_type, debug_dir, debug, False)
+            answer = rag.run_pipeline(user_selected_pipeline, query, file_path, hints_file_path, options, crop_size,
+                                      instruction, validation, ocr, markdown, page_type, debug_dir, debug, False)
 
         print(f"\nSparrow response:\n")
         print(answer)
@@ -52,7 +54,7 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
         print(f"Caught an exception: {e}")
 
 
-def process_markdown_extraction(rag, user_selected_pipeline, query, file_path, options, crop_size,
+def process_markdown_extraction(rag, user_selected_pipeline, query, file_path, hints_file_path, options, crop_size,
                                instruction, validation, ocr, markdown, page_type, debug_dir, debug):
     """
     Process document with markdown extraction and structured data extraction.
@@ -62,6 +64,7 @@ def process_markdown_extraction(rag, user_selected_pipeline, query, file_path, o
         user_selected_pipeline: Name of the pipeline to use
         query: Schema query for data extraction
         file_path: Path to the document file
+        hints_file_path: Path to JSON file containing query hints
         options: Pipeline options
         crop_size: Crop size for table extraction
         instruction: Enable instruction query
@@ -79,8 +82,9 @@ def process_markdown_extraction(rag, user_selected_pipeline, query, file_path, o
         print("\nProcessing markdown with DeepSeek OCR...")
 
     markdown_options = [options[0], 'deepseek-ocr:latest']
-    markdown_output_list = rag.run_pipeline(user_selected_pipeline, query, file_path, markdown_options, crop_size,
-                                       instruction, validation, ocr, markdown, page_type, debug_dir, debug, False)
+    markdown_output_list = rag.run_pipeline(user_selected_pipeline, query, file_path, hints_file_path, markdown_options,
+                                            crop_size, instruction, validation, ocr, markdown, page_type, debug_dir,
+                                            debug, False)
 
     combined_output = []
     try:
@@ -91,14 +95,14 @@ def process_markdown_extraction(rag, user_selected_pipeline, query, file_path, o
     num_pages = len(markdown_output_list)
 
     for i, markdown_output in enumerate(markdown_output_list):
-        instruction_query = create_extraction_prompt(markdown_content=markdown_output, schema_query=query)
+        instruction_query = create_extraction_prompt(markdown_content=markdown_output, schema_query=query, hints_file_path=hints_file_path)
 
         if debug:
             print("\nInstruction query:\n")
             print(instruction_query)
 
         rag = get_pipeline("sparrow-instructor")
-        answer = rag.run_pipeline("sparrow-instructor", instruction_query, None, options, crop_size,
+        answer = rag.run_pipeline("sparrow-instructor", instruction_query, None, None, options, crop_size,
                                   instruction, validation, ocr, markdown, page_type, debug_dir, debug, False)
 
         if num_pages > 1:
@@ -118,13 +122,34 @@ def process_markdown_extraction(rag, user_selected_pipeline, query, file_path, o
     return answer
 
 
-def create_extraction_prompt(markdown_content: str, schema_query: str) -> str:
+def read_hints_from_json(hints_file_path: str) -> str:
+    """
+    Check if hints_file_path points to a JSON file and read its content.
+
+    Args:
+        hints_file_path: Path to the hints file
+
+    Returns:
+        Content of the JSON file as a string, or empty string if not a JSON file or file doesn't exist
+    """
+    if hints_file_path and hints_file_path.endswith('.json'):
+        try:
+            with open(hints_file_path, 'r', encoding='utf-8') as f:
+                content = json.load(f)
+                return json.dumps(content, ensure_ascii=False)
+        except (FileNotFoundError, json.JSONDecodeError, IOError):
+            return ""
+    return ""
+
+
+def create_extraction_prompt(markdown_content: str, schema_query: str, hints_file_path: str = None) -> str:
     """
     Generate a prompt for LLM to extract structured data from markdown.
 
     Args:
         markdown_content: The markdown text to extract data from
         schema_query: JSON schema string defining the structure of data to extract
+        hints_file_path: Optional path to JSON file containing query hints
 
     Returns:
         A formatted prompt string with instruction and payload sections
@@ -134,6 +159,10 @@ def create_extraction_prompt(markdown_content: str, schema_query: str) -> str:
         >>> schema = '[{"name": "str", "age": "int"}]'
         >>> prompt = create_extraction_prompt(markdown, schema)
     """
+    # Read hints from JSON file if provided
+    hints_content = read_hints_from_json(hints_file_path)
+    hints_section = f"\n\nAdditional Hints:\n{hints_content}" if hints_content else ""
+
     # Build the instruction section
     instruction = f"""instruction:
 You are a data extraction specialist. Your task is to analyze the provided markdown content and extract structured data according to the specified JSON schema.
@@ -148,7 +177,7 @@ Guidelines:
 - Handle special characters and unicode properly
 
 Schema Query:
-{schema_query}
+{schema_query}{hints_section}
 
 Output Format:
 Return a JSON object or array matching the schema structure. Do not include any explanatory text, markdown formatting, or code blocks - only the raw JSON data."""
@@ -163,27 +192,35 @@ Return a JSON object or array matching the schema structure. Do not include any 
     return prompt
 
 
-async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_size, instruction, validation, ocr, markdown, page_type, file, debug_dir, debug):
+async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_size, instruction, validation, ocr,
+                              markdown, page_type, file, hints_file, debug_dir, debug):
     try:
         rag = get_pipeline(user_selected_pipeline)
 
         if file is not None:
             with tempfile.TemporaryDirectory() as temp_dir:
                 temp_file_path = os.path.join(temp_dir, file.filename)
-
                 # Save the uploaded file to the temporary directory
                 with open(temp_file_path, 'wb') as temp_file:
                     content = await file.read()
                     temp_file.write(content)
 
+                hints_temp_path = None
+                if hints_file is not None:
+                    hints_temp_path = os.path.join(temp_dir, hints_file.filename)
+                    with open(hints_temp_path, 'wb') as hints_temp:
+                        hints_content = await hints_file.read()
+                        hints_temp.write(hints_content)
+
                 if markdown:
                     markdown_options = [options_arr[0], 'deepseek-ocr:latest']
-                    answer = process_markdown_extraction(rag, user_selected_pipeline, query, temp_file_path, markdown_options,
-                                                         crop_size, instruction, validation, ocr, markdown, page_type, debug_dir,
-                                                         debug)
+                    answer = process_markdown_extraction(rag, user_selected_pipeline, query, temp_file_path, hints_temp_path,
+                                                         markdown_options, crop_size, instruction, validation, ocr,
+                                                         markdown, page_type, debug_dir, debug)
                 else:
-                    answer = rag.run_pipeline(user_selected_pipeline, query, temp_file_path, options_arr, crop_size, instruction,
-                                              validation, ocr, markdown, page_type, debug_dir, debug, False)
+                    answer = rag.run_pipeline(user_selected_pipeline, query, temp_file_path, hints_temp_path, options_arr,
+                                              crop_size, instruction, validation, ocr, markdown, page_type, debug_dir,
+                                              debug, False)
         else:
             answer = rag.run_pipeline(user_selected_pipeline, query, None, options_arr, crop_size, instruction,
                                       validation, ocr, markdown, page_type, debug_dir, debug, False)
@@ -206,6 +243,7 @@ async def run_from_api_engine_instruction(user_selected_pipeline, query, options
             user_selected_pipeline,
             query,
             None,  # No file path for instruction-only queries
+            None, # No hints file needed
             options_arr,
             None,  # No crop_size needed
             False,  # No instruction needed

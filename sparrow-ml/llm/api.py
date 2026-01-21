@@ -135,7 +135,8 @@ async def inference(
         sparrow_key: Annotated[Optional[str], Form()] = None,
         client_ip: Annotated[Optional[str], Form()] = "127.0.0.1",  # Default to localhost
         country: Annotated[Optional[str], Form()] = "Unknown",      # Default to Unknown
-        file: UploadFile = File(None)
+        file: UploadFile = File(None),
+        hints_file: Optional[UploadFile] = File(None)
         ):
     try:
         processed_crop_size = parse_optional_int(crop_size)
@@ -223,7 +224,7 @@ async def inference(
 
         # Call the engine to process the request
         answer = await run_from_api_engine(pipeline, query, options_arr, processed_crop_size, instruction, validation,
-                                           ocr, markdown, page_type_arr, file, debug_dir, debug)
+                                           ocr, markdown, page_type_arr, file, hints_file, debug_dir, debug)
 
         # Calculate duration
         duration = time.time() - start_time
