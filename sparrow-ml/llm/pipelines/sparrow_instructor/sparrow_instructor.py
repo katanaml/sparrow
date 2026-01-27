@@ -62,6 +62,7 @@ class SparrowInstructorPipeline(Pipeline):
                      validation: bool = False,
                      ocr: bool = False,
                      markdown: bool = False,
+                     chameleon: bool = False,
                      page_type: List[str] = None,
                      debug_dir: str = None,
                      debug: bool = False,
