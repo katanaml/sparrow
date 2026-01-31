@@ -1,0 +1,4 @@
+{
+  "instrument_name": "Extract the complete instrument/security name as written. Include all text: issuer, fund structure (PLC/SICAV), product name, share class, and trailing identifiers (EUR/DIST/INST/HDGD). Do not abbreviate or reformat.",
+  "valuation": "Extract and format the numeric value in European standard format for bank documents. Requirements: 1) No currency symbols, 2) Use period (.) as thousands separator for every three digits, 3) Use comma (,) as decimal separator, 4) Always include two decimal places. Examples: 19049.00 becomes 19.049,00 | 213030.00 becomes 213.030,00 | 1234567.89 becomes 1.234.567,89"
+}
