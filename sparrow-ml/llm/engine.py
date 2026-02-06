@@ -75,16 +75,15 @@ async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_s
                         hints_temp.write(hints_content)
 
                 if markdown:
-                    markdown_options = [options_arr[0], 'deepseek-ocr:latest']
                     answer = process_markdown_extraction(rag, user_selected_pipeline, query, temp_file_path, hints_temp_path,
-                                                         markdown_options, crop_size, instruction, validation, ocr,
+                                                         options_arr, crop_size, instruction, validation, ocr,
                                                          markdown, page_type, debug_dir, debug)
                 else:
                     answer = rag.run_pipeline(user_selected_pipeline, query, temp_file_path, hints_temp_path, options_arr,
-                                              crop_size, instruction, validation, ocr, chameleon, markdown, page_type, debug_dir,
+                                              crop_size, instruction, validation, ocr, markdown, chameleon, page_type, debug_dir,
                                               debug, False)
         else:
-            answer = rag.run_pipeline(user_selected_pipeline, query, None, options_arr, crop_size, instruction,
+            answer = rag.run_pipeline(user_selected_pipeline, query, None, None, options_arr, crop_size, instruction,
                                       validation, ocr, markdown, chameleon, page_type, debug_dir, debug, False)
     except ValueError as e:
         raise e
