@@ -144,7 +144,7 @@ class OllamaInference(ModelInference):
                 messages = self._prepare_messages(file_path, input_data, apply_annotation, ocr_callback)
 
                 # Handle different message formats for Ollama API
-                if "qwen" in self.model_name.lower():
+                if "qwen_deprecated" in self.model_name.lower():
                     # For Qwen: messages is a list of message dicts, add images to the last user message
                     ollama_messages = messages.copy()
                     # Find the last user message and add images

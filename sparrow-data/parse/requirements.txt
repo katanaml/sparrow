@@ -1,15 +1,15 @@
 rich
 # git+https://github.com/huggingface/transformers.git
-transformers==4.57.3
-torchvision==0.24.1
-torch==2.9.1
-sentence-transformers==5.2.0
-numpy==2.2.6
-pypdf==6.4.2
-gradio_client==2.0.1
+transformers==5.0.0rc3
+torchvision==0.25.0
+torch==2.10.0
+sentence-transformers==5.2.2
+numpy==2.4.2
+pypdf==6.6.2
+gradio_client==2.0.3
 pdf2image==1.17.0
-# mlx==0.30.0; sys_platform == 'darwin' and platform_machine == 'arm64'
-# mlx-vlm==0.3.9; sys_platform == 'darwin' and platform_machine == 'arm64'
+# mlx==0.30.4; sys_platform == 'darwin' and platform_machine == 'arm64'
+# mlx-vlm==0.3.10; sys_platform == 'darwin' and platform_machine == 'arm64'
 ollama==0.6.1
 
 # MLX dependencies moved to setup.py extras_require
