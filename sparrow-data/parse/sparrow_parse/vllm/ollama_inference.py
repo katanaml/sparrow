@@ -190,12 +190,12 @@ class OllamaInference(ModelInference):
         :param apply_annotation: Flag to apply annotations
         :return: Properly formatted messages
         """
-        if any(keyword in self.model_name.lower() for keyword in ["mistral", "ministral", "qwen", "deepseek", "glm"]):
+        if any(keyword in self.model_name.lower() for keyword in ["mistral", "ministral", "qwen", "deepseek", "gemma"]):
             if ocr_callback is not None:
                 input_data = ocr_callback(file_path, input_data)
             return input_data[0]["text_input"]
         else:
-            raise ValueError("Unsupported model type. Please use either Mistral, Ministral, Qwen, Deepseek, or GLM.")
+            raise ValueError("Unsupported model type. Please use either Mistral, Ministral, Qwen, Deepseek, or Gemma.")
 
 
     @staticmethod
