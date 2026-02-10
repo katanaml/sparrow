@@ -30,7 +30,7 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
         validation: Annotated[bool, typer.Option(help="Enable validation query")] = False,
         ocr: Annotated[bool, typer.Option(help="Enable data ocr enhancement")] = False,
         markdown: Annotated[bool, typer.Option(help="Enable markdown output")] = False,
-        chameleon: Annotated[bool, typer.Option(help="Enable chameleon query")] = False,
+        table: Annotated[bool, typer.Option(help="Enable table query")] = False,
         page_type: Annotated[List[str], typer.Option(help="Page type query")] = None,
         debug_dir: Annotated[str, typer.Option(help="Debug folder for multipage")] = None,
         debug: Annotated[bool, typer.Option(help="Enable debug mode")] = False):
@@ -46,7 +46,7 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
                                                  debug)
         else:
             answer = rag.run_pipeline(user_selected_pipeline, query, file_path, hints_file_path, options, crop_size,
-                                      instruction, validation, ocr, markdown, chameleon, page_type, debug_dir, debug, False)
+                                      instruction, validation, ocr, markdown, table, page_type, debug_dir, debug, False)
 
         print(f"\nSparrow response:\n")
         print(answer)
@@ -55,7 +55,7 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
 
 
 async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_size, instruction, validation, ocr,
-                              markdown, chameleon, page_type, file, hints_file, debug_dir, debug):
+                              markdown, table, page_type, file, hints_file, debug_dir, debug):
     try:
         rag = get_pipeline(user_selected_pipeline)
 
@@ -80,11 +80,11 @@ async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_s
                                                          markdown, page_type, debug_dir, debug)
                 else:
                     answer = rag.run_pipeline(user_selected_pipeline, query, temp_file_path, hints_temp_path, options_arr,
-                                              crop_size, instruction, validation, ocr, markdown, chameleon, page_type, debug_dir,
+                                              crop_size, instruction, validation, ocr, markdown, table, page_type, debug_dir,
                                               debug, False)
         else:
             answer = rag.run_pipeline(user_selected_pipeline, query, None, None, options_arr, crop_size, instruction,
-                                      validation, ocr, markdown, chameleon, page_type, debug_dir, debug, False)
+                                      validation, ocr, markdown, table, page_type, debug_dir, debug, False)
     except ValueError as e:
         raise e
 
@@ -111,7 +111,7 @@ async def run_from_api_engine_instruction(user_selected_pipeline, query, options
             False, # No validation needed
             False, # No ocr needed
             False, # No markdown needed
-            False, # No chameleon needed
+            False, # No table needed
             None, # No page_type needed
             debug_dir,
             debug,
