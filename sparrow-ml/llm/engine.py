@@ -8,6 +8,9 @@ from rich import print
 from pipelines.sparrow_parse.sparrow_markdown import (
     process_markdown_extraction
 )
+from pipelines.sparrow_parse.sparrow_table import (
+    process_table_extraction
+)
 
 
 # Disable parallelism in the Huggingface tokenizers library to prevent potential deadlocks and ensure consistent behavior.
@@ -44,6 +47,10 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
             answer = process_markdown_extraction(rag, user_selected_pipeline, query, file_path, hints_file_path, options,
                                                  crop_size, instruction, validation, ocr, markdown, page_type, debug_dir,
                                                  debug)
+        elif table:
+            answer = process_table_extraction(rag, user_selected_pipeline, query, file_path, hints_file_path, options,
+                                             crop_size, instruction, validation, ocr, markdown, page_type, debug_dir,
+                                             debug)
         else:
             answer = rag.run_pipeline(user_selected_pipeline, query, file_path, hints_file_path, options, crop_size,
                                       instruction, validation, ocr, markdown, table, page_type, debug_dir, debug, False)

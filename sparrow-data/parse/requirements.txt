@@ -5,12 +5,14 @@ torchvision==0.25.0
 torch==2.10.0
 sentence-transformers==5.2.2
 numpy==2.4.2
-pypdf==6.6.2
+pypdf==6.7.0
 gradio_client==2.0.3
 pdf2image==1.17.0
-# mlx==0.30.4; sys_platform == 'darwin' and platform_machine == 'arm64'
-# mlx-vlm==0.3.10; sys_platform == 'darwin' and platform_machine == 'arm64'
+# mlx==0.30.6; sys_platform == 'darwin' and platform_machine == 'arm64'
+# mlx-vlm==0.3.11; sys_platform == 'darwin' and platform_machine == 'arm64'
 ollama==0.6.1
+addict==2.4.0
+matplotlib==3.10.8
 
 # MLX dependencies moved to setup.py extras_require
 # Install with: pip install sparrow-parse[mlx] (Apple Silicon only)

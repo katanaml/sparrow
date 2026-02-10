@@ -6,9 +6,12 @@ import time
 
 # Load model and processor
 # model_path = "lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit"
-model_path = "mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit"
+# model_path = "mlx-community/Ministral-3-14B-Instruct-2512-bf16"
+model_path = "mlx-community/Ministral-3-14B-Instruct-2512-8bit"
+# model_path = "mlx-community/GLM-OCR-bf16"
+# model_path = "mlx-community/DeepSeek-OCR-2-bf16"
 # model_path = "mlx-community/Qwen2.5-VL-72B-Instruct-4bit"
-vl_model, vl_processor = load(model_path)
+vl_model, vl_processor = load(model_path, trust_remote_code=True)
 vl_config = load_config(model_path)
 print(f"Model loaded: {model_path}")
 
@@ -31,6 +34,8 @@ image = ["images/bonds_table.png"]
 # ]
 
 # message = "retrieve all data. return response in JSON format"
+# prompt = "Table Recognition:"
+# prompt = f"\n<|grounding|>Convert the document to markdown."
 prompt = "retrieve [{\"instrument_name\":\"str\", \"valuation\":\"int\"}]. return response in JSON format"
 
 formatted_prompt = apply_chat_template(vl_processor, vl_config, prompt, num_images=len(image))
