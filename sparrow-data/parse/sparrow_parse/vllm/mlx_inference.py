@@ -31,7 +31,7 @@ class MLXInference(ModelInference):
         :param model_name: Name of the model to load.
         :return: Tuple containing the loaded model and processor.
         """
-        model, processor = load(model_name)
+        model, processor = load(model_name, trust_remote_code=True)
         config = load_config(model_name)
         print(f"Loaded model: {model_name}")
         return model, processor, config
@@ -352,7 +352,7 @@ class MLXInference(ModelInference):
         :param apply_annotation: Flag to apply annotations
         :return: Properly formatted messages
         """
-        if "mistral" in self.model_name.lower():
+        if any(name in self.model_name.lower() for name in ["mistral", "ministral", "deepseek"]):
             if ocr_callback is not None:
                 input_data = ocr_callback(file_path, input_data)
 
