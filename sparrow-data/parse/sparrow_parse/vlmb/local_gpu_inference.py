@@ -1,5 +1,5 @@
 import torch
-from sparrow_parse.vllm.inference_base import ModelInference
+from sparrow_parse.vlmb.inference_base import ModelInference
 
 
 class LocalGPUInference(ModelInference):

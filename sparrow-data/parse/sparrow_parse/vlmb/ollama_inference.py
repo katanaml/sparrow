@@ -1,4 +1,4 @@
-from sparrow_parse.vllm.inference_base import ModelInference
+from sparrow_parse.vlmb.inference_base import ModelInference
 import ollama
 import os
 import json

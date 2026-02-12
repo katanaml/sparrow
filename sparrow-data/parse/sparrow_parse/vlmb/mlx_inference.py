@@ -1,7 +1,7 @@
 from mlx_vlm import load, generate
 from mlx_vlm.prompt_utils import apply_chat_template
 from mlx_vlm.utils import load_image, load_config
-from sparrow_parse.vllm.inference_base import ModelInference
+from sparrow_parse.vlmb.inference_base import ModelInference
 import os
 import json, re
 from rich import print
@@ -54,6 +54,9 @@ class MLXInference(ModelInference):
                         content = content[:json_end].strip()
                         formatted_json = json.loads(content)
                         return json.dumps(formatted_json, indent=2, ensure_ascii=False)
+                else:
+                    # It's markdown but not JSON - return as-is
+                    return output_text
 
             # Handle raw JSON (no markdown formatting)
             # First try to find JSON array or object patterns
@@ -72,8 +75,11 @@ class MLXInference(ModelInference):
             formatted_json = json.loads(output_text.strip())
             return json.dumps(formatted_json, indent=2, ensure_ascii=False)
 
-        except Exception as e:
-            print(f"Failed to parse JSON: {e}")
+        except (json.JSONDecodeError, ValueError):
+            # Not JSON - return original text (could be markdown or plain text)
+            return output_text
+        except Exception:
+            # Any other unexpected error - still return original text
             return output_text
 
 

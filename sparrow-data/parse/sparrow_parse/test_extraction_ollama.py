@@ -10,7 +10,7 @@ def test_ollama_multimodal_extraction():
     """
 
     # Configuration
-    model_name = "mistral-small3.1:24b-instruct-2503-q8_0"
+    model_name = "mistral-small3.2:24b-instruct-2506-q8_0"
     image_path = "images/bonds_table.png"
     query = 'retrieve [{"instrument_name":"str", "valuation":"int"}]. return response in JSON format'
 
@@ -64,7 +64,7 @@ def test_ollama_connection():
         model_names = [model.model for model in models_response.models]
         print(f"Available models: {model_names}")
 
-        target_model = "mistral-small3.1:24b-instruct-2503-q8_0"
+        target_model = "mistral-small3.2:24b-instruct-2506-q8_0"
         if target_model in model_names:
             print(f"✓ Target model '{target_model}' is available")
             return True

@@ -1,5 +1,5 @@
 import json
-from sparrow_parse.vllm.inference_factory import InferenceFactory
+from sparrow_parse.vlmb.inference_factory import InferenceFactory
 from sparrow_parse.helpers.pdf_optimizer import PDFOptimizer
 from sparrow_parse.helpers.image_optimizer import ImageOptimizer
 from sparrow_parse.processors.table_structure_processor import TableDetector
@@ -238,11 +238,11 @@ if __name__ == "__main__":
 
     # # export HF_TOKEN="hf_"
     # config = {
-    #     "method": "ollama",  # Could be 'huggingface', 'mlx', 'ollama' or 'local_gpu'
+    #     "method": "mlx",  # Could be 'huggingface', 'mlx', 'ollama' or 'local_gpu'
     #     # "model_name": "lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit",
     #     # "model_name": "mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit",
     #     # "model_name": "mlx-community/Qwen3-VL-8B-Instruct-bf16",
-    #     "model_name": "ministral-3:14b-instruct-2512-q8_0",
+    #     "model_name": "mlx-community/DeepSeek-OCR-2-bf16",
     #     # "model_name": "deepseek-ocr:latest",
     #     # "hf_space": "katanaml/sparrow-qwen2-vl-7b",
     #     # "hf_token": os.getenv('HF_TOKEN'),
@@ -254,19 +254,19 @@ if __name__ == "__main__":
     # factory = InferenceFactory(config)
     # model_inference_instance = factory.get_inference_instance()
     #
-    # input_data = [
-    #     {
-    #         "file_path": "sparrow_parse/images/bonds_table.png",
-    #         "text_input": "retrieve [{\"instrument_name\":\"str\", \"valuation\":\"int\"}]. return response in JSON format"
-    #     }
-    # ]
-    #
     # # input_data = [
     # #     {
     # #         "file_path": "sparrow_parse/images/bonds_table.png",
-    # #         "text_input": "\n<|grounding|>Convert the document to markdown."
+    # #         "text_input": "retrieve [{\"instrument_name\":\"str\", \"valuation\":\"int\"}]. return response in JSON format"
     # #     }
     # # ]
+    #
+    # input_data = [
+    #     {
+    #         "file_path": "sparrow_parse/images/bonds_table.png",
+    #         "text_input": "\n<|grounding|>Convert the document to markdown."
+    #     }
+    # ]
     #
     # # input_data = [
     # #     {

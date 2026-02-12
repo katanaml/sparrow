@@ -41,7 +41,7 @@ pip install sparrow-parse
 ### Basic Usage
 
 ```python
-from sparrow_parse.vllm.inference_factory import InferenceFactory
+from sparrow_parse.vlmb.inference_factory import InferenceFactory
 from sparrow_parse.extractors.vllm_extractor import VLLMExtractor
 
 # Initialize extractor
@@ -65,7 +65,7 @@ input_data = [{
 
 # Run inference
 results, num_pages = extractor.run_inference(
-    model_inference_instance, 
+    model_inference_instance,
     input_data,
     debug=True
 )
