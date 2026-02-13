@@ -284,7 +284,8 @@ class SparrowParsePipeline(Pipeline):
 
     def execute_query(self, options, crop_size, query_all_data, ocr_callback, query, file_path, debug_dir, debug):
         """
-        Executes the query using the specified inference backend in a subprocess.
+        Executes the query using the specified inference backend.
+        For vLLM backend, calls inference directly. For other backends, uses subprocess execution.
 
         Args:
             options (list): Inference backend options (e.g., ['huggingface', 'some_space']).
@@ -312,10 +313,9 @@ class SparrowParsePipeline(Pipeline):
             }
         ]
 
-        # Offload inference to a subprocess
-        with concurrent.futures.ProcessPoolExecutor() as executor:
-            future = executor.submit(
-                subprocess_inference,  # Call the top-level function
+        # For vLLM backend, call directly without subprocess
+        if config.get("method") == "vllm":
+            llm_output, num_pages = subprocess_inference(
                 config,
                 input_data,
                 tables_only,
@@ -326,7 +326,22 @@ class SparrowParsePipeline(Pipeline):
                 debug_dir,
                 debug
             )
-            llm_output, num_pages = future.result()
+        else:
+            # Offload inference to a subprocess for other backends
+            with concurrent.futures.ProcessPoolExecutor() as executor:
+                future = executor.submit(
+                    subprocess_inference,  # Call the top-level function
+                    config,
+                    input_data,
+                    tables_only,
+                    crop_size,
+                    query_all_data,
+                    apply_annotation,
+                    ocr_callback,
+                    debug_dir,
+                    debug
+                )
+                llm_output, num_pages = future.result()
 
         return llm_output, num_pages, tables_only, validation_off, apply_annotation
 
