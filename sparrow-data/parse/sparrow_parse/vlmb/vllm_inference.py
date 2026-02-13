@@ -26,6 +26,7 @@ class VLLMInference(ModelInference):
             "gpu_memory_utilization": 0.9,
             "max_model_len": 32768,
             "limit_mm_per_prompt": {"image": 1},
+            "allowed_local_media_path": "/",
         }
 
         if config:
