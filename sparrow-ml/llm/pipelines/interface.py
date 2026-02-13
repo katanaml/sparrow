@@ -32,10 +32,10 @@ class Pipeline(ABC):
 
 
 # Factory Method
-def get_pipeline(pipeline_name: str) -> Pipeline:
+def get_pipeline(pipeline_name: str, model_cache: dict = None) -> Pipeline:
     if pipeline_name == "sparrow-parse":
         from pipelines.sparrow_parse.sparrow_parse import SparrowParsePipeline
-        return SparrowParsePipeline()
+        return SparrowParsePipeline(model_cache)
     elif pipeline_name == "sparrow-instructor":
         from pipelines.sparrow_instructor.sparrow_instructor import SparrowInstructorPipeline
         return SparrowInstructorPipeline()

@@ -27,6 +27,9 @@ load_dotenv()
 # Get config instance
 config = get_config()
 
+# Global model cache
+model_cache = {}
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -227,7 +230,7 @@ async def inference(
         # Call the engine to process the request
         answer = await run_from_api_engine(pipeline, query, options_arr, processed_crop_size, instruction, validation,
                                            ocr, markdown, table, table_template, page_type_arr, file, hints_file,
-                                           debug_dir, debug)
+                                           debug_dir, debug, model_cache)
 
         # Calculate duration
         duration = time.time() - start_time
@@ -314,7 +317,7 @@ async def instruction_inference(
 
         # Call the engine to process the instruction-only request
         answer = await run_from_api_engine_instruction(
-            pipeline, query, options_arr, debug_dir, debug
+            pipeline, query, options_arr, debug_dir, debug, model_cache
         )
 
         # Calculate duration

@@ -64,9 +64,9 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
 
 
 async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_size, instruction, validation, ocr,
-                              markdown, table, table_template, page_type, file, hints_file, debug_dir, debug):
+                              markdown, table, table_template, page_type, file, hints_file, debug_dir, debug, model_cache=None):
     try:
-        rag = get_pipeline(user_selected_pipeline)
+        rag = get_pipeline(user_selected_pipeline, model_cache)
 
         if file is not None:
             with tempfile.TemporaryDirectory() as temp_dir:
@@ -102,12 +102,12 @@ async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_s
 
 
 # Add a new function for instruction-only processing
-async def run_from_api_engine_instruction(user_selected_pipeline, query, options_arr, debug_dir, debug):
+async def run_from_api_engine_instruction(user_selected_pipeline, query, options_arr, debug_dir, debug, model_cache=None):
     """
     Instruction-only version of run_from_api_engine that doesn't require a file.
     """
     try:
-        rag = get_pipeline(user_selected_pipeline)
+        rag = get_pipeline(user_selected_pipeline, model_cache)
 
         # Call run_pipeline with file_path=None for instruction-only processing
         answer = rag.run_pipeline(
