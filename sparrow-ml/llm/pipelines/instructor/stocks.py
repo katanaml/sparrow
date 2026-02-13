@@ -27,6 +27,7 @@ class Stocks(Pipeline):
                      ocr: bool = False,
                      markdown: bool = False,
                      table: bool = False,
+                     table_template: str = None,
                      page_type: List[str] = None,
                      debug_dir: str = None,
                      debug: bool = False,

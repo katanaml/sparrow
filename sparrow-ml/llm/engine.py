@@ -28,12 +28,13 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
         hints_file_path: Annotated[str, typer.Option(help="JSON file containing query hints")] = None,
         pipeline: Annotated[str, typer.Option(help="Selected pipeline")] = "sparrow-parse",
         options: Annotated[List[str], typer.Option(help="Options to pass to the pipeline")] = None,
-        crop_size: Annotated[int, typer.Option(help="Crop size for table extraction")] = None,
+        crop_size: Annotated[int, typer.Option(help="Crop size for extraction improvement")] = None,
         instruction: Annotated[bool, typer.Option(help="Enable instruction query")] = False,
         validation: Annotated[bool, typer.Option(help="Enable validation query")] = False,
         ocr: Annotated[bool, typer.Option(help="Enable data ocr enhancement")] = False,
         markdown: Annotated[bool, typer.Option(help="Enable markdown output")] = False,
         table: Annotated[bool, typer.Option(help="Enable table query")] = False,
+        table_template: Annotated[str, typer.Option(help="Table template for table query")] = None,
         page_type: Annotated[List[str], typer.Option(help="Page type query")] = None,
         debug_dir: Annotated[str, typer.Option(help="Debug folder for multipage")] = None,
         debug: Annotated[bool, typer.Option(help="Enable debug mode")] = False):
@@ -49,11 +50,12 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
                                                  debug)
         elif table:
             answer = process_table_extraction(rag, user_selected_pipeline, query, file_path, hints_file_path, options,
-                                             crop_size, instruction, validation, ocr, markdown, page_type, debug_dir,
-                                             debug)
+                                             crop_size, instruction, validation, ocr, markdown, table_template, page_type,
+                                             debug_dir, debug)
         else:
             answer = rag.run_pipeline(user_selected_pipeline, query, file_path, hints_file_path, options, crop_size,
-                                      instruction, validation, ocr, markdown, table, page_type, debug_dir, debug, False)
+                                      instruction, validation, ocr, markdown, table, table_template, page_type, debug_dir,
+                                      debug, False)
 
         print(f"\nSparrow response:\n")
         print(answer)
@@ -62,7 +64,7 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
 
 
 async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_size, instruction, validation, ocr,
-                              markdown, table, page_type, file, hints_file, debug_dir, debug):
+                              markdown, table, table_template, page_type, file, hints_file, debug_dir, debug):
     try:
         rag = get_pipeline(user_selected_pipeline)
 
@@ -87,11 +89,12 @@ async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_s
                                                          markdown, page_type, debug_dir, debug)
                 else:
                     answer = rag.run_pipeline(user_selected_pipeline, query, temp_file_path, hints_temp_path, options_arr,
-                                              crop_size, instruction, validation, ocr, markdown, table, page_type, debug_dir,
-                                              debug, False)
+                                              crop_size, instruction, validation, ocr, markdown, table, table_template,
+                                              page_type, debug_dir, debug, False)
         else:
             answer = rag.run_pipeline(user_selected_pipeline, query, None, None, options_arr, crop_size, instruction,
-                                      validation, ocr, markdown, table, page_type, debug_dir, debug, False)
+                                      validation, ocr, markdown, table, table_template, page_type, debug_dir,
+                                      debug, False)
     except ValueError as e:
         raise e
 
@@ -119,6 +122,7 @@ async def run_from_api_engine_instruction(user_selected_pipeline, query, options
             False, # No ocr needed
             False, # No markdown needed
             False, # No table needed
+            None, # No table_template needed
             None, # No page_type needed
             debug_dir,
             debug,

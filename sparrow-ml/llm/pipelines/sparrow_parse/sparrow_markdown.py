@@ -52,7 +52,7 @@ def process_markdown_extraction(rag, user_selected_pipeline, query, file_path, h
 
     markdown_options = [options[0], 'deepseek-ocr:latest']
     markdown_output_list = rag.run_pipeline(user_selected_pipeline, query, file_path, hints_file_path, markdown_options,
-                                            crop_size, instruction, validation, ocr, markdown, False, page_type, debug_dir,
+                                            crop_size, instruction, validation, ocr, markdown, False, None, page_type, debug_dir,
                                             debug, False)
 
     combined_output = []
@@ -72,7 +72,8 @@ def process_markdown_extraction(rag, user_selected_pipeline, query, file_path, h
 
         rag = get_pipeline("sparrow-instructor")
         answer = rag.run_pipeline("sparrow-instructor", instruction_query, None, None, options, crop_size,
-                                  instruction, validation, ocr, markdown, False, page_type, debug_dir, debug, False)
+                                  instruction, validation, ocr, markdown, False, None, page_type,
+                                  debug_dir, debug, False)
 
         if num_pages > 1:
             try:
