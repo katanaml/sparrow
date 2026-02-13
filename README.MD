@@ -133,7 +133,7 @@ Before running `pip install -r requirements_sparrow_parse.txt`, check your platf
 }
 ```
 
-Use `--options mlx` for MLX backend, `--options ollama` for Ollama backend. Make sure to provide correct Vision LLM model name, download model first separately with MLX or Ollama.
+Use `--options mlx` for MLX backend, `--options ollama` for Ollama backend, `--options vllm` for vLLM backend. Make sure to provide correct Vision LLM model name, download model first separately with MLX, vLLM or Ollama.
 
 ## 🛠️ Installation
 
@@ -172,7 +172,7 @@ sudo apt-get install poppler-utils libpoppler-cpp-dev
 ```
 
 **Apple Silicon**: MLX backend available for optimal performance  
-**NVIDIA/AMD GPU**: Use Ollama backend  
+**NVIDIA/AMD GPU**: Use vLLM or Ollama backend  
 **CPU Only**: Use smaller models or Hugging Face cloud backend  
 
 ### Verification
@@ -739,7 +739,7 @@ Built-in analytics and monitoring dashboard at [sparrow.katanaml.io](https://spa
 - ⚠️ Requires macOS with Apple Silicon
 
 **NVIDIA GPU**
-- ✅ Use Ollama backends
+- ✅ Use vLLM or Ollama backends
 - ✅ Recommended: Nvidia DGX Spark with 12GB+ VRAM or AMD GPU
 - ⚠️ Requires CUDA setup
 
