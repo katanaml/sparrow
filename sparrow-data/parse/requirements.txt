@@ -1,9 +1,9 @@
 rich
 # git+https://github.com/huggingface/transformers.git
-# transformers version moved to setup.py extras_require to avoid conflicts
+# transformers, torch, and torchvision versions moved to setup.py extras_require to avoid conflicts
 # transformers==5.0.0rc3
-torchvision==0.25.0
-torch==2.10.0
+# torchvision==0.25.0
+# torch==2.10.0
 sentence-transformers==5.2.2
 numpy==2.4.2
 pypdf==6.7.0
