@@ -358,7 +358,7 @@ class MLXInference(ModelInference):
         :param apply_annotation: Flag to apply annotations
         :return: Properly formatted messages
         """
-        if any(name in self.model_name.lower() for name in ["mistral", "ministral", "deepseek"]):
+        if any(name in self.model_name.lower() for name in ["mistral", "ministral", "deepseek", "dots"]):
             if ocr_callback is not None:
                 input_data = ocr_callback(file_path, input_data)
 
@@ -375,7 +375,7 @@ class MLXInference(ModelInference):
                 return [system_prompt, user_prompt]
             return input_data[0]["text_input"]
         else:
-            raise ValueError("Unsupported model type. Please use either Mistral or Qwen.")
+            raise ValueError("Unsupported model type. Please use Mistral, Ministral, DeepSeek, dots.ocr or Qwen.")
 
     @staticmethod
     def _extract_file_paths(input_data):

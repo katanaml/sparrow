@@ -7,6 +7,7 @@ from rich import print
 import os
 import tempfile
 import shutil
+import time
 
 
 class VLLMExtractor(object):
@@ -240,19 +241,32 @@ if __name__ == "__main__":
     # config = {
     #     "method": "mlx",  # Could be 'huggingface', 'mlx', 'ollama' or 'local_gpu'
     #     # "model_name": "lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit",
-    #     # "model_name": "mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit",
-    #     # "model_name": "mlx-community/Qwen3-VL-8B-Instruct-bf16",
-    #     "model_name": "mlx-community/DeepSeek-OCR-2-bf16",
     #     # "model_name": "deepseek-ocr:latest",
+    #     # "model_name": "mlx-community/DeepSeek-OCR-2-bf16",
+    #     "model_name": "mlx-community/dots.ocr-bf16",
     #     # "hf_space": "katanaml/sparrow-qwen2-vl-7b",
     #     # "hf_token": os.getenv('HF_TOKEN'),
     #     # Additional fields for local GPU inference
     #     # "device": "cuda", "model_path": "model.pth"
     # }
     #
+    # start_time = time.time()
+    #
     # # Use the factory to get the correct instance
     # factory = InferenceFactory(config)
     # model_inference_instance = factory.get_inference_instance()
+    #
+    # input_data = [
+    #     {
+    #         "file_path": "sparrow_parse/images/bank_statement.png",
+    #         # "file_path": "sparrow_parse/images/bonds_swiss_market.png",
+    #         # "file_path": "sparrow_parse/images/invoice_1.jpg",
+    #         # "file_path": "sparrow_parse/images/lab_results.png",
+    #         # "file_path": "sparrow_parse/images/oracle_10k_2024_q1_small.jpg",
+    #         "text_input": "retrieve all data. return response in JSON format"
+    #         # "text_input": "\n<|grounding|>Convert the document to markdown."
+    #     }
+    # ]
     #
     # # input_data = [
     # #     {
@@ -261,12 +275,12 @@ if __name__ == "__main__":
     # #     }
     # # ]
     #
-    # input_data = [
-    #     {
-    #         "file_path": "sparrow_parse/images/bonds_table.png",
-    #         "text_input": "\n<|grounding|>Convert the document to markdown."
-    #     }
-    # ]
+    # # input_data = [
+    # #     {
+    # #         "file_path": "sparrow_parse/images/bonds_table.png",
+    # #         "text_input": "\n<|grounding|>Convert the document to markdown."
+    # #     }
+    # # ]
     #
     # # input_data = [
     # #     {
@@ -288,4 +302,7 @@ if __name__ == "__main__":
     # for i, result in enumerate(results_array):
     #     print(f"Result for page {i + 1}:", result)
     # print(f"Number of pages: {num_pages}")
+    #
+    # end_time = time.time()
+    # print(f"Execution time: {end_time - start_time:.2f} seconds")
 
