@@ -1,5 +1,5 @@
-{"items":[{"instrument_name":"str", "valuation":"int"}]}
-
-{"invoice_no":"int", "invoice_date":"str", "seller_name":"str", "seller_address":"str", "seller_taxid":"str", "seller_iban":"str", "client_name":"str", "client_address":"str", "client_taxid":"str", "invoice_items":[{"description":"str", "quantity":"float", "net_price":"float", "net_worth":"float", "vat":"str", "gross_worth":"float"}], "invoice_summary":[{"net_worth":"float", "vat":"float", "gross_worth":"float"}]}
-
-{"account_number":"int", "statement_date":"str", "period_covered":"str", "total_money_in":"str", "total_money_out":"str", "statement_items":[{"date":"str", "description":"str", "withdrawal":"float or null", "deposit":"float or null", "balance":"float"}]}
+<table><tr><td colspan="7">Bonds &amp; similar positions</td></tr><tr><td>Instrument</td><td>Quantity/ Nominal</td><td>Ccy.</td><td>Closing Price</td><td>Purchase Price</td><td>Profit/Loss Total</td><td>Valuation (EUR)</td></tr><tr><td>UNITS BLACKROCK 
+FIX INC DUB FDS PLC ISHS EUR INV GRD CP BD IDX/INST/E</td><td>1&#x27;431.77</td><td>EUR</td><td>13.30500</td><td>13.72000</td><td>↓ 3.02%</td><td>19&#x27;049</td></tr><tr><td>UNITS ISHARES III PLC CORE EUR GOVT BOND UCITS 
+ETF/EUR</td><td>751</td><td>EUR</td><td>111.17000</td><td>130.88000</td><td>↓ 15.05%</td><td>83&#x27;488</td></tr><tr><td>UNITS ISHARES III PLC EUR CORP BOND 1-5YR UCITS ETF/EUR</td><td>2&#x27;014</td><td>EUR</td><td>105.77500</td><td>110.17000</td><td>↓ 
+3.98%</td><td>213&#x27;030</td></tr><tr><td>UNIT ISHARES VI PLC/JP MORGAN USD E BOND EUR HED UCITS ETF DIST/HDGD/</td><td>491</td><td>EUR</td><td>66.75000</td><td>88.90000</td><td>↓ 24.91%</td><td>32&#x27;774</td></tr><tr><td>UNITS XTRACKERS II SICAV/EUR HY 
+CORP BOND UCITS ETF/-1D-/DISTR.</td><td>1&#x27;501</td><td>EUR</td><td>15.75200</td><td>17.05000</td><td>↓ 7.61%</td><td>23&#x27;643</td></tr></table>
