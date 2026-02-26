@@ -1,5 +1,7 @@
 import json
 from rich import print
+from pipelines.sparrow_parse.table_templates.table_template_factory import TableTemplateFactory
+import time
 
 def process_table_extraction(rag, user_selected_pipeline, query, file_path, hints_file_path, options, crop_size,
                             instruction, validation, ocr, markdown, table_template, page_type, debug_dir, debug):
@@ -28,30 +30,66 @@ def process_table_extraction(rag, user_selected_pipeline, query, file_path, hint
     """
 
     form_query, table_queries = split_query(query)
-    print(query)
-    print(form_query)
-    print(table_queries)
-    print(table_template)
 
-    form_answer = None
-    if form_query:
-        options = options[:2]
-        form_answer = rag.run_pipeline(user_selected_pipeline, query, file_path, hints_file_path, options, crop_size,
-                                  instruction, validation, ocr, markdown, False, table_template, page_type, debug_dir,
-                                  debug, False)
-    print(form_answer)
+    # form_answer = None
+    # if form_query:
+    #     options = options[:2]
+    #     form_answer = rag.run_pipeline(user_selected_pipeline, query, file_path, hints_file_path, options, crop_size,
+    #                               instruction, validation, ocr, markdown, False, table_template, page_type, debug_dir,
+    #                               debug, False)
 
     table_options = options[2:]
-    print(table_options)
 
-    markdown_query = f"\n<|grounding|>Convert the document to markdown."
-    markdown = rag.run_pipeline(user_selected_pipeline, markdown_query, file_path, hints_file_path, table_options,
-                                crop_size, instruction, validation, ocr, True, False, table_template,
-                                page_type, debug_dir, debug, False)
+    ocr_query = "*"
+    ocr_output = rag.run_pipeline(user_selected_pipeline, ocr_query, file_path, hints_file_path, table_options,
+                                  crop_size, instruction, validation, ocr, markdown, False, table_template,
+                                  page_type, debug_dir, debug, False)
 
-    print(markdown)
+    tables = extract_tables_from_ocr(ocr_output)
+    if debug:
+        print(f"\nExtracted tables:", tables)
 
-    return None
+    answer = {}
+
+    # Process each table using the specified template
+
+    if debug:
+        print(f"\nTable queries: {table_queries}")
+
+    if table_template and tables:
+        for table in tables:
+            # Use factory to load template and fetch table data
+            try:
+                table_data = TableTemplateFactory.fetch_table_data(
+                    template_name=table_template,
+                    table_query=table_queries,
+                    table_markdown=table.get('text', '')
+                )
+
+                answer = table_data
+            except (ImportError, AttributeError) as e:
+                print(f"Error loading table template: {e}")
+
+    if debug:
+        print(f"\nForm query: {form_query}")
+
+    return answer
+
+
+def extract_tables_from_ocr(ocr_output):
+    """
+    Extract table entries from OCR output.
+
+    Args:
+        ocr_output: OCR output as a list of elements
+
+    Returns:
+        List of table entries with bbox, category, and text fields
+    """
+    if isinstance(ocr_output, str):
+        ocr_output = json.loads(ocr_output)
+
+    return [item for item in ocr_output if item.get('category') == 'Table']
 
 
 def split_query(query):
