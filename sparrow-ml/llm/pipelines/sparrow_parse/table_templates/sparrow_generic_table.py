@@ -170,7 +170,10 @@ def fetch_table_data(table_queries: List[str], table_markdown: str) -> dict:
     if thead:
         header_row = thead.find('tr')
         if header_row:
+            # Try <th> first, fall back to <td> if no <th> tags found
             headers = [th.get_text(strip=True) for th in header_row.find_all('th')]
+            if not headers:
+                headers = [td.get_text(strip=True) for td in header_row.find_all('td')]
 
     if not headers:
         return {'items': []}

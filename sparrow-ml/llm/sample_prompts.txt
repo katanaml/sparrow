@@ -288,3 +288,7 @@ mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit - FAIL
 ./sparrow.sh "{\"account_number\":\"int\", \"statement_date\":\"str\", \"period_covered\":\"str\", \"total_money_in\":\"str\", \"total_money_out\":\"str\", \"statement_items\":[{\"date\":\"str\", \"description\":\"str\", \"withdrawal\":\"float or null\", \"deposit\":\"float or null\", \"balance\":\"float\"}]}" --pipeline "sparrow-parse" --debug --options mlx --options lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bank_statement.png"
 
 lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit - FAIL
+
+Improved table processing:
+
+./sparrow.sh "{\"account_number\":\"int\", \"statement_date\":\"str\", \"period_covered\":\"str\", \"total_money_in\":\"str\", \"total_money_out\":\"str\", \"items\":[{\"date\":\"str\", \"description\":\"str\", \"withdrawal\":\"float or null\", \"deposit\":\"float or null\", \"balance\":\"float\"}]}" --pipeline "sparrow-parse" --table --table-template "sparrow_generic_table" --debug --options mlx --options mlx-community/Ministral-3-14B-Instruct-2512-8bit --options mlx --options mlx-community/dots.ocr-bf16 --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bank_statement.png"

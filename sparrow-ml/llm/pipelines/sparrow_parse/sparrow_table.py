@@ -31,13 +31,6 @@ def process_table_extraction(rag, user_selected_pipeline, query, file_path, hint
 
     form_query, table_queries = split_query(query)
 
-    # form_answer = None
-    # if form_query:
-    #     options = options[:2]
-    #     form_answer = rag.run_pipeline(user_selected_pipeline, query, file_path, hints_file_path, options, crop_size,
-    #                               instruction, validation, ocr, markdown, False, table_template, page_type, debug_dir,
-    #                               debug, False)
-
     table_options = options[2:]
 
     ocr_query = "*"
@@ -45,17 +38,16 @@ def process_table_extraction(rag, user_selected_pipeline, query, file_path, hint
                                   crop_size, instruction, validation, ocr, markdown, False, table_template,
                                   page_type, debug_dir, debug, False)
 
-    tables = extract_tables_from_ocr(ocr_output)
+    tables, has_other_entries = extract_tables_from_ocr(ocr_output)
     if debug:
         print(f"\nExtracted tables:", tables)
+        print(f"Has other entries besides tables: {has_other_entries}")
+        print(f"Form query: {form_query}")
+        print(f"Table queries: {table_queries}")
 
     answer = {}
 
     # Process each table using the specified template
-
-    if debug:
-        print(f"\nTable queries: {table_queries}")
-
     if table_template and tables:
         for table in tables:
             # Use factory to load template and fetch table data
@@ -69,11 +61,40 @@ def process_table_extraction(rag, user_selected_pipeline, query, file_path, hint
                 answer = table_data
             except (ImportError, AttributeError) as e:
                 print(f"Error loading table template: {e}")
-
     if debug:
-        print(f"\nForm query: {form_query}")
+        print("Table processing complete.")
 
-    return answer
+    form_answer = None
+    if form_query and has_other_entries:
+        options = options[:2]
+        form_query_str = json.dumps(form_query, ensure_ascii=False)
+        form_answer = rag.run_pipeline(user_selected_pipeline, form_query_str, file_path, hints_file_path, options, crop_size,
+                                  instruction, validation, ocr, markdown, False, table_template, page_type, debug_dir,
+                                  debug, False)
+
+    # Merge form_answer and answer into single JSON (form_answer values first)
+    merged_result = {}
+
+    # Parse form_answer if it exists
+    if form_answer:
+        if isinstance(form_answer, str):
+            form_answer_dict = json.loads(form_answer)
+        else:
+            form_answer_dict = form_answer
+        merged_result.update(form_answer_dict)
+
+    # Parse answer if it exists
+    if answer:
+        if isinstance(answer, str):
+            answer_dict = json.loads(answer)
+        else:
+            answer_dict = answer
+        merged_result.update(answer_dict)
+
+    # Format with indent=4
+    final_answer = json.dumps(merged_result, indent=4, ensure_ascii=False)
+
+    return final_answer
 
 
 def extract_tables_from_ocr(ocr_output):
@@ -84,12 +105,17 @@ def extract_tables_from_ocr(ocr_output):
         ocr_output: OCR output as a list of elements
 
     Returns:
-        List of table entries with bbox, category, and text fields
+        Tuple of (tables, has_other_entries) where:
+        - tables: List of table entries with bbox, category, and text fields
+        - has_other_entries: Boolean indicating if OCR output contains any entries besides category Table
     """
     if isinstance(ocr_output, str):
         ocr_output = json.loads(ocr_output)
 
-    return [item for item in ocr_output if item.get('category') == 'Table']
+    tables = [item for item in ocr_output if item.get('category') == 'Table']
+    has_other_entries = any(item.get('category') != 'Table' for item in ocr_output)
+
+    return tables, has_other_entries
 
 
 def split_query(query):
