@@ -261,6 +261,11 @@ mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit - OK
 
 lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit - OK
 
+Improved table processing:
+
+./sparrow.sh "{\"invoice_no\":\"int\", \"invoice_date\":\"str\", \"seller_name\":\"str\", \"seller_address\":\"str\", \"seller_taxid\":\"str\", \"seller_iban\":\"str\", \"client_name\":\"str\", \"client_address\":\"str\", \"client_taxid\":\"str\", \"items\":[{\"description\":\"str\", \"quantity\":\"float\", \"net_price\":\"float\", \"net_worth\":\"float\", \"vat\":\"str\", \"gross_worth\":\"float\"}]}" --pipeline "sparrow-parse" --table --table-template "sparrow_generic_table" --debug --options mlx --options mlx-community/Ministral-3-14B-Instruct-2512-8bit --options mlx --options mlx-community/dots.ocr-bf16 --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg"
+
+
 
 
 BANK STATEMENT
