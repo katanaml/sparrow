@@ -87,6 +87,10 @@ async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_s
                     answer = process_markdown_extraction(rag, user_selected_pipeline, query, temp_file_path, hints_temp_path,
                                                          options_arr, crop_size, instruction, validation, ocr,
                                                          markdown, page_type, debug_dir, debug)
+                elif table:
+                    answer = process_table_extraction(rag, user_selected_pipeline, query, temp_file_path, hints_temp_path,
+                                                      options_arr, crop_size, instruction, validation, ocr, markdown,
+                                                      table_template, page_type, debug_dir, debug)
                 else:
                     answer = rag.run_pipeline(user_selected_pipeline, query, temp_file_path, hints_temp_path, options_arr,
                                               crop_size, instruction, validation, ocr, markdown, table, table_template,
