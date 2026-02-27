@@ -1,7 +1,6 @@
 import json
 from rich import print
 from pipelines.sparrow_parse.table_templates.table_template_factory import TableTemplateFactory
-import time
 
 def process_table_extraction(rag, user_selected_pipeline, query, file_path, hints_file_path, options, crop_size,
                             instruction, validation, ocr, markdown, table_template, page_type, debug_dir, debug):
