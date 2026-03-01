@@ -73,7 +73,7 @@ def process_table_extraction(rag, user_selected_pipeline, query, file_path, hint
                 page_file_path = split_files[idx] if is_multipage and split_files else file_path
 
                 if debug:
-                    print(f"\nProcessing form data for page {page_number} from {page_file_path}")
+                    print(f"Processing form data for page {page_number} from {page_file_path}")
 
                 form_answer = rag.run_pipeline(user_selected_pipeline, form_query_str, page_file_path,
                                              hints_file_path, options_form, crop_size,
@@ -82,7 +82,6 @@ def process_table_extraction(rag, user_selected_pipeline, query, file_path, hint
 
             if debug:
                 print(f"\nProcessing page {page_number} with {len(tables)} table(s)")
-                print(f"Page {page_number} has other entries besides tables: {has_other_entries}")
 
             for table in tables:
                 # Use factory to load template and fetch table data
@@ -127,7 +126,7 @@ def process_table_extraction(rag, user_selected_pipeline, query, file_path, hint
         cleanup_split_files(split_files)
 
     end_time = time.time()
-    print(f"Total time with table processing: {end_time - start_time:.2f} seconds")
+    print(f"\nTotal time with table processing: {end_time - start_time:.2f} seconds")
 
     return json.dumps(answer, indent=4, ensure_ascii=False)
 
@@ -195,8 +194,6 @@ def split_query(query):
         - form_query: Dictionary with form elements or None
         - table_queries: List of table query dictionaries
     """
-    import json
-
     # Parse query if it's a string
     if isinstance(query, str):
         query_dict = json.loads(query)
