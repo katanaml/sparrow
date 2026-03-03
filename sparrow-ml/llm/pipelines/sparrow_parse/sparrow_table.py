@@ -42,8 +42,11 @@ def process_table_extraction(rag, user_selected_pipeline, query, file_path, hint
                                   page_type, debug_dir, debug, False)
 
     tables_by_page = extract_tables_from_ocr(ocr_output)
+    non_tables_by_page = extract_non_tables_from_ocr(ocr_output)
+
     if debug:
         print(f"\nExtracted tables by page:", tables_by_page)
+        print(f"\nExtracted non-tables by page:", non_tables_by_page)
         print(f"Form query: {form_query}")
         print(f"Table queries: {table_queries}")
 
@@ -73,15 +76,18 @@ def process_table_extraction(rag, user_selected_pipeline, query, file_path, hint
                 page_file_path = split_files[idx] if is_multipage and split_files else file_path
 
                 if debug:
-                    print(f"Processing form data for page {page_number} from {page_file_path}")
+                    print(f"Processing page {page_number}: form data query")
 
-                form_answer = rag.run_pipeline(user_selected_pipeline, form_query_str, page_file_path,
-                                             hints_file_path, options_form, crop_size,
-                                             instruction, validation, ocr, markdown, False, table_template,
-                                             page_type, debug_dir, debug, False)
+                form_answer = TableTemplateFactory.fetch_form_data(
+                    table_template, rag, user_selected_pipeline, form_query_str, page_file_path,
+                    hints_file_path, options_form, crop_size,
+                    instruction, validation, ocr, markdown,
+                    table_template, page_type, debug_dir, debug,
+                    non_tables_by_page
+                )
 
             if debug:
-                print(f"\nProcessing page {page_number} with {len(tables)} table(s)")
+                print(f"Processing page {page_number}: table data query with {len(tables)} table(s)")
 
             for table in tables:
                 # Use factory to load template and fetch table data
@@ -180,6 +186,51 @@ def extract_tables_from_ocr(ocr_output):
             })
 
     return tables_by_page
+
+
+def extract_non_tables_from_ocr(ocr_output):
+    """
+    Extract non-table entries from OCR output, handling both single-page and multi-page structures.
+
+    Args:
+        ocr_output: OCR output as a list of elements (single page) or list of page objects (multi-page)
+                   Multi-page format: [{"page": 1, "data": [...]}, {"page": 2, "data": [...]}]
+
+    Returns:
+        List of dicts with 'page' and 'non_tables' keys per page
+        e.g. [{'page': 1, 'non_tables': [...]}, {'page': 2, 'non_tables': [...]}]
+    """
+    if isinstance(ocr_output, str):
+        ocr_output = json.loads(ocr_output)
+
+    non_tables_by_page = []
+
+    # Check if this is multi-page format (list of objects with 'page' and 'data' keys)
+    if isinstance(ocr_output, list) and len(ocr_output) > 0 and isinstance(ocr_output[0], dict) and 'page' in ocr_output[0]:
+        # Multi-page format
+        for page_obj in ocr_output:
+            page_number = page_obj.get('page', 0)
+            page_data = page_obj.get('data', [])
+
+            # Extract non-table entries from this page
+            non_tables = [item for item in page_data if item.get('category') != 'Table']
+
+            if non_tables:
+                non_tables_by_page.append({
+                    'page': page_number,
+                    'non_tables': non_tables
+                })
+    else:
+        # Single page format (backward compatibility)
+        non_tables = [item for item in ocr_output if item.get('category') != 'Table']
+
+        if non_tables:
+            non_tables_by_page.append({
+                'page': 1,
+                'non_tables': non_tables
+            })
+
+    return non_tables_by_page
 
 
 def split_query(query):
