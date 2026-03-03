@@ -545,6 +545,7 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
 | `--markdown` | Boolean | Markdown pre-processing | `--markdown` |
 | `--ocr` | Boolean | Experimental functionality | `--ocr` |
 | `--table` | Boolean | Experimental functionality | `--table` |
+| `--table-template` | String | Experimental functionality | `--name` |
 | `--crop-size` | Integer | Border cropping pixels | `60` |
 | `--page-type` | String | Page classification | `financial_table` 
 | `--debug` | Boolean | Enable debug mode | `--debug` |
