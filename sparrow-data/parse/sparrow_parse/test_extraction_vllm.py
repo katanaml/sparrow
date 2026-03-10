@@ -2,17 +2,20 @@ from vllm import LLM, SamplingParams
 from vllm.assets.image import ImageAsset
 
 print("=" * 50)
-print("Testing Mistral Small 3.2 with vLLM")
+# print("Testing Mistral Small 3.2 with vLLM")
+print("Testing rednote-hilab/dots.ocr with vLLM")
 print("=" * 50)
 
 # Initialize the model
 print("\nLoading model with vLLM...")
 llm = LLM(
-    model="mistralai/Mistral-Small-3.2-24B-Instruct-2506",
+    # model="mistralai/Mistral-Small-3.2-24B-Instruct-2506",
+    model="rednote-hilab/dots.ocr",
+    trust_remote_code=True,
     dtype="bfloat16",
-    gpu_memory_utilization=0.9,
-    max_model_len=8192,
-    limit_mm_per_prompt={"image": 5},
+    gpu_memory_utilization=0.2,
+    max_model_len=32768,
+    limit_mm_per_prompt={"image": 1},
     allowed_local_media_path="/home/sparrow/sparrow-data/parse/sparrow_parse/images/"
 )
 
@@ -27,7 +30,8 @@ messages = [
         "role": "user",
         "content": [
             {"type": "image_url", "image_url": {"url": f"file://{image_path}"}},
-            {"type": "text", "text": "retrieve [{\"instrument_name\":\"str\", \"valuation\":\"int\"}]. return response in JSON format"}
+            {"type": "text", "text": "retrieve all data. return response in JSON format"}
+            # {"type": "text", "text": "retrieve [{\"instrument_name\":\"str\", \"valuation\":\"int\"}]. return response in JSON format"}
         ]
     }
 ]
@@ -36,7 +40,7 @@ messages = [
 print("\nProcessing image and generating response...")
 sampling_params = SamplingParams(
     temperature=0.0,
-    max_tokens=512
+    max_tokens=4000
 )
 
 outputs = llm.chat(messages, sampling_params=sampling_params)

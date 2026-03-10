@@ -5,6 +5,18 @@ import json
 import re
 
 
+# GPU memory allocation for running multiple vLLM models simultaneously on same GPU
+# Total must be < 1.0 (leaving buffer for CUDA overhead)
+# Tested on NVIDIA RTX 6000 Pro 96GB:
+# - Mistral Small 3.2 24B: 6.99 GiB KV cache, 45,776 tokens at 0.70
+# - dots.ocr: 11.15x concurrency, 32,768 tokens at 0.20
+VLLM_GPU_MEMORY_CONFIGS = {
+    "mistralai/Mistral-Small-3.2-24B-Instruct": 0.70,
+    "rednote-hilab/dots.ocr": 0.20,
+}
+VLLM_GPU_MEMORY_DEFAULT = 0.70
+
+
 class VLLMInference(ModelInference):
     """
     A class for performing inference using vLLM.
@@ -20,10 +32,18 @@ class VLLMInference(ModelInference):
         """
         self.model_name = model_name
 
+        # Look up gpu_memory_utilization for this specific model
+        gpu_mem = VLLM_GPU_MEMORY_DEFAULT
+        for known_model, mem in VLLM_GPU_MEMORY_CONFIGS.items():
+            if known_model.lower() in model_name.lower():
+                gpu_mem = mem
+                break
+
         # Default configuration
         default_config = {
             "dtype": "bfloat16",
-            "gpu_memory_utilization": 0.9,
+            "trust_remote_code": True,
+            "gpu_memory_utilization": gpu_mem,
             "max_model_len": 32768,
             "limit_mm_per_prompt": {"image": 1},
             "allowed_local_media_path": "/",
