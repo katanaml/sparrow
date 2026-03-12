@@ -6,9 +6,13 @@ from typing import Dict, Optional, List, Union
 import base64
 import json
 import logging
+import os
 from datetime import datetime
 from celery.result import AsyncResult
 from celery_config import celery_app
+
+# Disable Prefect analytics
+os.environ["PREFECT_SERVER_ANALYTICS_ENABLED"] = "false"
 
 from base import AgentManager
 from medical_prescriptions.agent import MedicalPrescriptionsAgent
@@ -392,6 +396,20 @@ async def health_check():
 
 
 if __name__ == "__main__":
+    # Start agents
+    # python api.py --port 8003
+
+    # Run Prefect server locally
+    # prefect server start
+
+    # Celery start
+    # redis-server
+    # celery -A tasks worker --loglevel=info -Q data_queue,file_queue
+
+    # celery -A tasks flower --port=5555 --basic_auth=admin:welcome1
+    # Flower UI: http://localhost:5555
+
+
     import uvicorn
     import argparse
 
