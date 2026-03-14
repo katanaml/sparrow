@@ -8,9 +8,11 @@ import time
 # model_path = "lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit"
 # model_path = "mlx-community/Ministral-3-14B-Instruct-2512-bf16"
 # model_path = "mlx-community/Ministral-3-14B-Instruct-2512-8bit"
-model_path = "mlx-community/dots.ocr-bf16"
+# model_path = "mlx-community/dots.ocr-bf16"
 # model_path = "mlx-community/DeepSeek-OCR-2-bf16"
-# model_path = "mlx-community/Qwen2.5-VL-72B-Instruct-4bit"
+# model_path = "mlx-community/Qwen3.5-9B-bf16"
+# model_path = "mlx-community/Qwen3.5-27B-8bit"
+model_path = "mlx-community/Qwen3.5-35B-A3B-8bit"
 vl_model, vl_processor = load(model_path, trust_remote_code=True)
 vl_config = load_config(model_path)
 print(f"Model loaded: {model_path}")
@@ -33,11 +35,15 @@ image = ["images/bonds_table.png"]
 #     {"role": "user", "content": "retrieve all data. return response in JSON format. For each identified field or data element, include: 1) a descriptive field name as the object key, 2) a nested object with 'value' containing the extracted content, 'bbox' array with [x_min, y_min, x_max, y_max] coordinates in pixels, and 'confidence' score between 0-1. Example structure: [{\"field_name\":{\"value\":\"extracted value\", \"bbox\":[100, 200, 300, 250], \"confidence\":0.95}}]"}
 # ]
 
-prompt = "retrieve all data. return response in JSON format"
+# prompt = "retrieve all data. return response in JSON format"
 # prompt = f"\n<|grounding|>Convert the document to markdown."
-# prompt = "retrieve [{\"instrument_name\":\"str\", \"valuation\":\"int\"}]. return response in JSON format"
+prompt = "retrieve [{\"instrument_name\":\"str\", \"valuation\":\"int\"}]. return response in JSON format"
 
-formatted_prompt = apply_chat_template(vl_processor, vl_config, prompt, num_images=len(image))
+formatted_prompt = apply_chat_template(vl_processor,
+                                       vl_config,
+                                       prompt,
+                                       num_images=len(image),
+                                       enable_thinking=False)
 
 script_start_time = time.time()
 
