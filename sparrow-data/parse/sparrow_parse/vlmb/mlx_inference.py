@@ -180,7 +180,7 @@ class MLXInference(ModelInference):
         :param messages: Input messages
         :return: Generated response
         """
-        prompt = apply_chat_template(processor, config, messages, num_images=0)
+        prompt = apply_chat_template(processor, config, messages, num_images=0, enable_thinking=False)
         response = generate(
             model,
             processor,
@@ -207,7 +207,7 @@ class MLXInference(ModelInference):
             messages = self._prepare_messages(file_path, input_data, apply_annotation, ocr_callback)
 
             # Always use resize_shape for memory efficiency
-            prompt = apply_chat_template(processor, config, messages, num_images=1)
+            prompt = apply_chat_template(processor, config, messages, num_images=1, enable_thinking=False)
             response = generate(
                 model,
                 processor,
