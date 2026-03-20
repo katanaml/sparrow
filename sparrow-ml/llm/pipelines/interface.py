@@ -38,7 +38,7 @@ def get_pipeline(pipeline_name: str, model_cache: dict = None) -> Pipeline:
         return SparrowParsePipeline(model_cache)
     elif pipeline_name == "sparrow-instructor":
         from pipelines.sparrow_instructor.sparrow_instructor import SparrowInstructorPipeline
-        return SparrowInstructorPipeline()
+        return SparrowInstructorPipeline(model_cache)
     elif pipeline_name == "stocks":
         from pipelines.instructor.stocks import Stocks
         return Stocks()

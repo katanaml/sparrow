@@ -18,16 +18,28 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
-def subprocess_inference(config, input_data, debug_dir, debug):
+def subprocess_inference(config, input_data, debug_dir, debug, model_cache=None):
     """
     Subprocess function to execute the inference logic.
     """
     from sparrow_parse.extractors.vllm_extractor import VLLMExtractor
     from sparrow_parse.vlmb.inference_factory import InferenceFactory
 
-    # Initialize the extractor and inference instance
-    factory = InferenceFactory(config)
-    model_inference_instance = factory.get_inference_instance()
+    # Create cache key based on config
+    cache_key = f"{config.get('method')}_{config.get('model_name')}"
+
+    # Check if model is already cached
+    if model_cache is not None and cache_key in model_cache:
+        model_inference_instance = model_cache[cache_key]
+    else:
+        # Initialize the extractor and inference instance
+        factory = InferenceFactory(config)
+        model_inference_instance = factory.get_inference_instance()
+
+        # Cache the model instance if cache is provided
+        if model_cache is not None:
+            model_cache[cache_key] = model_inference_instance
+
     extractor = VLLMExtractor()
 
     # Run inference
@@ -48,8 +60,8 @@ def subprocess_inference(config, input_data, debug_dir, debug):
 
 class SparrowInstructorPipeline(Pipeline):
 
-    def __init__(self):
-        pass
+    def __init__(self, model_cache: dict = None):
+        self.model_cache = model_cache if model_cache is not None else {}
 
     def run_pipeline(self,
                      pipeline: str,
@@ -81,7 +93,8 @@ class SparrowInstructorPipeline(Pipeline):
         llm_output_list, num_pages = self.invoke_pipeline_step(lambda: self.execute_query(options,
                                                                                           query,
                                                                                           debug_dir,
-                                                                                          debug),
+                                                                                          debug,
+                                                                                          self.model_cache),
                                                                 f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Executing query", local)
 
         llm_output = llm_output_list[0] if len(llm_output_list) > 0 else "No output from inference backend"
@@ -93,15 +106,17 @@ class SparrowInstructorPipeline(Pipeline):
         return llm_output
 
 
-    def execute_query(self, options, query, debug_dir, debug):
+    def execute_query(self, options, query, debug_dir, debug, model_cache):
         """
-        Executes the query using the specified inference backend in a subprocess.
+        Executes the query using the specified inference backend.
+        For vLLM backend, calls inference directly. For other backends, uses subprocess execution.
 
         Args:
             options (list): Inference backend options (e.g., ['huggingface', 'some_space']).
             query (str): Query text.
             debug_dir (str): Directory for debug output.
             debug (bool): Flag for enabling debug mode.
+            model_cache (dict): Cache for storing model instances.
 
         Returns:
             Tuple: (llm_output, num_pages)
@@ -119,16 +134,27 @@ class SparrowInstructorPipeline(Pipeline):
             }
         ]
 
-        # Offload inference to a subprocess
-        with concurrent.futures.ProcessPoolExecutor() as executor:
-            future = executor.submit(
-                subprocess_inference,  # Call the top-level function
+        # For vLLM backend, call directly without subprocess
+        if config.get("method") == "vllm":
+            llm_output, num_pages = subprocess_inference(
                 config,
                 input_data,
                 debug_dir,
-                debug
+                debug,
+                model_cache
             )
-            llm_output, num_pages = future.result()
+        else:
+            # Offload inference to a subprocess for other backends
+            with concurrent.futures.ProcessPoolExecutor() as executor:
+                future = executor.submit(
+                    subprocess_inference,  # Call the top-level function
+                    config,
+                    input_data,
+                    debug_dir,
+                    debug,
+                    None  # No model cache for subprocess execution
+                )
+                llm_output, num_pages = future.result()
 
         return llm_output, num_pages
 

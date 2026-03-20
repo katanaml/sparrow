@@ -35,7 +35,7 @@ def subprocess_inference(config, input_data, tables_only, crop_size, query_all_d
     from sparrow_parse.vlmb.inference_factory import InferenceFactory
 
     # Create cache key based on config
-    cache_key = f"{config.get('method')}_{config.get('model_name', config.get('hf_space', 'default'))}"
+    cache_key = f"{config.get('method')}_{config.get('model_name')}"
 
     # Check if model is already cached
     if model_cache is not None and cache_key in model_cache:
