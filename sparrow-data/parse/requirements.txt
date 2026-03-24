@@ -6,13 +6,13 @@ rich
 # torch==2.10.0
 # numpy==2.4.3
 
-sentence-transformers==5.2.3
-pypdf==6.7.5
+sentence-transformers==5.3.0
+pypdf==6.9.2
 gradio_client==2.3.0
 pdf2image==1.17.0
 # mlx==0.31.0; sys_platform == 'darwin' and platform_machine == 'arm64'
 # mlx-vlm==0.4.0; sys_platform == 'darwin' and platform_machine == 'arm64'
-# vllm==0.17.0
+# vllm==0.18.0
 ollama==0.6.1
 addict==2.4.0
 matplotlib==3.10.8
