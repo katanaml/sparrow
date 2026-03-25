@@ -9,14 +9,9 @@ import re
 # Total must be < 1.0 (leaving buffer for CUDA overhead)
 # Tested on NVIDIA RTX 6000 Pro 96GB:
 # - Mistral Small 3.2 24B: 6.99 GiB KV cache, 45,776 tokens at 0.70
-# - Qwen 3.5 35B: 10.00 GiB KV cache, 45,776 tokens at 0.70
 # - dots.ocr: 11.15x concurrency, 32,768 tokens at 0.20
-# VLLM_GPU_MEMORY_CONFIGS = {
-#     "mistralai/Mistral-Small-3.2-24B-Instruct": 0.70,
-#     "rednote-hilab/dots.ocr": 0.20,
-# }
 VLLM_GPU_MEMORY_CONFIGS = {
-    "Qwen/Qwen3.5-35B-A3B-FP8": 0.70,
+    "mistralai/Mistral-Small-3.2-24B-Instruct-2506": 0.70,
     "rednote-hilab/dots.ocr": 0.20,
 }
 VLLM_GPU_MEMORY_DEFAULT = 0.70
@@ -169,7 +164,7 @@ class VLLMInference(ModelInference):
                 max_tokens=4000
             )
 
-            outputs = self.llm.chat(chat_messages, sampling_params=sampling_params, chat_template_kwargs={"enable_thinking": False})
+            outputs = self.llm.chat(chat_messages, sampling_params=sampling_params)
             response = outputs[0].outputs[0].text
 
             print("Inference completed successfully")
