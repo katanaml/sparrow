@@ -20,9 +20,9 @@
 
 ## 🌟 Sparrow
 
-Production-ready structured data extraction platform powered by ML, LLMs, and Vision LLMs.
+Production-ready structured data extraction powered by ML, LLMs & Vision LLMs.
 
-Process documents, forms, and images into clean structured data — invoices, receipts, statements, tables, and more.
+Turn invoices, receipts, statements, forms and images into clean structured data.
 
 [🚀 Try Sparrow Online](https://sparrow.katanaml.io)
 
