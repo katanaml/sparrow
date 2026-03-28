@@ -18,12 +18,13 @@
 
 ---
 
-## 🌟 Sparrow UI
+## 🌟 Sparrow
 
-Interactive web interface for document processing.
+Production-ready structured data extraction platform powered by ML, LLMs, and Vision LLMs.
 
-### Try Online
-Live web interface: [sparrow.katanaml.io](https://sparrow.katanaml.io)
+Process documents, forms, and images into clean structured data — invoices, receipts, statements, tables, and more.
+
+[🚀 Try Sparrow Online](https://sparrow.katanaml.io)
 
 ![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui.png)
 
