@@ -23,7 +23,7 @@
 Interactive web interface for document processing.
 
 ### Try Online
-Visit [sparrow.katanaml.io](https://sparrow.katanaml.io) for a live instance running on Mac Mini M4 Pro.
+Live web interface: [sparrow.katanaml.io](https://sparrow.katanaml.io)
 
 ![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui.png)
 
