@@ -60,7 +60,7 @@ Turn invoices, receipts, statements, forms and images into clean structured data
 📱 **Multi-format Support**: Images (PNG, JPG) and multi-page PDFs  
 🎨 **Schema Validation**: JSON schema-based extraction with automatic validation  
 🌐 **API-First Design**: RESTful APIs for easy integration  
-💬 **Instruction Calling**: Beyond document extraction - text processing, validation, decision making. Using LLMs, such as GPT-OSS, Mistral, Qwen 3.5, etc.  
+💬 **Instruction Calling**: Text processing, validation, decision making with GPT-OSS, Mistral, Qwen 3.5, etc.  
 📊 **Visual Monitoring**: Built-in dashboard and agent workflow tracking  
 🔒 **Enterprise Ready**: Rate limiting, usage analytics, commercial licensing available  
 🚀 **Local Vision LLMs**: Mistral, Qwen 3.5, DeepSeek OCR, dots.ocr, dots-mocr, etc.  
