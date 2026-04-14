@@ -8,7 +8,7 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 
 setup(
     name="sparrow-parse",
-    version="1.4.4",
+    version="1.4.5",
     author="Andrej Baranovskij",
     author_email="andrejus.baranovskis@gmail.com",
     description="Sparrow Parse is a Python package (part of Sparrow) for parsing and extracting information from documents.",
@@ -39,7 +39,7 @@ setup(
                 "torch==2.10.0",
                 "torchvision==0.25.0",
                 "numpy",
-                "vllm==0.18.0; sys_platform == 'linux'",
+                "vllm==0.19.0; sys_platform == 'linux'",
             ],
             "all": [
                 "transformers==5.1.0",
@@ -48,7 +48,7 @@ setup(
                 "numpy==2.4.4",
                 "mlx==0.31.1; sys_platform == 'darwin' and platform_machine == 'arm64'",
                 "mlx-vlm==0.4.4; sys_platform == 'darwin' and platform_machine == 'arm64'",
-                "vllm==0.18.0; sys_platform == 'linux'",
+                "vllm==0.19.0; sys_platform == 'linux'",
             ],
         },
     entry_points={
