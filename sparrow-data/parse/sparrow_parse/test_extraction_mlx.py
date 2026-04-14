@@ -7,11 +7,14 @@ import time
 # Load model and processor
 # model_path = "lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit"
 # model_path = "mlx-community/Ministral-3-14B-Instruct-2512-8bit"
+# model_path = "mlx-community/gemma-4-31b-it-8bit"
+model_path = "mlx-community/gemma-4-26b-a4b-it-8bit"
 # model_path = "mlx-community/dots.ocr-bf16"
+# model_path = "mlx-community/dots.mocr-bf16"
 # model_path = "mlx-community/DeepSeek-OCR-2-bf16"
 # model_path = "mlx-community/Qwen3.5-9B-bf16"
 # model_path = "mlx-community/Qwen3.5-27B-8bit"
-model_path = "mlx-community/Qwen3.5-35B-A3B-8bit"
+# model_path = "mlx-community/Qwen3.5-35B-A3B-8bit"
 vl_model, vl_processor = load(model_path, trust_remote_code=True)
 vl_config = load_config(model_path)
 print(f"Model loaded: {model_path}")
@@ -35,6 +38,7 @@ image = ["images/bonds_table.png"]
 # ]
 
 # prompt = "retrieve all data. return response in JSON format"
+# prompt = "retrieve tables in HTML format"
 # prompt = f"\n<|grounding|>Convert the document to markdown."
 prompt = "retrieve [{\"instrument_name\":\"str\", \"valuation\":\"int\"}]. return response in JSON format"
 
@@ -53,6 +57,8 @@ vl_output = generate(
     image,
     max_tokens=4000,
     temperature=0,
+    # kv_bits=3.5,
+    # kv_quant_scheme="turboquant",
     verbose=True
 )
 
