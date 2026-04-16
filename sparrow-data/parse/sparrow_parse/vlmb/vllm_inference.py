@@ -8,11 +8,10 @@ import re
 # GPU memory allocation for running multiple vLLM models simultaneously on same GPU
 # Total must be < 1.0 (leaving buffer for CUDA overhead)
 # Tested on NVIDIA RTX 6000 Pro 96GB:
-# - Gemma 4 31B IT:  / Mistral Small 3.2 24B: 6.99 GiB KV cache, 45,776 tokens at 0.70
+# - Mistral Small 3.2 24B: 6.99 GiB KV cache, 45,776 tokens at 0.70
 # - dots.ocr: 11.15x concurrency, 32,768 tokens at 0.20
 VLLM_GPU_MEMORY_CONFIGS = {
-    # "mistralai/Mistral-Small-3.2-24B-Instruct-2506": 0.70,
-    "google/gemma-4-31B-it": 0.90,
+    "mistralai/Mistral-Small-3.2-24B-Instruct-2506": 0.70,
     "rednote-hilab/dots.ocr": 0.20,
 }
 VLLM_GPU_MEMORY_DEFAULT = 0.70
