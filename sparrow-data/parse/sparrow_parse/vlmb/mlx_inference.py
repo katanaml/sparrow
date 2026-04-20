@@ -190,7 +190,7 @@ class MLXInference(ModelInference):
             verbose=False
         )
         print("Inference completed successfully")
-        return response.text
+        return self.process_response(response.text)
 
 
     def _process_images(self, model, processor, config, file_paths, input_data, apply_annotation, ocr_callback):

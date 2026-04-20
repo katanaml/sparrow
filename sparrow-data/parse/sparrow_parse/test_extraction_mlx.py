@@ -12,9 +12,8 @@ model_path = "mlx-community/gemma-4-26b-a4b-it-8bit"
 # model_path = "mlx-community/dots.ocr-bf16"
 # model_path = "mlx-community/dots.mocr-bf16"
 # model_path = "mlx-community/DeepSeek-OCR-2-bf16"
-# model_path = "mlx-community/Qwen3.5-9B-bf16"
 # model_path = "mlx-community/Qwen3.5-27B-8bit"
-# model_path = "mlx-community/Qwen3.5-35B-A3B-8bit"
+# model_path = "mlx-community/Qwen3.6-35B-A3B-8bit"
 vl_model, vl_processor = load(model_path, trust_remote_code=True)
 vl_config = load_config(model_path)
 print(f"Model loaded: {model_path}")
