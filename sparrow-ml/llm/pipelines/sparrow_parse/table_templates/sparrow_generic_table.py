@@ -267,34 +267,22 @@ def fetch_form_data(rag, user_selected_pipeline: str, form_query_str: str, page_
     return result
 
 
-def fetch_table_data(table_queries: List[str], table_markdown: str) -> dict:
+def _parse_html_table(table_markdown: str):
     """
-    Extract JSON table structure from HTML/Markdown table based on query schema.
-
-    Uses fuzzy column name matching to map query fields to table columns.
+    Parse an HTML table string and extract the table element and its headers.
 
     Args:
-        table_queries: List of JSON strings defining desired structure.
-                      Example: ["[{'items': [{'instrument_name': 'str', 'valuation': 'int'}]}]"]
-                      Uses only the first query.
-        table_markdown: HTML/Markdown string containing the table
+        table_markdown: HTML string containing the table
 
     Returns:
-        dict: JSON structure with extracted data matching the query schema
+        Tuple of (table_element, headers) where table_element is a BeautifulSoup
+        Tag or None, and headers is a list of header strings (empty if not found)
     """
-    # Parse the query structure
-    fields = parse_query_structure(table_queries)
-    if not fields:
-        return {'items': []}
-
-    # Parse the HTML table
     soup = BeautifulSoup(table_markdown, 'html.parser')
     table = soup.find('table')
-
     if not table:
-        return {'items': []}
+        return None, []
 
-    # Extract headers
     headers = []
     thead = table.find('thead')
     if thead:
@@ -305,34 +293,43 @@ def fetch_table_data(table_queries: List[str], table_markdown: str) -> dict:
             if not headers:
                 headers = [td.get_text(strip=True) for td in header_row.find_all('td')]
 
-    if not headers:
-        return {'items': []}
+    return table, headers
 
-    # Map query fields to column indices
+
+def _extract_rows(table, headers: List[str], fields: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """
+    Extract data rows from a parsed table for the given field definitions.
+
+    Args:
+        table: BeautifulSoup table element
+        headers: List of table header strings
+        fields: List of field dicts with 'name' and 'type' keys
+
+    Returns:
+        List of row dicts with field names as keys and converted values
+    """
+    # Map field names to column indices
     field_to_column = {}
     for field in fields:
         column_idx = find_best_column_match(field['name'], headers)
         if column_idx is not None:
             field_to_column[field['name']] = {'index': column_idx, 'type': field['type']}
 
-    # Extract data rows
     items = []
     tbody = table.find('tbody')
     if tbody:
-        rows = tbody.find_all('tr')
-        for row in rows:
+        for row in tbody.find_all('tr'):
             cells = row.find_all('td')
-            if len(cells) == 0:
+            if not cells:
                 continue
 
             item = {}
             for field in fields:
                 if field['name'] in field_to_column:
                     column_info = field_to_column[field['name']]
-                    column_idx = column_info['index']
-                    if column_idx < len(cells):
-                        cell_value = cells[column_idx].get_text(strip=True)
-                        item[field['name']] = convert_value(cell_value, column_info['type'])
+                    col_idx = column_info['index']
+                    if col_idx < len(cells):
+                        item[field['name']] = convert_value(cells[col_idx].get_text(strip=True), column_info['type'])
                     else:
                         item[field['name']] = None
                 else:
@@ -340,4 +337,39 @@ def fetch_table_data(table_queries: List[str], table_markdown: str) -> dict:
 
             items.append(item)
 
-    return {'items': items}
+    return items
+
+
+def fetch_table_data(table_queries: List[str], table_markdown: str) -> dict:
+    """
+    Extract JSON table structure from HTML/Markdown table based on query schema.
+
+    When table_queries is empty, all columns are identified automatically and all
+    data is returned with string values (no filtering).
+
+    When table_queries is provided, uses fuzzy column name matching to map query
+    fields to table columns.
+
+    Args:
+        table_queries: List of JSON strings defining desired structure, or [] to
+                      fetch all columns automatically.
+                      Example: ["[{'items': [{'instrument_name': 'str', 'valuation': 'int'}]}]"]
+                      Uses only the first query when provided.
+        table_markdown: HTML/Markdown string containing the table
+
+    Returns:
+        dict: JSON structure with extracted data matching the query schema
+    """
+    table, headers = _parse_html_table(table_markdown)
+    if not table or not headers:
+        return {'items': []}
+
+    if not table_queries:
+        # Auto-detect: use all headers as string fields
+        fields = [{'name': header, 'type': 'str'} for header in headers if header]
+    else:
+        fields = parse_query_structure(table_queries)
+        if not fields:
+            return {'items': []}
+
+    return {'items': _extract_rows(table, headers, fields)}

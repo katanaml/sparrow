@@ -32,7 +32,12 @@ def process_table_extraction(rag, user_selected_pipeline, query, file_path, hint
     """
     start_time = time.time()
 
-    form_query, table_queries = split_query(query)
+    if query != "*":
+        form_query, table_queries = split_query(query)
+    else:
+        # If query is "*", fetch all table data
+        form_query = None
+        table_queries = []
 
     table_options = options[2:]
 
