@@ -121,10 +121,9 @@ def process_table_extraction(rag, user_selected_pipeline, query, file_path, hint
                         'data': merged_data,
                         'page': page_number
                     })
-
+                    
                 except (ImportError, AttributeError) as e:
                     print(f"Error loading table template for page {page_number}: {e}")
-                break  # Process only the first table from each page for now
 
     # Simplify structure for single page - return just the data without page wrapper
     if len(all_pages_data) == 1:
