@@ -267,9 +267,82 @@ def fetch_form_data(rag, user_selected_pipeline: str, form_query_str: str, page_
     return result
 
 
+def _flatten_thead_headers(thead) -> List[str]:
+    """
+    Flatten a multi-level <thead> into a single list of column header strings.
+
+    Handles rowspan and colspan generically by building a virtual column grid.
+    Parent colspan text is prepended to child cell text with a space separator.
+    Cells with rowspan > 1 that span all header rows are treated as leaf headers.
+
+    Examples:
+        Single-row thead  -> ['Col A', 'Col B', 'Col C']
+        Two-row thead with colspan=3 parent ->
+            ['Coverage', 'Face Amount', 'Premiums Annually',
+             'Premiums Semi-Annually', 'Premiums Quarterly', 'Monthly']
+    """
+    rows = thead.find_all('tr')
+    if not rows:
+        return []
+
+    if len(rows) == 1:
+        cells = rows[0].find_all(['th', 'td'])
+        return [c.get_text(strip=True) for c in cells]
+
+    # occupied: (row_idx, col) positions claimed by a rowspan from an earlier row
+    occupied: set = set()
+    # column_group[col] = accumulated parent prefix text built from colspan ancestors
+    column_group: Dict[int, str] = {}
+    # col_texts[col] = final flattened header for that column (set when a leaf cell is seen)
+    col_texts: Dict[int, str] = {}
+
+    for row_idx, row in enumerate(rows):
+        cells = row.find_all(['th', 'td'])
+        col = 0
+        for cell in cells:
+            # Advance past positions occupied by rowspan cells from earlier rows
+            while (row_idx, col) in occupied:
+                col += 1
+
+            text = cell.get_text(strip=True)
+            rowspan = int(cell.get('rowspan', 1))
+            colspan = int(cell.get('colspan', 1))
+
+            if colspan > 1:
+                # Group/parent header: accumulate its text into each spanned column's prefix
+                for c in range(col, col + colspan):
+                    existing = column_group.get(c, '')
+                    parts = [p for p in [existing, text] if p]
+                    column_group[c] = ' '.join(parts)
+                    for r in range(row_idx + 1, row_idx + rowspan):
+                        occupied.add((r, c))
+            else:
+                # Leaf cell: combine any accumulated parent prefix with this cell's text
+                prefix = column_group.get(col, '')
+                parts = [p for p in [prefix, text] if p]
+                col_texts[col] = ' '.join(parts)
+                for r in range(row_idx + 1, row_idx + rowspan):
+                    occupied.add((r, col))
+
+            col += colspan
+
+    # Any colspan-only column that never received a leaf child becomes its own header
+    for c, prefix in column_group.items():
+        if c not in col_texts:
+            col_texts[c] = prefix
+
+    if not col_texts:
+        return []
+    max_col = max(col_texts.keys()) + 1
+    return [col_texts.get(i, '') for i in range(max_col)]
+
+
 def _parse_html_table(table_markdown: str):
     """
     Parse an HTML table string and extract the table element and its headers.
+
+    Supports multi-level <thead> with rowspan/colspan by flattening all header
+    rows into a single list of column names.
 
     Args:
         table_markdown: HTML string containing the table
@@ -286,12 +359,7 @@ def _parse_html_table(table_markdown: str):
     headers = []
     thead = table.find('thead')
     if thead:
-        header_row = thead.find('tr')
-        if header_row:
-            # Try <th> first, fall back to <td> if no <th> tags found
-            headers = [th.get_text(strip=True) for th in header_row.find_all('th')]
-            if not headers:
-                headers = [td.get_text(strip=True) for td in header_row.find_all('td')]
+        headers = _flatten_thead_headers(thead)
 
     return table, headers
 
@@ -340,6 +408,20 @@ def _extract_rows(table, headers: List[str], fields: List[Dict[str, Any]]) -> Li
     return items
 
 
+def _deduplicate_headers(headers: List[str]) -> List[str]:
+    """Rename duplicate header strings by appending _2, _3, … to later occurrences."""
+    seen: Dict[str, int] = {}
+    result = []
+    for header in headers:
+        if header in seen:
+            seen[header] += 1
+            result.append(f"{header}_{seen[header]}")
+        else:
+            seen[header] = 1
+            result.append(header)
+    return result
+
+
 def fetch_table_data(table_queries: List[str], table_markdown: str) -> dict:
     """
     Extract JSON table structure from HTML/Markdown table based on query schema.
@@ -363,6 +445,8 @@ def fetch_table_data(table_queries: List[str], table_markdown: str) -> dict:
     table, headers = _parse_html_table(table_markdown)
     if not table or not headers:
         return {'items': []}
+
+    headers = _deduplicate_headers(headers)
 
     if not table_queries:
         # Auto-detect: use all headers as string fields
