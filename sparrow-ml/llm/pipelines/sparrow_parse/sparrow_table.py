@@ -6,7 +6,7 @@ from pypdf import PdfReader, PdfWriter
 import time
 
 def process_table_extraction(rag, user_selected_pipeline, query, file_path, hints_file_path, options, crop_size,
-                            instruction, validation, ocr, markdown, table_template, page_type, debug_dir, debug):
+                            instruction, validation, ocr, markdown, table_template, page_type, debug_dir, debug, local):
     """
     Process document with table extraction.
 
@@ -26,6 +26,7 @@ def process_table_extraction(rag, user_selected_pipeline, query, file_path, hint
         page_type: Page type query
         debug_dir: Debug folder for multipage
         debug: Enable debug mode
+        local: Enable local mode for debugging
 
     Returns:
         Extracted data as JSON string or dict
@@ -44,7 +45,7 @@ def process_table_extraction(rag, user_selected_pipeline, query, file_path, hint
     ocr_query = "*"
     ocr_output = rag.run_pipeline(user_selected_pipeline, ocr_query, file_path, hints_file_path, table_options,
                                   crop_size, instruction, validation, ocr, markdown, False, table_template,
-                                  page_type, debug_dir, debug, False)
+                                  page_type, debug_dir, debug, local)
 
     tables_by_page = extract_tables_from_ocr(ocr_output)
     non_tables_by_page = extract_non_tables_from_ocr(ocr_output)

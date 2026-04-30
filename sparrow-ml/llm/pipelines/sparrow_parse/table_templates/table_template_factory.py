@@ -54,7 +54,7 @@ class TableTemplateFactory:
                        page_file_path: str, hints_file_path: str, options_form: list, crop_size: int,
                        instruction: bool, validation: bool, ocr: bool, markdown: bool,
                        table_template: str, page_type: str, debug_dir: str, debug: bool,
-                       non_tables_by_page: list):
+                       non_tables_by_page: list, local: bool):
         """
         Load a table template module and call its fetch_form_data method.
 
@@ -76,6 +76,7 @@ class TableTemplateFactory:
             debug_dir: Debug folder for multipage
             debug: Enable debug mode
             non_tables_by_page: List of non-table entries by page
+            local: Enable local mode for debugging
 
         Returns:
             Form data as dict or string
@@ -93,4 +94,4 @@ class TableTemplateFactory:
                                      hints_file_path, options_form, crop_size,
                                      instruction, validation, ocr, markdown,
                                      table_template, page_type, debug_dir, debug,
-                                     non_tables_by_page)
+                                     non_tables_by_page, local)

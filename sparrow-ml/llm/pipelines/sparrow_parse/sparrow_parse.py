@@ -103,7 +103,7 @@ class SparrowParsePipeline(Pipeline):
         ocr_callback = process_ocr_data if ocr else None
 
         llm_output_list, num_pages, tables_only, validation_off, apply_annotation = self.invoke_pipeline_step(
-            lambda: self.execute_query(options, crop_size, query_all_data, ocr_callback, query, file_path, debug_dir, debug, self.model_cache),
+            lambda: self.execute_query(options, crop_size, query_all_data, ocr_callback, query, file_path, debug_dir, debug, self.model_cache, local),
             f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Executing query",
             local
         )
@@ -294,7 +294,8 @@ class SparrowParsePipeline(Pipeline):
         return query
 
 
-    def execute_query(self, options, crop_size, query_all_data, ocr_callback, query, file_path, debug_dir, debug, model_cache):
+    def execute_query(self, options, crop_size, query_all_data, ocr_callback, query, file_path,
+                      debug_dir, debug, model_cache, local):
         """
         Executes the query using the specified inference backend.
         For vLLM backend, calls inference directly. For other backends, uses subprocess execution.
@@ -309,6 +310,7 @@ class SparrowParsePipeline(Pipeline):
             debug_dir (str): Directory for debug output.
             debug (bool): Flag for enabling debug mode.
             model_cache (dict): Cache for storing model instances.
+            local (bool): Flag for local execution.
 
         Returns:
             Tuple: (llm_output, num_pages, tables_only, validation_off, apply_annotation)
@@ -327,7 +329,7 @@ class SparrowParsePipeline(Pipeline):
         ]
 
         # For vLLM backend, call directly without subprocess
-        if config.get("method") == "vllm":
+        if config.get("method") == "vllm" or local:
             llm_output, num_pages = subprocess_inference(
                 config,
                 input_data,
@@ -522,14 +524,8 @@ class SparrowParsePipeline(Pipeline):
     @staticmethod
     def invoke_pipeline_step(task_call, task_description, local):
         if local:
-            with Progress(
-                    SpinnerColumn(),
-                    TextColumn("[progress.description]{task.description}"),
-                    transient=False,
-            ) as progress:
-                progress_task = progress.add_task(description=task_description, total=None)
-                ret = task_call()
-                progress.update(progress_task, completed=1)
+            print(f"[bold cyan]▶[/bold cyan] {task_description}")
+            ret = task_call()
         else:
             print(task_description)
             ret = task_call()

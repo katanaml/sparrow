@@ -5,7 +5,7 @@ def fetch_form_data(rag, user_selected_pipeline: str, form_query_str: str, page_
                     hints_file_path: str, options_form: List, crop_size: int,
                     instruction: bool, validation: bool, ocr: bool, markdown: bool,
                     table_template: str, page_type: str, debug_dir: str, debug: bool,
-                    non_tables_by_page: List) -> Dict:
+                    non_tables_by_page: List, local: bool) -> Dict:
     """
     Extract invoice form data from non-table entries based on query schema.
 
@@ -26,6 +26,7 @@ def fetch_form_data(rag, user_selected_pipeline: str, form_query_str: str, page_
         debug_dir: Debug folder for multipage (not used)
         debug: Enable debug mode (not used)
         non_tables_by_page: List of non-table entries by page
+        local: Enable local mode for debugging
 
     Returns:
         Dictionary with extracted form data matching the query schema

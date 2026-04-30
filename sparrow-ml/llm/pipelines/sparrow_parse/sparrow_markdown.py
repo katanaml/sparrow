@@ -24,7 +24,7 @@ def read_hints_from_json(hints_file_path: str) -> str:
 
 
 def process_markdown_extraction(rag, user_selected_pipeline, query, file_path, hints_file_path, options, crop_size,
-                               instruction, validation, ocr, markdown, page_type, debug_dir, debug):
+                               instruction, validation, ocr, markdown, page_type, debug_dir, debug, local):
     """
     Process document with markdown extraction and structured data extraction.
 
@@ -43,6 +43,7 @@ def process_markdown_extraction(rag, user_selected_pipeline, query, file_path, h
         page_type: Page type query
         debug_dir: Debug folder for multipage
         debug: Enable debug mode
+        local: Enable local mode for debugging
 
     Returns:
         Extracted data as JSON string or dict
@@ -53,7 +54,7 @@ def process_markdown_extraction(rag, user_selected_pipeline, query, file_path, h
     markdown_options = [options[0], 'deepseek-ocr:latest']
     markdown_output_list = rag.run_pipeline(user_selected_pipeline, query, file_path, hints_file_path, markdown_options,
                                             crop_size, instruction, validation, ocr, markdown, False, None, page_type, debug_dir,
-                                            debug, False)
+                                            debug, local)
 
     combined_output = []
     try:
@@ -73,7 +74,7 @@ def process_markdown_extraction(rag, user_selected_pipeline, query, file_path, h
         rag = get_pipeline("sparrow-instructor")
         answer = rag.run_pipeline("sparrow-instructor", instruction_query, None, None, options, crop_size,
                                   instruction, validation, ocr, markdown, False, None, page_type,
-                                  debug_dir, debug, False)
+                                  debug_dir, debug, local)
 
         if num_pages > 1:
             try:

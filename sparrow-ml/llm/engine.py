@@ -47,15 +47,15 @@ def run(query: Annotated[str, typer.Argument(help="The list of fields to fetch")
         if markdown:
             answer = process_markdown_extraction(rag, user_selected_pipeline, query, file_path, hints_file_path, options,
                                                  crop_size, instruction, validation, ocr, markdown, page_type, debug_dir,
-                                                 debug)
+                                                 debug, True)
         elif table:
             answer = process_table_extraction(rag, user_selected_pipeline, query, file_path, hints_file_path, options,
                                              crop_size, instruction, validation, ocr, markdown, table_template, page_type,
-                                             debug_dir, debug)
+                                             debug_dir, debug, True)
         else:
             answer = rag.run_pipeline(user_selected_pipeline, query, file_path, hints_file_path, options, crop_size,
                                       instruction, validation, ocr, markdown, table, table_template, page_type, debug_dir,
-                                      debug, False)
+                                      debug, True)
 
         print(f"\nSparrow response:\n")
         print(answer)
@@ -86,11 +86,11 @@ async def run_from_api_engine(user_selected_pipeline, query, options_arr, crop_s
                 if markdown:
                     answer = process_markdown_extraction(rag, user_selected_pipeline, query, temp_file_path, hints_temp_path,
                                                          options_arr, crop_size, instruction, validation, ocr,
-                                                         markdown, page_type, debug_dir, debug)
+                                                         markdown, page_type, debug_dir, debug, False)
                 elif table:
                     answer = process_table_extraction(rag, user_selected_pipeline, query, temp_file_path, hints_temp_path,
                                                       options_arr, crop_size, instruction, validation, ocr, markdown,
-                                                      table_template, page_type, debug_dir, debug)
+                                                      table_template, page_type, debug_dir, debug, False)
                 else:
                     answer = rag.run_pipeline(user_selected_pipeline, query, temp_file_path, hints_temp_path, options_arr,
                                               crop_size, instruction, validation, ocr, markdown, table, table_template,

@@ -211,7 +211,7 @@ def fetch_form_data(rag, user_selected_pipeline: str, form_query_str: str, page_
                     hints_file_path: str, options_form: List, crop_size: int,
                     instruction: bool, validation: bool, ocr: bool, markdown: bool,
                     table_template: str, page_type: str, debug_dir: str, debug: bool,
-                    non_tables_by_page: List) -> Dict:
+                    non_tables_by_page: List, local: bool) -> Dict:
     """
     Extract form data from non-table entries based on query schema.
 
@@ -235,6 +235,7 @@ def fetch_form_data(rag, user_selected_pipeline: str, form_query_str: str, page_
         debug_dir: Debug folder for multipage (not used)
         debug: Enable debug mode (not used)
         non_tables_by_page: List of non-table entries by page
+        local: Enable local mode for debugging
 
     Returns:
         Dictionary with extracted form data matching the query schema
@@ -244,7 +245,7 @@ def fetch_form_data(rag, user_selected_pipeline: str, form_query_str: str, page_
     # form_answer = rag.run_pipeline(user_selected_pipeline, form_query_str, page_file_path,
     #                                hints_file_path, options_form, crop_size,
     #                                instruction, validation, ocr, markdown, False, table_template,
-    #                                page_type, debug_dir, debug, False)
+    #                                page_type, debug_dir, debug, local)
 
     # Parse the form query to get field names and types
     form_fields = parse_form_query(form_query_str)
@@ -344,12 +345,15 @@ def _parse_html_table(table_markdown: str):
     Supports multi-level <thead> with rowspan/colspan by flattening all header
     rows into a single list of column names.
 
+    For tables without a <thead> or <th> elements, headers are auto-generated
+    as col1, col2, ... based on the column count of the first row.
+
     Args:
         table_markdown: HTML string containing the table
 
     Returns:
         Tuple of (table_element, headers) where table_element is a BeautifulSoup
-        Tag or None, and headers is a list of header strings (empty if not found)
+        Tag or None, and headers is a list of header strings
     """
     soup = BeautifulSoup(table_markdown, 'html.parser')
     table = soup.find('table')
@@ -360,6 +364,18 @@ def _parse_html_table(table_markdown: str):
     thead = table.find('thead')
     if thead:
         headers = _flatten_thead_headers(thead)
+
+    if not headers:
+        # Check for <th> elements in the first row
+        first_row = table.find('tr')
+        if first_row:
+            th_cells = first_row.find_all('th')
+            if th_cells:
+                headers = [th.get_text(separator=' ', strip=True) for th in th_cells]
+            else:
+                # No header row at all — generate col1, col2, ... from column count
+                td_cells = first_row.find_all('td')
+                headers = [f'col{i + 1}' for i in range(len(td_cells))]
 
     return table, headers
 
@@ -385,25 +401,25 @@ def _extract_rows(table, headers: List[str], fields: List[Dict[str, Any]]) -> Li
 
     items = []
     tbody = table.find('tbody')
-    if tbody:
-        for row in tbody.find_all('tr'):
-            cells = row.find_all('td')
-            if not cells:
-                continue
+    row_source = tbody if tbody else table
+    for row in row_source.find_all('tr'):
+        cells = row.find_all('td')
+        if not cells:
+            continue
 
-            item = {}
-            for field in fields:
-                if field['name'] in field_to_column:
-                    column_info = field_to_column[field['name']]
-                    col_idx = column_info['index']
-                    if col_idx < len(cells):
-                        item[field['name']] = convert_value(cells[col_idx].get_text(strip=True), column_info['type'])
-                    else:
-                        item[field['name']] = None
+        item = {}
+        for field in fields:
+            if field['name'] in field_to_column:
+                column_info = field_to_column[field['name']]
+                col_idx = column_info['index']
+                if col_idx < len(cells):
+                    item[field['name']] = convert_value(cells[col_idx].get_text(strip=True), column_info['type'])
                 else:
                     item[field['name']] = None
+            else:
+                item[field['name']] = None
 
-            items.append(item)
+        items.append(item)
 
     return items
 
@@ -443,7 +459,7 @@ def fetch_table_data(table_queries: List[str], table_markdown: str) -> dict:
         dict: JSON structure with extracted data matching the query schema
     """
     table, headers = _parse_html_table(table_markdown)
-    if not table or not headers:
+    if not table:
         return {'items': []}
 
     headers = _deduplicate_headers(headers)
