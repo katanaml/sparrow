@@ -33,10 +33,17 @@ To run with Ollama on Linux/Windows:
 pip install sparrow-parse
 ```
 
+To run with LiteLLM (AI gateway over 100+ hosted providers, no separate proxy server required):
+
+```bash
+pip install sparrow-parse[litellm]
+```
+
 **Additional Requirements:**
 - For PDF processing: `brew install poppler` (macOS) or `apt-get install poppler-utils` (Linux)
 - For MLX backend: Apple Silicon Mac required
 - For Hugging Face: Valid HF token with GPU access
+- For LiteLLM backend: provider-specific API keys via env vars (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, etc.) per https://docs.litellm.ai/docs/providers
 
 ### Basic Usage
 
@@ -92,6 +99,30 @@ config = {
     "model_name": "mistral-small3.2:24b-instruct-2506-q8_0"
 }
 ```
+
+#### LiteLLM Backend (AI Gateway, 100+ hosted providers)
+Embedded LiteLLM SDK. One backend, many upstream providers (OpenAI, Anthropic,
+Vertex AI, Bedrock, Azure, Groq, Mistral, ...). Specify the model with the
+standard LiteLLM provider-prefixed name. Credentials are picked up from the
+matching provider env var (`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`,
+`AWS_ACCESS_KEY_ID`, ...) unless `api_key` / `api_base` are passed explicitly.
+Install with `pip install sparrow-parse[litellm]`.
+
+```python
+config = {
+    "method": "litellm",
+    "model_name": "anthropic/claude-3-5-sonnet-20241022",
+    # Optional, leave unset to use ANTHROPIC_API_KEY env var:
+    # "api_key": "sk-ant-...",
+    # "api_base": "https://your-foundry-endpoint/anthropic",
+    # Optional litellm.completion kwargs. drop_params=True is the default
+    # and silently strips kwargs unsupported on the upstream provider.
+    # "litellm_kwargs": {"num_retries": 3, "drop_params": True},
+}
+```
+
+See https://docs.litellm.ai/docs/providers for the full list of supported
+provider prefixes.
 
 #### Hugging Face Backend
 ```python
