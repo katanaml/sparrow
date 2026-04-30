@@ -19,6 +19,14 @@ class InferenceFactory:
         elif self.config["method"] == "vllm":
             from sparrow_parse.vlmb.vllm_inference import VLLMInference
             return VLLMInference(model_name=self.config["model_name"])
+        elif self.config["method"] == "litellm":
+            from sparrow_parse.vlmb.litellm_inference import LiteLLMInference
+            return LiteLLMInference(
+                model_name=self.config["model_name"],
+                api_key=self.config.get("api_key"),
+                api_base=self.config.get("api_base"),
+                litellm_kwargs=self.config.get("litellm_kwargs"),
+            )
         else:
             raise ValueError(f"Unknown method: {self.config['method']}")
 

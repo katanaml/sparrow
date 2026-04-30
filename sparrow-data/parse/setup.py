@@ -41,6 +41,9 @@ setup(
                 "numpy",
                 "vllm==0.19.0; sys_platform == 'linux'",
             ],
+            "litellm": [
+                "litellm>=1.60,<1.85",
+            ],
             "all": [
                 "transformers==5.1.0",
                 "torch==2.11.0",
@@ -49,6 +52,7 @@ setup(
                 "mlx==0.31.1; sys_platform == 'darwin' and platform_machine == 'arm64'",
                 "mlx-vlm==0.4.4; sys_platform == 'darwin' and platform_machine == 'arm64'",
                 "vllm==0.19.0; sys_platform == 'linux'",
+                "litellm>=1.60,<1.85",
             ],
         },
     entry_points={
