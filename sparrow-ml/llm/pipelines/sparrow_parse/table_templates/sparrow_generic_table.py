@@ -377,6 +377,9 @@ def _parse_html_table(table_markdown: str):
                 td_cells = first_row.find_all('td')
                 headers = [f'col{i + 1}' for i in range(len(td_cells))]
 
+    # Replace any empty header names with generated names (col1, col2, ...)
+    headers = [h if h else f'col{i + 1}' for i, h in enumerate(headers)]
+
     return table, headers
 
 
