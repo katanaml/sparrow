@@ -760,18 +760,20 @@ Built-in analytics and monitoring dashboard at [sparrow.katanaml.io](https://spa
 **Sparrow Instructor**: Use for text analysis, summarization, Q&A  
 **Sparrow Agents**: Use for complex multi-step document processing workflows  
 
+
 ## ⚡ Performance Tips
 
 ### Hardware Optimization
 
 **Apple Silicon (MLX)**
 - ✅ Best performance with unified memory
-- ✅ Models: Mistral-Small-3.2-24B, Qwen3.6-35B-A3B-8bit, 
+- ✅ Models: Mistral Small 3.2 24B, Qwen3.6 27B Dense, Qwen3.6 35B MoE, Gemma 4 31B Dense, Gemma 4 26B MoE
 - ⚠️ Requires macOS with Apple Silicon
 
-**NVIDIA GPU**
-- ✅ Use vLLM or Ollama backends
-- ✅ Recommended: Nvidia DGX Spark with 12GB+ VRAM or AMD GPU
+**NVIDIA GPU (vLLM)**
+- ✅ Production inference via vLLM backend
+- ✅ Models: Mistral Small 3.2 24B full precision (primary), dots.ocr for large table pipelines
+- ✅ Recommended: 96GB VRAM for full precision models
 - ⚠️ Requires CUDA setup
 
 **CPU Only**
@@ -779,25 +781,41 @@ Built-in analytics and monitoring dashboard at [sparrow.katanaml.io](https://spa
 - ✅ Use smaller models (7B parameters max)
 - ✅ Consider Hugging Face cloud backend
 
-### Memory Management
+### Table Extraction
+
+For large or complex tables, use the dots.ocr → Sparrow Templates pipeline instead of Vision LLM direct extraction:
 
 ```bash
-# Reduce memory usage
---crop-size 100        # Crop large images
---options tables_only  # Process only tables
+./sparrow.sh "*" --pipeline "sparrow-parse" \
+  --debug --table --table-template "sparrow_generic_table" \
+  --options mlx --options mlx-community/Qwen3.6-35B-A3B-8bit \
+  --options mlx --options mlx-community/dots.ocr-bf16 --file-path "data/well_report.jpg"
+```
 
-# For large PDFs
---debug-dir ./temp     # Monitor processing
-# Split large PDFs manually if needed
+- **dots.ocr**: Handles large tables with high accuracy via HTML intermediate output
+- **Sparrow Templates**: Maps extracted HTML table structure to JSON schema
+- Recommended for financial statements, multi-column invoices, and structured reports
+
+### Extraction Hints
+
+Use Sparrow hints to improve accuracy on complex documents — steer model attention to footers and fine print, disambiguate structurally similar fields (e.g., supplier vs. recipient VAT), normalize date and number formats, and resolve priority ordering for ambiguous fields:
+
+```bash
+./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"int\"}]" \
+  --pipeline "sparrow-parse" --debug --options mlx \
+  --options mlx-community/gemma-4-31b-it-8bit \
+  --file-path "data/bonds_table.png" --hints-file-path "data/llm_hints_eu.json"
 ```
 
 ### Model Selection
 
-| Use Case | Recommended Model | Memory | Speed |
-|----------|------------------|---------|--------|
-| **Forms/Invoices** | Mistral-Small-3.2-24B | 35GB | Fast |
-| **Complex Tables** | dots-ocr-bf16 | 50GB | Fast |
-| **Quick Testing** | Qwen3.6-35B-A3B-8bit | 35GB | Fastest |
+| Use Case | Recommended Model | Backend | Notes |
+|----------|------------------|---------|-------|
+| **Invoices / Forms (EU)** | Mistral Small 3.2 24B | vLLM / MLX | Primary production model |
+| **Invoices / Forms (US)** | Gemma 4 31B Dense | MLX | Strong on English documents |
+| **Large Tables** | dots.ocr | vLLM | Via Sparrow Templates pipeline |
+| **Quick Testing** | Qwen3.6 27B Dense | MLX | Fast, good general accuracy |
+| **Low Memory** | Qwen3.6 35B MoE / Gemma 4 26B MoE | MLX | Reduced memory footprint |
 
 ## 🔍 Troubleshooting
 
@@ -834,7 +852,7 @@ pip install mlx-vlm --trusted-host pypi.org --trusted-host pypi.python.org --tru
 # macOS
 brew install poppler
 
-# Ubuntu/Debian  
+# Ubuntu/Debian
 sudo apt-get install poppler-utils
 
 # Verify installation
@@ -847,7 +865,7 @@ pdftoppm -h
 <summary>🔧 Runtime Issues</summary>
 
 **Memory Errors:**
-- Use smaller models (7B instead of 72B)
+- Use smaller or MoE models to reduce VRAM footprint
 - Enable image cropping: `--crop-size 100`
 - Process single pages instead of entire PDFs
 
@@ -876,8 +894,9 @@ python api.py --debug
 <summary>📄 Document Processing Issues</summary>
 
 **Poor Extraction Quality:**
+- Add extraction hints to steer model attention to problem fields
 - Try image cropping: `--crop-size 60`
-- Use `--options tables_only` for table documents
+- Use `--table --table-template` with dots.ocr for table-heavy documents
 - Ensure image resolution is adequate (300+ DPI)
 - Use schema validation: avoid `--options validation_off`
 
@@ -901,6 +920,7 @@ with open('file.pdf', 'rb') as f:
 - Test with simple schema first
 
 </details>
+
 
 ### Getting Help
 
