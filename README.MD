@@ -60,10 +60,10 @@ Turn invoices, receipts, statements, forms and images into clean structured data
 📱 **Multi-format Support**: Images (PNG, JPG) and multi-page PDFs  
 🎨 **Schema Validation**: JSON schema-based extraction with automatic validation  
 🌐 **API-First Design**: RESTful APIs for easy integration  
-💬 **Instruction Calling**: Text processing, validation, decision making with GPT-OSS, Mistral, Qwen 3.5, etc.  
+💬 **Instruction Calling**: Text processing, validation, decision making with GPT-OSS, Mistral, Qwen 3.6, etc.  
 📊 **Visual Monitoring**: Built-in dashboard and agent workflow tracking  
 🔒 **Enterprise Ready**: Rate limiting, usage analytics, commercial licensing available  
-🚀 **Local Vision LLMs**: Mistral, Qwen 3.5, DeepSeek OCR, dots.ocr, dots-mocr, etc.  
+🚀 **Local Vision LLMs**: Mistral, Qwen 3.6, DeepSeek OCR, dots.ocr, Gemma 4, etc.  
 
 ## 🏗️ Architecture
 
@@ -533,7 +533,7 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
   --options mlx --options mlx-community/dots.ocr-bf16 --file-path "data/well_report.jpg"   
 ```
 
-### 🧾 Query hints
+### 🧾 Query Hints
 
 ```bash
 ./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"int\"}]" \
@@ -578,7 +578,7 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
 ./sparrow.sh '[{"instrument_name":"str", "valuation":0}]' \
   --pipeline "sparrow-parse" \
   --options mlx \
-  --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit \
+  --options mlx-community/Qwen3.6-35B-A3B-8bit \
   --file-path "data/bonds_table.png"
 
 # Hugging Face Cloud GPU
@@ -609,21 +609,21 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
   --page-type table \
   --pipeline "sparrow-parse" \
   --options mlx \
-  --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit \
+  --options mlx-community/Qwen3.6-35B-A3B-8bit \
   --file-path "multi_page.pdf"
 
 # Handle missing fields with null values
 ./sparrow.sh '[{"required_field":"str", "optional_field":"str or null"}]' \
   --pipeline "sparrow-parse" \
   --options mlx \
-  --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit \
+  --options mlx-community/Qwen3.6-35B-A3B-8bit \
   --file-path "document.png"
 
 # Table extraction with cropping
 ./sparrow.sh '*' \
   --pipeline "sparrow-parse" \
   --options mlx \
-  --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit \
+  --options mlx-community/Qwen3.6-35B-A3B-8bit \
   --options tables_only \
   --crop-size 100 \
   --file-path "scan.pdf"
@@ -685,7 +685,7 @@ curl -X POST 'http://localhost:8002/api/v1/sparrow-llm/instruction-inference' \
   -H 'Content-Type: application/x-www-form-urlencoded' \
   -d 'query=instruction: analyze data, payload: {...}' \
   -d 'pipeline=sparrow-instructor' \
-  -d 'options=mlx,mlx-community/Qwen2.5-VL-72B-Instruct-4bit'
+  -d 'options=mlx,mlx-community/Qwen3.6-35B-A3B-8bit'
 ```
 
 ### API Documentation
@@ -755,7 +755,7 @@ Built-in analytics and monitoring dashboard at [sparrow.katanaml.io](https://spa
 
 **Apple Silicon (MLX)**
 - ✅ Best performance with unified memory
-- ✅ Models: Mistral-Small-3.2-24B, Qwen2.5-VL-72B, 
+- ✅ Models: Mistral-Small-3.2-24B, Qwen3.6-35B-A3B-8bit, 
 - ⚠️ Requires macOS with Apple Silicon
 
 **NVIDIA GPU**
@@ -785,8 +785,8 @@ Built-in analytics and monitoring dashboard at [sparrow.katanaml.io](https://spa
 | Use Case | Recommended Model | Memory | Speed |
 |----------|------------------|---------|--------|
 | **Forms/Invoices** | Mistral-Small-3.2-24B | 35GB | Fast |
-| **Complex Tables** | Qwen2.5-VL-72B | 50GB | Slower |
-| **Quick Testing** | Qwen2.5-VL-7B | 20GB | Fastest |
+| **Complex Tables** | dots-ocr-bf16 | 50GB | Fast |
+| **Quick Testing** | Qwen3.6-35B-A3B-8bit | 35GB | Fastest |
 
 ## 🔍 Troubleshooting
 
