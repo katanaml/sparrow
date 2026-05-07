@@ -21,16 +21,27 @@
 ## 🌟 Sparrow
 
 Production-ready structured data extraction powered by ML, LLMs & Vision LLMs.
-
 Turn invoices, receipts, statements, forms and images into clean structured data.
+
+Sparrow is an **API-first platform** built for enterprise document intelligence. It provides RESTful APIs for structured data extraction, instruction processing, and multi-agent workflow orchestration — all running on your own infrastructure with no external API calls or cloud dependencies.
+
+**Platform capabilities:**
+- **Structured Extraction API**: Submit documents via REST and receive validated JSON — integrate directly into any backend or data pipeline
+- **Instruction Processing**: Beyond document extraction — text processing, validation, and decision making via the instruction inference API
+- **Agent Framework**: Orchestrate multi-step workflows with custom agents, visual monitoring via Prefect, and robust error handling
+- **Pluggable Pipelines**: Mix and match Vision LLM (Sparrow Parse), Text LLM (Sparrow Instructor), and Agent pipelines depending on the task
+- **Multiple Backends**: MLX on Apple Silicon, vLLM on NVIDIA, Ollama, Hugging Face — same API surface across all
 
 [🚀 Try Sparrow Online](https://sparrow.katanaml.io)
 
 ![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui.png)
 
 ### Sparrow UI Features
+
+The web UI provides a visual interface on top of the same API:
+
 - **Drag & Drop**: Upload documents directly
-- **Real-time Processing**: See results instantly  
+- **Real-time Processing**: See results instantly
 - **Data Query**: JSON based schema for data query
 - **Structured Output**: JSON structured output
 - **Result Annotation**: View bounding boxes
