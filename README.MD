@@ -20,6 +20,8 @@
 
 ## 🌟 Sparrow
 
+[🚀 Try Sparrow Online](https://sparrow.katanaml.io)
+
 Production-ready structured data extraction powered by ML, LLMs & Vision LLMs.
 Turn invoices, receipts, statements, forms and images into clean structured data.
 
@@ -31,8 +33,6 @@ Sparrow is an **API-first platform** built for enterprise document intelligence.
 - **Agent Framework**: Orchestrate multi-step workflows with custom agents, visual monitoring via Prefect, and robust error handling
 - **Pluggable Pipelines**: Mix and match Vision LLM (Sparrow Parse), Text LLM (Sparrow Instructor), and Agent pipelines depending on the task
 - **Multiple Backends**: MLX on Apple Silicon, vLLM on NVIDIA, Ollama, Hugging Face — same API surface across all
-
-[🚀 Try Sparrow Online](https://sparrow.katanaml.io)
 
 ![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui.png)
 
