@@ -533,6 +533,15 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
   --options mlx --options mlx-community/dots.ocr-bf16 --file-path "data/well_report.jpg"   
 ```
 
+### 🧾 Query hints
+
+```bash
+./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"int\"}]" \
+  --pipeline "sparrow-parse" --debug --options mlx \
+  --options mlx-community/gemma-4-31b-it-8bit \
+  --file-path "data/bonds_table.png" --hints-file-path "data/llm_hints_eu.json"  
+```
+
 ## 💻 CLI Usage
 
 ### Basic Syntax
