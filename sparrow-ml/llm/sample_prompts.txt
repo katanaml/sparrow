@@ -205,6 +205,20 @@ mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit - OK
 
 lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit - OK
 
+Sparrow hints:
+
+./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"str\", \"profit_loss_pct\": \"str\", \"risk_category\": \"str\"}]" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/gemma-4-31b-it-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png" --hints-file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/llm_hints_eu.json"
+
+mlx-community/gemma-4-31b-it-8bit - OK
+
+./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"str\", \"profit_loss_pct\": \"str\", \"risk_category\": \"str\"}]" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen3.6-27B-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png" --hints-file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/llm_hints_eu.json"
+
+mlx-community/Qwen3.6-27B-8bit - OK
+
+./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"str\", \"profit_loss_pct\": \"str\", \"risk_category\": \"str\"}]" --pipeline "sparrow-parse" --debug --options mlx --options lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png" --hints-file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/llm_hints_eu.json"
+
+lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit - OK
+
 
 
 FINANCIAL STATEMENT
