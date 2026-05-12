@@ -1,8 +1,7 @@
 import gradio as gr
 import requests
 import os
-from PIL import Image, ImageDraw, ImageFont
-import tempfile
+from PIL import Image
 import json
 from datetime import datetime
 import configparser
@@ -80,7 +79,7 @@ MAX_FILE_SIZE = 5 * 1024 * 1024  # 5 MB
 examples = [
     ["bonds_table.png", "Bonds table", "[{\"instrument_name\":\"str\", \"valuation\":0}]", None],
     ["lab_results.png", "Lab results", "{\"patient_name\": \"str\", \"patient_age\": \"str\", \"patient_pid\": 0, \"lab_results\": [{\"investigation\": \"str\", \"result\": 0.00, \"reference_value\": \"str\", \"unit\": \"str\"}]}", None],
-    ["bank_statement.png", "Bank statement", "*", "Tables Only"]
+    ["bank_statement.png", "Bank statement", "*", "Table Extraction"]
 ]
 
 # JSON data for Bonds table
@@ -352,24 +351,6 @@ def validate_file(file_path):
     return any(mime_type and mime_type.startswith(prefix) for prefix in allowed_mime_prefixes)
 
 
-def check_annotation_availability(file_path, query, options, model_name):
-    """Check if annotation should be available based on the conditions"""
-    # Check if file is an image (not PDF)
-    is_image = file_path and str(file_path).lower().endswith(('png', 'jpg', 'jpeg'))
-
-    # Check if "Enable Annotation" is selected
-    annotation_enabled = "Enable Annotation" in options
-
-    # Check if query is not just "*"
-    detailed_query = query and query.strip() != "*"
-
-    # Check if the advanced model is selected (contains "Advanced")
-    is_advanced_model = "Advanced" in model_name
-
-    # All conditions must be met
-    return is_image and annotation_enabled and detailed_query and is_advanced_model
-
-
 def run_inference(file_filepath, query, key, options, crop_size, friendly_model_name, client_ip):
     if file_filepath is None:
         gr.Warning("No file provided. Please upload a file before submitting.")
@@ -546,15 +527,10 @@ def run_inference(file_filepath, query, key, options, crop_size, friendly_model_
 
             # Prepare the options string
             selected_options = []
-            if "Tables Only" in options:
+            if "Table Extraction" in options:
                 selected_options.append("tables_only")
             if "Validation Off" in options:
                 selected_options.append("validation_off")
-
-            # Only add apply_annotation if all conditions are met
-            annotation_available = check_annotation_availability(file_path, query, options, friendly_model_name)
-            if annotation_available and "Enable Annotation" in options:
-                selected_options.append("apply_annotation")
 
             # Use the selected model's backend options via the friendly name
             final_options = model_options.get(friendly_model_name, model_options[friendly_names[0]])
@@ -648,229 +624,6 @@ def summarize_result(json_data, key, client_ip, model_name):
     except Exception as e:
         return f"Error generating summary: {str(e)}"
 
-
-def draw_annotations(image_path, json_result):
-    """
-    Draw bounding boxes on an image based on JSON annotations.
-
-    Args:
-        image_path: Path to the original image
-        json_result: JSON data with bbox annotations
-
-    Returns:
-        Path to the annotated image
-    """
-    # Create a temporary directory within Gradio's temp directory structure
-    # This ensures it will be cleaned up by the existing temp cleaner process
-    gradio_temp_dir = Path(tempfile.gettempdir()) / "gradio"
-    os.makedirs(gradio_temp_dir, exist_ok=True)
-
-    # Create a unique subfolder in the Gradio temp directory
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    temp_dir = os.path.join(gradio_temp_dir, f"annotation_{timestamp}_{os.getpid()}")
-    os.makedirs(temp_dir, exist_ok=True)
-
-    # Open the image
-    img = Image.open(image_path)
-    draw = ImageDraw.Draw(img)
-
-    # Parse the JSON result - handle different possible formats
-    results = json_result
-    if isinstance(results, str):
-        try:
-            results = json.loads(results)
-        except json.JSONDecodeError:
-            return image_path  # Return original image if we can't parse the JSON
-
-    # Predefined solid colors that are highly visible
-    solid_colors = [
-        (180, 30, 40),  # Dark red
-        (0, 100, 140),  # Dark blue
-        (30, 120, 40),  # Dark green
-        (140, 60, 160),  # Purple
-        (200, 100, 0),  # Orange
-        (100, 80, 0),  # Brown
-        (0, 100, 100),  # Teal
-        (120, 40, 100)  # Magenta
-    ]
-
-    # Function to extract field keys from JSON at any level
-    def extract_field_keys(data, keys=None):
-        if keys is None:
-            keys = set()
-
-        if isinstance(data, dict):
-            for key, value in data.items():
-                if isinstance(value, dict) and "bbox" in value and "value" in value:
-                    keys.add(key)
-                elif isinstance(value, (dict, list)):
-                    extract_field_keys(value, keys)
-        elif isinstance(data, list):
-            for item in data:
-                extract_field_keys(item, keys)
-
-        return keys
-
-    # Get all unique field keys with bbox information
-    unique_fields = extract_field_keys(results)
-
-    # If no bbox fields found, return original image
-    if not unique_fields:
-        return image_path
-
-    # Map each unique field to a color
-    field_color_map = {}
-    for i, field in enumerate(sorted(unique_fields)):
-        field_color_map[field] = solid_colors[i % len(solid_colors)]
-
-    # Load font with larger size
-    font_size = 20
-    try:
-        font = ImageFont.truetype("arial.ttf", font_size)
-    except IOError:
-        try:
-            font = ImageFont.truetype("DejaVuSans.ttf", font_size)
-        except IOError:
-            try:
-                font = ImageFont.truetype("Helvetica.ttf", font_size)
-            except IOError:
-                font = ImageFont.load_default()
-
-    # Helper function to measure text width
-    def get_text_dimensions(text, font):
-        try:
-            # Method for newer Pillow versions
-            left, top, right, bottom = draw.textbbox((0, 0), text, font=font)
-            return right - left, bottom - top
-        except AttributeError:
-            try:
-                # Alternative method
-                left, top, right, bottom = font.getbbox(text)
-                return right - left, bottom - top
-            except AttributeError:
-                # Fallback approximation
-                return len(text) * (font_size // 2), font_size + 2
-
-    # Function to process items and draw bounding boxes
-    def process_items(data, parent_path=""):
-        if isinstance(data, dict):
-            for key, value in data.items():
-                if isinstance(value, dict) and "bbox" in value and "value" in value:
-                    # This is a field with bbox information
-                    bbox = value["bbox"]
-                    field_value = value["value"]
-                    confidence = value.get("confidence", "N/A")
-
-                    # Check if coordinates need to be scaled (normalized 0-1 values)
-                    if all(isinstance(coord, (int, float)) for coord in bbox):
-                        if max(bbox) <= 1.0:  # Normalized coordinates
-                            width, height = img.size
-                            bbox = [
-                                bbox[0] * width,
-                                bbox[1] * height,
-                                bbox[2] * width,
-                                bbox[3] * height
-                            ]
-
-                    # Get color from the mapping
-                    display_field_name = key
-                    if parent_path:
-                        display_field_name = f"{parent_path}.{key}"
-                    color = field_color_map.get(key, solid_colors[0])
-
-                    # Make sure bbox coordinates are integers
-                    bbox = [int(coord) for coord in bbox]
-
-                    # Calculate the bbox width
-                    bbox_width = bbox[2] - bbox[0]
-
-                    # Draw rectangle with appropriate thickness
-                    border_thickness = 3
-                    draw.rectangle(
-                        [(bbox[0], bbox[1]), (bbox[2], bbox[3])],
-                        outline=color,
-                        width=border_thickness
-                    )
-
-                    # Format the value and confidence
-                    value_str = str(field_value)
-                    confidence_str = f" [{confidence:.2f}]" if isinstance(confidence, (int, float)) else ""
-                    prefix = f"{display_field_name}: "
-
-                    # First, try with full text without truncation
-                    full_label = prefix + value_str + confidence_str
-                    full_width, text_height = get_text_dimensions(full_label, font)
-
-                    # Compare with a reasonable maximum display width
-                    min_display_width = 300  # Reasonable minimum width to display text
-                    max_display_width = max(bbox_width * 1.5, min_display_width)
-
-                    # Only truncate if the full text exceeds our maximum display width
-                    if full_width > max_display_width:
-                        # Calculate the space available for the value
-                        prefix_width, _ = get_text_dimensions(prefix, font)
-                        confidence_width, _ = get_text_dimensions(confidence_str, font)
-                        available_value_width = max_display_width - prefix_width - confidence_width
-
-                        # Truncate the value to fit
-                        truncated_value = value_str
-                        for i in range(len(value_str) - 1, 3, -1):
-                            truncated_value = value_str[:i] + "..."
-                            temp_width, _ = get_text_dimensions(truncated_value, font)
-                            if temp_width <= available_value_width:
-                                break
-
-                        label = prefix + truncated_value + confidence_str
-                        text_width, _ = get_text_dimensions(label, font)
-                    else:
-                        # No truncation needed
-                        label = full_label
-                        text_width = full_width
-
-                    # Position for text (above the bounding box)
-                    padding = 6
-                    text_position = (bbox[0], bbox[1] - text_height - (padding * 2))
-
-                    # Ensure text doesn't go off the top of the image
-                    if text_position[1] < padding:
-                        # If too close to top, position below the box instead
-                        text_position = (bbox[0], bbox[3] + padding)
-
-                    # Add a background rectangle with better contrast
-                    draw.rectangle(
-                        [(text_position[0] - padding, text_position[1] - padding),
-                         (text_position[0] + text_width + padding, text_position[1] + text_height + padding)],
-                        fill=(255, 255, 255, 240),
-                        outline=color,
-                        width=2
-                    )
-
-                    # Draw the text
-                    draw.text(
-                        text_position,
-                        label,
-                        fill=color,
-                        font=font
-                    )
-                elif isinstance(value, (dict, list)):
-                    # Continue traversing nested structures
-                    new_path = f"{parent_path}.{key}" if parent_path else key
-                    process_items(value, new_path)
-        elif isinstance(data, list):
-            for i, item in enumerate(data):
-                new_path = f"{parent_path}[{i}]" if parent_path else f"[{i}]"
-                process_items(item, new_path)
-
-    # Start processing the JSON structure
-    process_items(results)
-
-    # Save the annotated image
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_filename = f"annotated_{timestamp}.png"
-    output_path = os.path.join(temp_dir, output_filename)
-    img.save(output_path)
-
-    return output_path
 
 # Initialize the temp cleaner
 temp_cleaner = GradioTempCleaner(
@@ -1187,9 +940,9 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
 
             options_select_comp = gr.CheckboxGroup(
                 label="Additional Options",
-                choices=["Tables Only", "Validation Off", "Enable Annotation"],
+                choices=["Table Extraction", "Validation Off"],
                 type="value",
-                info="'Tables Only' improves structured tables processing, but try without if results are incomplete. 'Enable Annotation' shows bounding boxes (available only for images with detailed queries using the advanced model)"
+                info="Focus extraction on table content only. Ideal for documents where data is organized in rows and columns — financial reports, lab results, portfolio statements."
             )
 
             crop_size_comp = gr.Slider(
@@ -1267,32 +1020,6 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 visible=True
             )
 
-            with gr.Group(visible=False) as annotation_group:
-                # View selector using Radio as a toggle (better styling control)
-                view_selector = gr.Radio(
-                    choices=["JSON", "Annotation"],
-                    value="JSON",  # Default to JSON view
-                    label="Results",
-                    scale=0,
-                    interactive=True,
-                    elem_classes=["view-toggle"]
-                )
-
-                # JSON view container
-                with gr.Column(visible=True) as json_view:
-                    tabbed_output_json = gr.JSON(
-                        label="Response (JSON)",
-                        height=1022,
-                        min_height=1022
-                    )
-
-                # Image view container
-                with gr.Column(visible=False) as image_view:
-                    output_image = gr.Image(
-                        label="Image with Annotations",
-                        type="filepath"
-                    )
-
             summarize_btn = gr.Button(
                 value="Summarize this result",
                 variant="secondary",
@@ -1301,7 +1028,6 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
 
             # Add hidden state to store the actual key used
             active_key_state = gr.State(value=None)
-            annotation_mode_state = gr.State(value=False)
 
             summarize_text = gr.Markdown(
                 value=result_summary_placeholder
@@ -1322,24 +1048,14 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 elif selected_example == "bank_statement.png":
                     example_json = bank_statement_json
 
-                # For image preview
-                preview_visible = selected_example.lower().endswith(('png', 'jpg', 'jpeg'))
-
                 return (
                     selected_example,  # input_file_comp
                     gr.update(value=example[2]),  # query_input_comp
                     gr.update(value=[example[3]] if example[3] else []),  # options_select_comp
                     gr.update(value=0),  # crop_size_comp
-                    gr.update(visible=True, value=example_json),  # output_json (regular)
-                    gr.update(visible=False),  # annotation_group
-                    gr.update(value="JSON"),  # view_selector (Radio)
-                    gr.update(value=None),  # tabbed_output_json
-                    gr.update(value=None),  # output_image
-                    gr.update(visible=True),  # json_view
-                    gr.update(visible=False),  # image_view
+                    gr.update(visible=True, value=example_json),  # output_json
                     gr.update(visible=False),  # summarize_btn
                     gr.update(value=result_summary_placeholder),  # summarize_text
-                    False  # annotation_mode_state - set to False for examples
                 )
 
         # Default return if no match found
@@ -1348,16 +1064,9 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             gr.update(value=""),  # query_input_comp
             gr.update(value=[]),  # options_select_comp
             gr.update(value=0),  # crop_size_comp
-            gr.update(visible=True, value=None),  # output_json (regular)
-            gr.update(visible=False),  # annotation_group
-            gr.update(value="JSON"),  # view_selector (Radio)
-            gr.update(value=None),  # tabbed_output_json
-            gr.update(value=None),  # output_image
-            gr.update(visible=True),  # json_view
-            gr.update(visible=False),  # image_view
+            gr.update(visible=True, value=None),  # output_json
             gr.update(visible=False),  # summarize_btn
             gr.update(value=result_summary_placeholder),  # summarize_text
-            False  # annotation_mode_state - set to False for default
         )
 
 
@@ -1384,42 +1093,31 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
         )
 
 
+    example_filenames = {ex[0] for ex in examples}
+
     def clear_on_file_upload(file_path, request: gr.Request):
         """Separate function to handle clearing fields on file upload"""
         if file_path is None:  # Only clear when file is removed
             return (
-                gr.update(value=""),  # query_input
+                gr.update(value="*"),  # query_input
                 gr.update(value=[]),  # options_select
                 gr.update(value=0),  # crop_size
                 gr.update(value=None),  # example_radio
                 gr.update(visible=True, value=None),  # Show empty regular JSON
-                gr.update(visible=False),  # Hide annotation group
-                gr.update(value="JSON"),  # Reset view selector to JSON
-                gr.update(value=None),  # Clear annotation JSON
-                gr.update(value=None),  # Clear image
-                gr.update(visible=True),  # Keep JSON view visible
-                gr.update(visible=False),  # Hide image view
                 gr.update(visible=False),  # Hide summarize button
                 gr.update(value=result_summary_placeholder),  # Reset summary text
-                False  # annotation_mode_state - set to False when clearing
             )
         else:
-            # When a new file is uploaded, hide annotation group and just show regular JSON
+            # When an example file is loaded programmatically, leave query unchanged
+            is_example = Path(str(file_path)).name in example_filenames
             return (
-                gr.update(),  # query_input (unchanged)
+                gr.update() if is_example else gr.update(value="*"),  # query_input
                 gr.update(),  # options_select (unchanged)
                 gr.update(),  # crop_size (unchanged)
                 gr.update(),  # example_radio (unchanged)
                 gr.update(visible=True),  # Show regular JSON output
-                gr.update(visible=False),  # Hide annotation group
-                gr.update(value="JSON"),  # Reset view selector to JSON
-                gr.update(value=None),  # Clear annotation JSON
-                gr.update(value=None),  # Clear image
-                gr.update(visible=True),  # Keep JSON view visible
-                gr.update(visible=False),  # Hide image view
                 gr.update(visible=False),  # Hide summarize button
                 gr.update(value=result_summary_placeholder),  # Reset summary text
-                False  # annotation_mode_state - set to False for new uploads initially
             )
 
 
@@ -1440,65 +1138,19 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
         result, actual_key = run_inference(input_file, query_input, key_input, options_select, crop_size, model_name,
                                            request.client.host)
 
-        # If result is valid, show the summary button
-        summarize_visible = False
-        if actual_key is not None:
-            summarize_visible = True
+        summarize_visible = actual_key is not None
 
-        # Check if annotation should be available
-        annotation_available = check_annotation_availability(input_file, query_input, options_select, model_name)
-
-        if annotation_available:
-            # Generate annotated image if annotation is enabled
-            try:
-                # Import PIL modules only when needed
-                annotated_image_path = draw_annotations(input_file, result)
-            except Exception as e:
-                gr.Warning(f"Failed to generate annotation: {str(e)}")
-                annotated_image_path = input_file  # Fallback to original image
-
-            # Show the annotation group with the radio toggle
-            return (
-                gr.update(visible=False),  # Hide regular JSON output
-                gr.update(visible=True),  # Show annotation group
-                gr.update(value="JSON"),  # Set view selector to JSON Result initially
-                result,  # Update JSON content in annotation view
-                annotated_image_path,  # Show annotated image in the image view
-                gr.update(visible=True),  # Ensure JSON view is visible first
-                gr.update(visible=False),  # Hide image view initially
-                gr.update(visible=summarize_visible, interactive=True),  # Update summarize button
-                actual_key,  # Store the key
-                True  # Set annotation_mode_state to True
-            )
-        else:
-            # Just show the regular JSON output
-            return (
-                gr.update(visible=True, value=result),  # Show and update regular JSON output
-                gr.update(visible=False),  # Hide annotation group
-                gr.update(value="JSON"),  # Reset view selector to default
-                None,  # No need to update annotation JSON
-                None,  # No need to update image
-                gr.update(visible=True),  # No change to JSON view visibility
-                gr.update(visible=False),  # No change to image view visibility
-                gr.update(visible=summarize_visible, interactive=True),  # Update summarize button
-                actual_key,  # Store the key
-                False  # Set annotation_mode_state to False
-            )
+        return (
+            gr.update(visible=True, value=result),  # Show and update regular JSON output
+            gr.update(visible=summarize_visible, interactive=True),  # Update summarize button
+            actual_key,  # Store the key
+        )
 
 
-    def summarize_result_wrapper(regular_json, is_annotation_mode, key_input, model_dropdown_comp,
-                                 request: gr.Request):
+    def summarize_result_wrapper(regular_json, key_input, model_dropdown_comp, request: gr.Request):
         """Wrapper function that calls the standalone summarize_result function"""
         log_request(request.client.host, "LLM instruction request")
 
-        if is_annotation_mode:
-            # Show a warning and don't run summarization
-            gr.Warning(
-                "Summarization is not available when using annotation mode. Please use regular extraction without annotation.")
-            # Return the button as interactive and keep the original placeholder
-            return gr.update(interactive=True), result_summary_placeholder
-
-        # Process regular JSON only
         summarize = summarize_result(
             regular_json,
             key_input,
@@ -1507,25 +1159,6 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
         )
 
         return gr.update(interactive=False), summarize
-
-
-    # Function to toggle between views
-    def toggle_view(selected_option):
-        show_json = selected_option == "JSON"
-        show_image = selected_option == "Annotation"
-
-        return (
-            gr.update(visible=show_json),  # Show/hide JSON view
-            gr.update(visible=show_image)  # Show/hide image view
-        )
-
-
-    view_selector.change(
-        toggle_view,
-        inputs=view_selector,
-        outputs=[json_view, image_view],
-        api_name=False
-    )
 
 
     # Connect components with updated handlers
@@ -1537,16 +1170,9 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             query_input_comp,
             options_select_comp,
             crop_size_comp,
-            output_json,  # Regular JSON output
-            annotation_group,  # Annotation group
-            view_selector,  # View selector checkbox group
-            tabbed_output_json,  # JSON in annotation view
-            output_image,  # Image preview
-            json_view,  # JSON view container
-            image_view,  # Image view container
+            output_json,
             summarize_btn,
             summarize_text,
-            annotation_mode_state  # Add the state component
         ],
         api_name=False
     )
@@ -1566,22 +1192,13 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                     gr.update(value=example[2]),  # query_input_comp
                     gr.update(value=[example[3]] if example[3] else []),  # options_select_comp
                     gr.update(value=0),  # crop_size_comp
-                    gr.update(visible=True, value=example_json),  # output_json (regular)
-                    gr.update(visible=False),  # annotation_group
-                    gr.update(value="JSON"),  # view_selector (Radio)
-                    gr.update(value=None),  # tabbed_output_json
-                    gr.update(value=None),  # output_image
-                    gr.update(visible=True),  # json_view
-                    gr.update(visible=False),  # image_view
+                    gr.update(visible=True, value=example_json),  # output_json
                     gr.update(visible=False),  # summarize_btn
                     gr.update(value=result_summary_placeholder),  # summarize_text
-                    False  # annotation_mode_state - set to False for examples
                 )
 
         # Default return if no match found (shouldn't happen)
-        return (None, "", [], 0, None, gr.update(visible=False), "JSON", None, None, 
-                gr.update(visible=True), gr.update(visible=False), gr.update(visible=False), 
-                result_summary_placeholder, False)
+        return (None, "", [], 0, None, gr.update(visible=False), result_summary_placeholder)
 
     # Trigger default example selection on page load
     demo.load(
@@ -1591,16 +1208,9 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             query_input_comp,
             options_select_comp,
             crop_size_comp,
-            output_json,  # Regular JSON output
-            annotation_group,  # Annotation group
-            view_selector,  # View selector checkbox group
-            tabbed_output_json,  # JSON in annotation view
-            output_image,  # Image preview
-            json_view,  # JSON view container
-            image_view,  # Image view container
+            output_json,
             summarize_btn,
             summarize_text,
-            annotation_mode_state  # Add the state component
         ],
         api_name=False
     )
@@ -1624,16 +1234,9 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             options_select_comp,
             crop_size_comp,
             example_radio,
-            output_json,  # Regular JSON output
-            annotation_group,  # Annotation group
-            view_selector,  # View selector checkbox group
-            tabbed_output_json,  # JSON in annotation view
-            output_image,  # Image preview
-            json_view,  # JSON view container
-            image_view,  # Image view container
+            output_json,
             summarize_btn,
             summarize_text,
-            annotation_mode_state  # Add the state component
         ],
         api_name=False
     )
@@ -1649,16 +1252,9 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             model_dropdown_comp
         ],
         outputs=[
-            output_json,  # Regular JSON output
-            annotation_group,  # Annotation group
-            view_selector,  # View selector checkbox group
-            tabbed_output_json,  # JSON in annotation view
-            output_image,  # Image preview
-            json_view,  # JSON view container
-            image_view,  # Image view container
+            output_json,
             summarize_btn,
             active_key_state,
-            annotation_mode_state  # Add the state component
         ],
         api_name=False
     )
@@ -1666,10 +1262,9 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
     summarize_btn.click(
         summarize_result_wrapper,
         inputs=[
-            output_json,  # Regular JSON output
-            annotation_mode_state,  # Whether annotation mode is active
-            active_key_state,  # Key used
-            model_dropdown_comp  # Model selected
+            output_json,
+            active_key_state,
+            model_dropdown_comp
         ],
         outputs=[summarize_btn, summarize_text],
         api_name=False
