@@ -1099,7 +1099,7 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
         """Separate function to handle clearing fields on file upload"""
         if file_path is None:  # Only clear when file is removed
             return (
-                gr.update(value="*"),  # query_input
+                gr.update(value=""),  # query_input
                 gr.update(value=[]),  # options_select
                 gr.update(value=0),  # crop_size
                 gr.update(value=None),  # example_radio
