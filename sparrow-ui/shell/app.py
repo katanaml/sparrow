@@ -351,7 +351,7 @@ def validate_file(file_path):
     return any(mime_type and mime_type.startswith(prefix) for prefix in allowed_mime_prefixes)
 
 
-def run_inference(file_filepath, query, key, options, crop_size, friendly_model_name, client_ip):
+def run_inference(file_filepath, query, key, table_extraction, validation_off, friendly_model_name, client_ip):
     if file_filepath is None:
         gr.Warning("No file provided. Please upload a file before submitting.")
         return None, None
@@ -527,9 +527,9 @@ def run_inference(file_filepath, query, key, options, crop_size, friendly_model_
 
             # Prepare the options string
             selected_options = []
-            if "Table Extraction" in options:
+            if table_extraction:
                 selected_options.append("tables_only")
-            if "Validation Off" in options:
+            if validation_off:
                 selected_options.append("validation_off")
 
             # Use the selected model's backend options via the friendly name
@@ -541,7 +541,6 @@ def run_inference(file_filepath, query, key, options, crop_size, friendly_model_
                 'query': query_json if query_json == "*" else json.dumps(query_json),  # Use wildcard as-is, or JSON
                 'pipeline': 'sparrow-parse',
                 'options': final_options,
-                'crop_size': str(crop_size) if crop_size > 0 else '',
                 'debug_dir': '',
                 'debug': 'false',
                 'sparrow_key': key,
@@ -860,6 +859,8 @@ div[data-testid="HTML"] + div[data-testid="HTML"] {
         font-size: 18px !important;
     }
 }
+
+
 """
 
 
@@ -938,20 +939,17 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 placeholder="Use * to query all data or JSON schema, e.g.: [{\"instrument_name\": \"str\"}]"
             )
 
-            options_select_comp = gr.CheckboxGroup(
-                label="Additional Options",
-                choices=["Table Extraction", "Validation Off"],
-                type="value",
-                info="Focus extraction on table content only. Ideal for documents where data is organized in rows and columns — financial reports, lab results, portfolio statements."
-            )
+            with gr.Group(elem_classes=["table-extraction-group"]):
+                table_extraction_comp = gr.Checkbox(
+                    label="Table Extraction",
+                    value=False,
+                    info="Focus extraction on table content only. Ideal for documents where data is organized in rows and columns — financial reports, lab results, portfolio statements."
+                )
 
-            crop_size_comp = gr.Slider(
-                label="Crop Size",
-                value=0,
-                minimum=0,
-                maximum=600,
-                step=1,
-                info="Crop by specifying the size in pixels (0 for no cropping)"
+            validation_off_comp = gr.Checkbox(
+                label="Validation Off",
+                value=False,
+                info="Disable automatic validation of extracted results."
             )
 
             key_input_comp = gr.Textbox(
@@ -1051,8 +1049,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 return (
                     selected_example,  # input_file_comp
                     gr.update(value=example[2]),  # query_input_comp
-                    gr.update(value=[example[3]] if example[3] else []),  # options_select_comp
-                    gr.update(value=0),  # crop_size_comp
+                    gr.update(value=example[3] == "Table Extraction"),  # table_extraction_comp
+                    gr.update(value=False),  # validation_off_comp
                     gr.update(visible=True, value=example_json),  # output_json
                     gr.update(visible=False),  # summarize_btn
                     gr.update(value=result_summary_placeholder),  # summarize_text
@@ -1062,8 +1060,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
         return (
             None,  # input_file_comp
             gr.update(value=""),  # query_input_comp
-            gr.update(value=[]),  # options_select_comp
-            gr.update(value=0),  # crop_size_comp
+            gr.update(value=False),  # table_extraction_comp
+            gr.update(value=False),  # validation_off_comp
             gr.update(visible=True, value=None),  # output_json
             gr.update(visible=False),  # summarize_btn
             gr.update(value=result_summary_placeholder),  # summarize_text
@@ -1100,8 +1098,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
         if file_path is None:  # Only clear when file is removed
             return (
                 gr.update(value=""),  # query_input
-                gr.update(value=[]),  # options_select
-                gr.update(value=0),  # crop_size
+                gr.update(value=False),  # table_extraction_comp
+                gr.update(value=False),  # validation_off_comp
                 gr.update(value=None),  # example_radio
                 gr.update(visible=True, value=None),  # Show empty regular JSON
                 gr.update(visible=False),  # Hide summarize button
@@ -1112,8 +1110,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             is_example = Path(str(file_path)).name in example_filenames
             return (
                 gr.update() if is_example else gr.update(value="*"),  # query_input
-                gr.update(),  # options_select (unchanged)
-                gr.update(),  # crop_size (unchanged)
+                gr.update(),  # table_extraction_comp (unchanged)
+                gr.update(),  # validation_off_comp (unchanged)
                 gr.update(),  # example_radio (unchanged)
                 gr.update(visible=True),  # Show regular JSON output
                 gr.update(visible=False),  # Hide summarize button
@@ -1121,7 +1119,7 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             )
 
 
-    def run_inference_wrapper(input_file, query_input, key_input, options_select, crop_size, model_name,
+    def run_inference_wrapper(input_file, query_input, key_input, table_extraction, validation_off, model_name,
                               request: gr.Request):
         if input_file:
             # Get just the file name from the path
@@ -1135,8 +1133,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             log_request(request.client.host, "Inference Request - No file")
 
         # Get inference result
-        result, actual_key = run_inference(input_file, query_input, key_input, options_select, crop_size, model_name,
-                                           request.client.host)
+        result, actual_key = run_inference(input_file, query_input, key_input, table_extraction, validation_off,
+                                           model_name, request.client.host)
 
         summarize_visible = actual_key is not None
 
@@ -1168,8 +1166,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
         outputs=[
             input_file_comp,
             query_input_comp,
-            options_select_comp,
-            crop_size_comp,
+            table_extraction_comp,
+            validation_off_comp,
             output_json,
             summarize_btn,
             summarize_text,
@@ -1190,15 +1188,15 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 return (
                     selected_example,  # input_file_comp
                     gr.update(value=example[2]),  # query_input_comp
-                    gr.update(value=[example[3]] if example[3] else []),  # options_select_comp
-                    gr.update(value=0),  # crop_size_comp
+                    gr.update(value=example[3] == "Table Extraction"),  # table_extraction_comp
+                    gr.update(value=False),  # validation_off_comp
                     gr.update(visible=True, value=example_json),  # output_json
                     gr.update(visible=False),  # summarize_btn
                     gr.update(value=result_summary_placeholder),  # summarize_text
                 )
 
         # Default return if no match found (shouldn't happen)
-        return (None, "", [], 0, None, gr.update(visible=False), result_summary_placeholder)
+        return (None, "", False, False, None, gr.update(visible=False), result_summary_placeholder)
 
     # Trigger default example selection on page load
     demo.load(
@@ -1206,8 +1204,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
         outputs=[
             input_file_comp,
             query_input_comp,
-            options_select_comp,
-            crop_size_comp,
+            table_extraction_comp,
+            validation_off_comp,
             output_json,
             summarize_btn,
             summarize_text,
@@ -1231,8 +1229,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
         inputs=[input_file_comp],
         outputs=[
             query_input_comp,
-            options_select_comp,
-            crop_size_comp,
+            table_extraction_comp,
+            validation_off_comp,
             example_radio,
             output_json,
             summarize_btn,
@@ -1247,8 +1245,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             input_file_comp,
             query_input_comp,
             key_input_comp,
-            options_select_comp,
-            crop_size_comp,
+            table_extraction_comp,
+            validation_off_comp,
             model_dropdown_comp
         ],
         outputs=[
