@@ -844,6 +844,13 @@ div[data-testid="HTML"] + div[data-testid="HTML"] {
     }
 }
 
+/* Disabled state for Vision LLM Model dropdown */
+#model_dropdown.disabled,
+#model_dropdown:has(input:disabled) {
+    opacity: 0.45 !important;
+    pointer-events: none !important;
+}
+
 /* For very narrow screens (phones in portrait) */
 @media (max-width: 480px) {
     .mobile-nav {
@@ -936,7 +943,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
 
             query_input_comp = gr.Textbox(
                 label="Query",
-                placeholder="Use * to query all data or JSON schema, e.g.: [{\"instrument_name\": \"str\"}]"
+                placeholder="Use * to query all data or JSON schema, e.g.: [{\"instrument_name\": \"str\"}]",
+                lines=3
             )
 
             with gr.Group(elem_classes=["table-extraction-group"]):
@@ -955,7 +963,7 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             key_input_comp = gr.Textbox(
                 label="Sparrow Key",
                 type="password",
-                placeholder="Enter your key or leave empty for limited usage",
+                placeholder="Enter your Sparrow Key for extended access and additional functionality",
                 visible=protected_access
             )
 
@@ -964,7 +972,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 label="Vision LLM Model",
                 choices=friendly_names,
                 value=friendly_names[0] if friendly_names else "",
-                info="Select model based on your document complexity"
+                info="Select model based on your document complexity",
+                elem_id="model_dropdown"
             )
 
             submit_btn = gr.Button(
@@ -1046,14 +1055,16 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 elif selected_example == "bank_statement.png":
                     example_json = bank_statement_json
 
+                is_table_extraction = example[3] == "Table Extraction"
                 return (
                     selected_example,  # input_file_comp
                     gr.update(value=example[2]),  # query_input_comp
-                    gr.update(value=example[3] == "Table Extraction"),  # table_extraction_comp
+                    gr.update(value=is_table_extraction),  # table_extraction_comp
                     gr.update(value=False),  # validation_off_comp
                     gr.update(visible=True, value=example_json),  # output_json
                     gr.update(visible=False),  # summarize_btn
                     gr.update(value=result_summary_placeholder),  # summarize_text
+                    gr.update(interactive=not is_table_extraction),  # model_dropdown_comp
                 )
 
         # Default return if no match found
@@ -1065,6 +1076,7 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             gr.update(visible=True, value=None),  # output_json
             gr.update(visible=False),  # summarize_btn
             gr.update(value=result_summary_placeholder),  # summarize_text
+            gr.update(interactive=True),  # model_dropdown_comp
         )
 
 
@@ -1104,6 +1116,7 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 gr.update(visible=True, value=None),  # Show empty regular JSON
                 gr.update(visible=False),  # Hide summarize button
                 gr.update(value=result_summary_placeholder),  # Reset summary text
+                gr.update(interactive=True),  # model_dropdown_comp (re-enable)
             )
         else:
             # When an example file is loaded programmatically, leave query unchanged
@@ -1116,6 +1129,7 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 gr.update(visible=True),  # Show regular JSON output
                 gr.update(visible=False),  # Hide summarize button
                 gr.update(value=result_summary_placeholder),  # Reset summary text
+                gr.update(),  # model_dropdown_comp (unchanged)
             )
 
 
@@ -1171,7 +1185,15 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             output_json,
             summarize_btn,
             summarize_text,
+            model_dropdown_comp,
         ],
+        api_name=False
+    )
+
+    table_extraction_comp.change(
+        lambda val: gr.update(interactive=not val),
+        inputs=[table_extraction_comp],
+        outputs=[model_dropdown_comp],
         api_name=False
     )
 
@@ -1184,19 +1206,21 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
         for example in examples:
             if example[0] == selected_example:
                 example_json = bonds_json  # Use bonds_json for bonds_table.png
+                is_table_extraction = example[3] == "Table Extraction"
 
                 return (
                     selected_example,  # input_file_comp
                     gr.update(value=example[2]),  # query_input_comp
-                    gr.update(value=example[3] == "Table Extraction"),  # table_extraction_comp
+                    gr.update(value=is_table_extraction),  # table_extraction_comp
                     gr.update(value=False),  # validation_off_comp
                     gr.update(visible=True, value=example_json),  # output_json
                     gr.update(visible=False),  # summarize_btn
                     gr.update(value=result_summary_placeholder),  # summarize_text
+                    gr.update(interactive=not is_table_extraction),  # model_dropdown_comp
                 )
 
         # Default return if no match found (shouldn't happen)
-        return (None, "", False, False, None, gr.update(visible=False), result_summary_placeholder)
+        return (None, "", False, False, None, gr.update(visible=False), result_summary_placeholder, gr.update(interactive=True))
 
     # Trigger default example selection on page load
     demo.load(
@@ -1209,6 +1233,7 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             output_json,
             summarize_btn,
             summarize_text,
+            model_dropdown_comp,
         ],
         api_name=False
     )
@@ -1235,6 +1260,7 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             output_json,
             summarize_btn,
             summarize_text,
+            model_dropdown_comp,
         ],
         api_name=False
     )
