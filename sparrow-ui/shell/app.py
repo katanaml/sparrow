@@ -59,7 +59,7 @@ for key, value in config.items("settings"):
 # Set a default option if none found
 if not model_options:
     default_backend = config.get("settings", "backend_options",
-                                 fallback="mlx,lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit")
+                                 fallback="mlx,mlx-community/Ministral-3-14B-Instruct-2512-8bit")
     tech_name = default_backend.split(",")[1]
     friendly_name = tech_name
     display_name = "🔍 " + friendly_name  # Add emoji to default
@@ -439,7 +439,7 @@ def run_inference(file_filepath, query, key, table_extraction, validation_off, f
                     # Continue if we can't check the page count, but log the error
 
             # Display warning about limitations of using auto-assigned key
-            gr.Info("Free tier: Limited to 3 calls per 6 hours, max 3-page documents.")
+            gr.Info("Free tier: Limited to 30 calls per 6 hours, max 3-page documents.")
 
             # Log the auto-assignment
             country = fetch_geolocation(client_ip)
@@ -995,7 +995,7 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                             <div style="font-size: 24px; margin-right: 10px; color: var(--primary-500);">💡</div>
                             <div>
                                 <p style="margin: 0; font-weight: 600; font-size: 16px; color: var(--primary-500);">Free Tier Available</p>
-                                <p style="margin: 5px 0 0 0;">• You can use Sparrow without entering a key for limited usage (3 calls per 6 hours, max 3-page documents).</p>
+                                <p style="margin: 5px 0 0 0;">• You can use Sparrow without entering a key for limited usage (30 calls per 6 hours, max 3-page documents).</p>
                                 <p style="margin: 5px 0 0 0;">• For unlimited usage, <a href="mailto:abaranovskis@redsamuraiconsulting.com" style="color: var(--primary-500); text-decoration: underline; font-weight: 500;">contact us</a> about our professional consulting and implementation services for local document processing solutions.</p>
                             </div>
                         </div>
@@ -1297,14 +1297,26 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
     gr.Markdown(
         f"""
         ---
-        <div style="text-align: center; margin: 25px 0 15px 0; padding: 22px 18px; background: linear-gradient(135deg, rgba(44, 82, 130, 0.08) 0%, rgba(44, 82, 130, 0.12) 100%); border-radius: 10px; border-top: 3px solid var(--primary-500); box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04); border: 1px solid rgba(44, 82, 130, 0.15);">
-            <h3 style="margin: 0 0 10px 0; font-weight: 700; font-size: 20px; color: #2c5282; letter-spacing: -0.3px;">Data processing with ML, LLM and Vision LLM</h3>
-            <p style="margin: 8px 0 16px 0; color: #4a5568; font-size: 14px; line-height: 1.5; max-width: 600px; margin-left: auto; margin-right: auto;">Sparrow extracts structured data from documents, forms, and images with high accuracy. Process invoices, receipts, bank statements, and tables using on-device Vision LLM models.</p>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; margin-top: 12px;">
-                <span style="font-size: 14px; color: #374151;">
-                    Visit <a href="https://katanaml.io/" target="_blank" style="color: #2c5282; text-decoration: none; font-weight: 600; border-bottom: 1px solid transparent; transition: all 0.2s ease;" onmouseover="this.style.borderBottom='1px solid #2c5282'; this.style.color='#1a365d'" onmouseout="this.style.borderBottom='1px solid transparent'; this.style.color='#2c5282'">Katana ML</a> • <a href="https://github.com/katanaml/sparrow" target="_blank" style="color: #2c5282; text-decoration: none; font-weight: 600; border-bottom: 1px solid transparent; transition: all 0.2s ease;" onmouseover="this.style.borderBottom='1px solid #2c5282'; this.style.color='#1a365d'" onmouseout="this.style.borderBottom='1px solid transparent'; this.style.color='#2c5282'">Sparrow</a> GitHub
+        <div style="padding: 1rem 0;">
+            <p style="text-align: center; font-size: 15px; font-weight: 600; color: #2c5282; margin: 0 0 1rem 0;">Data processing with ML, LLM and Vision LLM</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+                <div style="background: white; border-radius: 12px; border: 1px solid rgba(44, 82, 130, 0.15); padding: 1rem 1.25rem;">
+                    <p style="font-size: 14px; font-weight: 600; color: #2c5282; margin: 0 0 8px 0;">🔍 Document Extraction</p>
+                    <p style="font-size: 13px; color: #4a5568; line-height: 1.6; margin: 0;">Extracts structured data from invoices, receipts, bank statements, and tables using on-device Vision LLM models. Supports multi-page PDF, page classification, table processing with Sparrow Templates, bounding box annotation, and schema validation. No cloud dependencies.</p>
+                </div>
+                <div style="background: white; border-radius: 12px; border: 1px solid rgba(44, 82, 130, 0.15); padding: 1rem 1.25rem;">
+                    <p style="font-size: 14px; font-weight: 600; color: #2c5282; margin: 0 0 8px 0;">📋 Business Rules</p>
+                    <p style="font-size: 13px; color: #4a5568; line-height: 1.6; margin: 0;">Define business logic directly at the LLM level — formatting rules, derived fields, classification, and data transformation without post-processing code. Query schemas support field types and optional fields, giving full control over extraction structure and output format.</p>
+                </div>
+                <div style="background: white; border-radius: 12px; border: 1px solid rgba(44, 82, 130, 0.15); padding: 1rem 1.25rem;">
+                    <p style="font-size: 14px; font-weight: 600; color: #2c5282; margin: 0 0 8px 0;">🤖 Sparrow Agent</p>
+                    <p style="font-size: 13px; color: #4a5568; line-height: 1.6; margin: 0;">Supports two inference modes — Vision LLM for document data extraction and Text LLM for instruction-based processing, enabling arithmetic, validation, and decision making as standalone workflow steps. Orchestrates complex pipelines chaining classification, extraction, and field validation with visual monitoring and error handling.</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 1rem;">
+                <span style="font-size: 13px; color: #6b7280;">
+                    Visit <a href="https://katanaml.io/" target="_blank" style="color: #2c5282; text-decoration: none; font-weight: 600;">Katana ML</a> • <a href="https://github.com/katanaml/sparrow" target="_blank" style="color: #2c5282; text-decoration: none; font-weight: 600;">Sparrow</a> GitHub &nbsp; Version {version}
                 </span>
-                <span style="font-size: 13px; color: #6b7280; font-weight: 500;">Version {version}</span>
             </div>
         </div>
         """
