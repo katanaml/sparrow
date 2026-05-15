@@ -634,125 +634,135 @@ temp_cleaner = GradioTempCleaner(
 
 # CSS to hide default Gradio navigation and style our custom navigation
 custom_css = """
-/* Light mode - Subtle warm cream background */
+/* Page background — subtle warm grey so white component cards stand out gently */
 .gradio-container {
-    background: linear-gradient(135deg, #faf9f7 0%, #f5f3f0 100%) !important;
+    background: #f8f7f5 !important;
     min-height: 100vh;
+    max-width: none !important;
 }
 
-/* Dark mode support */
+/* Dark mode page background */
 @media (prefers-color-scheme: dark) {
     .gradio-container {
-        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%) !important;
-        min-height: 100vh;
+        background: #1a1a1a !important;
     }
 }
 
-/* Dark mode override for Gradio's dark theme */
-.dark .gradio-container, 
+.dark .gradio-container,
 [data-theme="dark"] .gradio-container {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%) !important;
-    min-height: 100vh;
+    background: #1a1a1a !important;
 }
 
-/* Alternative subtle backgrounds - uncomment one of these for different warm tones */
-/* Slightly more cream */
-/* 
-.gradio-container {
-    background: linear-gradient(135deg, #fefcf9 0%, #f7f5f2 100%) !important;
-    min-height: 100vh;
-}
-*/
-
-/* Very light beige */
-/* 
-.gradio-container {
-    background: linear-gradient(135deg, #fbfaf8 0%, #f2f0ed 100%) !important;
-    min-height: 100vh;
-}
-*/
-
-/* Warm white with hint of peach */
-/* 
-.gradio-container {
-    background: linear-gradient(135deg, #fefdfb 0%, #f9f7f4 100%) !important;
-    min-height: 100vh;
-}
-*/
-
-/* Main content area styling - light mode */
-.main > .wrap {
-    background: rgba(255, 255, 255, 0.7) !important;
-    backdrop-filter: blur(5px) !important;
-    border-radius: 12px !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
-    margin: 15px !important;
-    padding: 20px !important;
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+/* Trim the top whitespace left over where Gradio 6's navbar used to sit, and widen the content */
+.gradio-container > main,
+.gradio-container .contain {
+    padding: 0 !important;
+    max-width: none !important;
 }
 
-/* Main content area styling - dark mode */
-@media (prefers-color-scheme: dark) {
-    .main > .wrap {
-        background: rgba(45, 45, 45, 0.8) !important;
-        backdrop-filter: blur(5px) !important;
-        border-radius: 12px !important;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
-        margin: 15px !important;
-        padding: 20px !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    }
-}
-
-/* Dark mode override for main content */
-.dark .main > .wrap, 
-[data-theme="dark"] .main > .wrap {
-    background: rgba(45, 45, 45, 0.8) !important;
-    backdrop-filter: blur(5px) !important;
-    border-radius: 12px !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
-    margin: 15px !important;
-    padding: 20px !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-}
-
-/* Component styling improvements - light mode */
+/* Flat block borders with light divider line — uniform, no card-like shadow */
+.block,
 .gr-form, .gr-box {
-    background: rgba(255, 255, 255, 0.6) !important;
-    border-radius: 8px !important;
-    border: 1px solid rgba(0, 0, 0, 0.05) !important;
-    backdrop-filter: blur(3px) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: none !important;
 }
 
-/* Component styling improvements - dark mode */
 @media (prefers-color-scheme: dark) {
+    .block,
     .gr-form, .gr-box {
-        background: rgba(60, 60, 60, 0.7) !important;
-        border-radius: 8px !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        backdrop-filter: blur(3px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
     }
 }
 
-/* Dark mode override for components */
-.dark .gr-form, .dark .gr-box,
-[data-theme="dark"] .gr-form, [data-theme="dark"] .gr-box {
-    background: rgba(60, 60, 60, 0.7) !important;
-    border-radius: 8px !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    backdrop-filter: blur(3px) !important;
+.dark .block, .dark .gr-form, .dark .gr-box,
+[data-theme="dark"] .block,
+[data-theme="dark"] .gr-form,
+[data-theme="dark"] .gr-box {
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
 }
 
-/* Hide the default Gradio navigation bar */
-.gradio-container > .main > .wrap > .contain > div:first-child {
-    display: none !important;
+/* Full border opt-out (e.g. footer markdown that stands alone) */
+.block.no-border,
+.no-border.block,
+.no-border {
+    border: none !important;
+    box-shadow: none !important;
 }
 
-/* Alternative selectors for hiding Gradio's auto-generated navigation */
+/* Remove only top/bottom borders — keeps left/right so stacked blocks form a continuous outer rectangle */
+.block.merge-edges,
+.merge-edges.block,
+.merge-edges {
+    border-top: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+/* Drop the touching border edges of neighbors, so merged blocks blend in seamlessly */
+.merge-edges + .block {
+    border-top: none !important;
+}
+.block:has(+ .merge-edges) {
+    border-bottom: none !important;
+}
+
+/* Lighter border for opted-in components (e.g. feedback form fields) */
+.block.small-border,
+.small-border.block,
+.small-border {
+    border: 1px solid rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Footer feature cards — dark mode aware */
+.feature-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid rgba(44, 82, 130, 0.15);
+    padding: 1rem 1.25rem;
+}
+.feature-card .feature-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2c5282;
+    margin: 0 0 8px 0;
+}
+.feature-card .feature-body {
+    font-size: 13px;
+    color: #4a5568;
+    line-height: 1.6;
+    margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+    .feature-card {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(255, 255, 255, 0.12);
+    }
+    .feature-card .feature-title {
+        color: #7aa8d8;
+    }
+    .feature-card .feature-body {
+        color: #c8cdd4;
+    }
+}
+
+.dark .feature-card,
+[data-theme="dark"] .feature-card {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+.dark .feature-card .feature-title,
+[data-theme="dark"] .feature-card .feature-title {
+    color: #7aa8d8;
+}
+.dark .feature-card .feature-body,
+[data-theme="dark"] .feature-card .feature-body {
+    color: #c8cdd4;
+}
+
+/* Hide Gradio's auto-generated navbar (gr.Navbar visible=False is broken in 6.x — gradio-app/gradio#12174) */
 .nav-holder,
-nav.fillable,
-.nav-container,
-[data-testid="nav-container"] {
+nav.fillable {
     display: none !important;
 }
 
@@ -887,7 +897,7 @@ result_summary_placeholder = """
 
 
 # Define the Home page
-with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
+with gr.Blocks() as demo:
     demo.title = "Sparrow"
 
     # Add navigation using Markdown with HTML content for better integration
@@ -938,7 +948,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
             image_preview_comp = gr.Image(
                 label="Image Preview",
                 type="filepath",
-                visible=False
+                visible=False,
+                buttons=["download", "fullscreen"]
             )
 
             query_input_comp = gr.Textbox(
@@ -964,7 +975,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 label="Sparrow Key",
                 type="password",
                 placeholder="Enter your Sparrow Key for extended access and additional functionality",
-                visible=protected_access
+                visible=protected_access,
+                elem_classes=["merge-edges"]
             )
 
             friendly_names = list(model_options.keys())
@@ -1000,7 +1012,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                             </div>
                         </div>
                     </div>
-                    """
+                    """,
+                    elem_classes=["merge-edges"]
                 )
             else:
                 key_info_message = gr.Markdown(
@@ -1015,7 +1028,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                             </div>
                         </div>
                     </div>
-                    """
+                    """,
+                    elem_classes=["merge-edges"]
                 )
 
         with gr.Column():
@@ -1297,20 +1311,20 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
     gr.Markdown(
         f"""
         ---
-        <div style="padding: 1rem 0;">
+        <div style="padding: 0 0 1rem 0;">
             <p style="text-align: center; font-size: 15px; font-weight: 600; color: #2c5282; margin: 0 0 1rem 0;">Data processing with ML, LLM and Vision LLM</p>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
-                <div style="background: white; border-radius: 12px; border: 1px solid rgba(44, 82, 130, 0.15); padding: 1rem 1.25rem;">
-                    <p style="font-size: 14px; font-weight: 600; color: #2c5282; margin: 0 0 8px 0;">🔍 Document Extraction</p>
-                    <p style="font-size: 13px; color: #4a5568; line-height: 1.6; margin: 0;">Extracts structured data from invoices, receipts, bank statements, and tables using on-device Vision LLM models. Supports multi-page PDF, page classification, table processing with Sparrow Templates, bounding box annotation, and schema validation. No cloud dependencies.</p>
+                <div class="feature-card">
+                    <p class="feature-title">🔍 Document Extraction</p>
+                    <p class="feature-body">Extracts structured data from invoices, receipts, bank statements, and tables using on-device Vision LLM models. Supports multi-page PDF, page classification, table processing with Sparrow Templates, bounding box annotation, and schema validation. No cloud dependencies.</p>
                 </div>
-                <div style="background: white; border-radius: 12px; border: 1px solid rgba(44, 82, 130, 0.15); padding: 1rem 1.25rem;">
-                    <p style="font-size: 14px; font-weight: 600; color: #2c5282; margin: 0 0 8px 0;">📋 Business Rules</p>
-                    <p style="font-size: 13px; color: #4a5568; line-height: 1.6; margin: 0;">Define business logic directly at the LLM level — formatting rules, derived fields, classification, and data transformation without post-processing code. Query schemas support field types and optional fields, giving full control over extraction structure and output format.</p>
+                <div class="feature-card">
+                    <p class="feature-title">📋 Business Rules</p>
+                    <p class="feature-body">Define business logic directly at the LLM level — formatting rules, derived fields, classification, and data transformation without post-processing code. Query schemas support field types and optional fields, giving full control over extraction structure and output format.</p>
                 </div>
-                <div style="background: white; border-radius: 12px; border: 1px solid rgba(44, 82, 130, 0.15); padding: 1rem 1.25rem;">
-                    <p style="font-size: 14px; font-weight: 600; color: #2c5282; margin: 0 0 8px 0;">🤖 Sparrow Agent</p>
-                    <p style="font-size: 13px; color: #4a5568; line-height: 1.6; margin: 0;">Supports two inference modes — Vision LLM for document data extraction and Text LLM for instruction-based processing, enabling arithmetic, validation, and decision making as standalone workflow steps. Orchestrates complex pipelines chaining classification, extraction, and field validation with visual monitoring and error handling.</p>
+                <div class="feature-card">
+                    <p class="feature-title">🤖 Sparrow Agent</p>
+                    <p class="feature-body">Supports two inference modes — Vision LLM for document data extraction and Text LLM for instruction-based processing, enabling arithmetic, validation, and decision making as standalone workflow steps. Orchestrates complex pipelines chaining classification, extraction, and field validation with visual monitoring and error handling.</p>
                 </div>
             </div>
             <div style="text-align: center; margin-top: 1rem;">
@@ -1319,7 +1333,8 @@ with gr.Blocks(theme=gr.themes.Ocean(), css=custom_css) as demo:
                 </span>
             </div>
         </div>
-        """
+        """,
+        elem_classes=["no-border"]
     )
 
 # Dashboard page
@@ -1412,7 +1427,7 @@ if __name__ == "__main__":
 
     try:
         demo.queue(api_open=False, max_size=10)
-        demo.launch(server_name="0.0.0.0", server_port=7861, debug=False, pwa=True, show_api=False, share=False, favicon_path="favicon.ico")
+        demo.launch(server_name="0.0.0.0", server_port=7861, debug=False, pwa=True, footer_links=[], share=False, favicon_path="favicon.ico", theme=gr.themes.Ocean(), css=custom_css)
     finally:
         # Make sure to stop the cleaner when the app exits
         temp_cleaner.stop()

@@ -44,7 +44,7 @@ def log_request(client_ip, source="General"):
     print(log_message)
 
 # Define the dashboard interface
-with gr.Blocks(theme=gr.themes.Ocean()) as demo:
+with gr.Blocks() as demo:
     demo.title = "Sparrow Analytics Dashboard"
 
     # Log initial page load
@@ -53,7 +53,7 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
         log_request(request.client.host, "Dashboard Page Load")
 
     # Combine CSS and responsive messaging for both desktop and mobile
-    responsive_layout = gr.HTML("""
+    responsive_layout = gr.HTML(elem_classes=["no-border"], value="""
     <style>
         /* Mobile-specific styles */
         @media (max-width: 767px) {
@@ -141,14 +141,14 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
 
     # Key metrics at the top (HTML-based for better styling)
     with gr.Row(elem_id="metrics-container"):
-        metrics_html = gr.HTML()
+        metrics_html = gr.HTML(elem_classes=["no-border"])
 
     # First row - HTML visualizations for document size and model usage
     with gr.Row():
         with gr.Column(elem_id="document-size-container"):
-            inference_pages_html = gr.HTML(label="Document Size Performance")
+            inference_pages_html = gr.HTML(label="Document Size Performance", elem_classes=["no-border"])
         with gr.Column(elem_id="model-usage-container"):
-            model_usage_html = gr.HTML(label="Model Usage")
+            model_usage_html = gr.HTML(label="Model Usage", elem_classes=["no-border"])
 
     # Second row - Inference events timeline using Plotly
     with gr.Row(elem_id="timeline-container", visible=True):
@@ -157,9 +157,9 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
     # Third row - Country distribution (split into two columns)
     with gr.Row(elem_id="countries-container"):
         with gr.Column():
-            country_html = gr.HTML(label="Inference Requests by Country")
+            country_html = gr.HTML(label="Inference Requests by Country", elem_classes=["no-border"])
         with gr.Column(elem_id="unique-users-container"):
-            unique_users_html = gr.HTML(label="Unique Users by Country")
+            unique_users_html = gr.HTML(label="Unique Users by Country", elem_classes=["no-border"])
 
 
     # Function to process data and generate visualizations
@@ -685,20 +685,20 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
         gr.Markdown(
             f"""
             ---
-            <div style="padding: 1rem 0;">
+            <div style="padding: 0 0 1rem 0;">
                 <p style="text-align: center; font-size: 15px; font-weight: 600; color: #2c5282; margin: 0 0 1rem 0;">Data processing with ML, LLM and Vision LLM</p>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
-                    <div style="background: white; border-radius: 12px; border: 1px solid rgba(44, 82, 130, 0.15); padding: 1rem 1.25rem;">
-                        <p style="font-size: 14px; font-weight: 600; color: #2c5282; margin: 0 0 8px 0;">🔍 Document Extraction</p>
-                        <p style="font-size: 13px; color: #4a5568; line-height: 1.6; margin: 0;">Extracts structured data from invoices, receipts, bank statements, and tables using on-device Vision LLM models. Supports multi-page PDF, page classification, table processing with Sparrow Templates, bounding box annotation, and schema validation. No cloud dependencies.</p>
+                    <div class="feature-card">
+                        <p class="feature-title">🔍 Document Extraction</p>
+                        <p class="feature-body">Extracts structured data from invoices, receipts, bank statements, and tables using on-device Vision LLM models. Supports multi-page PDF, page classification, table processing with Sparrow Templates, bounding box annotation, and schema validation. No cloud dependencies.</p>
                     </div>
-                    <div style="background: white; border-radius: 12px; border: 1px solid rgba(44, 82, 130, 0.15); padding: 1rem 1.25rem;">
-                        <p style="font-size: 14px; font-weight: 600; color: #2c5282; margin: 0 0 8px 0;">📋 Business Rules</p>
-                        <p style="font-size: 13px; color: #4a5568; line-height: 1.6; margin: 0;">Define business logic directly at the LLM level — formatting rules, derived fields, classification, and data transformation without post-processing code. Query schemas support field types and optional fields, giving full control over extraction structure and output format.</p>
+                    <div class="feature-card">
+                        <p class="feature-title">📋 Business Rules</p>
+                        <p class="feature-body">Define business logic directly at the LLM level — formatting rules, derived fields, classification, and data transformation without post-processing code. Query schemas support field types and optional fields, giving full control over extraction structure and output format.</p>
                     </div>
-                    <div style="background: white; border-radius: 12px; border: 1px solid rgba(44, 82, 130, 0.15); padding: 1rem 1.25rem;">
-                        <p style="font-size: 14px; font-weight: 600; color: #2c5282; margin: 0 0 8px 0;">🤖 Sparrow Agent</p>
-                        <p style="font-size: 13px; color: #4a5568; line-height: 1.6; margin: 0;">Supports two inference modes — Vision LLM for document data extraction and Text LLM for instruction-based processing, enabling arithmetic, validation, and decision making as standalone workflow steps. Orchestrates complex pipelines chaining classification, extraction, and field validation with visual monitoring and error handling.</p>
+                    <div class="feature-card">
+                        <p class="feature-title">🤖 Sparrow Agent</p>
+                        <p class="feature-body">Supports two inference modes — Vision LLM for document data extraction and Text LLM for instruction-based processing, enabling arithmetic, validation, and decision making as standalone workflow steps. Orchestrates complex pipelines chaining classification, extraction, and field validation with visual monitoring and error handling.</p>
                     </div>
                 </div>
                 <div style="text-align: center; margin-top: 1rem;">
@@ -707,10 +707,11 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                     </span>
                 </div>
             </div>
-            """
+            """,
+            elem_classes=["no-border"]
         )
 
 # To run this file directly for testing
 if __name__ == "__main__":
     # Launch with explicitly disabled API and no documentation
-    demo.launch(show_api=False, share=False)
+    demo.launch(footer_links=[], share=False, theme=gr.themes.Ocean())

@@ -39,7 +39,7 @@ def log_request(client_ip, source="Feedback"):
 
 
 # Define the feedback form interface
-with gr.Blocks(theme=gr.themes.Ocean()) as demo:
+with gr.Blocks() as demo:
     demo.title = "Sparrow Feedback"
 
 
@@ -53,14 +53,16 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
         email_input = gr.Textbox(
             label="Email Address",
             placeholder="your.email@example.com",
-            info="We'll use this to follow up if needed"
+            info="We'll use this to follow up if needed",
+            elem_classes=["small-border"]
         )
 
         feedback_text = gr.TextArea(
             label="Your Feedback",
             placeholder="Tell us what you think about Sparrow...",
             info="Maximum 1000 characters",
-            max_lines=10
+            max_lines=10,
+            elem_classes=["small-border"]
         )
 
         submit_button = gr.Button("Submit Feedback", variant="primary")
@@ -110,20 +112,20 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
         gr.Markdown(
             f"""
             ---
-            <div style="padding: 1rem 0;">
+            <div style="padding: 0 0 1rem 0;">
                 <p style="text-align: center; font-size: 15px; font-weight: 600; color: #2c5282; margin: 0 0 1rem 0;">Data processing with ML, LLM and Vision LLM</p>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
-                    <div style="background: white; border-radius: 12px; border: 1px solid rgba(44, 82, 130, 0.15); padding: 1rem 1.25rem;">
-                        <p style="font-size: 14px; font-weight: 600; color: #2c5282; margin: 0 0 8px 0;">🔍 Document Extraction</p>
-                        <p style="font-size: 13px; color: #4a5568; line-height: 1.6; margin: 0;">Extracts structured data from invoices, receipts, bank statements, and tables using on-device Vision LLM models. Supports multi-page PDF, page classification, table processing with Sparrow Templates, bounding box annotation, and schema validation. No cloud dependencies.</p>
+                    <div class="feature-card">
+                        <p class="feature-title">🔍 Document Extraction</p>
+                        <p class="feature-body">Extracts structured data from invoices, receipts, bank statements, and tables using on-device Vision LLM models. Supports multi-page PDF, page classification, table processing with Sparrow Templates, bounding box annotation, and schema validation. No cloud dependencies.</p>
                     </div>
-                    <div style="background: white; border-radius: 12px; border: 1px solid rgba(44, 82, 130, 0.15); padding: 1rem 1.25rem;">
-                        <p style="font-size: 14px; font-weight: 600; color: #2c5282; margin: 0 0 8px 0;">📋 Business Rules</p>
-                        <p style="font-size: 13px; color: #4a5568; line-height: 1.6; margin: 0;">Define business logic directly at the LLM level — formatting rules, derived fields, classification, and data transformation without post-processing code. Query schemas support field types and optional fields, giving full control over extraction structure and output format.</p>
+                    <div class="feature-card">
+                        <p class="feature-title">📋 Business Rules</p>
+                        <p class="feature-body">Define business logic directly at the LLM level — formatting rules, derived fields, classification, and data transformation without post-processing code. Query schemas support field types and optional fields, giving full control over extraction structure and output format.</p>
                     </div>
-                    <div style="background: white; border-radius: 12px; border: 1px solid rgba(44, 82, 130, 0.15); padding: 1rem 1.25rem;">
-                        <p style="font-size: 14px; font-weight: 600; color: #2c5282; margin: 0 0 8px 0;">🤖 Sparrow Agent</p>
-                        <p style="font-size: 13px; color: #4a5568; line-height: 1.6; margin: 0;">Supports two inference modes — Vision LLM for document data extraction and Text LLM for instruction-based processing, enabling arithmetic, validation, and decision making as standalone workflow steps. Orchestrates complex pipelines chaining classification, extraction, and field validation with visual monitoring and error handling.</p>
+                    <div class="feature-card">
+                        <p class="feature-title">🤖 Sparrow Agent</p>
+                        <p class="feature-body">Supports two inference modes — Vision LLM for document data extraction and Text LLM for instruction-based processing, enabling arithmetic, validation, and decision making as standalone workflow steps. Orchestrates complex pipelines chaining classification, extraction, and field validation with visual monitoring and error handling.</p>
                     </div>
                 </div>
                 <div style="text-align: center; margin-top: 1rem;">
@@ -132,10 +134,11 @@ with gr.Blocks(theme=gr.themes.Ocean()) as demo:
                     </span>
                 </div>
             </div>
-            """
+            """,
+            elem_classes=["no-border"]
         )
 
 # To run this file directly for testing
 if __name__ == "__main__":
     # Launch with explicitly disabled API and no documentation
-    demo.launch(show_api=False, share=False)
+    demo.launch(footer_links=[], share=False, theme=gr.themes.Ocean())
