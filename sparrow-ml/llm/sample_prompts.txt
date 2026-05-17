@@ -220,6 +220,21 @@ mlx-community/Qwen3.6-27B-8bit - OK
 mlx-community/Ministral-3-14B-Instruct-2512-8bit - OK
 
 
+Sparrow instructor calls:
+
+QUERY="instruction: analyze bond portfolio and identify high risk positions based on loss percentage, return result as JSON with fields: instrument_short_name, loss_pct, risk_level (low/medium/high), payload: $(cat data/bonds_table.json)"
+
+QUERY="instruction: analyze bond portfolio weighting and identify concentration risk, flag any position above 20% weighting as overweight, return JSON with fields: instrument_short_name, weighting, status, payload: $(cat data/bonds_table.json)"
+
+QUERY="instruction: calculate total portfolio valuation in EUR and weighted average profit loss percentage, return JSON with fields: total_valuation_eur, weighted_avg_profit_loss_pct, best_performer, worst_performer, payload: $(cat data/bonds_table.json)"
+
+
+./sparrow.sh "$QUERY" \
+  --pipeline "sparrow-instructor" \
+  --options mlx \
+  --options mlx-community/gemma-4-31b-it-8bit
+
+
 
 FINANCIAL STATEMENT
 
