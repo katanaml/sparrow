@@ -1,0 +1,52 @@
+[
+  {
+    "Instrument": "UNITS BLACKROCK FIX INC DUB FDS PLC ISHS EUR INV GRD CP BD IDX/INST/E",
+    "Quantity/Nominal": "1'431.77",
+    "Ccy.": "EUR",
+    "Closing Price": "13.30500",
+    "Purchase Price": "13.72000",
+    "Profit/Loss Total": "-3.02%",
+    "Valuation (EUR)": "19'049",
+    "Weighting": "3.65%"
+  },
+  {
+    "Instrument": "UNITS ISHARES III PLC CORE EUR GOVT BOND UCITS ETF/EUR",
+    "Quantity/Nominal": "751",
+    "Ccy.": "EUR",
+    "Closing Price": "111.17000",
+    "Purchase Price": "130.88000",
+    "Profit/Loss Total": "-15.05%",
+    "Valuation (EUR)": "83'488",
+    "Weighting": "16.00%"
+  },
+  {
+    "Instrument": "ISHARES III PLC EUR CORP BOND 1-5YR UCITS ETF/EUR",
+    "Quantity/Nominal": "2'014",
+    "Ccy.": "EUR",
+    "Closing Price": "105.77500",
+    "Purchase Price": "110.17000",
+    "Profit/Loss Total": "-3.98%",
+    "Valuation (EUR)": "213'030",
+    "Weighting": "40.82%"
+  },
+  {
+    "Instrument": "UNIT ISHARES VI PLC/JP MORGAN USD E BOND EUR HED UCITS ETF DIST /HDGD/",
+    "Quantity/Nominal": "491",
+    "Ccy.": "EUR",
+    "Closing Price": "66.75000",
+    "Purchase Price": "88.90000",
+    "Profit/Loss Total": "-24.91%",
+    "Valuation (EUR)": "32'774",
+    "Weighting": "6.28%"
+  },
+  {
+    "Instrument": "UNITS XTRACKERS II SICAV/EUR HY CORP BOND UCITS ETF/-1D-/DISTR.",
+    "Quantity/Nominal": "1'501",
+    "Ccy.": "EUR",
+    "Closing Price": "15.75200",
+    "Purchase Price": "17.05000",
+    "Profit/Loss Total": "-7.61%",
+    "Valuation (EUR)": "23'643",
+    "Weighting": "4.53%"
+  }
+]

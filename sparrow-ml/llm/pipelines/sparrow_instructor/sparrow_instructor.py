@@ -206,14 +206,8 @@ class SparrowInstructorPipeline(Pipeline):
     @staticmethod
     def invoke_pipeline_step(task_call, task_description, local):
         if local:
-            with Progress(
-                    SpinnerColumn(),
-                    TextColumn("[progress.description]{task.description}"),
-                    transient=False,
-            ) as progress:
-                progress_task = progress.add_task(description=task_description, total=None)
-                ret = task_call()
-                progress.update(progress_task, completed=1)
+            print(f"[bold cyan]▶[/bold cyan] {task_description}")
+            ret = task_call()
         else:
             print(task_description)
             ret = task_call()
