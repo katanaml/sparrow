@@ -89,7 +89,7 @@ def process_table_extraction(rag, user_selected_pipeline, query, file_path, hint
                     hints_file_path, options_form, crop_size,
                     instruction, validation, ocr, markdown,
                     table_template, page_type, debug_dir, debug,
-                    non_tables_by_page
+                    non_tables_by_page, local
                 )
 
             if debug:
