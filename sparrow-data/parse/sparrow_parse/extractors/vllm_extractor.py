@@ -22,7 +22,7 @@ class VLLMExtractor(object):
         Handles generic queries, PDFs, and table extraction.
         """
         if generic_query:
-            input_data[0]["text_input"] = "retrieve document data. return response in JSON format"
+            input_data[0]["text_input"] = "retrieve all data. return response in JSON format"
             apply_annotation=False
 
         if debug:
@@ -244,7 +244,7 @@ if __name__ == "__main__":
     #     # "model_name": "deepseek-ocr:latest",
     #     # "model_name": "mlx-community/DeepSeek-OCR-2-bf16",
     #     # "model_name": "mlx-community/dots.ocr-bf16",
-    #     "model_name": "mlx-community/gemma-4-26b-a4b-it-8bit",
+    #     "model_name": "mlx-community/gemma-4-31b-it-8bit",
     #     # "hf_space": "katanaml/sparrow-qwen2-vl-7b",
     #     # "hf_token": os.getenv('HF_TOKEN'),
     #     # Additional fields for local GPU inference
@@ -260,11 +260,11 @@ if __name__ == "__main__":
     # input_data = [
     #     {
     #         # "file_path": "sparrow_parse/images/bank_statement.png",
-    #         # "file_path": "sparrow_parse/images/bonds_table.png",
+    #         "file_path": "sparrow_parse/images/bonds_table.png",
     #         # "file_path": "sparrow_parse/images/bonds_swiss_market.png",
     #         # "file_path": "sparrow_parse/images/invoice_1.jpg",
     #         # "file_path": "sparrow_parse/images/lab_results.png",
-    #         "file_path": "sparrow_parse/images/oracle_10k_2024_q1_small.jpg",
+    #         # "file_path": "sparrow_parse/images/oracle_10k_2024_q1_small.jpg",
     #         "text_input": "retrieve all data. return response in JSON format"
     #         # "text_input": "\n<|grounding|>Convert the document to markdown."
     #     }

@@ -1,21 +1,21 @@
 rich
 # git+https://github.com/huggingface/transformers.git
 # transformers, torch, torchvision, and numpy versions moved to setup.py extras_require to avoid conflicts
-# transformers==5.1.0
-# torchvision==0.26.0
-# torch==2.11.0
-# numpy==2.4.4
+# transformers==5.5.0
+# torchvision==0.27.0
+# torch==2.12.0
+# numpy==2.4.6
 
-sentence-transformers==5.4.1
-pypdf==6.10.1
-gradio_client==2.4.1
+sentence-transformers==5.5.0
+pypdf==6.11.0
+gradio_client==2.5.0
 pdf2image==1.17.0
-# mlx==0.31.1; sys_platform == 'darwin' and platform_machine == 'arm64'
-# mlx-vlm==0.4.4; sys_platform == 'darwin' and platform_machine == 'arm64'
-# vllm==0.19.0
-ollama==0.6.1
+# mlx==0.31.2; sys_platform == 'darwin' and platform_machine == 'arm64'
+# mlx-vlm==0.5.0; sys_platform == 'darwin' and platform_machine == 'arm64'
+# vllm==0.21.0
+ollama==0.6.2
 addict==2.4.0
-matplotlib==3.10.8
+matplotlib==3.10.9
 
 # MLX dependencies moved to setup.py extras_require
 # Install with: pip install sparrow-parse[mlx] (Apple Silicon only)
