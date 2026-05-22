@@ -4,6 +4,7 @@ from pipelines.sparrow_parse.table_templates.table_template_factory import Table
 import os
 from pypdf import PdfReader, PdfWriter
 import time
+import re
 
 def process_table_extraction(rag, user_selected_pipeline, query, file_path, hints_file_path, options, crop_size,
                             instruction, validation, ocr, markdown, table_template, page_type, debug_dir, debug, local):
@@ -46,6 +47,9 @@ def process_table_extraction(rag, user_selected_pipeline, query, file_path, hint
     ocr_output = rag.run_pipeline(user_selected_pipeline, ocr_query, file_path, hints_file_path, table_options,
                                   crop_size, instruction, validation, ocr, markdown, False, table_template,
                                   page_type, debug_dir, debug, local)
+
+    # Normalize plain text response to structured format if needed
+    ocr_output = normalize_ocr_response(ocr_output, debug)
 
     tables_by_page = extract_tables_from_ocr(ocr_output)
     non_tables_by_page = extract_non_tables_from_ocr(ocr_output)
@@ -331,3 +335,61 @@ def cleanup_split_files(split_files):
                 os.remove(file_path)
         except Exception as e:
             print(f"Error removing temporary file {file_path}: {e}")
+
+
+def normalize_ocr_response(ocr_output, debug):
+    """
+    Normalize OCR response to structured format.
+    Handles case where plain text is returned instead of JSON.
+
+    Args:
+        ocr_output: Raw OCR response - either parsed list, JSON string, or plain text
+
+    Returns:
+        Parsed list in structured format compatible with extract_tables_from_ocr
+        and extract_all_from_ocr functions
+    """
+    # Already a list - no normalization needed
+    if isinstance(ocr_output, list):
+        return ocr_output
+
+    if isinstance(ocr_output, str):
+        # Try JSON parsing first
+        try:
+            return json.loads(ocr_output)
+        except (json.JSONDecodeError, ValueError):
+            pass
+
+        if debug:
+            print("Failed to parse JSON, attempting plain text normalization")
+
+        # Plain text response - normalize to structured format
+        all_data = []
+        pattern = r'(<table>.*?</table>)'
+        segments = re.split(pattern, ocr_output, flags=re.DOTALL | re.IGNORECASE)
+
+        for segment in segments:
+            segment = segment.strip()
+            if not segment:
+                continue
+
+            if segment.lower().startswith('<table>'):
+                # HTML table segment
+                all_data.append({
+                    'bbox': [0, 0, 0, 0],
+                    'category': 'Table',
+                    'text': segment
+                })
+            else:
+                # Plain text segment - split by newlines into individual blocks
+                lines = [line.strip() for line in segment.split('\n') if line.strip()]
+                for line in lines:
+                    all_data.append({
+                        'bbox': [0, 0, 0, 0],
+                        'category': 'Text',
+                        'text': line
+                    })
+
+        return [{'page': 1, 'data': all_data}]
+
+    return ocr_output
