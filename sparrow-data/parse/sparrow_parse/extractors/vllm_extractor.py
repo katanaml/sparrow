@@ -22,7 +22,7 @@ class VLLMExtractor(object):
         Handles generic queries, PDFs, and table extraction.
         """
         if generic_query:
-            input_data[0]["text_input"] = "retrieve all data. return response in JSON format"
+            input_data[0]["text_input"] = "retrieve document data. return response in JSON format"
             apply_annotation=False
 
         if debug:
