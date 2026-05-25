@@ -17,6 +17,7 @@ os.environ["PREFECT_SERVER_ANALYTICS_ENABLED"] = "false"
 from base import AgentManager
 from medical_prescriptions.agent import MedicalPrescriptionsAgent
 from trading.agent import TradingAgent
+from bonds.agent import BondsAgent
 from tasks import process_data_agent, process_file_agent
 
 # Configure logging
@@ -48,6 +49,7 @@ app.add_middleware(
 manager = AgentManager()
 manager.register_agent(MedicalPrescriptionsAgent())
 manager.register_agent(TradingAgent())
+manager.register_agent(BondsAgent())
 
 
 class BaseRequest(BaseModel):
