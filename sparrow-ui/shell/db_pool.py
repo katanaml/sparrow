@@ -275,7 +275,8 @@ def get_inference_logs(period="1week"):
                 SPARROW.INFERENCE_LOGS
             WHERE 
                 SPARROW_KEY_ID != 1
-                AND COUNTRY_NAME IS NOT NULL 
+                AND COUNTRY_NAME IS NOT NULL
+                AND COUNTRY_NAME != 'Unknown' 
                 AND COUNTRY_NAME != 'Lithuania'
                 AND INFERENCE_TYPE = 'DATA_EXTRACTION'
         """
