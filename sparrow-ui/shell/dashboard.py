@@ -198,13 +198,16 @@ with gr.Blocks() as demo:
         friendly_name = "No data"
         top_model_count = 0
         if 'model_name' in df.columns and not df['model_name'].empty:
-            model_counts = df['model_name'].value_counts()
-            if not model_counts.empty:
-                top_model_name = model_counts.index[0]
-                top_model_count = model_counts.iloc[0]
-
-                # Replace model names with user-friendly names
-                friendly_name = "Standard model" if "Mistral" in top_model_name else "Advanced model" if "Qwen" in top_model_name else top_model_name
+            # Map to friendly names first, then count so variants collapse into one bucket
+            friendly_series = df['model_name'].apply(
+                lambda x: "Standard model" if ("Mistral" in x or "Ministral" in x) else
+                "Advanced model" if ("Qwen" in x or "gemma" in x) else
+                "Table model" if "Dots" in x else x
+            )
+            friendly_counts = friendly_series.value_counts()
+            if not friendly_counts.empty:
+                friendly_name = friendly_counts.index[0]
+                top_model_count = friendly_counts.iloc[0]
 
         # Format key metrics as HTML with id attributes for JavaScript targeting
         metrics_html_content = f"""
@@ -599,8 +602,14 @@ with gr.Blocks() as demo:
         # 4. Model Usage as HTML visualization matching page count style
         model_html = ""
         if 'model_name' in df.columns:
-            model_counts = df['model_name'].value_counts().reset_index()
-            model_counts.columns = ['model', 'count']
+            # Map to friendly names first so variants (e.g. Mistral + Ministral) collapse into one row
+            friendly_series = df['model_name'].apply(
+                lambda x: "Standard model" if ("Mistral" in x or "Ministral" in x) else
+                "Advanced model" if ("Qwen" in x or "gemma" in x) else
+                "Table model" if "Dots" in x else x
+            )
+            model_counts = friendly_series.value_counts().reset_index()
+            model_counts.columns = ['friendly_name', 'count']
 
             # Calculate percentages
             total = model_counts['count'].sum()
@@ -608,12 +617,6 @@ with gr.Blocks() as demo:
 
             # Get the maximum count for scaling the bars
             max_count = model_counts['count'].max()
-
-            # Create friendly model names
-            model_counts['friendly_name'] = model_counts['model'].apply(
-                lambda x: "Standard model" if "Mistral" in x else
-                "Advanced model" if "Qwen" in x else x
-            )
 
             # Create HTML for the visualization
             html = """
@@ -628,7 +631,7 @@ with gr.Blocks() as demo:
 
                 html += f"""
                 <div style="display: flex; align-items: center; width: 100%;">
-                  <div style="min-width: 120px; width: 120px; font-weight: 500; color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{row['model']}">{row['friendly_name']}</div>
+                  <div style="min-width: 120px; width: 120px; font-weight: 500; color: #444; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{row['friendly_name']}">{row['friendly_name']}</div>
                   <div style="flex-grow: 1; display: flex; align-items: center; width: calc(100% - 120px);">
                     <div style="height: 18px; width: {percent_width}%; background-color: #9b59b6; border-radius: 4px;"></div>
                     <span style="margin-left: 10px; white-space: nowrap; color: #555; font-size: 14px;">{row['count']:,} uses ({row['percentage']}%)</span>

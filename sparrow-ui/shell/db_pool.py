@@ -261,9 +261,13 @@ def get_inference_logs(period="1week"):
                 COUNTRY_NAME,
                 INFERENCE_DURATION,
                 PAGE_COUNT,
-                CASE 
-                    WHEN MODEL_NAME IN ('mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit', 'lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit') 
+                CASE
+                    WHEN MODEL_NAME IN ('mlx-community/Mistral-Small-3.1-24B-Instruct-2503-8bit', 'lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit')
                     THEN 'Mistral-Small'
+                    WHEN MODEL_NAME = 'mlx-community/Ministral-3-14B-Instruct-2512-8bit'
+                    THEN 'Ministral'
+                    WHEN MODEL_NAME = 'mlx-community/dots.ocr-bf16'
+                    THEN 'Dots'
                     ELSE MODEL_NAME
                 END as MODEL_NAME,
                 INFERENCE_HOST_IP
@@ -272,7 +276,6 @@ def get_inference_logs(period="1week"):
             WHERE 
                 SPARROW_KEY_ID != 1
                 AND COUNTRY_NAME IS NOT NULL 
-                AND COUNTRY_NAME != 'Unknown' 
                 AND COUNTRY_NAME != 'Lithuania'
                 AND INFERENCE_TYPE = 'DATA_EXTRACTION'
         """

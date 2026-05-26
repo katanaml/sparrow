@@ -208,10 +208,13 @@ async def inference(
                 except:
                     pass
 
-        # Extract the model name from options_arr (it's the second element)
+        # Extract the model name from options_arr (4th element if size is 4, 2nd if size is 2)
         model_name = None
-        if options_arr and len(options_arr) > 1:
-            model_name = options_arr[1]
+        if options_arr:
+            if len(options_arr) == 4:
+                model_name = options_arr[3]
+            elif len(options_arr) == 2:
+                model_name = options_arr[1]
 
         # Log the start of inference processing and get the ID
         log_id = db_pool.log_inference_start(
@@ -296,10 +299,13 @@ async def instruction_inference(
 
         options_arr = [param.strip() for param in options.split(',')] if options is not None else None
 
-        # Extract the model name from options_arr (it's the second element)
+        # Extract the model name from options_arr (4th element if size is 4, 2nd if size is 2)
         model_name = None
-        if options_arr and len(options_arr) > 1:
-            model_name = options_arr[1]
+        if options_arr:
+            if len(options_arr) == 4:
+                model_name = options_arr[3]
+            elif len(options_arr) == 2:
+                model_name = options_arr[1]
 
         # Log the start of inference processing and get the ID
         log_id = db_pool.log_inference_start(

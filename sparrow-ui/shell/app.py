@@ -1,6 +1,8 @@
-import gradio as gr
 import requests
 import os
+os.environ["GRADIO_ANALYTICS_ENABLED"] = "False"
+
+import gradio as gr
 from PIL import Image
 import json
 from datetime import datetime
@@ -527,8 +529,13 @@ def run_inference(file_filepath, query, key, table_extraction, validation_off, f
 
             # Prepare the options string
             selected_options = []
+            table = False
+            table_template = ""
             if table_extraction:
-                selected_options.append("tables_only")
+                query_json = "*"
+                table = True
+                table_template = "sparrow_generic_table"
+                selected_options.append("mlx,mlx-community/dots.ocr-bf16")
             if validation_off:
                 selected_options.append("validation_off")
 
@@ -540,6 +547,8 @@ def run_inference(file_filepath, query, key, table_extraction, validation_off, f
             data = {
                 'query': query_json if query_json == "*" else json.dumps(query_json),  # Use wildcard as-is, or JSON
                 'pipeline': 'sparrow-parse',
+                'table': table,
+                'table_template': table_template,
                 'options': final_options,
                 'debug_dir': '',
                 'debug': 'false',
@@ -861,6 +870,14 @@ div[data-testid="HTML"] + div[data-testid="HTML"] {
     pointer-events: none !important;
 }
 
+/* Disabled state for Query textbox */
+#query_input.disabled,
+#query_input:has(textarea:disabled),
+#query_input:has(input:disabled) {
+    opacity: 0.45 !important;
+    pointer-events: none !important;
+}
+
 /* For very narrow screens (phones in portrait) */
 @media (max-width: 480px) {
     .mobile-nav {
@@ -955,7 +972,8 @@ with gr.Blocks() as demo:
             query_input_comp = gr.Textbox(
                 label="Query",
                 placeholder="Use * to query all data or JSON schema, e.g.: [{\"instrument_name\": \"str\"}]",
-                lines=3
+                lines=3,
+                elem_id="query_input"
             )
 
             with gr.Group(elem_classes=["table-extraction-group"]):
@@ -1072,7 +1090,7 @@ with gr.Blocks() as demo:
                 is_table_extraction = example[3] == "Table Extraction"
                 return (
                     selected_example,  # input_file_comp
-                    gr.update(value=example[2]),  # query_input_comp
+                    gr.update(value=example[2], interactive=not is_table_extraction),  # query_input_comp
                     gr.update(value=is_table_extraction),  # table_extraction_comp
                     gr.update(value=False),  # validation_off_comp
                     gr.update(visible=True, value=example_json),  # output_json
@@ -1084,7 +1102,7 @@ with gr.Blocks() as demo:
         # Default return if no match found
         return (
             None,  # input_file_comp
-            gr.update(value=""),  # query_input_comp
+            gr.update(value="", interactive=True),  # query_input_comp
             gr.update(value=False),  # table_extraction_comp
             gr.update(value=False),  # validation_off_comp
             gr.update(visible=True, value=None),  # output_json
@@ -1123,7 +1141,7 @@ with gr.Blocks() as demo:
         """Separate function to handle clearing fields on file upload"""
         if file_path is None:  # Only clear when file is removed
             return (
-                gr.update(value=""),  # query_input
+                gr.update(value="", interactive=True),  # query_input
                 gr.update(value=False),  # table_extraction_comp
                 gr.update(value=False),  # validation_off_comp
                 gr.update(value=None),  # example_radio
@@ -1204,10 +1222,21 @@ with gr.Blocks() as demo:
         api_name=False
     )
 
+    def on_table_extraction_change(val):
+        if val:
+            return (
+                gr.update(interactive=False),  # model_dropdown_comp
+                gr.update(interactive=False, value="*"),  # query_input_comp
+            )
+        return (
+            gr.update(interactive=True),  # model_dropdown_comp
+            gr.update(interactive=True),  # query_input_comp
+        )
+
     table_extraction_comp.change(
-        lambda val: gr.update(interactive=not val),
+        on_table_extraction_change,
         inputs=[table_extraction_comp],
-        outputs=[model_dropdown_comp],
+        outputs=[model_dropdown_comp, query_input_comp],
         api_name=False
     )
 
@@ -1224,7 +1253,7 @@ with gr.Blocks() as demo:
 
                 return (
                     selected_example,  # input_file_comp
-                    gr.update(value=example[2]),  # query_input_comp
+                    gr.update(value=example[2], interactive=not is_table_extraction),  # query_input_comp
                     gr.update(value=is_table_extraction),  # table_extraction_comp
                     gr.update(value=False),  # validation_off_comp
                     gr.update(visible=True, value=example_json),  # output_json
