@@ -199,7 +199,7 @@ with gr.Blocks() as demo:
         top_model_count = 0
         if 'model_name' in df.columns and not df['model_name'].empty:
             # Map to friendly names first, then count so variants collapse into one bucket
-            friendly_series = df['model_name'].apply(
+            friendly_series = df['model_name'].dropna().apply(
                 lambda x: "Standard model" if ("Mistral" in x or "Ministral" in x) else
                 "Advanced model" if ("Qwen" in x or "gemma" in x) else
                 "Table model" if "Dots" in x else x
@@ -603,7 +603,7 @@ with gr.Blocks() as demo:
         model_html = ""
         if 'model_name' in df.columns:
             # Map to friendly names first so variants (e.g. Mistral + Ministral) collapse into one row
-            friendly_series = df['model_name'].apply(
+            friendly_series = df['model_name'].dropna().apply(
                 lambda x: "Standard model" if ("Mistral" in x or "Ministral" in x) else
                 "Advanced model" if ("Qwen" in x or "gemma" in x) else
                 "Table model" if "Dots" in x else x

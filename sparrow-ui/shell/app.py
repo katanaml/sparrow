@@ -878,6 +878,26 @@ div[data-testid="HTML"] + div[data-testid="HTML"] {
     pointer-events: none !important;
 }
 
+/* Padding for the result summary markdown block so content isn't flush against borders */
+.summary-result {
+    padding: 16px 20px !important;
+}
+.summary-result .prose {
+    padding: 0 !important;
+}
+.summary-result .prose > *:first-child {
+    margin-top: 0 !important;
+}
+.summary-result .prose > *:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* When showing the placeholder card (which has its own border/background), drop the outer block border and padding to avoid double-border */
+.summary-result:has(.summary-placeholder) {
+    border: none !important;
+    padding: 0 !important;
+}
+
 /* For very narrow screens (phones in portrait) */
 @media (max-width: 480px) {
     .mobile-nav {
@@ -899,7 +919,7 @@ div[data-testid="HTML"] + div[data-testid="HTML"] {
 
 
 result_summary_placeholder = """
-<div style="margin-top: -10px; padding: 15px; border-left: 4px solid var(--primary-500); border-radius: 6px; background-color: var(--background-fill-secondary);">
+<div class="summary-placeholder" style="border-left: 4px solid var(--primary-500); border-radius: 6px; background-color: var(--background-fill-secondary); padding: 15px;">
     <div style="display: flex; align-items: flex-start;">
         <div style="font-size: 24px; margin-right: 10px; color: var(--primary-500);">🔍</div>
         <div>
@@ -1062,14 +1082,15 @@ with gr.Blocks() as demo:
             summarize_btn = gr.Button(
                 value="Summarize this result",
                 variant="secondary",
-                visible=False
+                interactive=False
             )
 
             # Add hidden state to store the actual key used
             active_key_state = gr.State(value=None)
 
             summarize_text = gr.Markdown(
-                value=result_summary_placeholder
+                value=result_summary_placeholder,
+                elem_classes=["summary-result"]
             )
 
 
@@ -1094,7 +1115,7 @@ with gr.Blocks() as demo:
                     gr.update(value=is_table_extraction),  # table_extraction_comp
                     gr.update(value=False),  # validation_off_comp
                     gr.update(visible=True, value=example_json),  # output_json
-                    gr.update(visible=False),  # summarize_btn
+                    gr.update(interactive=False),  # summarize_btn
                     gr.update(value=result_summary_placeholder),  # summarize_text
                     gr.update(interactive=not is_table_extraction),  # model_dropdown_comp
                 )
@@ -1106,7 +1127,7 @@ with gr.Blocks() as demo:
             gr.update(value=False),  # table_extraction_comp
             gr.update(value=False),  # validation_off_comp
             gr.update(visible=True, value=None),  # output_json
-            gr.update(visible=False),  # summarize_btn
+            gr.update(interactive=False),  # summarize_btn
             gr.update(value=result_summary_placeholder),  # summarize_text
             gr.update(interactive=True),  # model_dropdown_comp
         )
@@ -1146,7 +1167,7 @@ with gr.Blocks() as demo:
                 gr.update(value=False),  # validation_off_comp
                 gr.update(value=None),  # example_radio
                 gr.update(visible=True, value=None),  # Show empty regular JSON
-                gr.update(visible=False),  # Hide summarize button
+                gr.update(interactive=False),  # Disable summarize button
                 gr.update(value=result_summary_placeholder),  # Reset summary text
                 gr.update(interactive=True),  # model_dropdown_comp (re-enable)
             )
@@ -1159,7 +1180,7 @@ with gr.Blocks() as demo:
                 gr.update(),  # validation_off_comp (unchanged)
                 gr.update(),  # example_radio (unchanged)
                 gr.update(visible=True),  # Show regular JSON output
-                gr.update(visible=False),  # Hide summarize button
+                gr.update(interactive=False),  # Disable summarize button
                 gr.update(value=result_summary_placeholder),  # Reset summary text
                 gr.update(),  # model_dropdown_comp (unchanged)
             )
@@ -1182,11 +1203,9 @@ with gr.Blocks() as demo:
         result, actual_key = run_inference(input_file, query_input, key_input, table_extraction, validation_off,
                                            model_name, request.client.host)
 
-        summarize_visible = actual_key is not None
-
         return (
             gr.update(visible=True, value=result),  # Show and update regular JSON output
-            gr.update(visible=summarize_visible, interactive=True),  # Update summarize button
+            gr.update(interactive=actual_key is not None),  # Enable summarize button if inference succeeded
             actual_key,  # Store the key
         )
 
@@ -1257,13 +1276,13 @@ with gr.Blocks() as demo:
                     gr.update(value=is_table_extraction),  # table_extraction_comp
                     gr.update(value=False),  # validation_off_comp
                     gr.update(visible=True, value=example_json),  # output_json
-                    gr.update(visible=False),  # summarize_btn
+                    gr.update(interactive=False),  # summarize_btn
                     gr.update(value=result_summary_placeholder),  # summarize_text
                     gr.update(interactive=not is_table_extraction),  # model_dropdown_comp
                 )
 
         # Default return if no match found (shouldn't happen)
-        return (None, "", False, False, None, gr.update(visible=False), result_summary_placeholder, gr.update(interactive=True))
+        return (None, "", False, False, None, gr.update(interactive=False), result_summary_placeholder, gr.update(interactive=True))
 
     # Trigger default example selection on page load
     demo.load(
