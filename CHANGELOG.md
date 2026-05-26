@@ -1,5 +1,12 @@
 # ChangeLog
 
+## [v0.5.0] - 2026-05-26
+
+## Major improvements
+
+See release notes.
+
+
 ## [v0.4.4] - 2025-09-27
 
 ## New MLX backend
