@@ -3,10 +3,12 @@
 [![PyPI - Python](https://img.shields.io/badge/python-v3.12+-blue.svg)](https://github.com/katanaml/sparrow)
 [![GitHub Stars](https://img.shields.io/github/stars/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/stargazers)
 [![GitHub Issues](https://img.shields.io/github/issues/katanaml/sparrow.svg)](https://github.com/katanaml/sparrow/issues)
-[![Current Version](https://img.shields.io/badge/version-0.4.4-green.svg)](https://github.com/katanaml/sparrow)
+[![Current Version](https://img.shields.io/badge/version-0.5.0-green.svg)](https://github.com/katanaml/sparrow)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-**Structured data extraction and instruction calling with ML, LLM and Vision LLM**
+**Structured data extraction, instruction calling and agentic workflows with ML, LLM and Vision LLM**
+
+Sparrow is an API-first platform for enterprise document intelligence. It combines accurate structured extraction from documents (invoices, statements, tables) with workflow agents and decision agents.
 
 <p align="center">
   <img width="300" height="300" src="https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_logo_5.png">
