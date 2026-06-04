@@ -205,11 +205,11 @@ function EmptyState() {
 
 // ─── Constants ────────────────────────────────────────────────────────────
 const PERIODS = [
-  { id: "1week",   label: "1 week"   },
-  { id: "2weeks",  label: "2 weeks"  },
-  { id: "1month",  label: "1 month"  },
-  { id: "6months", label: "6 months" },
-  { id: "all",     label: "All time" },
+  { id: "1week",   label: "1 week",   short: "1w"  },
+  { id: "2weeks",  label: "2 weeks",  short: "2w"  },
+  { id: "1month",  label: "1 month",  short: "1m"  },
+  { id: "6months", label: "6 months", short: "6m"  },
+  { id: "all",     label: "All time", short: "All" },
 ];
 
 // ─── Page ─────────────────────────────────────────────────────────────────
@@ -247,7 +247,8 @@ export default function DashboardPage() {
             {PERIODS.map((p) => (
               <button key={p.id} data-active={period === p.id ? "true" : undefined}
                 onClick={() => setPeriod(p.id)} disabled={loading}>
-                {p.label}
+                <span className="footer-desktop">{p.label}</span>
+                <span className="footer-mobile">{p.short}</span>
               </button>
             ))}
           </div>

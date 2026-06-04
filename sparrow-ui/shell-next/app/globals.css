@@ -155,6 +155,12 @@ body {
   footer.site { flex-direction: column; align-items: flex-start; gap: 8px; }
   .footer-desktop { display: none; }
   .footer-mobile  { display: inline; }
+
+  /* Filter bar segmented control — full width on mobile */
+  .filter-bar { flex-direction: column; align-items: flex-start; }
+  .filter-bar-left { width: 100%; }
+  .seg { width: 100%; }
+  .seg button { flex: 1; padding: 0 4px; font-size: 11px; }
 }
 
 /* ── Topbar ───────────────────────────────────────────────────────────── */
