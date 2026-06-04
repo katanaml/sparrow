@@ -79,7 +79,7 @@ export default function ProcessPage() {
 
   const handleFileChange = useCallback((f: File | null, pages: number) => {
     setFile(f);
-    setIsPdf(f?.type === "application/pdf" ?? false);
+    setIsPdf(f?.type === "application/pdf" || false);
     setPageCount(pages);
     if (!isLoadingExample.current) {
       setExampleFile(null);
