@@ -117,7 +117,7 @@ export default function ProcessPage() {
     const isTableExample = id === "bank_statement.png";
     setActiveExample(id);
     setQuery(example.schema);
-    setResultData(example.json);
+    setResultData(example.json as object);
     setResponseState("results");
     setDurationSec(undefined);
     setSummaryData(null);

@@ -59,7 +59,7 @@ export const BANK_STATEMENT_JSON = {
 export type ExampleId = "bonds_table.png" | "lab_results.png" | "bank_statement.png";
 
 export const EXAMPLE_DATA: Record<ExampleId, {
-  json: unknown;
+  json: object;
   query: string;
   schema: string;
 }> = {

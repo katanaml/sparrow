@@ -155,7 +155,7 @@ export async function get_inference_logs(period = "1week"): Promise<InferenceLog
       outFormat: oracledb.OUT_FORMAT_OBJECT,
     });
 
-    return ((result.rows ?? []) as Record<string, unknown>[]).map((row) => ({
+    return (((result.rows ?? []) as unknown[]) as Record<string, unknown>[]).map((row) => ({
       log_date:           row["LOG_DATE"] as Date,
       country_name:       row["COUNTRY_NAME"] as string,
       inference_duration: row["INFERENCE_DURATION"] as number,
@@ -217,7 +217,7 @@ export async function get_unique_users_by_country(period = "1week"): Promise<Uni
       outFormat: oracledb.OUT_FORMAT_OBJECT,
     });
 
-    return ((result.rows ?? []) as Record<string, unknown>[]).map((row) => ({
+    return (((result.rows ?? []) as unknown[]) as Record<string, unknown>[]).map((row) => ({
       country_name: row["COUNTRY_NAME"] as string,
       unique_users: row["UNIQUE_USERS"] as number,
     }));

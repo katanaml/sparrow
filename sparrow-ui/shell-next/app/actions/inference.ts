@@ -27,7 +27,7 @@ function getModelOptions(): Record<string, string> {
 
 // ─── Types ────────────────────────────────────────────────────────────────
 export type InferenceError = { error: string };
-export type InferenceSuccess = { data: unknown; durationSec: number };
+export type InferenceSuccess = { data: object; durationSec: number };
 export type InferenceResult = InferenceSuccess | InferenceError;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
@@ -172,7 +172,7 @@ export async function run_inference(formData: FormData): Promise<InferenceResult
     return { error: `Request failed with status code ${response.status}: ${text}` };
   }
 
-  const data = await response.json();
+  const data = await response.json() as object;
   return { data, durationSec };
 }
 
