@@ -130,7 +130,7 @@ export type ResponseState = "empty" | "running" | "results";
 
 interface ResponseCardProps {
   state: ResponseState;
-  data?: unknown;
+  data?: object | null;
   durationSec?: number;
   inferenceRan?: boolean;
   hasSummary?: boolean;

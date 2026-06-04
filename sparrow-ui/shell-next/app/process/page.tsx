@@ -70,7 +70,7 @@ export default function ProcessPage() {
   const [summaryData, setSummaryData] = useState<string | null>(null);
   const [summarizeError, setSummarizeError] = useState<string | null>(null);
   const [responseState, setResponseState] = useState<ResponseState>("empty");
-  const [resultData, setResultData] = useState<unknown>(null);
+  const [resultData, setResultData] = useState<object | null>(null);
   const [durationSec, setDurationSec] = useState<number | undefined>(undefined);
 
   const isLoadingExample = useRef(false);
