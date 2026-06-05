@@ -2,6 +2,7 @@
 
 import { headers } from "next/headers";
 import { fetch_geolocation } from "@/lib/geoip";
+import { timestamp } from "@/lib/timestamp";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
 async function getClientInfo(): Promise<{ ip: string; country: string }> {
@@ -12,10 +13,6 @@ async function getClientInfo(): Promise<{ ip: string; country: string }> {
   const ip = raw === "::1" ? "127.0.0.1" : raw;
   const country = await fetch_geolocation(ip);
   return { ip, country };
-}
-
-function timestamp(): string {
-  return new Date().toISOString().replace("T", " ").slice(0, 19);
 }
 
 // ─── Log events ───────────────────────────────────────────────────────────

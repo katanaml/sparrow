@@ -2,6 +2,7 @@
 
 import { verify_key, get_restricted_key } from "@/lib/db_pool";
 import { fetch_geolocation } from "@/lib/geoip";
+import { timestamp } from "@/lib/timestamp";
 import { headers } from "next/headers";
 
 // ─── Config ───────────────────────────────────────────────────────────────
@@ -115,8 +116,7 @@ export async function run_inference(formData: FormData): Promise<InferenceResult
       // TODO: log auto-assignment with geolocation
     }
   } else {
-    const timestamp = new Date().toISOString().replace("T", " ").slice(0, 19);
-    console.log(`[${timestamp}] Protected access disabled - skipping key validation for IP: ${clientIp}`);
+    console.log(`[${timestamp()}] Protected access disabled - skipping key validation for IP: ${clientIp}`);
     if (!sparrowKey || sparrowKey.trim() === "") {
       sparrowKey = "unrestricted_access";
     }
@@ -142,8 +142,8 @@ export async function run_inference(formData: FormData): Promise<InferenceResult
 
   // ── Call FastAPI backend ──────────────────────────────────────────────
   const country = await fetch_geolocation(clientIp);
-  const timestamp = new Date().toISOString().replace("T", " ").slice(0, 19);
-  console.log(`[${timestamp}] Inference request - IP: ${clientIp}, Country: ${country}, model: ${modelName}, table: ${table}`);
+  const shortModel = modelName.includes("Standard") ? "Standard" : modelName.includes("Advanced") ? "Advanced" : "Table";
+  console.log(`[${timestamp()}] Inference request - IP: ${clientIp}, Model: ${shortModel}, Table: ${table}, Country: ${country}`);
 
   const backendForm = new FormData();
   backendForm.append("file", file);
@@ -220,8 +220,8 @@ export async function summarize_result(
 
   // ── Geolocation ──────────────────────────────────────────────────────
   const country = await fetch_geolocation(clientIp);
-  const timestamp = new Date().toISOString().replace("T", " ").slice(0, 19);
-  console.log(`[${timestamp}] Summarize request - IP: ${clientIp}, Country: ${country}, model: ${modelName}`);
+  const shortModel = modelName.includes("Standard") ? "Standard" : modelName.includes("Advanced") ? "Advanced" : "Table";
+  console.log(`[${timestamp()}] Summarize request - IP: ${clientIp}, Model: ${shortModel}, Country: ${country}`);
 
   // ── Call backend ─────────────────────────────────────────────────────
   try {
