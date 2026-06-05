@@ -1,5 +1,11 @@
 # ChangeLog
 
+## [v0.6.0] - 2026-06-05
+
+## UI improvements
+
+See release notes.
+
 ## [v0.5.0] - 2026-05-26
 
 ## Major improvements
