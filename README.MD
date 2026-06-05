@@ -46,7 +46,6 @@ The web UI provides a visual interface on top of the same API:
 - **Real-time Processing**: See results instantly
 - **Data Query**: JSON based schema for data query
 - **Structured Output**: JSON structured output
-- **Result Annotation**: View bounding boxes
 
 ## 📑 Table of Contents
 
