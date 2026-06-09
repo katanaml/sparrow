@@ -8,12 +8,11 @@ import time
 # model_path = "lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit"
 # model_path = "mlx-community/Ministral-3-14B-Instruct-2512-8bit"
 # model_path = "mlx-community/gemma-4-31b-it-8bit"
-# model_path = "mlx-community/gemma-4-12B-it-8bit"
-model_path = "mlx-community/gemma-4-12B-it-bf16"
+model_path = "mlx-community/gemma-4-12B-it-8bit"
+# model_path = "mlx-community/gemma-4-12B-it-bf16"
 # model_path = "mlx-community/dots.ocr-bf16"
 # model_path = "mlx-community/DeepSeek-OCR-2-bf16"
 # model_path = "mlx-community/Qwen3.6-27B-8bit"
-# model_path = "mlx-community/Qwen3.6-35B-A3B-8bit"
 vl_model, vl_processor = load(model_path, trust_remote_code=True)
 vl_config = load_config(model_path)
 print(f"Model loaded: {model_path}")
