@@ -163,6 +163,7 @@ export async function run_inference(formData: FormData): Promise<InferenceResult
     method: "POST",
     headers: { accept: "application/json" },
     body: backendForm,
+    signal: AbortSignal.timeout(30 * 60 * 1000), // 30 minutes
   });
 
   const durationSec = (Date.now() - startTime) / 1000;
@@ -239,6 +240,7 @@ export async function summarize_result(
       method: "POST",
       headers: { accept: "application/json" },
       body: formData,
+      signal: AbortSignal.timeout(30 * 60 * 1000), // 30 minutes
     });
 
     if (!response.ok) {
