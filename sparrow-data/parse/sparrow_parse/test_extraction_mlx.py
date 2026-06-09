@@ -20,21 +20,6 @@ print(f"Model loaded: {model_path}")
 
 image = ["images/bonds_table.png"]
 
-# Qwen
-# prompt = [
-#     {"role": "system", "content": "You are an expert at extracting text from images. Format your response in JSON."},
-#     {"role": "user", "content": "retrieve [{\"instrument_name\":\"str\", \"valuation\":\"int\"}]. return response in JSON format"}
-# ]
-# Qwen with bbox
-# messages = [
-#     {"role": "system", "content": "You are an expert at extracting text from images. For each item in the table, provide separate bounding boxes for each field. All coordinates should be in pixels relative to the original image. Format your response in JSON."},
-#     {"role": "user", "content": "retrieve [{\"instrument_name\":{\"value\":\"str\", \"bbox\":[\"float\", \"float\", \"float\", \"float\"], \"confidence\":\"float\"}, \"valuation\":{\"value\":\"int\", \"bbox\":[\"float\", \"float\", \"float\", \"float\"], \"confidence\":\"float\"}}]. return response in JSON format"}
-# ]
-# Qwen with bbox, get all data
-# messages = [
-#     {"role": "system", "content": "You are an expert at extracting text from images. For each item in the table, provide separate bounding boxes for each field. All coordinates should be in pixels relative to the original image. Format your response in JSON."},
-#     {"role": "user", "content": "retrieve all data. return response in JSON format. For each identified field or data element, include: 1) a descriptive field name as the object key, 2) a nested object with 'value' containing the extracted content, 'bbox' array with [x_min, y_min, x_max, y_max] coordinates in pixels, and 'confidence' score between 0-1. Example structure: [{\"field_name\":{\"value\":\"extracted value\", \"bbox\":[100, 200, 300, 250], \"confidence\":0.95}}]"}
-# ]
 
 # prompt = "retrieve all data. return response in JSON format"
 # prompt = "retrieve tables in HTML format"
