@@ -6,9 +6,9 @@ import time
 
 # Load model and processor
 # model_path = "lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit"
-# model_path = "mlx-community/Ministral-3-14B-Instruct-2512-8bit"
+model_path = "mlx-community/Ministral-3-14B-Instruct-2512-8bit"
 # model_path = "mlx-community/gemma-4-31b-it-8bit"
-model_path = "mlx-community/gemma-4-12B-it-8bit"
+# model_path = "mlx-community/gemma-4-12B-it-8bit"
 # model_path = "mlx-community/gemma-4-12B-it-bf16"
 # model_path = "mlx-community/dots.ocr-bf16"
 # model_path = "mlx-community/DeepSeek-OCR-2-bf16"

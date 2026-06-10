@@ -16,6 +16,7 @@ pdf2image==1.17.0
 ollama==0.6.2
 addict==2.4.0
 matplotlib==3.10.9
+mistralai==2.4.9
 
 # MLX dependencies moved to setup.py extras_require
 # Install with: pip install sparrow-parse[mlx] (Apple Silicon only)
