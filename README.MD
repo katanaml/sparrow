@@ -75,7 +75,7 @@ The web UI provides a visual interface on top of the same API:
 💬 **Instruction Calling**: Text processing, validation, decision making with Gemma, Mistral, Qwen 3.6, etc.  
 📊 **Visual Monitoring**: Built-in dashboard and agent workflow tracking  
 🔒 **Enterprise Ready**: Rate limiting, usage analytics, commercial licensing available  
-🚀 **Local Vision LLMs**: Mistral, Qwen 3.6, DeepSeek OCR, dots.ocr, Gemma 4, etc.
+🚀 **Local Vision LLMs**: Mistral, Qwen 3.6, DeepSeek OCR, dots.ocr, Gemma 4, etc.  
 ☁️ **Cloud OCR Backend**: Mistral OCR for enterprise-grade cloud document extraction
 
 ## 🏗️ Architecture
