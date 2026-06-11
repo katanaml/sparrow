@@ -147,7 +147,7 @@ Before running `pip install -r requirements_sparrow_parse.txt`, check your platf
 }
 ```
 
-Use `--options mlx` for MLX backend, `--options ollama` for Ollama backend, `--options vllm` for vLLM backend. Make sure to provide correct Vision LLM model name, download model first separately with MLX, vLLM or Ollama.
+Use `--options mlx` for MLX backend, `--options ollama` for Ollama backend, `--options vllm` for vLLM backend, `--options mistral` for Mistral OCR cloud backend. Make sure to provide correct Vision LLM model name, download model first separately with MLX, vLLM or Ollama.
 
 ## 🛠️ Installation
 
@@ -187,6 +187,7 @@ sudo apt-get install poppler-utils libpoppler-cpp-dev
 
 **Apple Silicon**: MLX backend available for optimal performance  
 **NVIDIA/AMD GPU**: Use vLLM or Ollama backend  
+**Cloud**: Use Mistral OCR backend  
 **CPU Only**: Use smaller models or Hugging Face cloud backend  
 
 ### Verification
