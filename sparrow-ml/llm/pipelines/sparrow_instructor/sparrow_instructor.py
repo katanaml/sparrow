@@ -197,6 +197,11 @@ class SparrowInstructorPipeline(Pipeline):
                 "method": method,
                 "model_name": options[1]
             }
+        elif method == 'mistral':
+            return {
+                "method": method,
+                "model_name": options[1]
+            }
         else:
             # Extendable for additional backends
             print(f"Unsupported inference method: {method}")
