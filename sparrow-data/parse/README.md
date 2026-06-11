@@ -9,13 +9,14 @@ A powerful Python library for parsing and extracting structured information from
 ## ✨ Features
 
 - 🔍 **Document Data Extraction**: Extract structured data from invoices, forms, tables, and complex documents
-- 🤖 **Multiple Backend Support**: MLX (Apple Silicon), Ollama, Docker, Hugging Face Cloud GPU, and local GPU inference
+- 🤖 **Multiple Backend Support**: MLX (Apple Silicon), Ollama, Docker, Hugging Face Cloud GPU, Mistral OCR, and local GPU inference
 - 📄 **Multi-format Support**: Images (PNG, JPG, JPEG) and multi-page PDFs
 - 🎯 **Schema Validation**: JSON schema-based extraction with automatic validation
 - 📊 **Table Processing**: Specialized table detection and extraction capabilities
 - 🖼️ **Image Annotation**: Bounding box annotations for extracted data
 - 💬 **Text Instructions**: Support for instruction-based text processing
 - ⚡ **Optimized Processing**: Image cropping, resizing, and preprocessing capabilities
+- ☁️ **Cloud OCR Backend**: Mistral OCR for enterprise-grade cloud document extraction
 
 ## 🚀 Quick Start
 
