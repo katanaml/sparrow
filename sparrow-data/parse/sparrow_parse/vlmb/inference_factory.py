@@ -19,6 +19,9 @@ class InferenceFactory:
         elif self.config["method"] == "vllm":
             from sparrow_parse.vlmb.vllm_inference import VLLMInference
             return VLLMInference(model_name=self.config["model_name"])
+        elif self.config["method"] == "mistral":
+            from sparrow_parse.vlmb.mistral_inference import MistralInference
+            return MistralInference(model_name=self.config["model_name"])
         else:
             raise ValueError(f"Unknown method: {self.config['method']}")
 
