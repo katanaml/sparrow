@@ -68,7 +68,7 @@ The web UI provides a visual interface on top of the same API:
 
 🎯 **Universal Document Processing**: Handle invoices, receipts, forms, bank statements, tables    
 🔧 **Pluggable Architecture**: Mix and match different pipelines (Sparrow Parse, Instructor, Agents)  
-🖥️ **Multiple Backends**: MLX (Apple Silicon), Ollama, vLLM, Docker, Hugging Face Cloud GPU  
+🖥️ **Multiple Backends**: MLX, Ollama, vLLM, Docker, Hugging Face Cloud GPU, Mistral OCR  
 📱 **Multi-format Support**: Images (PNG, JPG) and multi-page PDFs  
 🎨 **Schema Validation**: JSON schema-based extraction with automatic validation  
 🌐 **API-First Design**: RESTful APIs for easy integration  
