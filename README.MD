@@ -34,7 +34,7 @@ Sparrow is an **API-first platform** built for enterprise document intelligence.
 - **Instruction Processing**: Beyond document extraction — text processing, validation, and decision making via the instruction inference API
 - **Agent Framework**: Orchestrate multi-step workflows with custom agents, visual monitoring via Prefect, and robust error handling
 - **Pluggable Pipelines**: Mix and match Vision LLM (Sparrow Parse), Text LLM (Sparrow Instructor), and Agent pipelines depending on the task
-- **Multiple Backends**: MLX on Apple Silicon, vLLM on NVIDIA, Ollama, Hugging Face — same API surface across all
+- **Multiple Backends**: MLX on Apple Silicon, vLLM on NVIDIA, Ollama, Hugging Face, Mistral OCR — same API surface across all
 
 ![Sparrow UI](https://github.com/katanaml/sparrow/blob/main/sparrow-ui/assets/sparrow_ui.png)
 
@@ -72,10 +72,11 @@ The web UI provides a visual interface on top of the same API:
 📱 **Multi-format Support**: Images (PNG, JPG) and multi-page PDFs  
 🎨 **Schema Validation**: JSON schema-based extraction with automatic validation  
 🌐 **API-First Design**: RESTful APIs for easy integration  
-💬 **Instruction Calling**: Text processing, validation, decision making with GPT-OSS, Mistral, Qwen 3.6, etc.  
+💬 **Instruction Calling**: Text processing, validation, decision making with Gemma, Mistral, Qwen 3.6, etc.  
 📊 **Visual Monitoring**: Built-in dashboard and agent workflow tracking  
 🔒 **Enterprise Ready**: Rate limiting, usage analytics, commercial licensing available  
-🚀 **Local Vision LLMs**: Mistral, Qwen 3.6, DeepSeek OCR, dots.ocr, Gemma 4, etc.  
+🚀 **Local Vision LLMs**: Mistral, Qwen 3.6, DeepSeek OCR, dots.ocr, Gemma 4, etc.
+☁️ **Cloud OCR Backend**: Mistral OCR for enterprise-grade cloud document extraction
 
 ## 🏗️ Architecture
 
