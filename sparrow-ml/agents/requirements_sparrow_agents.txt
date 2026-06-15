@@ -1,16 +1,16 @@
 python-multipart
 rich
 typer[all]
-fastapi==0.136.1
+fastapi==0.137.1
 uvicorn[standard]
-aiohttp==3.13.5
+aiohttp==3.14.1
 griffe
-prefect==3.7.1
+prefect==3.7.4
 numpy==2.4.6
-pypdf==6.11.0
+pypdf==6.13.2
 pdf2image
 celery==5.6.3
-redis==7.4.0
+redis==8.0.0
 flower==2.0.1
 
 
