@@ -1,0 +1,44 @@
+{
+  "positions": [
+    {
+      "instrument_name": "iShares Core EUR Govt Bond UCITS ETF",
+      "isin": "IE00B4WXJJ64",
+      "quantity": 751,
+      "purchase_price": 130.88,
+      "current_price": 108.95,
+      "loss_pct": -16.76,
+      "ccy": "EUR",
+      "holding_years": 8
+    },
+    {
+      "instrument_name": "iShares EUR Corp Bond 1-5yr UCITS ETF",
+      "isin": "IE00B4L60045",
+      "quantity": 2014,
+      "purchase_price": 110.17,
+      "current_price": 107.10,
+      "loss_pct": -2.79,
+      "ccy": "EUR",
+      "holding_years": 8
+    },
+    {
+      "instrument_name": "iShares JP Morgan USD EM Bond EUR Hedged UCITS ETF",
+      "isin": "IE00B9M6RS56",
+      "quantity": 491,
+      "purchase_price": 88.90,
+      "current_price": 68.16,
+      "loss_pct": -23.33,
+      "ccy": "EUR",
+      "holding_years": 8
+    },
+    {
+      "instrument_name": "Xtrackers EUR High Yield Corp Bond UCITS ETF",
+      "isin": "LU1109942653",
+      "quantity": 1501,
+      "purchase_price": 17.05,
+      "current_price": 15.74,
+      "loss_pct": -7.70,
+      "ccy": "EUR",
+      "holding_years": 8
+    }
+  ]
+}
