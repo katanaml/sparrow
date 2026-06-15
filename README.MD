@@ -68,7 +68,7 @@ The web UI provides a visual interface on top of the same API:
 
 🎯 **Universal Document Processing**: Handle invoices, receipts, forms, bank statements, tables    
 🔧 **Pluggable Architecture**: Mix and match different pipelines (Sparrow Parse, Instructor, Agents)  
-🖥️ **Multiple Backends**: MLX (Apple Silicon), Ollama, vLLM, Docker, Hugging Face Cloud GPU  
+🖥️ **Multiple Backends**: MLX, Ollama, vLLM, Docker, Hugging Face Cloud GPU, Mistral OCR  
 📱 **Multi-format Support**: Images (PNG, JPG) and multi-page PDFs  
 🎨 **Schema Validation**: JSON schema-based extraction with automatic validation  
 🌐 **API-First Design**: RESTful APIs for easy integration  
@@ -76,7 +76,7 @@ The web UI provides a visual interface on top of the same API:
 📊 **Visual Monitoring**: Built-in dashboard and agent workflow tracking  
 🔒 **Enterprise Ready**: Rate limiting, usage analytics, commercial licensing available  
 🚀 **Local Vision LLMs**: Mistral, Qwen 3.6, DeepSeek OCR, dots.ocr, Gemma 4, etc.  
-☁️ **Cloud OCR Backend**: Mistral OCR for enterprise-grade cloud document extraction
+☁️ **Cloud OCR Backend**: Mistral OCR for cloud document extraction
 
 ## 🏗️ Architecture
 
@@ -147,7 +147,7 @@ Before running `pip install -r requirements_sparrow_parse.txt`, check your platf
 }
 ```
 
-Use `--options mlx` for MLX backend, `--options ollama` for Ollama backend, `--options vllm` for vLLM backend. Make sure to provide correct Vision LLM model name, download model first separately with MLX, vLLM or Ollama.
+Use `--options mlx` for MLX backend, `--options ollama` for Ollama backend, `--options vllm` for vLLM backend, `--options mistral` for Mistral OCR cloud backend. Make sure to provide correct Vision LLM model name, download model first separately with MLX, vLLM or Ollama.
 
 ## 🛠️ Installation
 
@@ -187,6 +187,7 @@ sudo apt-get install poppler-utils libpoppler-cpp-dev
 
 **Apple Silicon**: MLX backend available for optimal performance  
 **NVIDIA/AMD GPU**: Use vLLM or Ollama backend  
+**Cloud**: Use Mistral OCR backend  
 **CPU Only**: Use smaller models or Hugging Face cloud backend  
 
 ### Verification
@@ -778,6 +779,12 @@ Built-in analytics and monitoring dashboard at [sparrow.katanaml.io](https://spa
 - ✅ Recommended: 96GB VRAM for full precision models
 - ⚠️ Requires CUDA setup
 
+**Mistral Cloud (OCR + Mistral Small)**
+- ✅ No local GPU required
+- ✅ OCR with structured JSON extraction
+- ✅ Pay-per-use, no infrastructure overhead
+- ⚠️ Requires Mistral API key
+
 **CPU Only**
 - ⚠️ Significantly slower
 - ✅ Use smaller models (7B parameters max)
@@ -812,12 +819,13 @@ Use Sparrow hints to improve accuracy on complex documents — steer model atten
 ### Model Selection
 
 | Use Case | Recommended Model | Backend | Notes |
-|----------|------------------|---------|-------|
+|----------|-------------------|---------|-------|
 | **Invoices / Forms (EU)** | Mistral Small 3.2 24B | vLLM / MLX | Primary production model |
 | **Invoices / Forms (US)** | Gemma 4 31B Dense | MLX | Strong on English documents |
 | **Large Tables** | dots.ocr | vLLM | Via Sparrow Templates pipeline |
 | **Quick Testing** | Qwen3.6 27B Dense | MLX | Fast, good general accuracy |
 | **Low Memory** | Qwen3.6 35B MoE / Gemma 4 26B MoE | MLX | Reduced memory footprint |
+| **Cloud / No GPU** | Mistral OCR + Mistral Small | Mistral Cloud | No infrastructure overhead, pay-per-use |
 
 ## 🔍 Troubleshooting
 
