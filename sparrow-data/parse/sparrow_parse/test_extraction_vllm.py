@@ -17,7 +17,7 @@ if __name__ == "__main__":
         trust_remote_code=True,
         dtype="bfloat16",
         gpu_memory_utilization=0.7,
-        max_model_len=32768,
+        max_model_len=32192,
         limit_mm_per_prompt={"image": 1},
         allowed_local_media_path="/home/sparrow/sparrow-data/parse/sparrow_parse/images/"
     )

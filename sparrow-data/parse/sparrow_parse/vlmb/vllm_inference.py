@@ -44,7 +44,7 @@ class VLLMInference(ModelInference):
             "dtype": "bfloat16",
             "trust_remote_code": True,
             "gpu_memory_utilization": gpu_mem,
-            "max_model_len": 32768,
+            "max_model_len": 32192,
             "limit_mm_per_prompt": {"image": 1},
             "allowed_local_media_path": "/",
         }
