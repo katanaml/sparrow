@@ -11,8 +11,7 @@ import re
 # - Mistral Small 3.2 24B: 6.99 GiB KV cache, 45,776 tokens at 0.70
 # - dots.ocr: 11.15x concurrency, 32,768 tokens at 0.20
 VLLM_GPU_MEMORY_CONFIGS = {
-    "mistralai/Ministral-3-14B-Instruct-2512": 0.70,
-    # "mistralai/Mistral-Small-3.2-24B-Instruct-2506": 0.70,
+    "mistralai/Mistral-Small-3.2-24B-Instruct-2506": 0.70,
     "rednote-hilab/dots.ocr": 0.20,
 }
 VLLM_GPU_MEMORY_DEFAULT = 0.70
