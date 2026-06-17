@@ -1,5 +1,6 @@
 "use server";
 
+import "@/lib/undici-config";
 import { verify_key, get_restricted_key } from "@/lib/db_pool";
 import { fetch_geolocation } from "@/lib/geoip";
 import { timestamp } from "@/lib/timestamp";
