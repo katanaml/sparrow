@@ -1,5 +1,6 @@
 "use server";
 
+import { Agent } from "undici";
 import { verify_key, get_restricted_key } from "@/lib/db_pool";
 import { fetch_geolocation } from "@/lib/geoip";
 import { timestamp } from "@/lib/timestamp";
@@ -10,6 +11,14 @@ const PROTECTED_ACCESS = process.env.PROTECTED_ACCESS !== "false";
 const BACKEND_URL = process.env.BACKEND_URL!;
 const PDF_PAGE_LIMIT_WITH_KEY = 10;
 const PDF_PAGE_LIMIT_FREE_TIER = 3;
+
+// 30 minute timeout for long inference calls — undici default headersTimeout
+// is 300s which is too short for multi-page document inference
+const LONG_TIMEOUT_MS = 30 * 60 * 1000;
+const longTimeoutAgent = new Agent({
+  headersTimeout: LONG_TIMEOUT_MS,
+  bodyTimeout:    LONG_TIMEOUT_MS,
+});
 
 function getModelOptions(): Record<string, string> {
   const options: Record<string, string> = {};
@@ -113,7 +122,6 @@ export async function run_inference(formData: FormData): Promise<InferenceResult
         };
       }
       sparrowKey = restrictedKey;
-      // TODO: log auto-assignment with geolocation
     }
   } else {
     console.log(`[${timestamp()}] Protected access disabled - skipping key validation for IP: ${clientIp}`);
@@ -163,7 +171,9 @@ export async function run_inference(formData: FormData): Promise<InferenceResult
     method: "POST",
     headers: { accept: "application/json" },
     body: backendForm,
-    signal: AbortSignal.timeout(30 * 60 * 1000), // 30 minutes
+    signal: AbortSignal.timeout(LONG_TIMEOUT_MS),
+    // @ts-expect-error — undici dispatcher extension supported by Node.js fetch
+    dispatcher: longTimeoutAgent,
   });
 
   const durationSec = (Date.now() - startTime) / 1000;
@@ -240,7 +250,9 @@ export async function summarize_result(
       method: "POST",
       headers: { accept: "application/json" },
       body: formData,
-      signal: AbortSignal.timeout(30 * 60 * 1000), // 30 minutes
+      signal: AbortSignal.timeout(LONG_TIMEOUT_MS),
+      // @ts-expect-error — undici dispatcher extension supported by Node.js fetch
+      dispatcher: longTimeoutAgent,
     });
 
     if (!response.ok) {
@@ -253,7 +265,6 @@ export async function summarize_result(
     if (typeof raw === "string") {
       summary = raw;
     } else if (typeof raw === "object" && raw !== null) {
-      // Some backends wrap in an object
       const val = Object.values(raw)[0];
       summary = typeof val === "string" ? val : JSON.stringify(raw);
     } else {
