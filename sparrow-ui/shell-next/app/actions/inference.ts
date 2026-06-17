@@ -1,6 +1,5 @@
 "use server";
 
-import { Agent } from "undici";
 import { verify_key, get_restricted_key } from "@/lib/db_pool";
 import { fetch_geolocation } from "@/lib/geoip";
 import { timestamp } from "@/lib/timestamp";
@@ -11,14 +10,7 @@ const PROTECTED_ACCESS = process.env.PROTECTED_ACCESS !== "false";
 const BACKEND_URL = process.env.BACKEND_URL!;
 const PDF_PAGE_LIMIT_WITH_KEY = 10;
 const PDF_PAGE_LIMIT_FREE_TIER = 3;
-
-// 30 minute timeout for long inference calls — undici default headersTimeout
-// is 300s which is too short for multi-page document inference
-const LONG_TIMEOUT_MS = 30 * 60 * 1000;
-const longTimeoutAgent = new Agent({
-  headersTimeout: LONG_TIMEOUT_MS,
-  bodyTimeout:    LONG_TIMEOUT_MS,
-});
+const LONG_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
 
 function getModelOptions(): Record<string, string> {
   const options: Record<string, string> = {};
@@ -172,8 +164,6 @@ export async function run_inference(formData: FormData): Promise<InferenceResult
     headers: { accept: "application/json" },
     body: backendForm,
     signal: AbortSignal.timeout(LONG_TIMEOUT_MS),
-    // @ts-expect-error — undici dispatcher extension supported by Node.js fetch
-    dispatcher: longTimeoutAgent,
   });
 
   const durationSec = (Date.now() - startTime) / 1000;
@@ -251,8 +241,6 @@ export async function summarize_result(
       headers: { accept: "application/json" },
       body: formData,
       signal: AbortSignal.timeout(LONG_TIMEOUT_MS),
-      // @ts-expect-error — undici dispatcher extension supported by Node.js fetch
-      dispatcher: longTimeoutAgent,
     });
 
     if (!response.ok) {
