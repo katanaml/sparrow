@@ -1,7 +1,7 @@
 from typing import Dict, Any
 import aiohttp
 import json
-from prefect import task
+from prefect import task, get_run_logger
 from urllib.parse import urljoin
 import logging
 import configparser
@@ -37,10 +37,12 @@ class SparrowClient:
             bonds_data: Bond positions data from the load_positions step
 
         Returns:
-            Dict containing risk analysis with fields: instrument_short_name, loss_pct, risk_level
+            Dict containing risk analysis with fields: isin, instrument_name, loss_pct, risk_level
         """
+        run_logger = get_run_logger()
+
         if self.mock_mode:
-            logger.info("Running in mock mode - returning mock data")
+            run_logger.info("Running in mock mode - returning mock data")
             return {}
 
         # Prepare the endpoint URL
@@ -50,9 +52,11 @@ class SparrowClient:
             payload_str = json.dumps(bonds_data)
             query = (
                 "instruction: analyze bond portfolio and identify high risk positions based on loss percentage, "
-                "return result as JSON with fields: instrument_short_name, loss_pct, risk_level (low/medium/high), "
+                "return result as JSON with fields: isin, instrument_name, loss_pct, risk_level (low/medium/high), "
                 f"payload: {payload_str}"
             )
+
+            run_logger.info(f"Calling Sparrow Instructor at: {endpoint}")
 
             # Prepare form data (instruction-inference uses form-encoded, not multipart)
             data = {
@@ -67,7 +71,9 @@ class SparrowClient:
             async with aiohttp.ClientSession() as session:
                 async with session.post(endpoint, data=data, timeout=3600) as response:
                     if response.status == 200:
-                        return await response.json()
+                        result = await response.json()
+                        run_logger.info("Sparrow Instructor call completed successfully")
+                        return result
                     else:
                         error_text = await response.text()
                         logger.error(f"API call failed: {error_text}")

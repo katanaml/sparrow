@@ -4,7 +4,7 @@ typer[all]
 fastapi==0.136.3
 uvicorn[standard]
 aiohttp==3.14.1
-griffe
+griffe<1.0.0
 prefect==3.7.4
 numpy==2.4.6
 pypdf==6.13.2
@@ -12,6 +12,7 @@ pdf2image
 celery==5.6.3
 redis==8.0.0
 flower==2.0.1
+tavily-python
 
 
 # Force reinstall:
