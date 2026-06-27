@@ -1,0 +1,146 @@
+{
+  "flow_run_id": "1782466298.727474",
+  "status": "success",
+  "result": {
+    "positions": {
+      "extracted_data": {
+        "positions": [
+          {
+            "instrument_name": "iShares Core EUR Govt Bond UCITS ETF",
+            "isin": "IE00B4WXJJ64",
+            "quantity": 751,
+            "purchase_price": 130.88,
+            "current_price": 109.89,
+            "loss_pct": -16.04,
+            "ccy": "EUR",
+            "holding_years": 8,
+            "annual_income_eur": 2000
+          },
+          {
+            "instrument_name": "iShares EUR Corp Bond 1-5yr UCITS ETF",
+            "isin": "IE00B4L60045",
+            "quantity": 2014,
+            "purchase_price": 110.17,
+            "current_price": 107.57,
+            "loss_pct": -2.36,
+            "ccy": "EUR",
+            "holding_years": 8,
+            "annual_income_eur": 6500
+          },
+          {
+            "instrument_name": "iShares JP Morgan USD EM Bond EUR Hedged UCITS ETF",
+            "isin": "IE00B9M6RS56",
+            "quantity": 491,
+            "purchase_price": 88.9,
+            "current_price": 69,
+            "loss_pct": -22.38,
+            "ccy": "EUR",
+            "holding_years": 8,
+            "annual_income_eur": 1900
+          },
+          {
+            "instrument_name": "Xtrackers EUR High Yield Corp Bond UCITS ETF",
+            "isin": "LU1109942653",
+            "quantity": 1501,
+            "purchase_price": 17.05,
+            "current_price": 15.83,
+            "loss_pct": -7.16,
+            "ccy": "EUR",
+            "holding_years": 8,
+            "annual_income_eur": 1170
+          }
+        ]
+      },
+      "status": "success"
+    },
+    "risk_analysis": {
+      "risk_analysis": [
+        {
+          "isin": "IE00B9M6RS56",
+          "instrument_name": "iShares JP Morgan USD EM Bond EUR Hedged UCITS ETF",
+          "loss_pct": -22.38,
+          "risk_level": "high"
+        },
+        {
+          "isin": "IE00B4WXJJ64",
+          "instrument_name": "iShares Core EUR Govt Bond UCITS ETF",
+          "loss_pct": -16.04,
+          "risk_level": "high"
+        },
+        {
+          "isin": "LU1109942653",
+          "instrument_name": "Xtrackers EUR High Yield Corp Bond UCITS ETF",
+          "loss_pct": -7.16,
+          "risk_level": "medium"
+        },
+        {
+          "isin": "IE00B4L60045",
+          "instrument_name": "iShares EUR Corp Bond 1-5yr UCITS ETF",
+          "loss_pct": -2.36,
+          "risk_level": "low"
+        }
+      ],
+      "status": "success"
+    },
+    "search_result": {
+      "enriched_positions": [
+        {
+          "isin": "IE00B4WXJJ64",
+          "instrument_name": "iShares Core EUR Govt Bond UCITS ETF",
+          "history_summary": "| Fund type | Open Ended Investment Company |. | Fund size | 5.14bn GBP As of May 31 2026 |. ## Top 5 holdings. | Top 5 holdings as a per cent of portfolio | | | |. Company | 1 year change | Portfolio weight | Long allocation || France (Republic Of) 2.5% | -- | 0.89% |  |. | France (Republic Of) 2.75% | -- | 0.84% |  |. | Per cent of portfolio in top 5 holdings: **4.06%** |. The investment objective of the Fund is to provide investors with a total return, taking into account both capital and income returns, which reflects the return of the Bloomberg Euro Treasury Bond Index. In order to achieve this investment objective, the investment policy of this Fund is to invest in a portfolio of fixed income securities that as far as possible and practicable consists of the component securities of the Bloomberg Euro Treasury Bond Index, this Fund’s Benchmark Index. The compound annual growth rate is calculated as the geometric mean:. fractional number of years in the simulation period. ### Standard deviation. The standard deviation measures the volatility of the portfolio. The standard deviation of monthly returns undergoes a transformation to get to the yearly standard deviation:. The Sharpe ratio of a portfolio measures its performance while taking account risk. In other words, it measures the **risk-adjusted return** of a portfolio. annualised standard deviation of the monthly excess returns. ### Annual returns. ### Annual returns histogram. The histogram shows the frequency of each annual return. The histogram shows the frequency of each monthly return. The **longest drawdown period** shows how much patience is required: 5 years and 5 months that started in , with a low of -21.5% so far. The **deepest drawdown period** shows the worst loss on paper: 5 years and 5 months that started in , with a low of -21.5% so far. standard deviation of monthly returns. # iShares Core EUR Government Bond UCITS ETF Dis. ## Top Holdings zu iShares Core EUR Government Bond UCITS ETF Dis. | 2.75% FRANCE BDS 25.02.30 SEN(134595592) Anleihe · WKN A3LXWA · ISIN FR001400PM68 | 0,88 % |. | 2% FRANCE BDS 25.11.32 SEN(120265660) Anleihe · WKN A3K7HG · ISIN FR001400BKZ3 | 0,82 % |. | 2.75% FRANCE BDS 25.02.29 SEN(126483870) Anleihe · WKN A3LG3Y · ISIN FR001400HI98 | 0,78 % |. ## Anteilsklassen zu iShares Core EUR Government Bond UCITS ETF Dis. ## Ratings zu iShares Core EUR Government Bond UCITS ETF Dis. ## ETF-Strategie zu iShares Core EUR Government Bond UCITS ETF Dis. ## Stammdaten zu iShares Core EUR Government Bond UCITS ETF Dis. ## Risiko-Kennzahlen zu iShares Core EUR Government Bond UCITS ETF Dis. ## Performance-Kennzahlen zu iShares Core EUR Government Bond UCITS ETF Dis. Hier wird die von der KVG berechnete Performance angezeigt. ##### ETF-Prospekte zu iShares Core EUR Government Bond UCITS ETF Dis.",
+          "outlook_summary": "| Fund type | Open Ended Investment Company |. | Fund size | 5.14bn GBP As of May 31 2026 |. ## Top 5 holdings. | Top 5 holdings as a per cent of portfolio | | | |. Company | 1 year change | Portfolio weight | Long allocation || France (Republic Of) 2.5% | -- | 0.89% |  |. | France (Republic Of) 2.75% | -- | 0.84% |  |. | Per cent of portfolio in top 5 holdings: **4.06%** |. The investment objective of the Fund is to provide investors with a total return, taking into account both capital and income returns, which reflects the return of the Bloomberg Euro Treasury Bond Index. In order to achieve this investment objective, the investment policy of this Fund is to invest in a portfolio of fixed income securities that as far as possible and practicable consists of the component securities of the Bloomberg Euro Treasury Bond Index, this Fund’s Benchmark Index. iShares iBonds Dec 2026 Term € Italy Govt Bond UCITS ETF EUR Acc (26TA.MI). 5.26 +0.00 (+0.02%). At close: June 23 at 9:04:23 AM GMT+2 Evaluate over **1 million global bond coverage** and advanced analytical tools. Evaluate over **100K stock coverage** and advanced analytical tools. Evaluate over **17K ETF & 140K Mutual fund coverage** and advanced analytical tools. The report uses data from the Cbonds database. Evaluate over **100K** indices and advanced analytical tools. Evaluate comprehensive coverage and advanced analytical tools. Evaluate the structure and quality of the data. # SEGA - iShares Core € Govt Bond UCITS ETF EUR (Dist) (IE00B4WXJJ64). ### Full access to the largest bond database. Analyze the data in the most efficient way. The iShares Core € Govt Bond UCITS ETF seeks to replicate as close as possible the price and yield performance of the Bloomberg Barclays Euro Treasury Bond Index by investing in a portfolio comprised primarily of Eurozone investment grade government bonds. The iShares Core € Govt Bond UCITS ETF EUR (Dist) is a(n) Fixed Income Exchange Traded Funds (ETF) seeks to invest in Government bonds sector located in Europe."
+        },
+        {
+          "isin": "IE00B4L60045",
+          "instrument_name": "iShares EUR Corp Bond 1-5yr UCITS ETF",
+          "history_summary": "| Fund type | Open Ended Investment Company |. | Fund size | 3.90bn GBP As of May 31 2026 |. | Share class size | 3.04bn GBP As of May 31 2026 |. ## Top 5 holdings. | Top 5 holdings as a per cent of portfolio | | | |. Company | 1 year change | Portfolio weight | Long allocation || Anheuser-Busch Inbev SA/NV 2% | -- | 0.17% |  |. | Per cent of portfolio in top 5 holdings: **0.69%** |. The investment objective of the Fund is to provide investors with a total return, taking into account both capital and income returns, which reflects the return of the Bloomberg Euro Corporate 1-5 Year Bond Index. In order to achieve this investment objective, the investment policy of this Fund is to invest in a portfolio of fixed income debt securities that as far as possible and practicable consists of the component securities of the Bloomberg Euro Corporate 1-5 Year Bond Index, this Fund’s Benchmark Index. PRODUCT INFORMATION ISIN : IE00B4L60045 Share Class Launch Date : 25-Sep-2009 Share Class Currency : EUR Total Expense Ratio : 0.20% Use of Income : Distributing Net Assets of Share Class (M) : 4,171.63 EUR KEY FACTS Asset Class : Fixed Income Benchmark : Bloomberg Euro Corporate 1-5 Year Bond Index Fund Launch Date : 25-Sep-2009 Distribution Frequency : Semi-Annual Net Assets of Fund (M) : 5,040.25 EUR SFDR Classification : Other Domicile : Ireland Methodology : Sampled Issuing Company : iShares III plc Product Structure : Physical PORTFOLIO CHARACTERISTICS Average Weighted Maturity : 2.88 yrs Effective Duration : 2.71 yrs Standard Deviation (3y) : 2.19% 3y Beta : 1.00 12m Trailing Yield : 2.92% Yield To Maturity : 2.69% Number of Holdings : 2,491 Contact Us For EMEA: +44-207-743-2030 • www.blackrock.com • investor.services@blackrock.com iShares € Corp Bond 1-5yr UCITS ETF Euro (Distributing) iShares III plc CALENDAR YEAR PERFORMANCE 2015 2016 2017 2018 2019 2020 2021 2022 2023 2024 Share Class 0.34 2.34 0.96 -0.66 2.61 0.97 -0.31 -8.23 6.19 4.59 Benchmark 0.58 2.60 1.16 -0.47 2.77 1.11 -0.08 -8.00 6.39 4.81 GROWTH OF HYPOTHETICAL 10,000 EUR SINCE INCEPTION CUMULATIVE & ANNUALISED PERFORMANCE CUMULATIVE (%) ANNUALISED (% p.a.) 1m 3m 6m YTD 1y 3y 5y Since Inception Share Class 0.51 0.84 1.97 3.38 4.35 4.95 1.11 2.11 Benchmark 0.51 0.89 2.04 3.50 4.52 5.13 1.31 2.30 The figures shown relate to past performance. Analysis of iShares Euro Corporate Bond 1-5yr UCITS ETF (IE00B4L60045) based on historical data between September 2009 and May 2026.",
+          "outlook_summary": "| Fund type | Open Ended Investment Company |. | Fund size | 3.90bn GBP As of May 31 2026 |. | Share class size | 3.04bn GBP As of May 31 2026 |. ## Top 5 holdings. | Top 5 holdings as a per cent of portfolio | | | |. Company | 1 year change | Portfolio weight | Long allocation || Anheuser-Busch Inbev SA/NV 2% | -- | 0.17% |  |. | Per cent of portfolio in top 5 holdings: **0.69%** |. The investment objective of the Fund is to provide investors with a total return, taking into account both capital and income returns, which reflects the return of the Bloomberg Euro Corporate 1-5 Year Bond Index. In order to achieve this investment objective, the investment policy of this Fund is to invest in a portfolio of fixed income debt securities that as far as possible and practicable consists of the component securities of the Bloomberg Euro Corporate 1-5 Year Bond Index, this Fund’s Benchmark Index. Evaluate over **1 million global bond coverage** and advanced analytical tools. Evaluate over **100K stock coverage** and advanced analytical tools. Evaluate over **17K ETF & 140K Mutual fund coverage** and advanced analytical tools. The report uses data from the Cbonds database. Evaluate over **100K** indices and advanced analytical tools. Evaluate comprehensive coverage and advanced analytical tools. Evaluate the structure and quality of the data. # SE15 - iShares € Corp Bond 1-5yr UCITS ETF EUR (Dist) (IE00B4L60045). ### Full access to the largest bond database. Analyze the data in the most efficient way. The iShares € Corp Bond 1-5yr UCITS ETF seeks to track the performance of Bloomberg Euro Corporate 1-5 Year Bond Index composed of Euro denominated investment grade corporate bonds. The iShares € Corp Bond 1-5yr UCITS ETF EUR (Dist) is a(n) Fixed Income Exchange Traded Funds (ETF) seeks to invest in Corporate bonds sector located in Developed markets. Get a detailed summary of iShares € Corp Bond 1-5yr UCITS ETF EUR (Dist), including current price, performance history, expert analysis, and key metrics."
+        },
+        {
+          "isin": "IE00B9M6RS56",
+          "instrument_name": "iShares JP Morgan USD EM Bond EUR Hedged UCITS ETF",
+          "history_summary": "| Fund size | 1.86bn GBP As of May 31 2026 |. | Top 5 holdings as a per cent of portfolio | | | |. | Per cent of portfolio in top 5 holdings: **4.07%** |. The investment objective of the Fund is to provide investors with a total return, taking into account both capital and income returns, which reflects the return of the J.P. Morgan EMBI Global Core Index hedged to Euro. In order to achieve this investment objective, the investment policy of the Fund is to invest in a portfolio of fixed income securities that, as far as possible and practicable, consist of the component securities of the J.P. Morgan EMBI Global Core Index (which make up the fixed income component of the J.P. Morgan EMBI Global Core Index hedged to Euro) and foreign exchange forward contracts that, as far as possible and practicable, track the hedging methodology of the J.P. Morgan EMBI Global Core Index hedged to Euro, this Fund’s Benchmark Index. Try in 7 days Trial access. Evaluate over **1 million global bond coverage** and advanced analytical tools. Evaluate over **100K stock coverage** and advanced analytical tools. Evaluate over **17K ETF & 140K Mutual fund coverage** and advanced analytical tools. The report uses data from the Cbonds database. Evaluate over **100K** indices and advanced analytical tools. Evaluate comprehensive coverage and advanced analytical tools. Evaluate the structure and quality of the data. # EMBE - iShares J.P. Morgan $ EM Bond EUR Hedged UCITS ETF (Dist) (IE00B9M6RS56). ### Full access to the largest bond database. Analyze the data in the most efficient way. The iShares J.P. Morgan $ EM Bond EUR Hedged UCITS ETF seeks to replicate as close as possible the price and yield performance of the J.P. Morgan EMBI Global Core Index by investing in a portfolio comprised primarily of USD-denominated bonds from Emerging Market countries. Performance charts for iShares J.P. Morgan USD EM Bond EUR Hedged UCITS ETF Dist (EMBE - Type ETF) including intraday, historical and comparison charts,",
+          "outlook_summary": "| Fund size | 1.86bn GBP As of May 31 2026 |. | Top 5 holdings as a per cent of portfolio | | | |. | Per cent of portfolio in top 5 holdings: **4.07%** |. The investment objective of the Fund is to provide investors with a total return, taking into account both capital and income returns, which reflects the return of the J.P. Morgan EMBI Global Core Index hedged to Euro. In order to achieve this investment objective, the investment policy of the Fund is to invest in a portfolio of fixed income securities that, as far as possible and practicable, consist of the component securities of the J.P. Morgan EMBI Global Core Index (which make up the fixed income component of the J.P. Morgan EMBI Global Core Index hedged to Euro) and foreign exchange forward contracts that, as far as possible and practicable, track the hedging methodology of the J.P. Morgan EMBI Global Core Index hedged to Euro, this Fund’s Benchmark Index. Try in 7 days Trial access. Evaluate over **1 million global bond coverage** and advanced analytical tools. Evaluate over **100K stock coverage** and advanced analytical tools. Evaluate over **17K ETF & 140K Mutual fund coverage** and advanced analytical tools. The report uses data from the Cbonds database. Evaluate over **100K** indices and advanced analytical tools. Evaluate comprehensive coverage and advanced analytical tools. Evaluate the structure and quality of the data. # EMBE - iShares J.P. Morgan $ EM Bond EUR Hedged UCITS ETF (Dist) (IE00B9M6RS56). ### Full access to the largest bond database. Analyze the data in the most efficient way. The iShares J.P. Morgan $ EM Bond EUR Hedged UCITS ETF seeks to replicate as close as possible the price and yield performance of the J.P. Morgan EMBI Global Core Index by investing in a portfolio comprised primarily of USD-denominated bonds from Emerging Market countries. # iShares J.P. Morgan USD EM Bond EUR Hedged UCITS ETF (Dist). You can set up price alerts in the justETF app and receive push notifications when the price reaches the defined level. The app is available in the following countries: Germany, Italy, France, Spain and the Netherlands. | Volatility 1 year (in EUR) | 4.40% |. | Scalable Capital |  | 0.00 € | 0.00 € | View offer\\*\\* |. | S Broker |  | 0.00 € | 0.00 € | View offer\\* |. | Consorsbank |  | 0.00 € | 0.00 € | View offer\\* |. ### What is the ticker of iShares J.P. Morgan USD EM Bond EUR Hedged UCITS ETF (Dist)? ### What is the ISIN of iShares J.P. Morgan USD EM Bond EUR Hedged UCITS ETF (Dist)? ### What are the costs of iShares J.P. Morgan USD EM Bond EUR Hedged UCITS ETF (Dist)? ### What's the fund size of iShares J.P. Morgan USD EM Bond EUR Hedged UCITS ETF (Dist)?"
+        },
+        {
+          "isin": "LU1109942653",
+          "instrument_name": "Xtrackers EUR High Yield Corp Bond UCITS ETF",
+          "history_summary": "# Xtrackers II EUR High Yield Corporate Bond UCITS ETF 1D. ISIN: LU1109942653 | WKN: DBX0PR | Symbol: XHYG | Type: ETF. DayWeek1 Month6 Months1 Year3 YearsMax. | |  | | --- | | 0 | | for 0 units | | |  | | --- | | 0 | | for 0 units | |. | Spread absolute / relative | 0 / 0% |. ## Price information Xtrackers II EUR High Yield Corporate Bond UCITS ETF 1D. | Closing price prev trading day |  |. | Trading hours | 08:00-22:00 |. ## Bid/ask overview ►. ## Performance. ## Master Data. ## Fees. ## Assets under management. | Assets under management in Euro |. ## Trading parameters Xetra. | Xetra Liquidity Measure in basis points (XLM)\\* |. ## live.deutsche-boerse.com. * Xetra real-time for shares. * Xetra real-time for ETFs. ## Weitere Websites der Gruppe Deutsche Börse. ## Contact us at:. * ► All contact addresses for your requests. Evaluate over **1 million global bond coverage** and advanced analytical tools. Evaluate over **100K stock coverage** and advanced analytical tools. Evaluate over **17K ETF & 140K Mutual fund coverage** and advanced analytical tools. The report uses data from the Cbonds database. Evaluate over **100K** indices and advanced analytical tools. Evaluate comprehensive coverage and advanced analytical tools. Evaluate the structure and quality of the data. in the public demo access. # XHYG - Xtrackers EUR High Yield Corporate Bond UCITS ETF 1D (EUR) (LU1109942653). Cbonds consolidates global bond, stock, ETF and indices data into a single platform — so you can analyze faster, make informed investment decisions and outperform the market. ### Full access to the largest bond database. Analyze the data in the most efficient way. The Xtrackers EUR High Yield Corporate Bond UCITS ETF 1D (EUR) is a(n) Fixed Income Exchange Traded Funds (ETF) seeks to invest in High Yield sector located in Global. From May 2016 to May 2017 From May 2017 to May 2018 From May 2018 to May 2019. Total return (EUR) 7.05% 0.83% 1.62% -2.83% 11.91% -7.09% 1.97% 9.05% 7.09% 3.75",
+          "outlook_summary": "EUR High Yield Corporate Bond UCITS ETF. ISIN: LU1109942653Symbol: XHYG 14.53 CHF +0.21% (0.03) Date / Time 10.06.2026 Xtrackers Evaluate over **1 million global bond coverage** and advanced analytical tools. Evaluate over **100K stock coverage** and advanced analytical tools. Evaluate over **17K ETF & 140K Mutual fund coverage** and advanced analytical tools. The report uses data from the Cbonds database. Evaluate over **100K** indices and advanced analytical tools. Evaluate comprehensive coverage and advanced analytical tools. Evaluate the structure and quality of the data. in the public demo access. # XHYG - Xtrackers EUR High Yield Corporate Bond UCITS ETF 1D (EUR) (LU1109942653). Cbonds consolidates global bond, stock, ETF and indices data into a single platform — so you can analyze faster, make informed investment decisions and outperform the market. ### Full access to the largest bond database. Analyze the data in the most efficient way. The Xtrackers EUR High Yield Corporate Bond UCITS ETF 1D (EUR) is a(n) Fixed Income Exchange Traded Funds (ETF) seeks to invest in High Yield sector located in Global. The Markit iBoxx EUR Liquid High Yield Index aims to reflect the performance of the following market: EUR-denominated corporate bonds; Sub Investment grade"
+        }
+      ],
+      "status": "success"
+    },
+    "decision": {
+      "decisions": {
+        "positions": [
+          {
+            "isin": "IE00B4WXJJ64",
+            "instrument_name": "iShares Core EUR Govt Bond UCITS ETF",
+            "decision": "hold",
+            "reasoning": "Despite a significant capital loss of -16.04%, the position has generated €16,000 in total income over 8 years (2,000 * 8), which substantially offsets the current price decline. Government bonds are sensitive to interest rate cycles; given the 6-month window and the nature of Euro Treasury bonds, there is a reasonable expectation for price stabilization or recovery as rate cycles peak, making a hold preferable to exiting at a deep loss."
+          },
+          {
+            "isin": "IE00B4L60045",
+            "instrument_name": "iShares EUR Corp Bond 1-5yr UCITS ETF",
+            "decision": "hold",
+            "reasoning": "The current loss is very small (-2.36%) and is completely overwhelmed by the total income earned over the holding period (€52,000). Recent performance data shows a positive trend (YTD 3.38%, 1y 4.35%). Since the investor is not in a hurry and the instrument is showing recovery momentum with low risk, holding for a few more months to potentially exit at a profit or break-even is the optimal strategy."
+          },
+          {
+            "isin": "IE00B9M6RS56",
+            "instrument_name": "iShares JP Morgan USD EM Bond EUR Hedged UCITS ETF",
+            "decision": "sell",
+            "reasoning": "This position has the highest capital loss (-22.38%) and is classified as high risk. While it earned €15,200 in income over 8 years, the volatility of Emerging Market bonds and the lack of a clear near-term recovery catalyst in the market outlook suggest that further downside is possible. To minimize further capital loss in a high-risk asset, exiting now is recommended."
+          },
+          {
+            "isin": "LU1109942653",
+            "instrument_name": "Xtrackers EUR High Yield Corp Bond UCITS ETF",
+            "decision": "hold",
+            "reasoning": "The capital loss is moderate (-7.16%) and is offset by €9,360 in total income earned over 8 years. High yield bonds often recover quickly when market sentiment improves. Given the medium risk level and the investor's ability to wait 6 months, holding for a better exit price is preferred over accepting the current loss."
+          }
+        ]
+      },
+      "status": "success"
+    }
+  }
+}
