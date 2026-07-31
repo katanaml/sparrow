@@ -165,21 +165,30 @@ export default function ProcessPage() {
     formData.append("validationOff",   String(validationOff));
     formData.append("modelName",       modelName);
 
-    console.log("Sending request to Sparrow backend...");
+    console.log(`[${new Date().toISOString()}] Calling run_inference...`);
 
-    const result = await run_inference(formData);
+    try {
+      const result = await run_inference(formData);
+      console.log(`[${new Date().toISOString()}] run_inference resolved:`, result);
 
-    if ("error" in result) {
-      setSubmitError(result.error);
+      if ("error" in result) {
+        console.error("run_inference returned error:", result.error);
+        setSubmitError(result.error);
+        setResponseState("empty");
+      } else {
+        setResultData(result.data);
+        setDurationSec(result.durationSec);
+        setResponseState("results");
+        setInferenceRan(true);
+      }
+    } catch (err) {
+      console.error(`[${new Date().toISOString()}] run_inference threw:`, err);
+      setSubmitError(String(err));
       setResponseState("empty");
-    } else {
-      setResultData(result.data);
-      setDurationSec(result.durationSec);
-      setResponseState("results");
-      setInferenceRan(true);
+    } finally {
+      setRunning(false);
+      console.log(`[${new Date().toISOString()}] setRunning(false) called`);
     }
-
-    setRunning(false);
   };
 
   return (
