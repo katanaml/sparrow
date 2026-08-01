@@ -4,7 +4,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import { InputDocumentCard } from "@/components/input-document-card";
 import { ResponseCard, type ResponseState } from "@/components/response-card";
-import { run_inference, summarize_result } from "@/app/actions/inference";
+import type { InferenceResult } from "@/app/actions/inference";
+import { summarize_result } from "@/app/actions/inference";
 import { log_example_selected, log_file_upload } from "@/app/actions/logging";
 import { EXAMPLE_DATA, type ExampleId } from "@/lib/examples";
 const EXAMPLES = [
@@ -165,24 +166,62 @@ export default function ProcessPage() {
     formData.append("validationOff",   String(validationOff));
     formData.append("modelName",       modelName);
 
-    console.log(`[${new Date().toISOString()}] Calling run_inference...`);
+    console.log(`[${new Date().toISOString()}] Calling /api/inference...`);
 
     try {
-      const result = await run_inference(formData);
-      console.log(`[${new Date().toISOString()}] run_inference resolved:`, result);
+      const response = await fetch("/api/inference", {
+        method: "POST",
+        body: formData,
+      });
 
-      if ("error" in result) {
-        console.error("run_inference returned error:", result.error);
-        setSubmitError(result.error);
+      if (!response.ok || !response.body) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let finalResult: InferenceResult | null = null;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        let newlineIndex;
+        while ((newlineIndex = buffer.indexOf("\n")) !== -1) {
+          const line = buffer.slice(0, newlineIndex).trim();
+          buffer = buffer.slice(newlineIndex + 1);
+          if (!line) continue;
+
+          const chunk = JSON.parse(line);
+          if (chunk.status === "processing") {
+            console.log(`[${new Date().toISOString()}] heartbeat received`);
+          } else if (chunk.status === "done") {
+            finalResult = chunk.result as InferenceResult;
+          } else if (chunk.status === "error") {
+            throw new Error(chunk.message);
+          }
+        }
+      }
+
+      console.log(`[${new Date().toISOString()}] stream finished:`, finalResult);
+
+      if (!finalResult) {
+        throw new Error("No result received from server.");
+      }
+
+      if ("error" in finalResult) {
+        setSubmitError(finalResult.error);
         setResponseState("empty");
       } else {
-        setResultData(result.data);
-        setDurationSec(result.durationSec);
+        setResultData(finalResult.data);
+        setDurationSec(finalResult.durationSec);
         setResponseState("results");
         setInferenceRan(true);
       }
     } catch (err) {
-      console.error(`[${new Date().toISOString()}] run_inference threw:`, err);
+      console.error(`[${new Date().toISOString()}] inference failed:`, err);
       setSubmitError(String(err));
       setResponseState("empty");
     } finally {

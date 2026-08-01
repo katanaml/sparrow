@@ -59,6 +59,7 @@ function parseQuery(query: string): { queryJson: string | object } | { error: st
 }
 
 // ─── run_inference ────────────────────────────────────────────────────────
+// Called directly (in-process, server-side only) by app/api/inference/route.ts.
 export async function run_inference(formData: FormData): Promise<InferenceResult> {
   const file      = formData.get("file") as File | null;
   const query     = formData.get("query") as string;
