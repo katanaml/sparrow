@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // ─── Icons ────────────────────────────────────────────────────────────────
 const CodeIcon = ({ w = 14 }: { w?: number }) => (
@@ -125,6 +125,19 @@ function estimateTokens(data: unknown): number {
   return Math.round(JSON.stringify(data).length / 4);
 }
 
+function formatElapsed(sec: number): string {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${m}:${s.toString().padStart(2, "0")}`;
+}
+
+function getStatusMessage(sec: number): string {
+  if (sec < 20) return "Reading document…";
+  if (sec < 60) return "Running Vision LLM inference…";
+  if (sec < 180) return "Still working — larger or complex documents take longer…";
+  return "Almost there — this one's a big one…";
+}
+
 // ─── Props ────────────────────────────────────────────────────────────────
 export type ResponseState = "empty" | "running" | "results";
 
@@ -139,6 +152,20 @@ interface ResponseCardProps {
 // ─── Component ────────────────────────────────────────────────────────────
 export function ResponseCard({ state, data, durationSec, inferenceRan, hasSummary }: ResponseCardProps) {
   const [copied, setCopied] = useState(false);
+  const [elapsed, setElapsed] = useState(0);
+
+  useEffect(() => {
+    if (state !== "running") {
+      setElapsed(0);
+      return;
+    }
+    const start = Date.now();
+    setElapsed(0);
+    const interval = setInterval(() => {
+      setElapsed(Math.floor((Date.now() - start) / 1000));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [state]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(JSON.stringify(data, null, 2));
@@ -182,8 +209,13 @@ export function ResponseCard({ state, data, durationSec, inferenceRan, hasSummar
           <div className="empty-icon" style={{ background: "hsl(var(--primary) / 0.1)", color: "hsl(var(--primary))" }}>
             <CpuIcon w={20} />
           </div>
-          <h3>Extracting…</h3>
-          <p>Running Sparrow on your document.</p>
+          <h3>
+            Extracting…{" "}
+            <span className="mono" style={{ fontWeight: 500, color: "hsl(var(--muted-foreground))" }}>
+              {formatElapsed(elapsed)}
+            </span>
+          </h3>
+          <p>{getStatusMessage(elapsed)}</p>
         </div>
       )}
 

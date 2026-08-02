@@ -4,8 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import { InputDocumentCard } from "@/components/input-document-card";
 import { ResponseCard, type ResponseState } from "@/components/response-card";
-import type { InferenceResult } from "@/app/actions/inference";
-import { summarize_result } from "@/app/actions/inference";
+import { run_inference, summarize_result } from "@/app/actions/inference";
 import { log_example_selected, log_file_upload } from "@/app/actions/logging";
 import { EXAMPLE_DATA, type ExampleId } from "@/lib/examples";
 const EXAMPLES = [
@@ -166,62 +165,24 @@ export default function ProcessPage() {
     formData.append("validationOff",   String(validationOff));
     formData.append("modelName",       modelName);
 
-    console.log(`[${new Date().toISOString()}] Calling /api/inference...`);
+    console.log(`[${new Date().toISOString()}] Calling run_inference...`);
 
     try {
-      const response = await fetch("/api/inference", {
-        method: "POST",
-        body: formData,
-      });
+      const result = await run_inference(formData);
+      console.log(`[${new Date().toISOString()}] run_inference resolved:`, result);
 
-      if (!response.ok || !response.body) {
-        throw new Error(`Request failed with status ${response.status}`);
-      }
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
-      let finalResult: InferenceResult | null = null;
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buffer += decoder.decode(value, { stream: true });
-
-        let newlineIndex;
-        while ((newlineIndex = buffer.indexOf("\n")) !== -1) {
-          const line = buffer.slice(0, newlineIndex).trim();
-          buffer = buffer.slice(newlineIndex + 1);
-          if (!line) continue;
-
-          const chunk = JSON.parse(line);
-          if (chunk.status === "processing") {
-            console.log(`[${new Date().toISOString()}] heartbeat received`);
-          } else if (chunk.status === "done") {
-            finalResult = chunk.result as InferenceResult;
-          } else if (chunk.status === "error") {
-            throw new Error(chunk.message);
-          }
-        }
-      }
-
-      console.log(`[${new Date().toISOString()}] stream finished:`, finalResult);
-
-      if (!finalResult) {
-        throw new Error("No result received from server.");
-      }
-
-      if ("error" in finalResult) {
-        setSubmitError(finalResult.error);
+      if ("error" in result) {
+        console.error("run_inference returned error:", result.error);
+        setSubmitError(result.error);
         setResponseState("empty");
       } else {
-        setResultData(finalResult.data);
-        setDurationSec(finalResult.durationSec);
+        setResultData(result.data);
+        setDurationSec(result.durationSec);
         setResponseState("results");
         setInferenceRan(true);
       }
     } catch (err) {
-      console.error(`[${new Date().toISOString()}] inference failed:`, err);
+      console.error(`[${new Date().toISOString()}] run_inference threw:`, err);
       setSubmitError(String(err));
       setResponseState("empty");
     } finally {
@@ -285,7 +246,7 @@ export default function ProcessPage() {
               <div>
                 <div className="card-title">
                   <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.36.13.66.36.88.65"/>
+                    <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
                   </svg>
                   Processing options
                 </div>

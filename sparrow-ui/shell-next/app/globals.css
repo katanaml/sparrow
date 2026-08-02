@@ -255,15 +255,16 @@ body {
 /* ── Inputs ───────────────────────────────────────────────────────────── */
 .input, .select, .textarea {
   width: 100%; height: var(--row); padding: 0 12px;
-  border: 1px solid hsl(var(--input));
+  border: 1px solid transparent;
   border-radius: calc(var(--radius) - 2px);
-  background: hsl(var(--background)); color: hsl(var(--foreground));
+  background: hsl(var(--muted) / 0.6); color: hsl(var(--foreground));
   font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   font-size: 14px; outline: none;
-  transition: border-color .12s, box-shadow .12s;
+  transition: border-color .12s, box-shadow .12s, background-color .12s;
 }
 .input:focus, .select:focus, .textarea:focus {
   border-color: hsl(var(--ring));
+  background: hsl(var(--background));
   box-shadow: 0 0 0 3px hsl(var(--ring) / 0.15);
 }
 .textarea { height: auto; padding: 10px 12px; resize: vertical; line-height: 1.5; }
@@ -390,11 +391,11 @@ body {
 /* ── Toggle row ───────────────────────────────────────────────────────── */
 .toggle-row {
   display: flex; align-items: flex-start; justify-content: space-between;
-  gap: 16px; padding: 12px 14px;
-  border: 1px solid hsl(var(--border)); border-radius: calc(var(--radius) - 2px);
-  background: hsl(var(--background));
+  gap: 16px; padding: 12px 0;
+  border-bottom: 1px solid hsl(var(--border));
 }
-.toggle-row + .toggle-row { margin-top: 8px; }
+.toggle-row:last-of-type { border-bottom: none; padding-bottom: 4px; }
+.toggle-row + .toggle-row { margin-top: 0; }
 
 /* ── Switch ───────────────────────────────────────────────────────────── */
 .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
