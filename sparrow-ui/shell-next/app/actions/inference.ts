@@ -5,6 +5,7 @@ import { verify_key, get_restricted_key } from "@/lib/db_pool";
 import { fetch_geolocation } from "@/lib/geoip";
 import { timestamp } from "@/lib/timestamp";
 import { headers } from "next/headers";
+import { PDFDocument } from "pdf-lib";
 
 // ─── Config ───────────────────────────────────────────────────────────────
 const PROTECTED_ACCESS = process.env.PROTECTED_ACCESS !== "false";
@@ -58,14 +59,44 @@ function parseQuery(query: string): { queryJson: string | object } | { error: st
   return { queryJson: parsed };
 }
 
+// Determines the *actual* PDF status and page count server-side, by reading
+// the uploaded file itself. Client-reported isPdf/pageCount are NEVER trusted
+// for enforcement decisions — they were the root cause of the page-limit
+// bypass, since they're plain FormData fields set by client-side JS and are
+// trivial to have go stale (race conditions in client-side counting), be
+// wrong (MIME type detection quirks), or be spoofed (direct API calls).
+//
+// A file is only treated as a PDF-to-be-limited if it looks like a PDF
+// (declared MIME type or .pdf extension) AND it actually parses as a valid
+// PDF. Anything that looks like a PDF but fails to parse is rejected rather
+// than silently falling back to pageCount=1, since that fallback is exactly
+// what let oversized PDFs slip through before.
+async function resolveActualPdfInfo(
+  file: File,
+): Promise<{ isPdf: boolean; pageCount: number } | { error: string }> {
+  const looksLikePdf =
+    file.type === "application/pdf" ||
+    file.name?.toLowerCase().endsWith(".pdf");
+
+  if (!looksLikePdf) {
+    return { isPdf: false, pageCount: 1 };
+  }
+
+  try {
+    const bytes = await file.arrayBuffer();
+    const pdfDoc = await PDFDocument.load(bytes, { ignoreEncryption: true });
+    return { isPdf: true, pageCount: pdfDoc.getPageCount() };
+  } catch {
+    return { error: "The uploaded file could not be read as a valid PDF. Please check the file and try again." };
+  }
+}
+
 // ─── run_inference ────────────────────────────────────────────────────────
 // Called directly (in-process, server-side only) by app/api/inference/route.ts.
 export async function run_inference(formData: FormData): Promise<InferenceResult> {
   const file      = formData.get("file") as File | null;
   const query     = formData.get("query") as string;
   let sparrowKey    = (formData.get("sparrowKey") as string) ?? "";
-  const isPdf     = formData.get("isPdf") === "true";
-  const pageCount = parseInt(formData.get("pageCount") as string) || 1;
   const tableExtraction = formData.get("tableExtraction") === "true";
   const validationOff   = formData.get("validationOff") === "true";
   const modelName = formData.get("modelName") as string;
@@ -84,6 +115,15 @@ export async function run_inference(formData: FormData): Promise<InferenceResult
   const queryResult = parseQuery(query);
   if ("error" in queryResult) return { error: queryResult.error };
   let queryJson = queryResult.queryJson;
+
+  // ── Resolve actual PDF status / page count server-side ────────────────
+  // NOTE: this reads the file's ArrayBuffer, which consumes the stream once.
+  // `file` (a Web File/Blob) can still be re-read afterwards (re-appended to
+  // backendForm below) since File/Blob objects support multiple independent
+  // reads — this is not a Node.js Readable stream.
+  const pdfInfo = await resolveActualPdfInfo(file);
+  if ("error" in pdfInfo) return { error: pdfInfo.error };
+  const { isPdf, pageCount } = pdfInfo;
 
   // ── Key validation ───────────────────────────────────────────────────
   const headersList = await headers();
@@ -145,7 +185,7 @@ export async function run_inference(formData: FormData): Promise<InferenceResult
   // ── Call FastAPI backend ──────────────────────────────────────────────
   const country = await fetch_geolocation(clientIp);
   const shortModel = modelName.includes("Standard") ? "Standard" : modelName.includes("Advanced") ? "Advanced" : "Table";
-  console.log(`[${timestamp()}] Inference request - IP: ${clientIp}, Model: ${shortModel}, Table: ${table}, Country: ${country}`);
+  console.log(`[${timestamp()}] Inference request - IP: ${clientIp}, Model: ${shortModel}, Table: ${table}, PDF: ${isPdf}, Pages: ${pageCount}, Country: ${country}`);
 
   const backendForm = new FormData();
   backendForm.append("file", file);
