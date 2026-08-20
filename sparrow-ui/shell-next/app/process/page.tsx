@@ -7,6 +7,7 @@ import { ResponseCard, type ResponseState } from "@/components/response-card";
 import type { InferenceResult, SummarizeResult } from "@/app/actions/inference";
 import { log_example_selected, log_file_upload } from "@/app/actions/logging";
 import { EXAMPLE_DATA, type ExampleId } from "@/lib/examples";
+
 const EXAMPLES = [
   {
     id: "bonds_table.png",
@@ -76,6 +77,14 @@ export default function ProcessPage() {
   const isLoadingExample = useRef(false);
 
   const hasUploadedBefore = useRef(false);
+
+  // Informational-only client-side hint. The value is derived from
+  // pdfjs-dist counting in InputDocumentCard, which can occasionally be
+  // wrong (silent failure defaults to 1) or stale — it's shown to help the
+  // user before they submit, but it is never trusted for enforcement.
+  // The authoritative check happens server-side in run_inference() via
+  // pdf-lib, against the real uploaded file.
+  const showPageCountHint = isPdf && pageCount > 0;
 
   const handleFileChange = useCallback((f: File | null, pages: number) => {
     setFile(f);
@@ -210,8 +219,6 @@ export default function ProcessPage() {
     formData.append("file",            file!);
     formData.append("query",           query);
     formData.append("sparrowKey",      sparrowKey);
-    formData.append("isPdf",           String(isPdf));
-    formData.append("pageCount",       String(pageCount));
     formData.append("tableExtraction", String(tableExtraction));
     formData.append("validationOff",   String(validationOff));
     formData.append("modelName",       modelName);
@@ -300,6 +307,17 @@ export default function ProcessPage() {
             loadFile={exampleFile}
             onClear={() => setExampleFile(null)}
           />
+
+          {/* PDF page count hint — informational only, shown right after upload.
+              The server independently verifies the real page count via
+              pdf-lib in run_inference(); the over-limit warning itself is
+              already shown near the Run extraction button after submit, so
+              this stays a plain, low-key page count. */}
+          {showPageCountHint && (
+            <div className="hint" style={{ marginTop: -4 }}>
+              This PDF has {pageCount} page{pageCount !== 1 ? "s" : ""}.
+            </div>
+          )}
 
           {/* Extraction schema card */}
           <div className="card">
