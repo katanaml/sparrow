@@ -12,7 +12,7 @@ Time to retrieve answer: 16.426633964991197
 \"seller_taxid\":\"str\", \"seller_iban\":\"str\", \"client_name\":\"str\", \"client_address\":\"str\",
 \"client_taxid\":\"str\", \"invoice_items\":[{\"description\":\"str\", \"quantity\":\"float\", \"net_price\":\"float\",
 \"net_worth\":\"float\", \"vat\":\"str\", \"gross_worth\":\"float\"}], \"invoice_summary\":[{\"net_worth\":\"float\", \"vat\":\"float\", \"gross_worth\":\"float\"}]}"
---pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg"
+--pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen3.8-27B-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg"
 
 
 ./sparrow.sh "{\"invoice_no\":\"int\", \"invoice_date\":\"str\", \"seller_name\":\"str\", \"seller_address\":\"str\",
@@ -79,7 +79,7 @@ Time to retrieve answer: 47.84319644900097
 
 
 ./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"int\"}]" --pipeline "sparrow-parse" --debug --options mlx
---options mlx-community/Qwen2.5-VL-72B-Instruct-4bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png"
+--options mlx-community/Qwen3.8-27B-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png"
 
 
 ./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"int\"}]" --pipeline "sparrow-parse" --debug --options huggingface
@@ -112,7 +112,7 @@ Time to retrieve answer: 47.84319644900097
 Time to retrieve answer: 22.78700271800335
 
 
-./sparrow.sh "*" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen2.5-VL-72B-Instruct-4bit
+./sparrow.sh "*" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen3.8-27B-8bit
 --crop-size 60 --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.pdf"
 
 {
@@ -181,9 +181,9 @@ Time to retrieve answer: 199.03000262507703
 
 BONDS TABLE
 
-./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"int\"}]" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png"
+./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"int\"}]" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen3.8-27B-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png"
 
-mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit - OK
+mlx-community/Qwen3.8-27B-8bit - OK
 
 ./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"int\"}]" --pipeline "sparrow-parse" --debug --options mlx --options lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png"
 
@@ -199,9 +199,9 @@ Sparrow hints:
 
 mlx-community/gemma-4-31b-it-8bit - OK
 
-./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"str\", \"profit_loss_pct\": \"str\", \"risk_category\": \"str\"}]" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen3.6-27B-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png" --hints-file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/llm_hints_eu.json"
+./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"str\", \"profit_loss_pct\": \"str\", \"risk_category\": \"str\"}]" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen3.8-27B-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png" --hints-file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/llm_hints_eu.json"
 
-mlx-community/Qwen3.6-27B-8bit - OK
+mlx-community/Qwen3.8-27B-8bit - OK
 
 ./sparrow.sh "[{\"instrument_name\":\"str\", \"valuation\":\"str\", \"profit_loss_pct\": \"str\", \"risk_category\": \"str\"}]" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Ministral-3-14B-Instruct-2512-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png" --hints-file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/llm_hints_eu.json"
 
@@ -226,9 +226,9 @@ QUERY="instruction: calculate total portfolio valuation in EUR and weighted aver
 
 FINANCIAL STATEMENT
 
-./sparrow.sh "[{\"description_text\":\"str\", \"price_1\":\"str or null\", \"price_2\": \"str or null\"}]" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit --file-path "/Users/andrejb/Work/samples/tables/oracle_10k_2024_q1_small_table.png"
+./sparrow.sh "[{\"description_text\":\"str\", \"price_1\":\"str or null\", \"price_2\": \"str or null\"}]" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen3.8-27B-8bit --file-path "/Users/andrejb/Work/samples/tables/oracle_10k_2024_q1_small_table.png"
 
-mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit - FAIL
+mlx-community/Qwen3.8-27B-8bit - OK
 
 ./sparrow.sh "[{\"description_text\":\"str\", \"price_1\":\"str or null\", \"price_2\": \"str or null\"}]" --pipeline "sparrow-parse" --debug --options mlx --options lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit --file-path "/Users/andrejb/Work/samples/tables/oracle_10k_2024_q1_small_table.png"
 
@@ -242,9 +242,9 @@ mistral-ocr-4-0 - OK
 
 INVOICE
 
-./sparrow.sh "{\"invoice_no\":\"int\", \"invoice_date\":\"str\", \"seller_name\":\"str\", \"seller_address\":\"str\", \"seller_taxid\":\"str\", \"seller_iban\":\"str\", \"client_name\":\"str\", \"client_address\":\"str\", \"client_taxid\":\"str\", \"invoice_items\":[{\"description\":\"str\", \"quantity\":\"float\", \"net_price\":\"float\", \"net_worth\":\"float\", \"vat\":\"str\", \"gross_worth\":\"float\"}], \"invoice_summary\":[{\"net_worth\":\"float\", \"vat\":\"float\", \"gross_worth\":\"float\"}]}" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg"
+./sparrow.sh "{\"invoice_no\":\"int\", \"invoice_date\":\"str\", \"seller_name\":\"str\", \"seller_address\":\"str\", \"seller_taxid\":\"str\", \"seller_iban\":\"str\", \"client_name\":\"str\", \"client_address\":\"str\", \"client_taxid\":\"str\", \"invoice_items\":[{\"description\":\"str\", \"quantity\":\"float\", \"net_price\":\"float\", \"net_worth\":\"float\", \"vat\":\"str\", \"gross_worth\":\"float\"}], \"invoice_summary\":[{\"net_worth\":\"float\", \"vat\":\"float\", \"gross_worth\":\"float\"}]}" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen3.8-27B-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg"
 
-mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit - OK
+mlx-community/Qwen3.8-27B-8bit - OK
 
 ./sparrow.sh "{\"invoice_no\":\"int\", \"invoice_date\":\"str\", \"seller_name\":\"str\", \"seller_address\":\"str\", \"seller_taxid\":\"str\", \"seller_iban\":\"str\", \"client_name\":\"str\", \"client_address\":\"str\", \"client_taxid\":\"str\", \"invoice_items\":[{\"description\":\"str\", \"quantity\":\"float\", \"net_price\":\"float\", \"net_worth\":\"float\", \"vat\":\"str\", \"gross_worth\":\"float\"}], \"invoice_summary\":[{\"net_worth\":\"float\", \"vat\":\"float\", \"gross_worth\":\"float\"}]}" --pipeline "sparrow-parse" --debug --options mlx --options lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg"
 
@@ -252,16 +252,16 @@ lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit - OK
 
 Improved table processing:
 
-./sparrow.sh "{\"invoice_no\":\"int\", \"invoice_date\":\"str\", \"seller_name\":\"str\", \"seller_address\":\"str\", \"seller_taxid\":\"str\", \"seller_iban\":\"str\", \"client_name\":\"str\", \"client_address\":\"str\", \"client_taxid\":\"str\", \"items\":[{\"description\":\"str\", \"quantity\":\"float\", \"net_price\":\"float\", \"net_worth\":\"float\", \"vat\":\"str\", \"gross_worth\":\"float\"}]}" --pipeline "sparrow-parse" --table --table-template "sparrow_generic_table" --debug --options mlx --options mlx-community/Qwen3.6-35B-A3B-8bit --options mlx --options mlx-community/dots.ocr-bf16 --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg"
+./sparrow.sh "{\"invoice_no\":\"int\", \"invoice_date\":\"str\", \"seller_name\":\"str\", \"seller_address\":\"str\", \"seller_taxid\":\"str\", \"seller_iban\":\"str\", \"client_name\":\"str\", \"client_address\":\"str\", \"client_taxid\":\"str\", \"items\":[{\"description\":\"str\", \"quantity\":\"float\", \"net_price\":\"float\", \"net_worth\":\"float\", \"vat\":\"str\", \"gross_worth\":\"float\"}]}" --pipeline "sparrow-parse" --table --table-template "sparrow_generic_table" --debug --options mlx --options mlx-community/Qwen3.8-27B-8bit --options mlx --options mlx-community/dots.ocr-bf16 --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/invoice_1.jpg"
 
 
 
 
 BANK STATEMENT
 
-./sparrow.sh "{\"account_number\":\"int\", \"statement_date\":\"str\", \"period_covered\":\"str\", \"total_money_in\":\"str\", \"total_money_out\":\"str\", \"statement_items\":[{\"date\":\"str\", \"description\":\"str\", \"withdrawal\":\"float or null\", \"deposit\":\"float or null\", \"balance\":\"float\"}]}" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bank_statement.png"
+./sparrow.sh "{\"account_number\":\"int\", \"statement_date\":\"str\", \"period_covered\":\"str\", \"total_money_in\":\"str\", \"total_money_out\":\"str\", \"statement_items\":[{\"date\":\"str\", \"description\":\"str\", \"withdrawal\":\"float or null\", \"deposit\":\"float or null\", \"balance\":\"float\"}]}" --pipeline "sparrow-parse" --debug --options mlx --options mlx-community/Qwen3.8-27B-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bank_statement.png"
 
-mlx-community/Qwen3-VL-30B-A3B-Instruct-8bit - FAIL
+mlx-community/Qwen3.8-27B-8bit - OK
 
 ./sparrow.sh "{\"account_number\":\"int\", \"statement_date\":\"str\", \"period_covered\":\"str\", \"total_money_in\":\"str\", \"total_money_out\":\"str\", \"statement_items\":[{\"date\":\"str\", \"description\":\"str\", \"withdrawal\":\"float or null\", \"deposit\":\"float or null\", \"balance\":\"float\"}]}" --pipeline "sparrow-parse" --debug --options mlx --options lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bank_statement.png"
 
@@ -269,4 +269,4 @@ lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit - FAIL
 
 Improved table processing:
 
-./sparrow.sh "{\"account_number\":\"int\", \"statement_date\":\"str\", \"period_covered\":\"str\", \"total_money_in\":\"str\", \"total_money_out\":\"str\", \"items\":[{\"date\":\"str\", \"description\":\"str\", \"withdrawal\":\"float or null\", \"deposit\":\"float or null\", \"balance\":\"float\"}]}" --pipeline "sparrow-parse" --table --table-template "sparrow_generic_table" --debug --options mlx --options mlx-community/Qwen3.6-35B-A3B-8bit --options mlx --options mlx-community/dots.ocr-bf16 --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bank_statement.png"
+./sparrow.sh "{\"account_number\":\"int\", \"statement_date\":\"str\", \"period_covered\":\"str\", \"total_money_in\":\"str\", \"total_money_out\":\"str\", \"items\":[{\"date\":\"str\", \"description\":\"str\", \"withdrawal\":\"float or null\", \"deposit\":\"float or null\", \"balance\":\"float\"}]}" --pipeline "sparrow-parse" --table --table-template "sparrow_generic_table" --debug --options mlx --options mlx-community/Qwen3.8-27B-8bit --options mlx --options mlx-community/dots.ocr-bf16 --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bank_statement.png"
