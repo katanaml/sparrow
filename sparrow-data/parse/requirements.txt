@@ -3,15 +3,15 @@ rich
 # transformers, torch, torchvision, and numpy versions moved to setup.py extras_require to avoid conflicts
 # transformers==5.14.0
 # torchvision==0.28.0
-#torch==2.13.0
+# torch==2.13.0
 # numpy==2.5.2
 
-sentence-transformers==5.7.0
-pypdf==6.16.1
-gradio_client==2.6.0
+sentence-transformers==6.0.0
+pypdf==6.16.2
+gradio_client==2.6.1
 pdf2image==1.17.0
-# mlx==0.32.1; sys_platform == 'darwin' and platform_machine == 'arm64'
-# mlx-vlm==0.6.15; sys_platform == 'darwin' and platform_machine == 'arm64'
+# mlx==0.32.2; sys_platform == 'darwin' and platform_machine == 'arm64'
+# mlx-vlm==0.6.16; sys_platform == 'darwin' and platform_machine == 'arm64'
 # vllm==0.23.0
 ollama==0.6.2
 addict==2.4.0
