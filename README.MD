@@ -538,13 +538,13 @@ The result of 2 + 2 is:
 The stock price of the Oracle Corporation is 186.3699951171875. USD
 ```
 
-### 🧾 Table/Form Processing with Sparrow Template
+### 🧾 Table/Form Processing with custom Sparrow logic
 
 ```bash
-./sparrow.sh "*" --pipeline "sparrow-parse" \
+./sparrow.sh "{\"items\": [{\"instrument_name\":\"str\", \"quantity\": \"float\", \"valuation\":\"int\"}]}" --pipeline "sparrow-parse" \
   --debug --table --table-template "sparrow_generic_table" \
-  --options mlx --options mlx-community/Qwen3.6-35B-A3B-8bit \
-  --options mlx --options mlx-community/dots.ocr-bf16 --file-path "data/well_report.jpg"   
+  --options mlx --options mlx-community/Ministral-3-14B-Instruct-2512-8bit \
+  --options mlx --options mlx-community/dots.ocr-bf16 --file-path "data/bonds_table.png"   
 ```
 
 ### 🧾 Query Hints
