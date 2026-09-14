@@ -541,7 +541,8 @@ The stock price of the Oracle Corporation is 186.3699951171875. USD
 ### 🧾 Table/Form Processing with custom Sparrow logic
 
 ```bash
-./sparrow.sh "{\"items\": [{\"instrument_name\":\"str\", \"quantity\": \"float\", \"valuation\":\"int\"}]}" --pipeline "sparrow-parse" \
+./sparrow.sh "{\"items\": [{\"instrument_name\":\"str\", \"quantity\": \"float\", \"valuation\":\"int\"}]}" \
+  --pipeline "sparrow-parse" \
   --debug --table --table-template "sparrow_generic_table" \
   --options mlx --options mlx-community/Ministral-3-14B-Instruct-2512-8bit \
   --options mlx --options mlx-community/dots.ocr-bf16 --file-path "data/bonds_table.png"   
