@@ -207,6 +207,10 @@ mlx-community/Qwen3.8-27B-8bit - OK
 
 mlx-community/Ministral-3-14B-Instruct-2512-8bit - OK
 
+Improved table processing:
+
+./sparrow.sh "{\"items\": [{\"instrument_name\":\"str\", \"quantity\": \"float\", \"valuation\":\"int\"}]}" --pipeline "sparrow-parse" --table --table-template "sparrow_generic_table" --debug --options mlx --options mlx-community/Ministral-3-14B-Instruct-2512-8bit --options mlx --options mlx-community/dots.ocr-bf16 --file-path "/Users/andrejb/Work/katana-git/sparrow/sparrow-ml/llm/data/bonds_table.png"
+
 
 Sparrow instructor calls:
 
