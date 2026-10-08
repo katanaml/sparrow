@@ -238,6 +238,41 @@ export function ResponseCard({ state, data, durationSec, inferenceRan, hasSummar
           </div>
         </>
       )}
+
+      {/* Consulting callout — visible in every state */}
+      <div
+        className="tip"
+        style={{
+          alignItems: "center",
+          margin: 12,
+          borderColor: "hsl(var(--primary) / 0.25)",
+          background: "hsl(var(--primary) / 0.05)",
+        }}
+      >
+        <div className="tip-icon">
+          <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div style={{ flex: 1 }}>
+          <div className="tip-title">Need this on your documents?</div>
+          <div className="tip-body">
+            We set up Sparrow on your infrastructure and run a pilot.
+          </div>
+        </div>
+        <a
+          href="https://katanaml.io/consulting.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-outline btn-sm"
+          style={{ flexShrink: 0 }}
+        >
+          Talk to us
+          <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
     </div>
   );
 }
