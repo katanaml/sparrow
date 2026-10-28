@@ -84,12 +84,15 @@ export function Navbar({ version }: NavbarProps) {
 
   const isDark = resolvedTheme === "dark";
 
+  // /diligence is a standalone page: no Process / Dashboard / Feedback tabs.
+  const standalone = pathname.startsWith("/diligence");
+
   return (
     <header className="topbar">
       <div className="topbar-inner">
 
         {/* Brand */}
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", color: "inherit" }}>
+        <Link href={standalone ? "/diligence" : "/"} style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", color: "inherit" }}>
           <div className="brand-mark">
             <SparrowMark />
           </div>
@@ -100,11 +103,13 @@ export function Navbar({ version }: NavbarProps) {
         </Link>
 
         {/* Nav tabs — centered */}
+        {!standalone && (
         <nav className="nav" role="tablist">
           <Link href="/process"   data-active={active("/process")   ? "true" : undefined}><WandIcon />    <span className="nav-label">Process</span></Link>
           <Link href="/dashboard" data-active={active("/dashboard") ? "true" : undefined}><BarChartIcon /><span className="nav-label">Dashboard</span></Link>
           <Link href="/feedback"  data-active={active("/feedback")  ? "true" : undefined}><MessageIcon /> <span className="nav-label">Feedback</span></Link>
         </nav>
+        )}
 
         {/* Theme toggle */}
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
