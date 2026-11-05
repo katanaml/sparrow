@@ -1,8 +1,7 @@
 // Contract between the diligence page and its data source.
 //
-// The page only consumes a stream of `DiligenceEvent`s. Today the stream comes
-// from `mock.ts`; later the same events can be produced by an API route that
-// forwards the agent results as NDJSON, and the page does not change.
+// The page only consumes a stream of `DiligenceEvent`s, produced on the server
+// by an API route / server action that forwards the agent results as NDJSON.
 
 export type RiskLevel =
   | "clean"
@@ -98,3 +97,6 @@ export type DiligenceEvent =
   // The LLM-written narrative is ready (usually arrives after the verdict).
   | { type: "narrative"; text: string; duration_sec: number }
   | { type: "error"; message: string };
+
+// One line of the NDJSON stream: an event, or a keep-alive that the page ignores.
+export type StreamLine = DiligenceEvent | { type: "heartbeat" };

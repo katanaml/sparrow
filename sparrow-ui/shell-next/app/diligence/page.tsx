@@ -5,7 +5,7 @@ import { DiligenceClient } from "@/components/diligence-client";
 export const metadata: Metadata = {
   title: "Due diligence",
   description:
-    "Upload a company document and screen the company against VAT, legal entity, sanctions and registry sources.",
+    "Upload an invoice, order confirmation, purchase order or company profile and screen the company against VAT, legal entity, sanctions and registry sources.",
 };
 
 export default function DiligencePage() {

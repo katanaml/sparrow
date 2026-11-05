@@ -15,15 +15,53 @@
 /* Compact dropzone */
 .dd-drop { padding: 22px 16px; }
 
-/* Demo scenario select (mock only) */
-.dd-mock { margin-top: 6px; padding-top: 12px; border-top: 1px dashed hsl(var(--border)); }
-.dd-mock .label { display: flex; align-items: center; gap: 8px; }
-.dd-mock-tag {
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
-  font-size: 10px; font-weight: 500; letter-spacing: 0.02em;
-  padding: 1px 6px; border-radius: 999px;
-  background: hsl(var(--muted)); color: hsl(var(--muted-foreground));
+
+/* Example buttons */
+.dd-examples { margin-top: 6px; padding-top: 12px; border-top: 1px dashed hsl(var(--border)); display: flex; flex-direction: column; gap: 6px; }
+.dd-examples-list { display: flex; flex-direction: column; gap: 6px; }
+.dd-ex-mini {
+  display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
+  padding: 8px 10px; border-radius: 8px; cursor: pointer; font: inherit; color: inherit;
+  border: 1px solid hsl(var(--border)); background: hsl(var(--background));
+  transition: border-color .15s, background .15s;
 }
+.dd-ex-mini:hover:not(:disabled) { border-color: hsl(var(--foreground) / 0.3); }
+.dd-ex-mini:disabled { opacity: .55; cursor: not-allowed; }
+.dd-ex-mini[data-active] { border-color: hsl(var(--foreground) / 0.45); background: hsl(var(--muted, var(--border)) / 0.4); }
+.dd-ex-mini-icon { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 7px; flex: none; background: hsl(var(--muted, var(--border)) / 0.6); color: hsl(var(--muted-foreground)); }
+.dd-ex-mini[data-tone="ok"] .dd-ex-mini-icon { background: hsl(142 76% 36% / 0.12); color: hsl(142 70% 32%); }
+.dd-ex-mini[data-tone="review"] .dd-ex-mini-icon { background: hsl(38 92% 50% / 0.14); color: hsl(32 95% 40%); }
+.dark .dd-ex-mini[data-tone="ok"] .dd-ex-mini-icon { color: hsl(142 65% 60%); }
+.dark .dd-ex-mini[data-tone="review"] .dd-ex-mini-icon { color: hsl(38 92% 60%); }
+.dd-ex-mini-body { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.dd-ex-mini-name { font-size: 13px; font-weight: 600; line-height: 1.3; }
+.dd-ex-mini-sub { font-size: 11.5px; color: hsl(var(--muted-foreground)); }
+.dd-ex-mini-arrow { flex: none; color: hsl(var(--muted-foreground)); transition: transform .15s; }
+.dd-ex-mini:hover:not(:disabled) .dd-ex-mini-arrow { transform: translateX(2px); }
+@media (prefers-reduced-motion: reduce) { .dd-ex-mini, .dd-ex-mini-arrow { transition: none; } }
+
+/* Example cards (empty results panel) */
+.dd-empty-state { padding-bottom: 28px; }
+.dd-ex-section { padding: 0 20px 20px; }
+.dd-ex-title { font-size: 12px; font-weight: 500; color: hsl(var(--muted-foreground)); margin-bottom: 10px; text-align: center; }
+.dd-ex-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 900px) { .dd-ex-grid { grid-template-columns: 1fr; } }
+.dd-ex-card {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left;
+  padding: 14px; border-radius: 10px; cursor: pointer; font: inherit; color: inherit;
+  border: 1px solid hsl(var(--border)); background: hsl(var(--background));
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+.dd-ex-card:hover { border-color: hsl(var(--foreground) / 0.3); box-shadow: 0 2px 8px hsl(0 0% 0% / 0.06); transform: translateY(-1px); }
+.dd-ex-card:focus-visible { outline: 2px solid hsl(var(--ring, var(--foreground))); outline-offset: 2px; }
+.dd-ex-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; }
+.dd-ex-country { font-size: 11.5px; color: hsl(var(--muted-foreground)); }
+.dd-ex-name { font-size: 14px; font-weight: 600; margin-top: 2px; }
+.dd-ex-text { font-size: 12.5px; line-height: 1.45; color: hsl(var(--muted-foreground)); flex: 1; }
+.dd-ex-cta { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 500; margin-top: 4px; }
+.dd-ex-card:hover .dd-ex-cta svg { transform: translateX(2px); }
+.dd-ex-cta svg { transition: transform .15s; }
+@media (prefers-reduced-motion: reduce) { .dd-ex-card, .dd-ex-cta svg { transition: none; } .dd-ex-card:hover { transform: none; } }
 
 /* Appear animation */
 @keyframes dd-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }

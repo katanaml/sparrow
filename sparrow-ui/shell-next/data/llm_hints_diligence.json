@@ -1,0 +1,65 @@
+{
+  "document_hints": {
+    "document_suitable": {
+      "rule": "Set 'true' only if the document is one of these types: company profile, letterhead, business card, official registration extract, invoice (including proforma invoice), receipt, order confirmation, or purchase order - AND the company to be checked can be clearly identified (see the company_name rule) by name AND shows at least one of: a full address, a VAT/tax identification number, or a company registration number. Set 'false' if the document is a contract or agreement, credit note, bank statement, personal letter, unrelated form, blank or near-blank page, or any document that does not identify a specific company - and also 'false' if the document has several companies but it is unclear which one is the issuer or supplier. This is a separate judgement from whether extraction technically succeeded - a document can be perfectly readable and still be 'false' here.",
+      "avoid": [
+        "confusing this with extraction success/validity - a clean scan of a contract is still 'false' here",
+        "setting 'false' just because the document is an invoice, receipt, order confirmation or purchase order - these are accepted when the company is identifiable",
+        "setting 'true' just because some company name appears somewhere in the text without an address, VAT ID, or registration number nearby"
+      ]
+    },
+    "street": {
+      "rule": "Return the street name together with the house or building number exactly as written, e.g. 'Friedrichstrasse 112', 'Dietmar-Hopp-Allee 16', '100 Victoria Embankment'. Keep the number in the position the document uses (after the street name in Germany and most of Europe, before it in the UK and US). Include any suffix such as '12a' or 'Building B' only if it is part of the same address line. Do not include the postal code or city in this field.",
+      "avoid": [
+        "dropping the house number and returning only the street name",
+        "moving the number to another field or merging the postal code and city into the street",
+        "taking the address of the other party on an invoice or order - use only the address of the company returned in company_name"
+      ]
+    },
+    "country": {
+      "rule": "If the document does not state the country explicitly and it cannot be confidently inferred from the postal code or city format, derive it from the VAT ID's two-letter country prefix instead (e.g., 'DE143454214' -> Germany, 'ATU12345678' -> Austria, 'FR12345678901' -> France). Return the full country name, not the two-letter code. If neither the address nor a VAT ID with a recognizable prefix is present, set to null.",
+      "avoid": [
+        "leaving country null when a VAT ID with a valid country prefix is present elsewhere in the extracted data",
+        "guessing a country from company name or language alone with no postal/VAT evidence",
+        "taking the country from the other party on an invoice or order"
+      ]
+    },
+    "vat_id": {
+      "rule": "Scan the entire document, including footer and registration details, for the company's VAT/tax identification number. Labels: 'VAT ID', 'VAT No.', 'USt-IdNr.', 'Tax ID', 'TIN', plus country code prefix (e.g., DE, AT, FR). Not every company has one (e.g., US companies typically do not) - set to null rather than guessing. Return it with its country prefix and without spaces or punctuation (e.g. 'DE 143 454 214' -> 'DE143454214'). On invoices and orders, both parties may print a VAT ID: return only the one belonging to the company returned in company_name (usually in the issuer's footer or header), never the customer's.",
+      "avoid": [
+        "confusing this with the company registration number (HRB, Company No., SIREN, OGRN) - they often appear near each other and are different identifiers",
+        "inventing or completing a VAT number that is not printed on the document - a missing or partly legible number must be null",
+        "dropping the country prefix when the document prints it",
+        "returning the VAT ID of the customer or buyer on an invoice or order"
+      ]
+    },
+    "registration_number": {
+      "rule": "Scan the entire document, especially the footer and any registration/incorporation details block, for the company's official business registration number - the identifier assigned by the national company register or incorporation authority, distinct from any VAT/tax number. Labels vary by country: 'Handelsregisternummer'/'HRB'/'HRA' (Germany), 'Companies House number'/'Company registration number'/'CRN' (UK), 'EIN'/'Employer Identification Number' or state incorporation number (US), 'SIREN'/'SIRET' (France), 'ABN'/'ACN' (Australia), 'CVR' (Denmark), 'KVK' (Netherlands), 'Registration No.', 'Company No.', 'Reg. No.'. Often appears near the company's registered court/authority (e.g., 'Amtsgericht Mannheim, HRB 719915' -> registration_number is 'HRB 719915'). On invoices and orders return only the registration number of the company returned in company_name.",
+      "avoid": [
+        "confusing this with the VAT/tax ID - they are different identifiers and often both appear near each other in a footer",
+        "leaving this null when a registration authority name and number both appear together, even if not explicitly labeled 'registration number'",
+        "returning the registration number of the customer or buyer"
+      ]
+    },
+    "company_name": {
+      "rule": "Return the legal name of the ONE company to be checked, including its legal form exactly as written (e.g. 'SAP SE', 'Nordlicht Logistik GmbH', 'Greyline Software Ltd'). Which company that is depends on the document type: for an invoice, proforma invoice or order confirmation it is the SELLER / SUPPLIER who issued the document (labels: 'From', 'Seller', 'Supplier', 'Lieferant', 'Vendor'; usually the letterhead or logo at the top, and the party whose bank details for payment and whose VAT ID appear in the footer). For a purchase order it is the SUPPLIER / VENDOR the order is addressed to, NOT the buyer who issued the order. For a company profile, letterhead, business card or registration extract it is the company the document is about.",
+      "avoid": [
+        "returning the customer on an invoice - ignore parties labelled 'Bill to', 'Invoice to', 'Ship to', 'Deliver to', 'Customer', 'Buyer', 'Sold to', 'Rechnungsempfaenger', 'Kunde'",
+        "returning the issuer of a purchase order - the buyer who writes the order is not the company to check",
+        "dropping the legal form (GmbH, Ltd, SE, LLC, S.A.) or inventing one that is not printed"
+      ]
+    },
+    "postal_code": {
+      "rule": "Return the postal code of the company returned in company_name, exactly as written, taken from that company's own address block.",
+      "avoid": [
+        "taking it from the customer, buyer or delivery address on an invoice or order - use only the address of the company returned in company_name"
+      ]
+    },
+    "city": {
+      "rule": "Return the city of the company returned in company_name, exactly as written, taken from that company's own address block.",
+      "avoid": [
+        "taking it from the customer, buyer or delivery address on an invoice or order - use only the address of the company returned in company_name"
+      ]
+    }
+  }
+}

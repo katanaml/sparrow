@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import {
+  ArrowRight,
   CircleAlert,
   CircleCheck,
   ExternalLink,
@@ -14,7 +15,7 @@ import {
   ShieldQuestionMark,
 } from "lucide-react";
 import { UploadCard } from "./diligence-upload-card";
-import { DEFAULT_MOCK_SCENARIO, MOCK_SCENARIOS, runMockDiligence } from "@/lib/diligence-mock";
+import { DILIGENCE_EXAMPLES, runExample } from "@/lib/diligence-examples";
 import {
   CHECK_META,
   CHECK_ORDER,
@@ -23,12 +24,10 @@ import {
   type DiligenceEvent,
   type ExtractedProfile,
   type RiskLevel,
+  type StreamLine,
   type WebRegistry,
   type WebRegistryField,
 } from "@/lib/diligence-types";
-
-// While the API is not connected, results come from mock.ts.
-const USE_MOCK = true;
 
 // ─── State ────────────────────────────────────────────────────────────────
 type Phase = "idle" | "extracting" | "checking" | "summarizing" | "done" | "error";
@@ -297,16 +296,35 @@ const VERDICT_META: Record<RiskLevel, { title: string; tone: "ok" | "review" | "
   not_assessable: { title: "Not assessable", tone: "muted", Icon: ShieldQuestionMark },
 };
 
-function VerdictCard({ state }: { state: State }) {
+function VerdictCard({ state, onExample }: { state: State; onExample: (id: string, label: string) => void }) {
   const { phase, verdict, narrative, rows, planned, profile } = state;
 
   if (phase === "idle") {
     return (
       <div className="card">
-        <div className="empty">
+        <div className="empty dd-empty-state">
           <div className="empty-icon"><ShieldCheck size={20} /></div>
           <h3>No results yet</h3>
-          <p>Upload a company document and run the checks. Results appear check by check as they complete.</p>
+          <p>Upload an invoice, order confirmation, purchase order, receipt or company profile and run the checks. Results appear check by check as they complete.</p>
+        </div>
+        <div className="dd-ex-section">
+          <div className="dd-ex-title">Or explore an example</div>
+          <div className="dd-ex-grid">
+            {DILIGENCE_EXAMPLES.map((ex) => {
+              const meta = VERDICT_META[ex.risk_level];
+              return (
+                <button key={ex.id} type="button" className="dd-ex-card" onClick={() => onExample(ex.id, ex.label)}>
+                  <span className="dd-ex-head">
+                    <span className="dd-badge" data-tone={meta.tone}>{meta.title}</span>
+                    <span className="dd-ex-country">{ex.profile.country}</span>
+                  </span>
+                  <span className="dd-ex-name">{ex.label}</span>
+                  <span className="dd-ex-text">{ex.highlight}</span>
+                  <span className="dd-ex-cta">View example <ArrowRight size={13} /></span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     );
@@ -402,8 +420,8 @@ function VerdictCard({ state }: { state: State }) {
 // ─── Page ─────────────────────────────────────────────────────────────────
 export function DiligenceClient() {
   const [file, setFile] = useState<File | null>(null);
-  const [scenario, setScenario] = useState(DEFAULT_MOCK_SCENARIO);
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [exampleLabel, setExampleLabel] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
 
@@ -414,7 +432,28 @@ export function DiligenceClient() {
   const handleFile = useCallback((f: File | null) => {
     abortRef.current?.abort();
     dispatch({ type: "reset" });
+    setExampleLabel(null);
     setFile(f);
+  }, []);
+
+  const handleExample = useCallback(async (id: string, label: string) => {
+    abortRef.current?.abort();
+    const ac = new AbortController();
+    abortRef.current = ac;
+    setExampleLabel(label);
+    dispatch({ type: "start" });
+
+    if (window.innerWidth <= 1100) {
+      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    try {
+      for await (const ev of runExample(id, ac.signal)) dispatch(ev);
+    } catch (err) {
+      if ((err as Error).name !== "AbortError") {
+        dispatch({ type: "error", message: String(err) });
+      }
+    }
   }, []);
 
   const handleRun = useCallback(async () => {
@@ -422,6 +461,7 @@ export function DiligenceClient() {
     abortRef.current?.abort();
     const ac = new AbortController();
     abortRef.current = ac;
+    setExampleLabel(null);
     dispatch({ type: "start" });
 
     // On narrow screens the results sit below the form.
@@ -430,13 +470,50 @@ export function DiligenceClient() {
     }
 
     try {
-      for await (const ev of runMockDiligence(scenario, ac.signal)) dispatch(ev);
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch("/api/diligence", {
+        method: "POST",
+        body: formData,
+        signal: ac.signal,
+      });
+      if (!response.ok || !response.body) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let sawEnd = false;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        let newlineIndex;
+        while ((newlineIndex = buffer.indexOf("\n")) !== -1) {
+          const line = buffer.slice(0, newlineIndex).trim();
+          buffer = buffer.slice(newlineIndex + 1);
+          if (!line) continue;
+
+          const ev = JSON.parse(line) as StreamLine;
+          if (ev.type === "heartbeat") continue;
+          if (ev.type === "narrative" || ev.type === "error") sawEnd = true;
+          dispatch(ev);
+        }
+      }
+
+      if (!sawEnd && !ac.signal.aborted) {
+        dispatch({ type: "error", message: "The run ended unexpectedly. Please try again." });
+      }
     } catch (err) {
       if ((err as Error).name !== "AbortError") {
-        dispatch({ type: "error", message: String(err) });
+        dispatch({ type: "error", message: "The due diligence service is not reachable. Please try again." });
       }
     }
-  }, [file, scenario]);
+  }, [file]);
 
   const showChecks = state.phase !== "idle";
   const showIdentity = state.profile?.document_suitable;
@@ -447,8 +524,8 @@ export function DiligenceClient() {
         <div>
           <h1>Due diligence</h1>
           <p>
-            Upload a company profile or letterhead. Sparrow reads the company identity and screens it against
-            VAT, entity, sanctions and registry sources.
+            Upload an invoice, order confirmation, purchase order, receipt or company profile. Sparrow reads the
+            company identity and screens it against VAT, entity, sanctions and registry sources.
           </p>
         </div>
       </div>
@@ -465,23 +542,36 @@ export function DiligenceClient() {
                 {running ? "Running…" : state.phase === "idle" ? "Run due diligence" : "Run again"}
               </button>
               <div className="hint">
-                Checks run one after another, and each result appears as soon as it is ready.
+                Usually takes 1–2 minutes. Results appear as each check completes.
               </div>
-
-              {USE_MOCK && (
-                <div className="dd-mock">
-                  <label className="label">Demo scenario <span className="dd-mock-tag">mock data</span></label>
-                  <select
-                    className="select"
-                    value={scenario}
-                    onChange={(e) => setScenario(e.target.value)}
-                    disabled={running}
-                  >
-                    {MOCK_SCENARIOS.map((s) => (
-                      <option key={s.id} value={s.id}>{s.label}</option>
-                    ))}
-                  </select>
+              {state.phase !== "idle" && (
+              <div className="dd-examples">
+                <span className="hint">Or explore an example</span>
+                <div className="dd-examples-list">
+                  {DILIGENCE_EXAMPLES.map((ex) => {
+                    const meta = VERDICT_META[ex.risk_level];
+                    const active = exampleLabel === ex.label;
+                    return (
+                      <button
+                        key={ex.id}
+                        type="button"
+                        className="dd-ex-mini"
+                        data-active={active || undefined}
+                        data-tone={meta.tone}
+                        onClick={() => handleExample(ex.id, ex.label)}
+                        disabled={running}
+                      >
+                        <span className="dd-ex-mini-icon"><meta.Icon size={15} /></span>
+                        <span className="dd-ex-mini-body">
+                          <span className="dd-ex-mini-name">{ex.label}</span>
+                          <span className="dd-ex-mini-sub">{ex.profile.country} · {meta.title}</span>
+                        </span>
+                        <ArrowRight size={14} className="dd-ex-mini-arrow" />
+                      </button>
+                    );
+                  })}
                 </div>
+              </div>
               )}
             </div>
           </div>
@@ -501,7 +591,20 @@ export function DiligenceClient() {
 
         {/* RIGHT — results */}
         <div className="stack" ref={resultsRef} style={{ scrollMarginTop: 76 }}>
-          <VerdictCard state={state} />
+          {exampleLabel && state.phase !== "idle" && (
+            <div className="tip dd-appear">
+              <div className="tip-icon"><Info size={14} /></div>
+              <div>
+                <div className="tip-title">Example: {exampleLabel}</div>
+                <div className="tip-body">
+                  A saved result from a real run on a sample company profile, not your document. Upload your own
+                  document to run the checks.
+                </div>
+              </div>
+            </div>
+          )}
+
+          <VerdictCard state={state} onExample={handleExample} />
 
           {showChecks && (
             <div className="card dd-appear">

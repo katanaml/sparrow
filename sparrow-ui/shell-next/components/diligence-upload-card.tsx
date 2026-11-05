@@ -60,7 +60,7 @@ export function UploadCard({
       <div className="card-header">
         <div>
           <div className="card-title"><Upload size={14} /> Company document</div>
-          <div className="card-desc">Company profile, letterhead or registration extract · PDF or image · max 5 MB</div>
+          <div className="card-desc">Invoice, order confirmation, purchase order, receipt or company profile · PDF or image · max 5 MB</div>
         </div>
         {file && !locked && (
           <button className="btn btn-ghost btn-icon btn-sm" onClick={clear} title="Remove file">
