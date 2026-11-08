@@ -499,7 +499,10 @@ export function DiligenceClient() {
           if (!line) continue;
 
           const ev = JSON.parse(line) as StreamLine;
-          if (ev.type === "heartbeat") continue;
+          if (ev.type === "heartbeat") {
+            console.log(`[${new Date().toISOString()}] heartbeat received`);
+            continue;
+          }
           if (ev.type === "narrative" || ev.type === "error") sawEnd = true;
           dispatch(ev);
         }
