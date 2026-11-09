@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { Navbar } from "@/components/navbar";
+import { JsonLd } from "@/components/json-ld";
+import { GITHUB_URL, PUBLISHER_URL, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const geist = Geist({
@@ -18,9 +20,23 @@ const geistMono = Geist_Mono({
 
 const version = process.env.VERSION ?? "0.5.0";
 
+const DESCRIPTION =
+  "Open-source, privacy-first platform for structured data extraction from invoices, statements, lab results and other documents, powered by local vision AI.";
+
 export const metadata: Metadata = {
-  title: "Sparrow",
-  description: "Structured data extraction with local Vision AI",
+  metadataBase: new URL(SITE_URL),
+  title: { default: "Sparrow: Document Data Extraction with Local AI", template: "%s | Sparrow" },
+  description: DESCRIPTION,
+  applicationName: SITE_NAME,
+  publisher: "Katana ML",
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    title: "Sparrow: Document Data Extraction with Local AI",
+    description: DESCRIPTION,
+    locale: "en_US",
+  },
+  twitter: { card: "summary_large_image" },
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
@@ -39,6 +55,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <body>
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: SITE_NAME,
+            url: SITE_URL,
+            publisher: { "@type": "Organization", name: "Katana ML", url: PUBLISHER_URL, sameAs: [GITHUB_URL] },
+          }}
+        />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navbar version={version} />
           <main className="app">{children}</main>

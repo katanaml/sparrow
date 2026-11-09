@@ -1,0 +1,13 @@
+# Sparrow
+
+> Sparrow is an open-source, privacy-first platform for structured data extraction from documents (invoices, bank statements, lab results, tables) using local vision AI. Built by Katana ML.
+
+## Tools
+
+- [Document processing](https://sparrow.katanaml.io/process): upload a document or pick an example and get structured JSON back.
+- [Due diligence](https://sparrow.katanaml.io/diligence): upload an invoice, order confirmation, purchase order, receipt or company profile. Sparrow reads the company identity and screens it against the US Consolidated Screening List (OFAC SDN and other US lists), the EU Consolidated Financial Sanctions List, EU VAT validation (VIES), the GLEIF LEI registry, UK Companies House and public web pages. The result is an informational screening aid, not a legal compliance determination.
+
+## Source and contact
+
+- [Sparrow on GitHub](https://github.com/katanaml/sparrow): open-source code for the extraction platform.
+- [Katana ML](https://katanaml.io): publisher.
