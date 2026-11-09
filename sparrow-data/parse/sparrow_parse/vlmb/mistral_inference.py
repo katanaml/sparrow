@@ -11,6 +11,10 @@ class MistralInference(ModelInference):
         A class for performing inference using the Mistral cloud.
         """
 
+    # Regional endpoint. Default is the EU endpoint; override with MISTRAL_SERVER_URL.
+    # Global (no location commitment): https://api.mistral.ai
+    DEFAULT_SERVER_URL = "https://api.eu.mistral.ai"
+
     def __init__(self, model_name):
         """
         Initialize the Mistral inference client.
@@ -20,8 +24,31 @@ class MistralInference(ModelInference):
         """
         api_key = os.environ["MISTRAL_API_KEY"]
         self.model_name = model_name
-        self.client = Mistral(api_key=api_key)
+        self.server_url = os.environ.get("MISTRAL_SERVER_URL", self.DEFAULT_SERVER_URL)
+        self.client = Mistral(api_key=api_key, server_url=self.server_url)
         print("Mistral API key loaded for model: " + self.model_name)
+        print("Mistral endpoint: " + self.server_url)
+
+
+    @staticmethod
+    def _usage_stats(ocr_response=None, chat_response=None):
+        """
+        Collect usage numbers from the OCR and chat responses.
+        Printed for now; the returned dict can later be passed on for DB logging.
+
+        :param ocr_response: Response from client.ocr.process, if an OCR step ran.
+        :param chat_response: Response from client.chat.complete, if a chat step ran.
+        :return: Dict with OCR pages processed and chat token counts (None when not available).
+        """
+        stats = {}
+        if ocr_response is not None:
+            usage_info = getattr(ocr_response, "usage_info", None)
+            stats["ocr_pages_processed"] = getattr(usage_info, "pages_processed", None) if usage_info is not None else None
+        if chat_response is not None:
+            usage = getattr(chat_response, "usage", None)
+            stats["prompt_tokens"] = getattr(usage, "prompt_tokens", None) if usage is not None else None
+            stats["completion_tokens"] = getattr(usage, "completion_tokens", None) if usage is not None else None
+        return stats
 
 
     def process_response(self, output_text):
@@ -121,6 +148,7 @@ class MistralInference(ModelInference):
             response_format={"type": "json_object"}
         )
 
+        print("Mistral usage:", self._usage_stats(chat_response=chat_response))
         print("Inference completed successfully")
         return self.process_response(chat_response.choices[0].message.content)
 
@@ -172,7 +200,7 @@ class MistralInference(ModelInference):
             prompt = messages
 
             chat_response = self.client.chat.complete(
-                model="mistral-small-latest",
+                model="mistral-small-2603",
                 messages=[
                     {
                         "role": "user",
@@ -181,6 +209,8 @@ class MistralInference(ModelInference):
                 ],
                 response_format={"type": "json_object"}
             )
+
+            print("Mistral usage:", self._usage_stats(ocr_response=ocr_response, chat_response=chat_response))
 
             # Process the raw response
             processed_response = self.process_response(chat_response.choices[0].message.content)
