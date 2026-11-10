@@ -2,7 +2,7 @@
 
 ## [v0.7.0] - 2026-11-10
 
-# Due diligence, discoverability and MLX-VLM upgrade
+## Due diligence, discoverability and MLX-VLM upgrade
 
 See release notes.
 
