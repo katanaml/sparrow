@@ -1,5 +1,11 @@
 # ChangeLog
 
+## [v0.7.0] - 2026-11-10
+
+# Due diligence, discoverability and MLX-VLM upgrade
+
+See release notes.
+
 ## [v0.6.0] - 2026-06-05
 
 ## UI improvements
