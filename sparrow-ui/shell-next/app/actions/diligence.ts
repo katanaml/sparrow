@@ -25,8 +25,7 @@ const PROTECTED_ACCESS = process.env.PROTECTED_ACCESS !== "false";
 const AGENT_URL = (process.env.DILIGENCE_AGENT_URL ?? "").replace(/\/+$/, "");
 const HINTS_PATH = process.env.DILIGENCE_HINTS_PATH ?? path.join(process.cwd(), "data", "llm_hints_diligence.json");
 const API_PREFIX = "/api/v1/sparrow-agents";
-const PDF_PAGE_LIMIT_WITH_KEY = 10;
-const PDF_PAGE_LIMIT_FREE_TIER = 3;
+const PDF_PAGE_LIMIT = 1; // one page: the page that shows the company details
 const MAX_FILE_BYTES = 5 * 1024 * 1024;
 const ACCEPTED_TYPES = ["image/png", "image/jpeg", "image/tiff", "image/webp", "application/pdf"];
 const LONG_TIMEOUT_MS = 10 * 60 * 1000; // 10 minutes
@@ -131,7 +130,8 @@ async function agentStep(
       body: JSON.stringify({
         agent_name: "diligence",
         sparrow_key: ctx.sparrowKey,   // never exposed to client
-        input_data: { step, ...fields },
+        // client_ip / country let the agent log instructor calls (web research, summary) against the end user
+        input_data: { step, ...fields, client_ip: ctx.clientIp, country: ctx.country },
       }),
       signal: AbortSignal.timeout(timeoutMs),
     });
@@ -221,6 +221,11 @@ async function prepareRun(formData: FormData): Promise<RunContext | { error: str
   const pdfInfo = await resolveActualPdfInfo(file);
   if ("error" in pdfInfo) return { error: pdfInfo.error };
   const { isPdf, pageCount } = pdfInfo;
+  if (isPdf && pageCount > PDF_PAGE_LIMIT) {
+    return {
+      error: `Please upload a single page: the page that shows the company details (usually the first page of an invoice). This PDF has ${pageCount} pages.`,
+    };
+  }
 
   // ── Key resolution - once per run; the key stays on the server ─────────
   const headersList = await headers();
@@ -234,21 +239,11 @@ async function prepareRun(formData: FormData): Promise<RunContext | { error: str
       if (!valid) {
         return { error: "Invalid Sparrow key. Please check your key or leave empty for limited usage." };
       }
-      if (isPdf && pageCount > PDF_PAGE_LIMIT_WITH_KEY) {
-        return {
-          error: `PDFs are limited to maximum ${PDF_PAGE_LIMIT_WITH_KEY} pages even with a valid Sparrow key. This document has ${pageCount} pages.`,
-        };
-      }
     } else {
       const restrictedKey = await get_restricted_key(clientIp);
       if (!restrictedKey) {
         return {
           error: "Rate limit exceeded or no available keys. Please obtain a Sparrow key by emailing abaranovskis@redsamuraiconsulting.com.",
-        };
-      }
-      if (isPdf && pageCount > PDF_PAGE_LIMIT_FREE_TIER) {
-        return {
-          error: `Free tier is limited to PDFs with maximum ${PDF_PAGE_LIMIT_FREE_TIER} pages. This document has ${pageCount} pages.`,
         };
       }
       sparrowKey = restrictedKey;
