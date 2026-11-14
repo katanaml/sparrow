@@ -47,6 +47,7 @@ interface State {
   verdict: { risk_level: RiskLevel; reason?: string } | null;
   narrative: { text: string; duration_sec: number } | null;
   error: string | null;
+  errorTitle: string | null;
 }
 
 const emptyRows = (): Record<CheckId, RowState> =>
@@ -61,6 +62,7 @@ const initialState: State = {
   verdict: null,
   narrative: null,
   error: null,
+  errorTitle: null,
 };
 
 type Action = { type: "start" } | { type: "reset" } | DiligenceEvent;
@@ -109,7 +111,7 @@ function reducer(state: State, action: Action): State {
     case "narrative":
       return { ...state, narrative: { text: action.text, duration_sec: action.duration_sec }, phase: "done" };
     case "error":
-      return { ...state, error: action.message, phase: "error" };
+      return { ...state, error: action.message, errorTitle: (action as { title?: string }).title ?? null, phase: "error" };
   }
 }
 
@@ -335,7 +337,7 @@ function VerdictCard({ state, onExample }: { state: State; onExample: (id: strin
       <div className="tip" style={{ borderColor: "hsl(var(--destructive) / 0.25)", background: "hsl(var(--destructive) / 0.05)" }}>
         <div className="tip-icon" style={{ color: "hsl(var(--destructive))" }}><CircleAlert size={14} /></div>
         <div>
-          <div className="tip-title" style={{ color: "hsl(var(--destructive))" }}>Something went wrong</div>
+          <div className="tip-title" style={{ color: "hsl(var(--destructive))" }}>{state.errorTitle ?? "Something went wrong"}</div>
           <div className="tip-body">{state.error}</div>
         </div>
       </div>

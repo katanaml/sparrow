@@ -198,7 +198,7 @@ function toCheckResult(id: CheckId, agentResult: AgentResult, findings: Finding[
 }
 
 // ─── Preparation: validate the upload and resolve the key ──────────────────
-async function prepareRun(formData: FormData): Promise<RunContext | { error: string }> {
+async function prepareRun(formData: FormData): Promise<RunContext | { error: string; title?: string }> {
   const file = formData.get("file") as File | null;
   let sparrowKey = ((formData.get("sparrowKey") as string) ?? "").trim();
 
@@ -223,7 +223,8 @@ async function prepareRun(formData: FormData): Promise<RunContext | { error: str
   const { isPdf, pageCount } = pdfInfo;
   if (isPdf && pageCount > PDF_PAGE_LIMIT) {
     return {
-      error: `Please upload a single page: the page that shows the company details (usually the first page of an invoice). This PDF has ${pageCount} pages.`,
+      title: "Single page only",
+      error: `Only single-page documents are supported. This PDF has ${pageCount} pages. Please upload just the page that shows the company details (usually the first page of an invoice).`,
     };
   }
 
@@ -315,7 +316,8 @@ async function extract(ctx: RunContext): Promise<{ extraction: AgentResult & { e
 export async function run_diligence(formData: FormData, emit: Emit): Promise<void> {
   const ctx = await prepareRun(formData);
   if ("error" in ctx) {
-    emit({ type: "error", message: ctx.error });
+    // `title` is optional: the page shows a specific heading instead of the generic one.
+    emit({ type: "error", message: ctx.error, ...("title" in ctx && ctx.title ? { title: ctx.title } : {}) } as DiligenceEvent);
     return;
   }
 
