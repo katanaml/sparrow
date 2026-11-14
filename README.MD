@@ -15,14 +15,14 @@ Sparrow is an API-first platform for enterprise document intelligence. It combin
 </p>
 
 <p align="center">
-  <strong>🚀 <a href="https://sparrow.katanaml.io">Try Sparrow Online</a> | 📖 <a href="#-quickstart">Quick Start</a> | 🛠️ <a href="#️-installation">Installation</a> | 📚 <a href="#-examples">Examples</a> | 🤖 <a href="#-sparrow-agent">Agents</a></strong>
+  <strong>🚀 <a href="https://sparrow.katanaml.io/process">Try Sparrow Online</a> | 🔍 <a href="https://sparrow.katanaml.io/diligence">Due Diligence</a> | 📖 <a href="#-quickstart">Quick Start</a> | 🛠️ <a href="#️-installation">Installation</a> | 📚 <a href="#-examples">Examples</a> | 🤖 <a href="#-sparrow-agent">Agents</a></strong>
 </p>
 
 ---
 
 ## 🌟 Sparrow
 
-[🚀 Try Sparrow Online](https://sparrow.katanaml.io)
+[🚀 Try Sparrow Online](https://sparrow.katanaml.io/process) · [🔍 Try Due Diligence](https://sparrow.katanaml.io/diligence)
 
 Production-ready structured data extraction powered by ML, LLMs & Vision LLMs.
 Turn invoices, receipts, statements, forms and images into clean structured data.
@@ -46,6 +46,12 @@ The web UI provides a visual interface on top of the same API:
 - **Real-time Processing**: See results instantly
 - **Data Query**: JSON based schema for data query
 - **Structured Output**: JSON structured output
+
+### 🔍 Company Due Diligence
+
+[**Due Diligence**](https://sparrow.katanaml.io/diligence) is an agent built on Sparrow. Upload a single-page invoice, order confirmation, purchase order, receipt or company profile. Sparrow reads the company identity, then the agent screens it against VAT (VIES), LEI (GLEIF), UK Companies House, OFAC / US Consolidated Screening List, EU sanctions and public web sources. It returns a risk level with a plain-language summary.
+
+It shows how Sparrow's extraction, instruction calling and agent workflows work together in one flow. Results are an informational screening aid, not a legal compliance determination.
 
 ## 📑 Table of Contents
 
