@@ -16,10 +16,35 @@ class VLLMExtractor(object):
 
     def run_inference(self, model_inference_instance, input_data, tables_only=False,
                       generic_query=False, crop_size=None, apply_annotation=False, ocr_callback=None,
-                      debug_dir=None, debug=False, mode=None):
+                      debug_dir=None, debug=False, mode=None, return_usage=False):
         """
         Main entry point for processing input data using a model inference instance.
         Handles generic queries, PDFs, and table extraction.
+
+        Returns (results, num_pages). With return_usage=True returns (results, num_pages, usage), where usage
+        is the list of per-call usage dicts of backends that track it (Mistral); other backends give [].
+        """
+        # Backends without usage tracking (MLX, vLLM, ...) simply don't have these methods
+        reset_usage_log = getattr(model_inference_instance, "reset_usage_log", None)
+        if reset_usage_log:
+            reset_usage_log()
+
+        results, num_pages = self._run_inference(model_inference_instance, input_data, tables_only,
+                                                 generic_query, crop_size, apply_annotation, ocr_callback,
+                                                 debug_dir, debug, mode)
+
+        if not return_usage:
+            return results, num_pages
+
+        get_usage_log = getattr(model_inference_instance, "get_usage_log", None)
+        usage = get_usage_log() if get_usage_log else []
+        return results, num_pages, usage
+
+
+    def _run_inference(self, model_inference_instance, input_data, tables_only, generic_query, crop_size,
+                       apply_annotation, ocr_callback, debug_dir, debug, mode):
+        """
+        Processes the input data (text-only, PDF or image) and returns (results, num_pages).
         """
         if generic_query:
             input_data[0]["text_input"] = "retrieve document data. return response in JSON format"
@@ -241,13 +266,14 @@ if __name__ == "__main__":
     # config = {
     #     "method": "mlx",  # Could be 'huggingface', 'mlx', 'ollama', 'mistral' or 'local_gpu'
     #     # "model_name": "lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit",
+    #     "model_name": "mlx-community/Ministral-3-14B-Instruct-2512-8bit",
     #     # "model_name": "deepseek-ocr:latest",
     #     # "model_name": "mlx-community/DeepSeek-OCR-2-bf16",
     #     # "model_name": "mlx-community/dots.ocr-bf16",
-    #     "model_name": "mlx-community/Qwen3.8-27B-8bit",
+    #     # "model_name": "mlx-community/Qwen3.8-27B-8bit",
     #     # "model_name": "mlx-community/gemma-4-31b-it-8bit",
-    #     # "model_name": "mistral-ocr-latest",
-    #     # "model_name": "mistral-small-latest",
+    #     # "model_name": "mistral-ocr-4-1",
+    #     # "model_name": "mistral-small-2603",
     #     # "hf_space": "katanaml/sparrow-qwen2-vl-7b",
     #     # "hf_token": os.getenv('HF_TOKEN'),
     #     # Additional fields for local GPU inference
@@ -268,7 +294,8 @@ if __name__ == "__main__":
     #         # "file_path": "sparrow_parse/images/invoice_1.jpg",
     #         # "file_path": "sparrow_parse/images/lab_results.png",
     #         # "file_path": "sparrow_parse/images/oracle_10k_2024_q1_small.jpg",
-    #         "text_input": "retrieve all data. return response in JSON format"
+    #         # "text_input": "retrieve all data. return response in JSON format"
+    #         "text_input": "retrieve [{\"instrument_name\":\"str\", \"valuation\":\"int\"}]. return response in JSON format"
     #         # "text_input": "\n<|grounding|>Convert the document to markdown."
     #     }
     # ]
@@ -295,19 +322,20 @@ if __name__ == "__main__":
     # # ]
     #
     # # Now you can run inference without knowing which implementation is used
-    # results_array, num_pages = extractor.run_inference(model_inference_instance, input_data, tables_only=False,
-    #                                                    generic_query=False,
-    #                                                    crop_size=0,
-    #                                                    apply_annotation=False,
-    #                                                    ocr_callback=ocr_callback,
-    #                                                    debug_dir=None,
-    #                                                    debug=True,
-    #                                                    mode=None)
+    # results_array, num_pages, usage = extractor.run_inference(model_inference_instance, input_data, tables_only=False,
+    #                                                           generic_query=False,
+    #                                                           crop_size=0,
+    #                                                           apply_annotation=False,
+    #                                                           ocr_callback=ocr_callback,
+    #                                                           debug_dir=None,
+    #                                                           debug=True,
+    #                                                           mode=None,
+    #                                                           return_usage=True)
     #
     # for i, result in enumerate(results_array):
     #     print(f"Result for page {i + 1}:", result)
     # print(f"Number of pages: {num_pages}")
+    # print("Usage:", usage)
     #
     # end_time = time.time()
     # print(f"Execution time: {end_time - start_time:.2f} seconds")
-

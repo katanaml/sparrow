@@ -1,9 +1,9 @@
 python-multipart
 rich
 typer[all]
-fastapi==0.162.2
+fastapi==0.163.1
 uvicorn[standard]
-sparrow-parse[mlx]==1.6.0
+sparrow-parse[mlx]==1.6.1
 genson==1.4.0
 jsonschema==4.26.0
 python-dotenv
