@@ -13,6 +13,7 @@ import time
 import tempfile
 import os
 import db_pool
+import usage_tracker
 from contextlib import asynccontextmanager
 
 
@@ -227,6 +228,9 @@ async def inference(
             source='UI'
         )
 
+        # Collect backend usage statistics (e.g. Mistral tokens) for this request
+        usage_tracker.start()
+
         # Start timing
         start_time = time.time()
 
@@ -238,8 +242,13 @@ async def inference(
         # Calculate duration
         duration = time.time() - start_time
 
-        # Update the record with actual duration
-        db_pool.update_inference_duration(log_id, duration)
+        # Summed token counts of all Mistral chat calls in this request (None for backends without token stats)
+        usage_summary = usage_tracker.summarize()
+        prompt_tokens = usage_summary["prompt_tokens"] if usage_summary else None
+        completion_tokens = usage_summary["completion_tokens"] if usage_summary else None
+
+        # Update the record with actual duration and token counts (when available)
+        db_pool.update_inference_duration(log_id, duration, prompt_tokens, completion_tokens)
     except ValueError as e:
         raise HTTPException(status_code=418, detail=str(e))
 
@@ -315,6 +324,9 @@ async def instruction_inference(
             source='UI'
         )
 
+        # Collect backend usage statistics (e.g. Mistral tokens) for this request
+        usage_tracker.start()
+
         # Start timing
         start_time = time.time()
 
@@ -326,8 +338,13 @@ async def instruction_inference(
         # Calculate duration
         duration = time.time() - start_time
 
-        # Update the record with actual duration
-        db_pool.update_inference_duration(log_id, duration)
+        # Summed token counts of all Mistral chat calls in this request (None for backends without token stats)
+        usage_summary = usage_tracker.summarize()
+        prompt_tokens = usage_summary["prompt_tokens"] if usage_summary else None
+        completion_tokens = usage_summary["completion_tokens"] if usage_summary else None
+
+        # Update the record with actual duration and token counts (when available)
+        db_pool.update_inference_duration(log_id, duration, prompt_tokens, completion_tokens)
     except ValueError as e:
         raise HTTPException(status_code=418, detail=str(e))
 

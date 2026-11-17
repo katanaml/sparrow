@@ -21,15 +21,18 @@ from .sparrow_utils import (
 from .sparrow_experimental import process_ocr_data
 import concurrent.futures
 from pipelines.interface import Pipeline
-
+import usage_tracker
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 
 
-def subprocess_inference(config, input_data, tables_only, crop_size, query_all_data, apply_annotation, ocr_callback, debug_dir, debug, model_cache=None):
+def subprocess_inference(config, input_data, tables_only, crop_size, query_all_data, apply_annotation, ocr_callback,
+                         debug_dir, debug, model_cache=None):
     """
-    Subprocess function to execute the inference logic.
+    Function to execute the inference logic (runs in a subprocess for some backends, in-process for others).
+    Returns (llm_output, num_pages, usage), where usage is the list of per-call usage dicts
+    (empty for backends that don't track usage).
     """
     from sparrow_parse.extractors.vllm_extractor import VLLMExtractor
     from sparrow_parse.vlmb.inference_factory import InferenceFactory
@@ -52,7 +55,7 @@ def subprocess_inference(config, input_data, tables_only, crop_size, query_all_d
     extractor = VLLMExtractor()
 
     # Run inference
-    llm_output, num_pages = extractor.run_inference(
+    llm_output, num_pages, usage = extractor.run_inference(
         model_inference_instance,
         input_data,
         tables_only=tables_only,
@@ -62,11 +65,12 @@ def subprocess_inference(config, input_data, tables_only, crop_size, query_all_d
         apply_annotation=apply_annotation,
         ocr_callback=ocr_callback,
         debug=debug,
-        mode=None
+        mode=None,
+        return_usage=True
     )
 
     # Return results
-    return llm_output, num_pages
+    return llm_output, num_pages, usage
 
 
 class SparrowParsePipeline(Pipeline):
@@ -103,7 +107,8 @@ class SparrowParsePipeline(Pipeline):
         ocr_callback = process_ocr_data if ocr else None
 
         llm_output_list, num_pages, tables_only, validation_off, apply_annotation = self.invoke_pipeline_step(
-            lambda: self.execute_query(options, crop_size, query_all_data, ocr_callback, query, file_path, debug_dir, debug, self.model_cache, local),
+            lambda: self.execute_query(options, crop_size, query_all_data, ocr_callback, query, file_path, debug_dir,
+                                       debug, self.model_cache, local),
             f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Executing query",
             local
         )
@@ -128,7 +133,6 @@ class SparrowParsePipeline(Pipeline):
         print(f"Time to retrieve answer: {end - start}")
 
         return llm_output
-
 
     def _process_query(self, query: str, instruction: bool, validation: bool, markdown: bool, page_type: List[str],
                        hints_file_path: str, local: bool) -> Tuple[str, Optional[Dict], bool]:
@@ -159,7 +163,6 @@ class SparrowParsePipeline(Pipeline):
             processed_query, schema = self._prepare_query(query, hints_file_path, local)
             return processed_query, schema, False
 
-
     def _prepare_query(self, query: str, hints_file_path: str, local: bool) -> Tuple[str, Optional[Dict]]:
         """Prepare the query and schema, raising errors as necessary."""
         try:
@@ -171,7 +174,6 @@ class SparrowParsePipeline(Pipeline):
         except ValueError as e:
             raise ValueError(f"Error preparing query: {e}")
 
-
     def _prepare_page_type_query(self, page_type: list[str], local: bool) -> str:
         """Prepare the query and schema, raising errors as necessary."""
         try:
@@ -182,8 +184,7 @@ class SparrowParsePipeline(Pipeline):
             )
         except ValueError as e:
             raise ValueError(f"Error preparing page type query: {e}")
-        
-        
+
     def _prepare_instruction_query(self, query: str, local: bool) -> str:
         """Prepare the query and schema, raising errors as necessary."""
         try:
@@ -194,7 +195,6 @@ class SparrowParsePipeline(Pipeline):
             )
         except ValueError as e:
             raise ValueError(f"Error preparing instruction query: {e}")
-
 
     def _prepare_validation_query(self, query: str, local: bool) -> str:
         """Prepare the query and schema, raising errors as necessary."""
@@ -207,7 +207,6 @@ class SparrowParsePipeline(Pipeline):
         except ValueError as e:
             raise ValueError(f"Error preparing validation query: {e}")
 
-
     def _prepare_markdown_query(self, query: str, local: bool) -> str:
         """Prepare the query and schema, raising errors as necessary."""
         try:
@@ -218,7 +217,6 @@ class SparrowParsePipeline(Pipeline):
             )
         except ValueError as e:
             raise ValueError(f"Error preparing markdown query: {e}")
-
 
     def prepare_query_and_schema(self, query, hints_file_path):
         is_query_valid = is_valid_json(query)
@@ -238,7 +236,6 @@ class SparrowParsePipeline(Pipeline):
                  ". If a field is not visible or cannot be found in the document, return null. Do not guess, infer, or generate values for missing fields." + hints_section)
 
         return query, query_schema
-
 
     @staticmethod
     def read_hints_from_json(hints_file_path: str) -> str:
@@ -260,26 +257,23 @@ class SparrowParsePipeline(Pipeline):
                 return ""
         return ""
 
-
     @staticmethod
     def prepare_page_type_query(page_type):
         if not page_type:  # Handle empty array
             return ""
 
         # Convert all elements to strings and join with comma
-        page_types =  ", ".join(str(item) for item in page_type)
+        page_types = ", ".join(str(item) for item in page_type)
 
-        query  = f"detect page type based on this list of types - {page_types}. return response in JSON format"
+        query = f"detect page type based on this list of types - {page_types}. return response in JSON format"
 
         return query
-
 
     @staticmethod
     def prepare_instruction_query(query):
         query = f"{query}. response must be short, with values to answer the question, no need to provide other values. return response in JSON format"
 
         return query
-
 
     @staticmethod
     def prepare_validation_query(query):
@@ -293,12 +287,11 @@ class SparrowParsePipeline(Pipeline):
 
         return query
 
-
     def execute_query(self, options, crop_size, query_all_data, ocr_callback, query, file_path,
                       debug_dir, debug, model_cache, local):
         """
         Executes the query using the specified inference backend.
-        For vLLM backend, calls inference directly. For other backends, uses subprocess execution.
+        For vLLM and Mistral (cloud API) backends, calls inference directly. For other backends, uses subprocess execution.
 
         Args:
             options (list): Inference backend options (e.g., ['huggingface', 'some_space']).
@@ -328,9 +321,9 @@ class SparrowParsePipeline(Pipeline):
             }
         ]
 
-        # For vLLM backend, call directly without subprocess
-        if config.get("method") == "vllm" or local:
-            llm_output, num_pages = subprocess_inference(
+        # For vLLM and Mistral (cloud API) backends, call directly without subprocess
+        if config.get("method") in ("vllm", "mistral") or local:
+            llm_output, num_pages, usage = subprocess_inference(
                 config,
                 input_data,
                 tables_only,
@@ -358,10 +351,12 @@ class SparrowParsePipeline(Pipeline):
                     debug,
                     None  # No model cache for subprocess execution
                 )
-                llm_output, num_pages = future.result()
+                llm_output, num_pages, usage = future.result()
+
+        # Hand backend usage statistics (e.g. Mistral tokens) to the request-scoped collector, if one is active
+        usage_tracker.add(usage)
 
         return llm_output, num_pages, tables_only, validation_off, apply_annotation
-
 
     @staticmethod
     def _configure_inference_backend(options):
@@ -417,8 +412,8 @@ class SparrowParsePipeline(Pipeline):
             print(f"Unsupported inference method: {method}")
             return None, tables_only, validation_off, apply_annotation
 
-
-    def process_single_page(self, llm_output_list, query_all_data, query_schema, tables_only, validation_off, debug, local):
+    def process_single_page(self, llm_output_list, query_all_data, query_schema, tables_only, validation_off, debug,
+                            local):
         """
         Processes a single page of LLM output, including validation and formatting if needed.
         """
@@ -443,8 +438,8 @@ class SparrowParsePipeline(Pipeline):
 
         return llm_output
 
-
-    def process_multiple_pages(self, llm_output_list, query_all_data, query_schema, tables_only, validation_off, markdown, debug, local):
+    def process_multiple_pages(self, llm_output_list, query_all_data, query_schema, tables_only, validation_off,
+                               markdown, debug, local):
         """
         Processes multiple pages of LLM output, including validation (if needed), formatting, and pagination.
         """
@@ -483,7 +478,6 @@ class SparrowParsePipeline(Pipeline):
 
         return json.dumps(combined_output, indent=4, ensure_ascii=False)
 
-
     def process_llm_output(self, llm_output_list, num_pages, query_all_data, query_schema, tables_only, validation_off,
                            markdown, debug, local):
         """
@@ -496,7 +490,6 @@ class SparrowParsePipeline(Pipeline):
             return self.process_multiple_pages(llm_output_list, query_all_data, query_schema, tables_only,
                                                validation_off, markdown, debug, local)
         return None
-
 
     @staticmethod
     def validate_result(llm_output, query_all_data, query_schema, debug):
@@ -524,7 +517,6 @@ class SparrowParsePipeline(Pipeline):
                 print("Validation passed. LLM output conforms to the schema.")
 
         return validation_result
-
 
     @staticmethod
     def invoke_pipeline_step(task_call, task_description, local):

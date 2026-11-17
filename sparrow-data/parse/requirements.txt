@@ -6,7 +6,7 @@ rich
 # torch==2.15.0
 # numpy==2.5.4
 
-sentence-transformers==6.3.0
+sentence-transformers==6.2.0
 pypdf==7.1.0
 gradio_client==2.7.2
 pdf2image==1.17.0

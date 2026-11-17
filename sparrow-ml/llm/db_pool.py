@@ -191,8 +191,16 @@ def log_inference_start(client_ip, country_name, sparrow_key, page_count, model_
             release_connection(connection)
 
 
-def update_inference_duration(log_id, duration):
-    """Update the record with the actual duration"""
+def update_inference_duration(log_id, duration, prompt_tokens=None, completion_tokens=None):
+    """
+    Update the record with the actual duration and, if available, the token counts.
+
+    Args:
+        log_id (int): ID returned by log_inference_start
+        duration (float): Inference duration in seconds
+        prompt_tokens (int, optional): Input tokens summed over all chat calls; None if the backend has no token stats
+        completion_tokens (int, optional): Output tokens summed over all chat calls; None if not available
+    """
     global database_enabled
 
     if not database_enabled or log_id is None:
@@ -203,17 +211,30 @@ def update_inference_duration(log_id, duration):
         connection = get_connection_from_pool()
         cursor = connection.cursor()
 
-        update_sql = """
-            UPDATE inference_logs
-            SET inference_duration = :duration
-            WHERE id = :id
-        """
+        if prompt_tokens is None and completion_tokens is None:
+            # No token stats (MLX, vLLM, OCR only, ...): update the duration only
+            update_sql = """
+                UPDATE inference_logs
+                SET inference_duration = :duration
+                WHERE id = :id
+            """
+            params = {"duration": duration, "id": log_id}
+        else:
+            update_sql = """
+                UPDATE inference_logs
+                SET inference_duration = :duration,
+                    prompt_tokens = :prompt_tokens,
+                    completion_tokens = :completion_tokens
+                WHERE id = :id
+            """
+            params = {
+                "duration": duration,
+                "prompt_tokens": prompt_tokens,
+                "completion_tokens": completion_tokens,
+                "id": log_id
+            }
 
-        cursor.execute(
-            update_sql,
-            duration=duration,
-            id=log_id
-        )
+        cursor.execute(update_sql, params)
 
         connection.commit()
         cursor.close()
