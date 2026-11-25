@@ -263,10 +263,14 @@ if __name__ == "__main__":
     extractor = VLLMExtractor()
 
     # # export HF_TOKEN="hf_"
+    # # export MISTRAL_API_KEY="..."   (Mistral also reads MISTRAL_SERVER_URL, MISTRAL_SHOW_PROMPT, MISTRAL_SHOW_THINKING and MISTRAL_MAX_WORKERS, both optional)
     # config = {
     #     "method": "mlx",  # Could be 'huggingface', 'mlx', 'ollama', 'mistral' or 'local_gpu'
     #     # "model_name": "lmstudio-community/Mistral-Small-3.2-24B-Instruct-2506-MLX-8bit",
     #     "model_name": "mlx-community/Ministral-3-14B-Instruct-2512-8bit",
+    #     # "model_name": "mistral-large-4",
+    #     # "model_name": "mistral-ocr-4-1",
+    #     # "ocr_model_name": "mistral-ocr-4-1",
     #     # "model_name": "deepseek-ocr:latest",
     #     # "model_name": "mlx-community/DeepSeek-OCR-2-bf16",
     #     # "model_name": "mlx-community/dots.ocr-bf16",

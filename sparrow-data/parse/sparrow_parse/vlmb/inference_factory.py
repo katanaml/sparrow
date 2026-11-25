@@ -21,7 +21,9 @@ class InferenceFactory:
             return VLLMInference(model_name=self.config["model_name"])
         elif self.config["method"] == "mistral":
             from sparrow_parse.vlmb.mistral_inference import MistralInference
-            return MistralInference(model_name=self.config["model_name"])
+            # "ocr_model_name" is set only when two models were passed (OCR first, then the chat model)
+            return MistralInference(model_name=self.config["model_name"],
+                                    ocr_model_name=self.config.get("ocr_model_name"))
         else:
             raise ValueError(f"Unknown method: {self.config['method']}")
 
