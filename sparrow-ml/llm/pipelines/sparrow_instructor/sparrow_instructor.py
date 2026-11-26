@@ -12,6 +12,7 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 
 import concurrent.futures
 from pipelines.interface import Pipeline
+import usage_tracker
 
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -20,7 +21,9 @@ warnings.filterwarnings("ignore", category=UserWarning)
 
 def subprocess_inference(config, input_data, debug_dir, debug, model_cache=None):
     """
-    Subprocess function to execute the inference logic.
+    Function to execute the inference logic (runs in a subprocess for some backends, in-process for others).
+    Returns (llm_output, num_pages, usage), where usage is the list of per-call usage dicts
+    (empty for backends that don't track usage).
     """
     from sparrow_parse.extractors.vllm_extractor import VLLMExtractor
     from sparrow_parse.vlmb.inference_factory import InferenceFactory
@@ -43,7 +46,7 @@ def subprocess_inference(config, input_data, debug_dir, debug, model_cache=None)
     extractor = VLLMExtractor()
 
     # Run inference
-    llm_output, num_pages = extractor.run_inference(
+    llm_output, num_pages, usage = extractor.run_inference(
         model_inference_instance,
         input_data,
         tables_only=False,
@@ -51,11 +54,12 @@ def subprocess_inference(config, input_data, debug_dir, debug, model_cache=None)
         crop_size=0,
         debug_dir=debug_dir,
         debug=debug,
-        mode=None
+        mode=None,
+        return_usage=True
     )
 
     # Return results
-    return llm_output, num_pages
+    return llm_output, num_pages, usage
 
 
 class SparrowInstructorPipeline(Pipeline):
@@ -124,7 +128,7 @@ class SparrowInstructorPipeline(Pipeline):
         # Validate and configure the inference backend
         config = self._configure_inference_backend(options)
         if config is None:
-            return "Inference backend is not set up for this option", 0
+            return ["Inference backend is not set up for this option"], 0
 
         # Prepare input data for inference
         input_data = [
@@ -134,9 +138,9 @@ class SparrowInstructorPipeline(Pipeline):
             }
         ]
 
-        # For vLLM backend, call directly without subprocess
-        if config.get("method") == "vllm":
-            llm_output, num_pages = subprocess_inference(
+        # For vLLM and Mistral (cloud API) backends, call directly without subprocess
+        if config.get("method") in ("vllm", "mistral"):
+            llm_output, num_pages, usage = subprocess_inference(
                 config,
                 input_data,
                 debug_dir,
@@ -154,7 +158,10 @@ class SparrowInstructorPipeline(Pipeline):
                     debug,
                     None  # No model cache for subprocess execution
                 )
-                llm_output, num_pages = future.result()
+                llm_output, num_pages, usage = future.result()
+
+        # Hand backend usage statistics (e.g. Mistral tokens) to the request-scoped collector, if one is active
+        usage_tracker.add(usage)
 
         return llm_output, num_pages
 
@@ -200,12 +207,28 @@ class SparrowInstructorPipeline(Pipeline):
         elif method == 'mistral':
             return {
                 "method": method,
-                "model_name": options[1]
+                "model_name": SparrowInstructorPipeline._pick_mistral_chat_model(options)
             }
         else:
             # Extendable for additional backends
             print(f"Unsupported inference method: {method}")
             return None
+
+
+    @staticmethod
+    def _pick_mistral_chat_model(options):
+        """
+        Model for an instruction call (text only, no document). Mistral options can carry two models,
+        each as its own 'mistral <model>' pair (OCR + chat). OCR is not used without a document,
+        so the chat model is taken, whatever the order. With a single model, that model is used as is.
+        """
+        models = [options[1]]
+        rest = options[2:]
+        if rest and rest[0].lower() == 'mistral' and len(rest) >= 2:
+            models.append(rest[1])
+
+        chat_models = [m for m in models if "ocr" not in m.lower()]
+        return chat_models[0] if chat_models else models[0]
 
 
     @staticmethod

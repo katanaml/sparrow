@@ -123,6 +123,35 @@ def parse_optional_int(value: Optional[str]) -> Optional[int]:
         raise ValueError("Invalid integer value provided")
 
 
+def extract_model_name(options_arr):
+    """
+    Model name to log for the request, taken from the options (backend first, then model name(s), then flags).
+
+    One model:   ['mistral', 'mistral-large-4', ...flags]               -> 'mistral-large-4'
+    Two models:  ['mistral', 'mistral-ocr-4-1', 'mistral', 'mistral-large-4', ...flags]
+                 (Mistral OCR + chat, each model as its own 'mistral <model>' pair)
+                 -> 'mistral-ocr-4-1 + mistral-large-4' (OCR model first, whatever the order in the options)
+    Flags (tables_only, validation_off, ...) after the models never change the result.
+    Returns None if the options carry no model name.
+    """
+    if not options_arr or len(options_arr) < 2:
+        return None
+
+    models = [options_arr[1]]
+    # Only Mistral takes two models, same rule as in the sparrow-parse pipeline
+    if options_arr[0].lower() == 'mistral' and len(options_arr) >= 4 and options_arr[2].lower() == 'mistral':
+        models.append(options_arr[3])
+
+    if len(models) == 2:
+        # OCR model first; if the pair is not one OCR + one chat model, keep the given order
+        ocr_models = [m for m in models if "ocr" in m.lower()]
+        chat_models = [m for m in models if "ocr" not in m.lower()]
+        if len(ocr_models) == 1 and len(chat_models) == 1:
+            models = ocr_models + chat_models
+
+    return " + ".join(models)
+
+
 @app.post("/api/v1/sparrow-llm/inference", tags=["LLM Inference"])
 async def inference(
         query: Annotated[str, Form()],
@@ -209,13 +238,8 @@ async def inference(
                 except:
                     pass
 
-        # Extract the model name from options_arr (4th element if size is >= 4, 2nd if size is 2)
-        model_name = None
-        if options_arr:
-            if len(options_arr) >= 4:
-                model_name = options_arr[3]
-            elif len(options_arr) == 2:
-                model_name = options_arr[1]
+        # Model name(s) for the log, see extract_model_name
+        model_name = extract_model_name(options_arr)
 
         # Log the start of inference processing and get the ID
         log_id = db_pool.log_inference_start(
@@ -308,10 +332,8 @@ async def instruction_inference(
 
         options_arr = [param.strip() for param in options.split(',')] if options is not None else None
 
-        # Extract the model name from options_arr (2nd element if size is 2)
-        model_name = None
-        if options_arr and len(options_arr) == 2:
-            model_name = options_arr[1]
+        # Model name(s) for the log, see extract_model_name
+        model_name = extract_model_name(options_arr)
 
         # Log the start of inference processing and get the ID
         log_id = db_pool.log_inference_start(
