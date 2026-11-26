@@ -38,7 +38,10 @@ def subprocess_inference(config, input_data, tables_only, crop_size, query_all_d
     from sparrow_parse.vlmb.inference_factory import InferenceFactory
 
     # Create cache key based on config
+    # (the OCR model is part of the key: OCR + chat and chat only are different instances)
     cache_key = f"{config.get('method')}_{config.get('model_name')}"
+    if config.get("ocr_model_name"):
+        cache_key += f"_{config['ocr_model_name']}"
 
     # Check if model is already cached
     if model_cache is not None and cache_key in model_cache:
@@ -311,7 +314,8 @@ class SparrowParsePipeline(Pipeline):
         # Validate and configure the inference backend
         config, tables_only, validation_off, apply_annotation = self._configure_inference_backend(options)
         if config is None:
-            return "Inference backend is not set up for this option", 1, tables_only, validation_off
+            # Same 5 values as the normal return; validation is off so the message passes through as is
+            return ["Inference backend is not set up for this option"], 1, tables_only, True, apply_annotation
 
         # Prepare input data for inference
         input_data = [
@@ -377,9 +381,18 @@ class SparrowParsePipeline(Pipeline):
             raise ValueError("Invalid options provided for inference backend configuration.")
 
         method = options[0].lower()
-        tables_only = "tables_only" in [opt.lower() for opt in options[2:]]
-        validation_off = "validation_off" in [opt.lower() for opt in options[2:]]
-        apply_annotation = "apply_annotation" in [opt.lower() for opt in options[2:]]
+
+        # Mistral can take two models, each as its own "mistral <model>" pair (OCR + chat), see
+        # _split_mistral_options. The other options are flags. For other methods, the flags start at options[2].
+        mistral_models = None
+        flag_options = options[2:]
+        if method == 'mistral':
+            mistral_models, flag_options = SparrowParsePipeline._split_mistral_options(options)
+
+        flags = [opt.lower() for opt in flag_options]
+        tables_only = "tables_only" in flags
+        validation_off = "validation_off" in flags
+        apply_annotation = "apply_annotation" in flags
 
         if method == 'huggingface':
             return {
@@ -403,14 +416,56 @@ class SparrowParsePipeline(Pipeline):
                 "model_name": options[1]
             }, tables_only, validation_off, apply_annotation
         elif method == 'mistral':
-            return {
-                "method": method,
-                "model_name": options[1]
-            }, tables_only, validation_off, apply_annotation
+            return SparrowParsePipeline._build_mistral_config(mistral_models), tables_only, validation_off, \
+                apply_annotation
         else:
             # Extendable for additional backends
             print(f"Unsupported inference method: {method}")
             return None, tables_only, validation_off, apply_annotation
+
+    @staticmethod
+    def _split_mistral_options(options):
+        """
+        Split the options of the mistral method into the model names and the remaining flags.
+
+        One model:   ['mistral', 'mistral-large-4', ...flags]
+        Two models:  ['mistral', 'mistral-ocr-4-1', 'mistral', 'mistral-large-4', ...flags]
+                     (the order of the two models does not matter)
+
+        Returns (models, flag_options).
+        """
+        models = [options[1]]
+        rest = options[2:]
+        if rest and rest[0].lower() == 'mistral':
+            if len(rest) < 2:
+                raise ValueError("Option 'mistral' is repeated without a second model name.")
+            models.append(rest[1])
+            rest = rest[2:]
+        return models, rest
+
+    @staticmethod
+    def _build_mistral_config(models):
+        """
+        Build the backend config for the mistral method from one or two model names.
+        OCR models are recognized by "ocr" in the name (same rule as in the Mistral backend).
+
+        - one model (OCR or chat): model_name = that model
+        - two models (one OCR, one chat): model_name = the chat model, ocr_model_name = the OCR model,
+          the backend runs OCR first and sends the OCR text to the chat model
+        """
+        config = {"method": "mistral"}
+        if len(models) == 1:
+            config["model_name"] = models[0]
+            return config
+
+        ocr_models = [m for m in models if "ocr" in m.lower()]
+        chat_models = [m for m in models if "ocr" not in m.lower()]
+        if len(ocr_models) != 1 or len(chat_models) != 1:
+            raise ValueError(f"Two Mistral models must be one OCR model and one chat model, got: {models}")
+
+        config["model_name"] = chat_models[0]
+        config["ocr_model_name"] = ocr_models[0]
+        return config
 
     def process_single_page(self, llm_output_list, query_all_data, query_schema, tables_only, validation_off, debug,
                             local):
